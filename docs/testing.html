@@ -1,0 +1,341 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/testing.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing on the device · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li><a href="video.html">Video recordings and the computer link</a></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="scripting-projects.html">Building a project by script</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li><a href="sections-plan.html">Sections and the song</a></li>
+<li><a href="sampler-plan.html">SAMPLE KING</a></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li><a href="design-reference.html">The design reference</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li class="on"><a href="testing.html" aria-current="page">Testing on the device</a><ul><li><a href="#the-tools">The tools</a></li><li><a href="#where-to-listen">Where to listen</a></li><li><a href="#the-feature-suite">The feature suite</a></li><li><a href="#sections-on-the-bar-line">SECTIONS on the bar line</a></li><li><a href="#the-exports-suite">The exports suite</a></li><li><a href="#projects-that-still-resolve">Projects that still resolve</a></li><li><a href="#recipes">Recipes</a></li><li><a href="#the-audio-graph">The audio graph</a></li></ul></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">Under the hood <span>/</span> docs/testing.md</p>
+<h1>Testing on the device</h1>
+<p class="doc-blurb">device.sh, the fifo hooks, the suites, the screenshot tour.</p>
+
+<p>Every tool used to drive, hear, measure and watch ravving on a Zynthbox, from the laptop.
+The pieces are small scripts in <code>tools/</code>; this page is the recipe book that strings them
+together. For the first-time set-up (SSH, the build loop) see <code>README.md</code>; for what each
+backend piece does, <code>docs/architecture.md</code>; for the sound and timing checks that were run
+when a feature was built, <code>docs/debugging.md</code> and <code>docs/quality.md</code>.</p>
+<p>The rule for every test: <strong>iterate with a local build</strong> (<code>tools/device.sh deploy</code>), never the
+AppImage; the AppImage and its release check (<code>docs/packaging.md</code>) are for minor releases.</p>
+<h2 id="the-tools">The tools</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tools/device.sh deploy</code></td>
+<td>rsync the source, build on the device, install, restart, wait until the audio is wired</td>
+</tr>
+<tr>
+<td><code>tools/device.sh cuia NAME…</code></td>
+<td>press device keys by CUIA name through the remote-control fifo (<code>SWITCH_NUMBER_5_RELEASED</code>, <code>SWITCH_ARROW_UP_RELEASED</code>, <code>SWITCH_STEP5_PRESSED</code> + <code>_RELEASED</code>, <code>SWITCH_MODE_RELEASED</code> = LIVE, <code>KNOB0_UP</code>…<code>KNOB3_DOWN</code>, <code>SWITCH_ALT_PRESSED</code> / <code>_RELEASED</code>, <code>SWITCH_PLAY_RELEASED</code>, <code>SWITCH_STOP_RELEASED</code>, <code>SWITCH_BACK_RELEASED</code>, <code>SWITCH_SELECT_RELEASED</code>)</td>
+</tr>
+<tr>
+<td>(object names)</td>
+<td>a machine key, <code>studio</code>, <code>ravving</code>, <code>input</code>, <code>take</code>, or a dotted path into an object's properties: <code>pads.kit</code>, <code>bass.sound</code>; any other name is a QML item's <code>objectName</code> (<code>padsModule</code>, <code>samplerModule</code>, <code>padsWaveEditor</code>, <code>samplerWaveEditor</code>): <code>set padsModule modifiersExpanded true</code>, <code>call padsWaveEditor open 16</code>, <code>set ravving currentPage 4</code>, <code>set ravving samplerMachine 1</code>; <code>mouse</code> is the MouseWatcher (<code>get mouse hasMouse</code>). QML items are found in the item tree (a page's items are visual children, not always QObject children), popups in the object tree. A QML function is called through the script engine, so its arguments arrive as plain numbers, booleans or text (<code>call chordsModule moveView 1</code>, <code>call padsWaveEditor open 16</code>); a C++ method gets its arguments converted to the parameter types</td>
+</tr>
+<tr>
+<td><code>tools/device.sh set OBJECT PROPERTY VALUE</code></td>
+<td>set a backend property (<code>set pads selectedPad 3</code>); plain setters are not reachable by <code>call</code>, properties are</td>
+</tr>
+<tr>
+<td><code>tools/device.sh get OBJECT PROPERTY</code></td>
+<td>read a backend property (<code>get pads muted</code>, <code>get studio playing</code>): ravving logs it, the script reads it back</td>
+</tr>
+<tr>
+<td><code>tools/device.sh call OBJECT METHOD ARGS…</code></td>
+<td>call a backend method: a machine by its kits.json key (<code>pads</code>, <code>sampler</code>, <code>drums1</code>, <code>bass</code>, <code>chords</code>, <code>lead</code>), <code>studio</code>, <code>input</code>, <code>take</code>, <code>exporter</code>, <code>music</code> (and <code>music.library</code>), <code>profile</code>, <code>drives</code> (USB sticks: <code>call drives eject /dev/sda1</code>), <code>usb</code> (the USB page: <code>call usb scan</code>, <code>call usb importEntry samples /media/root/EVS/x.wav</code>, <code>call usb exportEntry soundfonts /zynthian/…/x.sf2</code>; <code>usbPopup</code> opens it: <code>call controlCenter run usb</code>), <code>bluetooth</code> (<code>call bluetooth startDiscovery</code>, <code>get bluetooth devices</code>, <code>call bluetooth pair AA:BB:…</code>, <code>call bluetooth useAsOutput AA:BB:… true</code>, <code>call bluetooth sendFile AA:BB:… /path</code>), or a QML item by objectName (<code>window showPlayer true</code>, <code>window showRecorder true</code>, <code>exportPopup open</code>, <code>settingsPopup open</code>, <code>bluetoothPopup open</code>, <code>projectPicker open</code> then <code>projectPicker actionTriggered 4</code> for IMPORT (the index counts the dividers: OPEN 0, EXPORT 1, NEW 2, TEMPLATES 3, IMPORT 4, SAVE AS NEW 6), <code>playerPage</code>, <code>controlCenter</code>); any <code>Q_INVOKABLE</code> or slot, arguments converted (<code>call pads loadSample 0 /path.wav</code>, <code>call pads setFlag 0 looping true</code>, <code>call pads loadPreset "Boom Bap"</code>, <code>call input record</code>, <code>call input record true</code> for a RECORDER take; <code>set input.effects preset OVERDRIVE</code>; <code>get input.tuner frequency</code>; <code>call ravving setLogRules "ravving.cuia.debug=true"</code> turns a log category on while running: each key, who took it and the focus chain), <code>video</code> (<code>set video countdown 0</code>, <code>call video start</code> / <code>stop</code> / <code>toggle</code>, <code>get video state</code> / <code>lastFile</code> / <code>lastInfo</code>, <code>set video quality high</code>) and <code>computer</code> (<code>call computer setup HOST USER PASSWORD 22</code>, <code>check</code>, <code>send /path</code>, <code>forget</code>), <code>files</code> (the FILES browser: <code>get files kinds</code>, <code>call files entries videos</code>, <code>call files presetFile "pattern::bass-presets.json::My Bassline 1"</code>; <code>filesPopup open</code>, <code>filesPopup showKind presets</code>, <code>filesPopup openFolder BASS</code>: the drawer's dialogs open by script only once the MENU drawer has been shown since the start, so press MENU twice first); the journal logs each call</td>
+</tr>
+<tr>
+<td><code>tools/device.sh tap X Y</code></td>
+<td>a touch at a screen pixel (the panel is 1280 × 800); a hold is <code>xdotool mousemove X Y mousedown 1; sleep 1; xdotool mouseup 1</code> over ssh with <code>DISPLAY=:0 XAUTHORITY=/root/.Xauthority</code></td>
+</tr>
+<tr>
+<td><code>tools/device.sh shot FILE.png</code></td>
+<td>a screenshot, copied here (crop with ImageMagick to read details)</td>
+</tr>
+<tr>
+<td><code>tools/device.sh animations</code></td>
+<td>every running animation and repeating Timer, with its item, whether it is shown, its QML file and position: what keeps the window drawing (an idle screen should draw nothing)</td>
+</tr>
+<tr>
+<td><code>tools/audio-impact.sh [SECONDS] [idle\|playing\|both]</code></td>
+<td>what the screen, polls and watchers cost the sound: frames/s, CPU per thread group, realtime-thread page faults, xruns (<code>docs/quality.md</code> §10); <code>idle</code> presses nothing, so it is safe while someone plays</td>
+</tr>
+<tr>
+<td><code>tools/device.sh gallery [DIR]</code></td>
+<td>one screenshot per page</td>
+</tr>
+<tr>
+<td><code>tools/device.sh log [SECONDS]</code></td>
+<td>ravving's journal</td>
+</tr>
+<tr>
+<td><code>tools/device.sh bt [ADDR] [SINCE]</code> / <code>bt capture [SECONDS] [FILE]</code></td>
+<td>why a Bluetooth device does (not) connect or play, read-only (tools/bt-diagnose.sh: config, endpoints, codecs, the device's journal and a tally of failures), and an HCI trace with btmon while you connect it (docs/debugging.md, docs/bluetooth.md)</td>
+</tr>
+<tr>
+<td><code>tools/device.sh play FILE.mid</code></td>
+<td>play a MIDI file into ravving as an external keyboard (<code>tools/midifile.py</code> makes one)</td>
+</tr>
+<tr>
+<td><code>tools/device.sh default …</code></td>
+<td>switch between ravving and zynthbox-qml, install, purge, status</td>
+</tr>
+<tr>
+<td><code>tools/meter.py</code> (on the device: <code>tools/device.sh tools</code> copies it to <code>/tmp</code>)</td>
+<td><code>pw-jack python3 /tmp/meter.py PORT --seconds 2</code>: RMS, brightness and crest of a JACK port</td>
+</tr>
+<tr>
+<td><code>tools/record.py</code>, <code>tools/analyse.py</code>, <code>tools/repeatcheck.py</code></td>
+<td>record ports to numpy, analyse, check periodicity</td>
+</tr>
+<tr>
+<td><code>tools/soundfont.py presets · ranges · render · categorise FILE…</code></td>
+<td>look inside an SF2 / SF3 before making it a kits.json sound source (<code>categorise --json</code> proposes the entries, a category from the name and folder: Strings, Organ, Keys, Bass, Guitar, Winds, Voices, Synth, Alien for the drones, Drums, Other; mute fonts left out): its presets (bank:program), the key and velocity ranges of its zones (a <code>velRange 0–0</code> font is mute everywhere: SynStrings, LaString, MelloString, Organ on the image), and an offline render of one chord through fluidsynth with the level every quarter second</td>
+</tr>
+<tr>
+<td><code>tools/mididump.py PORT SECONDS</code> (on the device, <code>pw-jack python3</code>)</td>
+<td>what an engine really receives on a JACK MIDI port: notes, controllers, program changes, bends (the clock and ticks with <code>--clock</code>)</td>
+</tr>
+<tr>
+<td><code>tools/profile-taps.sh</code>, <code>tools/qml-profile.sh</code>, <code>tools/boot-timing.sh</code></td>
+<td>responsiveness, QML profiling, start-up time (<code>docs/quality.md</code>)</td>
+</tr>
+<tr>
+<td><code>tools/static-analysis.sh</code></td>
+<td>clang-tidy / clazy</td>
+</tr>
+<tr>
+<td><code>tools/pads-test.sh</code></td>
+<td>the PAD SAMPLER feature suite (below)</td>
+</tr>
+<tr>
+<td><code>tools/sections-test.sh</code></td>
+<td>SECTIONS heard: sections picked at random moments while the master records, <code>tools/sections-test.py</code> checks every 8th sounds once and on time, a change only on a bar line, a rest in whole bars (below)</td>
+</tr>
+<tr>
+<td><code>tools/bluetooth-setup.sh [--check]</code></td>
+<td>set a device up for Bluetooth (packages, the two drop-ins, services) and check every step (<code>docs/bluetooth.md</code>)</td>
+</tr>
+<tr>
+<td><code>tools/soundfont-check.sh</code></td>
+<td>every soundfont kits.json uses, checked on the device: exists, can sound, the preset exists, a chord comes out offline (<code>docs/quality.md</code> §7)</td>
+</tr>
+<tr>
+<td><code>tools/drums-test.sh</code></td>
+<td>the DRUMS page suite (60 checks: 55 on the device, 5 timing checks on the laptop from a recording of the lane): a new project starting clean on every page, the grid (toggle, accent, undo / redo, clear, bars, view bar, cursor and STEP entry), the kit (another loaded, reset), the row mix heard (mute, solo, level, accent, the machine's mute and pause), LIVE (a pad heard, hits recorded while playing), presets (save, load, remove), every SOUND EFFECT on and off with its knobs read back and DRIVE / COMPRESSOR / EQ / PAN heard, the kit's MODS, and <code>tools/hits-timing.py</code> (shared with the chords suite): every 8th within 12 ms, accents louder. It works in a project of its own and puts the previous one back</td>
+</tr>
+<tr>
+<td><code>tools/chords-test.sh</code></td>
+<td>the CHORDS page suite (54 checks: 50 on the device, 4 timing checks on the laptop): the key and chord sets (names follow ROOT and the set), the CHORDS view (chords, runs, undo / redo, clear), NOTES (toggle, a step's notes, custom voicings), SLOTS (arm, fill, bars, clear, the steps rebuilt), the octave, the sound source (a soundfont, back to TAL), heard (mute, pause, LIVE keys, a hit recorded), presets, every SOUND EFFECT with EQ / PAN / DRIVE heard, and <code>hits-timing.py</code> on two bars of piano stabs (every 8th within 20 ms)</td>
+</tr>
+<tr>
+<td><code>tools/video-test.sh</code></td>
+<td>the video recorder suite (docs/video.md): a recording over the fifo while playing, its MP4 (streams, starts, length, frame rate), the ring's dropped frames, the graph's xruns meanwhile, RECORD / STOP by the keys, the TIMER and its cancel, VIDEO off</td>
+</tr>
+<tr>
+<td><code>tools/share-test.sh [FILE]</code></td>
+<td>the phone share (SEND… → PHONE · QR CODE) with the laptop as the phone: the newest video (or FILE) offered over the fifo, its link fetched with curl and compared with the device's file (size, md5), a Range request → 206 of the right length, HEAD, a wrong token and the root → 404, the deliveries counted, the help page at /help/ (200 text/html, its CSS, a missing file and <code>../</code> → 404, not an attachment, not counted), stop → the link 404 while the help page stays; runs on the laptop (it must reach the device's address, as a phone would)</td>
+</tr>
+<tr>
+<td><code>tools/computer-link-test.sh</code></td>
+<td>the computer link end to end against the device's own sshd (a throwaway local user as the computer): set-up with the password, the key installed, Downloads found, a wrong password told apart, a file sent, the key removed → refused</td>
+</tr>
+<tr>
+<td><code>tools/video-sync-check.sh</code>, <code>tools/video-encode-impact.sh</code>, <code>tools/video-mic-check.sh</code></td>
+<td>the video sync mechanism alone; the encoder tiers' cost while playing; a recording with the RECORDER's mic heard and measured</td>
+</tr>
+<tr>
+<td><code>tools/export-test.sh</code></td>
+<td>the exports and music player suite (below): a project saved, changed and reopened, a short track export (WAV, then FLAC) checked to the sample, its tags and cover, a .ravv bundle and its import, the player's queue, playback, pause, seek and stop</td>
+</tr>
+<tr>
+<td><code>tools/examples/lofi-say-it.sh</code></td>
+<td>a whole project built by script (<code>docs/scripting-projects.md</code>): the recipe for making music over the fifo</td>
+</tr>
+<tr>
+<td><code>tools/appimage-test.sh</code>, <code>tools/store-register.py</code>, <code>tools/store-launch.sh</code></td>
+<td>the Store AppImage release check (<code>docs/packaging.md</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Environment switches: <code>QT_LOGGING_RULES="ravving.cuia.debug=true"</code> (set with
+<code>systemctl --user set-environment</code> and a restart) logs every hardware event with whether it
+was accepted and the focus chain it travelled; <code>ravving.midi.debug=true</code> the MIDI input.</p>
+<h2 id="where-to-listen">Where to listen</h2>
+<p>A machine's track after its effects is <code>TrackPassthrough:Channel{track+1}-lane1-dryOutLeft</code>
+(kits.json gives the track: drums 0–2, bass 3, chords 4, lead 5, SAMPLE KING 6, PAD SAMPLER
+7, the input monitor 9); the master is <code>GlobalPlayback:dryOutLeft</code>. Always compare runs
+(silent, playing, silent again), never read a single number: a track playing a beat is
+~0.02–0.2 RMS, silence is 0.0.</p>
+<h2 id="the-feature-suite">The feature suite</h2>
+<p><code>sh tools/pads-test.sh</code> runs every PAD SAMPLER backend feature as a check on the device
+(load, one-shot, NOTE ON, LOOP + latch + stopAll, the pattern on both tracks, erase, halve /
+double, MUTE, copy, a card value, a take with SMART stop when a signal is present, the
+samplers' exclusivity, the folders), PASS / FAIL / SKIP per line with the measured level,
+and exits with the number of failures. Run it after any change to the machine, the wiring,
+the paths or libzynthbox; it needs the reference audio in the library and a kick sample in
+the device's sketchpads. Add a check for every new feature.</p>
+<h2 id="sections-on-the-bar-line">SECTIONS on the bar line</h2>
+<p><code>sh tools/sections-test.sh</code> (from the laptop) builds a test project on the device: DRUMS 1
+alone, a bar of 8ths at 100 BPM, section A a kick, B a closed hat, REST with DRUMS 1 resting.
+It records the master while A and B are picked 24 times at random moments (0.6–2.6 s apart:
+some land, some are replaced before their bar), then A and REST in turn, and
+<code>tools/sections-test.py</code> checks the recordings by their onsets (a kick is dark, a hat
+bright): every 8th once (no gap near 600 ms, none under 200), on time (each onset within
+15 ms of one grid fitted through them all), the sound changing only on an onset that begins
+a bar, the rests whole bars from a bar line. What was open before is opened again (saved
+first when it had changes). 2026-10-09 on milo: 7/7, 152 eighths, 13 changes all on bar
+lines, every 8th within 13.3 ms of a 299.997 ms grid. Read the timing against the grid, not
+gap by gap: the detector reads a kick 2.7 ms early and a hat 3.0 ms late (each ±2.6 ms), so
+a gap across a change carries both errors (one gap read 22.7 ms off in an earlier run while
+every onset was within 11 ms of the grid).</p>
+<h2 id="the-exports-suite">The exports suite</h2>
+<p><code>sh tools/export-test.sh</code> runs the exports and the music player as checks on the device
+against whatever project is open (27 checks, all passing on milo with "Lo-fi Say It"): the
+profile's author fallback, a 2-bar WAV export that starts busy, plays the transport, stops it,
+lasts exactly 2 bars + 1 s at the project's tempo (to the sample), is 24-bit at the engine's
+rate, carries its tags (python3-taglib reads them back), its cover PNG and a sidecar that says
+the start was placed on the audio clock (<code>headFrom: clock</code>); a 1-bar FLAC; a .ravv bundle
+(project.json, metadata.json, cover.png, the samples; zip integrity checked by Python) imported
+as a new project with its sample paths rewritten; the library listing the tracks, playNow
+sounding on the master (meter.py), the position moving, pause, resume, seek, enqueue, stop. It
+removes its "Export Test" files (exports, the imported project and its samples) at the end.</p>
+<p>A track export by hand over the fifo (JSON in one argument; no <code>|</code> inside):</p>
+<pre><code class="language-sh">ssh root@milo.local &quot;printf '%s\n' 'call|exporter|exportAudio|{\&quot;title\&quot;:\&quot;My Track\&quot;,\&quot;artist\&quot;:\&quot;Me\&quot;,\&quot;format\&quot;:\&quot;flac\&quot;,\&quot;bars\&quot;:8,\&quot;loops\&quot;:2,\&quot;tail\&quot;:2}' &gt; /tmp/webconf-writes-to-this-fifo&quot;
+tools/device.sh get exporter phase      # preparing · recording · cutting · tagging · done
+tools/device.sh get exporter lastFile
+</code></pre>
+<h2 id="projects-that-still-resolve">Projects that still resolve</h2>
+<p>A project names what it plays instead of holding it: each instrument's sound source and factory
+sound by name, its MODS knobs as "CARD/KNOB", a drum kit or a sample by path, automation lanes by
+knob. A change to <code>data/kits.json</code>, <code>data/engines.json</code> or the device's files can leave a saved
+project pointing at nothing, and it then opens on another sound, silently. Three checks catch it:</p>
+<ul>
+<li><strong>On the laptop, every change:</strong> <code>ctest -R projects</code> runs <code>tools/check-projects.py</code> over
+  <code>data/demos</code> against the repo's kits.json and engines.json (sources, MODS knobs, automation
+  lanes, kit roles, sections and the song).</li>
+<li><strong>Over the device's saved projects:</strong> <code>tools/device.sh projects</code> (<code>-v</code> for every project) runs it
+  on milo against the installed data and files too: kit soundfonts, samples (a take saved before
+  the takes moved to <code>samples/takes/</code> is found there, as ravving finds it), imported soundfonts,
+  the TAL factory sounds. Run it after a data change, before a release.</li>
+<li><strong>In ravving, each time a project opens:</strong> the machines note what they could not resolve as
+  they restore it (<code>ProjectCheck</code>, <code>Machine::checkSaved()</code>: nothing is read twice, nothing runs
+  after), and the issues centre shows one warning listing it ("5AM: 2 of what it plays is
+  missing"), cleared by the next project that resolves.</li>
+</ul>
+<h2 id="recipes">Recipes</h2>
+<p><strong>A sampler pad from a script.</strong> Load, play, loop, latch, stop:</p>
+<pre><code class="language-sh">sh tools/device.sh call pads loadSample 0 /zynthian/zynthian-my-data/ravving/samples/refs/movie-intro-16s.wav
+sh tools/device.sh call pads audition 0            # one pass
+sh tools/device.sh call pads setFlag 0 looping true
+sh tools/device.sh call pads setLatched 0 true     # held looping, as a long press does
+sh tools/device.sh call pads stopAll               # what STOP does
+</code></pre>
+<p><strong>A pattern on the pads.</strong> Fill pads 1–4 with a kick, snare, hat and clap from the device's
+library (<code>find /zynthian/zynthian-my-data/samples -iname "*kick*.wav" | head -1</code>), then
+<code>call pads loadPreset "Boom Bap"</code>, <code>cuia SWITCH_PLAY_RELEASED</code>, meter the lane, <code>cuia
+SWITCH_STOP_RELEASED</code>. The step keys write the selected pad's row with LIVE off and play
+the pads with LIVE on (<code>SWITCH_MODE_RELEASED</code> toggles it; a step key held past half a second
+latches its pad).</p>
+<p><strong>A take into a pad.</strong> With something on the input jack (<code>INPUT</code> sets MIC / GUITAR / LINE):
+<code>call pads setSelectedPad 2</code>, then <code>call input record</code>; with SMART on
+(<code>studio.input.autoStop</code>, default on) the take ends by itself half a second after the sound
+stops, else <code>call input stop</code>. The processed take lands on the pad trimmed to its last
+burst; the journal shows <code>takeReady</code>. Without a signal the take never auto-stops: that is
+the guard against stopping before anything was played.</p>
+<p><strong>The hardware walk.</strong> Switch the trace on, then <code>cuia SWITCH_ARROW_UP_RELEASED</code> step by
+step and read which item accepted each key; <code>ALT + ▲</code> must land on the header from
+anywhere. Key 5 opens page 5 and, pressed again, toggles between SAMPLE KING and the PAD
+SAMPLER; the choice survives restarts, so check the nameplate in a screenshot before
+sending taps at a panel (a hold on the wrong one writes a step).</p>
+<p><strong>Reference audio</strong> for sampling tests lives in the library:
+<code>/zynthian/zynthian-my-data/ravving/samples/refs/</code> (<code>movie.wav</code> and <code>movie-intro-16s.wav</code>
+from the user's "04 - Movie", <code>nina-free*.wav</code>); the originals are in
+<code>~/Coding/refs/audio/</code> on the laptop.</p>
+<p><strong>Live jam test (to run).</strong> After the snippet works alone, build a lo-fi hip hop jam around
+it: drums, bass, chords and lead with the sampled audio on the pads, recorded with the
+header's ● into <code>recordings/</code>, as the thEx jam was made.</p>
+<h2 id="the-audio-graph">The audio graph</h2>
+<p><code>tools/device.sh graph all -s 60</code> checks the PipeWire / JACK graph ravving runs in (rates
+and periods against the driver's, linked nodes that are not running, the audio threads'
+priorities, xruns over a minute, the ravving links). <code>docs/routing.md</code> has the map of what
+ravving wires, the tools (pw-top, pw-dump, pw-dot, jack_iodelay…) and the measurements.</p>
+<p><code>tools/issues-test.sh</code> checks the issues center end to end (reports over the fifo, order, dismiss, clear, the drawer card and the dialog).</p>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+</body>
+</html>

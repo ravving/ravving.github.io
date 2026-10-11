@@ -1,0 +1,867 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/architecture.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architecture · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li><a href="video.html">Video recordings and the computer link</a></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="scripting-projects.html">Building a project by script</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li><a href="sections-plan.html">Sections and the song</a></li>
+<li><a href="sampler-plan.html">SAMPLE KING</a></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li><a href="design-reference.html">The design reference</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li class="on"><a href="architecture.html" aria-current="page">Architecture</a><ul><li><a href="#layers">Layers</a></li><li><a href="#input-flow-the-hardware-attached-property">Input flow: the Hardware attached property</a></li><li><a href="#backend-srcbackend">Backend (src/backend/)</a></li><li><a href="#qml-components">QML components</a></li><li><a href="#the-libzynthbox-bridge">The libzynthbox bridge</a></li><li><a href="#porting-status-zynthbox-qml-python-ravving-c">Porting status (zynthbox-qml Python → ravving C++)</a></li><li><a href="#device-workflow">Device workflow</a></li><li><a href="#distribution">Distribution</a></li></ul></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">Under the hood <span>/</span> docs/architecture.md</p>
+<h1>Architecture</h1>
+<p class="doc-blurb">The layers, the hardware input flow and the focus model, every backend class and QML component.</p>
+
+<h2 id="layers">Layers</h2>
+<pre><code> ┌──────────────── QML (qml/: the Ravving module, compiled in) ────────┐
+ │ Main.qml: RaveHeader + StackLayout of the five pages + MENU drawer   │
+ │ pages/:   DrumsPage ChordsPage BassPage LeadPage SamplerPage         │
+ │ components/: the shared parts every page is built from               │
+ └───────────────▲──────────────────────────────▲──────────────────────┘
+                 │ context properties           │ Zynthbox QQC style (SVG theme)
+ ┌───────────────┴──────── C++ app (src/) ──────┴──────────────────────┐
+ │ Ravving         page state, hardware → HardwareEvent   &quot;ravving&quot;    │
+ │ Hardware        the `Hardware.on…` attached property  import Ravving│
+ │ StyleHost       what the Zynthbox style needs          &quot;zynqtgui&quot;   │
+ │ ZynthboxBridge  loads libzyncoder + libzynthbox        &quot;zynthbox&quot;   │
+ │ HardwareSwitches  polls the buttons → MidiRouter's CUIA queue        │
+ │ HardwareKnobs   polls the 4 knobs (turns / pot positions)            │
+ │ UnixSignals     SIGTERM → LEDs off, then _exit (as zynthbox-qml)     │
+ └───────────────▲─────────────────────────────────────────────────────┘
+                 │ dlopen + meta-object calls (headers are not installed yet)
+ ┌───────────────┴──────────── libraries ──────────────────────────────┐
+ │ libzynthbox (sequencer, sampler, mixer, MIDI router, engines)        │
+ │ libzyncoder (buttons, knobs) · qml-style-zynthbox · KF6 Kirigami     │
+ └─────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>Rule:</strong> ravving runs no Python. When it needs something zynthbox-qml does in Python, that
+piece is ported to C++ under <code>src/</code>, and the class doc names the Python it came from.</p>
+<h2 id="input-flow-the-hardware-attached-property">Input flow: the <code>Hardware</code> attached property</h2>
+<p>The device's keys and knobs reach QML the way the keyboard does through <code>Keys</code>: as events
+delivered to the item with <strong>active focus</strong>, bubbling to its parents until a handler accepts
+them.</p>
+<pre><code>device button ─► HardwareSwitches (zyncoder poll, 20 ms)
+                   └► MidiRouter.enqueueCuiaCommand(&quot;SWITCH_STEP3_RELEASED&quot;)
+MIDI-mapped CUIA ─► MidiRouter ─► cuiaEvent ─► ZynthboxBridge ─► Ravving::handleCuia ─┐
+device knob ─► HardwareKnobs (zynpot poll) ─► Ravving::handleKnobTurn / handleKnobMove ─┤
+keyboard (dev) ─► Main.qml Shortcuts ─► ravving.simulateCuia / simulateKnob ────────────┤
+                                                                                         ▼
+                        HardwareEvent ─► Hardware::dispatch(window): activeFocusItem,
+                                          then each parent, until one accepts it
+</code></pre>
+<pre><code class="language-qml">import Ravving
+FocusScope {
+    Hardware.onKnob1Up: event =&gt; level += event.delta        // knob 1 clockwise
+    Hardware.onBigKnobDown: event =&gt; select(index - 1)
+    Hardware.onKnob2Moved: event =&gt; cutoff = event.value     // Z2_V5B fixed pot, 0..1
+    Hardware.onStepPressed: event =&gt; grid.toggle(event.index)
+    Hardware.onUpPressed: event =&gt; { if (atTop) event.accepted = false }  // bubble on
+}
+</code></pre>
+<p>Signals: <code>knob1Up/Down … knob3Up/Down</code>, <code>bigKnobUp/Down</code>, <code>knob1Moved … knob3Moved</code>,
+generic <code>knobTurned</code> / <code>knobMoved</code>, <code>up/down/left/right/select/back/menu/play/stop/record/metronome
+Pressed</code>, <code>stepPressed</code> (index 0–15), <code>numberPressed</code> (index 0–4), and <code>pressed</code> for anything
+else. As with <code>Keys</code>, the specific signal goes first and the generic one gets whatever is
+still not accepted. A handler that runs accepts the event unless it sets
+<code>event.accepted = false</code>.</p>
+<p>Focus model:
+- The open page (a <code>RavePage</code>, i.e. a FocusScope) has the focus. ▲ at a page's top edge
+  is left unaccepted, bubbles to <code>Main.qml</code>, and focuses the header's first group.
+- In the header, ◀ ▶ move between the <code>KnobGroup</code>s and ▼ / BACK return to the page. Step
+  keys always go to the page. A number key nobody handles still switches the page (C++
+  fallback).
+- A <code>KnobGroup</code> (FocusScope) hands its <code>targets</code> to the knobs: knob n → targets[n], the
+  big knob → targets[3] or fine steps on targets[0]. It can also hold <code>navItems</code>, which its
+  <code>navKnob</code> (the big knob by default; knob 1 for INSTRUMENTS) steps through and SELECT
+  activates. Targets show a <code>KnobBadge</code> (a tiny knob icon:
+  the knob number, value arc, pulsing while a Z2_V5B pot waits for pick-up).
+- Inside a page the big knob is always the volume of the machine on screen (<code>RavePage.module</code>,
+  <code>MachineModule.nudgeLevel()</code>); the fader wears the big-knob badge while it is. Groups in a
+  page (<code>ParamCard</code>, the machine strip) set <code>ownsBigKnob: false</code> so it passes through to the
+  page. Popups and the header, outside the page, keep using it.
+- A machine's strip (role, PAN knob, VOL <code>RaveFader</code>) is a <code>KnobGroup</code>: tap it and knob 1
+  pans, knob 2 sets the level; BACK or a tap in the grid give the knobs back to the rows
+  (<code>StepGrid.knobsActive</code> is off while the strip has them).
+- ▲ ▼ walk one vertical order per machine, owned by <code>MachineModule</code>: header → strip →
+  SOUND MODIFIERS cards (only while open) → the editor → SOUND EFFECTS cards (only while
+  open). The sections move the focus themselves (<code>ParamCardRow.released(dy)</code>, coming back
+  to the card last used with <code>enter()</code>); a page calls <code>focusUp()</code> / <code>focusDown()</code> when its
+  editor has no further to go (the drums: past the top row / the ACC row; the bass roll:
+  past its top / bottom note row). <code>focusUp()</code> returns false from the strip, so ▲ bubbles to the header; ▼ from the
+  header lands on the page's <code>focusTop()</code> (the strip).
+- RECORD on an instrument page is that machine's take (the strip's ● shows ● / count-in beat /
+  … / ■); RECORD with the header focused, or ALT + RECORD anywhere, is the global recording
+  (the header's ●, red RECORD LED).
+- The metronome is libzynthbox's (SyncTimer <code>audibleMetronome</code>) with zynthbox-qml's
+  tick/tock wavs: <code>ZynthboxBridge::setMetronomeSounds()</code> builds the two ClipAudioSources
+  through the exported constructor (no meta-object factory exists) and SamplerSynth's
+  <code>global-sketch1</code> outputs are wired to the master.
+- An external MIDI controller plays the machine on screen (on every page; LIVE, which may be
+  left on another machine, is the step keys' only: 2026-10-09) through the same path as the
+  step keys, so REC records it: GM drum notes 35–59 by
+  role (<code>DrumKit::roleForGmNote</code>), any other note cycling through the rows from C2, velocity
+  ≥ 100 an accent. Plugging one in or out shows a <code>Toast</code> (easyrave's dark pill, bottom centre).
+  Debug: QT_LOGGING_RULES="ravving.midi.debug=true".
+- The key lights (<code>Main.qml</code>'s <code>ledColors</code>): ▲ ▼ SELECT BACK ALT MENU always light in a soft
+  white (<code>navigationLight</code>; ALT white while held, MENU while the menu is open); ◀ ▶ light while
+  they switch something on the open page (<code>RavePage.sideKeysLit</code>: the CHORDS views with the
+  editor focused, the drum machines, the sampler banks); PLAY dim green when stopped, bright
+  while playing; STOP dim when stopped, lit while playing; RECORD dim red when ready, red
+  while recording (global or a sampler take), a machine's colour during its take.
+- ALT + ◀ / ▶ undo and redo the pattern of the machine on screen (the toolbar's ↶ ↷).
+- ALT + ▲ gives the focus to the app header at once, from wherever it is (a page's rows, a
+  section's cards, the strip): <code>Ravving.headerRequested</code>, raised in C++ before any dispatch.
+- AUTO: the header's AUTO arms recording (<code>Studio.recordAutomation</code>): while playing, a SOUND
+  MODIFIERS or SOUND EFFECTS knob turned is written into its machine's pattern at the step
+  playing (<code>Machine</code> automation lanes, step → value, undoable, saved); the toolbar's AUTO plays
+  them back (lit, "•" while there are some; a long press clears them).
+- SOUND EFFECTS cards (open): SELECT switches the focused card's effect on or off, BACK
+  closes the section and the focus goes back to the editor above (<code>ParamCardRow.selectAndBack</code>).
+  Closed, ▼ past the editor lands on the bar (<code>FxChain.focusBar()</code>): ◀ ▶ ring the chips,
+  SELECT switches the ringed effect, ▼ opens the section on its card, ▲ / BACK go back up.
+- Dialogs (<code>RavePopup</code>: ChoicePopup, InputPopup), drop-down lists and the menu darken the page
+  behind them (<code>ModalDim</code>); a dialog takes the keys while open and gives the focus back.
+  Dialogs wear easyrave's keyboard-shortcuts card (gradient #1e1c24 → #131118, hairline border,
+  radius 16, <code>DialogHeader</code>: spaced title, hint, ✕); the menu drawer is easyrave's settings
+  panel (gradient #211f28 → #16141c, hairline-split sections under small captions, flat wells
+  that light yellow, #f0c832).
+- MENU opens the control center (<code>ControlCenter</code> in the drawer): MIXER, Wi-Fi, Bluetooth, MIDI,
+  SYSTEM cards, the power row (REBOOT and POWER OFF need a second press within 3 s), OUTPUT
+  and BRIGHTNESS sliders on knobs 2 and 1; ◀ ▶ walk the actions, SELECT runs one.
+- ✱ (<code>starPressed</code>) opens and closes the MIXER (<code>MixerPage</code>, the StackLayout's sixth view,
+  <code>Main.mixerOpen</code>); a number key leaves it for that page. In it ◀ ▶ or step keys 1–9 pick a
+  strip, knob 1 is its level, knob 2 its pan, the big knob fine level, SELECT mutes, ALT +
+  SELECT solos, BACK or ✱ go back; the step LEDs show the strips (muted dim, picked white).
+- MODE switches LIVE on the open page's instrument (from anywhere; the MODE LED shows it).
+  ALT is a modifier held in C++ (<code>Ravving.altHeld</code>): ALT + big knob is the master volume
+  wherever the focus is (<code>masterTurned</code>, never dispatched), badged on the MASTER dial, and
+  ALT + knobs 1–3 go straight to <code>Ravving.altKnobTarget</code> (the header's FX SENDS: PHASER,
+  ECHO, HEAVY), a KnobGroup <code>borrowed</code> while ALT is held (badges, frame, pick-up).
+- A machine's ❚❚ pauses its written pattern (<code>DrumMachine.paused</code> → <code>Sketchpad.setTrackPaused</code>:
+  its clip stops in PlayfieldManager and is left out of the launch at play; resuming rejoins
+  on the next bar); it stays playable live.
+- <strong>LIVE</strong> (one machine at a time, <code>Session.liveMachine</code>) turns the step keys into pads
+  (<code>Hardware.onStepDown</code> on the press, <code>onStepPressed</code> on the release): on the drums keys 1–8
+  play the rows and key 9 held makes accents; with REC on while playing a hit is written at
+  the nearest step (<code>Machine::recordLive</code>, timed against the measured step length), in
+  STEP entry while stopped at the cursor (<code>writeAtCursor</code>). With the toolbar's Q off
+  (<code>Machine.quantise</code>) the hit keeps its distance from that step as the subnote's <code>delay</code>
+  (SyncTimer ticks, negative when early), so it plays back as played; the machine keeps
+  these offsets itself (<code>timing</code> in its state) and puts them back whenever its model
+  rewrites the pattern (<code>syncTiming</code>). The LEDs show the pads (rows in
+  the machine's colour, key 9 red, white while held) and drop the playhead
+  (<code>RavePage.stepKeysArePads</code>). libzynthbox's own live recorder is not used: it only hears
+  controller ports, and pads sent through SyncTimer arrive as sequencer traffic.
+- The toolbar's ⟲ (<code>Machine.loopBar</code>) plays only the bar on screen: the pattern's playback
+  window moves to it (<code>bankOffset</code> = that bar, <code>patternLength</code> = one bar) while <code>bars</code> keeps
+  the real length, and paging with ‹ › moves the loop. Not saved; attach and restore put the
+  window back.</p>
+<h2 id="backend-srcbackend">Backend (src/backend/)</h2>
+<p>The drums play through libzynthbox exactly the way zynthbox-qml's sketchpad does, with
+ravving's C++ objects standing in for the Python ones libzynthbox talks to:</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Role</th>
+<th>Stands in for / ports</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Studio</code></td>
+<td>backend root (<code>studio</code> in QML): builds the machines from <code>data/kits.json</code>, transport (play/stop, tempo, swing, step), saves the sequence after edits; a preview clock on a desktop; the sampler's browser (<code>sampleFiles()</code>: kits.json <code>sampleFolders</code>, folders labelled short) and hold-to-hear previews (<code>previewSample()</code> / <code>stopPreview()</code>: a one-shot clip on SamplerSynth's global lane)</td>
+<td>sketchpad song + transport glue</td>
+</tr>
+<tr>
+<td><code>Machine</code></td>
+<td>the base of every machine: track (level, pan, effects, mute, ❚❚, kick cuts), pattern (bars, view bar following the playing bar while playing: <code>follow</code>, off when a bar is picked mid-play, back on when stopped; playhead, STEP cursor), presets, LIVE play/record, UNDO / REDO of the pattern (<code>canUndo</code>, <code>undo()</code>, <code>canRedo</code>, <code>redo()</code>: every <code>edited</code> whose content differs is a step back, 50 deep, changes within 0.5 s of the last joining its step (a knob turned, a handle dragged); the mix, sound and effects are left out, and so are a subclass's <code>viewKeys()</code> such as the sampler's bank; <code>beginEditGroup()</code>/<code>endEditGroup()</code> make a take one step; a project open starts it afresh); subclasses give steps, sound and velocities; SECTIONS: <code>sectionContent()</code> (the pattern part less <code>soundState()</code>'s keys and the <code>viewKeys()</code>, plus ❚❚) and <code>applySectionContent()</code> (laid over the machine's own by <code>withSection()</code>, the history started over; an empty map empties the pattern), <code>sectionBars()</code> / <code>sectionSounds()</code>; the samplers keep their banks' hits, not their samples (<code>SamplerBanks</code>)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>MonoMachine</code></td>
+<td>a mono line (one note per step) with ACCENT and SLIDE (the note lasts 1.5 steps and a legato engine glides into the next): page 3's AC 303 (<code>bass</code>, DISTRHO Nekobi: accent velocity 127 vs 80, Nekobi accents above 90) and page 4's THERE LEAD (<code>lead</code>, Calf Monosynth, legato + portamento); base note and velocities from kits.json; presets in scale degrees (<code>bass-presets.json</code>, <code>lead-presets.json</code>), RANDOM, octave; follows the header's key: a ROOT or SCALE change snaps every note to the nearest note of the new key (upwards on a tie, as easyrave's <code>snapAll</code>), and the line's key is saved with it</td>
+<td>easyrave's AC 303 and THERE LEAD</td>
+</tr>
+<tr>
+<td><code>ChordMachine</code></td>
+<td>page 2's POLY-6 on TAL NoiseMaker (6 voices, Juno chorus); a custom voicing is scale degrees, or chromatic (semitones from the chord base, chart letter <code>c</code>) when a note is outside the key, so a chart can carry a C7 in E♭ major; <code>setStepNotes(step, "48,52,55,58")</code> for scripts; live keys below 1000 are chord degrees, from 1000 on single scale degrees (<code>noteKey</code>, <code>noteKeyForNote</code>, <code>noteOfKey</code>: the NOTES tab's LIVE, written one note into the step's voicing by a take or STEP entry): each step holds a voicing, a diatonic chord (a degree stacked in thirds from the scale, triad or seventh per degree by the chord set: Classic, Triads, Sevenths) or a custom set of scale degrees (built in NOTES); a run of one voicing is one held chord; everything is in scale degrees, so a key, set or octave change revoices it all. Three views: CHORDS (<code>setChord</code>), NOTES (<code>noteSets</code>, <code>toggleNote</code>), SLOTS (four <code>chordSlots</code> of 1/2/4/8 bars, <code>armedSlot</code>, <code>assignSlot</code>, <code>cycleSlotBars</code>, <code>clearSlot</code>: editing one rebuilds the steps in order). LIVE keys and the chord keys play whole chords, a keyboard note plays its degree's chord; presets <code>chord-presets.json</code> ("1111666633337777", "x" + VOICINGS for custom)</td>
+<td>easyrave's POLY-6</td>
+</tr>
+<tr>
+<td><code>SoundPresets</code></td>
+<td>an LV2 plugin's factory presets read from its bundle's <code>presets.ttl</code> (name, category from TAL's prefix, port values); a machine's kits.json <code>soundPresets</code> {file, keep} gives it <code>soundPresets</code> / <code>soundPreset</code> / <code>loadSoundPreset()</code>: the ports are set (but <code>keep</code>), the SOUND MODIFIERS take the values (<code>adopt()</code>), the name is saved, and an engine restart sends the sound again before the knobs</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>SoundControls</code></td>
+<td>a machine's SOUND MODIFIERS driving its engine's own ports, built from the machine's <code>sound</code> in kits.json (owned by <code>Machine</code>): cards of knobs, 0..1 mapped onto min..max linearly or with <code>"curve": "log"</code>; a knob with <code>choices</code> is a switch (snaps to i / (n − 1), <code>ParamCard</code> draws it as a <code>WaveCycler</code>) whose choices can each set several ports (TAL's JUNO wave: waveform + pulse width + levels). Bass: WAVE · FILTER (CUTOFF RESO ENV MOD) · VOICE (DECAY ACCENT TUNE); chords: FILTER (CUTOFF RESO LFO) · SHAPE (ATTACK LENGTH GLIDE) · TONE (WAVE SAW/JUNO/SQR/TRI, SPREAD, CHORUS OFF/I/II); lead: WAVE (SAW SQR SIN TRI) · FILTER (CUTOFF RESO ENV) · VOICE (GLIDE LENGTH). <code>Machine::setExpression()</code> plays kits.json <code>expressions</code> live (the ribbon's vibrato = Calf <code>lfo2pitch</code>)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>JalvPlugin</code>, <code>JalvEngine</code></td>
+<td>one LV2 plugin in jalv (effects, and instruments with MIDI in); JalvEngine makes an instrument a machine's SoundEngine (a mono output feeds both sides)</td>
+<td><code>zynthian_engine_jalv.py</code></td>
+</tr>
+<tr>
+<td><code>DrumMachine</code></td>
+<td>one drum machine: kit rows, steps as subnotes of its track's PatternModel, accents, presets, per-row level/mute/solo (as velocities), level (track gain), pan (track passthrough), mute, audition, kit switching and reset</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>TakeRecorder</code></td>
+<td>a machine's REC (<code>studio.take</code>): a fresh take of what is played LIVE, counted in by the transport's first bar (stopped) or punched in at the loop's restart (playing), overdubbing loop after loop; holds the metronome on for the take</td>
+<td>easyrave's per-machine ● REC</td>
+</tr>
+<tr>
+<td><code>MidiInput</code></td>
+<td>external controllers (<code>studio.midiIn</code>; <code>devices</code>: the connected ones' names): notes from MidiRouter's hardware port (raw controller notes parked on unused track 9; every device's channels reset to the current track; bridge duplicates dropped), plug-in/out notices</td>
+<td>zynthbox-qml's MIDI controller handling (subset)</td>
+</tr>
+<tr>
+<td><code>VideoRecorder</code></td>
+<td>video recordings (<code>video</code>, docs/video.md): the screen (x11grab) or a USB camera (v4l2) with the master's sound, encoded by ffmpeg (libx264, two threads, nice 10; three measured tiers) into <code>videos/&lt;project&gt; - &lt;date&gt;.mp4</code>; the sound comes from <code>AudioTap</code>, the sync from the wall clock on both inputs (<code>-copyts</code>, <code>-itsoffset</code> = the tap's first-sample moment), the file goes to Matroska first and is remuxed once to MP4 with its head cut to the first frame; states off / ready / countdown / starting / recording / saving, <code>takesKey</code> gives it RECORD and STOP while VIDEO is on (<code>Ravving::handleCuia</code>); VIDEO SAVED sends it on (<code>ComputerLink</code>, a USB stick)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>AudioTap</code></td>
+<td>ravving's JACK client <code>ravving-video</code> (stereo in): the master's last outputs copied on the audio thread into a 2^20-frame ring (21 s), drained by a plain thread into a named pipe ffmpeg reads as raw float; the first sample's CLOCK_REALTIME from <code>jack_get_cycle_times</code>; frames the ring could not hold are counted, never lost quietly</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>FileBrowser</code></td>
+<td>the FILES browser (<code>files</code>, <code>FilesPopup</code>): the library by kind ({key, label, about, usbKind, count}; projects through <code>Projects</code>, presets and templates through <code>PresetExchange</code>, the rest by folder and suffix from <code>filesuffixes.h</code>, shared with <code>UsbLibrary</code>), <code>entries(kind)</code> newest first, <code>presetFile(id)</code> to send a preset as one JSON file, <code>remove(entry)</code> through the owner (Projects, the preset library, the machine, Templates) or the file</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>ComputerLink</code></td>
+<td>the user's computer over SSH (<code>computer</code>, SETTINGS · COMPUTER): the device key (<code>~/.config/ravving/ssh/id_ed25519</code>) installed on the computer with <code>ssh-copy-id</code> and the password through <code>SSH_ASKPASS</code> (used once, never stored), ravving's own <code>known_hosts</code>, the Downloads folder asked with <code>xdg-user-dir</code>, <code>send(files)</code> by <code>scp</code> one at a time; statuses unset / setting-up / ready / unreachable / refused / failed</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>FileShare</code></td>
+<td>a file offered to a phone (<code>share</code>, SEND… → PHONE · QR CODE): a one-file HTTP server on QTcpServer (GET / HEAD at <code>/d/&lt;128 random bits&gt;/&lt;name&gt;</code>, Content-Disposition attachment, <code>Range</code> → 206, 64 kB chunks as the socket drains, 404 for anything else, port 8098 or the next free one) bound on every interface, the URL on the Wi-Fi address; <code>offer(path)</code> → the URL, <code>stop()</code>, 15 minutes at most; statuses idle / waiting / sending / done, <code>sent</code>, <code>downloads</code>, <code>downloaded(name)</code>; the QR code is drawn by <code>QrCodeItem</code> (src/, Nayuki's qrcodegen vendored in src/backend/thirdparty) in <code>QrPopup.qml</code>. The same server carries the ravving page: <code>setHelpFolder(dir)</code> (the installed <code>site/</code>) keeps it listening for good and serves <code>GET /help/&lt;file&gt;</code> from that folder (index.html for <code>/help/</code>, no path above it, text types with a charset, pages no-cache and the rest cached 10 minutes), <code>helpUrl</code> = <code>http://&lt;address&gt;:&lt;port&gt;/help/</code>, what <code>HelpPopup.qml</code> (SETTINGS → HELP) draws as a QR code</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>MixRecorder</code></td>
+<td>the global recording (<code>studio.mix</code>): the master (GlobalPlayback) to <code>recordings/ravving-&lt;date&gt;.wav</code> through AudioLevels (refused while a sampler take records: AudioLevels runs one recording at a time); the music player lists these under "Recordings"</td>
+<td>easyrave's top-bar RECORD</td>
+</tr>
+<tr>
+<td><code>PadSamplerMachine</code></td>
+<td>page 5's PAD SAMPLER (<code>studio.machines.pads</code>, kind "pads", <code>docs/mpc-sampler-plan.md</code>): 4 banks × 16 pads, each loaded pad one ClipAudioSource set up from the pad's <code>params[tab][knob]</code> (TRIM start / end / loop point, MIX pan, AMP ENV attack and decay / release, TUNE semi + fine, PLAY mono / mute group as exclusivity groups) and flags (NOTE ON = NonLooping, LOOP = Looping from the loop point, REVERSE = a reversed copy, MUTE; 16 LEVELS kept); pads 1–10 on track 7, 11–16 on a second track (kits.json <code>secondTrack</code> 8) whose pattern the machine mirrors (hits, length, loop, swing, mute) and whose live notes go out on it, both tracks' sample outputs wired into track 7's lane (<code>JackWiring::setSampleOutputs(track, samples, laneTrack)</code>); level as velocity; FILTER = the clip's equaliser bands (one, two for the 4-pole types, cutoff and Q from the knobs); the kit's knobs (<code>PadKitControls</code>, the SOUND MODIFIERS: KIT volume / semi / fine, 16 LEVELS type and switch); 16 LEVELS: the selected pad becomes the source, every pad plays it by velocity ramp or on sixteen level slices (notes 64–79, transposed by root note per TUNE semitones or the header's SCALE from pad 4), the hits meanwhile are the bank's level hits; audition = one pass; latch = the note held with the slice looping, unlatched after a short delay so the note-off is not ignored; PAD FX held on the pad played last (<code>heldFx</code>, <code>fxPad</code>): ECHO = the track's echo throw, TAPE STOP / SCRATCH = sweeps of the clip's <code>speedRatio</code> (a QVariantAnimation), STUTTER = a sixteenth-of-the-tempo retrigger, SKIP / REVERSE = the pad restarted with its start moved on / its reversed copy from the point reached, restored on release; erase pad, halve / double, UNMUTE ALL; presets <code>pads-presets.json</code> ("1"–"16"); <code>playing</code> and <code>playPositions</code> (per pad: whether its clip sounds and where it is in the file, from the clip's isPlaying / position signals) feed the grid's beam and the screen's playhead</td>
+<td>the MPC Sample</td>
+</tr>
+<tr>
+<td><code>SamplerMachine</code></td>
+<td>page 5's SAMPLE KING (<code>studio.machines.sampler</code>, track 6, "sample-trig"): 4 banks × 8 slots, each slot one ClipAudioSource (made through the bridge's exported constructor) on its track's sample slot <code>i % 5</code>, row <code>i / 5</code>, set up on its root slice: key zone = root note = <code>baseNote + i</code>, one-shot (a retrigger chokes it), PITCH = slice pitch, trim = start/length samples, 8 ms release; REVERSE plays a reversed copy rendered once in a worker (<code>AudioFile::writeReversed</code>, cached by path hash). Steps, accents and row mix as the drums (velocities); presets <code>sampler-presets.json</code> ("1"–"8": x/X). Published to the track as <code>samples</code> (<code>SketchpadTrack::setSamples</code>), its loaded slots' SamplerSynth ports wired into the lane (<code>JackWiring::setSampleOutputs</code>); <code>playing</code> / <code>playPositions</code> per slot as the PAD SAMPLER has</td>
+<td>easyrave's SAMPLE KING</td>
+</tr>
+<tr>
+<td><code>InputEffects</code></td>
+<td>the live effects on the device input (<code>studio.input.effects</code>): presets from <code>data/input-fx.json</code> (TAME, FUZZ VOICE, ROBOT, TELEPHONE, OCTAVE, AMP; OFF = the plain input), each a chain of jalv plugins (<code>ravving-in-&lt;preset&gt;-&lt;n&gt;</code>, started the first time it is picked and kept running) with fixed controls and three knobs mapped onto ports (linear or log); "bpm" delays follow the studio tempo. InputRecorder wires input → chain → monitor track and → the port recorder (<code>JackWiring::setInputChain</code>, which also makes the recorder connections, retried until a new plugin's ports exist): what is heard is what is recorded</td>
+<td>new (the recipe in <code>sampler-plan.md</code>)</td>
+</tr>
+<tr>
+<td><code>AudioFile</code></td>
+<td>libsndfile helpers run in workers: <code>info</code>, <code>writeReversed</code>, <code>transients</code> (onsets on the 10 ms peak envelope for the wave editor's THRESHOLD chop), <code>writeWindow</code> (a trim to a new file, normalised to −1 dBFS when asked), <code>processTake</code> (a 12 dB/octave high-pass by mode: MIC 80 Hz, GUITAR 40, LINE 20; a noise gate set 12 dB over the take's own noise floor, up to −30 dB; 3:1 compression 15 dB under the peak; normalise to −1 dBFS; refuse takes under −50 dBFS; the last burst as the trim). On a real mic take it left the pauses at −48 dBFS where the first version (6:1, no gate) brought them up to −39</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>InputPorts</code></td>
+<td>the input card's JACK capture ports found by the card, not a name: <code>pw-dump</code> gives the port whose alias is "<card>:capture_FL/FR" and its serial; its JACK name is "<description>:capture_FL-<serial>" when that exists, else the plain one (milo's two "Built-in Audio Stereo" cards swap the suffix between boots)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>InputRecorder</code></td>
+<td>the device input (<code>studio.input</code>): MIC / GUITAR (mono: the jack with the signal, <code>activeJack</code>, followed between takes) / LINE set the ADC's PGA gain and mic bias through amixer (<code>--</code> before the arguments: negative gains); <code>armed</code> connects the input to AudioLevels' port recorder, whose meter is <code>level</code>; MONITOR runs the input through its own track (kits.json <code>input.track</code>, 9) whose gain is <code>monitorLevel</code>; a take is the port recorder into a raw WAV, processed in a worker into <code>samples/my-samples/ravving/</code> (<code>takeReady(file, start, length)</code>). Mode, gains and monitor level are the device's (QSettings <code>ravving/input</code>)</td>
+<td>easyrave's mic takes</td>
+</tr>
+<tr>
+<td><code>PresetLibrary</code></td>
+<td>the drum presets every machine shares: factory beats (<code>data/drum-presets.json</code>) and the user's own (saved next to the project)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>Sections</code></td>
+<td>SECTIONS and the song (<code>studio.sections</code>, docs/sections-plan.md): the sections (id, name, colour, length: its own 1–8 bars or the longest sounding pattern, which machines sound), the section on screen (<code>current</code>, edited live: <code>pick()</code> keeps the one left as edited and hands the machines the one picked), the song (entries of a section × repeats, <code>songBars</code>, each entry's <code>startBar</code>) and LOOP / SONG; <code>add()</code> (empty, after the current one), <code>duplicate()</code> (A → A′, same colour), <code>rename</code>, <code>remove</code> (the neighbour takes over; the last stays), <code>move</code>, <code>setBars</code>, the song's <code>appendToSong</code> / <code>insertIntoSong</code> / <code>removeFromSong</code> / <code>moveInSong</code> / <code>setRepeats</code>; at most 16 sections, 16 repeats. It knows no machine: <code>Sections::Host</code> (the studio) captures, applies and measures <code>Machine::sectionContent()</code>, so it is unit-tested alone (tests/tst_sections.cpp). Saved in the project (<code>sections</code>); a project without it opens as one section, "A". <code>ravving.sections</code> logs the capture (2–3 ms) and switch (≈ 60 ms) times on milo; SONG mode: <code>songStarting()</code> before the transport, <code>transportStarted/Stopped()</code>, <code>barStarted(bar)</code> (the studio's bar count) cue each entry's section as the previous entry's last bar begins and ask the Host to <code>stopAtBarEnd()</code> at the song's end; <code>playFrom(entry)</code>; <code>playingEntry</code>, <code>songBar</code>, <code>entryBar</code>; a QML type (uncreatable) for <code>Sections.Loop</code> / <code>Sections.Song</code>; the exporter's SONG puts the mode on for the take</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>DrumKit</code></td>
+<td>reads a soundfont (SF2/SF3 preset → instrument → sample name per key) and finds eight roles: KICK SNARE CLAP TOM HAT OPEN CYMBAL PERC; a role the kit lacks is "—" and silent</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>SketchpadTrack</code></td>
+<td>the track object a PatternModel reads (<code>zlChannel</code>): <code>trackType</code> ("synth", or "sample-trig" for the sampler), <code>chainedSounds</code>, <code>muted</code>, ten <code>samples</code> (null, or objects with <code>cppObjId</code> = a clip's id: <code>setSamples()</code>)…</td>
+<td><code>sketchpad_channel.py</code></td>
+</tr>
+<tr>
+<td><code>Sketchpad</code></td>
+<td>PlayGridManager's <code>zlSketchpad</code>: SyncTimer's start/stop hooks; launches each track's clip (a or b, <code>trackClip()</code>) on every play; SECTIONS: <code>cueTrackClip()</code> has a track's two clips change places on the next bar (PlayfieldManager applies a bar's changes on its first tick, before the patterns schedule it: nothing drops or doubles), <code>clipPlaying()</code> asks the playfield</td>
+<td><code>zynthian_gui_sketchpad.py</code>, <code>playScene</code></td>
+</tr>
+<tr>
+<td><code>SoundEngine</code>, <code>FluidSynthEngine</code></td>
+<td>an engine process with MIDI in and stereo out; FluidSynth runs a soundfont preset</td>
+<td><code>zynthian_engine(_fluidsynth).py</code></td>
+</tr>
+<tr>
+<td><code>ConsoleProcess</code></td>
+<td>a helper process with a text console, run by libzynthbox's ProcessWrapper (created through the bridge's QML engine): pty, dies with ravving, crash restarts, startup commands, prompt-ended transactions</td>
+<td><code>zynthian_engine.py</code>'s process handling</td>
+</tr>
+<tr>
+<td><code>EffectChain</code></td>
+<td>the one definition of the SOUND EFFECTS chain: DRIVE COMPRESSOR REVERB EQ PAN SIDECHAIN DELAY, their knobs and defaults (<code>studio.effectChain</code>)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>TrackEffects</code></td>
+<td>a machine's effects (<code>machine.effects</code>) on its track's JackPassthrough: EQ (low shelf 250 Hz / peak 1 kHz / high shelf 5 kHz, ±12 dB), COMPRESSOR, SIDECHAIN (the compressor keyed from DRUMS 1), PAN (= the strip's pan), REVERB/DELAY sends after the fader (<code>setSendLevel()</code>: the machine's VOL gain scales them, so VOL 0 silences the echoes too; the lane itself sends before AudioLevels' gain), DRIVE (the machine's own Calf Saturator, inserted between engine and track only while on: AMOUNT = input gain up to +36 dB + saturation, output 1/(1+1.1·AMOUNT); TONE = post low-pass 1.2 kHz → open); saved with the machine</td>
+<td>zynthbox-qml's track mixer EQ/compressor</td>
+</tr>
+<tr>
+<td><code>LiveFx</code></td>
+<td>the header's LIVE FX (<code>studio.liveFx</code>): NO KICK / ONLY KICK (drum kick mode, as velocities), LO PASS / HI PASS (sweeps on GlobalPlayback's equaliser), DROP (kick out + high-pass build while held), STUTTER / LOOP (BeatRepeat), CRUSH (Calf Crusher) and PHASER (Calf Phaser) as master inserts GlobalPlayback → repeat → crusher → phaser → speakers, ECHO (every machine thrown into the delay), HEAVY (GlobalPlayback's compressor); taps latch NO/ONLY KICK and the filters, DROP and CRUSH act while held and latch after half a second, STUTTER and LOOP only while held (dragging a held pad picks CRUSH's 8 · 6 · 4 · 3 BIT, STUTTER's 1/16 · 1/32 · 1/64, or LOOP's 1/2 BAR · 1 BEAT · 2 STEPS · 1 STEP, shown on the pad: <code>readouts</code>)</td>
+<td>easyrave's punch FX</td>
+</tr>
+<tr>
+<td><code>DeviceControls</code></td>
+<td>the control center's device side (<code>device</code>): screen brightness (the backlight in /sys/class/backlight, 5 % a knob detent as Plasma's applet), the output jacks' level (the LM4811 through zyncoder, <code>ZynthboxBridge::setOutputLevel</code>), both kept in QSettings <code>ravving/device</code> and put back at start; Wi-Fi (<code>device.wifi</code>, below); Bluetooth power (bluetoothctl, only while the service runs); the address shown (Wi-Fi's, else any network's); CPU, temperature, free storage; reboot / power off. Polled every 2 s only while the drawer is open; commands run through <code>runCommand</code> (command.h: asynchronous, 4 s timeout)</td>
+<td>zynthbox-qml's settings pages</td>
+</tr>
+<tr>
+<td><code>Wifi</code>, <code>WifiNetworks</code>, <code>WpaConfig</code></td>
+<td>Wi-Fi after Plasma's network applet (plasma-nm's Handler, NetworkModel and password row) on what Zynthbox runs: on / off through Zynthbox's user services (set_wifi.sh), the mode kept as ZYNTHIAN_WIFI_MODE and put back at start (Zynthbox's boot-time wifi-setup.service has wpa_supplicant killed with its oneshot cgroup); the networks in range from <code>wpa_cli scan_results</code> (one row per name, sorted in use / saved / signal, frozen while a row is open); joins saved to Zynthbox's wpa_supplicant.conf (blocks wpa_supplicant would refuse are dropped: one <code>psk=""</code> stops Wi-Fi from starting at all), then <code>reconfigure</code> + <code>select_network</code>; a join that has not taken in 25 s fails (wrong password) and stops retrying. The UI is <code>WifiPopup</code> (password on the row, the on-screen keyboard from <code>Keyboard.qml</code>)</td>
+<td>zynthbox-qml's Wi-Fi settings (zynconf start_wifi / stop_wifi, its wifi_settings page)</td>
+</tr>
+<tr>
+<td><code>Paths</code></td>
+<td>every folder ravving writes to, decided once at start (<code>Paths::initialise()</code>): config, state (the session), cache, and the library (<code>/zynthian/zynthian-my-data/ravving</code> on the device: projects, presets, samples with takes, recordings); nothing in zynthbox-qml's folders; moves an older layout's files and fixes the paths in the session and projects (README "Where ravving keeps its files")</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>Projects</code></td>
+<td>SAVE and PROJECT ▾ (<code>studio.projects</code>): named JSON snapshots of the session (<code>Studio::projectState()</code>) in <code>Paths::projects()</code> (<code>/zynthian/zynthian-my-data/ravving/projects</code> on the device; "RAVE 001"… or the name typed: <code>saveAs</code> tidies it and keeps it unique); save / save as new / open / new / remove, <code>dirty</code> when the session differs from what was saved or opened (compact JSON without the page on screen, checked 300 ms after <code>Studio::modified</code>; at start the session file is what was saved); the current project and dirty flag survive restarts (<code>.current</code>)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>Exporter</code></td>
+<td>EXPORT (<code>studio.exporter</code>, the header's PROJECT ▾ and <code>ExportPopup</code>): a TRACK, the production recorded as the speakers hear it (AudioLevels' GlobalPlayback writer, post master gain) while the transport plays the project from its first beat for BARS × LOOPS bars plus a TAIL; the recording is placed on the audio clock (<code>LiveFx::audioFrame()</code>, the beat repeat's JACK client: SyncTimer's own playhead values are on another clock) a moment before playback, cut from the frame SyncTimer began playback at (<code>ZynthboxBridge::playbackStartFrame</code>) to exactly the bars at the tempo, the tail faded, pulled down to −0.1 dBFS only if it peaked over full scale, and written by libsndfile as WAV 24-bit (default), FLAC, OGG Vorbis or MP3 (<code>AudioFile::writeCut</code>), tagged by TagLib (ID3v2 / Vorbis comments, RIFF INFO too for WAV: title, artist, album, genre, composer, comment, date, BPM, the cover as the picture) with a PNG cover and a JSON sidecar (project, tempo, key, length, peak) beside it. A BUNDLE: <code>.ravv</code>, a zip (<code>ZipWriter</code>) of project.json (the state, every sample it refers to that is not the image's rewritten to samples/<file>), the samples, metadata.json and cover.png; <code>importProject()</code> unpacks one (samples into <code>samples/imported/&lt;name&gt;/</code>) into a new project (<code>Projects::addProject</code>). Metadata as a map or JSON text ({name, format, title, artist, album, genre, composer, comment, bars, loops, tail}); <code>busy</code> / <code>phase</code> / <code>progress</code>, started / finished / failed</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>AlbumArt</code></td>
+<td>the cover drawn for a track: a rounded card on a dark sleeve with a gradient from the title and artist (the same name, the same art), soft lights, the big-knob ring, the title, artist and album, ravving's mark with MADE WITH RAVVING; <code>AlbumArtProvider</code> serves it to QML as <code>image://albumart/&lt;title&gt;%09&lt;artist&gt;%09&lt;album&gt;</code> for the dialog's preview</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>ZipWriter</code>, <code>ZipReader</code></td>
+<td>a plain zip without a zip library (none with headers on the image): text entries deflated with zlib, samples stored and streamed; stored and deflated entries read back</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>Diagnostics</code></td>
+<td>the issues center (<code>issues</code>): {id, component, severity error/warning/notice, title, detail, suggestion, action, since, count}, worst first; <code>Issues::report</code> / <code>Issues::clear</code> from any component (any thread: queued); <code>dismiss</code> hides one until its detail changes; <code>act</code> runs restart / unset-gdb / reboot; <code>log</code> keeps the last warnings (the message handler in main feeds it); <code>reported</code> → a toast</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>StderrWatch</code></td>
+<td>fd 2 made a pipe early in main, teed to the real stderr by a thread that scans each line: zyncoder's "Error while processing GPIO events!" (the keys died) and a few more become issues; nothing else can see those lines</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>AudioGraph</code></td>
+<td>the graph's clock (sample rate and period), read once through a throwaway JACK client (48000 / 256 without one); FluidSynth is started with it (<code>-r</code>, <code>audio.period-size</code>, <code>audio.periods=2</code>) so its PipeWire stream runs in step with the graph instead of at 44100 / 1024 resampled (docs/routing.md)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>AudioOutputs</code></td>
+<td>where the sound goes (<code>outputs</code>, the control center's AUDIO OUTPUT card): PipeWire's sinks from <code>pw-dump</code> ({name, description, kind jacks / hdmi / bluetooth / other, address}); the jacks stay the graph's clock with the master wired to <code>system:playback_*</code>; any other sink is fed through a <code>pw-loopback</code> of ravving's own (a virtual sink <code>ravving-out</code> whose playback stream targets the chosen sink at a 2048-frame latency), the master's output ports linked to it with <code>pw-link</code> (its inputs have no JACK name; the link is verified with <code>pw-link -l</code> and retried until the ports exist) and the speaker links dropped (<code>JackWiring::setSpeakersEnabled</code>); making a Bluetooth sink the <em>default</em> sink instead clocked the JACK graph by the Bluetooth transport (glitches) and left the jack links in place (sound from both), as measured on milo</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>Bluetooth</code></td>
+<td>Bluetooth (<code>bluetooth</code>, on KDE's BluezQt): the adapter (<code>state</code> unavailable / off / switching / on with <code>reason</code>, power, discovery, discoverable for three minutes), the devices ({address, name, kind phone / computer / audio / input / other, paired, connected, trusted, rssi, audio = A2DP sink, receives = OBEX push}; nameless private addresses hidden unless paired), a pairing Agent (DisplayYesNo: <code>pairing</code> {kind confirm / pin / passkey / display, passkey}, <code>answerPairing</code>), pair → trust → connect, forget, OBEX Object Push sending (<code>sendFile</code>: a session per push, <code>transfer</code> {name, device, size, transferred, status}), an ObexAgent that accepts pushes into <code>library/incoming/</code> (<code>fileReceived</code>), and <code>useAsOutput</code>: the device's sink found among <code>AudioOutputs</code> by address (asked again until it appears after the connection) and selected there, back to the jacks on disconnect, forget or exit</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>RemovableDrives</code></td>
+<td>USB sticks (<code>drives</code>): <code>lsblk -J</code> every two seconds for USB partitions with a file system ({device, disk, label, size, fsType, mountPoint, mounted}), <code>mount()</code> through <code>udisksctl mount -b</code> (synchronous, lands under /media/root/<label>), <code>folder(device, "exports" / "projects")</code> makes the stick's <code>ravving/&lt;kind&gt;</code> folder, <code>eject()</code> = sync, <code>udisksctl unmount</code>, <code>power-off</code> (<code>ejected</code>); <code>driveAdded</code> / <code>driveRemoved</code> for the toasts</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>UsbLibrary</code></td>
+<td>the USB page's backend (<code>usb</code>): <code>scan()</code> mounts the stick and walks it in a worker (QtConcurrent), sorting files by kind (samples, soundfonts, projects, tracks under ravving/exports, MIDI files; hidden / System Volume Information / FOUND.* / $RECYCLE.BIN skipped, 20 000 files at most); <code>entries(kind)</code> with <code>onDevice</code>, <code>deviceEntries(kind)</code> with <code>onStick</code>; <code>importEntry</code> / <code>exportEntry</code> copy in a worker through a <code>.part</code> file with <code>progress</code> (fsync onto the stick), projects through the Exporter's bundle import / <code>exportProjectFile</code>; <code>finished(kind, name, ok, message)</code></td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>KeyedListModel</code></td>
+<td>the long lists' model (QML type): a new <code>items</code> list applied as the fewest row changes by a <code>key</code> field; roles = the fields seen (only grow), <code>modelData</code> the row; tests in tests/</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>Templates</code></td>
+<td>project templates (<code>studio.templates</code>): a template keeps the tempo, swing (as the header shows it, 50–75 %), key (root, scale by its Rave.scales name) and LIVE FX knobs, one preset-format JSON each (<code>"type": "template"</code>) in the library's <code>templates/</code> folder, and on a stick under ravving/presets/templates (<code>PresetExchange::stickTemplates</code>, <code>usb.templates(device)</code>). PROJECT ▾ → TEMPLATES lists them (SOURCE: DEVICE or a stick); <code>start(path)</code> is NEW over the template's settings (<code>Projects::newProject(state)</code>), <code>saveCurrent(name)</code> is SAVE TEMPLATE. Stands alone (Studio hands it the session's state and NEW as two functions); <code>tst_templates</code></td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>PresetExchange</code> / <code>NamedStore</code></td>
+<td>presets as files to share (one JSON per pattern preset, saved sound or project template under a stick's ravving/presets) / the user's named entries in a JSON file (never written over when unreadable)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>UserProfile</code></td>
+<td>who uses the device (<code>profile</code>): <code>user</code>, <code>author</code> (the exports' credit, the user's name when empty), the last <code>album</code> and <code>genre</code> typed; any key with <code>value()</code> / <code>setValue()</code>; QSettings <code>ravving/profile</code></td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>MusicLibrary</code></td>
+<td>the tracks the music player lists (<code>studio.music.library</code>): the exports folder and the recordings folder (album "Recordings"), each read once by TagLib for its tags, length and cover (the PNG beside it, else the tagged picture copied into the cache), the sidecar adding the project; <code>albums</code> / <code>artists</code> grouped; the folders watched; <code>remove()</code></td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>MusicPlayer</code></td>
+<td>the player (<code>studio.music</code>): a queue of tracks played through Qt Multimedia (QMediaPlayer + QAudioOutput; the FFmpeg backend decodes WAV, FLAC, OGG, MP3; the sound goes out through PipeWire's default output beside the studio's graph, so the master dial does not apply to it); playNow (in after the one playing), enqueue, playAt, next / previous, pause / resume, seek, stop, <code>repeat</code>, <code>volume</code> (the output's, remembered); a track that ends starts the next; the transport pauses it when it starts, the exporter stops it. It never touches libzynthbox: its sampler cannot read MP3 and playing such a clip crashes the audio thread (bug report 16), so <code>ZynthboxBridge::createClip</code> now refuses anything but wav / aif / aiff / flac / ogg</td>
+<td></td>
+</tr>
+<tr>
+<td>session</td>
+<td><code>Studio</code> saves everything to <code>session.json</code> in the project folder 1.5 s after any change (and on exit) and restores it at start: every machine (<code>Machine::state()</code>: steps or line, bars, kit, sound, effects, level, ❚❚, preset; the bass's key and octave), tempo, swing, master, metronome, LIVE FX knobs, send effects, and the UI's values (<code>uiValue</code>: key, scale, S/M, page). An older <code>machines.json</code> is read once. <code>applyProjectState()</code> puts a state back while running (<code>Machine::restore()</code> → <code>restoreContent()</code>)</td>
+<td>zynthbox-qml's sketchpad save</td>
+</tr>
+<tr>
+<td><code>BeatRepeat</code></td>
+<td>ravving's own JACK client (<code>ravving-repeat</code>), first master insert: anchors at the 16th under way (sample accurate through <code>ZynthboxBridge::timerTickAtFrame</code>, SyncTimer's frame → tick map), lets it play out, then repeats the audio from the anchor every N 16ths; 1 ms fades at the seams, 3 ms crossfades in and out; lock-free (atomics, preallocated history and slice). Measured: a held repeat is exact (similarity 1.000 at its lag), its hits within 3 ms of the live grid</td>
+<td>new (easyrave bends its sequencer instead)</td>
+</tr>
+<tr>
+<td><code>AudioInsert</code></td>
+<td>what JackWiring places in a path: stereo ports + <code>started</code>; <code>JalvPlugin</code> and <code>BeatRepeat</code> are ones</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>GlobalEffects</code></td>
+<td>the studio's send effects in jalv: Dragonfly Room reverb (SIZE) and TAP Echo delay (TIME in tempo-synced note lengths, FDBK); shared knobs saved as <code>globalEffects</code> in the session</td>
+<td>zynthbox-qml's global FX 1/2, <code>zynthian_engine_jalv.py</code></td>
+</tr>
+<tr>
+<td><code>MouseWatcher</code></td>
+<td>shows the pointer only while a mouse is plugged in: polls <code>QInputDevice::devices()</code> (X11's XInput list, hot-plug aware) every 2 s for a mouse that is not the virtual core / XTEST pointer, and sets or drops an override arrow cursor (start.sh blanks the root cursor); <code>mouse</code> on the fifo</td>
+<td></td>
+</tr>
+<tr>
+<td><code>CuiaFifo</code></td>
+<td>zynthbox-qml's remote-control fifo: <code>cuia/NAME</code> keys, plus ravving's <code>call|OBJECT|METHOD|ARGS…</code> (any backend method on a machine, <code>studio</code>, <code>ravving</code>, <code>input</code>, <code>take</code>, or a QML item by objectName), <code>get|OBJECT|PROPERTY</code> and <code>set|OBJECT|PROPERTY|VALUE</code> for scripts and the test suites (<code>docs/testing.md</code>)</td>
+<td><code>webconf_fifo_handler.py</code></td>
+</tr>
+<tr>
+<td><code>JackWiring</code></td>
+<td>Zynthian channel → engine → SynthPassthrough → TrackPassthrough → AudioLevels → GlobalPlayback → speakers, retried until the ports exist; removes PipeWire's direct engine→speaker links; a synth's insert (DRIVE) goes in and out with <code>setInsertActive()</code>; a track's lane on request (<code>addTrackLane</code>), the sampler's slot outputs (<code>setSampleOutputs</code>), the input monitor into its track (<code>setInputMonitor</code>)</td>
+<td><code>zynthian_autoconnect.py</code> (synth subset)</td>
+</tr>
+<tr>
+<td><code>zbcall.h</code></td>
+<td>one-line meta-calls into libzynthbox objects, including enum-typed parameters</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Contracts found the hard way (libzynthbox crashes or stays silent otherwise):
+- <code>SketchpadTrack.samples</code> must hold ten entries (PatternModel reads sample slots 0–9).
+- SamplerSynth makes a track's <code>channel_N-sampleM</code> ports only while a clip is registered on
+  that slot: wire exactly the loaded ones, again whenever they change.
+- AudioLevels starts every recorder set to record: a take turns the master's writer off
+  (<code>setRecordGlobalPlayback(false)</code>), the mix turns the port recorder off.
+- AudioLevels' own capture meter (<code>captureA/B</code>) reads the speakers under PipeWire (it takes
+  the first <code>system:</code> outputs, the monitor): meter the input through the port recorder.
+- PipeWire has a second "Built-in Audio Stereo" (the Dummy card): its ports get a number
+  suffix (<code>capture_FL-17167</code>); the plain names are the HiFiBerry's.
+- PlayGridManager's <code>zlSketchpad</code> must be set before playing (SyncTimer dereferences it).
+- A pattern only plays while PlayfieldManager has its clip in PlayingState, and stopping
+  resets every clip: the clips are re-launched from <code>Sketchpad::startPlayback()</code>.
+- Never call <code>Plugin::shutdown()</code>; exit with <code>_exit()</code> (see the exit row below).</p>
+<p><strong>Kits.</strong> <code>data/kits.json</code> holds every machine: <code>drumMachines</code> (track, Zynthian channel,
+engine, default kit and preset) and <code>machines</code> by <code>kind</code> (<code>mono</code>: bass on track 3, lead on
+track 5; <code>chords</code>: track 4), each with its engine (type, LV2 URI, fixed <code>controls</code>), its
+<code>sound</code> (SOUND MODIFIERS), <code>presets</code> file, <code>defaultPreset</code>, <code>baseNote</code> and velocities. Studio
+builds them generically and publishes the non-drum ones as <code>studio.machines.&lt;key&gt;</code>. Also the kit folder (the 40 drum-machine soundfonts in
+zynthian-data). Grid rows are not written by hand: <code>DrumKit</code> reads them out of the kit
+(soundfonts are not General MIDI: the 909's clap is on 50, the Linn's on 39). Tapping a
+machine's nameplate opens <code>ChoicePopup</code> with every kit; <code>DrumMachine::loadKit()</code> moves each
+hit to the new kit's note for its role (keeping accents), the engine reloads the soundfont
+(<code>SoundEngine::reconfigure</code>), and the choice is saved in the session (<code>session.json</code>). A
+double tap on the nameplate goes back to the default kit (<code>resetKit()</code>). A new engine type
+is one <code>SoundEngine</code> subclass plus a line in <code>SoundEngine::createEngine()</code>.</p>
+<p><strong>Presets</strong> are factory beats (House, Techno, Electro, Breaks, Hip Hop, Groove, Empty) that
+replace the pattern. They are drum charts written per role (<code>"KICK": "X...x..."</code>, X = an
+accented hit), so every preset plays on every kit. The toolbar's PRESET button shows the loaded
+preset (• once edited) and opens a <code>ChoicePopup</code> by genre; SAVE CURRENT AS NEW stores the
+pattern as "My Beat N" in <code>Paths::presets()/drum-presets.json</code>, and DELETE removes a
+user preset. The other machines save the same way into their own file, named by the factory
+file's <code>userName</code> ("My Bassline N", "My Progression N", "My Melody N", "My Pattern N").</p>
+<p><strong>Row mix.</strong> Each row's level, mute and solo are kept per role (they survive kit changes) and
+live in the hits' velocities: level 0.8 → velocity 100, an accent hits ×1.27 harder, and a
+muted or soloed-out row gets velocity −1, PatternModel's "do not play". Accents are kept by the
+machine and saved in the session with the row mix, never read back from velocities.</p>
+<p>The session lives in <code>Paths::state()</code> (<code>~/.local/state/ravving</code>; an explicit path: libzynthbox's
+MidiRouter renames the application to "zynthbox-qml" while it initialises).</p>
+<p><strong>The pattern interface.</strong> <code>StepGrid</code> and <code>PatternToolbar</code> only draw and forward to a
+<code>pattern</code> object: <code>rows, stepCount, steps, accents, playhead, bars, viewBar, presets,
+presetName, presetEdited, canSavePresets, rowLevels, rowMuted, rowSoloed, toggleStep(),
+toggleAccent(), clear(), loadPreset(), saveAsPreset(), removePreset(), setRowLevel(),
+setRowMuted(), setRowSoloed(), audition()</code>. The studio's
+<code>DrumMachine</code> and <code>SamplerMachine</code> implement it; <code>PatternState.qml</code> implements it in memory
+for pages whose backend is still to come (the melodic toolbars).</p>
+<p><strong>Not wired yet:</strong> the drums' SOUND MODIFIERS knobs, Q, the
+loop toggle, the sampler's LAYER / CUTOFF / BIT CRUSHER / live input effects, easyrave's SAVE CHORD (custom chords onto the chord keys),
+CAM and SING.</p>
+<h2 id="qml-components">QML components</h2>
+<p>Studio machines are shown by <code>MachinePanel</code> (a MachineModule backed by a Machine: level, pan,
+❚❚, effects, sound, REC/takes, STEP cursor, LIVE pad and keyboard bookkeeping), extended by
+<code>DrumMachinePanel</code> (step grid; pads = rows, key 9 = accent), <code>MonoMachinePanel</code> (mono
+<code>PianoRoll</code> with <code>pattern: machine</code>; in LIVE all 16 step keys play the scale from the root upwards and ▲ ▼ shift the octave (with STEP on, playing or not, they walk the rows, each heard: <code>previewSelection</code>, and SELECT writes the row: <code>writeSelection</code> / <code>selectionKey</code>, shared in <code>MachinePanel</code>);
+with <code>showRibbon</code> the lead's <code>Ribbon</code>: its notes go through the same LIVE path, a slide
+starts the next note before ending the last so the engine glides, drag up = vibrato) and
+<code>ChordMachinePanel</code> (the nameplate shows the loaded TAL sound's title, POLY-6 for its own; a tap opens the sound picker, a double tap rebuilds its own sound from TAL's start-up sound, the engine's controls and the default knobs; CHORDS / NOTES / SLOTS tabs: <code>ChordRoll</code>, a poly <code>PianoRoll</code> on the
+same steps, <code>ChordSlots</code>; ◀ ▶ switch them while the editor has the focus (<code>moveView</code>,
+<code>viewCount</code>); the step keys and ▲ ▼ work on the view on screen; CHORD SET,
+chord keys played as pads that also fill an armed slot; LIVE follows the tab: on CHORDS / SLOTS pads 1–7 = the degrees' chords, on NOTES all 16 pads play single scale notes (note keys), ▲ ▼ the octave while LIVE (the rows with STEP on; SELECT writes the selected chord or note);
+▲ ▼ = octave while LIVE) and <code>SamplerMachinePanel</code> (<code>SampleScreen</code> with the slot's waveform and trim
+handles, a KnobGroup itself: a tap on it or ▲ from the grid's top row gives knob 1 to the start
+handle and knob 2 to the end, ▼ gives the knobs back to the rows, LOAD with hold-to-hear previews, ▶, CLEAR, REVERSE, ● REC and INPUT (<code>InputPopup</code>),
+PITCH; the step grid over the bank's slots; BANK A–D chips and ◀ ▶; pads 1–8 = slots, key 9 =
+accent; knobs 1–3 = the selected row's mute, solo, level). <code>MachinePage</code> is the page around any of them: it forwards
+the step keys, ▲ ▼, the header hand-off and an external keyboard to its <code>panel</code>
+(<code>BassPage</code>, <code>LeadPage</code>, <code>ChordsPage</code> only declare their panel).</p>
+<p>All of <code>qml/</code> is one QML module, <code>Ravving</code>, built by <code>qt_add_qml_module</code> into the binary
+(qmlcachegen bytecode, typed bindings compiled to C++) and loaded with
+<code>loadFromModule("Ravving", "Main")</code>; <code>Hardware</code> and <code>HardwareEvent</code> join it through
+<code>QML_ELEMENT</code>. Every file imports <code>Ravving</code>; there are no relative imports. For development,
+<code>RAVVING_QML_DIR</code> makes <code>QmlSourceOverride</code> (a URL interceptor) serve the <code>.qml</code> files from a
+source tree instead, so QML edits need only a restart.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Rave</code> (singleton)</td>
+<td>machine finishes (colours), instruments strip, scales, chord sets, music helpers</td>
+</tr>
+<tr>
+<td><code>Session</code> (singleton)</td>
+<td>global state: key, scale, tempo, swing, transport clock, live FX, mute/solo; the views instead of the page (<code>mixView</code>, <code>songView</code>, <code>playerView</code>, one at a time); <code>sectionWaiting</code> / <code>sectionBlink</code> for a section waiting for its bar; the modal layers up (<code>overlays</code>, <code>inputBlocked</code>)</td>
+</tr>
+<tr>
+<td><code>RaveHeader</code></td>
+<td>the easyrave top bar shared by all pages; the ROOT and SCALE pickers without captions; the project's name on an engraved plate between SCALE and EDIT (200 px at most, a long name loses its middle; "•" while unsaved); a faint vertical meter of the master's level beside the MASTER dial (always drawn, so the dial never moves); SAVE asks the project's name the first time (<code>NamePopup</code>) and otherwise wants a second press within three seconds (SAVE AGAIN), SAVE AS NEW always asks; PROJECT ▾ has NEW, SAVE AS NEW, EXPORT (<code>exportRequested</code> → Main.qml's <code>ExportPopup</code>), IMPORT (a <code>ChoicePopup</code> of the .ravv bundles found: <code>studio.exporter.importable()</code>, imported and opened unless the session is unsaved) and DELETE</td>
+</tr>
+<tr>
+<td><code>NamePopup</code></td>
+<td>a name asked of the user: one text field with Qt's on-screen keyboard under it (as WifiPopup), OK / CANCEL, SELECT keeps, BACK cancels</td>
+</tr>
+<tr>
+<td><code>ExportPopup</code></td>
+<td>EXPORT: file name, title, artist, album / mixtape, genre, composer, comment, the cover drawn as typed (<code>image://albumart</code>), FORMAT (WAV 24-bit / FLAC / OGG / MP3), BARS × LOOPS + TAIL with the length; EXPORT TRACK (progress shown, CANCEL) and EXPORT .RAVV; shrinks over the on-screen keyboard and scrolls the field into view; ▲ ▼ fields, ◀ ▶ format, knobs 1–3 bars / loops / tail, SELECT exports, BACK closes</td>
+</tr>
+<tr>
+<td><code>SettingsPopup</code></td>
+<td>the profile: USER and AUTHOR, saved as typed</td>
+</tr>
+<tr>
+<td><code>MusicPlayerPage</code></td>
+<td>the MUSIC PLAYER, a full-screen view over the dashboard (<code>Session.playerView</code>, the control center's DASHBOARD / MUSIC PLAYER switch): left the library (TRACKS sorted by NEWEST / TITLE / ARTIST / ALBUM / LONGEST, ALBUMS and ARTISTS grids opening as lists with PLAY ALL / QUEUE ALL), a tap plays now, + queues; right the cover, the track, a position bar (tap to seek), ⏮ ▶ / ❚❚ ■ ⏭ REPEAT, VOLUME, and the QUEUE (tap plays, ✕ drops, CLEAR). Keys 1 2 3 or ◀ ▶ the views, ▲ ▼ the cursor, SELECT plays, PLAY pauses, STOP, big knob volume, knob 1 position, MENU the control center, BACK leaves. Opening it stops the transport, leaving it stops the player</td>
+</tr>
+<tr>
+<td><code>InstrumentChip</code>, <code>GroupLabel</code>, <code>LedDisplay</code></td>
+<td>header parts; a chip draws its machine's track level as a slim bar along its bottom (the mixer's colours), only while the machine sounds, from the header's <code>meters</code> (<code>studio.meters()</code> read ten times a second; the pads' second track counts too)</td>
+</tr>
+<tr>
+<td><code>Machine</code> (sound sources)</td>
+<td><code>soundSources</code> / <code>soundSource</code> / <code>chooseSoundSource()</code>: kits.json <code>sources</code> after the machine's own engine (<code>sourceName</code>); <code>engineConfig()</code> is the chosen one, saved as <code>soundSource</code> in the state; the studio restarts the engine on a change (<code>Studio::restartEngine</code>: <code>JackWiring::removeSynth</code> forgets the old ports, <code>SoundEngine::stop</code> ends its process, a new engine is started and wired with the same DRIVE insert). <code>soundControlsApply</code> hides the SOUND MODIFIERS on another source</td>
+</tr>
+<tr>
+<td><code>MachinePanel</code> (STEP entry)</td>
+<td>◀ ▶ in STEP entry while stopped move the entry cursor a step (<code>moveCursor</code>, wrapping in the pattern) on every panel, instead of switching views or banks; keys held together join one step (<code>Machine::writeWithPrevious</code>: the second key goes where the first went, the cursor advances once)</td>
+</tr>
+<tr>
+<td><code>MachineModule</code></td>
+<td>a machine panel: strip, SOUND MODIFIERS, the editor, SOUND EFFECTS. The editor keeps the height it has with both sections closed and scrolls under an open one (a Flickable; a line with dots in the accent along an edge says content continues beyond it) instead of being squashed</td>
+</tr>
+<tr>
+<td><code>Nameplate</code>, <code>FxChain</code>, <code>PatternToolbar</code></td>
+<td>machine panel parts</td>
+</tr>
+<tr>
+<td><code>StepGrid</code></td>
+<td>drum/slot rows × 16 steps (+ ACC); drums, sampler and the PAD SAMPLER's lane</td>
+</tr>
+<tr>
+<td><code>PianoRoll</code></td>
+<td>notes × 16 steps, mono (a MonoMachine: bass, lead) or poly (a ChordMachine's NOTES view: <code>noteSets</code>, <code>toggleNote</code>), ACCENT/SLIDE lanes. Two fingers pinch to zoom (rows kept 18–56 px tall, so the range follows the scale and the height) and drag to scroll; a scroll past an octave shifts the owner's octave (<code>octaveScrolled</code>), so OCT − / + shows what is on screen. ▲ ▼ select a note row (<code>currentNote</code>; a tap or a note played live selects too) and a step key writes that note. <code>heldNotes</code> lights the rows played live; a held note without a row shows as an edge marker ("▲ G4" / "▼ E2") or, outside the scale, a lit line between its neighbours with its name Gestures: a one-finger drag scrolls the rows (DragHandler, the gesture locked to its first axis; past 8 semitones <code>octaveScrolled</code> shifts the owner's octave) or pages the bars sideways (one bar per 120 px, the content following the finger), two fingers pinch to zoom and scroll; a tap toggles a cell. The row count is fixed by the zoom (<code>rowCount</code>), so scrolling never resizes the rows or the ACC / SLIDE lanes (fixed 20 px)</td>
+</tr>
+<tr>
+<td><code>WaveCycler</code></td>
+<td>easyrave's wave switch: LEDs per choice, the waveform drawn (SAW SQR TRI SIN), its name; tap = next, one knob detent = one choice</td>
+</tr>
+<tr>
+<td><code>ChordRoll</code></td>
+<td>scale degrees × 16 steps on a ChordMachine; runs joined; custom voicings ★ on their lowest degree; a selected degree row (▲ ▼, step keys), held degrees lit</td>
+</tr>
+<tr>
+<td><code>ChordSlots</code></td>
+<td>the SLOTS view: four cards (chord, numeral, bars); tap arms, hold empties, the bars button cycles 1/2/4/8</td>
+</tr>
+<tr>
+<td><code>Ribbon</code></td>
+<td>touch ribbon over two octaves from the lead's base note, snapped to the scale; <code>note</code> and <code>vibrato</code> (drag up)</td>
+</tr>
+<tr>
+<td><code>KeyCap</code>, <code>Chip</code>, <code>RaveKnob</code></td>
+<td>the controls: drum key, LED pill toggle, labelled dial (a QQC Dial for the touch handling, drawn by <code>DialFace</code>: the ring, the body and the pointer all in Qt Quick Shapes on the curve renderer, in one frame, so nothing drifts by a sub-pixel (a Rectangle body beside the Shape ring read as off-centre on the cards); crisp from 26 px up; groove, accent value arc from the start or from the centre for ranges around zero, body, pointer)</td>
+</tr>
+<tr>
+<td><code>KnobGroup</code>, <code>KnobBadge</code></td>
+<td>a focusable group the device knobs drive; the knob indicator</td>
+</tr>
+<tr>
+<td><code>RaveComboBox</code></td>
+<td>a drop-down (ROOT, SCALE, CHORD SETS) whose list opens as a dialog centred on the screen (the dialog card, a title, 48 px rows) that the device works while open: arrows / big knob move, SELECT picks and closes, BACK closes; the focus goes back where it was</td>
+</tr>
+<tr>
+<td><code>ControlCenter</code>, <code>ControlCard</code>, <code>LevelSlider</code>, <code>Glyph</code></td>
+<td>the menu drawer's control center: cards (a glyph, title, detail; toggle cards lamp-lit while on), the iOS-style pill slider (relative drag, a KnobGroup target), vector line icons</td>
+</tr>
+<tr>
+<td><code>MachineStrip</code></td>
+<td>a machine's strip (nameplate, role, PAN, VOL, REC, ❚❚, STEP and a hairline on a machine's page (<code>showStepModes</code>, <code>stepModeEdited</code>), LIVE, S, M; a KnobGroup for PAN and VOL), the top of every MachineModule and the MIXER's rows; <code>level</code>/<code>pan</code>/<code>paused</code> come in, edits go out (<code>levelEdited</code>…)</td>
+</tr>
+<tr>
+<td><code>MixerPage</code></td>
+<td>the MIXER, easyrave's MIX view: every machine folded to its MachineStrip on its own finish, one under another, a slim meter of its track (<code>Studio::meters()</code>, 20 times a second while on screen) under each; ▲ ▼ / step keys pick a machine (its strip takes knobs 1–2), SELECT mutes, ALT + SELECT solos, a nameplate opens the page. <code>Session.mixView</code> is its switch: ✱, the header's EDIT / MIX, the control center</td>
+</tr>
+<tr>
+<td><code>SongPage</code></td>
+<td>SONG (<code>studio.sections</code>): the StackLayout's seventh view, under the header as the MIXER (<code>Session.songView</code>, the project plate opens and closes it). SECTIONS as easyrave's shelf at a finger's size: square keys wearing their number, their name under, a dot per sounding machine, the one on screen filled in its colour (blinking while it waits for the bar: <code>Session.sectionBlink</code>, its timer running only then), eight a row (the first row is ALT + step keys 9–16), ＋ a copy of the one on screen; tap picks, double tap renames (NamePopup), hold and drag moves, × deletes (second tap). A row for the section on screen: RENAME, NEW, COLOUR, LENGTH (AUTO), MOVE, ADD TO SONG. The SONG as a strip of blocks as wide as bars × repeats, a row for the block picked: MOVE, REPEATS, REMOVE. Keys: ◀ ▶ walk, ▲ ▼ between, SELECT picks, step keys pick, ALT + ◀ ▶ move, knob 1 the length, knob 2 the repeats. Idle it draws nothing (0 frames/s measured)</td>
+</tr>
+<tr>
+<td><code>RavePopup</code>, <code>ModalDim</code>, <code>DialogHeader</code></td>
+<td>the dialogs' base (centred, modal, focus taken and given back) and the dark layer behind dialogs, drop-down lists and the menu</td>
+</tr>
+<tr>
+<td><code>ChoicePopup</code></td>
+<td>a grid picker (kits, presets, samples) with the same hardware; names wrap to two lines, subtitles elide in the middle; <code>previewable</code>: holding an item previews it until let go</td>
+</tr>
+<tr>
+<td><code>InputPopup</code>, <code>InputMeter</code></td>
+<td>INPUT: MIC / GUITAR / LINE, GAIN, MONITOR and its LEVEL, ● REC, and EFFECTS (OFF or a preset, its three knobs); the knobs work on one row, ▲ ▼ pick INPUT or EFFECTS, ◀ ▶ the mode or the preset (+ big knob for fine gain); the input's peak meter (−60…0 dBFS, yellow from −18, red from −6, held peak, CLIP)</td>
+</tr>
+<tr>
+<td><code>SampleScreen</code></td>
+<td>the sampler slot's screen: libzynthbox's <code>WaveFormItem</code> (made at run time), trim handles, darkened trimmed-out parts, a take's time and meter while recording</td>
+</tr>
+<tr>
+<td><code>PadSamplerPanel</code></td>
+<td>the PAD SAMPLER (MPC-style, <code>docs/mpc-sampler-plan.md</code>): PadGrid + the pad's SampleScreen, tools (LOAD, ● REC with SMART stop, CLEAR, COPY, ERASE, 16 LVL, CHOP, AUTO CHOP), Pad Play chips, the live PAD FX row, one tab card (TRIM · MIX · AMP ENV · TUNE · PLAY · FILTER · FLT ENV) on knobs 1–3, the lane (a StepGrid of the selected pad + ACC); ◀ ▶ tabs, ▲ ▼ lane → pads → strip; LIVE = the 16 step keys are the pads</td>
+</tr>
+<tr>
+<td><code>PadGrid</code></td>
+<td>a pad that sounds beams (its colour pulsing over it, the border lit: the machine's <code>playing</code>); the MPC's 4 × 4 pads (13–16 top, 1–4 bottom): number, name, 16 hit dots, pad colour, mute tint, selection, held flash, latched-loop ring; tap / hold / long press</td>
+</tr>
+<tr>
+<td><code>PadState</code></td>
+<td>the PAD SAMPLER in QML only (the backend's interface to come): 16 pads with <code>params[tab][knob]</code> 0..1 and Pad Play flags, the bar's steps, the <code>lane</code> single-row view, the tabs and switch choices</td>
+</tr>
+<tr>
+<td><code>WaveEditorPopup</code></td>
+<td>the wave editor both samplers share: the sample large with its trim, CHOP by REGIONS 4/8/16 (big knob), THRESHOLD (the machine's <code>detectTransients</code>, knob = threshold) or MANUAL (taps on the wave), the cuts drawn and numbered; APPLY / SELECT → the owner's <code>applyChop</code> (pieces onto the pads from pad 1, or the bank's slots from slot 1); NORMALISE / TRIM → <code>trimToNewFile</code>. Both machines expose the same three methods and <code>transientsDetected</code></td>
+</tr>
+<tr>
+<td><code>RavePage</code></td>
+<td>page base: a FocusScope receiving the hardware</td>
+</tr>
+</tbody>
+</table>
+<p>Pages combine these and hold only page-specific logic: the bassline generator, the bank
+switching, the chord cursor. Generic controls (buttons, combo boxes, sliders, tabs) come from the Zynthbox Quick Controls
+style, so they follow the active SVG theme; the dials are ravving's own (<code>DialFace</code>), since the
+theme's SVG dial breaks up at the small sizes the machines use.
+easyrave-specific parts (key caps, nameplates, grids) are drawn in QML from each machine's
+finish in <code>Rave.machines</code>.</p>
+<h2 id="the-libzynthbox-bridge">The libzynthbox bridge</h2>
+<p>libzynthbox doesn't install headers, and its headers pull in all of JUCE. So for now
+<code>ZynthboxBridge</code>:</p>
+<ol>
+<li><code>dlopen</code>s <code>libzyncoder.so</code> and calls <code>init_zynlib()</code>. libzynthbox needs zyncoder's MIDI
+   router first, the same order as zynthbox-qml.</li>
+<li><code>dlopen</code>s <code>libzynthbox.so</code> and resolves three symbols: <code>Plugin::instance()</code>,
+   <code>Plugin::initialize()</code> and <code>Plugin::registerTypes()</code>.</li>
+<li>Gets the <code>MidiRouter</code> QML singleton and connects to <code>cuiaEvent</code> through the meta-object
+   system.</li>
+</ol>
+<p>Both libraries are opened with <code>RTLD_LOCAL</code>. <code>RTLD_GLOBAL</code> lets libzynthbox's bundled
+JUCE/tracktion symbols interpose on libraries loaded later, and the app crashes in Kirigami's
+platform-plugin lookup.</p>
+<p>Next step for the bridge: make libzynthbox install its headers and a CMake config, then
+replace the bridge with a normal link.</p>
+<h2 id="porting-status-zynthbox-qml-python-ravving-c">Porting status (zynthbox-qml Python → ravving C++)</h2>
+<table>
+<thead>
+<tr>
+<th>Python</th>
+<th>C++</th>
+<th>State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>start.sh</code> + service</td>
+<td><code>data/start.sh</code>, <code>data/ravving.service</code></td>
+<td>done</td>
+</tr>
+<tr>
+<td>bootstrap (<code>lib_zyncoder_init</code>, <code>Plugin.initialize</code>, <code>registerTypes</code>)</td>
+<td><code>ZynthboxBridge</code></td>
+<td>done</td>
+</tr>
+<tr>
+<td><code>zynswitches()</code> + <code>*ButtonPressed</code> setters</td>
+<td><code>HardwareSwitches</code></td>
+<td>done</td>
+</tr>
+<tr>
+<td><code>displayHeightRatio</code>, <code>pushDialog</code>/<code>popDialog</code></td>
+<td><code>StyleHost</code></td>
+<td>done</td>
+</tr>
+<tr>
+<td>knob polling (<code>zyncoder_read</code>, <code>knobAbsoluteCuiaEmitter</code>)</td>
+<td><code>HardwareKnobs</code></td>
+<td>done</td>
+</tr>
+<tr>
+<td>exit (<code>EXIT_UI</code> → LEDs off → <code>os._exit</code>)</td>
+<td><code>UnixSignals</code> + service <code>ExecStop</code> → <code>_exit</code></td>
+<td>done</td>
+</tr>
+<tr>
+<td>LED driver (<code>zynthian_gui_led_config.py</code>, neopixel_spi) + LED merge in <code>main.qml</code></td>
+<td><code>WsLedStrip</code>, <code>Leds</code>, <code>Main.qml</code> ledColors</td>
+<td>done</td>
+</tr>
+<tr>
+<td>FluidSynth engine</td>
+<td><code>FluidSynthEngine</code></td>
+<td>done</td>
+</tr>
+<tr>
+<td>sketchpad channel / sketchpad (what libzynthbox reads)</td>
+<td><code>SketchpadTrack</code>, <code>Sketchpad</code></td>
+<td>done (synth tracks)</td>
+</tr>
+<tr>
+<td>autoconnect (synth on a track)</td>
+<td><code>JackWiring</code></td>
+<td>done</td>
+</tr>
+<tr>
+<td>webconf fifo (cuia commands)</td>
+<td><code>CuiaFifo</code></td>
+<td>done</td>
+</tr>
+<tr>
+<td>headphone/speaker amp to full volume (<code>set_hpvol(max)</code>, audio settings)</td>
+<td><code>ZynthboxBridge::start</code></td>
+<td>done</td>
+</tr>
+<tr>
+<td>other engines (jalv/LV2…), controllers, engine presets</td>
+<td>—</td>
+<td>synth pages</td>
+</tr>
+</tbody>
+</table>
+<h2 id="device-workflow">Device workflow</h2>
+<p>See the README, <code>debugging.md</code> (tools/: deploy, keys, screenshots, MIDI, measuring, logging,
+the traps met so far) and <code>extending.md</code> (new machines, engines, controls, effects).</p>
+<h2 id="distribution">Distribution</h2>
+<p>ravving ships as a Store AppImage that bundles ravving, the data and <code>ravving-setup</code>
+(<code>setup/</code>), the page the AppImage opens over zynthbox-qml to install ravving and pick the
+UI the device runs; both lean on <code>tools/default-app.sh</code>. See <a href="packaging.html">packaging.md</a>.</p>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+</body>
+</html>

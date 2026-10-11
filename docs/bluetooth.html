@@ -1,0 +1,507 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/bluetooth.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bluetooth · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li><a href="video.html">Video recordings and the computer link</a></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li class="on"><a href="bluetooth.html" aria-current="page">Bluetooth</a><ul><li><a href="#what-the-stock-image-lacks-and-the-fix">What the stock image lacks, and the fix</a></li><li><a href="#how-it-fits">How it fits</a></li><li><a href="#testing-it">Testing it</a></li><li><a href="#measured-on-milo-2026-10-08">Measured on milo (2026-10-08)</a></li><li><a href="#one-audio-device-at-a-time-the-lg-speaker-against-the-sony-2026-10-10">One audio device at a time (the LG speaker against the Sony, 2026-10-10)</a></li><li><a href="#troubleshooting">Troubleshooting</a></li></ul></li>
+<li><a href="scripting-projects.html">Building a project by script</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li><a href="sections-plan.html">Sections and the song</a></li>
+<li><a href="sampler-plan.html">SAMPLE KING</a></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li><a href="design-reference.html">The design reference</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">Using ravving <span>/</span> docs/bluetooth.md</p>
+<h1>Bluetooth</h1>
+<p class="doc-blurb">Speakers and headphones, files to and from a phone, what a Zynthbox needs for it and how to troubleshoot.</p>
+
+<p>Ravving's Bluetooth does what a phone's does: pair, connect, send a file, play through a
+speaker or headphones, receive a file. This page records what a Zynthbox needs for that to
+work at all (a stock image cannot even start the Bluetooth service), how the pieces fit, how
+to test them, and what to look at when something fails.</p>
+<h2 id="what-the-stock-image-lacks-and-the-fix">What the stock image lacks, and the fix</h2>
+<p>Found on milo (Zynthbox on a Raspberry Pi 5, Debian 13, BlueZ 5.82, PipeWire 1.4.2,
+WirePlumber 0.5.8), 2026-10-08:</p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Cause</th>
+<th>Fix (shipped by ravving)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bluetooth.service</code> fails at boot (status 203/EXEC), the adapter stays DOWN, the control center says "its service is not running"</td>
+<td>zynthian-sys's drop-in <code>/etc/systemd/system/bluetooth.service.d/01-disable-sap-plugin.conf</code> starts <code>/usr/lib/bluetooth/bluetoothd</code>, which Debian 13 moved to <code>/usr/libexec/bluetooth/</code></td>
+<td><code>data/systemd/50-ravving-bluetoothd-path.conf</code>, installed to the same drop-in folder: the same flags (<code>--compat --experimental --noplugin=sap</code>) with the path that exists</td>
+</tr>
+<tr>
+<td>a speaker or headphones pair but will not connect: <code>org.bluez.Error.Failed br-connection-profile-unavailable</code>; the adapter's UUIDs (<code>bluetoothctl show</code>) list no Audio Source / Audio Sink</td>
+<td>WirePlumber's Bluetooth monitor (<code>monitors/bluez.lua</code>) waits for a logind "active" seat before creating the BlueZ handle that registers the A2DP endpoints; the root <code>startx</code> session never reports one, so the monitor never starts and BlueZ has nothing to connect the device to</td>
+<td><code>data/wireplumber/50-ravving-bluetooth.conf</code>, installed to <code>/etc/wireplumber/wireplumber.conf.d/</code>: <code>wireplumber.profiles.main.monitor.bluez.seat-monitoring = disabled</code></td>
+</tr>
+<tr>
+<td>no audio over Bluetooth at all</td>
+<td><code>libspa-0.2-bluetooth</code> (PipeWire's A2DP / HFP plugin with the SBC, aptX, FastStream, LDAC codecs) is not installed</td>
+<td><code>apt install libspa-0.2-bluetooth</code>, then a WirePlumber restart (it loads the plugin at start)</td>
+</tr>
+<tr>
+<td>no file transfer</td>
+<td><code>bluez-obexd</code> (the OBEX daemon, <code>obex.service</code> in the user session, D-Bus activated as <code>org.bluez.obex</code>) is not installed</td>
+<td><code>apt install bluez-obexd</code></td>
+</tr>
+<tr>
+<td>the Qt side</td>
+<td>ravving links KDE's BluezQt (<code>libkf6bluezqt6</code>, present on the image; <code>libkf6bluezqt-dev</code> to build)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><code>tools/bluetooth-setup.sh</code> does all of it on a device and checks every step
+(<code>--check</code> only checks); <code>cmake --install</code> puts the two drop-ins in place as well. After the
+setup <code>bluetoothctl show</code> lists Audio Source, Audio Sink, Handsfree and Handsfree Audio Gateway.</p>
+<h2 id="how-it-fits">How it fits</h2>
+<ul>
+<li><strong>Backend</strong> <code>Bluetooth</code> (<code>src/backend/bluetooth.*</code>, QML <code>bluetooth</code>), on BluezQt: the
+  adapter (power, discovery, discoverable for three minutes), the devices (connected first,
+  then paired, then by signal; private-address phones without a name hidden until paired), a
+  pairing <code>Agent</code> (DisplayYesNo: a passkey to confirm or a PIN to type lands in <code>pairing</code>,
+  answered with <code>answerPairing</code>), pair → trust → connect, forget, OBEX Object Push sending
+  (<code>sendFile</code>, progress in <code>transfer</code>), an <code>ObexAgent</code> accepting pushes into the library's
+  <code>incoming/</code> folder, and the audio switch (<code>useAsOutput</code>).</li>
+<li><strong>Audio.</strong> When an audio device connects, WirePlumber makes a sink node
+  <code>bluez_output.&lt;address&gt;.1</code> (and an input / capture node for HFP). <code>useAsOutput</code> hands it
+  to <code>AudioOutputs</code> (<code>outputs</code>, also the control center's AUDIO OUTPUT card), which does not
+  make it the default sink: that would clock the whole JACK graph by the Bluetooth
+  transport in 256-frame chunks (glitches, measured on milo with the Sony WH-CH720N) and
+  leave the master's links to the jacks in place (sound from both). Instead the jacks keep
+  the clock, a <code>pw-loopback</code> of ravving's own (<code>ravving-out</code>, a virtual sink whose playback
+  stream targets the Bluetooth sink with a 2048-frame buffer) is started, the master's two
+  output ports are linked to it with <code>pw-link</code> (its inputs have no JACK name, so
+  libzynthbox's JackConnectionHandler cannot) and the jack links are dropped. Measured: the
+  Bluetooth node runs at 48 kHz SBC, the HiFiBerry node goes idle, the sound is clean and
+  the jacks silent. Off, on disconnect, forget or exit, the loopback stops and the jack
+  links come back.</li>
+<li><strong>Files.</strong> Sending opens an OBEX session (<code>Target: opp</code>) and pushes the file; receiving
+  needs milo VISIBLE (discoverable + pairable, three minutes) and lands under
+  <code>library/incoming/</code>, which <code>PROJECT ▾ → IMPORT</code> lists as "received" and the music library as
+  the album "Received".</li>
+<li><strong>UI.</strong> <code>BluetoothPopup</code> from the control center's BLUETOOTH card.</li>
+</ul>
+<h2 id="testing-it">Testing it</h2>
+<p>The basic checks: <code>sh tools/bluetooth-setup.sh --check</code>. With a device at hand, over the
+fifo (<code>docs/testing.md</code>):</p>
+<pre><code class="language-sh">tools/device.sh call bluetooth startDiscovery; sleep 10; tools/device.sh get bluetooth devices
+tools/device.sh call bluetooth pair 84:D3:52:35:80:99        # a speaker pairs without a prompt
+tools/device.sh get bluetooth pairing                        # a phone: {kind confirm, passkey} → answerPairing true
+tools/device.sh call bluetooth useAsOutput 84:D3:52:35:80:99 true
+tools/device.sh cuia SWITCH_PLAY_RELEASED                    # heard on the speaker
+tools/device.sh call bluetooth sendFile AA:BB:CC:DD:EE:FF &quot;/zynthian/zynthian-my-data/ravving/exports/Lo-fi Say It.wav&quot;
+</code></pre>
+<p>What to measure (the user's QA notes, 2026-10-08):</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>How, on the device</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>signal (RSSI, dBm: −30 excellent, −67…−70 good, below −80 drops)</td>
+<td><code>bluetoothctl info ADDR</code> (RSSI while scanning), <code>hcitool rssi ADDR</code> once connected</td>
+</tr>
+<tr>
+<td>link quality / packet loss</td>
+<td><code>hcitool lq ADDR</code> (255 = best); <code>btmon -w /tmp/bt.snoop</code> during playback and count retransmissions</td>
+</tr>
+<tr>
+<td>A2DP codec and latency</td>
+<td><code>pw-cli info &lt;bluez sink id&gt;</code> (<code>api.bluez5.codec</code>: SBC by default, aptX / LDAC when both sides have it); <code>pw-top</code> for the sink node's quantum and the graph's (the studio stays at 256 / 48000; the Bluetooth node runs its own)</td>
+</tr>
+<tr>
+<td>OBEX throughput</td>
+<td><code>transfer.transferred</code> over time (<code>get bluetooth transfer</code>)</td>
+</tr>
+<tr>
+<td>what BlueZ sees</td>
+<td><code>btmon</code> (HCI trace), <code>busctl --system tree org.bluez</code>, <code>journalctl -u bluetooth</code></td>
+</tr>
+<tr>
+<td>what WirePlumber does</td>
+<td><code>journalctl --user -u wireplumber</code>, with <code>systemctl --user set-environment WIREPLUMBER_DEBUG=3</code> and a restart for the monitor's own lines</td>
+</tr>
+</tbody>
+</table>
+<h2 id="measured-on-milo-2026-10-08">Measured on milo (2026-10-08)</h2>
+<p>Sony WH-CH720N (84:D3:52:35:80:99), paired and connected, playing through the loopback
+route; the adapter is the Pi's own (<code>hci0</code>, UART, BCM43455 class 0x6c0000). The tools are
+<code>hcitool</code>, <code>l2ping</code>, <code>busctl</code> (BlueZ's D-Bus objects) and <code>pw-dump</code>, all on the image.</p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Command</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>link quality</td>
+<td><code>hcitool lq &lt;addr&gt;</code></td>
+<td>255 / 255 (the best the firmware reports)</td>
+</tr>
+<tr>
+<td>RSSI</td>
+<td><code>hcitool rssi &lt;addr&gt;</code></td>
+<td>0 (the firmware reports "in the golden range", not dBm)</td>
+</tr>
+<tr>
+<td>transmit power</td>
+<td><code>hcitool tpl &lt;addr&gt;</code></td>
+<td>12 dBm</td>
+</tr>
+<tr>
+<td>adaptive hopping</td>
+<td><code>hcitool afh &lt;addr&gt;</code></td>
+<td>30 of 79 channels in use (the Wi-Fi band is cut out)</td>
+</tr>
+<tr>
+<td>round trip</td>
+<td><code>l2ping -c 5 &lt;addr&gt;</code></td>
+<td>18.7 ms, 0 % loss</td>
+</tr>
+<tr>
+<td>codec negotiated</td>
+<td><code>pw-dump</code> → <code>api.bluez5.codec</code></td>
+<td><code>sbc</code>; <code>busctl … MediaTransport1 Configuration</code> = <code>17 21 2 53</code>: 48 kHz joint stereo, 16 blocks, 8 subbands, loudness, bitpool 2–53 (SBC "high quality", ~345 kb/s)</td>
+</tr>
+<tr>
+<td>codecs the device offers</td>
+<td>the device's <code>sep*</code> endpoints (<code>MediaEndpoint1 Codec</code>)</td>
+<td>0 = SBC, 2 = AAC; the image has no AAC plugin (Debian ships none), it has aptX, LDAC, LC3, Opus, FastStream for devices with those</td>
+</tr>
+<tr>
+<td>SBC-XQ</td>
+<td>ravving's WirePlumber drop-in sets <code>bluez5.enable-sbc-xq</code></td>
+<td>a second profile <code>a2dp-sink-sbc_xq</code> appears (<code>wpctl set-profile &lt;dev&gt; &lt;index&gt;</code> to use it, bitpool up to 76, ~550 kb/s); WirePlumber still picks plain <code>a2dp-sink</code> by default</td>
+</tr>
+<tr>
+<td>transport delay</td>
+<td><code>MediaTransport1 Delay</code></td>
+<td>14 (1/10 ms; what the headphones claim, a nominal value)</td>
+</tr>
+<tr>
+<td>playback buffer</td>
+<td>the loopback's <code>node.latency</code></td>
+<td>2048 / 48000 = 43 ms before the codec; the headphones add their own (SBC devices are typically 150–250 ms end to end)</td>
+</tr>
+<tr>
+<td>xruns over 20 s of a full project</td>
+<td><code>pw-top</code> ERR on the bluez sink before / after</td>
+<td>19 / 19 (none new); the HiFiBerry node idle, the graph's quantum stays 256</td>
+</tr>
+<tr>
+<td>battery</td>
+<td><code>bluetoothctl info</code> → Battery Percentage</td>
+<td>reported (70 %)</td>
+</tr>
+</tbody>
+</table>
+<p>Not measured yet: OBEX throughput (needs a phone), end-to-end audio latency (needs a
+microphone at the headphones: play a click through the route and record it).</p>
+<p>Two traps found while testing:
+- <strong>A scan starves the audio link.</strong> The Pi has one radio for Bluetooth and Wi-Fi; a
+  discovery (inquiry) while headphones play makes the sound break up, and a long one gets
+  the headphones dropped. The dialog therefore scans for 12 s only (<code>DiscoverySeconds</code>) and
+  does not scan on its own while an audio device is connected: SCAN is the user's call then.
+- <strong>A dual-mode speaker found by its LE advertisement pairs the wrong side.</strong> The LG S20A
+  advertises LE Audio (Audio Stream Control, Published Audio Capabilities, Telephony and
+  Media Audio) as well as classic A2DP; paired from the LE advertisement it had no Audio Sink
+  UUID, PipeWire made no sink for it, and ravving offered no PLAY THROUGH. BlueZ can play
+  LE Audio only with its experimental features on and a kernel with ISO sockets, and the
+  Pi's firmware has none, so ravving scans classic (BR/EDR) only
+  (<code>setDiscoveryFilter {Transport: bredr}</code>), where the A2DP side pairs. By hand:
+  <code>bluetoothctl remove &lt;addr&gt;</code>, <code>bluetoothctl scan bredr</code>, pair again.
+- <strong>A WirePlumber restart leaves a connected device on the headset profile only</strong> (the
+  A2DP endpoints are registered after the device reconnected): <code>bluetoothctl disconnect</code>
+  then <code>connect</code>, and the <code>a2dp-sink</code> profile is back.
+  Also seen at connect time (2026-10-11, the WH-CH720N): bluetoothd logs
+  <code>a2dp_select_capabilities() Unable to select SEP</code> and the device offers only
+  <code>headset-head-unit</code> (mono, 16 kHz): the sink is <code>playback_MONO</code>. ravving's output loopback
+  mixes down to it (it once linked only the left channel: a track panned fully to one side went
+  silent); disconnect and connect for stereo.
+- <strong>SBC-XQ is offered, not chosen.</strong> With <code>bluez5.enable-sbc-xq = true</code> the WH-CH720N lists
+  <code>a2dp-sink-sbc_xq</code> beside <code>a2dp-sink</code> (plain SBC), but WirePlumber connects with plain SBC.
+  ravving switches it: SETTINGS · BLUETOOTH · SBC-XQ (on by default, AudioOutputs.preferSbcXq)
+  sets the output in use to SBC-XQ when it offers it, or back to plain SBC when off, once per
+  connection (<code>wpctl set-profile &lt;device id&gt; &lt;index&gt;</code>; WirePlumber kept no profile for it). The
+  switch replaces the sink node under the same name; ravving routes to it again (AudioOutputs
+  notices the node id changing). Measured: the WH-CH720N plays SBC-XQ cleanly (2026-10-11).</p>
+<h2 id="one-audio-device-at-a-time-the-lg-speaker-against-the-sony-2026-10-10">One audio device at a time (the LG speaker against the Sony, 2026-10-10)</h2>
+<p>The user's report: the Sony WH-CH720N headphones connect every time; the LG speaker is
+"flaky", and after a night idle it reconnects at once from a phone but not from milo. Read
+with <code>tools/device.sh bt</code> (journals of 2026-10-08 to 10-10; milo: BlueZ 5.82, PipeWire 1.4.2,
+WirePlumber 0.5.8).</p>
+<p><strong>The two devices.</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>LG SJ1(D8) <code>6C:5A:B5:49:35:D8</code></th>
+<th>Sony WH-CH720N <code>84:D3:52:35:80:99</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>radio</td>
+<td>BR/EDR only (not the dual-mode LG S20A of the trap above)</td>
+<td>BR/EDR + LE</td>
+</tr>
+<tr>
+<td>profiles</td>
+<td>A2DP sink, AVRCP (no HFP)</td>
+<td>A2DP sink, AVRCP, HFP, HSP, Sony's own</td>
+</tr>
+<tr>
+<td>codecs (BlueZ's endpoint cache)</td>
+<td><code>01=01:00:00:3fff0241</code>: one sink endpoint, <strong>SBC only</strong></td>
+<td>SBC, AAC (no AAC plugin on Debian: plays <strong>SBC</strong>)</td>
+</tr>
+<tr>
+<td>record</td>
+<td>paired, bonded, trusted</td>
+<td>paired, bonded, trusted</td>
+</tr>
+<tr>
+<td>who connects</td>
+<td>milo must page it</td>
+<td>the headphones page milo themselves at power-on</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What happened.</strong> Every one of the LG's 11 tries failed; none opened an A2DP transport.
+Nine went like this, with the Sony connected and playing (since 01:39) the whole time:</p>
+<pre><code>03:48:03 ravving: bluetooth: BLUETOOTH CONNECTED · LG SJ1(D8)
+03:48:03 bluetoothd: profiles/audio/a2dp.c:a2dp_select_capabilities() Unable to select SEP
+03:48:03 kf.bluezqt: PendingCall Error: &quot;br-connection-create-socket&quot;
+03:48:03 ravving: bluetooth: COULD NOT CONNECT · LG SJ1(D8) · br-connection-create-socket
+03:48:04 ravving: bluetooth: BLUETOOTH DISCONNECTED · LG SJ1(D8)
+03:48:20 ravving: bluetooth: NO AUDIO FROM · LG SJ1(D8)
+</code></pre>
+<p>(03:48:03, 03:48:08, 03:48:44, 03:49:18, 03:49:21, 03:49:38, 03:49:43, 03:49:55, 03:58:09.)
+The link comes up, so the speaker answered, but its audio is refused. The other two were
+page timeouts, where the speaker never answered (off, in standby, or held by the phone):</p>
+<pre><code>2026-10-08 16:00:49 bluetoothd: avdtp_connect_cb() connect to 6C:5A:B5:49:35:D8: Host is down (112)
+2026-10-08 16:00:49 ravving: bluetooth: COULD NOT CONNECT · LG SJ1(D8) · br-connection-page-timeout
+2026-10-10 03:51:40 (the same)
+</code></pre>
+<p>ravving tried once each time and gave up. WirePlumber logged nothing for the LG: it never
+got a transport to make a sink from.</p>
+<p><strong>Why.</strong> BlueZ keeps its local A2DP stream endpoints (SEPs) per adapter, shared by every
+device (<code>a2dp.c</code>: <code>server-&gt;seps</code>), and a local SEP carries one stream at a time
+(<code>avdtp.c</code>: <code>lsep-&gt;info.inuse</code> is set by <code>avdtp_set_configuration</code> and cleared only in
+<code>stream_free</code>; <code>avdtp_find_remote_sep</code> skips an in-use SEP). PipeWire registers one endpoint
+per codec, and SBC-XQ reuses the SBC one (<code>a2dp-codec-sbc.c</code>: <code>.endpoint_name = "sbc"</code>), so
+milo has exactly one SBC source endpoint (<code>/MediaEndpoint/A2DPSource/sbc</code>). The Sony
+streams SBC through it. The LG takes nothing but SBC. So while the Sony plays, BlueZ finds no
+free SEP for the LG ("Unable to select SEP"), the connection fails with create-socket, and
+retrying cannot help. The Sony looked reliable because it was the device already holding
+the endpoint, and because headphones page their last host themselves. A phone has no such
+conflict because it plays to one audio device at a time and lets the previous one go. The
+"after a night" case also needs milo to page: a speaker that wakes up pages its last host
+only, and that was the phone. Configuration cannot give a second SBC endpoint. An AAC
+plugin would let the Sony use AAC and free SBC, but Debian ships none (<code>libfdk-aac</code> is
+non-free).</p>
+<p><strong>What ravving does now</strong> (<code>src/backend/bluetooth.cpp</code>):</p>
+<ul>
+<li><strong>Hand-over.</strong> When a device answered but could not connect while another audio device
+  is connected, ravving lets the other device go. It shows SWITCHING FROM · <em>the other</em>,
+  disconnects it, waits 1 s for BlueZ to free the endpoint and connects again. The sound
+  falls back to the jacks in between, and PLAY THROUGH then routes to the new device. Only
+  a connection the user asked for does this; ravving's own reconnect never takes the link
+  from a playing device.</li>
+<li><strong>Pages retried.</strong> A page timeout (<code>Host is down</code>) is retried after 2, 5 and 10 s. That
+  is about 37 s with BlueZ's 5.12 s page, and the row reads "waking…". Disconnecting or
+  forgetting the device stops it. Only then does COULD NOT CONNECT appear, with a hint:
+  NOT ANSWERING: OFF, ASLEEP OR WITH A PHONE?</li>
+<li><strong>PLAY THROUGH waits for the connection.</strong> It used to start its 15 s sink poll at the
+  same moment as the connect, so a slow connection ended in NO AUDIO FROM. Now the poll
+  starts once the connection is made.</li>
+<li><strong>The kept output comes back.</strong> AudioOutputs keeps the Bluetooth address of the output
+  picked. When Bluetooth comes on (a start, the switch), that device is connected once,
+  3 s later, if it is paired and nothing else plays. ravving never repeats this in a loop:
+  paging a speaker in standby wakes it up (LG's Bluetooth standby), so a loop would keep
+  switching on a speaker that went to sleep.</li>
+</ul>
+<p><strong>Device settings proposed (not applied; they need a bluetoothd / WirePlumber restart,
+which drops the audio).</strong> In order of value:</p>
+<p><strong>Applied on milo (2026-10-10):</strong> <code>FastConnectable = true</code> in <code>/etc/bluetooth/main.conf</code>
+(<code>btmgmt info</code> lists <code>fast-connectable</code>), and <code>bluetooth.autoswitch-to-headset-profile = false</code>,
+now part of <code>data/wireplumber/50-ravving-bluetooth.conf</code> (installed with ravving). The main.conf
+line is a device setting (BlueZ reads no drop-in folder): set it by hand on a new image.</p>
+<ol>
+<li><code>/etc/bluetooth/main.conf</code>, under <code>[General]</code>: <code>FastConnectable = true</code>. milo then scans
+   for pages more often, so a speaker or headphones paging milo (their last host, waking
+   up) connect within a fraction of a second instead of waiting up to the default
+   1.28 s scan window. The cost is power, which does not matter on a Pi.</li>
+<li><code>/etc/wireplumber/wireplumber.conf.d/51-ravving-a2dp-only.conf</code>:</li>
+</ol>
+<p><code>wireplumber.settings = {
+     bluetooth.autoswitch-to-headset-profile = false
+   }</code></p>
+<p>Today it is <code>true</code>, and WirePlumber exposes <code>bluez_input.&lt;addr&gt;</code> for the Sony: anything
+   that records from it switches the headphones to HFP (mono, 16 kHz) and their A2DP sink
+   goes away. This does nothing for the LG, which has no HFP. It belongs in
+   <code>data/wireplumber/50-ravving-bluetooth.conf</code> once tested.
+3. <code>/etc/bluetooth/main.conf</code>, under <code>[BR]</code>: <code>PageTimeout = 16384</code> (10.24 s against the
+   default 8192 = 5.12 s). Do this only if a capture (<code>device.sh bt capture</code>) shows the
+   speaker answering just after 5.12 s. Each page holds the shared radio for that long.
+4. Leave <code>[Policy] ReconnectAttempts / ReconnectIntervals</code> at their defaults (7; 1, 2, 4,
+   8, 16, 32, 64 s). They act on a link lost by timeout only, not on a speaker that went
+   to standby and disconnected cleanly. <code>JustWorksRepairing</code> does not matter for a bonded
+   device.</p>
+<p><strong>To confirm on milo.</strong> With the Sony connected and playing, open BLUETOOTH, tap the LG and
+press PLAY THROUGH (or <code>device.sh call bluetooth useAsOutput 6C:5A:B5:49:35:D8 true</code>).
+Expected: SWITCHING FROM · WH-CH720N, the Sony disconnects, then BLUETOOTH CONNECTED · LG,
+PLAYING THROUGH · LG SJ1(D8), and the journal shows a <code>sep…/fd… ready</code> for
+<code>dev_6C_5A_B5_49_35_D8</code>. <code>device.sh bt 6C:5A:B5:49:35:D8 -1h</code> should tally an A2DP
+transport opened. Then switch the LG off (or let it sleep), press PLAY THROUGH again, and
+switch it on during the "waking…" phase: it should connect on a later page. Finally, with
+the LG as the output, restart ravving with the Sony off: the LG should come back on its
+own about 3 s after the start.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Look at</th>
+<th>Likely</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>control center: "its service is not running" / <code>bluetooth.state</code> unavailable</td>
+<td><code>systemctl status bluetooth</code> → 203/EXEC</td>
+<td>the bluetoothd path drop-in missing (run the setup)</td>
+</tr>
+<tr>
+<td>the adapter shows but <code>Powered: no</code> after a power on</td>
+<td><code>rfkill list</code> (soft blocked), <code>bluetoothctl power on</code></td>
+<td>rfkill: <code>rfkill unblock bluetooth</code></td>
+</tr>
+<tr>
+<td>the link comes up, then COULD NOT CONNECT · <code>br-connection-create-socket</code> and DISCONNECTED a second later</td>
+<td><code>journalctl -u bluetooth</code>: <code>Unable to select SEP</code>; <code>device.sh bt ADDR</code></td>
+<td>another audio device streams the same codec (SBC): one local endpoint per codec. Disconnect it; ravving hands the link over itself when you connect from the dialog</td>
+</tr>
+<tr>
+<td>COULD NOT CONNECT · <code>br-connection-page-timeout</code> (bluetoothd: <code>Host is down</code>)</td>
+<td>is the device on, in Bluetooth mode, not connected to a phone? <code>device.sh bt capture</code> while connecting</td>
+<td>it did not answer the page; ravving pages it again for about 37 s ("waking…"). A speaker that was last used with a phone connects only once milo pages it</td>
+</tr>
+<tr>
+<td>pairs but <code>br-connection-profile-unavailable</code> on connect</td>
+<td><code>bluetoothctl show</code> has no Audio Source / Sink</td>
+<td>WirePlumber's monitor not running: the seat drop-in missing, or WirePlumber started before <code>libspa-0.2-bluetooth</code> was installed (restart it)</td>
+</tr>
+<tr>
+<td>connected, but no <code>bluez_output.*</code> node in <code>wpctl status</code></td>
+<td><code>journalctl --user -u wireplumber</code></td>
+<td>the device connected HFP only, or the A2DP transport failed: disconnect and connect again</td>
+</tr>
+<tr>
+<td>PLAYING THROUGH says so but nothing is heard</td>
+<td><code>pgrep -af pw-loopback</code>, <code>pw-link -l \| grep -A1 ravving-phaser:out_l</code> (should show <code>ravving-out:playback_FL</code>), <code>pw-top</code> (the bluez sink R, the HiFiBerry S)</td>
+<td>the loopback did not start (pipewire-bin missing?) or its links failed: pick the jacks and the device again; the journal has "master linked to ravving-out" when it worked</td>
+</tr>
+<tr>
+<td>sound from the device <em>and</em> the Bluetooth device</td>
+<td><code>pw-jack jack_lsp -c system:playback_1</code></td>
+<td>the speaker links were not dropped: pick the jacks and the device again</td>
+</tr>
+<tr>
+<td>glitchy sound over Bluetooth</td>
+<td><code>pw-top</code>: is the bluez sink the driver of ravving's nodes?</td>
+<td>the default sink was switched by hand (<code>wpctl set-default</code>): put the jacks back as default, ravving routes through the loopback instead; Wi-Fi on the same antenna also costs (the Pi's radio is shared)</td>
+</tr>
+<tr>
+<td>sending fails at once: "COULD NOT REACH"</td>
+<td><code>busctl --user list \| grep obex</code>, <code>systemctl --user status obex</code></td>
+<td>obexd missing or not activatable; the phone must have OBEX push enabled (Android: accept the incoming file prompt)</td>
+</tr>
+<tr>
+<td>a phone cannot see milo</td>
+<td><code>bluetoothctl show</code> → Discoverable: no</td>
+<td>VISIBLE lasts three minutes; press it again</td>
+</tr>
+</tbody>
+</table>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+</body>
+</html>

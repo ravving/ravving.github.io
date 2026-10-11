@@ -1,0 +1,227 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/extending.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extending · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li><a href="video.html">Video recordings and the computer link</a></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="scripting-projects.html">Building a project by script</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li><a href="sections-plan.html">Sections and the song</a></li>
+<li><a href="sampler-plan.html">SAMPLE KING</a></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li><a href="design-reference.html">The design reference</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li class="on"><a href="extending.html" aria-current="page">Extending</a><ul><li><a href="#a-new-machine-a-pages-instrument">A new machine (a page&#x27;s instrument)</a></li><li><a href="#a-new-engine">A new engine</a></li><li><a href="#sound-modifiers-an-engines-own-controls">SOUND MODIFIERS: an engine&#x27;s own controls</a></li><li><a href="#a-new-effect">A new effect</a></li><li><a href="#hardware-and-focus">Hardware and focus</a></li><li><a href="#before-committing">Before committing</a></li><li><a href="#reporting-a-problem-to-the-issues-center">Reporting a problem to the issues center</a></li></ul></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">Under the hood <span>/</span> docs/extending.md</p>
+<h1>Extending</h1>
+<p class="doc-blurb">Adding a machine, an engine, SOUND MODIFIERS, an effect, an issues-center check.</p>
+
+<p>The recipes for growing ravving the way the drums and the bass were built. Read
+<code>architecture.md</code> first for the layers; this is the how-to. The code rules hold throughout:
+reuse a part before writing a new one, keep each class to one job, and give every public
+API a doc comment and every non-obvious line an inline one.</p>
+<h2 id="a-new-machine-a-pages-instrument">A new machine (a page's instrument)</h2>
+<p>The drums and the bass share everything except what is specific to them. A new machine
+(CHORDS, LEAD, SAMPLER) follows the same path.</p>
+<ol>
+<li><strong>Backend: a <code>Machine</code> subclass</strong> (<code>src/backend/machine.h</code>). It inherits the pattern,
+   bars, presets, level/pan/pause/mute, effects, LIVE play and STEP entry. Implement:
+   - <code>onAttached()</code>: write the machine's own state into its libzynthbox pattern;
+   - <code>refresh()</code>: publish the bar on screen to QML (its own Q_PROPERTYs + <code>stepsChanged</code>);
+   - <code>revoice()</code>: rewrite every step's velocity (mute/solo/kick modes changed);
+   - <code>clearOwnSteps()</code>, <code>applyChart(chart)</code>, <code>chart()</code>: its preset format (a chart is a
+     map of strings, one character per step, so preset files stay readable);
+   - <code>placeHit(position, key, accented)</code>, <code>liveNotes(key)</code>, <code>liveVelocity(key, accented)</code>:
+     what a live key writes and plays (a list of notes: one for a row or a mono note, a
+     whole chord for ChordMachine);
+   - <code>state()</code>: everything it keeps (call <code>Machine::state()</code> and add to it: its steps, kit,
+     sound…); a project file is exactly this, so it must be complete;
+   - <code>restoreContent(state)</code>: take that back <strong>while running</strong> (opening a project) and
+     write the pattern; an empty state means its defaults (the default preset, kit,
+     sound). Call it from the constructor too, so start-up and opening share one path
+     (MonoMachine and ChordMachine do). A missing key means "default", a present but empty one means
+     "empty" (a cleared pattern stays cleared).
+   Write steps through <code>addSubnote</code>/<code>setSubnoteMetadata</code> (velocity −1 = silent, duration in
+   pattern ticks via <code>stepTicks()</code>), and call <code>markEdited()</code> after a user change.</li>
+<li><strong>Data:</strong> an entry in kits.json's <code>machines</code> (<code>key</code>, <code>kind</code>, <code>track</code>, <code>zynthianChannel</code>,
+   <code>engine</code>, <code>sound</code>, <code>presets</code>, <code>defaultPreset</code>, <code>baseNote</code>…; tracks and channels must be
+   unused) and a presets file (<code>data/&lt;machine&gt;-presets.json</code>, <code>{presets: [{name, genre,
+   chart}]}</code>), installed by CMakeLists.txt. A new instance of an existing kind (another
+   mono synth) needs nothing else on the C++ side.</li>
+<li><strong>Studio</strong> (<code>studio.cpp</code>, <code>loadKits()</code>): a new kind is one more <code>kind ==</code> branch creating
+   it; <code>addMachine()</code> then wires saving, ❚❚, the track lane, sends, the engine, DRIVE, SOUND
+   MODIFIERS and expressions generically (<code>attachMachine()</code>), and it appears as
+   <code>studio.machines.&lt;key&gt;</code>.</li>
+<li><strong>QML: a <code>MachinePanel</code> subclass</strong> (see <code>MonoMachinePanel.qml</code>, <code>ChordMachinePanel.qml</code>):
+   the toolbar and editor as children, and the overrides <code>MachinePanel</code> declares: <code>stepLeds</code>,
+   <code>liveKeyDown/Up</code> (what pads do while LIVE), <code>stepKey</code>, <code>moveSelection(dy)</code> (▲ ▼ in the
+   editor; false at the edge), <code>keyForNote</code> / <code>padForKey</code> (what a keyboard note plays and
+   which pad lights). Light live notes from <code>heldKeys</code>.</li>
+<li><strong>QML: the page</strong>: a <code>MachinePage</code> declaring its panel (see <code>pages/ChordsPage.qml</code>); it
+   forwards the device and an external keyboard to it.</li>
+<li>Add the C++ files to <code>src/backend/CMakeLists.txt</code> and the QML files to <code>src/CMakeLists.txt</code>
+   (<code>RAVVING_QML_FILES</code>), a screenshot step in <code>src/main.cpp</code>, and
+   the machine to <code>Rave.machines</code> (finish colours: strings).</li>
+</ol>
+<h2 id="a-new-engine">A new engine</h2>
+<p>Engines are <code>SoundEngine</code> subclasses (<code>soundengine.h</code>): <code>start()</code>, <code>reconfigure(config)</code>,
+<code>midiInputPort()</code>, <code>audioOutputPorts()</code> (left, right), optional <code>setControl(symbol, value)</code>,
+and the <code>started</code> signal. <code>SoundEngine::createEngine()</code> picks one by the <code>type</code> of the
+kits.json <code>engine</code> object:</p>
+<ul>
+<li><code>"jalv"</code> (<code>JalvEngine</code>): <strong>any LV2 instrument</strong>, e.g.
+  <code>{"type": "jalv", "uri": "http://distrho.sf.net/plugins/Nekobi", "controls": {"volume": 75}}</code>.
+  Ports and control indexes come from <code>lv2info</code> (cached per URI); a mono output is sent to
+  both sides. Nothing else is needed for a new LV2 synth.</li>
+<li><code>"fluidsynth"</code> (<code>FluidSynthEngine</code>): soundfonts (the drum kits).</li>
+</ul>
+<p>A new kind (setBfree, sfizz, a sampler…) is one more subclass run through <code>ConsoleProcess</code>
+(libzynthbox's ProcessWrapper: restarted on a crash, startup commands, a console prompt)
+and one more <code>type</code> in <code>createEngine()</code>. Choose an engine by measuring it first
+(<code>debugging.md</code>: synthprobe/analyse): velocity response, glide, CPU (<code>top</code>), level.</p>
+<h2 id="sound-modifiers-an-engines-own-controls">SOUND MODIFIERS: an engine's own controls</h2>
+<p>A machine's SOUND MODIFIERS are data: its <code>sound</code> in kits.json, which <code>Machine</code> turns into a
+<code>SoundControls</code> (<code>machine.sound</code>). Cards of knobs, each driving an engine port by its LV2
+symbol, a 0..1 knob mapped onto <code>min..max</code> (linearly, or <code>"curve": "log"</code> for ports the engine
+treats as logarithmic), with a 0..1 default:</p>
+<pre><code class="language-json">&quot;sound&quot;: [
+  { &quot;title&quot;: &quot;FILTER&quot;, &quot;knobs&quot;: [
+      { &quot;name&quot;: &quot;CUTOFF&quot;, &quot;symbol&quot;: &quot;cutoff&quot;, &quot;min&quot;: 300, &quot;max&quot;: 9000, &quot;curve&quot;: &quot;log&quot;, &quot;default&quot;: 0.55 } ] },
+  { &quot;title&quot;: &quot;TONE&quot;, &quot;knobs&quot;: [
+      { &quot;name&quot;: &quot;WAVE&quot;, &quot;default&quot;: 0, &quot;choices&quot;: [
+          { &quot;label&quot;: &quot;SAW&quot;,  &quot;controls&quot;: { &quot;osc1waveform&quot;: 0,   &quot;osc1pw&quot;: 0.5 } },
+          { &quot;label&quot;: &quot;JUNO&quot;, &quot;controls&quot;: { &quot;osc1waveform&quot;: 0.5, &quot;osc1pw&quot;: 0.75 } } ] } ] } ]
+</code></pre>
+<p>A knob with <code>choices</code> is a switch (its value snaps to choice i of n at i / (n − 1)) and
+shows as a <code>WaveCycler</code> (SAW, SQR, TRI, SIN are drawn); each choice sets its <code>controls</code>
+(several ports; give every choice the same ports) or a <code>value</code> for the knob's <code>symbol</code>.
+Ports with no knob go in <code>engine.controls</code>. A live control a page plays (the ribbon's
+vibrato) is an <code>expression</code>: <code>"expressions": {"vibrato": {"symbol": "lfo2pitch", "max": 60}}</code>,
+played with <code>machine.setExpression("vibrato", amount)</code>.</p>
+<p><strong>Get the ports right from the mods.</strong> Every engine Zynthbox ships has a mod in
+<code>~/Coding/&lt;engine&gt;_mod/</code> whose <code>docs/RESEARCH.md</code> decodes its ports from the engine's own
+source: which are logarithmic, how enums quantise (TAL: <code>i / den</code>, rounded, 1-based), which
+envelope drives what (Calf: EG1 → cutoff, EG2 → amp), what a port called <code>volume</code> really
+does. Read it before writing a machine's <code>engine.controls</code> and <code>sound</code>, and record what
+ravving relies on in <code>engines.md</code>. Studio connects the
+controls to the engine and sends them all whenever it (re)starts; values are saved with
+the machine. Read a plugin's port ranges with <code>lv2info</code> and check what its numbers mean in
+its source: an LV2 range is not always the unit its own GUI shows.</p>
+<h2 id="a-new-effect">A new effect</h2>
+<ul>
+<li><strong>On the track lane</strong> (EQ, COMPRESSOR, SIDECHAIN, PAN): an entry in
+  <code>EffectChain::effects()</code> (name, knobs, defaults, shared or per machine) and its mapping
+  in <code>TrackEffects::apply()</code> onto the JackPassthrough lane's properties.</li>
+<li><strong>An insert</strong> (DRIVE): a <code>JalvPlugin</code> per machine created in <code>Studio::attachMachine()</code>,
+  given to <code>TrackEffects</code> (which maps the knobs onto its controls and starts it on first
+  use) and to <code>JackWiring::addSynth(…, insert)</code>; <code>TrackEffects::driveSwitched</code> →
+  <code>JackWiring::setInsertActive()</code> moves it into the path only while on, so the dry sound
+  never depends on the extra process. Calibrate its gain staging with <code>lv2probe.sh</code>.</li>
+<li><strong>A send</strong> (REVERB, DELAY): one shared <code>JalvPlugin</code> in <code>GlobalEffects</code>, fed from every
+  lane's wet outputs (<code>JackWiring::addSends</code>) and returned with <code>addEffectReturn</code>.</li>
+<li><strong>On the master</strong> (LIVE FX: CRUSH, PHASER, STUTTER/LOOP): <code>LiveFx</code> and
+  <code>JackWiring::setMasterInserts</code>, which takes any <code>AudioInsert</code>.</li>
+<li><strong>Your own DSP</strong> (BeatRepeat): an <code>AudioInsert</code> subclass opening its own JACK client
+  (libjack, linked through pkg-config; PipeWire's at run time). Keep the process callback
+  lock-free: atomics from the GUI thread, buffers allocated in the constructor, no Qt
+  calls. For musical timing, <code>ZynthboxBridge::timerTickAtFrame(jack_frame_time())</code> gives
+  the transport position sample-accurately.</li>
+</ul>
+<h2 id="hardware-and-focus">Hardware and focus</h2>
+<ul>
+<li>Handle keys with the <code>Hardware</code> attached property (like <code>Keys</code>); an unaccepted event
+  bubbles to the parent. See <code>architecture.md</code> for the signal list.</li>
+<li>A machine's vertical order (strip → SOUND MODIFIERS → editor → SOUND EFFECTS) lives in
+  <code>MachineModule</code>: pages only call <code>focusUp()</code> / <code>focusDown()</code> at their editor's edge.</li>
+<li>Knob-driven controls go in a <code>KnobGroup</code> (targets need <code>value</code>, <code>from</code>, <code>to</code>, <code>knobStep</code>,
+  <code>fineStep</code>, <code>knobBadge</code>, <code>knobPending</code>: <code>RaveKnob</code>, <code>RaveFader</code>, <code>WaveCycler</code> have them).</li>
+<li>Menus: <code>RaveComboBox</code> (drop-downs) and <code>ChoicePopup</code> (grids: kits, presets) already take
+  the arrows, the big knob, SELECT and BACK, and hand the focus back on close.</li>
+</ul>
+<h2 id="before-committing">Before committing</h2>
+<p>Build clean (no warnings), run the desktop screenshots (no QML warnings), deploy, check on
+the device (screenshot + measurement), update <code>architecture.md</code> and these guides, then
+commit as a single line authored by the user.</p>
+<h2 id="reporting-a-problem-to-the-issues-center">Reporting a problem to the issues center</h2>
+<p>Every component owns a check pass: at start, and whenever something fails or recovers, it
+tells the center (<code>src/backend/diagnostics.h</code>):</p>
+<pre><code class="language-cpp">#include &quot;diagnostics.h&quot;
+Issues::report(QStringLiteral(&quot;wiring&quot;), QStringLiteral(&quot;sound&quot;), QStringLiteral(&quot;warning&quot;),
+               QStringLiteral(&quot;Some audio connections are missing&quot;),          // the title, the user's words
+               QStringLiteral(&quot;some ports never appeared…&quot;),                  // the detail: what was seen
+               QStringLiteral(&quot;Pick the sound again, or restart ravving.&quot;),   // what to do
+               QStringLiteral(&quot;restart&quot;));                                   // an action button, or &quot;&quot;
+Issues::clear(QStringLiteral(&quot;wiring&quot;));                                     // once it works again
+</code></pre>
+<p>Rules: a stable <code>id</code> per problem (reporting it again updates and counts it); <code>error</code> when
+something does not work, <code>warning</code> when it works worse or will stop, <code>notice</code> for what is
+worth knowing (a desktop without device keys); always a suggestion the user can follow; clear
+it from the same place that would see it recovered. A library's stderr line can become an
+issue through <code>StderrWatch</code>'s pattern table (src/stderrwatch.cpp). <code>tools/issues-test.sh</code>
+exercises the center over the fifo.</p>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+</body>
+</html>

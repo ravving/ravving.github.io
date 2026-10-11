@@ -1,0 +1,176 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/design-reference.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The design reference · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li><a href="video.html">Video recordings and the computer link</a></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="scripting-projects.html">Building a project by script</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li><a href="sections-plan.html">Sections and the song</a></li>
+<li><a href="sampler-plan.html">SAMPLE KING</a></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li class="on"><a href="design-reference.html" aria-current="page">The design reference</a><ul><li><a href="#what-easyrave-is">What easyrave is</a></li><li><a href="#how-each-machine-makes-sound">How each machine makes sound</a></li><li><a href="#can-we-borrow-it">Can we borrow it?</a></li><li><a href="#what-it-means-for-the-engines">What it means for the engines</a></li></ul></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">The designs <span>/</span> docs/design-reference.md</p>
+<h1>The design reference</h1>
+<p class="doc-blurb">easyrave&#x27;s page, machine by machine, and what ravving takes from it.</p>
+
+<p>Findings from easyrave.com's page source (fetched 2026-10-04 into
+<code>~/Downloads/theme_refs/rave/site/index.html</code>, 1.2 MB, everything inlined).</p>
+<h2 id="what-easyrave-is">What easyrave is</h2>
+<ul>
+<li><strong>A commercial product.</strong> It has accounts and licences ("free = 3 songs, license =
+  unlimited") and online saves through <code>easyrave-api.ezamboni96.workers.dev</code>.</li>
+<li><strong>No licence is published</strong> for the code or the assets. No MIT/GPL header, no copyright
+  line. That means all rights reserved by default.</li>
+<li><strong>All sound comes from its own Web Audio code.</strong> There are no third-party audio libraries
+  (no Tone.js, no WASM synths). The only third-party code is MediaPipe, loaded from a CDN for
+  the CAM feature.</li>
+</ul>
+<h2 id="how-each-machine-makes-sound">How each machine makes sound</h2>
+<table>
+<thead>
+<tr>
+<th>Machine</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>909 / 808 drums</td>
+<td><strong>Synthesised.</strong> <code>bd909</code>, <code>bd808</code>, <code>snare</code>, <code>clap</code>, <code>hat</code>, <code>tom</code>, <code>ride</code>, <code>crash</code>: oscillators with pitch envelopes plus filtered noise and waveshapers. No samples.</td>
+</tr>
+<tr>
+<td>LinnBeats</td>
+<td><strong>Samples</strong>: 10 WAVs (<code>kick snare sstick clap tamb conga chh ohh cowb ride</code>), embedded as base64 (<code>LINN_EMBED</code>) or fetched from <code>linn/*.wav</code>. No provenance given.</td>
+</tr>
+<tr>
+<td>303 bass</td>
+<td>Oscillator → resonant biquad, with accent, slide and tie per step. Includes a <code>genBassline</code> generator (in key, weighted toward the root).</td>
+</tr>
+<tr>
+<td>POLY-6 chords</td>
+<td>Oscillator voices. Chords are stacked in thirds from the current scale, with per-degree "chord sets".</td>
+</tr>
+<tr>
+<td>THERE LEAD</td>
+<td>One glide voice, a 2-octave ribbon quantised to the scale, LFO vibrato.</td>
+</tr>
+<tr>
+<td>SAMPLE KING</td>
+<td>8 slots of user audio (mic recording or dropped WAV/MP3), cutoff, bit crusher.</td>
+</tr>
+<tr>
+<td>Master</td>
+<td>An AudioWorklet glue compressor + limiter (<code>ERMaster</code>), and a crusher worklet (<code>ERCrush</code>: bit-depth reduction + sample-and-hold).</td>
+</tr>
+<tr>
+<td>Extras</td>
+<td>The DROP builder (4-bar riser into an impact), NO/ONLY KICK, SING/autotune (YIN pitch + TD-PSOLA), voice → 303 pattern, WAV/MP3 export.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="can-we-borrow-it">Can we borrow it?</h2>
+<p><strong>Code: no.</strong> It's unlicensed, commercial JavaScript. Copying it, translated or not, would
+copy its expression. Ravving reimplements behaviour. Reading what a feature does to design
+ours is fine; porting their functions line by line is not.</p>
+<p><strong>Samples: no.</strong> The Linn WAVs come with no licence or provenance (they're probably LinnDrum
+ROM material), so we can't ship them. Drum kits need licence-clean sources: our own
+recordings or renders, or CC0/permissive packs.</p>
+<p><strong>Artwork: no.</strong> Nameplates and finishes are reference only (this rule was already set for
+the Rave themes). Ravving draws its own in QML.</p>
+<p><strong>Ideas, techniques and musical facts: yes.</strong> These aren't copyrightable, and we implement
+them ourselves:
+- Analog-drum synthesis recipes: a sine kick with a fast pitch drop and a long tail, noise
+  snares and hats. These are standard techniques. DrumSynth (ZBP_SYNTH_00015) already does
+  this kind of synthesis on the device, and its kits can be programmed to match.
+- Diatonic chords stacked from the scale, per-degree chord sets: music theory, already in
+  <code>Rave.chordName</code>.
+- An in-key random bassline weighted to the root: already in <code>BassPage.randomBassline</code>.
+- The DROP structure (riser, cut, impact), kill-kick, stutter: performance ideas we build on
+  libzynthbox (pattern performance clone, mutes, master filter).
+- A bit crusher (bit reduction + sample-and-hold): a textbook algorithm. Ravving still needs
+  an implementation, because the device has no crusher among its 56 FX (see the mapping).
+- Pitch tracking for SING (YIN) and pitch correction (PSOLA): published algorithms with open
+  implementations (e.g. aubio, GPL) that we could use instead.</p>
+<p><strong>Fonts: yes.</strong> Oswald, IBM Plex Mono and Baloo 2 are OFL. We can bundle them if we want
+the exact type.</p>
+<p><strong>Colours: yes, as reference.</strong> Per-machine colour values are facts. <code>Rave.machines</code> uses
+them, as the Rave themes already do.</p>
+<h2 id="what-it-means-for-the-engines">What it means for the engines</h2>
+<p>easyrave's sounds can't come with us, so ravving uses the device's engines (proposal in the
+ravving skill's <code>mapping.md</code>, still awaiting approval):
+- <strong>Drums:</strong> DrumSynth kits programmed after the 909/808 recipes (synthesis, licence-clean),
+  or SamplerSynth with clean one-shot kits.
+- <strong>Bass:</strong> Nekobi (a TB-303 model). <strong>Chords:</strong> Obxd. <strong>Lead:</strong> Calf Monosynth.
+  <strong>Sampler:</strong> SamplerSynth.
+- <strong>Crusher:</strong> to be added (an LV2, or a stage in libzynthbox).</p>
+<p>If any of easyrave's sounds or code turn out to be essential, asking its author for
+permission is the way to get them.</p>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+</body>
+</html>

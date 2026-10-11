@@ -1,0 +1,234 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/sampler-plan.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAMPLE KING · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li><a href="video.html">Video recordings and the computer link</a></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="scripting-projects.html">Building a project by script</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li><a href="sections-plan.html">Sections and the song</a></li>
+<li class="on"><a href="sampler-plan.html" aria-current="page">SAMPLE KING</a><ul><li><a href="#what-easyraves-sample-king-does">What easyrave&#x27;s SAMPLE KING does</a></li><li><a href="#what-the-device-gives-us">What the device gives us</a></li><li><a href="#the-input-milo-hifiberry-dacadc-pro-pcm186x-adc">The input (milo: HiFiBerry DAC+ADC Pro, PCM186x ADC)</a></li><li><a href="#live-voice-guitar-effects-yes">Live voice / guitar effects: yes</a></li><li><a href="#plan-in-phases">Plan, in phases</a></li><li><a href="#decisions-taken-2026-10-05">Decisions (taken 2026-10-05)</a></li></ul></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li><a href="design-reference.html">The design reference</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">The designs <span>/</span> docs/sampler-plan.md</p>
+<h1>SAMPLE KING</h1>
+<p class="doc-blurb">What easyrave&#x27;s sampler does, what libzynthbox&#x27;s gives, and the phases that built page 5.</p>
+
+<p>The sampler page (page 5), and live voice / guitar effects while recording. Research
+2026-10-05 from easyrave's source, libzynthbox's source and the device (milo).</p>
+<p><strong>Status (2026-10-05):</strong> phases 1 (playback) and 2 (recording) are built and running on milo;
+phase 3 (live FX: <code>InputEffects</code>, <code>data/input-fx.json</code>) is built, waiting for the presets to be
+tuned with a mic and the guitar; phase 4 is next. The decisions below were taken as proposed: 4 banks × 8 slots,
+takes in <code>/zynthian/zynthian-my-data/samples/my-samples/ravving/</code> (raw takes kept in
+<code>~/.local/share/ravving/takes-raw/</code>), record wet (+ dry later), TAME first. What the build
+found is in <code>engines.md</code> (SamplerSynth, the audio input) and <code>architecture.md</code>
+(<code>SamplerMachine</code>, <code>InputRecorder</code>, <code>AudioFile</code>).</p>
+<h2 id="what-easyraves-sample-king-does">What easyrave's SAMPLE KING does</h2>
+<ul>
+<li><strong>Banks A–D</strong>, each with <strong>8 sample slots and its own pattern</strong> (a step grid, a row per
+  slot). Switching bank switches kit and pattern.</li>
+<li><strong>Machine knobs</strong> on every slot: LEVEL, CUTOFF, BIT CRUSHER, AUTOTUNE (re-tunes autotuned
+  samples to the song's key when the key changes).</li>
+<li><strong>Slot editor</strong>: a waveform screen with <strong>trim handles</strong> (start, length), PITCH ±12, REVERSE,
+  ▶ preview, ● record; a <strong>LAYER</strong>: a second sample in the same slot, fired by the same hit.</li>
+<li><strong>Playback</strong>: a hit plays the trimmed window <strong>one-shot</strong>; each slot <strong>chokes itself</strong> (a new
+  hit fades the previous one out in 8 ms instead of stacking).</li>
+<li><strong>Levels by loudness</strong>: each sample is matched by its loudness while it sounds (BS.1770
+  K-weighting, 100 ms blocks, gated), not by its peak (a vocal and a kick with the same peak
+  were 8 LU apart).</li>
+<li><strong>A mic take is processed before it becomes a sample</strong>: DC removed, 6:1 compression (fast
+  attack, musical release), normalised to just under full scale; the trim defaults to the
+  <strong>last burst</strong> when a take holds several.</li>
+<li><strong>KEYS</strong> (keys 1–8 play the slots live) and <strong>REC</strong> (a take of the pattern, count-in first).</li>
+</ul>
+<h2 id="what-the-device-gives-us">What the device gives us</h2>
+<p><strong>libzynthbox's sampler is the engine.</strong> SamplerSynth plays ClipAudioSources in real time
+(JUCE, in the audio thread). Each slot is one ClipAudioSource; its root slice has what every
+slot feature needs:</p>
+<table>
+<thead>
+<tr>
+<th>Slot feature</th>
+<th>ClipAudioSource / slice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>which note plays it</td>
+<td><code>keyZoneStart</code> = <code>keyZoneEnd</code> = the slot's note, <code>rootNote</code> = the same (no transposition)</td>
+</tr>
+<tr>
+<td>trim</td>
+<td><code>startPositionSamples</code>, <code>lengthSamples</code></td>
+</tr>
+<tr>
+<td>PITCH</td>
+<td><code>pitch</code> (semitones)</td>
+</tr>
+<tr>
+<td>one-shot</td>
+<td><code>playbackStyle</code> = <code>OneshotPlaybackStyle</code></td>
+</tr>
+<tr>
+<td>choke</td>
+<td><code>exclusivityGroup</code> (−1 none; a slot in its own group cuts itself)</td>
+</tr>
+<tr>
+<td>level, pan</td>
+<td><code>gainHandler</code>, <code>pan</code> (loudness matching sets the gain)</td>
+</tr>
+<tr>
+<td>envelope</td>
+<td><code>adsrAttack/Decay/Sustain/Release</code> (a short release = easyrave's 8 ms fade)</td>
+</tr>
+<tr>
+<td>LAYER</td>
+<td>a second ClipAudioSource on the same key zone: SamplerSynth plays every clip that matches the note</td>
+</tr>
+<tr>
+<td>(later)</td>
+<td>granular modes, slices, velocity zones, loops</td>
+</tr>
+</tbody>
+</table>
+<p>A ClipAudioSource is built through its exported constructor, the way ravving already makes
+the metronome clips (<code>ClipAudioSource(path, track, slot, row, registerForPolyphonicPlayback,
+muted, parent)</code>).</p>
+<p><strong>Routing is already in place.</strong> <code>SketchpadTrack</code> (ravving's <code>zlChannel</code>) with <code>trackType</code>
+"sample-trig" makes the track's PatternModel send its notes to SamplerSynth
+(<code>SampleTriggerDestination</code>), and its <code>samples</code> list (10 entries, each an object with
+<code>cppObjId</code> = the clip's id) is how PatternModel registers the clips (<code>updateSamples()</code> →
+<code>setClipIds()</code>). So a <strong>bank = 8 clips in that list + its own pattern</strong>; switching bank
+swaps the list and the pattern. LIVE keys reach SamplerSynth the same way the synths' do.</p>
+<p><strong>REVERSE</strong> is not a one-shot option (only granular and loop styles run backwards), so a
+reversed slot plays a <strong>reversed copy of its file</strong>, rendered once.</p>
+<p><strong>Waveforms</strong>: libzynthbox ships <code>WaveFormItem</code> (QML), which draws a ClipAudioSource's
+waveform with its own peak cache: no drawing in JS.</p>
+<p><strong>Recording</strong>: AudioLevels records any JACK ports to a WAV (<code>addRecordPort(port, channel)</code>,
+<code>setShouldRecordPorts</code>, <code>scheduleStartRecording(delay)</code> sample-accurately on SyncTimer's clock,
+<code>stopRecording</code>, <code>recordingFilenames</code>): a take can start exactly on the bar after a count-in.
+AudioLevels also meters the input (<code>captureA/B</code>).</p>
+<p><strong>Files</strong>: libsndfile 1.2.2 is installed on the device and the laptop: reading, writing,
+reversing, the take processing and the loudness measurement run in C++ in a worker thread
+(QtConcurrent), never on the UI thread.</p>
+<h2 id="the-input-milo-hifiberry-dacadc-pro-pcm186x-adc">The input (milo: HiFiBerry DAC+ADC Pro, PCM186x ADC)</h2>
+<ul>
+<li>JACK ports <code>Built-in Audio Stereo:capture_FL</code> / <code>capture_FR</code>, 48 kHz.</li>
+<li><strong>PGA gain −12 … +40 dB per channel</strong> (<code>amixer -c 3</code> "PGA Gain Left/Right", 0.5 dB steps),
+  plus the ADC digital volume; input select (VINL1/VINL2, differential) and <strong>mic bias</strong> (on).</li>
+<li>So the page can offer <strong>input modes</strong>: MIC (bias on, PGA ~+20…30 dB), GUITAR (bias off,
+  PGA ~+20 dB, mono), LINE (PGA 0 dB, stereo), with a level meter and a gain knob.
+  (The exact gains are to be set with the user's guitar and mic.)</li>
+</ul>
+<h2 id="live-voice-guitar-effects-yes">Live voice / guitar effects: yes</h2>
+<p><strong>Feasible and cheap.</strong> The device has every block, and a whole chain costs little: eight
+effects running on the input (compressor, saturator, multi chorus, phaser, vintage delay,
+plate reverb, SwankyAmp, pitch shifter) measured <strong>under 1 % CPU each</strong> on the Pi 5 (4 cores).
+<strong>Latency</strong>: JACK runs 256 frames at 48 kHz (5.3 ms a period), so input → effects → speakers
+is about 11–16 ms: playable for monitoring a voice or a guitar. (The period could go to 128 if
+needed, at more CPU.)</p>
+<p>The design: an <strong>input chain</strong> of jalv effects (ravving's <code>JalvPlugin</code>, wired by <code>JackWiring</code>
+like DRIVE and the master inserts): <code>capture → chain → monitor (to the master, with its own
+level) and → the recorder</code>. A take records the <strong>wet</strong> sound (what you hear), plus optionally
+the dry input next to it, so the effect can be changed afterwards.</p>
+<p><strong>"Like Tame Impala"</strong>: Kevin Parker's vocal sound is a known recipe, all on the device:
+heavy compression (Calf Compressor) → a little saturation (Calf Saturator) → doubling / swirl
+(Calf Multi Chorus, Phaser or Flanger; the Rotary Speaker for the Leslie wobble) → tape echo
+(Calf Vintage Delay, slapback + long tail) → a big plate (Dragonfly Plate). Other presets on
+the same chain: FUZZ VOICE (a guitarix fuzz), ROBOT (Calf Vocoder / TAL Vocoder), TELEPHONE
+(band-pass), OCTAVE (pitch shift), and for the guitar: AMP (SwankyAmp → guitarix UltraCab →
+delay → plate). Each preset is data (like kits.json: plugins, fixed controls, and 3–6 knobs
+for the device knobs: AMOUNT, WOBBLE, ECHO, SPACE…).</p>
+<h2 id="plan-in-phases">Plan, in phases</h2>
+<ol>
+<li><strong>Playback</strong> (done): a <code>SamplerMachine</code> (a Machine, track 6, "sample-trig"): 4 banks × 8 slots of
+   ClipAudioSources, each bank with its own pattern (the step grid, a row per slot, reusing
+   <code>StepGrid</code>); trim, PITCH, REVERSE, choke; a sample browser (ChoicePopup over
+   <code>/zynthian/zynthian-my-data/samples</code> and Zynthbox's sample library); LIVE pads 1–8; all in
+   the session and projects. Verify on the device: choke through <code>exclusivityGroup</code>, layering,
+   live triggering, CPU with 32 loaded clips.</li>
+<li><strong>Recording</strong> (done: guitar tested on jack 4; the monitor runs through its own track with a
+   LEVEL, ready for the chain): input mode (MIC / GUITAR / LINE), gain and meter; ● on a slot records a take
+   (count-in on the transport, or free while stopped), processed (DC, compression, normalise,
+   trim to the last burst) in a worker thread, then loaded into the slot.</li>
+<li><strong>Live FX</strong> (built): the input chain with presets (TAME, FUZZ VOICE, ROBOT, TELEPHONE, OCTAVE,
+   AMP), monitor on/off, record wet (+ dry).</li>
+<li><strong>Polish</strong>: loudness matching (BS.1770), LAYER, the machine knobs (CUTOFF, BIT CRUSHER on
+   the track lane), and later AUTOTUNE (pitch detection + correction: the heaviest part; a
+   separate study).</li>
+</ol>
+<h2 id="decisions-taken-2026-10-05">Decisions (taken 2026-10-05)</h2>
+<ul>
+<li>Banks: 4 × 8 slots, as easyrave (a bank fits SketchpadTrack's 10 sample slots).</li>
+<li>Takes go to <code>/zynthian/zynthian-my-data/samples/my-samples/ravving/</code>, which the browser lists.</li>
+<li>Record the effect's sound (wet); the clean input next to it is a later option.</li>
+<li>TAME is the first FX preset.</li>
+</ul>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+</body>
+</html>

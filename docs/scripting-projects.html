@@ -1,0 +1,184 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/scripting-projects.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building a project by script · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li><a href="video.html">Video recordings and the computer link</a></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li class="on"><a href="scripting-projects.html" aria-current="page">Building a project by script</a><ul><li><a href="#the-loop">The loop</a></li><li><a href="#the-recipe-in-order">The recipe, in order</a></li><li><a href="#things-that-bit">Things that bit</a></li></ul></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li><a href="sections-plan.html">Sections and the song</a></li>
+<li><a href="sampler-plan.html">SAMPLE KING</a></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li><a href="design-reference.html">The design reference</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">Using ravving <span>/</span> docs/scripting-projects.md</p>
+<h1>Building a project by script</h1>
+<p class="doc-blurb">The remote-control fifo: samples, patterns, sounds and a whole project from a shell script.</p>
+
+<p>Everything a finger does on the device, a script can do through the remote-control fifo
+(<code>docs/testing.md</code>): load samples, write patterns, pick sounds, set the key and the tempo,
+save the result as a project. <code>tools/examples/five-am/</code> (the 5AM demo: sections and the song
+by script, <code>build.py</code> writing the lines, <code>run.sh</code> sending them) and <code>tools/examples/lofi-say-it.sh</code> are complete ones (a third, "Autumn Leaves", is kept outside
+the repo in <code>~/Coding/ravving-projects/autumn-leaves/</code>: its theme is transcribed from the
+user's own sheet, a generator in Python writing the fifo lines), the lo-fi
+hip hop project built on the changes of "Say It (Over and Over Again)"; copy it for the
+next one. This page is the recipe and what we learned writing it.</p>
+<h2 id="the-loop">The loop</h2>
+<pre><code class="language-sh">FIFO=/tmp/webconf-writes-to-this-fifo
+send() { timeout 2 sh -c &quot;echo \&quot;$1\&quot; &gt; $FIFO&quot;; sleep 0.2; }
+call() { local line=&quot;call&quot;; for a in &quot;$@&quot;; do line=&quot;$line|$a&quot;; done; send &quot;$line&quot;; }
+setp() { send &quot;set|$1|$2|$3&quot;; }
+get()  { send &quot;get|$1|$2&quot;; journalctl --user -u ravving --since '-5s' --no-pager | grep 'fifo get' | tail -1 | sed 's/.*= //'; }
+</code></pre>
+<p>A script runs on the device (copy it there, as the example does with itself); every call
+is one line on the fifo and takes about a fifth of a second, so a full project is a few
+hundred lines and a couple of minutes. <code>tools/device.sh call|set|get</code> do the same one at a
+time from the laptop.</p>
+<h2 id="the-recipe-in-order">The recipe, in order</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Calls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>keep what is there, start clean</td>
+<td><code>get studio.projects dirty</code>, <code>call studio.projects saveAs NAME</code>; <code>call studio.projects newProject</code></td>
+</tr>
+<tr>
+<td>tempo, swing, key</td>
+<td><code>set studio bpm 74</code>, <code>set studio swing 0.58</code> (and <code>set studio swingEighths true</code> for jazz: the off-beat 8ths swing, not the 16ths; the header's SWING 8 / 16, tapped), <code>call header setKey ROOT SCALE</code> (root 0–11 from C, scale an index into Rave.scales: 0 natural minor, 1 major, 2 Dorian…). <strong>NEW resets the key to C minor</strong>: set it before writing anything in a key</td>
+</tr>
+<tr>
+<td>drums</td>
+<td><code>call drumsN clear</code>, <code>call drumsN toggleStep ROW STEP</code>, <code>toggleAccent STEP</code>; rows by <code>get drumsN rows</code>; <code>call drumsN saveAsPreset</code> keeps the beat as "My Beat N"</td>
+</tr>
+<tr>
+<td>chords</td>
+<td><code>set chords bars 8</code> (the most a pattern holds), <code>set chords viewBar B</code>, then per step <code>call chords setStepNotes STEP "48,52,55,58"</code> (MIDI notes; a note outside the key makes the voicing chromatic). A run of the same voicing on consecutive steps is <strong>one held chord</strong>; an empty step ends it. Diatonic shortcuts: <code>setChord STEP DEGREE</code>, or SLOTS: <code>assignSlot SLOT DEGREE</code> + <code>cycleSlotBars SLOT</code>. <code>saveAsPreset</code> keeps a chart as "My Progression N" (a longer form = several presets to switch between)</td>
+</tr>
+<tr>
+<td>bass, lead</td>
+<td><code>set bass bars 8</code>, <code>set bass viewBar B</code>, <code>call bass setNote STEP NOTE</code> (MIDI; C2 = 36 for the bass, C4 = 60 for the lead, see kits.json <code>baseNote</code>), <code>setNoteLength STEP STEPS</code> (a note lasts one step unless set: a half note is 8, up to 64, into the next bars), <code>toggleAccent STEP</code>, <code>toggleSlide STEP</code>; any note is accepted, in the key or not, and a preset keeps it exactly (the chart's ALTER and HOLD lanes)</td>
+</tr>
+<tr>
+<td>drum kits</td>
+<td><code>call drums1 loadKit PATH</code>: a kit file, or a preset inside a soundfont with chosen rows (<code>…/FluidR3Mono_GM.sf3#128:32?CYMBAL=51&amp;HAT=44</code>, the Jazz kit with its ride and hi-hat foot; docs/engines.md); <code>call drumsN setRowLevel ROW 0..1</code></td>
+</tr>
+<tr>
+<td>sounds</td>
+<td><code>call bass chooseSoundSource Upright</code> (names from <code>get bass soundSources</code>), <code>call chords loadSoundPreset NAME</code> for TAL's factory sounds, <code>call bass.sound setValue CARD KNOB 0..1</code> for the synth's own SOUND MODIFIERS</td>
+</tr>
+<tr>
+<td>pads</td>
+<td><code>call pads clearPad N</code>, <code>call pads loadSample N PATH [start length]</code>, <code>call pads chopRegions N COUNT FIRSTPAD</code>, <code>set pads selectedPad N</code> + <code>call pads setValue MIX VOLUME 0.95</code>, <code>set pads bars 8</code>, <code>set pads viewBar B</code> + <code>toggleStep PAD STEP</code>; a long one-shot (a 16 s intro) needs a loop long enough not to retrigger it: 8 bars at 74 BPM is 26 s</td>
+</tr>
+<tr>
+<td>SAMPLE KING</td>
+<td><code>call sampler loadSample SLOT PATH</code>; <code>set ravving samplerMachine 1</code> puts the pads on key 5</td>
+</tr>
+<tr>
+<td>save</td>
+<td><code>call studio.projects saveAs NAME</code> (a name typed in the dialog would do the same); <code>get studio.projects current</code> to check</td>
+</tr>
+<tr>
+<td>sections and the song</td>
+<td>the section on screen is what the calls above edit; <code>call studio.sections rename s1 DROP</code>, <code>duplicate s1</code> (a copy, placed after the section ON SCREEN, which it becomes), <code>setBars ID 1–8</code>, <code>set MACHINE paused true</code> (it rests in this section), <code>move FROM TO</code> (the list), <code>removeFromSong 0</code> / <code>appendToSong ID</code> / <code>setRepeats INDEX N</code> (the song), <code>set studio.sections mode 1</code> (SONG), <code>pick ID</code> (the one on screen when saved)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="things-that-bit">Things that bit</h2>
+<ul>
+<li>
+<p>A loop in the shell that reads a file line by line and calls <code>tools/device.sh</code> loses all
+  but the first line: the ssh inside reads the loop's stdin. Send the lines from one script
+  on the device (run.sh) or use <code>ssh -n</code>.</p>
+</li>
+<li>
+<p>Soundfont programs: a soundfont's presets are not always at program 0. <code>ACBass.sf3</code> has
+  its one bass at bank 0 program 3; read the <code>phdr</code> chunk (a few lines of Python) before
+  trusting a number. General MIDI sets (<code>FluidR3Mono_GM.sf3</code>) follow the GM numbers.</p>
+</li>
+<li>Solos survive: a machine stays silent while another is soloed, by script too. Check the
+  header before concluding an engine is broken.</li>
+<li>Hearing it from the laptop: <code>tools/meter.py</code> on <code>TrackPassthrough:Channel&lt;track+1&gt;-lane1-dryOutLeft</code>
+  gives RMS and brightness per machine; compare before and after a change.</li>
+<li>Jazz swings the 8ths: PatternModel's swing moves the odd 16ths only, so ravving swings
+  8ths itself through each note's <code>delay</code> (<code>Machine::setEighthSwing</code>). Measured on milo at
+  100 BPM, full swing: the ride's off-beat 448–453 ms after the beat, 149 ms before the next
+  (75 / 25), against 300 / 300 straight.</li>
+<li>A melody needs lengths: a bass or lead note is one step unless <code>setNoteLength</code> says more
+  (a sax's whole note held over the bar line is 19 steps); the roll draws the tail and a
+  long press on a cell stretches the row's note before it up to there.</li>
+<li>The melody of a published tune is someone else's: chord changes are fine to use, the
+  written melody is not something to copy into a project.</li>
+</ul>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+</body>
+</html>
