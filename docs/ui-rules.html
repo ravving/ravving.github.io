@@ -75,11 +75,16 @@
 <h1>UI rules</h1>
 <p class="doc-blurb">The shared base types, action against state buttons, one ✕ to leave, readable palettes.</p>
 
-<p>ravving's screens share one look: machines with side rails and a face in
-their own finish, controls grouped on strips, work areas recessed in wells, a dark header band on
-top. These rules keep every new screen in it. <code>tools/check-ui.py</code> checks them over the QML (a
-laptop test, <code>ctest -R ui-rules</code>, and <code>tools/static-analysis.sh ui</code>); <code>tools/ui-rules.json</code> holds
-the rules and their exceptions, and is where a new rule goes.</p>
+<p>ravving's screens share one look:</p>
+<ul>
+<li>machines with side rails and a face in their own finish;</li>
+<li>controls grouped on strips;</li>
+<li>work areas recessed in wells;</li>
+<li>a dark header band on top.</li>
+</ul>
+<p>These rules keep every new screen in it. <code>tools/check-ui.py</code> checks them over the QML, as a
+laptop test (<code>ctest -R ui-rules</code>) and in <code>tools/static-analysis.sh ui</code>. <code>tools/ui-rules.json</code>
+holds the rules and their exceptions, and is where a new rule goes.</p>
 <h2 id="shared-base-types">Shared base types</h2>
 <p>Use the component; never redraw it.</p>
 <table>
@@ -158,10 +163,10 @@ the rules and their exceptions, and is where a new rule goes.</p>
 <li><strong>Squared <code>ActionButton</code>: it does something once and leaves no state.</strong> LOAD, CLEAR, SAVE,
   RENAME, NEW, −/+, ◀ ▶, PLAY FROM HERE, TRIM, TO PADS, the transport keys, a picker showing its
   current value (it opens a list).</li>
-<li><strong>Rounded <code>Chip</code> / <code>StripButton</code>: a state you can see.</strong> An on/off toggle wears its LED (SET,
-  STEP, LIVE, S/M, MONITOR, REPEAT); one choice out of a set wears none (BANK A–D, the views,
-  SORT, the input tabs, KEEP TAKES IN). It stays lit while the state is on, so it always binds
-  <code>checked</code> (or is checkable). <em>Checked:</em> <code>chip-shows-state</code>.</li>
+<li><strong>Rounded <code>Chip</code> / <code>StripButton</code>: a state you can see.</strong> It stays lit while the state is on,
+  so it always binds <code>checked</code>, or is checkable. <em>Checked:</em> <code>chip-shows-state</code>.</li>
+<li>An on/off toggle wears its LED: SET, STEP, LIVE, S/M, MONITOR, REPEAT.</li>
+<li>One choice out of a set wears none: BANK A–D, the views, SORT, the input tabs, KEEP TAKES IN.</li>
 <li><strong><code>ConfirmButton</code> for what cannot be undone:</strong> the first tap arms it (AGAIN? and a countdown
   bar), a second one within three seconds does it.</li>
 <li>All of them at the standard size (see Button sizes). <em>Checked:</em> <code>actions-are-actionbuttons</code>
@@ -171,38 +176,45 @@ the rules and their exceptions, and is where a new rule goes.</p>
 <ul>
 <li><strong>One height: <code>Rave.controlHeight</code> (36 px)</strong> for every button, action or state, so a row of
   them lines up and a finger always finds the same target on the 1280×800 touch screen.</li>
-<li><strong>A smallest width:</strong> <code>Rave.controlWidth</code> (48 px, square) for a glyph (◀ ▶ − + ⟳ ✕) and
-  <code>Rave.actionMinWidth</code> (88 px) for a word (LOAD, SCAN, SAVE): a short word is no smaller a
-  target than a long one. A longer label grows past it. <code>ActionButton</code> applies both on its own
-  (<code>minimumWidth</code>); a button may ask for more (the dialogs' main action, SAVE at 150, SCAN at
-  130 so SCANNING… does not shift the row), never for less.</li>
+<li><strong>A smallest width:</strong> <code>Rave.controlWidth</code> (48 px, square) for a glyph (◀ ▶ − + ⟳ ✕), and
+  <code>Rave.actionMinWidth</code> (88 px) for a word (LOAD, SCAN, SAVE). A short word is no smaller a
+  target than a long one, and a longer label grows past it.</li>
+<li><code>ActionButton</code> applies both on its own (<code>minimumWidth</code>). A button may ask for more, never
+  less: the dialogs' main action, SAVE at 150, or SCAN at 130 so SCANNING… doesn't shift the
+  row.</li>
 <li>A row that wants bigger buttons sizes them all from one property (the SONG page's
   <code>rowButtonHeight</code>, <code>wordButtonWidth</code>), never with numbers on each button.
   <em>Checked:</em> <code>button-standard-size</code> (no number under the standard on a button's height or width).</li>
 </ul>
 <h2 id="controls-in-a-group-take-the-device-knobs">Controls in a group take the device knobs</h2>
 <ul>
-<li><strong>Dials, switches (WaveCycler) and sliders that sit together are a <code>KnobGroup</code></strong> with them as
-  its <code>targets</code>: the group takes the focus (a tap on it, ◀ ▶ between groups), the device's
-  three small knobs then drive its controls in order (the big knob, one more), and each control
-  wears its <code>KnobBadge</code> (1, 2, 3) saying which knob moves it, with the pick-up diamond on the
-  fixed-pot kit. A group shows its frame while it has the knobs. ParamCard (the MODS and SOUND
-  EFFECTS cards) and the header's TEMPO, FX SENDS and MASTER are the model.</li>
+<li><strong>Dials, switches (WaveCycler) and sliders that sit together are a <code>KnobGroup</code></strong>, with them as
+  its <code>targets</code>.</li>
+<li>The group takes the focus: a tap on it, or ◀ ▶ between groups.</li>
+<li>The device's three small knobs then drive its controls in order, and the big knob one more.</li>
+<li>Each control wears its <code>KnobBadge</code> (1, 2, 3) saying which knob moves it, with the pick-up
+    diamond on the fixed-pot kit.</li>
+<li>A group shows its frame while it has the knobs.</li>
+<li>The models: ParamCard (the MODS and SOUND EFFECTS cards), and the header's TEMPO, FX SENDS
+    and MASTER.</li>
 <li>So nothing a finger can turn is out of reach of the hardware, and the badges say which knob
   is which without a manual. <em>Checked:</em> <code>grouped-controls-take-knobs</code> (a file with dials,
   switches or sliders and no KnobGroup).</li>
 </ul>
 <h2 id="rows-of-controls-sit-on-bands-dialogs-and-pages">Rows of controls sit on bands (dialogs and pages)</h2>
 <ul>
-<li><strong>A page's or a dialog's row of controls sits on one <code>ToolStrip</code></strong>, the darker rounded band a pattern
-  toolbar is (the preset, OCT, undo / redo on one band): <strong>one row, one continuous band</strong>, never
-  split into a band per group. The groups in it (a GroupLabel first, then its chips) are told
-  apart by the space between them, as the toolbar's are. In the presets and sounds dialogs
-  (ChoicePopup): SOURCE at the left and LOAD at the right share their row's band; GROUP and
-  SORT share theirs (the groups wrap in what SORT leaves them, SORT keeps the top right). A row
-  of one group hugs it (SAVE PATTERN AS's KEEP, NamePopup's <code>options</code> under <code>optionsLabel</code>). A
-  page's toolbar rows too: the SONG page's top bar (its title, SWITCH, PLAYS), its section and
-  song rows, the pattern toolbars.</li>
+<li><strong>A page's or a dialog's row of controls sits on one <code>ToolStrip</code></strong>: the darker rounded band a
+  pattern toolbar is, with the preset, OCT and undo / redo on one band.</li>
+<li><strong>One row, one continuous band</strong>, never split into a band per group.</li>
+<li>The groups in it (a GroupLabel first, then its chips) are told apart by the space between
+    them, as the toolbar's are.</li>
+<li>In the presets and sounds dialogs (ChoicePopup), SOURCE at the left and LOAD at the right
+    share their row's band. GROUP and SORT share theirs: the groups wrap in what SORT leaves
+    them, and SORT keeps the top right.</li>
+<li>A row of one group hugs it: SAVE PATTERN AS's KEEP, NamePopup's <code>options</code> under
+    <code>optionsLabel</code>.</li>
+<li>A page's toolbar rows too: the SONG page's top bar (its title, SWITCH, PLAYS), its section
+    and song rows, the pattern toolbars.</li>
 <li>So a dialog reads in rows and groups at a glance, as a page does, and a wrapping row never
   leaves a lone chip on a line of its own. <em>Checked:</em> <code>dialog-groups-on-bands</code> (a GroupLabel in a
   *Popup.qml outside a ToolStrip); one band per row is the reviewer's to see.</li>
@@ -221,9 +233,10 @@ the rules and their exceptions, and is where a new rule goes.</p>
 <ul>
 <li>Every page wears a <code>Chassis</code> in its own finish. <em>Checked:</em> <code>page-wears-chassis</code>.</li>
 <li>A page that takes the whole window (MUSIC PLAYER, RECORDER) has a <code>PageHeader</code> like the
-  dashboard's: row 1 its transport, a <code>HeaderPlate</code> saying what is on, its own toggles, the ✕;
-  row 2 its deck of grouped controls (<code>ToolStrip</code>s). The view sits under it on the <code>Chassis</code>.
-  <em>Checked:</em> <code>full-page-has-header</code>.</li>
+  dashboard's. <em>Checked:</em> <code>full-page-has-header</code>.</li>
+<li>Row 1: its transport, a <code>HeaderPlate</code> saying what's on, its own toggles, and the ✕.</li>
+<li>Row 2: its deck of grouped controls, on <code>ToolStrip</code>s.</li>
+<li>The view sits under it, on the <code>Chassis</code>.</li>
 <li>Its controls go on <code>ToolStrip</code>s by group, its work areas in <code>Well</code>s.</li>
 </ul>
 <h2 id="empty-views">Empty views</h2>
@@ -234,25 +247,87 @@ records the input as played"), never a <code>Text</code> of its own. <em>Checked
 <code>recorderFinishes</code>): <code>chassisTop</code>, <code>chassisBottom</code>, <code>rail</code>, <code>well</code>, <code>ink</code>, <code>dim</code>, <code>accent</code>, <code>glow</code>,
 <code>dark</code>. A new one:</p>
 <ul>
-<li id="starts-from-a-researched-palette-not-a-guess"><strong>Starts from a researched palette, not a guess.</strong> Pick its family from a reference palette set
-  (the Radix / Tailwind / Material colour scales, Adobe Color's or Coolors' tested schemes, or a
-  brand's own): a dark chassis from the scale's 950–900 steps, its well one step darker, the rail a
-  mid step of the same hue, the ink from the scale's 50 step, the dim from 400, the accent the
-  family's 400–500 (or its complement for contrast), the glow a lighter step of the accent.</li>
-<li><strong>Is readable (WCAG 2.x contrast), against both chassis colours:</strong> <code>ink</code> ≥ 7:1 (AAA body text),
-  <code>dim</code> ≥ 4.5:1 (AA text), <code>accent</code> ≥ 3:1 (AA for non-text) on the chassis or the well it lights
-  in. <em>Checked:</em> <code>palette-readable</code> (the ratios are printed when it fails).</li>
-<li>Is distinct from the pages beside it: the player is violet, the RECORDER's inputs wine, amber
-  and teal, the SONG page a matte slate night.</li>
+<li id="starts-from-a-researched-palette-not-a-guess"><strong>Starts from a researched palette, not a guess.</strong> Pick its family from a reference palette
+  set: the Radix, Tailwind or Material colour scales, Adobe Color's or Coolors' tested schemes,
+  or a brand's own. Then map its steps:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Colour</th>
+<th>Step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chassis</td>
+<td>950–900, dark</td>
+</tr>
+<tr>
+<td>well</td>
+<td>one step darker than the chassis</td>
+</tr>
+<tr>
+<td>rail</td>
+<td>a mid step of the same hue</td>
+</tr>
+<tr>
+<td>ink</td>
+<td>50</td>
+</tr>
+<tr>
+<td>dim</td>
+<td>400</td>
+</tr>
+<tr>
+<td>accent</td>
+<td>400–500, or its complement for contrast</td>
+</tr>
+<tr>
+<td>glow</td>
+<td>a lighter step of the accent</td>
+</tr>
+<tr>
+<td>- <strong>Is readable (WCAG 2.x contrast), against both chassis colours.</strong> <em>Checked:</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>palette-readable</code>, which prints the ratios when it fails.</td>
+<td></td>
+</tr>
+<tr>
+<td>- <code>ink</code> ≥ 7:1 (AAA body text);</td>
+<td></td>
+</tr>
+<tr>
+<td>- <code>dim</code> ≥ 4.5:1 (AA text);</td>
+<td></td>
+</tr>
+<tr>
+<td>- <code>accent</code> ≥ 3:1 (AA for non-text), on the chassis or the well it lights in.</td>
+<td></td>
+</tr>
+<tr>
+<td>- Is distinct from the pages beside it: the player is violet, the RECORDER's inputs wine, amber</td>
+<td></td>
+</tr>
+<tr>
+<td>and teal, the SONG page a matte slate night.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h2 id="text-is-translatable-keys-are-not">Text is translatable, keys are not</h2>
-<p>Every text a screen shows goes through <code>i18nc</code> with a context (<a href="translations.html">Translations</a>); a key
-that is stored or compared stays English and is translated where it is drawn (the <code>Rave</code>
-display helpers, <code>Rave.kli18nc</code> to mark it). The device's printed key names and the product
-names stay as printed. Translations run longer (Spanish about a third): <code>ActionButton</code> and
-<code>Chip</code> shrink their text to fit, down to 75 %, so give words room and look at every new
-screen in Spanish. Checked as <code>text-translatable</code>: a <code>text:</code> given a literal string without
-<code>i18n…</code>, outside the keep list in tools/ui-rules.json.</p>
+<p>Every text a screen shows goes through <code>i18nc</code>, with a context (<a href="translations.html">Translations</a>).</p>
+<ul>
+<li><strong>A key that's stored or compared</strong> stays English, and is translated where it's drawn: the
+  <code>Rave</code> display helpers, with <code>Rave.kli18nc</code> to mark it.</li>
+<li><strong>The device's printed key names and the product names</strong> stay as printed.</li>
+<li><strong>Translations run longer</strong>, Spanish by about a third. <code>ActionButton</code> and <code>Chip</code> shrink their
+  text to fit, down to 75 %, so give words room and look at every new screen in Spanish.</li>
+</ul>
+<p><em>Checked:</em> <code>text-translatable</code>, a <code>text:</code> given a literal string without <code>i18n…</code>, outside the
+keep list in tools/ui-rules.json.</p>
 <h2 id="adding-a-rule">Adding a rule</h2>
 <ol>
 <li>Write it here, under its heading, with why.</li>

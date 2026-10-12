@@ -101,27 +101,29 @@ jacks 4/5 (the HiFiBerry's capture, HardwarePorts) ──&gt; [input inserts] �
 <p>The link PipeWire makes on its own from every new engine to the speakers is removed, as
 zynthbox-qml's autoconnect does, so all sound goes through its track (level, mute, FX).</p>
 <p>Clock: every JACK client (libzynthbox's nodes, jalv) runs at the graph's rate and period,
-48000 / 256 on a Zynthbox. FluidSynth's audio goes through its PipeWire driver (a stream,
-so its node can run on its own clock): ravving tells it the graph's rate and period
-(<code>AudioGraph</code>, read once through a throwaway JACK client) so it is not resampled.</p>
+48000 / 256 on a Zynthbox. FluidSynth's audio goes through its PipeWire driver, a stream whose
+node can run on its own clock. So ravving tells it the graph's rate and period (<code>AudioGraph</code>,
+read once through a throwaway JACK client), and it isn't resampled.</p>
 <h2 id="hardware-port-names">Hardware port names</h2>
-<p>ravving never trusts a hardware port's JACK name: pipewire-jack names a device's ports after its
-node's description, or <code>system:</code> for the default device, and two cards sharing a description
-take turns at the plain name and a <code>-&lt;serial&gt;</code> one from one start of PipeWire to the next. On a
-Zynthbox the kernel's snd-dummy and the HiFiBerry are both "Built-in Audio Stereo", so a name
+<p>ravving never trusts a hardware port's JACK name. pipewire-jack names a device's ports after its
+node's description, or <code>system:</code> for the default device. Two cards sharing a description take
+turns at the plain name and a <code>-&lt;serial&gt;</code> one, from one start of PipeWire to the next.</p>
+<p>On a Zynthbox, the kernel's snd-dummy and the HiFiBerry are both "Built-in Audio Stereo". A name
 alone can point the input at the silent Dummy.</p>
 <ul>
-<li><strong>The device:</strong> <code>data/wireplumber/50-ravving-hardware.conf</code> hides the Dummy from PipeWire, so
-  the HiFiBerry is the only "Built-in Audio Stereo", and (by its priority, 10000 against 1000)
-  the <code>system:</code> device, on every start. libzynthbox and zynthbox-qml wire that name too.</li>
-<li><strong>ravving:</strong> <code>HardwarePorts</code> finds a card's ports by the card. In <code>pw-dump</code> each port's
-  <code>port.alias</code> is "<ALSA card name>:<port>" (kits.json <code>input.portsCard</code>), and its JACK name is
-  the JACK port whose UUID carries that port's object serial (pipewire-jack makes a port's UUID
-  as <code>(1 &lt;&lt; 32) | (serial + 1)</code>). The input (<code>captureOf</code>) and the speakers (<code>playbackOf</code>,
-  <code>JackWiring::setSpeakers</code>) are found that way at start; the input again each time it is armed
-  (the RECORDER or INPUT opening).</li>
-<li><strong>Seeing it:</strong> <code>pw-jack jack_lsp -U</code> (the UUIDs) against <code>pw-dump</code> (the serials and aliases);
-  the journal says <code>ravving: input ports …</code> and <code>ravving: speakers …</code>.</li>
+<li><strong>The device:</strong> <code>data/wireplumber/50-ravving-hardware.conf</code> hides the Dummy from PipeWire. The
+  HiFiBerry is then the only "Built-in Audio Stereo", and the <code>system:</code> device on every start
+  (by its priority, 10000 against 1000). libzynthbox and zynthbox-qml wire that name too.</li>
+<li><strong>ravving:</strong> <code>HardwarePorts</code> finds a card's ports by the card.</li>
+<li>In <code>pw-dump</code>, each port's <code>port.alias</code> is "<ALSA card name>:<port>" (kits.json
+    <code>input.portsCard</code>).</li>
+<li>Its JACK name is the JACK port whose UUID carries that port's object serial. pipewire-jack
+    makes a port's UUID as <code>(1 &lt;&lt; 32) | (serial + 1)</code>.</li>
+<li>The input (<code>captureOf</code>) and the speakers (<code>playbackOf</code>, <code>JackWiring::setSpeakers</code>) are found
+    that way at start. The input is found again each time it's armed, when the RECORDER or INPUT
+    opens.</li>
+<li><strong>Seeing it:</strong> compare <code>pw-jack jack_lsp -U</code> (the UUIDs) with <code>pw-dump</code> (the serials and
+  aliases). The journal says <code>ravving: input ports …</code> and <code>ravving: speakers …</code>.</li>
 </ul>
 <h2 id="tools-all-on-the-image">Tools (all on the image)</h2>
 <table>
@@ -225,16 +227,41 @@ alone can point the input at the silent Dummy.</p>
 <li>FluidSynth is started with <code>-r &lt;graph rate&gt; -o audio.period-size=&lt;period&gt; -o audio.periods=2</code>:
   its node runs at the graph's rate, not resampled, buffered by two periods (48000 / 512,
   10.7 ms). The ring is what keeps a busy engine from starving the graph.</li>
-<li>Thread priorities (<code>graph-check.py threads</code>): PipeWire's data loops run FIFO 88 (daemon)
-  and 83 (clients: libzynthbox's, jalv's, FluidSynth's); FluidSynth's own render thread
-  (<code>fluid_pipewire</code>) is not realtime (its <code>audio.realtime-prio</code> 60 covers the synth thread
-  only), jalv's main thread is not (it has no audio work); libzynthbox's SyncTimerThread
-  runs FIFO 99 while the transport has run.</li>
+<li>Thread priorities (<code>graph-check.py threads</code>):</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Thread</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PipeWire's data loops</td>
+<td>FIFO 88 (the daemon), 83 (the clients: libzynthbox's, jalv's, FluidSynth's)</td>
+</tr>
+<tr>
+<td>FluidSynth's render thread (<code>fluid_pipewire</code>)</td>
+<td>not realtime: its <code>audio.realtime-prio</code> 60 covers the synth thread only</td>
+</tr>
+<tr>
+<td>jalv's main thread</td>
+<td>not realtime: it does no audio work</td>
+</tr>
+<tr>
+<td>libzynthbox's SyncTimerThread</td>
+<td>FIFO 99, once the transport has run</td>
+</tr>
+</tbody>
+</table>
+<ul>
 <li><code>RAVVING_GDB=1</code> runs ravving under <code>gdb -batch</code>, which stops the whole process at every fork
-  and thread start or exit: the graph then counts 20 to 40 xruns a minute. It is for crash
-  hunts only: <code>systemctl --user unset-environment RAVVING_GDB</code> and a restart for a device that
-  is used; <code>tools/device.sh deploy</code> says so when it finds it set. The same applies to any
-  debugger or profiler attached to zynthbox-qml.</li>
+  and thread start or exit. The graph then counts 20 to 40 xruns a minute.</li>
+<li>It's for crash hunts only. On a device in use, run
+    <code>systemctl --user unset-environment RAVVING_GDB</code> and restart.</li>
+<li><code>tools/device.sh deploy</code> warns when it finds it set.</li>
+<li>The same goes for any debugger or profiler attached to zynthbox-qml.</li>
 <li>With nothing attached the graph has room to spare: a full project playing runs with 0 xruns,
   the busiest node (TrackPassthrough) at about 6 % of the period.</li>
 </ul>
@@ -249,17 +276,19 @@ alone can point the input at the silent Dummy.</p>
   Midi-Bridge, so copies closer than 4 ms are dropped (<a href="architecture.html">architecture.md</a>).</li>
 <li>Bluetooth MIDI: <code>bluez_midi.server</code> is PipeWire's BLE MIDI node, idle unless a BLE MIDI
   device connects.</li>
-<li>Latency: measure a MIDI round trip with <code>pw-jack jack_midi_latency_test</code> between a
-  hardware MIDI out and in joined by a cable (or <code>a2j</code>'s Midi Through for the software
-  path alone); an audio round trip with <code>pw-jack jack_iodelay</code> and a cable from an output
-  jack into input jack 4 or 5.</li>
+<li>Latency:</li>
+<li><strong>MIDI round trip:</strong> <code>pw-jack jack_midi_latency_test</code> between a hardware MIDI out and in,
+    joined by a cable. <code>a2j</code>'s Midi Through measures the software path alone.</li>
+<li><strong>Audio round trip:</strong> <code>pw-jack jack_iodelay</code>, with a cable from an output jack into input
+    jack 4 or 5.</li>
 </ul>
 <h3 id="who-drives-the-graph">Who drives the graph</h3>
 <p>The sound card's playback node is the driver (<code>priority.driver</code> 10000 from
 <code>/etc/wireplumber/wireplumber.conf.d/99-default-soundcard.conf</code>). It stays the driver whatever
-output is picked: with the sound routed to Bluetooth / HDMI the master's links to the jacks
-stay in place and the jacks are muted, since an unlinked playback node suspends and another
-node (the card's capture, or the Bluetooth transport) would become the clock.</p>
+output is picked.</p>
+<p>With the sound routed to Bluetooth or HDMI, the master's links to the jacks stay in place and
+the jacks are muted. An unlinked playback node would suspend, and another node would become the
+clock: the card's capture, or the Bluetooth transport.</p>
   </article>
 </main>
 <footer>

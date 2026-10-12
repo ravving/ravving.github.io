@@ -172,15 +172,20 @@ test suites in <a href="testing.html">testing.md</a>.</p>
 <code>python3-jack</code> and <code>numpy</code> there and must run under <code>pw-jack</code>: a plain JACK client (jalv over
 ssh included) would start its own jackd and break the session's audio.</p>
 <h2 id="when-ravving-stops-unexpectedly">When ravving stops unexpectedly</h2>
-<p>The service comes back on its own (<code>Restart=always</code>: startx leaves with 0 even when ravving
-dies under it, so <code>on-failure</code> would never fire; at most 5 starts in 2 minutes). The next start tells
-the issues center how the run before ended (<code>src/backend/lastrun.h</code>): ravving keeps a marker,
-<code>~/.local/state/ravving/running</code>, while it runs and removes it on a clean exit (SIGTERM, a normal
-return); <code>data/start.sh</code> writes <code>last-exit</code> ("<code> <time>", 128 + n for signal n). A crash
-(signal 11, 6), a kill (9), a failure (exit 1: often the display went away) or the session
-ending first (no exit written: X stopped) each read as such, with the <code>journalctl</code> line to
-look at. To try it: <code>pkill -SEGV -x ravving</code> brings ravving back 3 s later with the issue
-"ravving stopped unexpectedly" (error); <code>systemctl --user restart ravving</code> reports nothing.</p>
+<p>The service comes back on its own: <code>Restart=always</code>, at most 5 starts in 2 minutes. startx
+leaves with 0 even when ravving dies under it, so <code>on-failure</code> would never fire.</p>
+<p>The next start tells the issues center how the run before ended (<code>src/backend/lastrun.h</code>):</p>
+<ul>
+<li>ravving keeps a marker, <code>~/.local/state/ravving/running</code>, while it runs, and removes it on a
+  clean exit (SIGTERM, a normal return).</li>
+<li><code>data/start.sh</code> writes <code>last-exit</code> as "<code> <time>", with 128 + n for signal n.</li>
+<li>Each ending reads as what it was, with the <code>journalctl</code> line to look at:</li>
+<li>a crash (signal 11 or 6), or a kill (9);</li>
+<li>a failure (exit 1), often the display going away;</li>
+<li>the session ending first: no exit written, because X stopped.</li>
+</ul>
+<p>To try it: <code>pkill -SEGV -x ravving</code> brings ravving back 3 s later with the issue "ravving stopped
+unexpectedly" (error). <code>systemctl --user restart ravving</code> reports nothing.</p>
 <h2 id="recipes">Recipes</h2>
 <p id="deploy-and-wait"><strong>Deploy and wait.</strong> <code>sh tools/device.sh deploy</code> syncs the tree (not <code>build/</code>), builds,
 installs, restarts the service and returns once the journal says <em>audio and MIDI wired</em>,
@@ -196,16 +201,22 @@ let go), <code>SWITCH_MODE_RELEASED</code> (LIVE), <code>SWITCH_SELECT_RELEASED<
 <code>KNOB0_UP</code> … <code>KNOB3_DOWN</code> (knobs 1–3 and the big one). <strong>A step key with LIVE off edits the
 pattern on release</strong>: switch LIVE on (MODE) before using step keys as a test signal, and
 off again after.</p>
-<p id="call-a-backend-method"><strong>Call a backend method.</strong> <code>sh tools/device.sh call pads loadSample 0 /zynthian/…/x.wav</code>,
-<code>call pads audition 0</code>, <code>call pads setFlag 0 looping true</code>, <code>call input record</code>: the fifo's
-<code>call|OBJECT|METHOD|ARGS…</code> line (<code>src/cuiafifo.h</code>, fields split on <code>|</code> so paths keep their slashes) invokes any <code>Q_INVOKABLE</code> or slot on a
-machine (by its kits.json key), <code>studio</code>, <code>input</code> or <code>take</code>, converting the arguments; the
-journal logs each call with its arguments and whether it was found.</p>
-<p id="play-notes-as-a-keyboard"><strong>Play notes as a keyboard.</strong> <code>python3 tools/midifile.py /tmp/c2.mid 36</code> then
-<code>sh tools/device.sh play /tmp/c2.mid</code> (it goes in through Midi Through, 14:0, which ravving
-reads like any controller: the bass plays it when it is LIVE, or with nothing LIVE while
-its page is on screen). A chord: <code>midifile.py /tmp/c.mid 40 52 67</code>.</p>
-<p id="measure-a-sound"><strong>Measure a sound.</strong> While a note plays (<code>aplaymidi -p 14:0 /tmp/c2.mid &amp;</code> on the device):</p>
+<p id="call-a-backend-method"><strong>Call a backend method.</strong> For example <code>sh tools/device.sh call pads loadSample 0
+/zynthian/…/x.wav</code>, <code>call pads audition 0</code>, <code>call pads setFlag 0 looping true</code> or
+<code>call input record</code>.</p>
+<ul>
+<li>It's the fifo's <code>call|OBJECT|METHOD|ARGS…</code> line (<code>src/cuiafifo.h</code>). The fields are split on
+  <code>|</code>, so paths keep their slashes.</li>
+<li>It invokes any <code>Q_INVOKABLE</code> or slot on a machine (by its kits.json key), <code>studio</code>, <code>input</code>
+  or <code>take</code>, converting the arguments.</li>
+<li>The journal logs each call, with its arguments and whether it was found.</li>
+</ul>
+<p id="play-notes-as-a-keyboard"><strong>Play notes as a keyboard.</strong> <code>python3 tools/midifile.py /tmp/c2.mid 36</code>, then
+<code>sh tools/device.sh play /tmp/c2.mid</code>. A chord: <code>midifile.py /tmp/c.mid 40 52 67</code>.</p>
+<p>The notes go in through Midi Through (14:0), which ravving reads like any controller. The bass
+plays them when it's LIVE, or with nothing LIVE while its page is on screen.</p>
+<h3 id="measure-a-sound">Measure a sound</h3>
+<p>While a note plays (<code>aplaymidi -p 14:0 /tmp/c2.mid &amp;</code> on the device):</p>
 <pre><code class="language-sh">pw-jack python3 /tmp/meter.py TrackPassthrough:Channel4-lane1-dryOutLeft
 # rms 0.0256 hf 0.001 crest 3.44
 </code></pre>
@@ -261,22 +272,31 @@ LV2 fed from a port and measures it, one setting per call; DRIVE (Calf Saturator
 calibrated with runs like
 <code>lv2probe.sh http://calf.sourceforge.net/plugins/Saturator ravving-bass:lv2_audio_out_1 /tmp/n36.mid level_in=16 drive=5</code>.
 <code>lv2info URI</code> lists a plugin's ports and ranges; <code>lv2ls | grep -i word</code> finds plugins.</p>
-<p id="test-a-time-effect"><strong>Test a time effect.</strong> Record the master after the repeat while holding a pad, then check
+<h3 id="test-a-time-effect">Test a time effect</h3>
+<p>Record the master after the repeat while holding a pad, then check
 the repeat: <code>pw-jack python3 /tmp/record.py ravving-repeat:out_l --seconds 4.5 &amp;</code>, hold
 STUTTER (<code>xdotool mousemove 400 113 mousedown 1; sleep 1.5; xdotool mouseup 1</code>; the transport
 must play), then <code>python3 /tmp/repeatcheck.py --file /tmp/record.npy --bpm 120 --length-steps 1</code>:
 ~0 live, 1.000 while held. Dragging a held pad is <code>xdotool mousemove</code> steps of 5 px while the
 button is down.</p>
-<p id="read-the-saved-state"><strong>Read the saved state.</strong> <code>~/.local/state/ravving/session.json</code> is the whole
-session (the same format as a project): <code>machines</code> (each one's <code>steps</code> or <code>line</code>, <code>bars</code>,
-<code>kit</code>, <code>sound</code>, <code>effects</code>, <code>level</code>, <code>paused</code>, <code>preset</code>…), <code>bpm</code>, <code>swing</code>, <code>master</code>,
-<code>liveFx</code>, <code>globalEffects</code>, <code>ui</code>. It is written 1.5 s after a change and on exit. Projects
-are in <code>/zynthian/zynthian-my-data/ravving/projects/</code> (<code>.current</code> names the open one). To
-check a save/open round trip: copy session.json, SAVE, NEW, open the project again, and
-compare the two files' <code>machines</code> (a python one-liner; every machine should be identical).</p>
-<p>From QML, give <code>studio.uiValue()</code> its fallback with <code>??</code> (a JS object does not convert to
-the C++ default), and know that a JS object passed to C++ arrives as a QJSValue
-(<code>setUiValue</code> unwraps it, or it would save as null).</p>
+<h3 id="read-the-saved-state">Read the saved state</h3>
+<p><code>~/.local/state/ravving/session.json</code> is the whole session, in the same format as a project:</p>
+<ul>
+<li><code>machines</code>: each one's <code>steps</code> or <code>line</code>, <code>bars</code>, <code>kit</code>, <code>sound</code>, <code>effects</code>, <code>level</code>,
+  <code>paused</code>, <code>preset</code>…</li>
+<li><code>bpm</code>, <code>swing</code>, <code>master</code>, <code>liveFx</code>, <code>globalEffects</code>, <code>ui</code>.</li>
+</ul>
+<p>It's written 1.5 s after a change, and on exit. Projects are in
+<code>/zynthian/zynthian-my-data/ravving/projects/</code>, where <code>.current</code> names the open one.</p>
+<p>To check a save and open round trip: copy session.json, SAVE, NEW, open the project again, and
+compare the two files' <code>machines</code>. Every machine should be identical.</p>
+<p>From QML:</p>
+<ul>
+<li>give <code>studio.uiValue()</code> its fallback with <code>??</code>, since a JS object doesn't convert to the C++
+  default;</li>
+<li>a JS object passed to C++ arrives as a QJSValue. <code>setUiValue</code> unwraps it, or it would save as
+  null.</li>
+</ul>
 <p id="logging"><strong>Logging.</strong> Categories are off by default:</p>
 <pre><code class="language-sh">ssh root@milo.local 'systemctl --user set-environment QT_LOGGING_RULES=&quot;ravving.cuia.debug=true;ravving.midi.debug=true&quot; &amp;&amp; systemctl --user restart ravving'
 sh tools/device.sh log 30
@@ -289,31 +309,43 @@ RAVVING_NO_ZYNTHBOX=1 RAVVING_DATA_DIR=$PWD/data QT_QPA_PLATFORM=offscreen ./bui
 captures every page and a few scripted states (src/main.cpp: add a step there, and find
 items by <code>objectName</code> with <code>findItem()</code>). It also shows QML warnings: a clean run prints
 nothing.</p>
-<p id="check-the-audio-input"><strong>Check the audio input.</strong> Read both channels while someone plays or touches the plug's tip
+<h3 id="check-the-audio-input">Check the audio input</h3>
+<p>Read both channels while someone plays or touches the plug's tip
 (a finger on a working input hums around −30 dBFS; an open one sits near −75):</p>
 <pre><code class="language-sh">pw-jack python3 /tmp/record.py &quot;Built-in Audio Stereo:capture_FL&quot; --seconds 10 --save /tmp/l.npy
 amixer -c 3 sset &quot;ADC Left Capture Source&quot; &quot;VINL1[SE]&quot;     # try the ADC's other inputs
 </code></pre>
-<p>Two cards are called "Built-in Audio Stereo" (the HiFiBerry and a Dummy, always −180 dBFS), and
-which one gets the number suffix (<code>capture_FL-92</code>) <strong>changes between boots</strong>: check with
-<code>pw-dump</code> (the port alias names the card) or ravving's journal line <code>input ports</code>. ravving finds
-them itself (<code>InputPorts</code>).</p>
-<p id="why-a-bluetooth-device-does-not-connect-or-play"><strong>Why a Bluetooth device does not connect or play.</strong> Read-only, nothing is connected or
-restarted, so it is safe while someone listens:</p>
+<p>Two cards are called "Built-in Audio Stereo": the HiFiBerry, and a Dummy at −180 dBFS. Which one
+gets the number suffix (<code>capture_FL-92</code>) <strong>changes between boots</strong>. Check with <code>pw-dump</code>, where
+the port alias names the card, or ravving's journal line <code>input ports</code>. ravving finds them
+itself (<code>InputPorts</code>).</p>
+<h3 id="why-a-bluetooth-device-doesnt-connect-or-play">Why a Bluetooth device doesn't connect or play</h3>
+<p>The report is read-only: nothing is connected or restarted, so it's safe while someone
+listens.</p>
 <pre><code class="language-sh">sh tools/device.sh bt 6C:5A:B5:49:35:D8          # one device; no address: every known one
 sh tools/device.sh bt 6C:5A:B5:49:35:D8 -1d      # only the last day of the journals
 sh tools/device.sh bt capture 60 /tmp/lg.snoop   # btmon for 60 s: connect the device meanwhile
 btmon -r /tmp/lg.snoop | less                    # or open it in Wireshark
 </code></pre>
-<p>The report has the adapter and <code>main.conf</code>, the A2DP endpoints PipeWire registered (one per
-codec, shared by every device), WirePlumber's Bluetooth drop-ins, the PipeWire Bluetooth
-objects (card, sink, codec) and ravving's loopback, then per device its record (keys hidden),
-its cached A2DP endpoints decoded (which codecs it takes), the bluetoothd / WirePlumber /
-ravving journal lines and a tally: link up, <code>Unable to select SEP</code>, create-socket,
-page-timeout, profile-unavailable, A2DP transports opened. What each failure means is in
-"Bluetooth troubleshooting" below and <a href="bluetooth.html">architecture.md</a>. In a capture, a page that is never answered shows as <code>Create Connection</code> followed
-by <code>Connect Complete … Page Timeout</code>; a link refused for lack of an endpoint shows the AVDTP
-<code>Discover</code> / <code>Get Capabilities</code> and then a disconnect with no <code>Set Configuration</code>.</p>
+<p>The report has:</p>
+<ul>
+<li>the adapter and <code>main.conf</code>;</li>
+<li>the A2DP endpoints PipeWire registered, one per codec, shared by every device;</li>
+<li>WirePlumber's Bluetooth drop-ins, and the PipeWire Bluetooth objects (card, sink, codec);</li>
+<li>ravving's loopback;</li>
+<li>per device: its record (keys hidden), its cached A2DP endpoints decoded (which codecs it
+  takes), and the bluetoothd, WirePlumber and ravving journal lines;</li>
+<li>a tally: link up, <code>Unable to select SEP</code>, create-socket, page-timeout, profile-unavailable,
+  A2DP transports opened.</li>
+</ul>
+<p>What each failure means is in "Bluetooth troubleshooting" below and in
+<a href="bluetooth.html">the Bluetooth page</a>. In a capture:</p>
+<ul>
+<li>a page that's never answered shows as <code>Create Connection</code>, then <code>Connect Complete … Page
+  Timeout</code>;</li>
+<li>a link refused for lack of an endpoint shows the AVDTP <code>Discover</code> and <code>Get Capabilities</code>, then
+  a disconnect with no <code>Set Configuration</code>.</li>
+</ul>
 <h2 id="bluetooth-troubleshooting">Bluetooth troubleshooting</h2>
 <table>
 <thead>

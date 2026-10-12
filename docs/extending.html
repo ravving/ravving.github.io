@@ -76,53 +76,70 @@
 <p class="doc-blurb">Adding a machine, an engine, SOUND MODIFIERS, an effect, an issues-center check.</p>
 
 <p>The recipes for growing ravving. Read <a href="architecture.html">architecture.md</a> first for the
-layers; this is the how-to. The code rules hold throughout:
-reuse a part before writing a new one, keep each class to one job, and give every public
-API its QDoc block in the <code>.cpp</code> (<a href="writing-code-docs.html">writing-code-docs.md</a>) and every non-obvious line an
-inline comment that says why.</p>
+layers; this is the how-to. The code rules hold throughout:</p>
+<ul>
+<li>reuse a part before writing a new one;</li>
+<li>keep each class to one job;</li>
+<li>give every public API its QDoc block in the <code>.cpp</code> (<a href="writing-code-docs.html">writing-code-docs.md</a>);</li>
+<li>give every non-obvious line an inline comment that says why.</li>
+</ul>
 <h2 id="a-new-machine-a-pages-instrument">A new machine (a page's instrument)</h2>
 <p>The drums and the bass share everything except what is specific to them. A new machine
 (CHORDS, LEAD, SAMPLER) follows the same path.</p>
-<ol>
-<li><strong>Backend: a <code>Machine</code> subclass</strong> (<code>src/backend/machine.h</code>). It inherits the pattern,
-   bars, presets, level/pan/pause/mute, effects, LIVE play and STEP entry. Implement:
-   - <code>onAttached()</code>: write the machine's own state into its libzynthbox pattern;
-   - <code>refresh()</code>: publish the bar on screen to QML (its own Q_PROPERTYs + <code>stepsChanged</code>);
-   - <code>revoice()</code>: rewrite every step's velocity (mute/solo/kick modes changed);
-   - <code>clearOwnSteps()</code>, <code>applyChart(chart)</code>, <code>chart()</code>: its preset format (a chart is a
-     map of strings, one character per step, so preset files stay readable);
-   - <code>placeHit(position, key, accented)</code>, <code>liveNotes(key)</code>, <code>liveVelocity(key, accented)</code>:
-     what a live key writes and plays (a list of notes: one for a row or a mono note, a
-     whole chord for ChordMachine);
-   - <code>state()</code>: everything it keeps (call <code>Machine::state()</code> and add to it: its steps, kit,
-     sound…); a project file is exactly this, so it must be complete;
-   - <code>restoreContent(state)</code>: take that back <strong>while running</strong> (opening a project) and
-     write the pattern; an empty state means its defaults (the default preset, kit,
-     sound). Call it from the constructor too, so start-up and opening share one path
-     (MonoMachine and ChordMachine do). A missing key means "default", a present but empty one means
-     "empty" (a cleared pattern stays cleared).
-   Write steps through <code>addSubnote</code>/<code>setSubnoteMetadata</code> (velocity −1 = silent, duration in
-   pattern ticks via <code>stepTicks()</code>), and call <code>markEdited()</code> after a user change.</li>
-<li><strong>Data:</strong> an entry in kits.json's <code>machines</code> (<code>key</code>, <code>kind</code>, <code>track</code>, <code>zynthianChannel</code>,
-   <code>engine</code>, <code>sound</code>, <code>presets</code>, <code>defaultPreset</code>, <code>baseNote</code>…; tracks and channels must be
-   unused) and a presets file (<code>data/&lt;machine&gt;-presets.json</code>, <code>{presets: [{name, genre,
-   chart}]}</code>), installed by CMakeLists.txt. A new instance of an existing kind (another
-   mono synth) needs nothing else on the C++ side.</li>
-<li><strong>Studio</strong> (<code>studio.cpp</code>, <code>loadKits()</code>): a new kind is one more <code>kind ==</code> branch creating
-   it; <code>addMachine()</code> then wires saving, ❚❚, the track lane, sends, the engine, DRIVE, SOUND
-   MODIFIERS and expressions generically (<code>attachMachine()</code>), and it appears as
-   <code>studio.machines.&lt;key&gt;</code>.</li>
-<li><strong>QML: a <code>MachinePanel</code> subclass</strong> (see <code>MonoMachinePanel.qml</code>, <code>ChordMachinePanel.qml</code>):
-   the toolbar and editor as children, and the overrides <code>MachinePanel</code> declares: <code>stepLeds</code>,
-   <code>liveKeyDown/Up</code> (what pads do while LIVE), <code>stepKey</code>, <code>moveSelection(dy)</code> (▲ ▼ in the
-   editor; false at the edge), <code>keyForNote</code> / <code>padForKey</code> (what a keyboard note plays and
-   which pad lights). Light live notes from <code>heldKeys</code>.</li>
-<li><strong>QML: the page</strong>: a <code>MachinePage</code> declaring its panel (see <code>pages/ChordsPage.qml</code>); it
-   forwards the device and an external keyboard to it.</li>
-<li>Add the C++ files to <code>src/backend/CMakeLists.txt</code> and the QML files to <code>src/CMakeLists.txt</code>
-   (<code>RAVVING_QML_FILES</code>), a screenshot step in <code>src/main.cpp</code>, and
-   the machine to <code>Rave.machines</code> (finish colours: strings).</li>
-</ol>
+<h3 id="1-backend-a-machine-subclass">1. Backend: a <code>Machine</code> subclass</h3>
+<p>In <code>src/backend/machine.h</code>. It inherits the pattern, bars, presets, level, pan, pause, mute,
+effects, LIVE play and STEP entry. Implement:</p>
+<ul>
+<li><code>onAttached()</code>: write the machine's own state into its libzynthbox pattern;</li>
+<li><code>refresh()</code>: publish the bar on screen to QML (its own Q_PROPERTYs + <code>stepsChanged</code>);</li>
+<li><code>revoice()</code>: rewrite every step's velocity (mute/solo/kick modes changed);</li>
+<li><code>clearOwnSteps()</code>, <code>applyChart(chart)</code>, <code>chart()</code>: its preset format (a chart is a
+  map of strings, one character per step, so preset files stay readable);</li>
+<li><code>placeHit(position, key, accented)</code>, <code>liveNotes(key)</code>, <code>liveVelocity(key, accented)</code>:
+  what a live key writes and plays (a list of notes: one for a row or a mono note, a
+  whole chord for ChordMachine).</li>
+</ul>
+<h4 id="saving-and-opening">Saving and opening</h4>
+<ul>
+<li><code>state()</code>: everything it keeps (call <code>Machine::state()</code> and add to it: its steps, kit,
+  sound…); a project file is exactly this, so it must be complete;</li>
+<li><code>restoreContent(state)</code>: take that back <strong>while running</strong> (opening a project) and
+  write the pattern. An empty state means its defaults: the default preset, kit and sound.</li>
+<li>In a state, a missing key means "default", and a present but empty one means "empty", so
+  a cleared pattern stays cleared.</li>
+<li>Call <code>restoreContent</code> from the constructor too, so start-up and opening share one path, as
+  MonoMachine and ChordMachine do.</li>
+</ul>
+<p>Write steps through <code>addSubnote</code>/<code>setSubnoteMetadata</code>: velocity −1 is silent, and the
+duration is in pattern ticks via <code>stepTicks()</code>. Call <code>markEdited()</code> after a user change.</p>
+<h3 id="2-data">2. Data</h3>
+<ul>
+<li>an entry in kits.json's <code>machines</code>: <code>key</code>, <code>kind</code>, <code>track</code>, <code>zynthianChannel</code>, <code>engine</code>,
+  <code>sound</code>, <code>presets</code>, <code>defaultPreset</code>, <code>baseNote</code>… Tracks and channels must be unused.</li>
+<li>a presets file, <code>data/&lt;machine&gt;-presets.json</code> (<code>{presets: [{name, genre, chart}]}</code>),
+  installed by CMakeLists.txt.</li>
+</ul>
+<p>A new instance of an existing kind, like another mono synth, needs nothing else in C++.</p>
+<h3 id="3-studio">3. Studio</h3>
+<p>In <code>studio.cpp</code>'s <code>loadKits()</code>, a new kind is one more <code>kind ==</code> branch creating it. <code>addMachine()</code> then wires it up generically (<code>attachMachine()</code>): saving, ❚❚, the track
+lane, sends, the engine, DRIVE, SOUND MODIFIERS and expressions. It appears as
+<code>studio.machines.&lt;key&gt;</code>.</p>
+<h3 id="4-qml-a-machinepanel-subclass">4. QML: a <code>MachinePanel</code> subclass</h3>
+<p>Like <code>MonoMachinePanel.qml</code> and <code>ChordMachinePanel.qml</code>, with the toolbar and editor as
+children. Override what <code>MachinePanel</code> declares:</p>
+<ul>
+<li><code>stepLeds</code>, and <code>liveKeyDown/Up</code>: what pads do while LIVE;</li>
+<li><code>stepKey</code>, and <code>moveSelection(dy)</code>: ▲ ▼ in the editor, false at the edge;</li>
+<li><code>keyForNote</code> / <code>padForKey</code>: what a keyboard note plays and which pad lights.</li>
+</ul>
+<p>Light live notes from <code>heldKeys</code>.</p>
+<h3 id="5-qml-the-page">5. QML: the page</h3>
+<p>A <code>MachinePage</code> declaring its panel (see <code>pages/ChordsPage.qml</code>); it
+forwards the device and an external keyboard to it.</p>
+<h3 id="6-build-files-and-finish">6. Build files and finish</h3>
+<p>Add the C++ files to <code>src/backend/CMakeLists.txt</code> and the QML files to <code>src/CMakeLists.txt</code>
+(<code>RAVVING_QML_FILES</code>). Add a screenshot step in <code>src/main.cpp</code>, and the machine to
+<code>Rave.machines</code>, with its finish colours as strings.</p>
 <h2 id="a-new-engine">A new engine</h2>
 <p>Engines are <code>SoundEngine</code> subclasses (<code>soundengine.h</code>): <code>start()</code>, <code>reconfigure(config)</code>,
 <code>midiInputPort()</code>, <code>audioOutputPorts()</code> (left, right), optional <code>setControl(symbol, value)</code>,
@@ -152,31 +169,40 @@ treats as logarithmic), with a 0..1 default:</p>
           { &quot;label&quot;: &quot;SAW&quot;,  &quot;controls&quot;: { &quot;osc1waveform&quot;: 0,   &quot;osc1pw&quot;: 0.5 } },
           { &quot;label&quot;: &quot;JUNO&quot;, &quot;controls&quot;: { &quot;osc1waveform&quot;: 0.5, &quot;osc1pw&quot;: 0.75 } } ] } ] } ]
 </code></pre>
-<p>A knob with <code>choices</code> is a switch (its value snaps to choice i of n at i / (n − 1)) and
-shows as a <code>WaveCycler</code> (SAW, SQR, TRI, SIN are drawn); each choice sets its <code>controls</code>
-(several ports; give every choice the same ports) or a <code>value</code> for the knob's <code>symbol</code>.
-Ports with no knob go in <code>engine.controls</code>. A live control a page plays (the ribbon's
-vibrato) is an <code>expression</code>: <code>"expressions": {"vibrato": {"symbol": "lfo2pitch", "max": 60}}</code>,
-played with <code>machine.setExpression("vibrato", amount)</code>.</p>
-<p id="get-the-ports-right-from-the-mods"><strong>Get the ports right from the mods.</strong> Every engine Zynthbox ships has an engine mod
-whose <code>docs/RESEARCH.md</code> decodes its ports from the engine's own
-source: which are logarithmic, how enums quantise (TAL: <code>i / den</code>, rounded, 1-based), which
-envelope drives what (Calf: EG1 → cutoff, EG2 → amp), what a port called <code>volume</code> really
-does. Read it before writing a machine's <code>engine.controls</code> and <code>sound</code>, and record what
-ravving relies on in <a href="engines.html">engines.md</a>. Studio connects the
-controls to the engine and sends them all whenever it (re)starts; values are saved with
-the machine. Read a plugin's port ranges with <code>lv2info</code> and check what its numbers mean in
-its source: an LV2 range is not always the unit its own GUI shows.</p>
+<ul>
+<li><strong>A knob with <code>choices</code></strong> is a switch: its value snaps to choice i of n at i / (n − 1). It
+  shows as a <code>WaveCycler</code>, which draws SAW, SQR, TRI and SIN. Each choice sets its <code>controls</code>
+  (several ports; give every choice the same ports) or a <code>value</code> for the knob's <code>symbol</code>.</li>
+<li><strong>Ports with no knob</strong> go in <code>engine.controls</code>.</li>
+<li><strong>A live control a page plays</strong>, like the ribbon's vibrato, is an <code>expression</code>:
+  <code>"expressions": {"vibrato": {"symbol": "lfo2pitch", "max": 60}}</code>, played with
+  <code>machine.setExpression("vibrato", amount)</code>.</li>
+</ul>
+<h3 id="get-the-ports-right-from-the-mods">Get the ports right from the mods</h3>
+<p>Every engine Zynthbox ships has an engine mod whose <code>docs/RESEARCH.md</code> decodes its ports from
+the engine's own source:</p>
+<ul>
+<li>which ports are logarithmic;</li>
+<li>how enums quantise (TAL: <code>i / den</code>, rounded, 1-based);</li>
+<li>which envelope drives what (Calf: EG1 → cutoff, EG2 → amp);</li>
+<li>what a port called <code>volume</code> really does.</li>
+</ul>
+<p>Read it before writing a machine's <code>engine.controls</code> and <code>sound</code>, and record what ravving relies
+on in <a href="engines.html">engines.md</a>. Read a plugin's port ranges with <code>lv2info</code>, and check what the
+numbers mean in its source: an LV2 range isn't always the unit its own GUI shows.</p>
+<p>Studio connects the controls to the engine, and sends them all whenever it starts or restarts.
+The values are saved with the machine.</p>
 <h2 id="a-new-effect">A new effect</h2>
 <ul>
 <li><strong>On the track lane</strong> (EQ, COMPRESSOR, SIDECHAIN, PAN): an entry in
   <code>EffectChain::effects()</code> (name, knobs, defaults, shared or per machine) and its mapping
   in <code>TrackEffects::apply()</code> onto the JackPassthrough lane's properties.</li>
-<li><strong>An insert</strong> (DRIVE): a <code>JalvPlugin</code> per machine created in <code>Studio::attachMachine()</code>,
-  given to <code>TrackEffects</code> (which maps the knobs onto its controls and starts it on first
-  use) and to <code>JackWiring::addSynth(…, insert)</code>; <code>TrackEffects::driveSwitched</code> →
-  <code>JackWiring::setInsertActive()</code> moves it into the path only while on, so the dry sound
-  never depends on the extra process. Calibrate its gain staging with <code>lv2probe.sh</code>.</li>
+<li><strong>An insert</strong> (DRIVE): a <code>JalvPlugin</code> per machine, created in <code>Studio::attachMachine()</code>.</li>
+<li>It goes to <code>TrackEffects</code>, which maps the knobs onto its controls and starts it on first
+    use, and to <code>JackWiring::addSynth(…, insert)</code>.</li>
+<li><code>TrackEffects::driveSwitched</code> → <code>JackWiring::setInsertActive()</code> puts it in the path only
+    while it's on, so the dry sound never depends on the extra process.</li>
+<li>Calibrate its gain staging with <code>lv2probe.sh</code>.</li>
 <li><strong>A send</strong> (REVERB, DELAY): one shared <code>JalvPlugin</code> in <code>GlobalEffects</code>, fed from every
   lane's wet outputs (<code>JackWiring::addSends</code>) and returned with <code>addEffectReturn</code>.</li>
 <li><strong>On the master</strong> (LIVE FX: CRUSH, PHASER, STUTTER/LOOP): <code>LiveFx</code> and
@@ -199,10 +225,14 @@ its source: an LV2 range is not always the unit its own GUI shows.</p>
   the arrows, the big knob, SELECT and BACK, and hand the focus back on close.</li>
 </ul>
 <h2 id="before-committing">Before committing</h2>
-<p>Build clean (no warnings), run the desktop screenshots (no QML warnings), deploy, check on
-the device (screenshot + measurement), update the docs this change touches (and the page's
-features or shortcuts), rebuild the site's pages, then commit. A gotcha met on the way is
-written down for the maintainers, not in these docs.</p>
+<ol>
+<li>Build clean, with no warnings.</li>
+<li>Run the desktop screenshots, with no QML warnings.</li>
+<li>Deploy, and check on the device: a screenshot and a measurement.</li>
+<li>Update the docs this change touches, and the webpage's features or shortcuts.</li>
+<li>Rebuild the site's pages, then commit.</li>
+</ol>
+<p>A gotcha met on the way goes to notes/ for the maintainers, not into these docs.</p>
 <p>A change the user can undo goes through the project's history: see "The undo history" in
 <a href="undo-history.html">architecture.md</a>.</p>
 <h2 id="reporting-a-problem-to-the-issues-center">Reporting a problem to the issues center</h2>
@@ -216,12 +246,16 @@ Issues::report(QStringLiteral(&quot;wiring&quot;), QStringLiteral(&quot;sound&qu
                QStringLiteral(&quot;restart&quot;));                                   // an action button, or &quot;&quot;
 Issues::clear(QStringLiteral(&quot;wiring&quot;));                                     // once it works again
 </code></pre>
-<p>Rules: a stable <code>id</code> per problem (reporting it again updates and counts it); <code>error</code> when
-something does not work, <code>warning</code> when it works worse or will stop, <code>notice</code> for what is
-worth knowing (a desktop without device keys); always a suggestion the user can follow; clear
-it from the same place that would see it recovered. A library's stderr line can become an
-issue through <code>StderrWatch</code>'s pattern table (src/stderrwatch.cpp). <code>tools/issues-test.sh</code>
-exercises the center over the fifo.</p>
+<p>Rules:</p>
+<ul>
+<li><strong>A stable <code>id</code> per problem.</strong> Reporting it again updates it and counts it.</li>
+<li><strong>The level:</strong> <code>error</code> when something doesn't work, <code>warning</code> when it works worse or will
+  stop, and <code>notice</code> for what's worth knowing, like a desktop without device keys.</li>
+<li><strong>Always a suggestion</strong> the user can follow.</li>
+<li><strong>Clear it</strong> from the same place that would see it recovered.</li>
+</ul>
+<p>A library's stderr line can become an issue through <code>StderrWatch</code>'s pattern table
+(src/stderrwatch.cpp). <code>tools/issues-test.sh</code> exercises the center over the fifo.</p>
   </article>
 </main>
 <footer>

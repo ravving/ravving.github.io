@@ -80,10 +80,11 @@ from the engine mods' research (each mod's <code>docs/RESEARCH.md</code>, decode
 source); read the mod before changing an engine's <code>engine.controls</code> in <code>data/kits.json</code> or its
 MODS profile in <code>data/engines.json</code>.</p>
 <h2 id="the-mods-one-profile-per-engine-dataenginesjson">The MODS: one profile per engine (data/engines.json)</h2>
-<p>What a page lets the user tweak of an engine (its SOUND MODIFIERS, the MODS cards, and its
-expressions, such as the lead ribbon's vibrato) is the <strong>engine's</strong>, not the machine's: one profile
-per engine in <code>data/engines.json</code>, found by the engine itself (<code>type</code>, and for jalv the plugin
-<code>uri</code>; <code>EngineProfiles</code>). Every source that plays an engine shows its knobs, on any machine:</p>
+<p>What a page lets you tweak of an engine belongs to the <strong>engine</strong>, not the machine. That's its
+SOUND MODIFIERS, the MODS cards, and its expressions, such as the lead ribbon's vibrato.</p>
+<p>There's one profile per engine in <code>data/engines.json</code>, found by the engine itself: its <code>type</code>,
+and for jalv the plugin <code>uri</code> (<code>EngineProfiles</code>). Every source that plays an engine shows its
+knobs, on any machine:</p>
 <table>
 <thead>
 <tr>
@@ -115,27 +116,34 @@ per engine in <code>data/engines.json</code>, found by the engine itself (<code>
 </tr>
 </tbody>
 </table>
+<h3 id="how-the-knobs-behave">How the knobs behave</h3>
 <ul>
-<li><strong>A source starts its knobs where its own <code>engine.controls</code> put those ports</strong> (the 808's
-  cutoff 400 Hz shows as the CUTOFF knob at 400), so loading a source never changes its sound;
-  without such a control a knob starts at the profile's <code>default</code>.</li>
+<li><strong>A source starts its knobs where its own <code>engine.controls</code> put those ports</strong>, so loading a
+  source never changes its sound. The 808's cutoff of 400 Hz shows as the CUTOFF knob at 400.
+  Without such a control, a knob starts at the profile's <code>default</code>.</li>
 <li><strong>The project keeps each set apart:</strong> <code>sound</code> (the own engine's), <code>sourceSound</code> (the
   soundfonts'), <code>sourceSounds</code> (each other plugin source's, by name); AUTO lanes are
   <code>sound/…</code>, <code>source/…</code> and <code>sources/&lt;source&gt;/…</code>.</li>
 <li id="an-engine-with-no-profile-shows-no-mods"><strong>An engine with no profile shows no MODS.</strong> A machine or a source that brings its own <code>sound</code>
   in kits.json keeps it (a special case; the profile is the rule).</li>
-<li id="checked-against-the-engines-real-ports-twice"><strong>Checked against the engines' real ports, twice.</strong> On the laptop, <code>tools/check-engines.py</code>
-  (<code>ctest -R engines</code>) checks every knob, choice, expression and kits.json control against the
-  plugins' ports, ranges included, from <code>tests/data/lv2-ports.json</code>. Run <code>tools/check-engines.py
-  --refresh</code> to read them again from the device's <code>lv2info</code> after adding an engine or upgrading
-  plugins. On the device, when an engine starts, <code>SoundEngine::hasControl()</code> checks the MODS of
-  the source playing, and a knob on a control the engine lacks is an issue in the issues centre
-  ("BASS MODS: Calf Monosynth lacks 1 of their controls").</li>
 </ul>
-<p><strong>Adding an engine's MODS:</strong> add its profile to <code>data/engines.json</code> (the cards as SoundControls
-reads them: <code>symbol</code>, <code>min</code>, <code>max</code>, <code>default</code> 0..1, <code>"curve": "log"</code>, or <code>choices</code> for a switch),
-refresh the ports if it is a new plugin, run <code>tools/check-engines.py</code>, then hear each knob on the
-device (<code>device.sh call &lt;machine&gt;.activeSound setValue CARD KNOB 0..1</code>).</p>
+<h3 id="checked-against-the-engines-real-ports-twice">Checked against the engines' real ports, twice</h3>
+<ul>
+<li><strong>On the laptop,</strong> <code>tools/check-engines.py</code> (<code>ctest -R engines</code>) checks every knob, choice,
+  expression and kits.json control against the plugins' ports, ranges included, from
+  <code>tests/data/lv2-ports.json</code>. After adding an engine or upgrading plugins, run
+  <code>tools/check-engines.py --refresh</code> to read them again from the device's <code>lv2info</code>.</li>
+<li><strong>On the device,</strong> <code>SoundEngine::hasControl()</code> checks the playing source's MODS when an
+  engine starts. A knob on a control the engine lacks shows in the issues centre, as "BASS
+  MODS: Calf Monosynth lacks 1 of their controls".</li>
+</ul>
+<p><strong>Adding an engine's MODS:</strong></p>
+<ol>
+<li>Add its profile to <code>data/engines.json</code>. The cards are as SoundControls reads them: <code>symbol</code>,
+   <code>min</code>, <code>max</code>, <code>default</code> 0..1, <code>"curve": "log"</code>, or <code>choices</code> for a switch.</li>
+<li>Refresh the ports if it's a new plugin, and run <code>tools/check-engines.py</code>.</li>
+<li>Hear each knob on the device: <code>device.sh call &lt;machine&gt;.activeSound setValue CARD KNOB 0..1</code>.</li>
+</ol>
 <h2 id="nekobi-bass-track-3">Nekobi: BASS (track 3)</h2>
 <p><code>http://distrho.sf.net/plugins/Nekobi</code>, a TB-303 clone. Research: <code>nekobi_acid_mod</code>.</p>
 <table>
@@ -282,18 +290,46 @@ Research: <code>fluidsynth2_mod</code>.</p>
 </tr>
 </tbody>
 </table>
-<p>The drums' SOUND MODIFIERS are the kit's own (engines.json's <code>kitSound</code>, EngineProfiles::resolveKit):
-TONE (CUTOFF, RESO), SHAPE (ATTACK, LENGTH: the release) and PITCH (TUNE in semitones, FINE in
-cents), SF2 generator offsets sent as NRPNs like the soundfont sources' MODS. A kit is one soundfont
-on one channel, so they act on the whole kit; per drum would need a channel per row.</p>
+<p>The drums' SOUND MODIFIERS are the kit's own (engines.json's <code>kitSound</code>,
+EngineProfiles::resolveKit):</p>
+<table>
+<thead>
+<tr>
+<th>Card</th>
+<th>Knobs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TONE</td>
+<td>CUTOFF, RESO</td>
+</tr>
+<tr>
+<td>SHAPE</td>
+<td>ATTACK, LENGTH (the release)</td>
+</tr>
+<tr>
+<td>PITCH</td>
+<td>TUNE in semitones, FINE in cents</td>
+</tr>
+</tbody>
+</table>
+<p>They're SF2 generator offsets sent as NRPNs, like the soundfont sources' MODS. A kit is one
+soundfont on one channel, so they act on the whole kit. Per-drum settings would need a channel
+per row.</p>
 <p><strong>Acoustic kits inside a General MIDI font</strong> (kits.json <code>presetKits</code>, the picker's ACOUSTIC
-group): a kit's path may name one preset of a soundfont, <code>&lt;file&gt;#&lt;bank&gt;:&lt;program&gt;</code>, and after
-it choose a row's key, <code>?CYMBAL=51&amp;HAT=44</code>. FluidR3's kits sit at bank 128 (Jazz 32, Brush
-40, Standard 0, Room 8) and keep the General MIDI map, so a key whose sample name says
-nothing ("Md Studio", its toms) takes its GM role. "Jazz · ride" and "Brush · ride" put the
-ride (51) on CYMBAL and the hi-hat foot (44) on HAT (shown as PEDAL); the plain "Jazz ·
-crash" keeps the crash, for breaks. FluidSynth gets the file and the bank and program; the
-path with its choices is what a project saves.</p>
+group):</p>
+<ul>
+<li><strong>The path</strong> may name one preset of a soundfont, <code>&lt;file&gt;#&lt;bank&gt;:&lt;program&gt;</code>, then choose a
+  row's key: <code>?CYMBAL=51&amp;HAT=44</code>.</li>
+<li><strong>FluidR3's kits</strong> sit at bank 128 (Jazz 32, Brush 40, Standard 0, Room 8) and keep the General
+  MIDI map. A key whose sample name says nothing, like "Md Studio" for its toms, takes its GM
+  role.</li>
+<li><strong>"Jazz · ride" and "Brush · ride"</strong> put the ride (51) on CYMBAL and the hi-hat foot (44) on HAT,
+  shown as PEDAL. The plain "Jazz · crash" keeps the crash, for breaks.</li>
+<li><strong>FluidSynth</strong> gets the file, the bank and the program. A project saves the path with its
+  choices.</li>
+</ul>
 <h2 id="samplersynth-sample-king-track-6">SamplerSynth: SAMPLE KING (track 6)</h2>
 <p>libzynthbox's own sampler: no process, clips (ClipAudioSource) played in the audio thread.
 Facts from libzynthbox's source (<code>SamplerSynthVoice.cpp</code>, <code>ClipAudioSourceSliceSettings.cpp</code>,
