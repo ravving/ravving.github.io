@@ -41,6 +41,7 @@
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
 <li><a href="export-a-track.html">Export a track and play it back</a></li>
+<li><a href="film-a-session.html">Film your session</a></li>
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
 <li><a href="machines.html">The machines</a></li>
 <li><a href="first-beat.html">Your first beat</a></li>
@@ -190,13 +191,15 @@ The history keeps <code>History::Depth</code> (100) steps.</p>
 <code>.canRedo</code>.</p>
 <h2 id="making-something-undoable">Making something undoable</h2>
 <ol>
-<li>Implement <code>HistoryParticipant</code> (four functions):
-   - <code>historyKey()</code>: a name unique among the participants ("bass", "song");
-   - <code>historyLabel()</code>: how the user reads a step of it ("BASS", "SONG");
-   - <code>historyState()</code>: its state as plain data, equal when nothing that matters changed
-     (leave out what only says what is on screen: a bar shown, a tab);
-   - <code>applyHistoryState(state)</code>: become that state (it may emit its change signals as
-     usual: the history does not record what it puts back).</li>
+<li>Implement <code>HistoryParticipant</code> (four functions):<ul>
+<li><code>historyKey()</code>: a name unique among the participants ("bass", "song");</li>
+<li><code>historyLabel()</code>: how the user reads a step of it ("BASS", "SONG");</li>
+<li><code>historyState()</code>: its state as plain data, equal when nothing that matters changed
+  (leave out what only says what is on screen: a bar shown, a tab);</li>
+<li><code>applyHistoryState(state)</code>: become that state (it may emit its change signals as
+  usual: the history does not record what it puts back).</li>
+</ul>
+</li>
 <li>Register it: <code>studio.history</code> → <code>history-&gt;add(this)</code> once it exists (Studio does it for
    the machines, <code>Machine::setHistory()</code>).</li>
 <li>Call <code>history-&gt;record(this)</code> after each change the user makes (a machine does it on its

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from guide/film-a-session.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html class="no-js" data-docs-base="../../docs/" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Graba tu sesión en vídeo · documentación de ravving</title>
+<link href="../../site.css?v=28f7125214" rel="stylesheet"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E" rel="icon"/>
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Ir al texto</a>
+<header class="nav">
+<div class="wrap">
+<a aria-label="ravving" class="brand" href="../index.html">
+<img alt="ravving" class="ravving" height="104" src="../../assets/ravving-wordmark.svg" width="822"/>
+</a>
+<nav aria-label="Secciones"><a href="../features.html#features">Funciones</a> <a href="../features.html#shortcuts">Atajos</a> <a aria-current="true" href="../../docs/index.html">Documentación</a> <a href="../../api/index.html">Referencia de la API</a></nav>
+<nav aria-label="Language" class="langs" translate="no">
+<a href="../../docs/film-a-session.html" hreflang="en" lang="en">EN</a>
+<a href="film-a-session.html" hreflang="es" lang="es">ES</a>
+<a href="../../ja/docs/film-a-session.html" hreflang="ja" lang="ja">日本語</a>
+</nav>
+</div>
+</header>
+<main class="wrap docs-wrap">
+<details class="docs-side" open="">
+<summary><span class="mono">Documentación</span></summary>
+<form class="docs-search" onsubmit="return false" role="search">
+<input aria-label="Buscar en la documentación" autocomplete="off" id="docs-search" placeholder="Buscar en la documentación… live fx, soundfonts" type="search"/>
+<ol hidden="" id="docs-results"></ol>
+</form>
+<nav aria-label="Documentación">
+<p class="mono">Usar ravving</p><ul>
+<li><a href="get-ravving.html">Consigue ravving</a></li>
+<li><a href="load-a-preset.html">Cargar un preset</a></li>
+<li><a href="loop-to-song.html">Convierte tu loop en una canción</a></li>
+<li><a href="export-a-track.html">Exporta un tema y escúchalo</a></li>
+<li class="on"><a aria-current="page" href="film-a-session.html">Graba tu sesión en vídeo</a><ul><li><a href="#start-live-rec">Empieza LIVE REC</a></li><li><a href="#while-it-records">Mientras graba</a></li><li><a href="#stop-it">Detenlo</a></li><li><a href="#when-it-ends">Al terminar</a></li><li><a href="#talk-over-the-music">Habla sobre la música</a></li><li><a href="#settings">Ajustes</a></li><li><a href="#more">Más</a></li></ul></li>
+<li><a href="troubleshooting.html">Cuando algo falla</a></li>
+<li><a href="machines.html">Las máquinas</a></li>
+<li><a href="first-beat.html">Tu primer beat</a></li>
+<li><a href="../../docs/manual.html">El manual</a></li>
+</ul>
+<p class="mono">Los packs de patrones</p><ul>
+<li><a href="../../docs/packs.html">Los packs de géneros</a></li>
+</ul>
+<p class="mono">Por dentro</p><ul>
+<li><a href="../../docs/architecture.html">Arquitectura</a></li>
+<li><a href="../../docs/backend.html">Clases del backend</a></li>
+<li><a href="../../docs/qml-components.html">Componentes QML</a></li>
+<li><a href="../../docs/undo-history.html">El historial de deshacer</a></li>
+<li><a href="../../docs/bluetooth.html">Bluetooth</a></li>
+<li><a href="../../docs/live-recording.html">Grabaciones en vivo</a></li>
+<li><a href="../../docs/engines.html">Los motores</a></li>
+<li><a href="../../docs/routing.html">El grafo de audio</a></li>
+<li><a href="../../docs/translations.html">Traducciones</a></li>
+<li><a href="../../docs/ui-rules.html">Reglas de UI</a></li>
+<li><a href="../../docs/extending.html">Ampliar ravving</a></li>
+<li><a href="../../docs/writing-the-guide.html">Escribir la guía</a></li>
+<li><a href="../../docs/writing-code-docs.html">Documentar el código</a></li>
+<li><a href="../../docs/building.html">Compilar</a></li>
+<li><a href="../../docs/packaging.html">Empaquetar</a></li>
+<li><a href="../../docs/testing.html">Pruebas en el aparato</a></li>
+<li><a href="../../docs/debugging.html">Depuración</a></li>
+<li><a href="../../docs/quality.html">Calidad</a></li>
+</ul>
+<p class="mono">El código</p><ul>
+<li><a href="../../api/index.html">Referencia de la API</a></li>
+</ul>
+</nav>
+</details>
+<article class="doc" id="doc">
+<p class="mono doc-kicker"><b>Usar ravving</b> <span>/</span> <b translate="no">guide/film-a-session.md</b></p>
+<h1>Graba tu sesión en vídeo</h1>
+<p class="doc-blurb">LIVE REC: un vídeo de la pantalla o de una cámara con el sonido sincronizado, o solo el sonido, con tu voz encima.</p>
+<p>Graba lo que tocas en vídeo: la pantalla, o una cámara USB, con el sonido sincronizado. O graba solo el sonido. En los dos casos, la música sigue sonando.</p>
+<h2 id="start-live-rec">Empieza LIVE REC</h2>
+<ol>
+<li>Pulsa <strong>MENU</strong> y toca <strong>LIVE REC</strong>.</li>
+<li><span>Elige <strong>WHAT</strong>, qué grabar:</span><ul>
+<li><strong>VIDEO:</strong> la pantalla o una cámara USB, con el sonido, como un MP4 entre tus VIDEOS;</li>
+<li><strong>AUDIO ONLY:</strong> solo el sonido, como un WAV entre tus TRACKS.</li>
+</ul>
+</li>
+<li>Elige si entra el <strong>MIC</strong>. Si está activado, tu voz va encima de la música.</li>
+<li>Toca <strong>START</strong>.</li>
+</ol>
+<p><img alt="El diálogo LIVE REC: WHAT, MIC y START" src="../../docs/images/live-rec-dialog.webp"/></p>
+<p>El diálogo es la confirmación, así que un toque sin querer nunca empieza una grabación.</p>
+<h2 id="while-it-records">Mientras graba</h2>
+<p>La placa cuenta hacia atrás, <strong>REC IN 3</strong>, y luego muestra el tiempo: <strong>● REC 00:04</strong>. El menú se cierra antes, para no salir en la imagen.</p>
+<p>En un vídeo, cada tecla que pulsas aparece nombrada abajo en la pantalla, para que quien lo vea sepa qué tocaste.</p>
+<h2 id="stop-it">Detenlo</h2>
+<p>Pulsa <strong>STOP</strong>. Termina la grabación, y la música con ella.</p>
+<p>Después, LIVE REC sigue activado y listo: pulsa <strong>RECORD</strong> para otra toma, desde cualquier página. Para apagarlo, vuelve a tocar la tarjeta LIVE REC en el menú.</p>
+<h2 id="when-it-ends">Al terminar</h2>
+<p>El diálogo VIDEO SAVED muestra el archivo, cuánto dura y su tamaño.</p>
+<p><img alt="VIDEO SAVED, con DELETE, RENAME y SEND…" src="../../docs/images/video-saved.webp"/></p>
+<ul>
+<li><strong>DELETE:</strong> tócalo dos veces en menos de tres segundos.</li>
+<li><strong>RENAME:</strong> ponle tu propio nombre.</li>
+<li><strong>SEND…:</strong> a una memoria USB, uno de tus ordenadores o tu teléfono.</li>
+</ul>
+<p>Una grabación de audio también tiene <strong>METADATA…</strong>: etiquétala, dibuja su portada y guárdala como WAV, FLAC, OGG o MP3, como un tema exportado.</p>
+<aside class="aru-tip"><span class="aru" data-mood="gregorian" data-species="octopus"></span><p>¡Canta encima! Con el MIC, la música baja bajo tu voz.</p></aside>
+<h2 id="talk-over-the-music">Habla sobre la música</h2>
+<p>Con el MIC, la música baja mientras hablas y vuelve cuando paras. Si aparece MIC TOO HOT, baja el GAIN del RECORDER.</p>
+<h2 id="settings">Ajustes</h2>
+<p>MENU → SETTINGS → VIDEO tiene la QUALITY, el TIMER antes de empezar a grabar, la SOURCE (la pantalla o una cámara USB) y la mezcla de voz en off.</p>
+<h2 id="more">Más</h2>
+<ul>
+<li><a href="../../docs/manual.html#video-recordings-and-the-computer-link">Grabaciones de vídeo y la conexión con el ordenador</a>: todos los ajustes, hablar sobre la música y tus ordenadores.</li>
+</ul>
+</article>
+</main>
+<footer>
+<div class="wrap">
+<p>ravving es de Camilo Higuita, GPL‑3.0‑or‑later; estas páginas se generan a partir del markdown del repositorio con tools/build-site-docs.py.</p>
+</div>
+</footer>
+<script defer="" src="../../assets/aru.js?v=b9b5e512af"></script>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
+  function load(done) {
+    if (index) return done();
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
+</body>
+</html>

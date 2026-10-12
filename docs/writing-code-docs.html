@@ -41,6 +41,7 @@
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
 <li><a href="export-a-track.html">Export a track and play it back</a></li>
+<li><a href="film-a-session.html">Film your session</a></li>
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
 <li><a href="machines.html">The machines</a></li>
 <li><a href="first-beat.html">Your first beat</a></li>
@@ -87,31 +88,37 @@ plugin base types first.</p>
 <h2 id="the-rules">The rules</h2>
 <h3 id="what-to-write">What to write</h3>
 <ol>
-<li id="document-with-qdoc"><strong>Document with QDoc.</strong> Every public item has a <code>/*! ... */</code> block:
-   - a class, struct or namespace: <code>\class</code> (<code>\struct</code>, <code>\namespace</code>), <code>\inmodule Ravving</code>, its
-     <code>\ingroup</code> and a <code>\brief</code>;
-   - a Q_PROPERTY: a <code>\property</code> block;
-   - a public method, slot, Q_INVOKABLE or signal: a block;
-   - a public enum: an <code>\enum</code> block, with a <code>\value</code> for each value.</li>
-<li><strong>Be concise, precise and technical about what the current code does:</strong>
-   - its inputs and outputs;
-   - units: dB or linear gain, milliseconds or seconds, steps or ticks, 0..1;
-   - ranges and clamping;
-   - the thread it runs on: the GUI thread, the audio thread, a worker;
-   - who owns what it hands out, its invariants, and its side effects (what it saves, emits,
-     starts).</li>
+<li id="document-with-qdoc"><strong>Document with QDoc.</strong> Every public item has a <code>/*! ... */</code> block:<ul>
+<li>a class, struct or namespace: <code>\class</code> (<code>\struct</code>, <code>\namespace</code>), <code>\inmodule Ravving</code>, its
+  <code>\ingroup</code> and a <code>\brief</code>;</li>
+<li>a Q_PROPERTY: a <code>\property</code> block;</li>
+<li>a public method, slot, Q_INVOKABLE or signal: a block;</li>
+<li>a public enum: an <code>\enum</code> block, with a <code>\value</code> for each value.</li>
+</ul>
+</li>
+<li><strong>Be concise, precise and technical about what the current code does:</strong><ul>
+<li>its inputs and outputs;</li>
+<li>units: dB or linear gain, milliseconds or seconds, steps or ticks, 0..1;</li>
+<li>ranges and clamping;</li>
+<li>the thread it runs on: the GUI thread, the audio thread, a worker;</li>
+<li>who owns what it hands out, its invariants, and its side effects (what it saves, emits,
+  starts).</li>
+</ul>
+</li>
 </ol>
 <h3 id="what-to-leave-out">What to leave out</h3>
 <ol start="3">
-<li><strong>Never write history or AI-style context</strong>, in a QDoc block or in any <code>//</code> comment:
-   - no <code>used to</code>, <code>was changed</code>, <code>previously</code>, <code>no longer</code>, or <code>now X instead of Y</code>;
-   - no dates (<code>found 2026-10-12</code>), no <code>the user asked</code>, no story of a past bug or of why
-     something changed;
-   - no bug report numbers, <code>on milo</code>, or <code>measured on</code> / <code>measured with</code>;
-   - no paths to docs or notes pages;
-   - no lineage (<code>the way zynthbox-qml does</code>, <code>as easyrave's…</code>, <code>ported from</code>), and no wording
-     from the request that created a feature. Keep a zynthbox-qml or libzynthbox reference only
-     as a contract the code depends on.</li>
+<li><strong>Never write history or AI-style context</strong>, in a QDoc block or in any <code>//</code> comment:<ul>
+<li>no <code>used to</code>, <code>was changed</code>, <code>previously</code>, <code>no longer</code>, or <code>now X instead of Y</code>;</li>
+<li>no dates (<code>found 2026-10-12</code>), no <code>the user asked</code>, no story of a past bug or of why
+  something changed;</li>
+<li>no bug report numbers, <code>on milo</code>, or <code>measured on</code> / <code>measured with</code>;</li>
+<li>no paths to docs or notes pages;</li>
+<li>no lineage (<code>the way zynthbox-qml does</code>, <code>as easyrave's…</code>, <code>ported from</code>), and no wording
+  from the request that created a feature. Keep a zynthbox-qml or libzynthbox reference only
+  as a contract the code depends on.</li>
+</ul>
+</li>
 </ol>
 <h3 id="comments-overviews-and-commits">Comments, overviews and commits</h3>
 <ol start="4">
