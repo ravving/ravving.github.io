@@ -1,0 +1,211 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from guide/load-a-preset.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Load a preset · ravving docs</title>
+<link rel="stylesheet" href="../site.css?v=28f7125214">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+      <a href="../api/index.html">API reference</a>
+    </nav>
+    <nav class="langs" aria-label="Language" translate="no">
+      <a href="load-a-preset.html" hreflang="en" lang="en">EN</a>
+      <a href="../es/docs/load-a-preset.html" hreflang="es" lang="es">ES</a>
+      <a href="../ja/docs/load-a-preset.html" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="get-ravving.html">Get ravving</a></li>
+<li class="on"><a href="load-a-preset.html" aria-current="page">Load a preset</a><ul><li><a href="#open-the-presets">Open the presets</a></li><li><a href="#pick-where-it-comes-from">Pick where it comes from</a></li><li><a href="#choose-what-comes-along">Choose what comes along</a></li><li><a href="#find-one-and-load-it">Find one and load it</a></li><li><a href="#changed-your-mind">Changed your mind?</a></li><li><a href="#more">More</a></li></ul></li>
+<li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
+<li><a href="machines.html">The machines</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="manual.html">The manual</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="translations.html">Translations</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="writing-the-guide.html">Writing the guide</a></li>
+<li><a href="writing-code-docs.html">Writing code documentation</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+</ul>
+<p class="mono">The code</p><ul>
+<li><a href="../api/index.html">API reference</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker"><b>Using ravving</b> <span>/</span> <b translate="no">guide/load-a-preset.md</b></p>
+<h1>Load a preset</h1>
+<p class="doc-blurb">Pick a preset from your MIKO or a USB stick, choose what comes along, and undo it.</p>
+
+<p>A preset is a ready-made pattern for one instrument, sometimes with the sound it was written
+for. Here's how to load one, from your MIKO or from a USB stick.</p>
+<h2 id="open-the-presets">Open the presets</h2>
+<ol>
+<li>Open the instrument's page: <strong>1</strong> to <strong>5</strong>.</li>
+<li>Tap the preset's name in the pattern toolbar, the box beside LOCK.</li>
+</ol>
+<p>The PRESETS dialog opens on the source your current pattern came from, with that preset marked.</p>
+<p><img alt="The PRESETS dialog: SOURCE, the LOAD switches, a GROUP per genre" src="images/load-preset-dialog.webp" /></p>
+<h2 id="pick-where-it-comes-from">Pick where it comes from</h2>
+<p><strong>SOURCE</strong> shows DEVICE, plus one chip for each USB stick plugged in. Pick a stick to play its
+presets straight from it, without copying anything. The row only appears when a stick is in.</p>
+<h2 id="choose-what-comes-along">Choose what comes along</h2>
+<p>The three <strong>LOAD</strong> switches decide what a preset brings:</p>
+<table>
+<thead>
+<tr>
+<th>Switch</th>
+<th>On</th>
+<th>Off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WITH ITS SOUND</td>
+<td>the instrument switches to the preset's sound</td>
+<td>your sound stays</td>
+</tr>
+<tr>
+<td>WITH ITS MODS</td>
+<td>the preset's MODS are set</td>
+<td>your MODS stay</td>
+</tr>
+<tr>
+<td>WITH ITS BARS</td>
+<td>the preset's own length</td>
+<td>laid over your bars: a shorter preset repeats, a longer one is cut</td>
+</tr>
+</tbody>
+</table>
+<p>Turning on WITH ITS SOUND turns on WITH ITS MODS too, since a sound is heard with its MODS. You
+can switch MODS off again. Your choices are remembered.</p>
+<p>A preset that carries a sound shows ♪ and the sound's name under its genre, plus "+ MODS" when
+it has MODS.</p>
+<h2 id="find-one-and-load-it">Find one and load it</h2>
+<ul>
+<li><strong>GROUP:</strong> a chip per genre, or ALL.</li>
+<li><strong>SORT:</strong> AS LISTED or A–Z.</li>
+<li><strong>★:</strong> hold a preset to make it a favourite.</li>
+</ul>
+<p>Tap a preset to load it. The dialog closes, and the toolbar shows the preset's name.</p>
+<p><img alt="The bass with R&amp;B · Fantasy Walk loaded: its finger bass and its two bars" src="images/load-preset-loaded.webp" /></p>
+<h2 id="changed-your-mind">Changed your mind?</h2>
+<p>Tap <strong>↶</strong> in the toolbar, or press <strong>ALT + ◀</strong>. One undo puts your pattern back.</p>
+<p>The sound isn't part of the undo history, so it stays. To get yours back, tap the nameplate and
+pick it again.</p>
+<aside class="aru-tip"><span class="aru" data-species="octopus" data-mood="hiphop"></span><p>Every pack brings its own groove. Try a few, then undo the ones you don't like.</p></aside>
+<h2 id="more">More</h2>
+<ul>
+<li><a href="manual.html#sound-sources">Sound sources</a>: saving your own presets, and what a
+  preset keeps.</li>
+<li><a href="packs.html">The genre packs</a>: twenty-two packs to put on a stick.</li>
+</ul>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script src="../assets/aru.js?v=b9b5e512af" defer></script>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
+  function load(done) {
+    if (index) return done();
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
+</body>
+</html>
