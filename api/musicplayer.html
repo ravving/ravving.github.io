@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- musicplayer.cpp -->
-  <meta name="description" content="The music player, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;music: a queue of the library's tracks (MusicLibrary) played one after the other through Qt Multimedia.">
+  <meta name="description" content="Plays a queue of the library's tracks (MusicLibrary) one after the other through Qt Multimedia; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;music.">
   <meta name="keywords" content="class">
   <title>MusicPlayer Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">MusicPlayer Class</h1>
 <!-- $$$MusicPlayer-brief -->
-<p>The music player, published to QML as <code translate="no">studio.music</code>: a queue of the library's tracks (<a href="musiclibrary.html" translate="no">MusicLibrary</a>) played one after the other through Qt Multimedia. <a href="#details">More...</a></p>
+<p>Plays a queue of the library's tracks (<a href="musiclibrary.html" translate="no">MusicLibrary</a>) one after the other through Qt Multimedia; published to QML as <code translate="no">studio.music</code>. <a href="#details">More...</a></p>
 <!-- @@@MusicPlayer -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;musicplayer.h&gt;</code></td></tr>
@@ -147,9 +147,9 @@
 <!-- $$$MusicPlayer-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>QMediaPlayer with an audio output decodes WAV, FLAC, Ogg and MP3 alike (FFmpeg), and the sound goes out through PipeWire beside the studio's own graph rather than through it, to the output picked (<a href="musicplayer.html#setOutputSink" translate="no">setOutputSink</a>(): <a href="audiooutputs.html" translate="no">AudioOutputs</a>' current sink, the jacks or a Bluetooth device). It does not touch libzynthbox: a format its sampler cannot read must never reach the audio thread (libzynthbox bug report 16). The studio's transport pauses the player when it starts, so the two never sound at once.</p>
-<p>The queue is the right-hand list of the player page: <a href="musicplayer.html#playNow" translate="no">playNow</a>() puts a track in after the one playing and plays it, <a href="musicplayer.html#enqueue" translate="no">enqueue</a>() adds it at the end, <a href="musicplayer.html#playAt" translate="no">playAt</a>() jumps to one, <a href="musicplayer.html#next" translate="no">next</a>() and <a href="musicplayer.html#previous" translate="no">previous</a>() step, and a track that ends starts the next (round again with repeat). Pause keeps the position; <a href="musicplayer.html#seek" translate="no">seek</a>() moves inside the track.</p>
-<p>Qt Multimedia is there only while a track is loaded: the media player and its audio output are made when one starts and deleted when the player stops (STOP, the end of the queue, the player page closed), so no decoder and no PipeWire stream is left beside the studio meanwhile. GUI thread only.</p>
+<p>A QMediaPlayer with a QAudioOutput decodes WAV, FLAC, Ogg and MP3 (FFmpeg). Its stream goes to PipeWire beside the studio's JACK graph, not through libzynthbox, into the sink set with <a href="musicplayer.html#setOutputSink" translate="no">setOutputSink</a>(). Starting the studio's transport pauses the player.</p>
+<p>The queue: <a href="musicplayer.html#playNow" translate="no">playNow</a>() inserts a track after the current one and plays it, <a href="musicplayer.html#enqueue" translate="no">enqueue</a>() appends, <a href="musicplayer.html#playAt" translate="no">playAt</a>() jumps to an entry, <a href="musicplayer.html#next" translate="no">next</a>() and <a href="musicplayer.html#previous" translate="no">previous</a>() step, and a track that ends starts the next one (wrapping round when repeat is on). <a href="musicplayer.html#pause" translate="no">pause</a>() keeps the position; <a href="musicplayer.html#seek" translate="no">seek</a>() moves within the track.</p>
+<p>The QMediaPlayer and its QAudioOutput exist only while a track is loaded: they are created when playback starts and deleted by <a href="musicplayer.html#stop" translate="no">stop</a>() and at the end of the queue, so no decoder or PipeWire stream stays open while nothing plays. GUI thread only.</p>
 </div>
 <!-- @@@MusicPlayer -->
 <div class="prop">
