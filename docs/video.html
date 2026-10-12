@@ -211,14 +211,19 @@ VOICE):</p>
   master is turned down to VOICE DUCK (−12 dB by default, −6 or −18; 0 is off) in 20 ms and
   comes back over 600 ms once the voice stops, so the music sits in the background exactly
   while someone speaks;</li>
-<li>the sum is clamped at ±0.999, so a loud word over a loud beat cannot overflow the float
-  the encoder gets.</li>
+<li>the sum goes through a peak limiter (ceiling −1 dBFS, instant attack, 150 ms release):
+  a hot mic over a loud beat is turned down for the moment, never clipped. The first cut
+  (2026-10-12) clamped the sum instead, and a mic peaking near 0 dBFS lifted 6 dB came out
+  as crackle with runs of samples stuck at the ceiling; the limiter replaced it the same day.
+  The RECORDER's GAIN still sets how hot the voice comes in: a mic peaking around −12 dBFS
+  there leaves the mix room.</li>
 </ul>
 <p>Both settings apply at once, on a recording under way too. With DUCK and LIFT both 0 the
 mix is the plain sum of before. <code>tools/video-voice-check.sh</code> measures it: the transport
 playing, a 1 kHz tone in bursts (tools/tone.py, −20 dBFS) into the tap's mic ports as the
 voice; second by second, the music (the tone's band cut) must be DUCK dB quieter while the
-tone is on, and the tone must come out LIFT dB louder.</p>
+tone is on, the tone must come out LIFT dB louder, and the file must show no clipping (its
+peak under −0.5 dBFS, no run of samples stuck at the ceiling).</p>
 <h2 id="the-hardware-keys-and-the-ui">The hardware keys and the UI</h2>
 <ul>
 <li>The VIDEO card (control center): tap twice to start, the second within three seconds (the

@@ -284,7 +284,7 @@ ravving's C++ objects standing in for the Python ones libzynthbox talks to:</p>
 </tr>
 <tr>
 <td><code>AudioTap</code></td>
-<td>ravving's JACK client <code>ravving-video</code> (stereo in): the master's last outputs copied on the audio thread into a 2^20-frame ring (21 s), drained by a plain thread into a named pipe ffmpeg reads as raw float; the first sample's CLOCK_REALTIME from <code>jack_get_cycle_times</code>; frames the ring could not hold are counted, never lost quietly; the mic inputs mixed in, plain or as a voice over (<code>setVoiceOver(duckDb, liftDb)</code>: a 120 Hz high-pass and a +4 dB shelf from 3 kHz on the mic, its envelope followed, the master ducked while it speaks, the sum clamped)</td>
+<td>ravving's JACK client <code>ravving-video</code> (stereo in): the master's last outputs copied on the audio thread into a 2^20-frame ring (21 s), drained by a plain thread into a named pipe ffmpeg reads as raw float; the first sample's CLOCK_REALTIME from <code>jack_get_cycle_times</code>; frames the ring could not hold are counted, never lost quietly; the mic inputs mixed in, plain or as a voice over (<code>setVoiceOver(duckDb, liftDb)</code>: a 120 Hz high-pass and a +4 dB shelf from 3 kHz on the mic, its envelope followed, the master ducked while it speaks, the sum through a peak limiter at −1 dBFS, never clipped)</td>
 <td>new</td>
 </tr>
 <tr>
