@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Building · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=540337d520">
+<link rel="stylesheet" href="../site.css?v=28f7125214">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -71,38 +71,53 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker">Under the hood <span>/</span> docs/building.md</p>
+<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/building.md</b></p>
 <h1>Building</h1>
 <p class="doc-blurb">What ravving is made of, the dependencies, the CMake layout, the build folders, faster builds, the site, the documentation rules.</p>
 
 <h2 id="what-ravving-is-made-of">What ravving is made of</h2>
-<p>What ravving is made of, all taken from the device (nothing is bundled, by the AppImage either): ravving
-runs on the <strong>Zynthbox QtQuick Controls style</strong> (<code>qml-style-zynthbox</code>, picked by name in
-<code>main.cpp</code>, so there is no build-time check: a missing style shows the Basic look and
-unthemed controls), and that style imports <strong><code>io.zynthbox.ui</code></strong> (ZUI, from
-<code>qml-module-zynthbox</code>: Button, CheckBox, Switch, Menu and TextField read their theme from it)
-and the KDE Frameworks it draws with (Kirigami, KSvg, Plasma). The audio engine comes from
-<strong>libzynthbox</strong> (<code>io.zynthbox.components</code>) and <strong>zyncoder</strong>, both loaded at run time. So the
-order is: libzynthbox + zyncoder, qml-module-zynthbox, qml-style-zynthbox, then ravving; on a
-stock Zynthbox they are the installed <code>libzynthbox</code>, <code>qml-module-zynthbox</code> and
-<code>qml-style-zynthbox</code> packages, and a rebuilt module or style must be installed before ravving
-is tried. The music player plays through <strong>Qt Multimedia</strong> (<code>qt6-multimedia-dev</code> to build;
-<code>libqt6multimedia6</code> with its FFmpeg plugin at run time, both on the image; its sound goes
-out through PulseAudio, so ravving's service wants <code>pipewire-pulse.service</code>, which a
-Zynthbox has but leaves off; the player's stream runs at its own adapted quantum and leaves
-the graph at 256 frames, 48 kHz), and the exports
-use <strong>TagLib</strong> (<code>libtag1-dev</code>), <strong>zlib</strong> and <strong>libsndfile</strong> with its FLAC, Vorbis and LAME
-encoders.</p>
-<p>The sound itself comes from programs and data the Zynthbox image ships, started and wired
-by ravving at run time and bundled by nothing: <strong>jalv</strong> (the LV2 host) with the <strong>LV2
-plugins</strong> the machines and effects name by URI in <code>data/kits.json</code> and <code>src/backend/</code>
-(TAL NoiseMaker, DISTRHO Nekobi, Calf Monosynth, Calf Crusher and Phaser, Dragonfly Room
-Reverb, TAP Echo; <code>tools/lv2probe.sh</code> checks a URI on the device), <strong>FluidSynth 2</strong> for the
-drum kits and the soundfont sound sources, the <strong>soundfonts</strong> under
-<code>/zynthian/zynthian-data/soundfonts</code> (the SFZ Drum Machines kits, <code>SF2 Instruments</code> with
-<code>FluidR3Mono_GM.sf3</code> and <code>ACBass.sf3</code>), and <strong>PipeWire's JACK</strong> (<code>pw-jack</code>) with Zynthbox's
-MIDI routing (ZLRouter, a2j). A machine whose plugin or soundfont is missing starts silent
-and says so in the journal; <a href="engines.html">engines.md</a> has what each engine does and expects.</p>
+<p>Everything ravving builds on comes from the device. Nothing is bundled, by the AppImage either.</p>
+<h3 id="the-ui-stack">The UI stack</h3>
+<ul>
+<li><strong>The Zynthbox QtQuick Controls style</strong> (<code>qml-style-zynthbox</code>), picked by name in <code>main.cpp</code>.
+  There's no build-time check: a missing style shows the Basic look and unthemed controls.</li>
+<li><strong><code>io.zynthbox.ui</code></strong> (ZUI, from <code>qml-module-zynthbox</code>), which that style imports. Button,
+  CheckBox, Switch, Menu and TextField read their theme from it.</li>
+<li><strong>The KDE Frameworks</strong> the style draws with: Kirigami, KSvg, Plasma.</li>
+</ul>
+<h3 id="the-engine-and-the-build-order">The engine and the build order</h3>
+<p>The audio engine comes from <strong>libzynthbox</strong> (<code>io.zynthbox.components</code>) and <strong>zyncoder</strong>, both
+loaded at run time. So the order is: libzynthbox + zyncoder, qml-module-zynthbox,
+qml-style-zynthbox, then ravving.</p>
+<p>On a stock Zynthbox, these are the installed <code>libzynthbox</code>, <code>qml-module-zynthbox</code> and
+<code>qml-style-zynthbox</code> packages. A rebuilt module or style must be installed before ravving is
+tried.</p>
+<h3 id="the-player-and-the-exports">The player and the exports</h3>
+<ul>
+<li><strong>The music player</strong> plays through <strong>Qt Multimedia</strong>: <code>qt6-multimedia-dev</code> to build, and
+  <code>libqt6multimedia6</code> with its FFmpeg plugin at run time, both on the image.</li>
+<li>Its sound goes out through PulseAudio, so ravving's service wants <code>pipewire-pulse.service</code>,
+    which a Zynthbox has but leaves off.</li>
+<li>The player's stream runs at its own adapted quantum, and leaves the graph at 256 frames,
+    48 kHz.</li>
+<li><strong>The exports</strong> use <strong>TagLib</strong> (<code>libtag1-dev</code>), <strong>zlib</strong>, and <strong>libsndfile</strong> with its FLAC,
+  Vorbis and LAME encoders.</li>
+</ul>
+<h3 id="the-sound">The sound</h3>
+<p>The sound comes from programs and data the Zynthbox image ships. ravving starts and wires them
+at run time, and nothing bundles them:</p>
+<ul>
+<li><strong>jalv</strong>, the LV2 host, with the <strong>LV2 plugins</strong> the machines and effects name by URI in
+  <code>data/kits.json</code> and <code>src/backend/</code>: TAL NoiseMaker, DISTRHO Nekobi, Calf Monosynth, Calf
+  Crusher and Phaser, Dragonfly Room Reverb, TAP Echo. <code>tools/lv2probe.sh</code> checks a URI on the
+  device.</li>
+<li><strong>FluidSynth 2</strong>, for the drum kits and the soundfont sound sources.</li>
+<li><strong>The soundfonts</strong> under <code>/zynthian/zynthian-data/soundfonts</code>: the SFZ Drum Machines kits, and
+  <code>SF2 Instruments</code> with <code>FluidR3Mono_GM.sf3</code> and <code>ACBass.sf3</code>.</li>
+<li><strong>PipeWire's JACK</strong> (<code>pw-jack</code>), with Zynthbox's MIDI routing (ZLRouter, a2j).</li>
+</ul>
+<p>A machine whose plugin or soundfont is missing starts silent, and says so in the journal.
+<a href="engines.html">engines.md</a> has what each engine does and expects.</p>
 <h2 id="dependencies">Dependencies</h2>
 <p>On the device (Debian 13 arm64, as a Zynthbox image is) the build needs, by Debian name:</p>
 <table>
@@ -139,15 +154,20 @@ and says so in the journal; <a href="engines.html">engines.md</a> has what each 
 </tr>
 </tbody>
 </table>
-<p>Everything else ravving needs it finds at run time on a stock Zynthbox: libzynthbox and
-zyncoder, <code>qml-module-zynthbox</code> and <code>qml-style-zynthbox</code> with the KDE Frameworks they draw
-with (Kirigami, KSvg, Plasma), <code>libqt6multimedia6</code> with its FFmpeg plugin, PipeWire with
-<code>pipewire-jack</code> (<code>pw-jack</code>), <code>pipewire-bin</code> (<code>pw-loopback</code>, <code>pw-link</code>, <code>pw-dump</code>, <code>pw-top</code>)
-and <code>pipewire-pulse</code> (left off by the image; ravving's service wants it), <code>udisks2</code> and
-<code>util-linux</code> (USB sticks: <code>udisksctl</code>, <code>lsblk</code>), jalv with the LV2 plugins and FluidSynth
-with the soundfonts named below. Bluetooth needs three packages the image lacks,
-<code>bluez-obexd</code>, <code>libspa-0.2-bluetooth</code> and <code>libkf6bluezqt6</code>, plus two drop-ins ravving
-installs: <code>tools/bluetooth-setup.sh</code> does all of it (<a href="packaging.html">packaging.md</a>, "Bluetooth on a fresh device").</p>
+<p>Everything else ravving needs, it finds at run time on a stock Zynthbox:</p>
+<ul>
+<li>libzynthbox and zyncoder;</li>
+<li><code>qml-module-zynthbox</code> and <code>qml-style-zynthbox</code>, with the KDE Frameworks they draw with
+  (Kirigami, KSvg, Plasma);</li>
+<li><code>libqt6multimedia6</code>, with its FFmpeg plugin;</li>
+<li>PipeWire, with <code>pipewire-jack</code> (<code>pw-jack</code>), <code>pipewire-bin</code> (<code>pw-loopback</code>, <code>pw-link</code>,
+  <code>pw-dump</code>, <code>pw-top</code>) and <code>pipewire-pulse</code> (left off by the image; ravving's service wants it);</li>
+<li><code>udisks2</code> and <code>util-linux</code>, for USB sticks (<code>udisksctl</code>, <code>lsblk</code>);</li>
+<li>jalv with the LV2 plugins, and FluidSynth with the soundfonts named below.</li>
+</ul>
+<p>Bluetooth needs three packages the image lacks, <code>bluez-obexd</code>, <code>libspa-0.2-bluetooth</code> and
+<code>libkf6bluezqt6</code>, plus two drop-ins ravving installs. <code>tools/bluetooth-setup.sh</code> does all of it
+(<a href="packaging.html">packaging.md</a>, "Bluetooth on a fresh device").</p>
 <pre><code class="language-sh">tools/device.sh deploy                 # from the laptop: sync, build, install, restart, wait
 # or by hand (rsync without -a: older laptop mtimes would make ninja skip changed files)
 rsync -rlp --checksum --exclude build --exclude .git ./ root@milo.local:/root/ravving/
@@ -181,10 +201,41 @@ RAVVING_WINDOWED=1 RAVVING_NO_ZYNTHBOX=1 RAVVING_STYLE=Basic RAVVING_QML_DIR=$PW
 </code></pre>
 <p>On a desktop without a terminal, Qt logs to journald; add <code>QT_FORCE_STDERR_LOGGING=1</code> to see
 QML warnings.</p>
-<p>Keys (they send the same events as the device): <code>1</code>–<code>5</code> number keys ·
-<code>q w e r t y u i a s d f g h j k</code> the 16 step keys · arrows · <code>Enter</code> select · <code>Esc</code> back ·
-<code>Space</code> play · <code>Backspace</code> stop · <code>o</code> metronome · <code>m</code> menu · <code>z</code>/<code>x</code>, <code>c</code>/<code>v</code>, <code>b</code>/<code>n</code> knobs 1–3 down/up ·
-<code>,</code>/<code>.</code> big knob.</p>
+<p>Keys send the same events as the device:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Device</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code>–<code>5</code></td>
+<td>the number keys</td>
+</tr>
+<tr>
+<td><code>q w e r t y u i a s d f g h j k</code></td>
+<td>the 16 step keys</td>
+</tr>
+<tr>
+<td>arrows, <code>Enter</code>, <code>Esc</code></td>
+<td>arrows, SELECT, BACK</td>
+</tr>
+<tr>
+<td><code>Space</code>, <code>Backspace</code>, <code>o</code>, <code>m</code></td>
+<td>play, stop, metronome, MENU</td>
+</tr>
+<tr>
+<td><code>z</code>/<code>x</code>, <code>c</code>/<code>v</code>, <code>b</code>/<code>n</code></td>
+<td>knobs 1–3, down and up</td>
+</tr>
+<tr>
+<td><code>,</code>/<code>.</code></td>
+<td>the big knob</td>
+</tr>
+</tbody>
+</table>
 <h2 id="environment-variables">Environment variables</h2>
 <table>
 <thead>
@@ -304,11 +355,15 @@ backend class goes into <code>src/backend/CMakeLists.txt</code>, a new QML file 
 </tr>
 </tbody>
 </table>
-<p>Neither is ever removed by the tools: <code>device.sh deploy</code> syncs the source with <code>--exclude
-'/build*'</code> (so its <code>--delete</code> leaves both alone on the device), REMOVE RAVVING and the release
-check uninstall only what <code>cmake --install</code> put on the system, and the AppImage build clears only
-its staging trees (<code>build-release/stage</code>, <code>build-release/appimage</code>). Keeping them is what keeps
-builds incremental.</p>
+<p>The tools never remove either one:</p>
+<ul>
+<li><code>device.sh deploy</code> syncs the source with <code>--exclude '/build*'</code>, so its <code>--delete</code> leaves both
+  alone on the device;</li>
+<li>REMOVE RAVVING and the release check uninstall only what <code>cmake --install</code> put on the system;</li>
+<li>the AppImage build clears only its staging trees (<code>build-release/stage</code>,
+  <code>build-release/appimage</code>).</li>
+</ul>
+<p>Keeping them is what keeps builds incremental.</p>
 <h2 id="faster-builds">Faster builds</h2>
 <p>The development build (<code>build/</code>) compiles about twice as fast as the release build: the QML
 as bytecode only and the Qt headers precompiled. The device (a Pi 5, 4 cores) takes about as
@@ -324,13 +379,17 @@ long as a 4-core laptop for the same work.</p>
   before with the same flags comes from its cache (after a reconfigure, switching branches).</li>
 <li><strong>The device builds at the lowest priority</strong> (<code>nice -n 19 ionice -c 3</code> in <code>device.sh
   deploy</code>): not faster, but a build beside the music does not take the audio's time.</li>
+</ul>
+<h3 id="where-the-backend-lives">Where the backend lives</h3>
+<ul>
 <li id="the-backend-is-a-library-of-its-own"><strong>The backend is a library of its own.</strong> <code>src/backend</code> (and <code>zynthboxbridge</code>) build as the
-  static library <code>ravving_backend</code>, outside the QML module: Qt's type registration reads the
-  metadata of every QObject class in the QML module's target, so a backend header inside it
-  would regenerate every QML file's compiled C++. QML reaches the backend through context
-  properties (<code>studio</code>, <code>ravving</code>…), which need no registration; the LOOP / SONG values of
-  <code>Sections</code> are two numbers in <code>Rave.qml</code> (<code>Rave.sectionsLoop</code>, <code>Rave.sectionsSong</code>). A
-  backend header edit recompiles no QML.</li>
+  static library <code>ravving_backend</code>, outside the QML module. A backend header edit recompiles no
+  QML.</li>
+<li>Qt's type registration reads the metadata of every QObject class in the QML module's
+    target. A backend header inside it would regenerate every QML file's compiled C++.</li>
+<li>QML reaches the backend through context properties (<code>studio</code>, <code>ravving</code>…), which need no
+    registration. The LOOP / SONG values of <code>Sections</code> are two numbers in <code>Rave.qml</code>
+    (<code>Rave.sectionsLoop</code>, <code>Rave.sectionsSong</code>).</li>
 </ul>
 <h3 id="a-corrupted-ninja-log-rebuilds-everything">A corrupted ninja log rebuilds everything</h3>
 <p><code>ninja: warning: premature end of file; recovering</code> means <code>build/.ninja_deps</code> was cut short (a
@@ -344,79 +403,95 @@ right. Never run two builds in one build folder; let a build finish rather than 
 <li><code>analysis.txt</code>, <strong>ClangBuildAnalyzer</strong>'s report: the slowest files to parse and to compile, the
   most expensive headers (where they come from, how often), the costliest template sets and
   functions;</li>
-<li><code>trace.json</code>, <strong>ninjatracing</strong> over <code>.ninja_log</code>: the build's timeline, one lane per job; open it
-  in https://ui.perfetto.dev (or chrome://tracing) to see what holds the four cores up (moc's
-  <code>mocs_compilation.cpp</code>, a slow file at the end, qmlcachegen's steps).</li>
+<li><code>trace.json</code>, <strong>ninjatracing</strong> over <code>.ninja_log</code>: the build's timeline, one lane per job. Open
+  it in https://ui.perfetto.dev (or chrome://tracing) to see what holds the four cores up:
+  moc's <code>mocs_compilation.cpp</code>, a slow file at the end, qmlcachegen's steps.</li>
 </ul>
 <p>The tools: <code>clang</code> (Arch's), ClangBuildAnalyzer and ninjatracing in <code>~/.local/bin</code> (built from
 their git checkouts in <code>~/.local/src</code>), include-what-you-use from the AUR (<code>yay -S
 include-what-you-use</code>).</p>
-<p><strong>include-what-you-use</strong>: <code>cmake -B analysis/iwyu -DRAVVING_IWYU=ON -DRAVVING_PCH=OFF</code> and build
-<code>ravving_backend</code> there: each file's compile prints what to add, what to remove and which
-includes a forward declaration would replace (<code>analysis/iwyu.log</code>). Precompiled headers off, or
-it reports their includes as unused everywhere. Read it with care: it knows no Qt mapping (it
-would swap <code>&lt;QVariantMap&gt;</code> for Qt's internal <code>&lt;qvariant.h&gt;</code>: ignore those), and it does not see
-moc's generated code, so it calls a header unneeded where a Q_PROPERTY exposes a pointer to that
-class (<code>machine.h</code>'s SoundControls and TrackEffects, <code>devicecontrols.h</code>'s Wifi): moc needs the
-complete type there.</p>
-<p><strong>Unity builds</strong> (<code>RAVVING_UNITY</code>, the backend only: the app target carries qmlcachegen's and
-rcc's generated sources, and AUTOMOC's <code>mocs_compilation.cpp</code> stays out of the batches on its own)
-are there to measure, not on by default: many backend files define file-local constants with
-the same names (<code>MaxBars</code>, <code>AuditionMs</code>…), which collide once a batch merges them.</p>
+<p><strong>include-what-you-use</strong>: <code>cmake -B analysis/iwyu -DRAVVING_IWYU=ON -DRAVVING_PCH=OFF</code>, then build
+<code>ravving_backend</code> there. Each file's compile prints what to add, what to remove, and which
+includes a forward declaration would replace (<code>analysis/iwyu.log</code>). Precompiled headers must be
+off, or it reports their includes as unused everywhere.</p>
+<p>Read it with care:</p>
+<ul>
+<li>it knows no Qt mapping, so it would swap <code>&lt;QVariantMap&gt;</code> for Qt's internal <code>&lt;qvariant.h&gt;</code>:
+  ignore those;</li>
+<li>it doesn't see moc's generated code. So it calls a header unneeded where a Q_PROPERTY exposes
+  a pointer to that class (<code>machine.h</code>'s SoundControls and TrackEffects, <code>devicecontrols.h</code>'s
+  Wifi). moc needs the complete type there.</li>
+</ul>
+<h3 id="unity-builds">Unity builds</h3>
+<p><code>RAVVING_UNITY</code> is for measuring, not on by default. Many backend files define file-local
+constants with the same names (<code>MaxBars</code>, <code>AuditionMs</code>…), which collide once a batch merges them.</p>
+<p>It covers the backend only. The app target carries qmlcachegen's and rcc's generated sources,
+and AUTOMOC's <code>mocs_compilation.cpp</code> stays out of the batches on its own.</p>
 <h2 id="the-site">The site</h2>
 <p><code>site/</code> is the page ravving serves at <code>http://&lt;device&gt;:8098/help/</code> (the shortcuts, the features
 and the documentation; <code>site/README.md</code> says how it is made and how to retake a screenshot).
 It is installed as it is (<code>install(DIRECTORY site …)</code>, this README left out), so it must be
 plain static files with relative references, and its documentation pages are generated into
 the repository:</p>
-<pre><code class="language-sh">python3 tools/build-site-docs.py          # docs/*.md, data/secret/README.md → site/docs/*.html
+<pre><code class="language-sh">python3 tools/build-site-docs.py          # guide/*.md, docs/*.md, data/secret/README.md → site/docs/*.html
 python3 tools/build-site-docs.py --list   # the pages
 python3 tools/build-site-docs.py --plain  # the script's own converter, as on a machine without python-markdown
 </code></pre>
-<p>The same run writes <code>site/docs/search.json</code>, the index behind the SEARCH box in every docs
-page's sidebar (every section, its heading and text): the search runs in the browser alone,
-so it works on the public page and on the device's own copy without internet. <code>--check</code> (the
+<p>The same run writes <code>site/docs/search.json</code>, the index behind the SEARCH box in every docs page's
+sidebar: every section, with its heading and text. The search runs in the browser alone, so it
+works on the public page and on the device's own copy without internet. <code>--check</code> (the
 <code>site-docs-current</code> test) compares the pages and the index with what the markdown gives.</p>
-<p>Only the developer docs (<code>docs/</code>) and the packs page are rendered; the webpage's manual is
-<code>docs/manual-interim.md</code> until the user guide (<code>guide/</code>) replaces it. The script never reads
-<code>notes/</code>, <code>guide/_material/</code> or <code>.claude/</code>, and two tests keep it so:</p>
+<h3 id="whats-rendered">What's rendered</h3>
+<p>The user guide (<code>guide/</code>: Get ravving, The machines, Your first beat), the manual
+(<code>docs/manual-interim.md</code>), the developer docs (<code>docs/</code>) and the packs page. The script never
+reads <code>notes/</code>, <code>guide/_material/</code> or <code>.claude/</code>, and these tests keep the pages honest:</p>
 <ul>
 <li><code>docs-fences</code> (<code>tools/check-docs-fences.py</code>): no page in PAGES lives in those folders, and
   no rendered page links or includes anything from them;</li>
-<li><code>docs-history</code> (<code>tools/check-docs-history.py</code>): no page in PAGES tells history or carries
-  the wording of the requests behind a feature (dates, <code>used to</code>, <code>found on milo</code>, the design
-  reference's name…: the phrases of <code>tools/check-cpp-docs.py</code>'s BANNED list and a few more).</li>
+<li><code>docs-history</code> (<code>tools/check-docs-history.py</code>): no page in PAGES, and not the webpage, tells
+  history or carries the wording of the requests behind a feature. That's dates, <code>used to</code>,
+  <code>found on milo</code>, the design reference's name…: <code>tools/check-cpp-docs.py</code>'s BANNED list and a
+  few more.</li>
+<li><code>guide-style</code> (<code>tools/check-guide-style.py --strict</code>): the user pages, the webpage and the
+  docs pages rewritten so far follow <a href="writing-the-guide.html">writing-the-guide.md</a>.</li>
 </ul>
-<p>The page is public at https://ravving.github.io/: <code>sh tools/publish-site.sh</code> copies <code>site/</code>
-(this README left out) into a clone of the <code>ravving/ravving.github.io</code> repository, commits it
-under the source commit and pushes; that repository's workflow deploys its own content as the
-Pages artifact on every push. Nothing there needs access to this repository and no secret is
-kept anywhere. Run it once <code>site/</code> is committed.</p>
+<h3 id="publishing">Publishing</h3>
+<p>The page is public at https://ravving.github.io/. Run <code>sh tools/publish-site.sh</code> once <code>site/</code> is
+committed:</p>
+<ol>
+<li>It copies <code>site/</code> (this README left out) into a clone of the <code>ravving/ravving.github.io</code>
+   repository, with the stylesheet and scripts versioned by content.</li>
+<li>It commits it under the source commit, and pushes.</li>
+<li>That repository's workflow deploys its own content as the Pages artifact on every push.</li>
+</ol>
+<p>Nothing there needs access to this repository, and no secret is kept anywhere.</p>
 <p>The rule ("The documentation rules", below): the docs and the page follow every change, in the same
 commit; <code>python3 tools/build-site-docs.py --check</code> (ctest <code>site-docs-current</code>) fails when the
 rendered pages do not match the markdown.</p>
-<p>The C++ API reference is <code>site/api/</code>, generated by QDoc from the sources' <code>/*! */</code> blocks
-with <code>python3 tools/build-api-docs.py</code> (Qt 6's qdoc; <code>--check</code> is ctest <code>api-docs-current</code>)
-and committed the same way; <a href="writing-code-docs.html">writing-code-docs.md</a> has the rules and the details.</p>
+<p>The C++ API reference is <code>site/api/</code>, generated by QDoc from the sources' <code>/*! */</code> blocks with
+<code>python3 tools/build-api-docs.py</code> (Qt 6's qdoc), and committed the same way. Its <code>--check</code> is
+ctest <code>api-docs-current</code>. <a href="writing-code-docs.html">writing-code-docs.md</a> has the rules and the
+details.</p>
 <p>Run it after editing a doc and commit <code>site/docs/</code> with the markdown. It uses python-markdown
 when it is installed (Arch <code>python-markdown</code>, Debian <code>python3-markdown</code>) and its own small
 converter otherwise; <code>PAGES</code> in the script lists the documents, their groups and blurbs.</p>
 <h2 id="the-documentation-rules">The documentation rules</h2>
 <ul>
-<li id="the-docs-and-the-page-follow-every-change"><strong>The docs and the page follow every change.</strong> A feature added, changed or removed is not
-  done until the same commit updates what says it: the developer docs (<code>docs/*.md</code>) it belongs
-  in, the manual (<code>docs/manual-interim.md</code>, until the user guide in <code>guide/</code> replaces it), and
-  the page in <code>site/</code> (the SHORTCUTS row of a key, the FEATURES highlight or grouped item of a
-  feature, translated through po-site/), then <code>python3 tools/build-site-docs.py</code>. Push, then
-  <code>sh tools/publish-site.sh</code> puts it at https://ravving.github.io/; the device's copy follows
-  the next deploy.</li>
-<li id="the-docs-say-what-the-code-does-now"><strong>The docs say what the code does now.</strong> No dates, no history, no measurements of the day,
-  no traps met, no wording from the requests behind a feature: those are kept for the
-  maintainers outside the published docs (<code>ctest -R docs-history</code> enforces the phrases).</li>
-<li><strong>Every new or changed C++ API comes with its QDoc in the same commit</strong>
-  (<a href="writing-code-docs.html">writing-code-docs.md</a>; <code>ctest -R cpp-docs</code>, <code>ctest -R api-docs-current</code>).</li>
-<li><strong>Every release has its translations reviewed</strong> (<a href="translations.html">translations.md</a>).</li>
+<li id="the-docs-and-the-page-follow-every-change"><strong>The docs and the page follow every change.</strong> A feature added, changed or removed isn't done
+  until the same commit updates what says it:</li>
+<li>the developer docs (<code>docs/*.md</code>) it belongs in;</li>
+<li>the manual (<code>docs/manual-interim.md</code>, until the user guide in <code>guide/</code> replaces it);</li>
+<li>the page in <code>site/</code>: the SHORTCUTS row of a key, or the FEATURES highlight or grouped item of
+    a feature, translated through po-site/.</li>
 </ul>
+<p>Then run <code>python3 tools/build-site-docs.py</code>, push, and <code>sh tools/publish-site.sh</code> puts it at
+  https://ravving.github.io/. The device's copy follows the next deploy.
+- <strong>The docs say what the code does now.</strong> No dates, no history, no measurements of the day, no
+  traps met, and no wording from the requests behind a feature. Those go to notes/ for the
+  maintainers; <code>ctest -R docs-history</code> enforces the phrases.
+- <strong>Every new or changed C++ API comes with its QDoc in the same commit</strong>
+  (<a href="writing-code-docs.html">writing-code-docs.md</a>; <code>ctest -R cpp-docs</code>, <code>ctest -R api-docs-current</code>).
+- <strong>Every release has its translations reviewed</strong> (<a href="translations.html">translations.md</a>).</p>
   </article>
 </main>
 <footer>
@@ -431,9 +506,11 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
   if (!box || !list) return;
   var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
   function load(done) {
     if (index) return done();
-    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
       .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
   }
   function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -467,7 +544,7 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
       list.hidden = false;
       if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
       list.innerHTML = hits.slice(0, 20).map(function (h) {
-        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
       }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
     });
   }

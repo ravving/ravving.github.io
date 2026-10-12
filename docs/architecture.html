@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Architecture · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=540337d520">
+<link rel="stylesheet" href="../site.css?v=28f7125214">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -71,7 +71,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker">Under the hood <span>/</span> docs/architecture.md</p>
+<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/architecture.md</b></p>
 <h1>Architecture</h1>
 <p class="doc-blurb">The layers, the hardware input flow and the focus model, the libzynthbox bridge, files, the theme.</p>
 
@@ -127,104 +127,175 @@ Pressed</code>, <code>stepPressed</code> (index 0–15), <code>numberPressed</co
 else. As with <code>Keys</code>, the specific signal goes first and the generic one gets whatever is
 still not accepted. A handler that runs accepts the event unless it sets
 <code>event.accepted = false</code>.</p>
-<p>Focus model:
-- The open page (a <code>RavePage</code>, i.e. a FocusScope) has the focus. ▲ at a page's top edge
-  is left unaccepted, bubbles to <code>Main.qml</code>, and focuses the header's first group.
-- In the header, ◀ ▶ move between the <code>KnobGroup</code>s and ▼ / BACK return to the page. Step
-  keys always go to the page. A number key nobody handles still switches the page (C++
-  fallback).
-- A <code>KnobGroup</code> (FocusScope) hands its <code>targets</code> to the knobs: knob n → targets[n], the
-  big knob → targets[3] or fine steps on targets[0]. It can also hold <code>navItems</code>, which its
-  <code>navKnob</code> (the big knob by default; knob 1 for INSTRUMENTS) steps through and SELECT
-  activates. Targets show a <code>KnobBadge</code> (a tiny knob icon:
-  the knob number, value arc, pulsing while a Z2_V5B pot waits for pick-up).
-- Inside a page the big knob is always the volume of the machine on screen (<code>RavePage.module</code>,
-  <code>MachineModule.nudgeLevel()</code>); the fader wears the big-knob badge while it is. Groups in a
-  page (<code>ParamCard</code>, the machine strip) set <code>ownsBigKnob: false</code> so it passes through to the
-  page. Popups and the header, outside the page, keep using it.
-- A machine's strip (role, PAN knob, VOL <code>RaveFader</code>) is a <code>KnobGroup</code>: tap it and knob 1
-  pans, knob 2 sets the level; BACK or a tap in the grid give the knobs back to the rows
-  (<code>StepGrid.knobsActive</code> is off while the strip has them).
-- ▲ ▼ walk one vertical order per machine, owned by <code>MachineModule</code>: header → strip →
-  SOUND MODIFIERS cards (only while open) → the editor → SOUND EFFECTS cards (only while
-  open). The sections move the focus themselves (<code>ParamCardRow.released(dy)</code>, coming back
-  to the card last used with <code>enter()</code>); a page calls <code>focusUp()</code> / <code>focusDown()</code> when its
-  editor has no further to go (the drums: past the top row / the ACC row; the bass roll:
-  past its top / bottom note row). <code>focusUp()</code> returns false from the strip, so ▲ bubbles to the header; ▼ from the
-  header lands on the page's <code>focusTop()</code> (the strip).
-- RECORD on an instrument page is that machine's take (the strip's ● shows ● / count-in beat /
-  … / ■); RECORD with the header focused, or ALT + RECORD anywhere, is the global recording
-  (the header's ●, red RECORD LED).
-- The metronome is libzynthbox's (SyncTimer <code>audibleMetronome</code>) with zynthbox-qml's
-  tick/tock wavs: <code>ZynthboxBridge::setMetronomeSounds()</code> builds the two ClipAudioSources
-  through the exported constructor (no meta-object factory exists) and SamplerSynth's
-  <code>global-sketch1</code> outputs are wired to the master.
-- An external MIDI controller plays the machine on screen (on every page; LIVE, which may be
-  left on another machine, is the step keys' only) through the same path as the
-  step keys, so REC records it: GM drum notes 35–59 by
-  role (<code>DrumKit::roleForGmNote</code>), any other note cycling through the rows from C2, velocity
-  ≥ 100 an accent. Plugging one in or out shows a <code>Toast</code> (a dark pill, bottom centre).
-  Debug: QT_LOGGING_RULES="ravving.midi.debug=true".
-- The key lights (<code>Main.qml</code>'s <code>ledColors</code>): ▲ ▼ SELECT BACK ALT MENU always light in a soft
-  white (<code>navigationLight</code>; ALT white while held, MENU while the menu is open); ◀ ▶ light while
-  they switch something on the open page (<code>RavePage.sideKeysLit</code>: the CHORDS views with the
-  editor focused, the drum machines, the sampler banks); PLAY dim green when stopped, bright
-  while playing; STOP dim when stopped, lit while playing; RECORD dim red when ready, red
-  while recording (global or a sampler take), a machine's colour during its take.
-- ALT + ◀ / ▶ undo and redo the pattern of the machine on screen (the toolbar's ↶ ↷).
-- ALT + ▲ gives the focus to the app header at once, from wherever it is (a page's rows, a
-  section's cards, the strip): <code>Ravving.headerRequested</code>, raised in C++ before any dispatch.
-- ALT + 1 opens the SONG page from anywhere, and again goes back to the page
-  (<code>Ravving.songRequested</code>, raised in C++ before any dispatch, its press swallowed too).
-- The header's INSTRUMENTS chips light the machine on screen only: none while the MIXER, the
-  SONG page, the music player or the RECORDER covers the pages (<code>Session.pageCovered</code>).
-- AUTO: the header's AUTO arms recording (<code>Studio.recordAutomation</code>): while playing, a SOUND
+<h3 id="focus">Focus</h3>
+<ul>
+<li>The open page (a <code>RavePage</code>, i.e. a FocusScope) has the focus. ▲ at a page's top edge is left
+  unaccepted, bubbles to <code>Main.qml</code>, and focuses the header's first group.</li>
+<li>In the header, ◀ ▶ move between the <code>KnobGroup</code>s, and ▼ / BACK return to the page. Step keys
+  always go to the page. A number key nobody handles still switches the page (C++ fallback).</li>
+<li>▲ ▼ walk one vertical order per machine, owned by <code>MachineModule</code>: header → strip → SOUND
+  MODIFIERS cards (only while open) → the editor → SOUND EFFECTS cards (only while open).</li>
+<li>The sections move the focus themselves (<code>ParamCardRow.released(dy)</code>), coming back to the
+    card last used with <code>enter()</code>.</li>
+<li>A page calls <code>focusUp()</code> / <code>focusDown()</code> when its editor has no further to go: the drums
+    past the top row or the ACC row, the bass roll past its top or bottom note row.</li>
+<li><code>focusUp()</code> returns false from the strip, so ▲ bubbles to the header. ▼ from the header
+    lands on the page's <code>focusTop()</code>, the strip.</li>
+</ul>
+<h3 id="the-knobs">The knobs</h3>
+<ul>
+<li>A <code>KnobGroup</code> (FocusScope) hands its <code>targets</code> to the knobs: knob n → targets[n], and the big
+  knob → targets[3], or fine steps on targets[0].</li>
+<li>It can also hold <code>navItems</code>, which its <code>navKnob</code> steps through and SELECT activates. The
+    <code>navKnob</code> is the big knob by default, and knob 1 for INSTRUMENTS.</li>
+<li>Targets show a <code>KnobBadge</code>: a tiny knob icon with the knob number and a value arc, pulsing
+    while a Z2_V5B pot waits for pick-up.</li>
+<li>Inside a page, the big knob is always the volume of the machine on screen (<code>RavePage.module</code>,
+  <code>MachineModule.nudgeLevel()</code>), and the fader wears the big-knob badge.</li>
+<li>Groups in a page (<code>ParamCard</code>, the machine strip) set <code>ownsBigKnob: false</code>, so it passes
+    through to the page.</li>
+<li>Popups and the header, outside the page, keep using it.</li>
+<li>A machine's strip (role, PAN knob, VOL <code>RaveFader</code>) is a <code>KnobGroup</code>. Tap it, and knob 1 pans
+  and knob 2 sets the level. BACK or a tap in the grid give the knobs back to the rows
+  (<code>StepGrid.knobsActive</code> is off while the strip has them).</li>
+</ul>
+<h3 id="recording-and-the-metronome">Recording and the metronome</h3>
+<ul>
+<li>RECORD on an instrument page records that machine's take: the strip's ● shows ●, the count-in
+  beat, …, then ■.</li>
+<li>RECORD with the header focused, or ALT + RECORD anywhere, is the global recording: the
+  header's ●, and a red RECORD LED.</li>
+<li>The metronome is libzynthbox's (SyncTimer <code>audibleMetronome</code>), with zynthbox-qml's tick/tock
+  wavs. <code>ZynthboxBridge::setMetronomeSounds()</code> builds the two ClipAudioSources through the
+  exported constructor, since no meta-object factory exists. SamplerSynth's <code>global-sketch1</code>
+  outputs are wired to the master.</li>
+</ul>
+<h3 id="an-external-midi-controller">An external MIDI controller</h3>
+<p>It plays the machine on screen, on every page, through the same path as the step keys, so REC
+records it. LIVE, which may be left on another machine, is the step keys' only.</p>
+<ul>
+<li>GM drum notes 35–59 map by role (<code>DrumKit::roleForGmNote</code>). Any other note cycles through the
+  rows from C2.</li>
+<li>A velocity of 100 or more is an accent.</li>
+<li>Plugging one in or out shows a <code>Toast</code>: a dark pill, bottom centre.</li>
+<li>Debug: <code>QT_LOGGING_RULES="ravving.midi.debug=true"</code>.</li>
+</ul>
+<h3 id="the-key-lights">The key lights</h3>
+<p><code>Main.qml</code>'s <code>ledColors</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Light</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>▲ ▼ SELECT BACK ALT MENU</td>
+<td>always a soft white (<code>navigationLight</code>); ALT white while held, MENU while the menu is open</td>
+</tr>
+<tr>
+<td>◀ ▶</td>
+<td>lit while they switch something on the open page (<code>RavePage.sideKeysLit</code>): the CHORDS views with the editor focused, the drum machines, the sampler banks</td>
+</tr>
+<tr>
+<td>PLAY</td>
+<td>dim green when stopped, bright while playing</td>
+</tr>
+<tr>
+<td>STOP</td>
+<td>dim when stopped, lit while playing</td>
+</tr>
+<tr>
+<td>RECORD</td>
+<td>dim red when ready, red while recording (global, or a sampler take), a machine's colour during its take</td>
+</tr>
+</tbody>
+</table>
+<h3 id="alt-and-the-shortcut-keys">ALT and the shortcut keys</h3>
+<ul>
+<li>ALT is a modifier held in C++ (<code>Ravving.altHeld</code>).</li>
+<li>ALT + big knob is the master volume, wherever the focus is (<code>masterTurned</code>, never
+    dispatched), badged on the MASTER dial.</li>
+<li>ALT + knobs 1–3 go straight to <code>Ravving.altKnobTarget</code>, the header's FX SENDS (PHASER, ECHO,
+    HEAVY): a KnobGroup <code>borrowed</code> while ALT is held, with its badges, frame and pick-up.</li>
+<li>ALT + ◀ / ▶ undo and redo the pattern of the machine on screen (the toolbar's ↶ ↷).</li>
+<li>ALT + ▲ gives the focus to the app header at once, from wherever it is (a page's rows, a
+    section's cards, the strip): <code>Ravving.headerRequested</code>, raised in C++ before any dispatch.</li>
+<li>ALT + 1 opens the SONG page from anywhere, and again goes back to the page
+    (<code>Ravving.songRequested</code>, raised in C++ before any dispatch, its press swallowed too).</li>
+</ul>
+<h3 id="mode-and-menu">MODE, ✱ and MENU</h3>
+<ul>
+<li>MODE switches LIVE on the open page's instrument, from anywhere. The MODE LED shows it.</li>
+<li>✱ (<code>starPressed</code>) opens and closes the MIXER (below).</li>
+<li>MENU opens the control center (<code>ControlCenter</code>, in the drawer): MIXER, Wi-Fi, Bluetooth, MIDI
+  and SYSTEM cards, the power row, and OUTPUT and BRIGHTNESS sliders on knobs 2 and 1.</li>
+<li>◀ ▶ walk the actions, and SELECT runs one.</li>
+<li>REBOOT and POWER OFF need a second press within 3 s.</li>
+<li>The header's INSTRUMENTS chips light the machine on screen only. None lights while the MIXER,
+  the SONG page, the music player or the RECORDER covers the pages (<code>Session.pageCovered</code>).</li>
+</ul>
+<h3 id="the-mixer">The MIXER</h3>
+<p><code>MixerPage</code> is the StackLayout's sixth view (<code>Main.mixerOpen</code>). A number key leaves it for that
+page. In it:</p>
+<ul>
+<li>◀ ▶ or step keys 1–9 pick a strip;</li>
+<li>knob 1 is its level, knob 2 its pan, and the big knob the fine level;</li>
+<li>SELECT mutes, and ALT + SELECT solos;</li>
+<li>BACK or ✱ go back;</li>
+<li>the step LEDs show the strips: muted dim, picked white.</li>
+</ul>
+<h3 id="auto-and-the-sound-effects">AUTO and the SOUND EFFECTS</h3>
+<ul>
+<li><strong>AUTO:</strong> the header's AUTO arms recording (<code>Studio.recordAutomation</code>). While playing, a SOUND
   MODIFIERS or SOUND EFFECTS knob turned is written into its machine's pattern at the step
-  playing (<code>Machine</code> automation lanes, step → value, undoable, saved); the toolbar's AUTO plays
-  them back (lit, "•" while there are some; a long press clears them).
-- SOUND EFFECTS cards (open): SELECT switches the focused card's effect on or off, BACK
-  closes the section and the focus goes back to the editor above (<code>ParamCardRow.selectAndBack</code>).
-  Closed, ▼ past the editor lands on the bar (<code>FxChain.focusBar()</code>): ◀ ▶ ring the chips,
-  SELECT switches the ringed effect, ▼ opens the section on its card, ▲ / BACK go back up.
-  A tap on the ▸ SOUND EFFECTS heading opens it on the effect last touched (the heading is
-  the one way in by touch; the bar has no OPEN button).
-- Dialogs (<code>RavePopup</code>: ChoicePopup, InputPopup), drop-down lists and the menu darken the page
-  behind them (<code>ModalDim</code>); a dialog takes the keys while open and gives the focus back.
-  Dialogs wear one card look (gradient #1e1c24 → #131118, hairline border,
-  radius 16, <code>DialogHeader</code>: spaced title, hint, ✕); the menu drawer is a settings
-  panel (gradient #211f28 → #16141c, hairline-split sections under small captions, flat wells
-  that light yellow, #f0c832).
-- MENU opens the control center (<code>ControlCenter</code> in the drawer): MIXER, Wi-Fi, Bluetooth, MIDI,
-  SYSTEM cards, the power row (REBOOT and POWER OFF need a second press within 3 s), OUTPUT
-  and BRIGHTNESS sliders on knobs 2 and 1; ◀ ▶ walk the actions, SELECT runs one.
-- ✱ (<code>starPressed</code>) opens and closes the MIXER (<code>MixerPage</code>, the StackLayout's sixth view,
-  <code>Main.mixerOpen</code>); a number key leaves it for that page. In it ◀ ▶ or step keys 1–9 pick a
-  strip, knob 1 is its level, knob 2 its pan, the big knob fine level, SELECT mutes, ALT +
-  SELECT solos, BACK or ✱ go back; the step LEDs show the strips (muted dim, picked white).
-- MODE switches LIVE on the open page's instrument (from anywhere; the MODE LED shows it).
-  ALT is a modifier held in C++ (<code>Ravving.altHeld</code>): ALT + big knob is the master volume
-  wherever the focus is (<code>masterTurned</code>, never dispatched), badged on the MASTER dial, and
-  ALT + knobs 1–3 go straight to <code>Ravving.altKnobTarget</code> (the header's FX SENDS: PHASER,
-  ECHO, HEAVY), a KnobGroup <code>borrowed</code> while ALT is held (badges, frame, pick-up).
-- A machine's ❚❚ pauses its written pattern (<code>DrumMachine.paused</code> → <code>Sketchpad.setTrackPaused</code>:
-  its clip stops in PlayfieldManager and is left out of the launch at play; resuming rejoins
-  on the next bar); it stays playable live.
-- <strong>LIVE</strong> (one machine at a time, <code>Session.liveMachine</code>) turns the step keys into pads
-  (<code>Hardware.onStepDown</code> on the press, <code>onStepPressed</code> on the release): on the drums keys 1–8
-  play the rows and key 9 held makes accents; with REC on while playing a hit is written at
-  the nearest step (<code>Machine::recordLive</code>, timed against the measured step length), in
-  STEP entry while stopped at the cursor (<code>writeAtCursor</code>). With the toolbar's Q off
-  (<code>Machine.quantise</code>) the hit keeps its distance from that step as the subnote's <code>delay</code>
-  (SyncTimer ticks, negative when early), so it plays back as played; the machine keeps
-  these offsets itself (<code>timing</code> in its state) and puts them back whenever its model
-  rewrites the pattern (<code>syncTiming</code>). The LEDs show the pads (rows in
-  the machine's colour, key 9 red, white while held) and drop the playhead
-  (<code>RavePage.stepKeysArePads</code>). libzynthbox's own live recorder is not used: it only hears
-  controller ports, and pads sent through SyncTimer arrive as sequencer traffic.
-- The toolbar's ⟲ (<code>Machine.loopBar</code>) plays only the bar on screen: the pattern's playback
-  window moves to it (<code>bankOffset</code> = that bar, <code>patternLength</code> = one bar) while <code>bars</code> keeps
-  the real length, and paging with ‹ › moves the loop. Not saved; attach and restore put the
-  window back.</p>
+  playing.</li>
+<li>These are <code>Machine</code> automation lanes, step → value: undoable, and saved.</li>
+<li>The toolbar's AUTO plays them back. It's lit, with "•" while there are some, and a long press
+    clears them.</li>
+<li><strong>SOUND EFFECTS cards, open:</strong> SELECT switches the focused card's effect on or off. BACK closes
+  the section, and the focus goes back to the editor above (<code>ParamCardRow.selectAndBack</code>).</li>
+<li><strong>Closed:</strong> ▼ past the editor lands on the bar (<code>FxChain.focusBar()</code>). ◀ ▶ ring the chips,
+  SELECT switches the ringed effect, ▼ opens the section on its card, and ▲ / BACK go back up.</li>
+<li><strong>By touch:</strong> a tap on the ▸ SOUND EFFECTS heading opens it on the effect last touched. The
+  heading is the one way in by touch; the bar has no OPEN button.</li>
+</ul>
+<h3 id="dialogs-and-the-menu">Dialogs and the menu</h3>
+<p>Dialogs (<code>RavePopup</code>: ChoicePopup, InputPopup), drop-down lists and the menu darken the page
+behind them (<code>ModalDim</code>). A dialog takes the keys while open, and gives the focus back.</p>
+<ul>
+<li><strong>Dialogs</strong> wear one card look: a gradient #1e1c24 → #131118, a hairline border, radius 16,
+  and a <code>DialogHeader</code> with a spaced title, a hint and the ✕.</li>
+<li><strong>The menu drawer</strong> is a settings panel: a gradient #211f28 → #16141c, hairline-split sections
+  under small captions, and flat wells that light yellow (#f0c832).</li>
+</ul>
+<h3 id="pausing-live-and-the-bar-loop">Pausing, LIVE and the bar loop</h3>
+<ul>
+<li><strong>❚❚</strong> pauses a machine's written pattern (<code>DrumMachine.paused</code> →
+  <code>Sketchpad.setTrackPaused</code>). Its clip stops in PlayfieldManager and is left out of the launch
+  at play; resuming rejoins on the next bar. It stays playable live.</li>
+<li><strong>LIVE</strong> (one machine at a time, <code>Session.liveMachine</code>) turns the step keys into pads:
+  <code>Hardware.onStepDown</code> on the press, and <code>onStepPressed</code> on the release.</li>
+<li>On the drums, keys 1–8 play the rows, and key 9 held makes accents.</li>
+<li>With REC on while playing, a hit is written at the nearest step (<code>Machine::recordLive</code>,
+    timed against the measured step length). In STEP entry while stopped, it's written at the
+    cursor (<code>writeAtCursor</code>).</li>
+<li>The LEDs show the pads (rows in the machine's colour, key 9 red, white while held) and drop
+    the playhead (<code>RavePage.stepKeysArePads</code>).</li>
+<li>libzynthbox's own live recorder isn't used: it only hears controller ports, and pads sent
+    through SyncTimer arrive as sequencer traffic.</li>
+</ul>
+<h3 id="timing-and-the-bar-loop">Timing and the bar loop</h3>
+<ul>
+<li><strong>Q off</strong> (<code>Machine.quantise</code>): a hit keeps its distance from its step as the subnote's
+  <code>delay</code>, in SyncTimer ticks (negative when early), so it plays back as played. The machine
+  keeps these offsets itself (<code>timing</code> in its state), and puts them back whenever its model
+  rewrites the pattern (<code>syncTiming</code>).</li>
+<li><strong>⟲</strong> (<code>Machine.loopBar</code>) plays only the bar on screen. The pattern's playback window moves to
+  it (<code>bankOffset</code> = that bar, <code>patternLength</code> = one bar), while <code>bars</code> keeps the real length.
+  Paging with ‹ › moves the loop. It isn't saved; attach and restore put the window back.</li>
+</ul>
 <h2 id="the-libzynthbox-bridge">The libzynthbox bridge</h2>
 <p>libzynthbox doesn't install headers, and its headers pull in all of JUCE. So
 <code>ZynthboxBridge</code>:</p>
@@ -248,12 +319,14 @@ platform-plugin lookup.</p>
 (<code>setup/</code>), the page the AppImage opens over zynthbox-qml to install ravving and pick the
 UI the device runs; both lean on <code>tools/default-app.sh</code>. See <a href="packaging.html">packaging.md</a>.</p>
 <h2 id="the-theme">The theme</h2>
-<p>ravving wears one theme, set in code: <code>RAVVING_THEME</code> in the top-level CMakeLists.txt names the folder
-under <code>data/plasma/desktoptheme/</code> that ships with the app (<code>ravving-theme</code>: the Miko theme).
-The app makes its bundled <code>config/plasmarc</code> its only plasmarc, so neither zynthbox-qml's
-theme chooser (<code>~/.config/plasmarc</code>) nor any user file can change it; the journal line
-<code>ravving: theme …</code> says what a run wears. To change the look, change the theme folder or
-<code>RAVVING_THEME</code>, and rebuild.</p>
+<p>ravving wears one theme, set in code. <code>RAVVING_THEME</code> in the top-level CMakeLists.txt names the
+folder under <code>data/plasma/desktoptheme/</code> that ships with the app: <code>ravving-theme</code>, the Miko theme.</p>
+<ul>
+<li>The app makes its bundled <code>config/plasmarc</code> its only plasmarc. Neither zynthbox-qml's theme
+  chooser (<code>~/.config/plasmarc</code>) nor any user file can change it.</li>
+<li>The journal line <code>ravving: theme …</code> says what a run wears.</li>
+<li>To change the look, change the theme folder or <code>RAVVING_THEME</code>, and rebuild.</li>
+</ul>
 <h2 id="where-ravving-keeps-its-files">Where ravving keeps its files</h2>
 <p>Nothing of ravving's goes into zynthbox-qml's folders, and nothing of zynthbox-qml's is
 written: ravving reads the device's sample library and writes only to its own places
@@ -293,21 +366,31 @@ written: ravving reads the device's sample library and writes only to its own pl
 this one at start (<code>Paths::initialise()</code>), and the session's and projects' sample paths with them.</p>
 <h2 id="the-startup-splash">The startup splash</h2>
 <p><code>StartupSplash</code> (qml/Splash.qml and SplashLook.qml) shows the logo from the moment libzynthbox
-is up until the page is ready, then plays a short show into the page. MENU → SETTINGS →
-STARTUP picks the look, from the next start: ANIME, GLOW, STILL, ZOOM or OFF. While the studio
-loads the splash is a still picture, since a moving one keeps the screen redrawn every frame
-and slows the start; the show plays in the page's own window (kwin keeps a full-screen window
-above a "stay on top" one). The logos are the effect SVGs drawn without their backgrounds
-(data/branding/make-splash.sh); the album art's wordmark is data/branding/ravving-wordmark.svg.</p>
+is up until the page is ready, then plays a short show into the page. MENU → SETTINGS → STARTUP
+picks the look, from the next start: ANIME, GLOW, STILL, ZOOM, ARU or OFF.</p>
+<ul>
+<li><strong>While the studio loads</strong>, the splash is a still picture. A moving one keeps the screen
+  redrawn every frame and slows the start.</li>
+<li><strong>The show</strong> plays in the page's own window, since kwin keeps a full-screen window above a
+  "stay on top" one.</li>
+<li><strong>The logos</strong> are the effect SVGs drawn without their backgrounds
+  (data/branding/make-splash.sh). ARU's frames, the pixel octopus and the wolf pup, are drawn by
+  data/branding/make-aru.py from data/branding/aru/.</li>
+<li><strong>The album art's wordmark</strong> is data/branding/ravving-wordmark.svg.</li>
+</ul>
 <h2 id="the-phone-share-and-the-help-page">The phone share and the help page</h2>
-<p><code>FileShare</code> (<code>share</code>) is ravving's one-file HTTP server, on port 8098 or the next free one:
-SEND… → PHONE · QR CODE offers one file at a path of 128 random bits for as long as the dialog
-is open, 15 minutes at most; FILES → PHONE · BROWSE serves the library as pages
-(<code>FileShare.openBrowse</code>, a random path that lives until 15 minutes pass with no request); the
-same server carries the webpage (<code>site/</code>, installed as <code>share/ravving/site</code>) at
-<code>http://&lt;device&gt;:8098/help/</code>, which SETTINGS → HELP shows as a QR code (<code>get share helpUrl</code>).
-Over the fifo: <code>call share offer /path/file</code>, <code>get share url</code>, <code>get share status</code>,
-<code>get share browseUrl</code>, <code>call share stop</code>; <code>tools/share-test.sh</code> checks it from the laptop
+<p><code>FileShare</code> (<code>share</code>) is ravving's one-file HTTP server, on port 8098 or the next free one. It
+serves three things:</p>
+<ul>
+<li><strong>SEND… → PHONE · QR CODE</strong> offers one file, at a path of 128 random bits, for as long as the
+  dialog is open: 15 minutes at most.</li>
+<li><strong>FILES → PHONE · BROWSE</strong> serves the library as pages (<code>FileShare.openBrowse</code>), at a random
+  path that lives until 15 minutes pass with no request.</li>
+<li><strong>The webpage</strong> (<code>site/</code>, installed as <code>share/ravving/site</code>), at
+  <code>http://&lt;device&gt;:8098/help/</code>. SETTINGS → HELP shows it as a QR code (<code>get share helpUrl</code>).</li>
+</ul>
+<p>Over the fifo: <code>call share offer /path/file</code>, <code>get share url</code>, <code>get share status</code>,
+<code>get share browseUrl</code>, <code>call share stop</code>. <code>tools/share-test.sh</code> checks it from the laptop
 (<a href="testing.html">testing.md</a>).</p>
 <h2 id="topics-with-their-own-page">Topics with their own page</h2>
 <ul>
@@ -331,9 +414,11 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
   if (!box || !list) return;
   var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
   function load(done) {
     if (index) return done();
-    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
       .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
   }
   function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -367,7 +452,7 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
       list.hidden = false;
       if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
       list.innerHTML = hits.slice(0, 20).map(function (h) {
-        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
       }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
     });
   }

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Testing on the device · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=540337d520">
+<link rel="stylesheet" href="../site.css?v=28f7125214">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -61,7 +61,7 @@
 <li><a href="writing-code-docs.html">Writing code documentation</a></li>
 <li><a href="building.html">Building</a></li>
 <li><a href="packaging.html">Packaging</a></li>
-<li class="on"><a href="testing.html" aria-current="page">Testing on the device</a><ul><li><a href="#the-tools">The tools</a></li><li><a href="#where-to-listen">Where to listen</a></li><li><a href="#the-feature-suite">The feature suite</a></li><li><a href="#sections-on-the-bar-line">SECTIONS on the bar line</a></li><li><a href="#the-exports-suite">The exports suite</a></li><li><a href="#projects-that-still-resolve">Projects that still resolve</a></li><li><a href="#recipes">Recipes</a></li><li><a href="#the-audio-graph">The audio graph</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#live-recordings">Live recordings</a></li><li><a href="#building-a-project-by-script">Building a project by script</a></li></ul></li>
+<li class="on"><a href="testing.html" aria-current="page">Testing on the device</a><ul><li><a href="#the-tools">The tools</a></li><li><a href="#where-to-listen">Where to listen</a></li><li><a href="#the-feature-suite">The feature suite</a></li><li><a href="#sections-on-the-bar-line">SECTIONS on the bar line</a></li><li><a href="#the-exports-suite">The exports suite</a></li><li><a href="#translations">Translations</a></li><li><a href="#projects-that-still-resolve">Projects that still resolve</a></li><li><a href="#recipes">Recipes</a></li><li><a href="#the-audio-graph">The audio graph</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#live-recordings">Live recordings</a></li><li><a href="#building-a-project-by-script">Building a project by script</a></li></ul></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
 </ul>
@@ -71,7 +71,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker">Under the hood <span>/</span> docs/testing.md</p>
+<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/testing.md</b></p>
 <h1>Testing on the device</h1>
 <p class="doc-blurb">device.sh, the fifo hooks, the suites, Bluetooth and live recording tests, building a project by script.</p>
 
@@ -240,71 +240,122 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 <code>systemctl --user set-environment</code> and a restart) logs every hardware event with whether it
 was accepted and the focus chain it travelled; <code>ravving.midi.debug=true</code> the MIDI input.</p>
 <h2 id="where-to-listen">Where to listen</h2>
-<p>A machine's track after its effects is <code>TrackPassthrough:Channel{track+1}-lane1-dryOutLeft</code>
-(kits.json gives the track: drums 0–2, bass 3, chords 4, lead 5, SAMPLE KING 6, PAD SAMPLER
-7, the input monitor 9); the master is <code>GlobalPlayback:dryOutLeft</code>. Always compare runs
-(silent, playing, silent again), never read a single number: a track playing a beat is
-~0.02–0.2 RMS, silence is 0.0.</p>
+<p>A machine's track after its effects is <code>TrackPassthrough:Channel{track+1}-lane1-dryOutLeft</code>.
+kits.json gives the track:</p>
+<table>
+<thead>
+<tr>
+<th>Machine</th>
+<th>Track</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>drums</td>
+<td>0–2</td>
+</tr>
+<tr>
+<td>bass, chords, lead</td>
+<td>3, 4, 5</td>
+</tr>
+<tr>
+<td>SAMPLE KING, PAD SAMPLER</td>
+<td>6, 7</td>
+</tr>
+<tr>
+<td>the input monitor</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p>The master is <code>GlobalPlayback:dryOutLeft</code>. Always compare runs (silent, playing, silent again),
+never a single number: a track playing a beat is about 0.02–0.2 RMS, and silence is 0.0.</p>
 <h2 id="the-feature-suite">The feature suite</h2>
-<p><code>sh tools/pads-test.sh</code> runs every PAD SAMPLER backend feature as a check on the device
-(load, one-shot, NOTE ON, LOOP + latch + stopAll, the pattern on both tracks, erase, halve /
-double, MUTE, copy, a card value, a take with SMART stop when a signal is present, the
-samplers' exclusivity, the folders), PASS / FAIL / SKIP per line with the measured level,
-and exits with the number of failures. Run it after any change to the machine, the wiring,
-the paths or libzynthbox; it needs the reference audio in the library and a kick sample in
-the device's sketchpads. Add a check for every new feature.</p>
+<p><code>sh tools/pads-test.sh</code> runs every PAD SAMPLER backend feature as a check on the device, and
+exits with the number of failures. Each line reads PASS, FAIL or SKIP, with the level measured.</p>
+<ul>
+<li><strong>Playing:</strong> load, one-shot, NOTE ON, LOOP + latch + stopAll, MUTE, and the samplers'
+  exclusivity.</li>
+<li><strong>Editing:</strong> the pattern on both tracks, erase, halve and double, copy, and a card value.</li>
+<li><strong>Recording and files:</strong> a take with SMART stop when a signal is present, and the folders.</li>
+<li><strong>When:</strong> after any change to the machine, the wiring, the paths or libzynthbox. Add a check
+  for every new feature.</li>
+<li><strong>It needs</strong> the reference audio in the library, and a kick sample in the device's
+  sketchpads.</li>
+</ul>
 <h2 id="sections-on-the-bar-line">SECTIONS on the bar line</h2>
-<p><code>sh tools/sections-test.sh</code> (from the laptop) builds a test project on the device: DRUMS 1
-alone, a bar of 8ths at 100 BPM, section A a kick, B a closed hat, REST with DRUMS 1 resting.
-It records the master while A and B are picked 24 times at random moments (0.6–2.6 s apart:
-some land, some are replaced before their bar), then A and REST in turn, and
-<code>tools/sections-test.py</code> checks the recordings by their onsets (a kick is dark, a hat
-bright): every 8th once (no gap near 600 ms, none under 200), on time (each onset within
-15 ms of one grid fitted through them all), the sound changing only on an onset that begins
-a bar, the rests whole bars from a bar line. What was open before is opened again (saved
-first when it had changes). Read the timing against the grid, not gap by gap: the detector
-reads a kick 2.7 ms early and a hat 3.0 ms late (each ±2.6 ms), so a gap across a change
-carries both errors.</p>
+<p><code>sh tools/sections-test.sh</code>, from the laptop, builds a test project on the device: DRUMS 1 alone,
+a bar of 8ths at 100 BPM, section A a kick, B a closed hat, and REST with DRUMS 1 resting.</p>
+<ol>
+<li>It records the master while A and B are picked 24 times at random moments, 0.6–2.6 s apart.
+   Some land, and some are replaced before their bar.</li>
+<li>Then it picks A and REST in turn.</li>
+<li><code>tools/sections-test.py</code> checks the recordings by their onsets, a kick dark and a hat bright:
+   - every 8th plays once: no gap near 600 ms, none under 200;
+   - on time: each onset within 15 ms of one grid fitted through them all;
+   - the sound changes only on an onset that begins a bar;
+   - the rests are whole bars from a bar line.</li>
+</ol>
+<p>What was open before is opened again, saved first if it had changes.</p>
+<p>Read the timing against the grid, not gap by gap. The detector reads a kick 2.7 ms early and a
+hat 3.0 ms late (each ±2.6 ms), so a gap across a change carries both errors.</p>
 <h2 id="the-exports-suite">The exports suite</h2>
-<p><code>sh tools/export-test.sh</code> runs the exports and the music player as checks on the device
-against whatever project is open (27 checks): the
-profile's author fallback, a 2-bar WAV export that starts busy, plays the transport, stops it,
-lasts exactly 2 bars + 1 s at the project's tempo (to the sample), is 24-bit at the engine's
-rate, carries its tags (python3-taglib reads them back), its cover PNG and a sidecar that says
-the start was placed on the audio clock (<code>headFrom: clock</code>); a 1-bar FLAC; a .ravv bundle
-(project.json, metadata.json, cover.png, the samples; zip integrity checked by Python) imported
-as a new project with its sample paths rewritten; the library listing the tracks, playNow
-sounding on the master (meter.py), the position moving, pause, resume, seek, enqueue, stop. It
-removes its "Export Test" files (exports, the imported project and its samples) at the end.</p>
+<p><code>sh tools/export-test.sh</code> runs 27 checks of the exports and the music player on the device,
+against whatever project is open:</p>
+<ul>
+<li><strong>The profile:</strong> the author fallback.</li>
+<li><strong>A 2-bar WAV export:</strong> it starts busy, plays the transport and stops it. It lasts exactly
+  2 bars + 1 s at the project's tempo, to the sample, and is 24-bit at the engine's rate.</li>
+<li><strong>Its metadata:</strong> the tags (python3-taglib reads them back), the cover PNG, and a sidecar
+  saying the start was placed on the audio clock (<code>headFrom: clock</code>).</li>
+<li id="a-1-bar-flac"><strong>A 1-bar FLAC.</strong></li>
+<li><strong>A .ravv bundle:</strong> project.json, metadata.json, cover.png and the samples, with the zip's
+  integrity checked by Python. It's imported as a new project, with its sample paths rewritten.</li>
+<li><strong>The music player:</strong> the library lists the tracks, playNow sounds on the master (meter.py),
+  the position moves, and pause, resume, seek, enqueue and stop work.</li>
+</ul>
+<p>It removes its "Export Test" files at the end: the exports, the imported project and its
+samples.</p>
 <p>A track export by hand over the fifo (JSON in one argument; no <code>|</code> inside):</p>
 <pre><code class="language-sh">ssh root@milo.local &quot;printf '%s\n' 'call|exporter|exportAudio|{\&quot;title\&quot;:\&quot;My Track\&quot;,\&quot;artist\&quot;:\&quot;Me\&quot;,\&quot;format\&quot;:\&quot;flac\&quot;,\&quot;bars\&quot;:8,\&quot;loops\&quot;:2,\&quot;tail\&quot;:2}' &gt; /tmp/webconf-writes-to-this-fifo&quot;
 tools/device.sh get exporter phase      # preparing · recording · cutting · tagging · done
 tools/device.sh get exporter lastFile
 </code></pre>
-<h2 id="projects-that-still-resolve">Projects that still resolve</h2>
-<p>A project names what it plays instead of holding it: each instrument's sound source and factory
-sound by name, its MODS knobs as "CARD/KNOB", a drum kit or a sample by path, automation lanes by
-knob. A change to <code>data/kits.json</code>, <code>data/engines.json</code> or the device's files can leave a saved
-project pointing at nothing, and it then opens on another sound, silently. Three checks catch it:</p>
+<h2 id="translations">Translations</h2>
 <ul>
-<li><strong>On the laptop, every change of text:</strong> <code>sh tools/i18n-extract.sh</code>, translate what it marks,
-  then <code>ctest -R translations-current</code> (<code>tools/check-translations.py</code>: templates current, catalogs
-  compile, nothing untranslated or fuzzy, placeholders and markup kept, the translated pages
-  rendered). To test a language on the device: <code>device.sh set localization language es</code>
-  (<code>ja</code>, <code>en</code>, or empty for the system's), then run the page suites in it: a suite that reads a
-  display text instead of a key fails there.</li>
+<li><strong>On the laptop, every change of text:</strong> run <code>sh tools/i18n-extract.sh</code>, translate what it
+  marks, then <code>ctest -R translations-current</code>. <code>tools/check-translations.py</code> checks the templates
+  are current, the catalogs compile, nothing is untranslated or fuzzy, placeholders and markup are
+  kept, and the translated pages are rendered.</li>
+<li><strong>A language on the device:</strong> <code>device.sh set localization language es</code> (<code>ja</code>, <code>en</code>, or empty
+  for the system's), then run the page suites in it. A suite that reads a display text instead
+  of a key fails there.</li>
+</ul>
+<h2 id="projects-that-still-resolve">Projects that still resolve</h2>
+<p>A project names what it plays instead of holding it:</p>
+<ul>
+<li>each instrument's sound source and factory sound, by name;</li>
+<li>its MODS knobs as "CARD/KNOB";</li>
+<li>a drum kit or a sample by path;</li>
+<li>automation lanes by knob.</li>
+</ul>
+<p>A change to <code>data/kits.json</code>, <code>data/engines.json</code> or the device's files can leave a saved
+project pointing at nothing. It then opens on another sound, silently. Three checks catch it:</p>
+<ul>
 <li><strong>On the laptop, every change:</strong> <code>ctest -R projects</code> runs <code>tools/check-projects.py</code> over
   <code>data/demos</code> against the repo's kits.json and engines.json (sources, MODS knobs, automation
   lanes, kit roles, sections and the song).</li>
-<li><strong>Over the device's saved projects:</strong> <code>tools/device.sh projects</code> (<code>-v</code> for every project) runs it
-  on the device against the installed data and files too: kit soundfonts, samples (an older take
-  outside <code>samples/takes/</code> is found there too, as ravving finds it), imported soundfonts,
-  the TAL factory sounds. Run it after a data change, before a release.</li>
-<li><strong>In ravving, each time a project opens:</strong> the machines note what they could not resolve as
-  they restore it (<code>ProjectCheck</code>, <code>Machine::checkSaved()</code>: nothing is read twice, nothing runs
-  after), and the issues centre shows one warning listing it ("5AM: 2 of what it plays is
-  missing"), cleared by the next project that resolves.</li>
+<li><strong>Over the device's saved projects:</strong> <code>tools/device.sh projects</code> (<code>-v</code> for every project) runs
+  it on the device, against the installed data and files too. That's the kit soundfonts, the
+  samples, imported soundfonts and the TAL factory sounds. An older take outside
+  <code>samples/takes/</code> is found there, as ravving finds it. Run it after a data change, and before a
+  release.</li>
 </ul>
+<h3 id="when-a-project-opens">When a project opens</h3>
+<p>The machines note what they couldn't resolve as they restore it (<code>ProjectCheck</code>,
+<code>Machine::checkSaved()</code>). Nothing is read twice, and nothing runs after. The issues centre shows
+one warning listing it, like "5AM: 2 of what it plays is missing". The next project that
+resolves clears it.</p>
 <h2 id="recipes">Recipes</h2>
 <p id="a-sampler-pad-from-a-script"><strong>A sampler pad from a script.</strong> Load, play, loop, latch, stop:</p>
 <pre><code class="language-sh">sh tools/device.sh call pads loadSample 0 /zynthian/zynthian-my-data/ravving/samples/refs/movie-intro-16s.wav
@@ -319,24 +370,35 @@ library (<code>find /zynthian/zynthian-my-data/samples -iname "*kick*.wav" | hea
 SWITCH_STOP_RELEASED</code>. The step keys write the selected pad's row with LIVE off and play
 the pads with LIVE on (<code>SWITCH_MODE_RELEASED</code> toggles it; a step key held past half a second
 latches its pad).</p>
-<p id="a-take-into-a-pad"><strong>A take into a pad.</strong> With something on the input jack (<code>INPUT</code> sets MIC / GUITAR / LINE):
-<code>call pads setSelectedPad 2</code>, then <code>call input record</code>; with SMART on
-(<code>studio.input.autoStop</code>, default on) the take ends by itself half a second after the sound
-stops, else <code>call input stop</code>. The processed take lands on the pad trimmed to its last
-burst; the journal shows <code>takeReady</code>. Without a signal the take never auto-stops: that is
-the guard against stopping before anything was played.</p>
-<p id="the-hardware-walk"><strong>The hardware walk.</strong> Switch the trace on, then <code>cuia SWITCH_ARROW_UP_RELEASED</code> step by
-step and read which item accepted each key; <code>ALT + ▲</code> must land on the header from
-anywhere. Key 5 opens page 5 and, pressed again, toggles between SAMPLE KING and the PAD
-SAMPLER; the choice survives restarts, so check the nameplate in a screenshot before
-sending taps at a panel (a hold on the wrong one writes a step).</p>
+<p id="a-take-into-a-pad"><strong>A take into a pad.</strong> With something on the input jack (<code>INPUT</code> sets MIC, GUITAR or LINE):</p>
+<ol>
+<li><code>call pads setSelectedPad 2</code>, then <code>call input record</code>.</li>
+<li>With SMART on (<code>studio.input.autoStop</code>, on by default), the take ends by itself half a second
+   after the sound stops. Otherwise, <code>call input stop</code>.</li>
+<li>The processed take lands on the pad, trimmed to its last burst, and the journal shows
+   <code>takeReady</code>.</li>
+</ol>
+<p>Without a signal, the take never stops by itself: that guards against stopping before anything
+was played.</p>
+<h3 id="the-hardware-walk">The hardware walk</h3>
+<p>Switch the trace on, then <code>cuia SWITCH_ARROW_UP_RELEASED</code> step by step, and read which item
+accepted each key. <code>ALT + ▲</code> must land on the header from anywhere.</p>
+<p>Key 5 opens page 5, and pressed again toggles between SAMPLE KING and the PAD SAMPLER. The choice
+survives restarts, so check the nameplate in a screenshot before sending taps at a panel. A
+hold on the wrong one writes a step.</p>
 <p><strong>Reference audio</strong> for sampling tests lives in the library's <code>samples/refs/</code> folder
 (<code>/zynthian/zynthian-my-data/ravving/samples/refs/</code>).</p>
 <h2 id="the-audio-graph">The audio graph</h2>
-<p><code>tools/device.sh graph all -s 60</code> checks the PipeWire / JACK graph ravving runs in (rates
-and periods against the driver's, linked nodes that are not running, the audio threads'
-priorities, xruns over a minute, the ravving links). <a href="routing.html">routing.md</a> has the map of
-what ravving wires and the tools (pw-top, pw-dump, pw-dot, jack_iodelay…).</p>
+<p><code>tools/device.sh graph all -s 60</code> checks the PipeWire / JACK graph ravving runs in:</p>
+<ul>
+<li>rates and periods against the driver's;</li>
+<li>linked nodes that aren't running;</li>
+<li>the audio threads' priorities;</li>
+<li>xruns over a minute;</li>
+<li>the ravving links.</li>
+</ul>
+<p><a href="routing.html">routing.md</a> has the map of what ravving wires, and the tools: pw-top, pw-dump,
+pw-dot, jack_iodelay…</p>
 <p><code>tools/issues-test.sh</code> checks the issues center end to end (reports over the fifo, order, dismiss, clear, the drawer card and the dialog).</p>
 <h2 id="bluetooth">Bluetooth</h2>
 <p>The basic checks: <code>sh tools/bluetooth-setup.sh --check</code>. With a device at hand, over the
@@ -424,13 +486,17 @@ tools/device.sh call bluetooth sendFile AA:BB:CC:DD:EE:FF &quot;/zynthian/zynthi
 <code>call computer check</code>, <code>call computer send /path/file</code>, <code>call computer forget</code>.</p>
 <h2 id="building-a-project-by-script">Building a project by script</h2>
 <p>Everything a finger does on the device, a script can do through the remote-control fifo: load
-samples, write patterns, pick sounds, set the key and the tempo, save the result as a project.
-<code>tools/examples/five-am/</code> (the 5AM demo: sections and the song by script, <code>build.py</code> writing
-the lines, <code>run.sh</code> sending them) and <code>tools/examples/lofi-say-it.sh</code> (a lo-fi hip hop project
-built on the changes of "Say It (Over and Over Again)") are complete ones; copy one for the
-next. A loop in the shell that reads a file line by line and calls <code>tools/device.sh</code> loses
-all but the first line (the ssh inside reads the loop's stdin): send the lines from one script
-on the device (run.sh) or use <code>ssh -n</code>.</p>
+samples, write patterns, pick sounds, set the key and the tempo, and save the result as a
+project. Two complete ones to copy:</p>
+<ul>
+<li><code>tools/examples/five-am/</code>: the 5AM demo, with sections and the song by script. <code>build.py</code>
+  writes the lines, and <code>run.sh</code> sends them.</li>
+<li><code>tools/examples/lofi-say-it.sh</code>: a lo-fi hip hop project on the changes of "Say It (Over and
+  Over Again)".</li>
+</ul>
+<p>A shell loop that reads a file line by line and calls <code>tools/device.sh</code> loses all but the first
+line, since the ssh inside reads the loop's stdin. Send the lines from one script on the device
+(run.sh), or use <code>ssh -n</code>.</p>
 <h3 id="the-loop">The loop</h3>
 <pre><code class="language-sh">FIFO=/tmp/webconf-writes-to-this-fifo
 send() { timeout 2 sh -c &quot;echo \&quot;$1\&quot; &gt; $FIFO&quot;; sleep 0.2; }
@@ -438,10 +504,10 @@ call() { local line=&quot;call&quot;; for a in &quot;$@&quot;; do line=&quot;$li
 setp() { send &quot;set|$1|$2|$3&quot;; }
 get()  { send &quot;get|$1|$2&quot;; journalctl --user -u ravving --since '-5s' --no-pager | grep 'fifo get' | tail -1 | sed 's/.*= //'; }
 </code></pre>
-<p>A script runs on the device (copy it there, as the example does with itself); every call
-is one line on the fifo and takes about a fifth of a second, so a full project is a few
-hundred lines and a couple of minutes. <code>tools/device.sh call|set|get</code> do the same one at a
-time from the laptop.</p>
+<p>A script runs on the device; copy it there, as the example does with itself. Every call is one
+line on the fifo and takes about a fifth of a second, so a full project is a few hundred lines
+and a couple of minutes. <code>tools/device.sh call|set|get</code> do the same, one at a time, from the
+laptop.</p>
 <h3 id="the-recipe-in-order">The recipe, in order</h3>
 <table>
 <thead>
@@ -511,9 +577,11 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
   if (!box || !list) return;
   var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
   function load(done) {
     if (index) return done();
-    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
       .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
   }
   function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -547,7 +615,7 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
       list.hidden = false;
       if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
       list.innerHTML = hits.slice(0, 20).map(function (h) {
-        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
       }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
     });
   }

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The undo history · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=540337d520">
+<link rel="stylesheet" href="../site.css?v=28f7125214">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -71,7 +71,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker">Under the hood <span>/</span> docs/undo-history.md</p>
+<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/undo-history.md</b></p>
 <h1>The undo history</h1>
 <p class="doc-blurb">What is undone, what becomes one step, the History API, making a feature undoable.</p>
 
@@ -224,9 +224,11 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
   if (!box || !list) return;
   var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
   function load(done) {
     if (index) return done();
-    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
       .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
   }
   function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -260,7 +262,7 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
       list.hidden = false;
       if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
       list.innerHTML = hits.slice(0, 20).map(function (h) {
-        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
       }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
     });
   }

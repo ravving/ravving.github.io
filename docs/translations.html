@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Translations · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=540337d520">
+<link rel="stylesheet" href="../site.css?v=28f7125214">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -71,7 +71,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker">Under the hood <span>/</span> docs/translations.md</p>
+<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/translations.md</b></p>
 <h1>Translations</h1>
 <p class="doc-blurb">KI18n in the app, keys against display text, the contexts, the glossary, the webpage&#x27;s catalogs, adding a language, the release review.</p>
 
@@ -277,16 +277,21 @@ python3 tools/site-i18n.py render     # po-site → site/es/ and site/ja/
 <li>the rendered pages are older than their catalogs.</li>
 </ul>
 <h2 id="the-webpage">The webpage</h2>
-<p><code>tools/site-i18n.py extract</code> collects the text of site/index.html and site/features.html into
-po-site/ravving-site.pot:</p>
+<p><code>tools/site-i18n.py extract</code> collects the text of site/index.html, site/features.html and the user
+guide's pages (site/docs/get-ravving.html, machines.html, first-beat.html, as
+<code>tools/build-site-docs.py</code> renders them) into po-site/ravving-site.pot:</p>
 <ul>
 <li>every block of text (a heading, a paragraph, a row's words), with its inline <code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>
   and <code>&lt;br&gt;</code>;</li>
-<li>the <code>alt</code>, <code>title</code> and <code>aria-label</code> attributes;</li>
+<li>the <code>alt</code>, <code>title</code>, <code>aria-label</code> and <code>placeholder</code> attributes;</li>
 <li>site.js's captions and marks.</li>
 </ul>
-<p><code>render</code> writes site/<lang>/index.html, site/<lang>/features.html and site.js, with the links
-pointing one folder up. The language switcher in the top bar links the three languages.
+<p><code>render</code> writes site/<lang>/index.html, site/<lang>/features.html, site/<lang>/docs/ (the guide's
+pages) and site/<lang>/site.js. A link to a translated page stays in the language; any other
+goes to the English one, so the manual and the developer docs stay English. The language
+switcher in the top bar links the three languages.</p>
+<p>Text sitting loose beside other elements (<code>&lt;h3&gt;Five keys. &lt;span&gt;…&lt;/span&gt;&lt;/h3&gt;</code>) can't become a
+message: <code>extract</code> warns about it, and the page wraps it (<code>&lt;b&gt;Five keys.&lt;/b&gt;</code>).
 <code>&lt;kbd&gt;</code>, <code>&lt;code&gt;</code> and anything marked <code>translate="no"</code> stay as they are.</p>
 <p>The page's catalogs live in po-site/, not po/: <code>ki18n_install</code> compiles every catalog in po/
 into the device's install.</p>
@@ -319,9 +324,11 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
   if (!box || !list) return;
   var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
   function load(done) {
     if (index) return done();
-    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
       .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
   }
   function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -355,7 +362,7 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
       list.hidden = false;
       if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
       list.innerHTML = hits.slice(0, 20).map(function (h) {
-        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
       }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
     });
   }

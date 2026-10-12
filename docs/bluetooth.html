@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bluetooth · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=540337d520">
+<link rel="stylesheet" href="../site.css?v=28f7125214">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -50,7 +50,7 @@
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
 <li><a href="undo-history.html">The undo history</a></li>
-<li class="on"><a href="bluetooth.html" aria-current="page">Bluetooth</a></li>
+<li class="on"><a href="bluetooth.html" aria-current="page">Bluetooth</a><ul><li><a href="#the-backend">The backend</a></li><li><a href="#discovery">Discovery</a></li><li><a href="#audio-output">Audio output</a></li><li><a href="#the-codec">The codec</a></li><li><a href="#the-silence-watch">The silence watch</a></li><li><a href="#one-audio-device-at-a-time">One audio device at a time</a></li><li><a href="#when-a-device-doesnt-answer">When a device doesn&#x27;t answer</a></li><li><a href="#the-kept-output-comes-back">The kept output comes back</a></li><li><a href="#files">Files</a></li></ul></li>
 <li><a href="live-recording.html">Live recordings</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
@@ -71,7 +71,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker">Under the hood <span>/</span> docs/bluetooth.md</p>
+<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/bluetooth.md</b></p>
 <h1>Bluetooth</h1>
 <p class="doc-blurb">Devices, pairing, file transfer and audio output over BlueZ and PipeWire.</p>
 
@@ -80,65 +80,89 @@
 speaker or headphones, receive a file. What a Zynthbox needs for it is in
 <a href="packaging.html">packaging.md</a> ("Bluetooth on a fresh device"), the tests in
 <a href="testing.html">testing.md</a> and the troubleshooting table in <a href="debugging.html">debugging.md</a>.</p>
+<h2 id="the-backend">The backend</h2>
+<p><code>Bluetooth</code> (<code>src/backend/bluetooth.*</code>, QML <code>bluetooth</code>), on BluezQt. The UI is <code>BluetoothPopup</code>,
+from the control center's BLUETOOTH card.</p>
 <ul>
-<li><strong>Backend</strong> <code>Bluetooth</code> (<code>src/backend/bluetooth.*</code>, QML <code>bluetooth</code>), on BluezQt: the
-  adapter (power, discovery, discoverable for three minutes), the devices (connected first,
-  then paired, then by signal; private-address phones without a name hidden until paired), a
-  pairing <code>Agent</code> (DisplayYesNo: a passkey to confirm or a PIN to type lands in <code>pairing</code>,
-  answered with <code>answerPairing</code>), pair → trust → connect, forget, OBEX Object Push sending
-  (<code>sendFile</code>, progress in <code>transfer</code>), an <code>ObexAgent</code> accepting pushes into the library's
-  <code>incoming/</code> folder, and the audio switch (<code>useAsOutput</code>).</li>
-<li id="discovery"><strong>Discovery.</strong> The Pi has one radio for Bluetooth and Wi-Fi, and an inquiry breaks up a
-  playing A2DP link, so a scan lasts 12 s (<code>DiscoverySeconds</code>) and starts on its own only
-  while no audio device is connected. It scans classic devices only (<code>setDiscoveryFilter
-  {Transport: bredr}</code>): a dual-mode speaker paired from its LE advertisement gets no A2DP sink,
-  and the Pi's firmware has no LE Audio.</li>
-<li id="audio"><strong>Audio.</strong> When an audio device connects, WirePlumber makes a sink node
-  <code>bluez_output.&lt;address&gt;.1</code> (and an input / capture node for HFP). <code>useAsOutput</code> hands it
-  to <code>AudioOutputs</code> (<code>outputs</code>, also the control center's AUDIO OUTPUT card), which does not
-  make it the default sink: that would clock the whole JACK graph by the Bluetooth
-  transport in 256-frame chunks (glitches) and leave the master's links to the jacks in place
-  (sound from both). Instead the jacks keep the clock, a <code>pw-loopback</code> of ravving's own
-  (<code>ravving-out</code>, a virtual sink whose playback stream targets the Bluetooth sink with a
-  2048-frame buffer) is started, the master's two output ports are linked to it with <code>pw-link</code>
-  (its inputs have no JACK name, so libzynthbox's JackConnectionHandler cannot) and the jacks
-  are muted, not unlinked: an unlinked jacks sink is suspended and the Bluetooth transport would
-  become the graph's clock. Off, on disconnect, forget or exit, the loopback stops and the jack
-  links come back. A device connected on the headset profile only (<code>playback_MONO</code>) gets a
-  mono mix-down.</li>
-<li id="the-codec"><strong>The codec.</strong> PipeWire offers <code>a2dp-sink-sbc_xq</code> beside plain SBC (ravving's WirePlumber
-  drop-in sets <code>bluez5.enable-sbc-xq</code>) but WirePlumber connects with plain SBC. SETTINGS ·
-  BLUETOOTH · SBC-XQ (<code>AudioOutputs.preferSbcXq</code>, on by default) switches the output in use to
-  SBC-XQ when it offers it, or back to plain SBC, once per connection (<code>wpctl set-profile</code>); each
-  paired device can override it with its own chip in the BLUETOOTH dialog
-  (<code>AudioOutputs.sbcXqByDevice</code>, <code>setSbcXqFor()</code>), since a device may advertise the bitpool and
-  still not sustain it. A codec switch replaces the sink node under the same name: AudioOutputs
-  notices the node id changing and routes to the new one; a Bluetooth output gets its codec
-  first and is routed to once its new sink is there.</li>
-<li id="the-silence-watch"><strong>The silence watch.</strong> While another output plays, <code>OutputWatch</code> listens to what goes into the
-  loopback and what comes out: music going in with silence coming out for six seconds is
-  routed again once (a fresh loopback), and if it is still silent the issues center says the
-  output plays no sound.</li>
-<li id="one-audio-device-at-a-time"><strong>One audio device at a time.</strong> BlueZ keeps one local A2DP endpoint per codec, shared by
-  every device, and a local endpoint carries one stream; PipeWire registers one SBC source
-  (SBC-XQ reuses it). So while one device streams SBC, a second SBC device cannot set up its
-  audio (<code>Unable to select SEP</code>, <code>br-connection-create-socket</code>). When a device the user is
-  connecting answered but could not connect while another audio device is connected, ravving shows
-  SWITCHING FROM · <em>the other</em>, disconnects it, waits 1 s for BlueZ to free the endpoint and
-  connects again; ravving's own reconnect never takes the link from a playing device.</li>
-<li id="pages-retried"><strong>Pages retried.</strong> A page timeout (<code>Host is down</code>) is retried after 2, 5 and 10 s (about
-  37 s with BlueZ's 5.12 s page; the row reads "waking…"; disconnecting or forgetting stops
-  it) before COULD NOT CONNECT with the hint NOT ANSWERING: FREE IT FROM A PHONE, OR TURN IT
-  OFF AND ON. PLAY THROUGH's sink poll (15 s) starts once the connection is made.</li>
-<li id="the-kept-output-comes-back"><strong>The kept output comes back.</strong> AudioOutputs keeps the Bluetooth address of the output
-  picked. When Bluetooth comes on (a start, the switch), that device is connected once, 3 s
-  later, if it is paired and nothing else plays. Never in a loop: paging a speaker in standby
-  wakes it up.</li>
-<li id="files"><strong>Files.</strong> Sending opens an OBEX session (<code>Target: opp</code>) and pushes the file; receiving
-  needs the device VISIBLE (discoverable + pairable, three minutes) and lands under
-  <code>library/incoming/</code>, which <code>PROJECT ▾ → IMPORT</code> lists as "received" and the music library as
-  the album "Received".</li>
-<li id="ui"><strong>UI.</strong> <code>BluetoothPopup</code> from the control center's BLUETOOTH card.</li>
+<li><strong>The adapter:</strong> power, discovery, and discoverable for three minutes.</li>
+<li><strong>The devices:</strong> connected first, then paired, then by signal. Phones with a private address
+  and no name stay hidden until paired.</li>
+<li><strong>Pairing:</strong> an <code>Agent</code> (DisplayYesNo). A passkey to confirm or a PIN to type lands in
+  <code>pairing</code>, answered with <code>answerPairing</code>. Then pair → trust → connect, or forget.</li>
+<li><strong>Files:</strong> OBEX Object Push sending (<code>sendFile</code>, progress in <code>transfer</code>), and an <code>ObexAgent</code>
+  accepting pushes into the library's <code>incoming/</code> folder.</li>
+<li><strong>Audio:</strong> the switch to a Bluetooth output (<code>useAsOutput</code>).</li>
+</ul>
+<h2 id="discovery">Discovery</h2>
+<p>The Pi has one radio for Bluetooth and Wi-Fi, and an inquiry breaks up a playing A2DP link. So
+a scan lasts 12 s (<code>DiscoverySeconds</code>), and only starts on its own while no audio device is
+connected.</p>
+<p>It scans classic devices only (<code>setDiscoveryFilter {Transport: bredr}</code>). A dual-mode speaker
+paired from its LE advertisement gets no A2DP sink, and the Pi's firmware has no LE Audio.</p>
+<h2 id="audio-output">Audio output</h2>
+<p>When an audio device connects, WirePlumber makes a sink node <code>bluez_output.&lt;address&gt;.1</code>, plus an
+input (capture) node for HFP. <code>useAsOutput</code> hands it to <code>AudioOutputs</code> (<code>outputs</code>, also the
+control center's AUDIO OUTPUT card).</p>
+<p>AudioOutputs doesn't make it the default sink. That would clock the whole JACK graph by the
+Bluetooth transport, in 256-frame chunks (glitches), and leave the master's links to the jacks
+in place (sound from both). Instead:</p>
+<ol>
+<li>The jacks keep the clock.</li>
+<li>ravving starts its own <code>pw-loopback</code>, <code>ravving-out</code>: a virtual sink whose playback stream
+   targets the Bluetooth sink, with a 2048-frame buffer.</li>
+<li>The master's two output ports are linked to it with <code>pw-link</code>. Its inputs have no JACK name,
+   so libzynthbox's JackConnectionHandler can't.</li>
+<li>The jacks are muted, not unlinked. An unlinked jacks sink would suspend, and the Bluetooth
+   transport would become the graph's clock.</li>
+</ol>
+<p>Off, on disconnect, forget or exit, the loopback stops and the jack links come back. A device
+connected on the headset profile only (<code>playback_MONO</code>) gets a mono mix-down.</p>
+<h2 id="the-codec">The codec</h2>
+<p>PipeWire offers <code>a2dp-sink-sbc_xq</code> beside plain SBC, since ravving's WirePlumber drop-in sets
+<code>bluez5.enable-sbc-xq</code>. But WirePlumber connects with plain SBC.</p>
+<ul>
+<li><strong>SETTINGS · BLUETOOTH · SBC-XQ</strong> (<code>AudioOutputs.preferSbcXq</code>, on by default) switches the
+  output in use to SBC-XQ when it offers it, or back to plain SBC. That happens once per
+  connection (<code>wpctl set-profile</code>).</li>
+<li><strong>Each paired device</strong> can override it with its own chip in the BLUETOOTH dialog
+  (<code>AudioOutputs.sbcXqByDevice</code>, <code>setSbcXqFor()</code>). A device may advertise the bitpool and still
+  not sustain it.</li>
+<li><strong>A codec switch</strong> replaces the sink node under the same name. AudioOutputs notices the node
+  id change and routes to the new one. A Bluetooth output gets its codec first, and is routed
+  to once its new sink is there.</li>
+</ul>
+<h2 id="the-silence-watch">The silence watch</h2>
+<p>While another output plays, <code>OutputWatch</code> listens to what goes into the loopback and what comes
+out. If music goes in and silence comes out for six seconds, it routes again once, with a fresh
+loopback. If it's still silent, the issues center says the output plays no sound.</p>
+<h2 id="one-audio-device-at-a-time">One audio device at a time</h2>
+<p>BlueZ keeps one local A2DP endpoint per codec, shared by every device, and a local endpoint
+carries one stream. PipeWire registers one SBC source, which SBC-XQ reuses. So while one device
+streams SBC, a second SBC device can't set up its audio (<code>Unable to select SEP</code>,
+<code>br-connection-create-socket</code>).</p>
+<p>When a device you're connecting answers but can't connect while another audio device is
+connected, ravving:</p>
+<ol>
+<li>shows SWITCHING FROM · <em>the other</em>;</li>
+<li>disconnects the other one;</li>
+<li>waits 1 s for BlueZ to free the endpoint, and connects again.</li>
+</ol>
+<p>ravving's own reconnect never takes the link from a playing device.</p>
+<h2 id="when-a-device-doesnt-answer">When a device doesn't answer</h2>
+<p>A page timeout (<code>Host is down</code>) is retried after 2, 5 and 10 s. With BlueZ's 5.12 s page, that's
+about 37 s, while the row reads "waking…". Disconnecting or forgetting stops it.</p>
+<p>After that, it reads COULD NOT CONNECT, with the hint NOT ANSWERING: FREE IT FROM A PHONE, OR
+TURN IT OFF AND ON. PLAY THROUGH's sink poll (15 s) starts once the connection is made.</p>
+<h2 id="the-kept-output-comes-back">The kept output comes back</h2>
+<p>AudioOutputs keeps the Bluetooth address of the output picked. When Bluetooth comes on, at a
+start or with the switch, that device is connected once, 3 s later, if it's paired and nothing
+else plays. Never in a loop: paging a speaker in standby wakes it up.</p>
+<h2 id="files">Files</h2>
+<ul>
+<li><strong>Sending</strong> opens an OBEX session (<code>Target: opp</code>) and pushes the file.</li>
+<li><strong>Receiving</strong> needs the device VISIBLE (discoverable and pairable, for three minutes). Files
+  land under <code>library/incoming/</code>. <code>PROJECT ▾ → IMPORT</code> lists them as "received", and the music
+  library as the album "Received".</li>
 </ul>
   </article>
 </main>
@@ -154,9 +178,11 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
   if (!box || !list) return;
   var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
   function load(done) {
     if (index) return done();
-    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
       .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
   }
   function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -190,7 +216,7 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
       list.hidden = false;
       if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
       list.innerHTML = hits.slice(0, 20).map(function (h) {
-        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
       }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
     });
   }

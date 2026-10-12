@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Quality · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=540337d520">
+<link rel="stylesheet" href="../site.css?v=28f7125214">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -71,7 +71,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker">Under the hood <span>/</span> docs/quality.md</p>
+<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/quality.md</b></p>
 <h1>Quality</h1>
 <p class="doc-blurb">Static analysis, startup timing, QML profiling, the screenshot tour, what the rest costs the sound.</p>
 
@@ -127,27 +127,35 @@ the device ones run against <code>root@milo.local</code> (<code>DEVICE=</code> f
 <h2 id="1-static-analysis-clang-tidy-and-clazy">1. Static analysis: clang-tidy and clazy</h2>
 <pre><code class="language-sh">tools/static-analysis.sh            # both; or `tidy` / `clazy` alone
 </code></pre>
-<p>It configures a separate build folder with a compile database (<code>BUILD</code>, default
-<code>/tmp/ravving-analysis</code>; the normal <code>build/</code> is never touched), generates moc and the QML
-type registration, then runs <strong>clang-tidy</strong> with the repo's <code>.clang-tidy</code> and <strong>clazy</strong>
-(levels 0–2 without the Qt-idiom noise listed in the script) over <code>src/</code> only, in parallel.
-Reports go to <code>REPORTS</code> (default <code>./analysis</code>): <code>clang-tidy.log</code>, <code>clazy.log</code> and
-<code>summary.txt</code>, one count per check. Arch packages: <code>clang</code> (clang-tidy, run-clang-tidy) and
-<code>clazy</code>. A newer clang-tidy brings new checks: decide for each whether it finds something or
-restates the house style, and turn the latter off in <code>.clang-tidy</code> with a line saying why.</p>
+<p>It configures a separate build folder with a compile database: <code>BUILD</code>, by default
+<code>/tmp/ravving-analysis</code>, so the normal <code>build/</code> is never touched. It generates moc and the QML
+type registration, then runs two tools over <code>src/</code> only, in parallel:</p>
+<ul>
+<li><strong>clang-tidy</strong>, with the repo's <code>.clang-tidy</code>;</li>
+<li><strong>clazy</strong>, levels 0–2, without the Qt-idiom noise listed in the script.</li>
+</ul>
+<p>Reports go to <code>REPORTS</code> (default <code>./analysis</code>): <code>clang-tidy.log</code>, <code>clazy.log</code>, and
+<code>summary.txt</code> with one count per check. Arch packages: <code>clang</code> (clang-tidy, run-clang-tidy) and
+<code>clazy</code>.</p>
+<p>A newer clang-tidy brings new checks. Decide for each whether it finds something or restates the
+house style, and turn the latter off in <code>.clang-tidy</code>, with a line saying why.</p>
 <h3 id="shellcheck">ShellCheck</h3>
 <p><code>tools/static-analysis.sh shell</code> runs ShellCheck 0.10 at <code>-S style</code> over every shell script;
 the baseline is <strong>0</strong>. ShellCheck is on the device (<code>apt install shellcheck</code>); on a laptop
 without it the script sends the files there.</p>
 <h3 id="handlers-under-dialogs">Handlers under dialogs</h3>
-<p>The modal dimmer stops items, not pointer handlers: Qt Quick still hands a press to every
-handler under it after the dialog's button or field took it, and a page's DragHandler then
-takes the drag over past its threshold. Disabling the page while a dialog is up is no way
-out (a disabled ComboBox closes its own list at once). So the modal layers (dialogs, the MENU
-drawer, a drop-down's list) register in <code>Session.overlays</code> by identity (a repeated open cannot
-leave the page blocked), and every handler on a page or the header binds
-<code>enabled: !Session.inputBlocked</code>. <code>tools/check-handlers.py</code> (<code>static-analysis.sh handlers</code>,
-also in <code>all</code>) fails on a new one that does not.</p>
+<p>The modal dimmer stops items, not pointer handlers. Qt Quick still hands a press to every
+handler under it after the dialog's button or field took it, and a page's DragHandler then takes
+the drag over past its threshold. Disabling the page while a dialog is up is no way out: a
+disabled ComboBox closes its own list at once.</p>
+<p>So:</p>
+<ul>
+<li>the modal layers (dialogs, the MENU drawer, a drop-down's list) register in <code>Session.overlays</code>,
+  by identity, so a repeated open can't leave the page blocked;</li>
+<li>every handler on a page or the header binds <code>enabled: !Session.inputBlocked</code>;</li>
+<li><code>tools/check-handlers.py</code> (<code>static-analysis.sh handlers</code>, also in <code>all</code>) fails on a new one
+  that doesn't.</li>
+</ul>
 <h3 id="the-accepted-findings">The accepted findings</h3>
 <p>What is left is known and accepted; anything not in this list is new and worth reading.</p>
 <table>
@@ -233,56 +241,69 @@ tools/boot-timing.sh last           # the last start, without restarting anythin
 <p>Compare medians, never single runs: the first frame moves by up to 3 s between runs because
 kwin starts beside ravving (<code>start.sh</code>) and the window is not shown before kwin manages it.</p>
 <p>The start depends on the page the session restores, since only the page on screen is built
-first: DRUMS is the heaviest (all three drum machines' step grids), BASS a typical one.
-Compare runs on the same restored page (<code>"page"</code> in the session.json: 0 drums … 4 sampler),
-and before blaming a change for a slower start, compare against an old build (a <code>git
-worktree</code>, deployed) on the same day, project and page: the device's state moves the times too.</p>
+first. DRUMS is the heaviest (all three drum machines' step grids), and BASS a typical one.</p>
+<ul>
+<li>Compare runs on the same restored page: <code>"page"</code> in the session.json, 0 drums … 4 sampler.</li>
+<li>Before blaming a change for a slower start, compare against an old build (a <code>git worktree</code>,
+  deployed) on the same day, project and page. The device's state moves the times too.</li>
+</ul>
 <p id="restart-sparingly"><strong>Restart sparingly.</strong> Every restart stops and starts the HiFiBerry's PCM, and after a few
 dozen in a session the Pi's RP1 audio DMA driver can oops (the device reboots itself). Prefer
 3–5 runs per measurement, and take <code>boot-timing.sh last</code> after a start that happens anyway.</p>
-<p id="deploy-with-checksums"><strong>Deploy with checksums.</strong> <code>rsync -a</code> keeps the laptop's modification times, so a file edited
-before the device last built another tree arrives older than that build's objects and ninja
-skips it. <code>tools/device.sh deploy</code> syncs with <code>rsync -rlp --checksum</code>; after switching trees by
-hand, <code>find src qml -exec touch {} +</code> on the device before building.</p>
-<p>What keeps the start short:
-1. <strong>Only the page on screen is built before the first frame</strong> (Main.qml's <code>PageLoader</code>): the
-   other four pages and the mixer are built one per 40 ms tick once the first frame is up.
-   main.cpp restores the page before loading the QML, so the first page built is the right
-   one.
-2. <strong>KnobBadge builds its drawing on first show</strong> (<code>shown</code>, not <code>visible</code>): most badges stay
-   hidden.
-3. <strong>The LV2 ports are cached on disk</strong> (JalvPlugin::readPorts, <code>~/.cache/ravving/lv2-ports.json</code>)
+<h3 id="deploy-with-checksums">Deploy with checksums</h3>
+<p><code>rsync -a</code> keeps the laptop's modification times. A file edited before the device last built
+another tree then arrives older than that build's objects, and ninja skips it.
+<code>tools/device.sh deploy</code> syncs with <code>rsync -rlp --checksum</code>. After switching trees by hand, run
+<code>find src qml -exec touch {} +</code> on the device before building.</p>
+<h3 id="what-keeps-the-start-short">What keeps the start short</h3>
+<ol>
+<li><strong>Only the page on screen is built before the first frame</strong> (Main.qml's <code>PageLoader</code>). Once
+   the first frame is up, the other four pages and the mixer are built, one per 40 ms tick. The
+   page is restored (in main.cpp) before the QML loads, so the first page built is the right one.</li>
+<li><strong>KnobBadge builds its drawing on first show</strong> (<code>shown</code>, not <code>visible</code>): most badges stay
+   hidden.</li>
+<li><strong>The LV2 ports are cached on disk</strong> (JalvPlugin::readPorts, <code>~/.cache/ravving/lv2-ports.json</code>)
    instead of <code>lv2info</code> running for each plugin built at start. Each entry carries its bundle's
    and binary's modification times; an installed or upgraded plugin does not match and is
-   asked again. Delete the file to force a full re-read.
-4. <strong>Imported soundfonts cost next to nothing</strong>: only each font's preset list ("pdta") is read,
+   asked again. Delete the file to force a full re-read.</li>
+<li><strong>Imported soundfonts cost next to nothing</strong>: only each font's preset list ("pdta") is read,
    found by walking the RIFF chunk headers (<code>SoundFontFile::presetData</code>, which steps over an
    unpadded odd-sized chunk too). The journal says what it cost: <code>ravving: kits N ms, imported
    soundfonts: F fonts, S sources, M ms</code> (also after a USB import, <code>refreshImported</code>); that
-   line is the check after adding a font whose writer is new.</p>
+   line is the check after adding a font whose writer is new.</li>
+</ol>
 <h2 id="3-qml-profiling">3. QML profiling</h2>
 <pre><code class="language-sh">tools/qml-profile.sh NAME           # ./NAME.qtd and ./NAME-summary.txt
 tools/qml-profile-summary.py NAME.qtd --type Creating --top 40
 tools/qml-profile-summary.py NAME.qtd --from 2 --to 4
 </code></pre>
-<p>A systemd drop-in sets <code>RAVVING_QML_DEBUG=10002,block</code>: main.cpp opens the QML debug server
-and waits for qmlprofiler before loading any QML; the script attaches on the device, waits
-for <code>startup wired</code>, flushes the trace, then removes the drop-in and restarts ravving. The
-summary lists self time per event type, per file and per event: look at <strong>Creating</strong> first
-(how many of what were built) and the call counts (1436 calls of one component is the
-finding, not its 0.1 ms each). Never probe the debug port by connecting to it: the server
-takes the first connection as its client.</p>
+<p>How it works:</p>
+<ol>
+<li>A systemd drop-in sets <code>RAVVING_QML_DEBUG=10002,block</code>. main.cpp opens the QML debug server,
+   and waits for qmlprofiler before loading any QML.</li>
+<li>The script attaches on the device, waits for <code>startup wired</code>, and flushes the trace.</li>
+<li>It removes the drop-in and restarts ravving.</li>
+</ol>
+<p>The summary lists self time per event type, per file and per event. Look at <strong>Creating</strong> first,
+how many of what were built, and at the call counts: 1436 calls of one component is the finding,
+not its 0.1 ms each.</p>
+<p>Never probe the debug port by connecting to it: the server takes the first connection as its
+client.</p>
 <h2 id="4-visual-checks-the-screenshot-tour">4. Visual checks: the screenshot tour</h2>
 <pre><code class="language-sh">RAVVING_STYLE=Basic QT_QPA_PLATFORM=offscreen QT_FORCE_STDERR_LOGGING=1 RAVVING_NO_ZYNTHBOX=1 \
 RAVVING_DATA_DIR=$PWD/data RAVVING_PROJECT_DIR=/tmp/tour/project RAVVING_SCREENSHOT_DIR=/tmp/tour/shots \
     build/ravving 2&gt;&amp;1 | grep -v -i jack
 </code></pre>
-<p>It visits every page and a few dialogs, saves PNGs and quits (main.cpp). Start from an empty
-project folder each time (the tour turns knobs, and the session keeps them), build the
-reference from the previous commit the same way, and compare with
-<code>compare -metric AE ref.png new.png null:</code> (ImageMagick). <code>QT_FORCE_STDERR_LOGGING</code> matters:
-without a terminal Qt logs to the journal and the run looks silent. The Zynthbox style is not
-on the laptop, hence <code>RAVVING_STYLE=Basic</code>.</p>
+<p>It visits every page and a few dialogs, saves PNGs and quits (main.cpp).</p>
+<ul>
+<li>Start from an empty project folder each time, since the tour turns knobs and the session keeps
+  them.</li>
+<li>Build the reference from the previous commit the same way, and compare with
+  <code>compare -metric AE ref.png new.png null:</code> (ImageMagick).</li>
+<li><code>QT_FORCE_STDERR_LOGGING</code> matters: without a terminal, Qt logs to the journal and the run looks
+  silent.</li>
+<li>The Zynthbox style isn't on the laptop, hence <code>RAVVING_STYLE=Basic</code>.</li>
+</ul>
 <h2 id="5-making-ravving-the-devices-ui">5. Making ravving the device's UI</h2>
 <pre><code class="language-sh">tools/device.sh default ravving       # or on the device: /usr/share/ravving/default-app.sh ravving
 tools/device.sh default status
@@ -293,66 +314,88 @@ global enable in <code>/etc/systemd/user</code>, and updates re-enable it global
 both) and enables ravving. Going back unmasks and starts zynthbox-qml, disables and resets
 ravving, and drops the development environment (<code>RAVVING_GDB</code>, <code>RAVVING_QML_DIR</code>).</p>
 <h2 id="6-the-store-appimage-the-release-check">6. The Store AppImage: the release check</h2>
-<p><code>tools/appimage-test.sh</code> builds the AppImage on the device, installs it the way the Store
-does and walks every choice of the setup page and ravving's ZYNTHBOX button by touch, with
-an assertion on the device's state after each step. Run it after a version bump or any change
-to <code>setup/</code>, <code>tools/default-app.sh</code>, <code>data/ravving.service</code> or <code>packaging/</code>. About eight
-minutes; results in <code>analysis/appimage-test-&lt;date&gt;/</code>. Details in <a href="packaging.html">packaging.md</a>.</p>
+<p><code>tools/appimage-test.sh</code> builds the AppImage on the device and installs it the way the Store does.
+Then it walks every choice of the setup page and ravving's ZYNTHBOX button by touch, asserting
+the device's state after each step.</p>
+<p>Run it after a version bump, or any change to <code>setup/</code>, <code>tools/default-app.sh</code>,
+<code>data/ravving.service</code> or <code>packaging/</code>. It takes about eight minutes, with results in
+<code>analysis/appimage-test-&lt;date&gt;/</code>. Details are in <a href="packaging.html">packaging.md</a>.</p>
 <h2 id="7-soundfonts-and-engines-when-one-is-added">7. Soundfonts and engines: when one is added</h2>
-<p><code>sh tools/soundfont-check.sh</code> (on the device, from the laptop) takes every soundfont
-<code>data/kits.json</code> names (the drum kits, the machines' default engines, every FluidSynth sound
-source) and checks each: the file exists, its zones can sound (a font whose instrument zones
-declare a velocity range of 0–0 is mute at any velocity: SynStrings, LaString, MelloString and
-Organ.sf3 on the image are such, and are left out), the preset the entry asks for
-(bank:program) exists in the font, and a chord rendered through fluidsynth offline on that
-preset (a kick, snare and hat for a kit, low notes for a bass, three seconds for pads that
-swell slowly) actually comes out. PASS / FAIL per font, exit status = failures. Run it after
-editing the sources in kits.json, after an image update (the fonts live in
+<p><code>sh tools/soundfont-check.sh</code>, run on the device from the laptop, takes every soundfont
+<code>data/kits.json</code> names: the drum kits, the machines' default engines, and every FluidSynth sound
+source. It checks each one:</p>
+<ol>
+<li>the file exists;</li>
+<li>its zones can sound. A font whose instrument zones declare a velocity range of 0–0 is mute at
+   any velocity. SynStrings, LaString, MelloString and Organ.sf3 on the image are like that, and
+   are left out;</li>
+<li>the preset the entry asks for (bank:program) exists in the font;</li>
+<li>a chord rendered offline through fluidsynth on that preset actually comes out: a kick, snare
+   and hat for a kit, low notes for a bass, three seconds for pads that swell slowly.</li>
+</ol>
+<p>It prints PASS or FAIL per font, and exits with the number of failures. Run it after editing the
+sources in kits.json, after an image update (the fonts live in
 <code>/zynthian/zynthian-data/soundfonts</code>), and before a release.</p>
-<p>Behind it, <code>tools/soundfont.py</code> (presets · ranges · render · categorise) looks inside one font
-and proposes kits.json entries for new ones (<code>categorise --json</code>), and <code>tools/mididump.py</code>
-shows what an engine's JACK MIDI port really carries, for a source that stays silent in
-ravving but sounds offline (<a href="testing.html">testing.md</a>). A new engine type (a <code>SoundEngine</code>
-subclass) gets the same treatment: its sources into kits.json, the check run, and a pw-top
-look at its nodes' rate and quantum against the graph's (48000 / 256 on the device).</p>
+<h3 id="behind-it">Behind it</h3>
+<ul>
+<li><code>tools/soundfont.py</code> (presets · ranges · render · categorise) looks inside one font, and
+  proposes kits.json entries for new ones (<code>categorise --json</code>).</li>
+<li><code>tools/mididump.py</code> shows what an engine's JACK MIDI port really carries, for a source that
+  stays silent in ravving but sounds offline (<a href="testing.html">testing.md</a>).</li>
+</ul>
+<p>A new engine type (a <code>SoundEngine</code> subclass) gets the same treatment. Its sources go into
+kits.json, the check runs, and pw-top shows its nodes' rate and quantum against the graph's
+(48000 / 256 on the device).</p>
 <h3 id="pipewire-pulse-and-the-music-player">pipewire-pulse and the music player</h3>
-<p>ravving's music player needs <code>pipewire-pulse</code> (Qt's audio output on Linux is PulseAudio), so
-the unit wants it. Its stream runs at its own adapted quantum and leaves the graph at 256 /
-48000; the graph's rate is pinned (<code>clock.allowed-rates = [ 48000 ]</code>), so a 44.1 kHz file
-cannot switch it. After a PipeWire update, check with <code>pw-top -b -n 2</code>: idle, with an MP3
-playing, and with the MP3 plus the transport, the driver must stay at 256 / 48000 with its
-xrun count unchanged.</p>
+<p>ravving's music player needs <code>pipewire-pulse</code>, since Qt's audio output on Linux is PulseAudio,
+so the unit wants it. Its stream runs at its own adapted quantum, and leaves the graph at
+256 / 48000. The graph's rate is pinned (<code>clock.allowed-rates = [ 48000 ]</code>), so a 44.1 kHz file
+can't switch it.</p>
+<p>After a PipeWire update, check with <code>pw-top -b -n 2</code>: idle, with an MP3 playing, and with the MP3
+plus the transport. The driver must stay at 256 / 48000, with its xrun count unchanged.</p>
 <h2 id="8-the-audio-graph-routing-clocks-and-xruns">8. The audio graph: routing, clocks and xruns</h2>
 <p>When an engine, insert or route is added or changed, and in every phase pass:</p>
 <pre><code class="language-sh">tools/device.sh graph all -s 60      # rates, idle-but-linked nodes, threads, xruns over 60 s, the links
 </code></pre>
-<p>Expected on a Zynthbox: the driver is the sound card's playback node at 48000 / 256; every
-<code>ravving-*</code> audio node at 48000 with a period of 256 (jalv) or 512 (FluidSynth's stream,
-by design); no node with links that is not running; 0 xruns in 60 s, idle and with the
-reference project playing (run it twice, once with <code>device.sh cuia SWITCH_PLAY_RELEASED</code>
-first). Any steady xrun rate means a stall somewhere: the first thing to check is
-<code>systemctl --user show-environment</code> for <code>RAVVING_GDB=1</code> (gdb costs 20–40 a minute),
-then <code>graph-check.py threads</code> for a render thread without realtime priority or one above
-PipeWire's data loops. What each column means, the tools behind it and the numbers
-PipeWire's data loops. What each column means and the tools behind it are in
-<a href="routing.html">routing.md</a>.</p>
+<p>Expected on a Zynthbox:</p>
+<ul>
+<li>the driver is the sound card's playback node, at 48000 / 256;</li>
+<li>every <code>ravving-*</code> audio node is at 48000, with a period of 256 (jalv), or 512 (FluidSynth's
+  stream, by design);</li>
+<li>no node with links is not running;</li>
+<li>0 xruns in 60 s, idle and with the reference project playing. Run it twice, once with
+  <code>device.sh cuia SWITCH_PLAY_RELEASED</code> first.</li>
+</ul>
+<p>Any steady xrun rate means a stall somewhere. Check first <code>systemctl --user show-environment</code>
+for <code>RAVVING_GDB=1</code> (gdb costs 20–40 a minute). Then <code>graph-check.py threads</code>, for a render
+thread without realtime priority, or one above PipeWire's data loops. What each column means,
+and the tools behind it, are in <a href="routing.html">routing.md</a>.</p>
 <h2 id="9-what-the-rest-costs-the-sound">9. What the rest costs the sound</h2>
-<p>The sound comes first on this device: a feature, a poll, a watcher or an animation may not
-cost the audio anything it can hear. ravving's audio threads run at realtime priority, so
-other work cannot preempt them directly; what it can do is load the CPUs and the memory bus
-they share, stall a cycle with a page fault on a realtime thread, or hold a lock the audio
-side needs. Measure it, before and after:</p>
+<p>The sound comes first on this device: a feature, a poll, a watcher or an animation may not cost
+the audio anything it can hear.</p>
+<p>ravving's audio threads run at realtime priority, so other work can't preempt them directly.
+What it can do is:</p>
+<ul>
+<li>load the CPUs and the memory bus they share;</li>
+<li>stall a cycle with a page fault on a realtime thread;</li>
+<li>hold a lock the audio side needs.</li>
+</ul>
+<p>Measure it, before and after:</p>
 <pre><code class="language-sh">tools/audio-impact.sh               # 30 s idle, then 30 s with the transport playing
 tools/audio-impact.sh 20 idle       # only the idle window (no keys pressed: safe while someone plays)
 tools/device.sh animations          # what keeps the window drawing, item by item
 </code></pre>
-<p><code>audio-impact.sh</code> prints, per state: the <strong>frames per second</strong> the window put on screen
-(<code>Ravving.framesSwapped</code>, counted on the render thread), <strong>CPU</strong> in % of one core for the
-render thread, the GUI thread, ravving's realtime threads (policy FIFO / RR: the JACK
-clients, SyncTimer, MidiRouter…) and the rest, the <strong>page faults</strong> the realtime threads took,
-and the graph's <strong>xruns</strong> over the window (<code>graph-check.py xruns</code>, summed over the nodes: one
-graph-wide dropout counts once per node). <code>playing</code> presses PLAY and STOP: never run it while
-someone plays; <code>idle</code> only reads.</p>
+<p><code>audio-impact.sh</code> prints, per state:</p>
+<ul>
+<li>the <strong>frames per second</strong> the window put on screen (<code>Ravving.framesSwapped</code>, counted on the
+  render thread);</li>
+<li><strong>CPU</strong> in % of one core, for the render thread, the GUI thread, ravving's realtime threads
+  (policy FIFO / RR: the JACK clients, SyncTimer, MidiRouter…) and the rest;</li>
+<li>the <strong>page faults</strong> the realtime threads took;</li>
+<li>the graph's <strong>xruns</strong> over the window (<code>graph-check.py xruns</code>, summed over the nodes, so one
+  graph-wide dropout counts once per node).</li>
+</ul>
+<p><code>playing</code> presses PLAY and STOP, so never run it while someone plays. <code>idle</code> only reads.</p>
 <p>What healthy looks like (a Pi 5, a full project):</p>
 <table>
 <thead>
@@ -408,17 +451,20 @@ someone plays; <code>idle</code> only reads.</p>
 </ul>
 <h2 id="10-list-models">10. List models</h2>
 <p>Views fed a plain list (a QVariantList from the backend, a JS array) rebuild every delegate
-whenever the list is set again; on the Pi a row with a Zynthbox Button costs ~1.4 ms to make
-(five SVG frames). The long or often-updated lists go through <code>KeyedListModel</code> (src/, tests in
-tests/: <code>cmake -DRAVVING_TESTS=ON build &amp;&amp; ctest --test-dir build</code>): a new list is applied as
-the fewest row changes, matched by a key; the longest also set <code>reuseItems</code>. Its roles only
-grow (a reset would rebuild everything), and a test keeps it so. Use KeyedListModel for any
-list that is long or updated often; small fixed lists (the banks, the kinds) stay plain.
-<code>AFTER=script tools/qml-profile.sh</code> profiles an interaction instead of a start.</p>
+whenever the list is set again. On the Pi, a row with a Zynthbox Button costs about 1.4 ms to
+make (five SVG frames).</p>
+<ul>
+<li><strong>The long or often-updated lists</strong> go through <code>KeyedListModel</code> (src/, tests in tests/:
+  <code>cmake -DRAVVING_TESTS=ON build &amp;&amp; ctest --test-dir build</code>). It applies a new list as the
+  fewest row changes, matched by a key. The longest also set <code>reuseItems</code>.</li>
+<li><strong>Its roles only grow</strong>, since a reset would rebuild everything, and a test keeps it so.</li>
+<li><strong>Small fixed lists</strong>, like the banks and the kinds, stay plain.</li>
+</ul>
+<p><code>AFTER=script tools/qml-profile.sh</code> profiles an interaction instead of a start.</p>
 <h2 id="11-phase-passes">11. Phase passes</h2>
-<p>Every phase of a feature ends with this pass, run with ravving under gdb on the device
-(<code>systemctl --user set-environment RAVVING_GDB=1</code>, then a restart: start.sh prints a backtrace
-to the journal on a crash) while the suites run, and gdb off again for the timing rows:</p>
+<p>Every phase of a feature ends with this pass. Run the suites with ravving under gdb on the device:
+<code>systemctl --user set-environment RAVVING_GDB=1</code>, then a restart. start.sh prints a backtrace to
+the journal on a crash. Turn gdb off again for the timing rows:</p>
 <table>
 <thead>
 <tr>
@@ -471,9 +517,11 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
   if (!box || !list) return;
   var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
   function load(done) {
     if (index) return done();
-    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
       .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
   }
   function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -507,7 +555,7 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
       list.hidden = false;
       if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
       list.innerHTML = hits.slice(0, 20).map(function (h) {
-        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
       }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
     });
   }

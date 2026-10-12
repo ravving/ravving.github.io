@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Packaging · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=540337d520">
+<link rel="stylesheet" href="../site.css?v=28f7125214">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -71,36 +71,44 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker">Under the hood <span>/</span> docs/packaging.md</p>
+<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/packaging.md</b></p>
 <h1>Packaging</h1>
 <p class="doc-blurb">The Store AppImage, the setup page, what the device needs, Bluetooth on a fresh device.</p>
 
-<p>ravving reaches a device as an <strong>AppImage</strong> in the Store's Apps category, installed as the Store installs any app: the Store downloads the file into <code>~/.local/share/zynthbox/apps/&lt;author&gt;/&lt;name&gt;/</code>,
-registers it with libappimage (a desktop entry in <code>~/.local/share/applications</code>), extracts it next
-to itself with <code>--appimage-extract</code> (an <code>&lt;md5&gt;.AppDir</code>), and from then on launches that AppDir's
-<code>AppRun</code> from inside zynthbox-qml when the entry is tapped.</p>
-<p>The bundle is <strong>for the Zynthbox device only</strong>. It is built on the device, for its architecture,
-against the Qt, libzynthbox, zyncoder and Zynthbox QML modules the device already has, so it
-bundles no libraries at all: just ravving, the setup program and the data. In particular the
-device must have the <code>qml-style-zynthbox</code> package (the Zynthbox QtQuick Controls style ravving
-selects at startup) and the <code>qml-module-zynthbox</code> package it imports (<code>io.zynthbox.ui</code>), as
-every stock Zynthbox does; see <a href="building.html">building.md</a>, "What ravving is made of", for the whole chain. What the AppImage
-starts is not ravving but <strong>ravving-setup</strong> (<code>setup/</code>), a page over zynthbox-qml that installs
-ravving from the bundle and picks which UI the device runs.</p>
+<p>ravving reaches a device as an <strong>AppImage</strong> in the Store's Apps category, installed as the Store
+installs any app:</p>
+<ol>
+<li>The Store downloads the file into <code>~/.local/share/zynthbox/apps/&lt;author&gt;/&lt;name&gt;/</code>.</li>
+<li>It registers it with libappimage: a desktop entry in <code>~/.local/share/applications</code>.</li>
+<li>It extracts it next to itself with <code>--appimage-extract</code>, as an <code>&lt;md5&gt;.AppDir</code>.</li>
+<li>From then on, zynthbox-qml launches that AppDir's <code>AppRun</code> when the entry is tapped.</li>
+</ol>
+<p>The bundle is <strong>for the Zynthbox device only</strong>. It's built on the device, for its architecture,
+against the Qt, libzynthbox, zyncoder and Zynthbox QML modules the device already has. So it
+bundles no libraries at all: just ravving, the setup program and the data.</p>
+<p>The device must have, as every stock Zynthbox does:</p>
+<ul>
+<li><code>qml-style-zynthbox</code>, the Zynthbox QtQuick Controls style ravving selects at startup;</li>
+<li><code>qml-module-zynthbox</code>, which it imports (<code>io.zynthbox.ui</code>).</li>
+</ul>
+<p><a href="building.html">building.md</a>, "What ravving is made of", has the whole chain.</p>
+<p>What the AppImage starts isn't ravving but <strong>ravving-setup</strong> (<code>setup/</code>): a page over
+zynthbox-qml that installs ravving from the bundle and picks which UI the device runs.</p>
 <h2 id="what-the-device-needs">What the device needs</h2>
 <p>The bundle carries no libraries, so what ravving needs from the device is listed in one place,
 <code>data/requirements.json</code> (installed with the data, and in the bundle), and checked twice:</p>
 <ul>
-<li><strong>The setup page, before installing</strong> (<code>default-app.sh deps DIR [--install] [--json]</code>, which runs
-  <code>check-requirements.py</code> from the bundle): every requirement, and every library the bundle's
-  ravving links to (<code>ldd</code>'s "not found"). The page lists what is missing, the feature each costs
-  and the Debian package that brings it, with <strong>INSTALL MISSING PACKAGES</strong> (apt-get, online). A
-  <code>startup</code> requirement or library missing means ravving cannot start there: TRY IT and MAKE IT
-  THE DEFAULT stay dimmed and the list says why.</li>
-<li><strong>ravving, once started</strong> (<code>Requirements</code>, four seconds after the first frame): the <code>feature</code>
-  requirements by file and program checks only (no process, microseconds), each missing one a
-  warning in the issues centre: "MUSIC PLAYER will not work", what it costs, the package for the
-  device's admins.</li>
+<li><strong>The setup page, before installing</strong> (<code>default-app.sh deps DIR [--install] [--json]</code>, which
+  runs <code>check-requirements.py</code> from the bundle). It checks every requirement, and every library
+  the bundle's ravving links to (<code>ldd</code>'s "not found").</li>
+<li>The page lists what's missing, the feature each costs, and the Debian package that brings
+    it, with <strong>INSTALL MISSING PACKAGES</strong> (apt-get, online).</li>
+<li>A <code>startup</code> requirement or library missing means ravving can't start there. TRY IT and MAKE
+    IT THE DEFAULT stay dimmed, and the list says why.</li>
+<li><strong>ravving, once started</strong> (<code>Requirements</code>, four seconds after the first frame). It checks the
+  <code>feature</code> requirements by files and programs only: no process, microseconds.</li>
+<li>Each missing one is a warning in the issues centre, like "MUSIC PLAYER will not work", with
+    what it costs and the package for the device's admins.</li>
 </ul>
 <p>What ravving needs that a Zynthbox image may not have:</p>
 <table>
@@ -205,20 +213,43 @@ script always matches the files it installs):</p>
 </tr>
 </tbody>
 </table>
-<p>The cards above them (installed version, what starts at boot, what runs now) are
-<code>default-app.sh status</code>, re-read after every action. The two installing tiles read by what
-the device has: "Install this bundle and …" with nothing installed, "Update the installed X
-to this bundle's Y and …" with another version, and "ravving Y is already installed: …" with
-this one, in which case the install step is skipped (TRY IT then reads LAUNCH RAVVING). A
-tile that would change nothing is dimmed: MAKE IT THE DEFAULT while ravving already boots, ZYNTHBOX AT BOOT AGAIN while Zynthbox
-does, REMOVE while nothing is installed. The AppImage itself stays in the Store's
-list until it is removed there.</p>
-<p>Switching stops the UI that is running, and with it everything it started: the setup page
-under zynthbox-qml, or the script itself under ravving's ZYNTHBOX button. The script
-therefore re-runs the switching commands in a transient unit of its own (<code>systemd-run
---user --wait</code>) and only then touches the services. <code>run APP</code> switches for the session
-only (the boot default stays; a masked zynthbox-qml is unmasked for the start and masked
-again), while <code>ravving</code> and <code>zynthbox</code> change what boots.</p>
+<p>The cards above them come from <code>default-app.sh status</code>, re-read after every action: the
+installed version, what starts at boot, and what runs now.</p>
+<p>The two installing tiles read by what the device has:</p>
+<table>
+<thead>
+<tr>
+<th>Installed</th>
+<th>The tile reads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nothing</td>
+<td>"Install this bundle and …"</td>
+</tr>
+<tr>
+<td>another version</td>
+<td>"Update the installed X to this bundle's Y and …"</td>
+</tr>
+<tr>
+<td>this version</td>
+<td>"ravving Y is already installed: …", and the install step is skipped (TRY IT reads LAUNCH RAVVING)</td>
+</tr>
+</tbody>
+</table>
+<p>A tile that would change nothing is dimmed: MAKE IT THE DEFAULT while ravving already boots,
+ZYNTHBOX AT BOOT AGAIN while Zynthbox does, and REMOVE while nothing is installed. The AppImage
+itself stays in the Store's list until it's removed there.</p>
+<p>Switching stops the UI that's running, and everything it started: the setup page under
+zynthbox-qml, or the script itself under ravving's ZYNTHBOX button. So the script re-runs the
+switching commands in a transient unit of its own (<code>systemd-run --user --wait</code>), and only then
+touches the services.</p>
+<ul>
+<li><code>run APP</code> switches for the session only. The boot default stays; a masked zynthbox-qml is
+  unmasked for the start and masked again.</li>
+<li><code>ravving</code> and <code>zynthbox</code> change what boots.</li>
+</ul>
 <h2 id="building-the-appimage">Building the AppImage</h2>
 <p>The builder is <a href="https://github.com/Nitrux/nx-apphub" rel="noopener" target="_blank">NX AppHub CLI</a> (<code>nx-apphub-cli build</code>),
 the tool the Zynthbox kit's other apps use, driven by <code>packaging/appimage/ravving.yml.in</code>,
@@ -227,8 +258,9 @@ modelled on the kit's vvave bundle (UriHerrera/storage, <code>AppImages/vvave/ap
 <li><code>deps</code> is empty, so nothing is downloaded; the <code>zbkit</code> repo entry is the kit's and goes
   unused;</li>
 <li>our binaries get into the AppDir through the <code>scripts/</code> folder next to the YAML, which
-  nx-apphub copies into <code>usr/bin</code> before it looks for <code>binarypath</code>; the data, desktop entry,
-  icon and unit come from the install staging tree through <code>prebuild-commands</code>;</li>
+  nx-apphub copies into <code>usr/bin</code> before it looks for <code>binarypath</code>;</li>
+<li>the data, desktop entry, icon and unit come from the install staging tree, through
+  <code>prebuild-commands</code>;</li>
 <li><code>binarypath</code> and <code>exec</code> are <code>ravving-setup</code>: nx-apphub patches that binary's RPATH (with
   patchelf; the paths it adds do not exist in this bundle, which is harmless) and writes the
   AppRun for it;</li>
@@ -239,13 +271,14 @@ modelled on the kit's vvave bundle (UriHerrera/storage, <code>AppImages/vvave/ap
 <p>From the laptop:</p>
 <pre><code class="language-sh">tools/device.sh appimage [OUT_DIR]     # default OUT_DIR: the Store packages folder beside the repo
 </code></pre>
-<p>syncs the source, installs nx-apphub on the device if it is missing
-(<code>tools/install-nx-apphub.sh</code>: patchelf and the Python dependencies from Debian, the CLI from
-its git checkout into a venv), runs <code>tools/build-appimage.sh</code> there and copies
+<p>syncs the source, and installs nx-apphub on the device if it's missing
+(<code>tools/install-nx-apphub.sh</code>: patchelf and the Python dependencies from Debian, the CLI from its
+git checkout into a venv). Then it runs <code>tools/build-appimage.sh</code> there, and copies
 <code>ravving-&lt;version&gt;-aarch64.AppImage</code> back. On the device itself:</p>
 <pre><code class="language-sh">cd /root/ravving &amp;&amp; tools/build-appimage.sh dist
 </code></pre>
-<p>The version is <code>project(ravving VERSION …)</code> in CMakeLists.txt; it names the file, fills
+<h3 id="the-version">The version</h3>
+<p>The version is <code>project(ravving VERSION …)</code> in CMakeLists.txt. It names the file, fills
 <code>usr/share/ravving/VERSION</code> and shows on the setup page.</p>
 <h2 id="the-store-pages-assets">The Store page's assets</h2>
 <p>Next to the AppImage, the Store listing wants an icon and a gallery:</p>
@@ -259,10 +292,14 @@ its git checkout into a venv), runs <code>tools/build-appimage.sh</code> there a
   Load a project worth showing first: the shots are of whatever is on screen.</li>
 </ul>
 <h2 id="before-a-release-the-translations">Before a release: the translations</h2>
-<p>Every release has its translations reviewed: what changed in po/ and po-site/ since the last
-release is read by someone who reads the language, the screenshot tour is taken in Spanish and
-Japanese, and <code>ctest -R translations-current</code> passes (no fuzzy or untranslated text, every
-placeholder kept, the translated pages rendered). <a href="translations.html">Translations</a> has the steps.</p>
+<p>Every release has its translations reviewed:</p>
+<ul>
+<li>someone who reads the language reads what changed in po/ and po-site/ since the last release;</li>
+<li>the screenshot tour is taken in Spanish and Japanese;</li>
+<li><code>ctest -R translations-current</code> passes: no fuzzy or untranslated text, every placeholder kept,
+  the translated pages rendered.</li>
+</ul>
+<p><a href="translations.html">Translations</a> has the steps.</p>
 <h2 id="the-release-check-toolsappimage-testsh">The release check: tools/appimage-test.sh</h2>
 <p>Run it after any release-worthy change (a version bump, a change to the setup page, the
 scripts or the unit), from the laptop:</p>
@@ -270,33 +307,43 @@ scripts or the unit), from the laptop:</p>
 tools/appimage-test.sh --no-build # the AppImage already in the device's dist/
 tools/appimage-test.sh --keep     # leave the entry in the device's Apps list afterwards
 </code></pre>
-<p>Run it on a freshly booted device. It switches between the two UIs six times in a few minutes;
-several walks in a row can leave zynthbox-qml hung loading its sketchpad ("Starting engine
-…"), a Zynthbox / PipeWire wedge after many fast restarts that only a reboot clears.</p>
-<p>It builds the AppImage (<code>device.sh appimage</code>), installs it as the Store would
-(<code>tools/store-register.py install</code>, which registers with libappimage, extracts the AppDir and
-points the desktop entry at its AppRun), checks the AppDir's contents, then walks the page and
-ravving by touch, asserting <code>default-app.sh status</code> after each step:</p>
+<p>Run it on a freshly booted device. It switches between the two UIs six times in a few minutes.
+Several walks in a row can leave zynthbox-qml hung loading its sketchpad ("Starting engine
+…"): a Zynthbox and PipeWire wedge after many fast restarts, which only a reboot clears.</p>
+<p>It:</p>
 <ol>
-<li>TRY IT from a purged system: ravving runs, <code>installed</code> is the bundle's version,
-   <code>/usr/bin/ravving</code> is byte for byte the bundle's binary, the boot default is untouched;</li>
+<li>builds the AppImage (<code>device.sh appimage</code>);</li>
+<li>installs it as the Store would (<code>tools/store-register.py install</code>): it registers with
+   libappimage, extracts the AppDir, and points the desktop entry at its AppRun;</li>
+<li>checks the AppDir's contents;</li>
+<li>
+<p>walks the page and ravving by touch, asserting <code>default-app.sh status</code> after each step:</p>
+</li>
+<li>
+<p>TRY IT from a purged system: ravving runs, <code>installed</code> is the bundle's version,
+   <code>/usr/bin/ravving</code> is byte for byte the bundle's binary, the boot default is untouched;</p>
+</li>
 <li>ravving's POWER → ZYNTHBOX: zynthbox-qml runs;</li>
 <li>MAKE IT THE DEFAULT: ravving runs and boots, zynthbox-qml is masked;</li>
 <li>ZYNTHBOX again: zynthbox-qml runs and stays masked for boot;</li>
 <li>ZYNTHBOX AT BOOT AGAIN: zynthbox-qml boots, ravving still installed;</li>
 <li>REMOVE RAVVING twice, CLOSE: nothing of ravving left, the page gone.</li>
 </ol>
-<p>The page is started with <code>tools/store-launch.sh</code>, which puts it in zynthbox-qml's own
-service cgroup on the device's display: the exact situation of a Store launch, so a switch
-that kills zynthbox-qml kills the page too, as in real use. Screenshots and the status after
-every step go to <code>analysis/appimage-test-&lt;date&gt;/</code> (eyeball the page shots: dimmed tiles,
-messages). The user's ravving settings (<code>~/.config/ravving</code>) and live session
-(<code>~/.local/state/ravving</code>) are copied aside before the walk's purge and put back at the end, a
-failed step included. Whatever the device had before is put back at the end: a dev install by
-<code>cmake --install</code>, ravving as the boot default by <code>default-app.sh ravving</code>; the Store entry
-is removed unless <code>--keep</code>. A failed assertion stops the run and prints the device's status;
-the device is then left mid-walk, and <code>tools/device.sh default zynthbox</code> or <code>ravving</code> brings
-it back by hand.</p>
+<h3 id="how-the-walk-runs">How the walk runs</h3>
+<ul>
+<li><strong>The launch:</strong> <code>tools/store-launch.sh</code> starts the page in zynthbox-qml's own service cgroup,
+  on the device's display. That's exactly a Store launch, so a switch that kills zynthbox-qml
+  kills the page too, as in real use.</li>
+<li><strong>The record:</strong> screenshots and the status after every step go to
+  <code>analysis/appimage-test-&lt;date&gt;/</code>. Eyeball the page shots for dimmed tiles and messages.</li>
+<li><strong>Your data:</strong> the user's ravving settings (<code>~/.config/ravving</code>) and live session
+  (<code>~/.local/state/ravving</code>) are copied aside before the walk's purge, and put back at the end,
+  even after a failed step.</li>
+<li><strong>The device's state</strong> is put back at the end: a dev install by <code>cmake --install</code>, or ravving
+  as the boot default by <code>default-app.sh ravving</code>. The Store entry is removed, unless <code>--keep</code>.</li>
+<li><strong>A failed assertion</strong> stops the run and prints the device's status. The device is then left
+  mid-walk; <code>tools/device.sh default zynthbox</code> or <code>ravving</code> brings it back by hand.</li>
+</ul>
 <h2 id="testing-an-appimage-without-the-store">Testing an AppImage without the Store</h2>
 <p>By hand on the device, the pieces the release check uses:</p>
 <pre><code class="language-sh">tools/store-register.py install dist/ravving-0.3.0-aarch64.AppImage camiloh &quot;Ravving 0.3.0&quot;
@@ -304,12 +351,42 @@ it back by hand.</p>
 tools/store-launch.sh &quot;$APPDIR&quot;    # the page, as zynthbox-qml's Apps list would start it
 tools/store-register.py remove &quot;~/.local/share/zynthbox/apps/camiloh/Ravving 0.3.0/ravving-0.3.0-aarch64.AppImage&quot;
 </code></pre>
-<p>(<code>store-register.py</code> does what <code>registerAppImage</code> / <code>unregisterAppImage</code> in zynthbox-qml's
-<code>zynthian_gui_main.py</code> do, minus the UI.) Or in zynthbox-qml: <code>SCREEN_MAIN_MENU</code>
-(<code>tools/device.sh cuia</code>), tap Apps, tap Ravving. The page is touch only; <code>tools/device.sh
-tap X Y</code> drives it: the tiles are the four quarters of the lower half (TRY IT 337 390, MAKE
-IT THE DEFAULT 943 390, ZYNTHBOX AT BOOT AGAIN 337 600, REMOVE 943 600), CLOSE 1160 736.
-A desktop look without a device:</p>
+<p><code>store-register.py</code> does what <code>registerAppImage</code> / <code>unregisterAppImage</code> in zynthbox-qml's
+<code>zynthian_gui_main.py</code> do, minus the UI. Or, in zynthbox-qml: <code>SCREEN_MAIN_MENU</code>
+(<code>tools/device.sh cuia</code>), tap Apps, tap Ravving.</p>
+<p>The page is touch only, and <code>tools/device.sh tap X Y</code> drives it. The tiles are the four quarters
+of the lower half:</p>
+<table>
+<thead>
+<tr>
+<th>Tile</th>
+<th>X Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TRY IT</td>
+<td>337 390</td>
+</tr>
+<tr>
+<td>MAKE IT THE DEFAULT</td>
+<td>943 390</td>
+</tr>
+<tr>
+<td>ZYNTHBOX AT BOOT AGAIN</td>
+<td>337 600</td>
+</tr>
+<tr>
+<td>REMOVE</td>
+<td>943 600</td>
+</tr>
+<tr>
+<td>CLOSE</td>
+<td>1160 736</td>
+</tr>
+</tbody>
+</table>
+<p>A desktop look without a device:</p>
 <pre><code class="language-sh">QT_QPA_PLATFORM=offscreen RAVVING_WINDOWED=1 RAVVING_BUNDLE_DIR=&lt;a staged bundle&gt; \
   RAVVING_SETUP_SHOT=setup.png ./build/setup/ravving-setup
 </code></pre>
@@ -355,16 +432,20 @@ A desktop look without a device:</p>
 <p><code>tools/bluetooth-setup.sh</code> does all of it on a device and checks every step
 (<code>--check</code> only checks); <code>cmake --install</code> puts the two drop-ins in place as well. After the
 setup <code>bluetoothctl show</code> lists Audio Source, Audio Sink, Handsfree and Handsfree Audio Gateway.</p>
-<p><code>cmake --install</code> puts ravving's two drop-ins in place; the packages (<code>bluez-obexd</code>,
-<code>libspa-0.2-bluetooth</code>, <code>libkf6bluezqt6</code>) and the service restarts are
-<code>tools/bluetooth-setup.sh</code>'s job, which the setup program should run (or the AppImage's first
-start), and which <code>--check</code> verifies afterwards. After the setup <code>bluetoothctl show</code> lists
-Audio Source, Audio Sink, Handsfree and Handsfree Audio Gateway. ravving's WirePlumber drop-in
-also sets <code>bluetooth.autoswitch-to-headset-profile = false</code> (so recording from headphones
-never switches them to HFP) and <code>bluez5.enable-sbc-xq</code>. One more setting is the device's own,
-set by hand on a new image since BlueZ reads no drop-in folder: <code>FastConnectable = true</code> under
-<code>[General]</code> in <code>/etc/bluetooth/main.conf</code>, so a speaker or headphones paging the device connect
-within a fraction of a second.</p>
+<p><code>cmake --install</code> puts ravving's two drop-ins in place. <code>tools/bluetooth-setup.sh</code> does the
+rest, and the setup program, or the AppImage's first start, should run it: the packages
+(<code>bluez-obexd</code>, <code>libspa-0.2-bluetooth</code>, <code>libkf6bluezqt6</code>) and the service restarts. <code>--check</code>
+verifies it afterwards.</p>
+<p>After the setup, <code>bluetoothctl show</code> lists Audio Source, Audio Sink, Handsfree and Handsfree
+Audio Gateway. ravving's WirePlumber drop-in also sets:</p>
+<ul>
+<li><code>bluetooth.autoswitch-to-headset-profile = false</code>, so recording from headphones never
+  switches them to HFP;</li>
+<li><code>bluez5.enable-sbc-xq</code>.</li>
+</ul>
+<p>One more setting is the device's own, set by hand on a new image, since BlueZ reads no drop-in
+folder: <code>FastConnectable = true</code> under <code>[General]</code> in <code>/etc/bluetooth/main.conf</code>. With it, a
+speaker or headphones paging the device connect within a fraction of a second.</p>
   </article>
 </main>
 <footer>
@@ -379,9 +460,11 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
   if (!box || !list) return;
   var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
   function load(done) {
     if (index) return done();
-    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
       .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
   }
   function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -415,7 +498,7 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
       list.hidden = false;
       if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
       list.innerHTML = hits.slice(0, 20).map(function (h) {
-        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
       }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
     });
   }
