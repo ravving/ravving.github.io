@@ -614,13 +614,13 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 /* the line widths are in the drawing's units (1000 across), thicker on a narrow screen so they stay
    about a pixel wide; no non-scaling-stroke: Safari then measures the dashes in screen pixels and
    the lines never draw in */
-.bp { --bp-w: 1.3; }
-@media (max-width: 760px) { .bp { --bp-w: 2.2; } }
-@media (max-width: 480px) { .bp { --bp-w: 3; } }
-.bp .ln { fill: none; stroke: rgba(236, 240, 248, 0.62); stroke-width: var(--bp-w);
+.bp { --bp-w: 1; }
+@media (max-width: 760px) { .bp { --bp-w: 1.6; } }
+@media (max-width: 480px) { .bp { --bp-w: 2.4; } }
+.bp .ln { fill: none; stroke: rgba(240, 244, 250, 0.9); stroke-width: var(--bp-w);
   stroke-dasharray: 1; stroke-dashoffset: 1; animation: bp-draw 0.9s cubic-bezier(0.45, 0, 0.2, 1) calc(var(--d) + 0.1s) forwards; }
-.bp .ln.strong { stroke: rgba(246, 248, 252, 0.85); stroke-width: calc(var(--bp-w) * 1.3); }
-.bp .ln.faint { stroke: rgba(236, 240, 248, 0.28); }
+.bp .ln.strong { stroke: #fbfcfe; stroke-width: calc(var(--bp-w) * 1.4); }
+.bp .ln.faint { stroke: rgba(236, 240, 248, 0.4); }
 .bp .lamp { display: none; }
 .bp text { font-family: var(--font-cap); text-anchor: middle; fill: var(--c); opacity: 0;
   animation: bp-lit 0.5s ease-out calc(var(--d) + 0.6s) forwards; filter: drop-shadow(0 0 4px var(--c)); }
@@ -628,15 +628,19 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .bp .icon { fill: none; stroke: var(--c); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; opacity: 0;
   filter: drop-shadow(0 0 4px var(--c)); animation: bp-lit 0.5s ease-out 2.1s forwards; }
 .bp .icon.fill { fill: var(--c); stroke: none; }
-.bp .step { fill: var(--c); opacity: 0; filter: drop-shadow(0 0 5px var(--c)); animation: bp-step 0.35s ease-out calc(4s + var(--i) * 0.06s) forwards; }
+/* the step keys: lit in a run, then a sequence playing: each flashes as the playhead passes it
+   (in step with the screen's, 0.2 s a step from 5.2 s) and rests dim in its colour */
+.bp .step { fill: var(--c); opacity: 0; filter: drop-shadow(0 0 5px var(--c));
+  animation: bp-step 0.35s ease-out calc(4s + var(--i) * 0.06s) forwards, bp-seq 3.2s steps(1, end) calc(5.2s + var(--i) * 0.2s) infinite; }
+@keyframes bp-seq { 0% { opacity: 1; } 6.25% { opacity: 0.28; } 100% { opacity: 0.28; } }
 @keyframes bp-draw { to { stroke-dashoffset: 0; } }
 /* the drums page on the screen: thinner lines, the beat's hits, a playhead walking the 16 steps */
-.bp .ln.ui { stroke: rgba(236, 240, 248, 0.42); stroke-width: calc(var(--bp-w) * 0.6); animation-duration: 0.6s; }
+.bp .ln.ui { stroke: rgba(236, 240, 248, 0.72); stroke-width: calc(var(--bp-w) * 0.75); animation-duration: 0.6s; }
 .bp .hit { fill: #ff5a4a; opacity: 0; filter: drop-shadow(0 0 2px #ff5a4a); animation: bp-lit 0.3s ease-out var(--d) forwards; }
 .bp .playhead { fill: rgba(255, 255, 255, 0.10); opacity: 0; animation: bp-lit 0.3s ease-out 5.2s forwards, bp-play 3.2s steps(16, jump-none) 5.2s infinite; }
 @keyframes bp-play { from { transform: translateX(0); } to { transform: translateX(calc(var(--step) * 15)); } }
 @keyframes bp-lit { to { opacity: 1; } }
-@keyframes bp-step { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0.85; } }
+@keyframes bp-step { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0.28; } }
 /* the screen: it powers on to the splash once drawn, then shows the app */
 .bp-screen { background: transparent; animation: none; }
 .bp-boot { position: absolute; inset: 0; display: grid; place-items: center; background: #06050a; opacity: 0;
