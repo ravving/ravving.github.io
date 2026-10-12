@@ -552,3 +552,23 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
   .landing-button { transition: none; }
   .landing-screen, .landing-steps { display: none; }
 }
+
+/* ---- the mascots (assets/aru.js): an octopus and a wolf pup, 32×32 sprites drawn at whole-pixel
+   multiples; a tip is a sprite beside a speech bubble in the mood's signal colour ---- */
+.aru { display: inline-block; width: 64px; height: 64px; flex: none; }
+.aru svg { display: block; width: 100%; height: 100%; }
+.aru-tip { display: flex; align-items: center; gap: 14px; margin: 22px 0; }
+.aru-tip p { position: relative; margin: 0; padding: 10px 14px; border-radius: 10px; font-size: 15px; color: var(--ink);
+  background: var(--panel); border: 1px solid color-mix(in srgb, var(--tip-c, #f25d0a) 55%, transparent); }
+.aru-tip p::before { content: ""; position: absolute; left: -7px; top: 50%; width: 12px; height: 12px; margin-top: -6px;
+  background: var(--panel); border-left: 1px solid color-mix(in srgb, var(--tip-c, #f25d0a) 55%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--tip-c, #f25d0a) 55%, transparent); transform: rotate(45deg); }
+.aru-tip:has([data-mood="hiphop"]) { --tip-c: #ff4f8b; } .aru-tip:has([data-mood="gregorian"]) { --tip-c: #4a9bff; }
+.aru-tip:has([data-mood="pop"]) { --tip-c: #ffc134; } .aru-tip:has([data-mood="punk"]) { --tip-c: #c9ee6e; }
+.aru-tip:has([data-mood="jazz"]) { --tip-c: #b07cff; } .aru-tip:has([data-mood="metal"]) { --tip-c: #ff3b2f; }
+.aru-crew { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin-top: 18px; }
+.aru-crew figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.aru-crew .aru { width: 56px; height: 56px; }
+.aru-crew figcaption { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-align: center; }
+@media (max-width: 560px) { .aru-crew { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.section-head .aru-tip { margin: 14px 0 0; }
