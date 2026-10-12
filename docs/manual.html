@@ -698,7 +698,15 @@ and it goes back to the output once it is there again (a restart, a reconnection
 Bluetooth output's address is kept with it, so that Bluetooth can connect it when it comes
 on); picking the jacks forgets it. The dialog's list follows PipeWire while it is open. The music player,
 which plays beside the master, follows the output picked too. The drawer's OUTPUT slider
-(knob 2) sets the amplifier's level on the jacks and the chosen sink's own level otherwise.</p>
+(knob 2) sets the amplifier's level on the jacks and the chosen sink's own level otherwise.
+A Bluetooth output gets its codec first (SETTINGS' SBC-XQ) and is routed to once its new sink
+is there, whether it comes back on its own or is picked: routing first and switching the codec
+after replaced the sink under a live loopback. While another output plays, ravving listens to
+what goes into its loopback and what comes out:
+music going in with silence coming out for six seconds is routed again once (a fresh
+loopback), and if it is still silent the issues center says the output plays no sound
+(2026-10-12: after a Bluetooth codec switch the LG speaker went silent with every node
+"running" and nothing said so).</p>
 <h2 id="the-recorder">The RECORDER</h2>
 <p>MENU → RECORDER is a full-screen page (as the music player) for recording the input freely,
 as played (docs/recorder-plan.md). The transport keeps going, so a take can be played over the

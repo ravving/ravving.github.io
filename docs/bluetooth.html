@@ -473,6 +473,11 @@ own about 3 s after the start.</p>
 <td>the device connected HFP only, or the A2DP transport failed: disconnect and connect again</td>
 </tr>
 <tr>
+<td>the issues center: "… plays no sound" (or it went quiet and came back by itself)</td>
+<td>the journal: "plays silence: routing to it again", then "the output plays again" or not; <code>pw-jack python3 /tmp/meter.py ravving-out:output_FL</code> against <code>ravving-phaser:out_l</code></td>
+<td>the loopback passes silence though every node runs and every link is there (seen after a codec switch replaced the sink, 2026-10-12): ravving routes again once by itself; if that fails, pick the jacks and the device again, or turn the device off and on</td>
+</tr>
+<tr>
 <td>PLAYING THROUGH says so but nothing is heard</td>
 <td><code>pgrep -af pw-loopback</code>, <code>pw-link -l \| grep -A1 ravving-phaser:out_l</code> (should show <code>ravving-out:playback_FL</code>), <code>pw-top</code> (the bluez sink R, the HiFiBerry S)</td>
 <td>the loopback did not start (pipewire-bin missing?) or its links failed: pick the jacks and the device again; the journal has "master linked to ravving-out" when it worked</td>

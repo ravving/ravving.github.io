@@ -459,6 +459,11 @@ ravving's C++ objects standing in for the Python ones libzynthbox talks to:</p>
 <td>new</td>
 </tr>
 <tr>
+<td><code>OutputWatch</code></td>
+<td><code>ravving-outwatch</code>, a JACK client of two inputs that listens, while another output plays, to what the master sends into AudioOutputs' loopback and what the loopback plays out (peaks kept on the audio thread, compared every second): music in with nothing out for 6 s says <code>silent()</code> (AudioOutputs routes again once, then reports "… plays no sound"), sound out again <code>flowing()</code>; idle (the jacks) it is disconnected</td>
+<td>new</td>
+</tr>
+<tr>
 <td><code>Bluetooth</code></td>
 <td>Bluetooth (<code>bluetooth</code>, on KDE's BluezQt): the adapter (<code>state</code> unavailable / off / switching / on with <code>reason</code>, power, discovery, discoverable for three minutes), the devices ({address, name, kind phone / computer / audio / input / other, paired, connected, trusted, rssi, audio = A2DP sink, receives = OBEX push}; nameless private addresses hidden unless paired), a pairing Agent (DisplayYesNo: <code>pairing</code> {kind confirm / pin / passkey / display, passkey}, <code>answerPairing</code>), pair → trust → connect, forget, OBEX Object Push sending (<code>sendFile</code>: a session per push, <code>transfer</code> {name, device, size, transferred, status}), an ObexAgent that accepts pushes into <code>library/incoming/</code> (<code>fileReceived</code>), and <code>useAsOutput</code>: the device's sink found among <code>AudioOutputs</code> by address (asked again until it appears after the connection) and selected there, back to the jacks on disconnect, forget or exit</td>
 <td>new</td>
