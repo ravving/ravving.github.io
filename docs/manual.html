@@ -54,6 +54,7 @@
 <li><a href="translations.html">Translations</a></li>
 <li><a href="ui-rules.html">UI rules</a></li>
 <li><a href="extending.html">Extending</a></li>
+<li><a href="writing-the-guide.html">Writing the guide</a></li>
 <li><a href="writing-code-docs.html">Writing code documentation</a></li>
 <li><a href="building.html">Building</a></li>
 <li><a href="packaging.html">Packaging</a></li>
@@ -125,88 +126,174 @@ bar line, and the whole session lives in projects.</p>
 setup page over Zynthbox with four choices: TRY IT, MAKE IT THE DEFAULT, ZYNTHBOX AT BOOT
 AGAIN, REMOVE RAVVING. Projects, takes and recordings stay when ravving is removed.</p>
 <h2 id="playing-and-editing">Playing and editing</h2>
-<p>Shortcuts on the device: <code>ALT</code> + <code>▲</code> jumps to the app header from anywhere; <code>ALT</code> + step
-keys 1–8 toggle the header's LIVE FX in their order (DROP, NO KICK, ONLY KICK, CRUSH, LO
-PASS, HI PASS, STUTTER, LOOP; the keys light orange while ALT is held and the pads show their
-key numbers); <code>ALT</code> + knobs 1–3
-move PHASER, ECHO and HEAVY; <code>ALT</code> + the big knob is the master volume. A long press on a
-machine's <strong>S</strong> (the strip's or the header's) solos it alone. <strong>MODE</strong> walks the instrument on
-screen OFF → LIVE → STEP + LIVE → OFF. <strong>STOP while stopped</strong> is the panic: every instrument's
-held notes end (a note left sounding). In STEP entry <code>◀</code> <code>▶</code> move the
-entry cursor a step, and keys held together go into the same step (a chord in one column). LIVE on the melodic pages: bass, lead and the chords page's NOTES tab
-play the scale on all 16 step keys with <code>▲</code> <code>▼</code> shifting the octave; the chords page's
-CHORDS and SLOTS tabs play the seven chord keys. In STEP entry with the transport stopped,
-<code>SELECT</code> writes the editor's selected row (a note, or the chord on CHORDS) at the cursor,
-and with LIVE and STEP on (playing or not) <code>▲</code> <code>▼</code> walk the rows instead of the octave,
-each row sounding as it is reached, to find the note by ear first. On a piano roll and the chord roll one finger drags
-sideways to page the bars (a piano roll also drags its rows up and down; past eight
-semitones the octave shifts); two
-fingers pinch to zoom; a tap still toggles a note. The first SAVE asks for the
-project's name (the on-screen keyboard comes up), later saves write over it after a second press within three seconds (AGAIN?), and the button reads SAVED, asleep, until the next change; SAVE AS NEW
-asks again. PROJECT ▾ lists the projects and the demos: a tap opens one (a second tap when
-there are unsaved changes), a long press or ★ makes it a favourite; its one row of actions
-works on the project open: NEW, TEMPLATES, IMPORT | SAVE AS NEW | EXPORT. The pointer is shown
-only while a mouse is plugged in.</p>
-<p><strong>Undo</strong>: the header's ↶ ↷ (and ALT + ◀ ▶ on the machine pages) walk the
-project's timeline back and forth, a change that touched several machines at once (CLEAR ALL,
-a key change snapping the bass and the lead) being one step; a machine's toolbar ↶ ↷ undo
-that machine's own changes only. Patterns and slots are undone, and so is the arrangement:
-a section removed comes back with its content, a rename, a colour, a length and the song's
-edits go back too (picking a section is not a step). Sounds, the mix and the project's
-settings are not undone.</p>
-<p><strong>LOCK</strong> (every pattern toolbar, first): the note grids write nothing while it is on: a tap on a
-cell, a step key, STEP entry, SELECT's moves and note knobs are refused, and LOCK flashes to
-say why; the grids still scroll, page and audition. Pressing PLAY locks them, so a stray touch
-cannot change what plays, and STOP unlocks them again. Tap LOCK to edit while it plays (it
-then stays unlocked past the stop), or to lock the grids while stopped (it then stays locked).
-One lock for every page; a take (●) still records.</p>
-<p><strong>SELECT</strong> (bass, lead and chords, in the pattern toolbar beside ♭♯): while it is on, a tap on
-the grid picks a note instead of writing one (again: unpicks; on a held note's tail, the
-note), on any bar, and <code>▲</code> <code>▼</code> move every picked note one note of the key up or down (a
-semitone with ♭♯ on), keeping its length, accent and slide; each move is one UNDO. On the
-chords page the CHORDS view picks chords and moves them a degree, the NOTES view picks single
-notes; a held chord always moves as one. A <strong>long press on SELECT</strong> turns it on with every note
-(or chord) of the pattern picked, in all its bars, to move the whole pattern at once. Turning
-SELECT off drops the picks.</p>
-<p><strong>A note's own settings</strong> (bass and lead): with SELECT on and notes picked, the device's knobs 1–3
-set them, the picked notes together, and a readout at the grid's top right shows the first one's
-with its knob badges (the big knob stays the volume; a focused dial group keeps its knobs):</p>
+<h3 id="shortcuts-youll-use-all-the-time">Shortcuts you'll use all the time</h3>
+<table>
+<thead>
+<tr>
+<th>Press</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ALT + ▲</td>
+<td>Jump to the header, from anywhere</td>
+</tr>
+<tr>
+<td>ALT + step keys 1–8</td>
+<td>Switch the LIVE FX on and off: DROP, NO KICK, ONLY KICK, CRUSH, LO PASS, HI PASS, STUTTER, LOOP</td>
+</tr>
+<tr>
+<td>ALT + knobs 1–3</td>
+<td>PHASER, ECHO and HEAVY</td>
+</tr>
+<tr>
+<td>ALT + big knob</td>
+<td>Master volume</td>
+</tr>
+<tr>
+<td>MODE</td>
+<td>The instrument on screen goes OFF → LIVE → STEP + LIVE → OFF</td>
+</tr>
+<tr>
+<td>STOP, while stopped</td>
+<td>Panic: every held note ends</td>
+</tr>
+<tr>
+<td>Long press on a machine's <strong>S</strong></td>
+<td>Solo that machine alone</td>
+</tr>
+</tbody>
+</table>
+<p>While you hold ALT, the step keys light up orange and the LIVE FX pads show their key numbers.</p>
+<h3 id="play-it-live">Play it live</h3>
+<p>Turn LIVE on with MODE, and the step keys become something you can play:</p>
+<ul>
+<li><strong>Bass, lead and the chords' NOTES tab:</strong> the scale is spread over all 16 keys. ▲ ▼ shift
+  the octave.</li>
+<li><strong>The chords' CHORDS and SLOTS tabs:</strong> you get the seven chord keys of your key.</li>
+</ul>
+<h3 id="write-notes-step-by-step">Write notes step by step</h3>
+<p>STEP entry writes what you play at a cursor.</p>
+<ul>
+<li>◀ ▶ move the cursor a step.</li>
+<li>Keys you hold together land in the same step, so a chord goes into one column.</li>
+<li>With the transport stopped, SELECT writes the selected row at the cursor: a note, or the
+  chord on CHORDS.</li>
+<li>With both LIVE and STEP on, ▲ ▼ walk the rows instead of the octave. Each row sounds as you
+  reach it, so you can find the note by ear first.</li>
+</ul>
+<h3 id="touch-the-grid">Touch the grid</h3>
+<ul>
+<li><strong>One finger</strong> drags sideways to page through the bars. On a piano roll it also drags the
+  rows up and down; past eight semitones, the octave shifts.</li>
+<li><strong>Two fingers</strong> pinch to zoom.</li>
+<li><strong>A tap</strong> still toggles a note.</li>
+</ul>
+<p>The pointer only shows while a mouse is plugged in.</p>
+<h3 id="save-and-open-projects">Save and open projects</h3>
+<ul>
+<li><strong>The first SAVE</strong> asks for the project's name, and the on-screen keyboard comes up.</li>
+<li><strong>Later saves</strong> write over it. Press SAVE twice within three seconds (it asks AGAIN?).</li>
+<li><strong>SAVED</strong> means nothing has changed since; the button wakes up with your next edit.</li>
+<li><strong>SAVE AS NEW</strong> asks for a new name.</li>
+</ul>
+<p>PROJECT ▾ lists your projects and the demos. Tap one to open it. If you have unsaved changes,
+tap it a second time to confirm. A long press or ★ makes a project a favourite.</p>
+<p>The row at the bottom always works on the project you have open: NEW, TEMPLATES and IMPORT,
+then SAVE AS NEW, then EXPORT.</p>
+<h3 id="undo">Undo</h3>
+<p>The header's ↶ ↷ step the whole project back and forth. ALT + ◀ ▶ do the same on the machine
+pages. A change that touched several machines at once counts as one step: CLEAR ALL, or a key
+change that moved both the bass and the lead.</p>
+<p>A machine's own ↶ ↷, in its toolbar, undo only that machine's changes.</p>
+<p>What comes back:</p>
+<ul>
+<li>Patterns and slots.</li>
+<li>The arrangement: a removed section with its content, a rename, a colour, a length, and edits
+  to the song.</li>
+</ul>
+<p>What doesn't: sounds, the mix and the project's settings. Picking a section isn't a step
+either. More in <a href="#undo-and-redo">Undo and redo</a>.</p>
+<h3 id="lock-keep-a-stray-tap-from-changing-what-plays">LOCK: keep a stray tap from changing what plays</h3>
+<p>LOCK is the first button of every pattern toolbar. While it's on, the note grids don't write
+anything. Taps on cells, step keys, STEP entry, SELECT's moves and the note knobs are all
+refused, and LOCK flashes to tell you why. You can still scroll, page and listen.</p>
+<ul>
+<li><strong>PLAY</strong> turns LOCK on. <strong>STOP</strong> turns it off again.</li>
+<li><strong>Tap LOCK while playing</strong> to edit anyway. It then stays unlocked after you stop.</li>
+<li><strong>Tap LOCK while stopped</strong> to lock the grids. It then stays locked.</li>
+</ul>
+<p>There's one LOCK for every page, and a take (●) still records.</p>
+<h3 id="select-move-notes-after-youve-written-them">SELECT: move notes after you've written them</h3>
+<p>SELECT sits in the pattern toolbar of the bass, lead and chords, beside ♭♯. While it's on, a
+tap on the grid picks a note instead of writing one. Tap again to unpick it. A tap on a held
+note's tail picks that note.</p>
+<ul>
+<li><strong>▲ ▼</strong> move every picked note one note of the key up or down. With ♭♯ on, they move a
+  semitone. Length, accent and slide come along.</li>
+<li><strong>Each move</strong> is one undo step.</li>
+<li><strong>On the chords page,</strong> the CHORDS view picks chords and moves them a degree. The NOTES view
+  picks single notes. A held chord always moves as one.</li>
+<li><strong>A long press on SELECT</strong> picks every note (or chord) in all the bars, so you can move the
+  whole pattern at once.</li>
+<li><strong>Turning SELECT off</strong> drops the picks.</li>
+</ul>
+<h3 id="shape-a-single-note">Shape a single note</h3>
+<p>On the bass and lead, pick notes with SELECT, then turn knobs 1–3 to change them together. A
+readout at the top right of the grid shows the first picked note's values, with the knob
+badges.</p>
 <table>
 <thead>
 <tr>
 <th>Knob</th>
 <th>Setting</th>
-<th>A detent</th>
+<th>Range</th>
+<th>One detent</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
-<td><strong>LENGTH</strong>, 1 step to 4 bars (the lighter cells; a long press on a cell sets it too)</td>
+<td><strong>LENGTH</strong> (the lighter cells)</td>
+<td>1 step to 4 bars</td>
 <td>a step</td>
 </tr>
 <tr>
 <td>2</td>
-<td><strong>VELOCITY</strong>, 1–127, over the plain or ACCENT one; the ACCENT lane's cell fills to it (bright red when accented), and a tap there still flips the accent: full, or back to the plain velocity (clearing the note's own)</td>
+<td><strong>VELOCITY</strong></td>
+<td>1–127</td>
 <td>4</td>
 </tr>
 <tr>
 <td>3</td>
-<td><strong>NUDGE</strong>, half a step early to half a step late, from where the swing puts the note (a LIVE take with Q off records one)</td>
+<td><strong>NUDGE</strong>, from where the swing puts the note</td>
+<td>half a step early to half a step late</td>
 <td>a 16th of a step</td>
 </tr>
 </tbody>
 </table>
-<p>They move with the note (▲ ▼ ◀ ▶ in SELECT), are one UNDO a detent, and are kept with the project
-and in a saved pattern preset (the chart's <code>HOLD</code> lane, and <code>VELOCITY</code> and <code>NUDGE</code>, by step: a
-velocity, a % of a step).</p>
-<p><strong>SLOTS</strong> (chords page) composes with whole chords: tap a slot, play a chord
-key (the next slot arms itself), set each slot's length (1, 2, 4 or 8 bars, never past the
-pattern's eight in all: "n / 8 BARS"); the slots write the chord pattern and PLAY plays them
-in order, the slot playing lit with its bar. ＋ adds four more slots (up to eight), − takes
-them away. The slots generate the pattern: once the CHORDS or NOTES view changes it, the view
-says PATTERN CHANGED and dims the slots, and editing a slot rebuilds from them (UNDO brings
-the edits back).</p>
+<ul>
+<li>A long press on a cell also sets a note's length.</li>
+<li>The ACCENT lane's cell fills to the velocity, bright red when accented. A tap there still
+  flips the accent: full, or back to the plain velocity.</li>
+<li>A LIVE take with Q off records a nudge for each hit.</li>
+<li>These settings move with the note, each detent is one undo step, and they're kept with the
+  project and in a saved pattern preset.</li>
+</ul>
+<p>The big knob stays the volume, and a focused group of dials keeps its own knobs.</p>
+<h3 id="slots-write-with-whole-chords">SLOTS: write with whole chords</h3>
+<p>On the chords page, SLOTS lets you compose chord by chord:</p>
+<ol>
+<li>Tap a slot.</li>
+<li>Play a chord key. The next slot arms itself.</li>
+<li>Set each slot's length: 1, 2, 4 or 8 bars. All slots together never pass the pattern's eight
+   bars; the "n / 8 BARS" readout keeps count.</li>
+</ol>
+<p>The slots write the chord pattern, and PLAY plays them in order with the current slot lit. ＋
+adds four more slots, up to eight, and − takes them away.</p>
+<p>If you change the pattern in the CHORDS or NOTES view, the view says PATTERN CHANGED and dims
+the slots. Editing a slot then rebuilds the pattern from the slots. Undo brings your edits back.</p>
 <h2 id="sample-king">SAMPLE KING</h2>
 <p>Page 5 holds two samplers. Press 5 again to swap between SAMPLE KING and the PAD SAMPLER;
 ravving remembers which one you used.</p>
