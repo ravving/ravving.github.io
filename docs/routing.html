@@ -1,0 +1,298 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/routing.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The audio graph · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li><a href="video.html">Video recordings and the computer link</a></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="scripting-projects.html">Building a project by script</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li><a href="sections-plan.html">Sections and the song</a></li>
+<li><a href="sampler-plan.html">SAMPLE KING</a></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li><a href="design-reference.html">The design reference</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li class="on"><a href="routing.html" aria-current="page">The audio graph</a><ul><li><a href="#the-graph-ravving-makes">The graph ravving makes</a></li><li><a href="#hardware-port-names">Hardware port names</a></li><li><a href="#tools-all-on-the-image">Tools (all on the image)</a></li><li><a href="#the-routine-toolsdevicesh-graph-all-s-60">The routine (tools/device.sh graph all -s 60)</a></li><li><a href="#measured-on-milo">Measured on milo</a></li><li><a href="#midi">MIDI</a></li></ul></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">Under the hood <span>/</span> docs/routing.md</p>
+<h1>The audio graph</h1>
+<p class="doc-blurb">What ravving wires in PipeWire&#x27;s JACK graph, the tools to look at it, the latency measured.</p>
+
+<p>What ravving wires, how to look at it, how to measure it, and what was measured. The
+graph is PipeWire's, seen by libzynthbox and the engines through PipeWire's JACK library
+(<code>pw-jack</code>), the way zynthbox-qml runs. <code>tools/graph-check.py</code> (run with <code>tools/device.sh
+graph …</code>) does the checks below in one go.</p>
+<h2 id="the-graph-ravving-makes">The graph ravving makes</h2>
+<p><code>JackWiring</code> (src/backend/jackwiring.*) asks libzynthbox's JackConnectionHandler for every
+link and retries until the ports exist (engines and passthroughs make their ports a moment
+after they are asked for). Per machine (z: its Zynthian channel, t: its sketchpad track):</p>
+<pre><code>ZLRouter:Zynthian-Channel{z} ─MIDI─&gt; ravving-&lt;key&gt;-midi:midi_00          (FluidSynth)
+                                      ravving-&lt;key&gt;:&lt;lv2 midi in&gt;         (jalv)
+ravving-&lt;key&gt;:output_FL/FR ──&gt; [DRIVE insert] ──&gt; SynthPassthrough:Synth{z+1}-input{L,R}
+SynthPassthrough:Synth{z+1}-dryOut ──&gt; TrackPassthrough:Channel{t+1}-lane1-input
+TrackPassthrough lane dryOut ──&gt; AudioLevels:Channel{t+1} ──&gt; GlobalPlayback:input
+TrackPassthrough lane wetOutFx1 ──&gt; ravving-reverb ──&gt; GlobalPlayback:input   (send 1)
+TrackPassthrough lane wetOutFx2 ──&gt; ravving-delay  ──&gt; GlobalPlayback:input   (send 2)
+SamplerSynth:channel_{t+1}-sample{n} ──&gt; the track's lane (the samplers' slots)
+SamplerSynth:global-sketch1 ──&gt; GlobalPlayback:input (the metronome's ticks)
+GlobalPlayback:dryOut ──&gt; ravving-repeat ──&gt; ravving-crush ──&gt; ravving-phaser (the master
+    inserts: LIVE FX) ──&gt; system:playback_1/2   (or ravving-out, a loopback, when the sound
+    goes to Bluetooth / HDMI: docs/bluetooth.md)
+jacks 4/5 (the HiFiBerry's capture, HardwarePorts) ──&gt; [input inserts] ──&gt; a track's lane (monitor) and / or
+    AudioLevels:SystemRecorder (record); AudioLevels:SystemCapture meters the input
+</code></pre>
+<p>The link PipeWire makes on its own from every new engine to the speakers is removed, as
+zynthbox-qml's autoconnect does, so all sound goes through its track (level, mute, FX).</p>
+<p>Clock: every JACK client (libzynthbox's nodes, jalv) runs at the graph's rate and period,
+48000 / 256 on a Zynthbox. FluidSynth's audio goes through its PipeWire driver (a stream,
+so its node can run on its own clock): ravving tells it the graph's rate and period
+(<code>AudioGraph</code>, read once through a throwaway JACK client) so it is not resampled.</p>
+<h2 id="hardware-port-names">Hardware port names</h2>
+<p>ravving never trusts a hardware port's JACK name: pipewire-jack names a device's ports after its
+node's description, or <code>system:</code> for the default device, and two cards sharing a description
+take turns at the plain name and a <code>-&lt;serial&gt;</code> one from one start of PipeWire to the next. On
+milo the kernel's snd-dummy and the HiFiBerry are both "Built-in Audio Stereo"; on a bad start
+the input listened to the Dummy and was silent (2026-10-10).</p>
+<ul>
+<li><strong>The device:</strong> <code>data/wireplumber/50-ravving-hardware.conf</code> hides the Dummy from PipeWire, so
+  the HiFiBerry is the only "Built-in Audio Stereo", and (by its priority, 10000 against 1000)
+  the <code>system:</code> device, on every start. libzynthbox and zynthbox-qml wire that name too.</li>
+<li><strong>ravving:</strong> <code>HardwarePorts</code> finds a card's ports by the card. In <code>pw-dump</code> each port's
+  <code>port.alias</code> is "<ALSA card name>:<port>" (kits.json <code>input.portsCard</code>), and its JACK name is
+  the JACK port whose UUID carries that port's object serial (pipewire-jack makes a port's UUID
+  as <code>(1 &lt;&lt; 32) | (serial + 1)</code>). The input (<code>captureOf</code>) and the speakers (<code>playbackOf</code>,
+  <code>JackWiring::setSpeakers</code>) are found that way at start; the input again each time it is armed
+  (the RECORDER or INPUT opening).</li>
+<li><strong>Seeing it:</strong> <code>pw-jack jack_lsp -U</code> (the UUIDs) against <code>pw-dump</code> (the serials and aliases);
+  the journal says <code>ravving: input ports …</code> and <code>ravving: speakers …</code>.</li>
+</ul>
+<h2 id="tools-all-on-the-image">Tools (all on the image)</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it shows</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pw-top -b -n 2</code></td>
+<td>every node: driver (no <code>+</code>) or follower, QUANT/RATE it runs at, WAIT/BUSY per cycle, W/Q B/Q (fractions of the period), ERR (xruns), format</td>
+<td>the first thing to look at; <code>tools/graph-check.py</code> parses it</td>
+</tr>
+<tr>
+<td><code>pw-dump</code></td>
+<td>the whole graph as JSON: nodes with props (<code>node.rate</code>, <code>node.latency</code>, <code>api.alsa.*</code>), ports, links, devices with profiles</td>
+<td>scripting; <code>pw-dump ID</code> for one object</td>
+</tr>
+<tr>
+<td><code>pw-dot</code> + <code>dot -Tpng</code></td>
+<td>the graph as a picture</td>
+<td><code>pw-dot -o /tmp/g.dot; dot -Tpng /tmp/g.dot &gt; g.png</code> (graphviz on the laptop)</td>
+</tr>
+<tr>
+<td><code>pw-link -l</code> / <code>-o</code> / <code>-i</code></td>
+<td>links by PipeWire names (the only names some nodes have: the loopback's inputs)</td>
+<td><code>pw-link A:out B:in</code>, <code>pw-link -d</code> to remove</td>
+</tr>
+<tr>
+<td><code>pw-jack jack_lsp -c</code> / <code>-l</code></td>
+<td>JACK names with connections / latency ranges</td>
+<td>ravving's and libzynthbox's names</td>
+</tr>
+<tr>
+<td><code>pw-mon</code></td>
+<td>events as they happen (nodes, links, params)</td>
+<td>watching an engine start or a link appear</td>
+</tr>
+<tr>
+<td><code>pw-metadata -n settings 0</code></td>
+<td>the defaults (<code>clock.quantum</code> 1024, <code>clock.rate</code>) and forced values</td>
+<td>NOT the running clock: that is the driver row in pw-top</td>
+</tr>
+<tr>
+<td><code>pw-cli info ID</code></td>
+<td>one node's params (Props: channelVolumes…)</td>
+<td>volumes, formats</td>
+</tr>
+<tr>
+<td><code>wpctl status</code> / <code>inspect</code> / <code>set-profile</code></td>
+<td>WirePlumber's view: devices, profiles, defaults</td>
+<td>the sound card's profile (below)</td>
+</tr>
+<tr>
+<td><code>pw-jack jack_iodelay</code></td>
+<td>round-trip latency through a cable from an output jack to an input jack</td>
+<td>the only true end-to-end audio latency measurement</td>
+</tr>
+<tr>
+<td><code>pw-jack jack_midi_latency_test</code></td>
+<td>MIDI round trip through a loopback (a cable between a MIDI out and in, or a2j's Midi Through)</td>
+<td>MIDI path latency and jitter</td>
+</tr>
+<tr>
+<td><code>pw-jack jack_bufsize</code> / <code>jack_cpu_load</code></td>
+<td>the period, the DSP load JACK sees</td>
+<td></td>
+</tr>
+<tr>
+<td><code>tools/mididump.py</code></td>
+<td>the MIDI an engine really receives on a port</td>
+<td>silent-engine investigations</td>
+</tr>
+<tr>
+<td><code>tools/meter.py</code></td>
+<td>RMS on any ports</td>
+<td>is sound passing a link</td>
+</tr>
+<tr>
+<td><code>tools/graph-check.py</code></td>
+<td>rates/periods vs the graph, xrun deltas, linked-but-idle nodes, the ravving links</td>
+<td>the routine check</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-routine-toolsdevicesh-graph-all-s-60">The routine (<code>tools/device.sh graph all -s 60</code>)</h2>
+<ol>
+<li><code>rates</code>: every audio node's rate and period against the running driver's. A node at
+   another rate is resampled; a node with a larger period is buffered by that much.</li>
+<li><code>idle</code>: nodes with links that are not running: a link that passes no data looks like
+   this (an engine linked while still registering, seen once with FluidSynth: re-make the
+   link).</li>
+<li><code>xruns -s N</code>: each node's ERR counter now and N seconds later. Compare idle vs playing,
+   and before vs after a change.</li>
+<li><code>links ravving</code>: what is linked, grouped by output port, to check against the map above.</li>
+</ol>
+<h2 id="measured-on-milo">Measured on milo</h2>
+<p>(HiFiBerry DAC+ADC Pro, profile <code>output:stereo-fallback+input:stereo-fallback</code>, graph
+48000 / 256, PipeWire 1.4.2.)</p>
+<h3 id="fluidsynths-clock-fixed-2026-10-08">FluidSynth's clock (fixed 2026-10-08)</h3>
+<p>Before: every FluidSynth audio node ran at 44100 with a 1024-frame buffer (its defaults:
+<code>synth.sample-rate</code> 44100, <code>audio.periods</code> 16 × <code>audio.period-size</code> 64) inside the 48000 /
+256 graph: PipeWire resampled each one, and each added 23 ms of latency; BUSY per cycle
+≈ 170 µs per engine. After <code>-r &lt;graph rate&gt; -o audio.period-size=&lt;period&gt; -o
+audio.periods=2</code>: 48000 / 512 (10.7 ms), BUSY ≈ 85 µs, no resampling. The export suite
+(33 checks) and the soundfont checks pass unchanged.</p>
+<p>Four FluidSynth buffering variants side by side (standalone processes linked into the
+master, idle, 60 s, ravving under gdb at the time, see below): PipeWire driver 2 × 256
+async (+37 xruns), 4 × 256 async (+40), 2 × 256 synchronous (+39), JACK driver through
+pw-jack (+40); the driver itself +20. The buffering made no difference: those xruns were
+the graph's, not the engines'. The JACK driver would run at exactly the graph's period
+(no 512-frame ring), but needs pw-jack's library path and gives one client for audio and
+MIDI (ports <code>l_00</code> / <code>r_00</code> / <code>midi_00</code>); not adopted: the stream's 10.7 ms is below the
+jitter of anything else in the chain, and the ring is what keeps a busy engine from
+starving the graph.</p>
+<p>Thread priorities (<code>graph-check.py threads</code>): PipeWire's data loops run FIFO 88 (daemon)
+and 83 (clients: libzynthbox's, jalv's, FluidSynth's); FluidSynth's own render thread
+(<code>fluid_pipewire</code>) is not realtime (its <code>audio.realtime-prio</code> 60 covers the synth thread
+only), jalv's main thread is not (it has no audio work). libzynthbox's SyncTimerThread
+runs FIFO 99 while the transport has run; lowering it to 70 (<code>chrt -f -p 70 TID</code>) changed
+nothing in the xrun rate (19/min before and after), so it is not what delays the graph.</p>
+<h3 id="gdb-costs-20-to-40-xruns-a-minute-found-2026-10-08">gdb costs 20 to 40 xruns a minute (found 2026-10-08)</h3>
+<p>Idle, nothing playing, the graph showed +19 xruns a minute on the sound card's driver and
++34 to +40 on each FluidSynth node (the capture driver +32 and Midi-Bridge +32 when the
+capture node drove the graph), at a steady rhythm of one every 2 to 3 s. The cause was the
+development aid left on: <code>RAVVING_GDB=1</code> runs ravving under <code>gdb -batch</code>, and gdb stops
+the whole process at every fork (ravving spawns <code>lsblk</code>, sensor reads and the like every
+2 s) and every thread start or exit; libzynthbox's nodes inside ravving are then late and
+the driver counts a graph xrun. Without gdb (<code>systemctl --user unset-environment
+RAVVING_GDB</code>, restart): <strong>0 xruns in 60 s on every node</strong>, idle and playing (below). Never
+leave it on for a device that is used; <code>tools/device.sh deploy</code> now says so when it finds
+it set. The same applies to any debugger or profiler attached to zynthbox-qml.</p>
+<h3 id="under-load">Under load</h3>
+<p>The Lo-fi Say It project playing (six FluidSynth engines, the sends, the master inserts),
+60 s, no gdb: 0 xruns on every node. Busy time per 5.3 ms cycle: the driver 29 µs,
+GlobalPlayback 66 µs, TrackPassthrough 315 µs (6 % of the period, the busiest node: every
+track's lane, EQ and compressor), each FluidSynth node 85 µs. The graph has room for a
+great deal more.</p>
+<h2 id="midi">MIDI</h2>
+<ul>
+<li>Sequenced notes: libzynthbox's SyncTimer schedules them on the JACK frame clock and
+  ZLRouter puts each machine's on <code>ZLRouter:Zynthian-Channel{z}</code>, linked to the engine's
+  MIDI input (above). <code>tools/mididump.py PORT SECONDS</code> prints what a port carries.</li>
+<li>External keyboards: MidiRouter's hardware pass-through (<code>MidiInput</code>, port 3) feeds the
+  LIVE machine; raw notes reach no engine on their own (the current sketchpad track is
+  parked at 9). <code>Midi Through</code> arrives twice, through a2j and through PipeWire's
+  Midi-Bridge, so copies closer than 4 ms are dropped (docs/architecture.md).</li>
+<li>Bluetooth MIDI: <code>bluez_midi.server</code> is PipeWire's BLE MIDI node, idle unless a BLE MIDI
+  device connects.</li>
+<li>Latency: a MIDI round trip is measured with <code>pw-jack jack_midi_latency_test</code> between a
+  hardware MIDI out and in joined by a cable (or <code>a2j</code>'s Midi Through for the software
+  path alone); an audio round trip with <code>pw-jack jack_iodelay</code> and a cable from an output
+  jack into input jack 4 or 5. Neither has been run yet: both need the cable on the device.</li>
+</ul>
+<h3 id="who-drives-the-graph">Who drives the graph</h3>
+<p>The sound card's playback node is the driver (<code>priority.driver</code> 10000 from
+<code>/etc/wireplumber/wireplumber.conf.d/99-default-soundcard.conf</code>) while the master is linked
+to the jacks. With the sound routed to Bluetooth / HDMI the playback node has no links,
+suspends, and the card's <strong>capture</strong> node (always linked: the input meter, the sampler)
+becomes the clock. It is configured as a batch device (<code>api.alsa.period-size</code> 1024,
+<code>api.alsa.headroom</code> 32) and runs the graph at 256 anyway. The <code>pro-audio</code> profile of the
+card (available, <code>wpctl set-profile &lt;card id&gt; 4</code>) would make one driver of both halves (one
+clock, no drift), but renames the nodes (<code>pro-output-0</code>), which zynthbox-qml's and
+ravving's wiring (<code>system:playback_*</code>, the OwnSink name) rely on: not tried.</p>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+</body>
+</html>

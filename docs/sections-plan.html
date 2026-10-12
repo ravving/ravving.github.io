@@ -1,0 +1,289 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/sections-plan.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sections and the song · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li><a href="video.html">Video recordings and the computer link</a></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="scripting-projects.html">Building a project by script</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li class="on"><a href="sections-plan.html" aria-current="page">Sections and the song</a><ul><li><a href="#what-easyrave-does-and-what-ravving-does-better">What easyrave does, and what ravving does better</a></li><li><a href="#decided-the-user-2026-10-09">Decided (the user, 2026-10-09)</a></li><li><a href="#the-parts">The parts</a></li><li><a href="#the-interface">The interface</a></li><li><a href="#status">Status</a></li><li><a href="#phases-each-closed-by-a-review">Phases, each closed by a review</a></li><li><a href="#risks">Risks</a></li></ul></li>
+<li><a href="sampler-plan.html">SAMPLE KING</a></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li><a href="design-reference.html">The design reference</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">The designs <span>/</span> docs/sections-plan.md</p>
+<h1>Sections and the song</h1>
+<p class="doc-blurb">The design and the decisions behind SECTIONS, the queue, SONG mode, and what each phase measured.</p>
+
+<p>A song is more than one loop. A <strong>section</strong> is every machine's pattern at once (the intro,
+the verse, the bridge); the <strong>song</strong> is the sections in order, each played a number of
+times. This page is the design, decided before the code (TODO 9b), and the phases it is
+built in, each closed by its review.</p>
+<h2 id="what-easyrave-does-and-what-ravving-does-better">What easyrave does, and what ravving does better</h2>
+<p>easyrave's SECTIONS (+) (site/index.html, "SONG SECTIONS") is a row of numbered chips: ＋
+saves the whole song (every machine with its sounds, tempo, swing, key, the live FX, mutes,
+master) as a section; a click recalls it at once, a double click renames, × deletes, a drag
+reorders. Three things it does not do, which ravving should:</p>
+<table>
+<thead>
+<tr>
+<th>easyrave</th>
+<th>ravving</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a recall lands <strong>at once</strong>, wherever the bar is</td>
+<td>it lands <strong>on the next bar line</strong>, sample-accurately, as Zynthbox launches clips</td>
+</tr>
+<tr>
+<td>sections are <strong>snapshots</strong>: edits after a recall are lost unless saved again as a new section</td>
+<td>sections are <strong>live</strong>: what you edit is the section on screen, kept when you move on</td>
+</tr>
+<tr>
+<td>no song: switching is by hand</td>
+<td>a <strong>song</strong>: the sections in order with repeats, played through (SONG) or one looped (LOOP), exported in one take</td>
+</tr>
+</tbody>
+</table>
+<h2 id="decided-the-user-2026-10-09">Decided (the user, 2026-10-09)</h2>
+<p>A section holds the patterns and what plays (not sounds, kits, MODS, effects or levels);
+sections are live (edits stay in the section on screen); a section picked while playing
+takes over on the next bar; the sections live on the header's plate and a SONG page (no
+strip taking height from every page).</p>
+<h2 id="the-parts">The parts</h2>
+<h3 id="what-a-section-holds">What a section holds</h3>
+<p>The patterns and what plays, per machine: the steps, lines and chords, the bars, accents,
+slides, note lengths, live timing, automation lanes, the drums' row mix (levels, mutes,
+solos) and ❚❚ (a machine resting in the intro). That is <code>Machine::contentState()</code>, what
+undo already keeps, less what changes the <strong>engine</strong>: the kit and the sound source.</p>
+<p>Sounds, MODS, effects, levels, tempo, swing and key stay the <strong>project's</strong>. A kit or a source
+change restarts FluidSynth or jalv (0.3 s and more of silence): at a section change it would
+be a gap in the music, which "audio first" rules out.</p>
+<h3 id="switching-on-the-bar-line-two-clips-per-track">Switching on the bar line: two clips per track</h3>
+<p>Every sketchpad track has five clips; ravving plays clip a only. Each machine gets a second,
+clip b, and the two take turns:</p>
+<ol>
+<li><strong>Cue</strong>: the section to come is written into the clip that is <em>not</em> playing (the
+   machine's model takes the new content and renders it there, <code>applyContent()</code>); the
+   playing clip is not touched, so nothing in it can drop or double.</li>
+<li><strong>Switch</strong>: PlayfieldManager is told, for the next bar, to start that clip and stop the
+   other (<code>setClipPlaystate(…, NextBarPosition)</code>), which libzynthbox does on the audio thread
+   at the bar's first tick, the way Zynthbox launches clips.</li>
+<li>A machine whose content is the same in both sections is <strong>not switched</strong>: it keeps
+   playing (a five-bar brush pattern carries on across the change instead of restarting).</li>
+</ol>
+<p>When: a section picked by hand while playing is cued at once and switches at the next bar
+(the grids show it at once, the chip blinks until it plays); in SONG, the next section is
+cued as the last bar of the current one begins (a whole bar of margin for the main thread).
+Stopped, a pick is immediate (nothing plays).</p>
+<p>The bar count comes from SyncTimer's 16th beats since the start (Studio already follows
+them); Sketchpad's start launches, per track, the clip that holds the section, not always
+clip a.</p>
+<h3 id="song-and-modes">Song and modes</h3>
+<ul>
+<li><strong>LOOP</strong> (the default, today's behaviour): the current section loops; picking another
+  switches at the next bar.</li>
+<li><strong>SONG</strong>: the song plays from its first entry (or the one picked) to its end, each entry
+  its section × repeats; at the end it stops, or loops the song (a switch).</li>
+<li>A section's length is its longest pattern (8 bars at most), shown and changeable (1–8).</li>
+<li>A song entry: a section and repeats (×1…×8). A section may appear more than once (A A B A).</li>
+</ul>
+<h3 id="editing">Editing</h3>
+<p>The section on screen is the one edited; its content is kept in the section when another is
+picked (and with the project). New sections start as a copy of the current one (DUPLICATE)
+or empty (NEW): a song is mostly variations. Undo stays per machine and starts over on a
+section change (it would otherwise undo another section's edit unseen).</p>
+<h3 id="saving">Saving</h3>
+<p>The project gets <code>sections: {list: [{id, name, colour, bars, machines: {key: content}}],
+song: [{section, repeats}], current, mode}</code>. A project without it opens as one section, "A",
+holding what it has: nothing changes for the projects saved so far. The .ravv bundle carries
+it unchanged. Presets are untouched: a machine's preset still loads into the section on
+screen.</p>
+<h3 id="export">Export</h3>
+<p>EXPORT → TRACK gains SONG (the default when the song has more than one entry): the whole
+song in one take, its length from the song, plus the tail. LOOP keeps today's BARS × LOOPS.</p>
+<h2 id="the-interface">The interface</h2>
+<ul>
+<li><strong>Header</strong>: the project plate reads the section too ("Autumn Leaves · B  3/4"); a tap
+  opens the SONG page. While a section is cued its name blinks there.</li>
+<li><strong>SONG page</strong> (full screen, like the music player): the sections as cards (name, colour,
+  length, which machines play, ⧉ duplicate, rename, delete) with ＋; the song as a strip of
+  blocks, each as wide as its bars × repeats, the playing one with a moving playhead, tap to
+  play from there, drag to reorder, the repeats on a stepper; LOOP / SONG; a tap on a card
+  picks that section.</li>
+<li><strong>Hardware</strong>: ALT + step key N picks section N (the step keys light in the sections'
+  colours while ALT is held, the playing one bright, a cued one blinking); on the SONG page
+  the knobs and arrows walk the cards and the strip.</li>
+<li>Each section has a colour (from a fixed palette, in order), the same on the plate, the
+  cards, the strip and the LEDs.</li>
+</ul>
+<h2 id="status">Status</h2>
+<p><strong>Phase 1, the model: done (2026-10-09).</strong> <code>Sections</code> (src/backend/sections.h) with its
+Host, the studio; <code>Machine::sectionContent()</code> / <code>applySectionContent()</code> and the samplers'
+<code>SamplerBanks</code>; saved in the project, old projects open as section "A"; 18 unit tests
+(tests/tst_sections.cpp, they found a name cut leaving a trailing space). On milo: Autumn
+Leaves rebuilt as A1 A2 B C SOLO from its presets, the song A1 A2 B C SOLO A1 A2 B C (72
+bars), each pick bringing back its own lines (A2's held E♭5, C's E♭ E♭ C C, the solo),
+no sample loaded by a switch, saved and opened again unchanged (not dirty). A capture takes
+2–3 ms, a switch (every machine's pattern rewritten) about 60 ms, on the main thread. Startup:
+restoring the sections takes 19 ms; an A/B against the build before today (6fda638) showed
+the same 7.9–8.1 s to wired on the same project and page, so nothing measurable is added
+(the gap to the 5.1 s of quality.md §2 is the device's state, not this code). Review:
+clang-tidy at the baseline, clazy's three new range-loop detaches and the Qt linters' two
+findings in the new files fixed. Until phase 2 a pick applies at once, wherever the bar is.</p>
+<p><strong>Phase 2, on the bar line: done (2026-10-09).</strong> Read in libzynthbox first: each tick
+PlayGridManager advances the playfield (a bar's clip changes, all on its first tick) before
+the patterns schedule that tick, with no look-ahead (<code>sequenceProgressionLength</code> 0), so a
+clip started and one stopped on the same bar meet exactly. Each machine has its track's
+clips a and b (<code>Machine::attachSpare()</code>, the PAD SAMPLER's second track too); a pick while
+playing writes the section into the clip not playing (<code>cueSectionContent()</code>), or into the
+one already waiting when picked again, and <code>Sketchpad::cueTrackClip()</code> has them change places
+on the next bar; a machine whose part does not change is left playing; ❚❚ in a section goes
+with the bar too (no note cut at the pick). Sections shows <code>switching</code> until the studio sees,
+at a bar's start, the clips changed (asked of the playfield, not counted). Measured on milo
+(<code>tools/sections-test.sh</code>): 146 eighths through 24 random picks, none missing or doubled,
+10 changes, every one on a bar line, rests in whole bars; <code>tools/audio-impact.sh</code> playing,
+with a pick every 1.5 s against none: 0 xruns both, realtime CPU 15 % both, GUI 10 % against
+9 %. The one edge: a hit recorded early (Q off) on the first step of the section to come
+cannot sound, its clip not playing yet when it is due.</p>
+<p><strong>Phase 3, the interface: done (2026-10-09).</strong> Two changes to the plan above, with the
+user: the SONG page sits under the header, as the MIXER does, rather than over the whole
+screen (the transport, the tempo and the plate stay at hand while arranging), and the
+sections follow easyrave's SECTIONS shelf (the user's reference: square keys wearing their
+number, the name under, ＋ saving the one on screen again, tap / double tap / × / drag),
+at a finger's size since the header has no room for easyrave's 19–28 px keys; ALT + step
+keys 9–16 pick sections 1–8 (ALT + 1–8 are the LIVE FX already). A copy now takes its own
+colour (COLOUR changes it), the song's blocks being told apart by it. Checked on milo by
+touch: the plate opens it, a tap picks, a double tap renames, ＋ copies, × × deletes, a drag
+moves (5 before 2 and back), ALT + step 11 picks B, a pick while playing blinks until its
+bar (<code>switching</code> true, then false with the section playing); idle it draws 0 frames/s.
+Review: the Qt QML linter (one <code>clip</code> on the strip's ListView, which scrolls), qmllint,
+<code>static-analysis.sh handlers</code>, clang-tidy on the C++ (none); 21 unit tests.</p>
+<p><strong>Phase 4, SONG mode and the song's export: done (2026-10-09).</strong> <code>Sections</code> follows the song
+bar by bar (<code>barStarted()</code>, the bars since the start counted by the studio: libzynthbox's
+16th beat counts within the bar): as an entry's last bar begins, the next entry's section is
+cued through phase 2's path (the same section: it plays on, nothing is touched); as the
+song's last bar begins the studio stops every clip on the next bar (<code>Sketchpad::
+stopAllAtNextBar()</code>) and then the transport. PLAY in SONG mode puts the first entry's section
+in place before the first note (<code>songStarting()</code>); PLAY FROM HERE starts any entry (from the
+next bar while playing); a section picked by hand jumps to its first entry (none: LOOP); song
+edits while it plays keep the entry playing (removing it: LOOP). The SONG page's LOOP | SONG,
+the block playing with its progress, "PLAYING PART 6, BAR 44"; the plate's "6/9". EXPORT →
+WHAT: SONG (its length, once; up to 2048 bars) or LOOP (BARS × LOOPS); the export puts SONG
+mode on and back. Measured on milo: from part 9 the song stopped on the bar after its 8th;
+C → SOLO → A1 cued on each 8th bar (27 and 9 ms); Autumn Leaves exported in one take, 72 bars
++ 4 s tail = 122.36 s, its sections' levels within 0.4 dB of the hand-joined WAV, silent after
+the tail; audio-impact playing in SONG against LOOP on the same project: the same CPU, 0
+xruns. 28 unit tests (the song through, the same section twice, a pick and PLAY FROM while
+playing, SONG taking over, edits while playing, a missed bar). Sections is a QML type now
+(its enum by name; uncreatable). <code>zb</code> note: libzynthbox's <code>metronomeBeat16th</code> counts within
+the bar.</p>
+<h2 id="phases-each-closed-by-a-review">Phases, each closed by a review</h2>
+<ol>
+<li><strong>The model</strong> (C++ <code>Sections</code>, no audio yet): sections, song, current, mode; capture and
+   apply through <code>Machine::contentState()</code> / <code>applyContent()</code> minus the engine keys; saving
+   and the migration; unit tests (tests/, QAbstractItemModelTester, the song's bar math,
+   old projects). Review: qt-cpp-review, clang-tidy / clazy clean, the API documented.</li>
+<li><strong>On the bar line</strong>: clip b per track, cue and switch through PlayfieldManager, Sketchpad
+   launching the right clip, unchanged machines left alone. Measured on milo: a click on
+   every 16th of section A and a different pitch in B, recorded across a hundred switches
+   (by hand and in SONG): no note missing, none doubled, none late (onsets against the
+   grid); <code>tools/audio-impact.sh</code> while switching: no xruns, no realtime page faults added.</li>
+<li><strong>The interface</strong>: the plate, the SONG page, ALT + step keys and LEDs. Review:
+   qt-qml-review and qmllint, the screenshot tour at 1280×800, the delegates on
+   KeyedListModel, <code>device.sh animations</code>: nothing drawing while idle.</li>
+<li><strong>SONG and export</strong>: playing the song through, the export of the whole song, the
+   Autumn Leaves project rebuilt as A1 A2 B C + the solo chorus and exported in one take
+   (against the hand-joined WAV).</li>
+<li><strong>Docs and the quality pass</strong>: architecture.md, scripting-projects.md (the fifo calls),
+   the user-facing help; the full static-analysis run, QML profiler on the SONG page,
+   boot timing unchanged.</li>
+</ol>
+<p>Each phase is deployed on milo, tested there, committed on its own.</p>
+<h2 id="risks">Risks</h2>
+<ul>
+<li><strong>libzynthbox's NextBarPosition with two clips of one track</strong>: Zynthbox uses it per clip;
+  that a stop and a start on one track land on the same tick is to be measured in phase 2
+  before anything is built on it (a click track recorded across the switch). The fallback,
+  if it slips: both clips change on the bar through one <code>setClipPlaystate</code> pair at
+  <code>CurrentPosition</code> with the bar's tick as the offset.</li>
+<li><strong>The PAD SAMPLER</strong> has a second track (pads 11–16) and SAMPLE KING plays samples:
+  their sections hold the hits, not the samples (loading samples is not for the bar line).</li>
+<li><strong>Picking a section marked the project changed</strong> (fixed 2026-10-09). Projects::comparable
+  leaves out <code>sections.current</code> and, on every machine, the keys the section on screen holds
+  of it (its patterns and rest, repeated at the machine's top level). Nothing real hides:
+  the sections' list captures the section on screen live, so an edit to it (a step, a sample
+  in a pad) still changes the list. Checked on milo: the song played across a section
+  change, a section picked by hand → unchanged; a step added → changed; taken out again →
+  unchanged.</li>
+<li><strong>Automation</strong> recorded in one section stays in it; a live knob sweep across a switch
+  keeps going (it is the knob, not the section).</li>
+</ul>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+</body>
+</html>

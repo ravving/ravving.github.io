@@ -1,0 +1,362 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/video.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video recordings and the computer link · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li class="on"><a href="video.html" aria-current="page">Video recordings and the computer link</a><ul><li><a href="#the-rule-it-is-built-on">The rule it is built on</a></li><li><a href="#how-a-recording-is-made">How a recording is made</a></li><li><a href="#measured-on-milo-pi-5-2026-10-11">Measured on milo (Pi 5, 2026-10-11)</a></li><li><a href="#a-microphone-in-the-sound">A microphone in the sound</a></li><li><a href="#the-voice-over">The voice over</a></li><li><a href="#the-hardware-keys-and-the-ui">The hardware keys and the UI</a></li><li><a href="#the-computer-link">The computer link</a></li><li><a href="#tests-and-tools">Tests and tools</a></li><li><a href="#traps-and-limits">Traps and limits</a></li></ul></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="scripting-projects.html">Building a project by script</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li><a href="sections-plan.html">Sections and the song</a></li>
+<li><a href="sampler-plan.html">SAMPLE KING</a></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li><a href="design-reference.html">The design reference</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">Using ravving <span>/</span> docs/video.md</p>
+<h1>Video recordings and the computer link</h1>
+<p class="doc-blurb">A video of the session with the master&#x27;s sound, the quality tiers measured, the mic, the keys shown on screen, and the laptop files are sent to over SSH.</p>
+
+<p>A video of a session: the screen (or a USB camera) with the master's sound, as one MP4 in
+the library's <code>videos/</code> folder (<code>Paths::videos()</code>, <code>/zynthian/zynthian-my-data/ravving/videos</code>
+on the device). The control center's VIDEO card starts one; while VIDEO is on, the device's
+RECORD key starts a recording and STOP ends it, from any page, as the header's ● and ■ do on
+the screen. SETTINGS · VIDEO has the QUALITY, the TIMER (a countdown before it starts) and
+the SOURCE; VIDEO SAVED, when a recording ends, sends it to the COMPUTER set up in SETTINGS
+or copies it TO USB. Code: <code>src/backend/videorecorder.*</code> (<code>video</code>), <code>src/backend/audiotap.*</code>,
+<code>src/backend/computerlink.*</code> (<code>computer</code>), <code>qml/components/ComputerPopup.qml</code>,
+<code>VideoSavedPopup.qml</code>, the VIDEO card in <code>ControlCenter.qml</code>.</p>
+<h2 id="the-rule-it-is-built-on">The rule it is built on</h2>
+<p>The sound comes first: a video may cost the audio nothing it can hear, and the audio in the
+video must never drop. Everything below follows from that.</p>
+<h2 id="how-a-recording-is-made">How a recording is made</h2>
+<ol>
+<li><strong>The sound is tapped, not recorded through AudioLevels.</strong> <code>AudioTap</code> is ravving's own
+   JACK client (<code>ravving-video</code>, stereo in) connected to the master's last outputs (what the
+   speakers get: the LIVE FX inserts included, which the header's ● WAV recording misses). Its
+   process callback copies each cycle into a ring of 2^20 frames (21.8 s at 48 kHz) and
+   touches nothing else; a plain thread drains the ring into a named pipe (<code>$XDG_RUNTIME_DIR/
+   ravving-video-&lt;stamp&gt;.pipe</code>, 1 MB of kernel buffering) as raw 32-bit float stereo. ffmpeg
+   reads the pipe as <code>-f f32le</code>. Why not libzynthbox's AudioLevels (the WAV recorder's and the
+   exporter's path): it runs one recording at a time, and a video session must leave the
+   header's ● and the samplers' record-to-pad free. Why not ffmpeg's own <code>-f jack</code> input: its
+   ring is 16 periods (85 ms at 256 frames), so an encoder or SD-card stall longer than that
+   drops sound; this ring holds 21 seconds, and what it could not hold is counted
+   (<code>audioDroppedMs</code>, a warning in the issues center) rather than lost quietly.</li>
+<li><strong>The picture is ffmpeg's.</strong> <code>x11grab</code> of the display (<code>-draw_mouse 0</code>), or <code>v4l2</code> of the
+   camera, encoded with libx264 on two threads at <code>nice -n 10</code>: the Pi 5 has no hardware H.264
+   encoder (ffmpeg lists <code>h264_v4l2m2m</code>, but the Pi 5's V4L2 nodes are its ISP and HEVC
+   decoder). The tiers, measured below, all run with 0 xruns.</li>
+<li><strong>Sync without a shared clock.</strong> ffmpeg stamps every grabbed frame with the wall clock
+   (<code>-use_wallclock_as_timestamps 1</code>; on this ffmpeg x11grab's default stamps are the wall clock
+   too). The tap takes the wall-clock moment of its first sample on the audio thread, from the
+   cycle's own start (<code>jack_get_cycle_times</code>: the cycle began <code>now − (jack_get_time() −
+   cycle_usecs)</code> ago), and ffmpeg is told it with <code>-itsoffset</code> on the audio input. With
+   <code>-copyts</code> both streams sit on the same absolute clock in the file, to the millisecond.</li>
+<li><strong>Matroska first, then one remux.</strong> The recording goes to <code>.recording-&lt;stamp&gt;.mkv</code>: a
+   Matroska is readable even if ravving or ffmpeg dies (an MP4 without its index is not). On
+   STOP the tap closes the pipe (ffmpeg's audio input ends), ffmpeg gets SIGINT and finishes
+   its file, and ffprobe reads the two streams' start times: the audio began while ffmpeg was
+   starting (~0.45 s before the first frame), so <code>ffmpeg -ss &lt;video start − audio start&gt;
+   -i rec.mkv -c copy -movflags +faststart</code> cuts the head to the first video frame, writes
+   the MP4 with its index up front and its title / date tags, and the Matroska is removed.
+   The remux copies packets: a few seconds for a long recording ("SAVING" on the card and the
+   plate). If the remux fails the Matroska is kept under the final name.</li>
+</ol>
+<p>Checked on milo with <code>tools/video-sync-check.sh</code> (the mechanism alone, with a synthetic audio
+feeder): video − audio in the Matroska 0.466 s (ffmpeg's launch latency), the cut MP4's
+video at 0.000 s and its audio at 0.003 s (the AAC frame granularity at <code>-c copy</code>).</p>
+<h2 id="measured-on-milo-pi-5-2026-10-11">Measured on milo (Pi 5, 2026-10-11)</h2>
+<p><code>tools/video-encode-impact.sh</code>: each tier recording the screen while the transport played the
+open project, <code>tools/audio-impact.sh 20 playing</code> alongside (frames/s is the UI's own rate,
+which must not fall; "realtime" is ravving's audio threads' CPU; xruns must be 0).</p>
+<table>
+<thead>
+<tr>
+<th>tier</th>
+<th>ffmpeg CPU (of one core)</th>
+<th>UI frames/s</th>
+<th>realtime threads</th>
+<th>xruns</th>
+<th>frames delivered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>none (baseline)</td>
+<td>—</td>
+<td>21.5</td>
+<td>18 %</td>
+<td>0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>full screen 30 fps, ultrafast</td>
+<td>35 %</td>
+<td>21.1</td>
+<td>23 %</td>
+<td>0</td>
+<td>991 in 33 s (30.0 fps)</td>
+</tr>
+<tr>
+<td><strong>HIGH</strong>: full screen 30 fps, veryfast crf 21</td>
+<td>48 %</td>
+<td>20.7</td>
+<td>23 %</td>
+<td>0</td>
+<td>976 in 32 s (30.0)</td>
+</tr>
+<tr>
+<td><strong>MEDIUM</strong>: full screen 15 fps, veryfast crf 23</td>
+<td>26 %</td>
+<td>21.1</td>
+<td>21 %</td>
+<td>0</td>
+<td>496 in 32 s (15.0)</td>
+</tr>
+<tr>
+<td><strong>LOW</strong>: 640 × 400 30 fps, veryfast crf 26</td>
+<td>31 %</td>
+<td>21.8</td>
+<td>23 %</td>
+<td>0</td>
+<td>1021 in 34 s (30.0)</td>
+</tr>
+</tbody>
+</table>
+<p>So every tier records at its full frame rate with the audio graph untouched; the realtime
+threads cost 3–5 points more of CPU under the encoder's memory traffic, and the UI keeps its
+rate. MEDIUM is the default (the lightest; the screen's text stays sharp at full size). LOW
+makes the smallest files, not the lightest load (the scale filter costs what the pixels save).
+The AAC audio is 192 kb/s. File sizes: ~1 MB per 30 s at MEDIUM with a still screen; a busy
+screen (the playhead, meters, the SONG page's waves) is several times that.</p>
+<h2 id="a-microphone-in-the-sound">A microphone in the sound</h2>
+<p>SETTINGS · VIDEO · MIC: the RECORDER's input, as it is set up there (MIC / GUITAR / LINE,
+the jack in use, its GAIN, its effects), mixed into the video's sound. Nothing of the input
+is repeated for the video: <code>InputRecorder::setListener(ports)</code> adds the tap's two mic ports
+(<code>ravving-video:mic_l</code> / <code>mic_r</code>) as one more destination at the end of the input chain
+(<code>JackWiring::setInputChain</code>'s <code>listeners</code>, beside the monitor lane and the take recorder; a
+mono input feeds both), the input counts as in use while a listener is set (its effects run),
+and the audio thread adds the ports to the master's sound as the video hears it. The master
+itself is untouched: the speakers get the mic only with the RECORDER's MONITOR on, in which
+case the video hears it twice (louder), so one or the other. <code>tools/video-test.sh</code> records
+once with MIC on and checks the link; <code>tools/video-mic-check.sh</code> is the listening test: a
+recording with the music stopped while someone speaks, then the file's audio measured.
+Measured on milo (2026-10-11, a mic on jack 5, the RECORDER on MIC at 30 dB gain): the chain
+found jack 5 on its own (<code>capture_FR</code> → <code>mic_l</code>), the file's audio peaked at −1.4 dBFS, RMS
+−21.6 dB, the music stopped: the voice, at the gain set on the RECORDER page.</p>
+<h2 id="the-voice-over">The voice over</h2>
+<p>A voice over the playing (a tutorial, a jam with talk) was buried: the master plays some
+25 dB above a voice at a normal distance, and a plain sum leaves the voice behind it. With
+MIC on, the tap mixes the two as a voice over (<code>AudioTap::setVoiceOver</code>, SETTINGS · VIDEO ·
+VOICE):</p>
+<ul>
+<li>the mic is made crisp: a 120 Hz high-pass and a +4 dB high shelf from 3 kHz (RBJ biquads
+  on the audio thread), then lifted by VOICE LIFT (+6 dB by default, +12 or flat);</li>
+<li>its envelope is followed (instant attack, 250 ms release); while it is above −34 dBFS the
+  master is turned down to VOICE DUCK (−12 dB by default, −6 or −18; 0 is off) in 20 ms and
+  comes back over 600 ms once the voice stops, so the music sits in the background exactly
+  while someone speaks;</li>
+<li>the sum is clamped at ±0.999, so a loud word over a loud beat cannot overflow the float
+  the encoder gets.</li>
+</ul>
+<p>Both settings apply at once, on a recording under way too. With DUCK and LIFT both 0 the
+mix is the plain sum of before. <code>tools/video-voice-check.sh</code> measures it: the transport
+playing, a 1 kHz tone in bursts (tools/tone.py, −20 dBFS) into the tap's mic ports as the
+voice; second by second, the music (the tone's band cut) must be DUCK dB quieter while the
+tone is on, and the tone must come out LIFT dB louder.</p>
+<h2 id="the-hardware-keys-and-the-ui">The hardware keys and the UI</h2>
+<ul>
+<li>The VIDEO card (control center): tap twice to start, the second within three seconds (the
+  card reads TAP AGAIN · VIDEO and its bar runs out, as REBOOT asks: a stray tap never starts
+  one; the drawer closes first, so it is not in the picture; the TIMER counts down on an
+  overlay that is not recorded either, since ffmpeg starts after it). The card reads READY / STARTS IN n / RECORDING mm:ss / SAVING and
+  is lit while VIDEO is on; a tap while on ends the recording and switches VIDEO off.</li>
+<li>While VIDEO is on, RECORD and STOP are the video's before any page sees them
+  (<code>Ravving::handleCuia</code> → <code>VideoRecorder::takesKey</code>): RECORD starts when idle (a toast says
+  ■ stops when it is already recording), STOP ends the recording (and stops the music with
+  it: the session is over) or cancels the countdown; STOP with nothing recording is the
+  transport's again. The header's
+  ● and ■ do the same (<code>Session.toggleRecording</code> / <code>Session.stop</code>).</li>
+<li>The project plate shows the video's state while VIDEO is on (VIDEO READY · ● RECORDS,
+  VIDEO IN 3, ● REC 01:23, VIDEO · SAVING); the RECORD LED glows dim red when ready, orange
+  during the countdown, red while recording; STOP lights while there is something to end.</li>
+<li>While recording, every device key pressed (ALT combos as "ALT + MODE", knob turns as "KNOB 1
+  ▲", "BIG KNOB ▼") is named in a short red notice at the screen's bottom (<code>Ravving::keyShown</code> →
+  Main.qml's second Toast), so the video shows what was played; SETTINGS · VIDEO · KEYS turns
+  it off (<code>video.showKeys</code>, on by default).</li>
+<li>VIDEO SAVED (when a recording ends): the file, its length, size and picture size; SEND TO
+  the computer (<code>ComputerLink::send</code>) or TO USB (<code>VideoRecorder::copyToUsb</code>, into the stick's
+  <code>ravving/videos</code>).</li>
+<li>A failure (ffmpeg missing, no space, the encoder giving no frames in 12 s, ffmpeg dying)
+  is a toast, an issues-center entry and <code>video.error</code>; what ffmpeg wrote before dying is still
+  saved when it has frames.</li>
+</ul>
+<h2 id="the-computer-link">The computer link</h2>
+<p>SETTINGS · COMPUTERS holds the laptops or PCs exports and videos can be sent to over SSH:
+any number (<code>Computers</code>, <code>computers</code>, a list of <code>ComputerLink</code>s, each its own group
+<code>computers/&lt;id&gt;</code> of the settings file; a set-up from before the list is moved into <code>c1</code>).
+ADD A COMPUTER asks for the host name or address, the user there, and that user's
+password; a computer already in the list as the same user@host is set up again rather than
+added twice. The password is used once: it opens the first connection so the device's own key
+(<code>~/.config/ravving/ssh/id_ed25519</code>, made on the first CONNECT) can be installed with
+<code>ssh-copy-id</code>; it is never written to the settings. The password reaches ssh through
+<code>SSH_ASKPASS</code> (a helper script of ravving's printing a file readable by root alone, made for
+the set-up's seconds and removed after, <code>SSH_ASKPASS_REQUIRE=force</code> so no terminal is
+involved). The computer's host key is kept in ravving's own <code>known_hosts</code> (accepted on the
+first connection, refused if it changes; FORGET removes that computer's entry with
+<code>ssh-keygen -R</code>, the others stay). The Downloads folder is asked of
+the computer (<code>xdg-user-dir DOWNLOAD</code>, else <code>~/Downloads</code>); files go there with <code>scp</code>, one at
+a time (<code>busy</code> / <code>phase</code> / <code>progress</code>), and <code>sent(ok, count, label)</code> ends it with a toast.
+Statuses: unset, setting-up, ready, unreachable, refused (the key no longer accepted: CONNECT
+AGAIN with the password), failed (<code>error</code> says why: a wrong password, a name that does not
+resolve, SSH refused or no answer, a changed host key). Where it is used: one standard SEND…
+button (<code>SendPopup</code>, the destinations there are: every writable USB stick's ravving/<kind>
+folder through <code>RemovableDrives::copyFiles</code>, each computer, and a phone by QR code: see
+"Sending to a phone" in README.md) in the FILES browser (every
+kind: a project is bundled for the destination by <code>Exporter::exportProjectFile</code>, a preset
+written out as one JSON file by <code>FileBrowser::presetFile</code>), on VIDEO SAVED, on each track in
+the music player, in the pattern presets dialog and the sound picker; and the export dialog's
+COMPUTER row (a chip per computer, one lit), which sends a new track or bundle as soon as it
+is written (<code>Exporter::sendToComputer</code>, the metadata's <code>computer</code> = the computer's id).</p>
+<p>The computer needs an SSH server: Linux <code>openssh-server</code> (Arch: <code>systemctl enable --now
+sshd</code>), macOS "Remote Login"; Windows' OpenSSH server has no <code>$HOME/Downloads</code> in its default
+shell and is not supported.</p>
+<h2 id="tests-and-tools">Tests and tools</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tools/video-test.sh</code></td>
+<td>the feature suite on the device (41 checks, all PASS on milo 2026-10-11): a recording over the fifo while playing, the MP4's streams, starts, length and frame rate, the ring's dropped frames, the graph's xruns meanwhile, RECORD / STOP by the device keys (the music goes on), the TIMER and its cancel, VIDEO off, the computer link's state</td>
+</tr>
+<tr>
+<td><code>tools/computer-link-test.sh</code></td>
+<td>the computer link end to end against the device's own sshd (21 checks, all PASS on milo 2026-10-11): a throwaway local user stands in for the computer (set up with the password, the key installed, Downloads found, a wrong password told apart, a file sent and compared, the key removed → refused); the user is removed and the previous computer put back</td>
+</tr>
+<tr>
+<td><code>tools/share-test.sh [FILE]</code></td>
+<td>the phone share from the laptop (31 checks, all PASS on milo 2026-10-11): the newest video offered over the fifo, fetched with curl and compared (size, md5), a Range → 206, HEAD, 404s, the deliveries counted, stop → connection refused</td>
+</tr>
+<tr>
+<td><code>tools/video-mic-check.sh [SECONDS]</code></td>
+<td>a recording with the mic while the music is stopped, its audio measured (speak when told)</td>
+</tr>
+<tr>
+<td><code>tools/video-sync-check.sh</code></td>
+<td>the sync mechanism alone (a synthetic audio feeder + x11grab + the remux), PASS when both streams start together</td>
+</tr>
+<tr>
+<td><code>tools/video-encode-impact.sh [SECONDS]</code></td>
+<td>the tiers' cost while playing (the table above); mirror any change to the encoder arguments here and re-measure</td>
+</tr>
+</tbody>
+</table>
+<p>Scripts: <code>set video countdown 0</code>, <code>call video start</code>, <code>get video state</code>, <code>call video stop</code>,
+<code>get video lastFile</code>, <code>get video lastInfo</code>, <code>call video toggle</code>, <code>set video quality high</code>,
+<code>set video source camera</code>, <code>get video cameras</code>; <code>call computer setup HOST USER PASSWORD 22</code>,
+<code>call computer check</code>, <code>call computer send /path/file</code>, <code>call computer forget</code>.</p>
+<h2 id="traps-and-limits">Traps and limits</h2>
+<ul>
+<li><strong>No probing on the pipe input</strong> (<code>-probesize 32 -analyzeduration 0</code> before its <code>-i</code>): with
+  ffmpeg's defaults, <code>avformat_find_stream_info</code> reads 5 s of the raw audio before the output
+  is opened, so the first progress report (and ravving's "recording" state) came 6 s after
+  the launch, while 75 raw frames (4 MB each) piled up in the video input's queue meanwhile.
+  Measured: the first <code>frame=</code> report at 5.1 s with the defaults, 1.8 s without probing; the
+  picture itself starts 0.5 s after the launch either way (the x264 lookahead and the stats
+  period account for the rest). The video input's queue is 64 frames for the same reason.</li>
+<li><code>-t</code> and <code>-copyts</code> do not mix: ffmpeg's <code>-t</code> compares against the absolute timestamps, so
+  a recording limited with <code>-t</code> ends at once. Recordings are ended with SIGINT (once; a
+  second signal makes ffmpeg quit without its trailer: <code>-nostdin</code>, and never <code>timeout -s INT</code>
+  in a non-interactive shell, which sent two).</li>
+<li>The wall clock: a step of the system clock during a recording (the Pi has no RTC; timesyncd
+  steps it on the first network sync after boot) puts a jump in the video's timestamps (a
+  freeze for a forward step; dropped frames for a backward one). Start recording once the
+  device has been online for a moment.</li>
+<li>A test that <code>pkill -f</code>s a script by name over ssh kills the ssh command line itself when it
+  carries that name (every command after it is lost without a word): <code>pkill -x ffmpeg</code>, and
+  patterns that cannot match the caller.</li>
+<li><code>ffprobe</code> on a Matroska written with <code>-copyts</code> reports the absolute starts (epoch seconds);
+  <code>avg_frame_rate</code> is right, <code>nb_frames</code> is N/A (count with <code>-count_frames</code>).</li>
+<li>The AAC encoder's priming frame puts the audio stream's start 21 ms before the first sample;
+  the remux reads the stream starts from the file, so the cut is consistent with it.</li>
+<li>The screen recording shows exactly what is on the display: a dialog opened during the
+  recording is in the picture; the countdown overlay and the drawer are not (both are gone
+  before ffmpeg starts).</li>
+<li>Camera: USB cameras are found in <code>/sys/class/video4linux</code> (the node with <code>index</code> 0 on a USB
+  device); the capture size follows the tier (640 × 480 for LOW, 1280 × 720 otherwise). Not
+  tested yet: no camera was at hand (2026-10-11).</li>
+<li>Streaming later: the same tap, encoder, tiers, keys and UI would feed <code>-f flv rtmp://…</code>
+  (YouTube, Twitch, an OBS on the computer) instead of the Matroska; what is new there is the
+  network sink and a bitrate budget for Wi-Fi, not the capture.</li>
+</ul>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+</body>
+</html>

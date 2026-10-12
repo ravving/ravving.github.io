@@ -1,0 +1,3352 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from data/secret/README.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The genre packs · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li><a href="video.html">Video recordings and the computer link</a></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="scripting-projects.html">Building a project by script</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li class="on"><a href="packs.html" aria-current="page">The genre packs</a><ul><li><a href="#sounds">Sounds</a></li><li><a href="#classical-major">Classical: Major</a></li><li><a href="#hip-hop-natural-minor">Hip-Hop: Natural Minor</a></li><li><a href="#pop-major">Pop: Major</a></li><li><a href="#rock-major-with-3-7-and-vivii-borrowed">Rock: Major, with ♭3, ♭7 and ♭VI/♭VII borrowed</a></li><li><a href="#trap-natural-minor-with-harmonic-minor-7-and-phrygian-2">Trap: Natural Minor, with harmonic-minor 7 and Phrygian ♭2</a></li><li><a href="#reggaeton-natural-minor">Reggaeton: Natural Minor</a></li><li><a href="#punk-major-with-3-7-and-vivii-borrowed">Punk: Major, with ♭3, ♭7 and ♭VI/♭VII borrowed</a></li><li><a href="#tropical-major-with-salsa-and-bachata-on-the-relative-minor-degree-6">Tropical: Major, with salsa and bachata on the relative minor (degree 6)</a></li><li><a href="#cumbia-major-with-the-minor-styles-on-the-relative-minor-degree-6">Cumbia: Major, with the minor styles on the relative minor (degree 6)</a></li><li><a href="#piig-natural-minor-with-the-dorian-iv-and-the-harmonic-v">Piig: Natural Minor, with the Dorian IV and the harmonic V</a></li><li><a href="#folk-major-the-modal-tunes-on-degree-2-dorian">Folk: Major, the modal tunes on degree 2 (Dorian)</a></li><li><a href="#heavy-metal-natural-minor-with-the-2-the-5-and-the-raised-7th">Heavy Metal: Natural Minor, with the ♭2, the ♭5 and the raised 7th</a></li><li><a href="#black-metal-natural-minor-with-the-phrygian-2-and-the-5">Black Metal: Natural Minor, with the Phrygian ♭2 and the ♭5</a></li><li><a href="#post-punk-natural-minor-with-the-dorian-iv">Post-Punk: Natural Minor, with the Dorian IV</a></li><li><a href="#gregorian-old-gothic-dorian">Gregorian (old gothic): Dorian</a></li><li><a href="#jazz">Jazz</a></li><li><a href="#vuelo-flight-facilities">Vuelo (Flight Facilities)</a></li></ul></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li><a href="sections-plan.html">Sections and the song</a></li>
+<li><a href="sampler-plan.html">SAMPLE KING</a></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li><a href="design-reference.html">The design reference</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">The pattern packs <span>/</span> data/secret/README.md</p>
+<h1>The genre packs</h1>
+<p class="doc-blurb">Seventeen packs of pattern presets for a USB stick: what each preset is, its tempo, its sound, the scale it is written in and the template it ships with.</p>
+
+<p>Fifteen genre packs plus the jazz pack: classical, hip-hop, pop, rock, trap, reggaeton, punk,
+tropical, cumbia, folk, heavy metal, black metal, post-punk, Gregorian (old gothic) and vuelo
+(Flight Facilities' nu-disco). Each has
+five pattern presets for each of the drums, the bass, the lead and the chords. A smaller style
+pack, piig, has three of each. They are not installed with ravving. To play one, copy a
+pack's <code>ravving</code> folder to the root of a USB stick: the presets dialog's <strong>SOURCE · USB</strong>
+plays them straight from there (<code>PresetExchange::stickPatterns</code> / <code>loadStickPattern</code>), and
+the USB page can import them.</p>
+<pre><code>data/secret/&lt;genre&gt;-presets/build.py                     the generator (python3 build.py)
+data/secret/&lt;genre&gt;-presets/ravving/presets/&lt;drums|bass|lead|chords&gt;/patterns/&lt;Genre&gt; · &lt;Name&gt;.json
+data/secret/patternkit.py                                shared by the genre build.py files (not the jazz one)
+data/secret/validate.py                                  checks every pack against ravving's parsers
+</code></pre>
+<p>Each file is <code>{"ravving": "preset", "type": "pattern", "library": "&lt;x&gt;-presets.json",
+"preset": {"name", "genre", "chart", "sound"}}</code>. The chart is the shipped libraries' format.
+<code>sound</code> is the sound the pattern was written for: <code>{"soundSource": …}</code> for the bass, lead and
+chords, <code>{"kit": …}</code> for the drums (a subset of <code>Machine::soundState()</code>).</p>
+<p><strong>The notes are scale degrees.</strong> They follow the session's root and scale. Each genre is
+written for one scale, so its four instruments play together:</p>
+<ul>
+<li>Natural Minor: hip-hop, trap, reggaeton, piig, heavy metal, black metal, post-punk, vuelo.</li>
+<li>Major: classical, pop, rock, punk, tropical, cumbia, folk.</li>
+<li>Dorian: Gregorian.</li>
+<li>Tropical's minor styles (salsa, bachata) and cumbia's (villera, chicha) sit on degree 6,
+  the relative minor, so each pack stays in one key. In C major they play in A minor.</li>
+</ul>
+<p>Notes from outside the scale use ALTER (for example rock's ♭3/♭7, trap's ♭2 and raised 7th).
+Chords from outside the key use chromatic <code>c</code> voicings.</p>
+<p><strong>Tempo and swing are not stored</strong> in a pattern. The tables give each preset's tempo, in
+quarter-note BPM on the 16-step grid. Every preset plays straight (SWING 50) except these:</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>SWING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hip-Hop · Golden Era Swing</td>
+<td>58–62</td>
+</tr>
+<tr>
+<td>Hip-Hop · Boom Bap, Lo-Fi Lazy and their bass, lead and chords</td>
+<td>54–60 if wanted; straight works</td>
+</tr>
+<tr>
+<td>Hip-Hop · Jazz Rap, Jazz Rap Walk</td>
+<td>60–66</td>
+</tr>
+<tr>
+<td>Rock · Half-Time Shuffle</td>
+<td>about 66, the triplet shuffle</td>
+</tr>
+<tr>
+<td>Piig · every preset</td>
+<td>56–60, the lazy MPC swing</td>
+</tr>
+</tbody>
+</table>
+<p>Set the same swing on every machine playing along.</p>
+<p><strong>Each pack ships a template, or more</strong> (<code>pack.template(…)</code>, <code>patternkit.write_template()</code>; the
+projects dialog's TEMPLATES, <code>ravving/presets/templates/&lt;genre&gt;.json</code> on the stick, a second one
+under its own <code>name=</code>): the tempo, swing, key and LIVE FX its presets are best played with.
+Choosing one starts a new project with them. The tempo is the middle of the pack's preset
+tempos; the key is the one a pack was made for where it says so, else a usual key of the style.</p>
+<table>
+<thead>
+<tr>
+<th>Pack</th>
+<th>Tempo</th>
+<th>Key</th>
+<th>Swing</th>
+<th>PHASER · ECHO · HEAVY</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Classical</td>
+<td>100</td>
+<td>C major</td>
+<td>50</td>
+<td>0 · 0.2 · 0</td>
+</tr>
+<tr>
+<td>Hip-Hop</td>
+<td>90</td>
+<td>C minor</td>
+<td>56</td>
+<td>0 · 0.15 · 0.35</td>
+</tr>
+<tr>
+<td>Pop</td>
+<td>116</td>
+<td>C major</td>
+<td>50</td>
+<td>0 · 0.15 · 0.25</td>
+</tr>
+<tr>
+<td>Rock</td>
+<td>122</td>
+<td>E major</td>
+<td>50</td>
+<td>0 · 0.05 · 0.35</td>
+</tr>
+<tr>
+<td>Trap</td>
+<td>140</td>
+<td>F minor</td>
+<td>50</td>
+<td>0 · 0.15 · 0.45</td>
+</tr>
+<tr>
+<td>Reggaeton</td>
+<td>93</td>
+<td>A minor</td>
+<td>50</td>
+<td>0 · 0.1 · 0.4</td>
+</tr>
+<tr>
+<td>Punk</td>
+<td>170</td>
+<td>A major</td>
+<td>50</td>
+<td>0 · 0 · 0.5</td>
+</tr>
+<tr>
+<td>Tropical</td>
+<td>130</td>
+<td>C major</td>
+<td>50</td>
+<td>0 · 0.1 · 0.2</td>
+</tr>
+<tr>
+<td>Cumbia</td>
+<td>95</td>
+<td>G major</td>
+<td>50</td>
+<td>0.15 · 0.3 · 0.2</td>
+</tr>
+<tr>
+<td>Piig</td>
+<td>79</td>
+<td>D minor</td>
+<td>58</td>
+<td>0.15 · 0.25 · 0.3</td>
+</tr>
+<tr>
+<td>Folk</td>
+<td>110</td>
+<td>G major</td>
+<td>50</td>
+<td>0 · 0.1 · 0</td>
+</tr>
+<tr>
+<td>Metal</td>
+<td>150</td>
+<td>E minor</td>
+<td>50</td>
+<td>0 · 0.05 · 0.6</td>
+</tr>
+<tr>
+<td>Black Metal</td>
+<td>170</td>
+<td>E minor</td>
+<td>50</td>
+<td>0 · 0.25 · 0.55</td>
+</tr>
+<tr>
+<td>Post-Punk</td>
+<td>142</td>
+<td>A minor</td>
+<td>50</td>
+<td>0.3 · 0.3 · 0.3</td>
+</tr>
+<tr>
+<td>Gregorian</td>
+<td>70</td>
+<td>D Dorian</td>
+<td>50</td>
+<td>0 · 0.5 · 0</td>
+</tr>
+<tr>
+<td>Jazz</td>
+<td>120</td>
+<td>C minor</td>
+<td>62</td>
+<td>0 · 0.1 · 0</td>
+</tr>
+<tr>
+<td>Vuelo</td>
+<td>120</td>
+<td>A minor</td>
+<td>50</td>
+<td>0.1 · 0.15 · 0.3</td>
+</tr>
+<tr>
+<td>Vuelo · Crave</td>
+<td>120</td>
+<td>C# minor</td>
+<td>52</td>
+<td>0 · 0.25 · 0.25</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The notes may carry their own velocity and nudge</strong> (SELECT's knobs 2 and 3, the chart's
+<code>VELOCITY</code> and <code>NUDGE</code> lanes by step): patternkit writes them from a note token's <code>@64</code> and
+<code>&lt;10</code> / <code>&gt;10</code> (10 % of a step early / late). The packs made since use them: palm-muted chugs,
+tremolo down- and up-strokes, a fiddle's bow, grace notes snapped in early, a dub bass behind the
+beat, a chant's swell. A note's LENGTH is its <code>_</code> steps (HOLD), as before.</p>
+<p><strong>6/8 and 3/4 in the new packs</strong> work as the waltz trio does (below): three 16-step bars hold
+four 12-step bars, and the tempo counts a quarter of four steps (a jig at a dotted quarter of
+110 is "165").</p>
+<p><strong>The waltz trio is in 3/4.</strong> Classical · Waltz, Waltz Oom and Waltz Pah-Pah are three
+16-step bars long, which hold four 12-step waltz bars, so the three loop together.</p>
+<h2 id="sounds">Sounds</h2>
+<p>Every sound named is a source in <code>data/kits.json</code> (or a kit path), and <code>validate.py</code> checks
+this. I added two kinds of entries to <code>kits.json</code>, all from the FluidR3Mono_GM.sf3 already on
+the device (<code>/zynthian/zynthian-data/soundfonts/SF2 Instruments/</code>):</p>
+<ul>
+<li><strong>Chords sources:</strong> Harpsichord 0:6, Guitar · Clean 0:27, Guitar · Overdrive 0:29,
+  Guitar · Distortion 0:30, Marimba 0:12, Steel drums 0:114, Accordion 0:21,
+  Brass section 0:61, Pizzicato strings 0:45.</li>
+<li><strong>Bass sources:</strong> Picked bass 0:34, Slap bass 0:36, Sine sub 8:80, Contrabass 0:43,
+  Cello 0:42.</li>
+<li><strong>Lead sources:</strong> Violin 0:40, Harpsichord 0:6, Trumpet 0:56, Guitar · Overdrive 0:29,
+  Marimba 0:12, Steel drums 0:114, Pan flute 0:75, Accordion 0:21, Music box 0:10,
+  Guitar · Clean 0:27 (champeta's soukous lead).</li>
+<li><strong>Bass source "808 · Monosynth":</strong> a <code>jalv</code> source on Calf Monosynth, the lead machine's
+  own engine (a second instance on the bass track). Its controls are real port values,
+  checked against the plugin's lv2info dump in
+  <code>engine-mods/calf_monosynth_mod/docs/engine-symbols.txt</code>:</li>
+<li>Sound: osc 1 Sine (<code>o1_wave</code> 3), plus 15 % of a triangle an octave up (<code>o2_wave</code> 4,
+    <code>o2_xpose</code> 12, <code>o12_mix</code> 0.15) for the harmonics an 808's saturation gives.</li>
+<li>Filter: 12 dB low-pass at 400 Hz that follows the key, opened by a 60 ms filter envelope
+    (<code>env2cutoff</code> 2400 cents): the click of the attack.</li>
+<li>Amp envelope: 1 ms attack, 1.8 s decay to 0.3, 250 ms release.</li>
+<li>Glide: <code>legato</code> 3 (Fingered Legato) with <code>portamento</code> 80 ms, so only overlapping notes
+    (a SLIDE) glide.</li>
+<li>Off: LFO-to-pitch, LFO-to-filter, the mod wheel; <code>master</code> 0.5.</li>
+<li>What it cannot do:<ul>
+<li><strong>No pitch drop.</strong> The Monosynth's modulation matrix is LV2 state, not ports (the mod's
+  RESEARCH.md), so kits.json can't set a pitch envelope.</li>
+<li><strong>No drive port.</strong> Turn on the bass machine's DRIVE for the saturation.</li>
+<li>The bass page's knobs (Nekobi's) don't apply to it.</li>
+</ul>
+</li>
+<li><strong>presetKits:</strong></li>
+<li>Power <code>#128:16</code></li>
+<li>
+<p>Orchestra <code>#128:48?TOM=48&amp;HAT=43&amp;OPEN=81&amp;CYMBAL=57&amp;PERC=54</code>. The rows land on:</p>
+<table>
+<thead>
+<tr>
+<th>Row</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KICK</td>
+<td>concert bass drum</td>
+</tr>
+<tr>
+<td>SNARE</td>
+<td>concert (field) snare</td>
+</tr>
+<tr>
+<td>CLAP</td>
+<td>castanets</td>
+</tr>
+<tr>
+<td>TOM</td>
+<td>timpani on C (key 48)</td>
+</tr>
+<tr>
+<td>HAT</td>
+<td>timpani on G below (key 43)</td>
+</tr>
+<tr>
+<td>OPEN</td>
+<td>triangle</td>
+</tr>
+<tr>
+<td>CYMBAL</td>
+<td>concert crash (clash cymbals)</td>
+</tr>
+<tr>
+<td>PERC</td>
+<td>tambourine</td>
+</tr>
+</tbody>
+</table>
+<p>The timpani suit a key of C: drum kits don't follow the session's key.
+  - Cumbia · timbal <code>#128:0?PERC=73&amp;TOM=65&amp;CYMBAL=56&amp;CLAP=63</code>: PERC the güiro, TOM the high
+timbale, CYMBAL the cowbell (campana), CLAP the high conga (llamador).
+  - Cumbia · room <code>#128:8?PERC=74&amp;TOM=66&amp;CYMBAL=56&amp;CLAP=63</code>: the room kit, with the long güiro
+and the low timbale.
+  - Latin · congas <code>#128:0?SNARE=63&amp;CLAP=62&amp;TOM=64&amp;HAT=75&amp;OPEN=70&amp;CYMBAL=56&amp;PERC=73</code>, for
+salsa: SNARE open conga, CLAP conga slap, TOM tumba, HAT claves, OPEN maracas, CYMBAL
+cowbell (campana), PERC güiro; KICK stays the kick.
+  - Latin · güira <code>#128:0?SNARE=60&amp;TOM=61&amp;CLAP=62&amp;OPEN=64&amp;HAT=70&amp;CYMBAL=56&amp;PERC=69</code>, for
+merengue and bachata: SNARE high bongo, TOM low bongo, CLAP conga slap, OPEN tumba (the
+tambora's low stroke), HAT maracas, CYMBAL cowbell, PERC cabasa (the metal güira).
+  - All the Latin keys were named from the font and rendered; every one sounds.</p>
+</li>
+</ul>
+<p><strong>Nothing needs installing on the device.</strong> The device's font is MuseScore 2.3.2's
+FluidR3Mono_GM.sf3. It matches by sha256
+<code>cfcd66d89e8386823400eca64934b14fbea7bf48ba1f00d21189af1262794ec2</code>, the hash in zynthbox-qml's
+<code>config/soundfonts.json</code>, entry SF_00022. A byte-identical copy is in
+<code>~/Downloads/ravving-soundfonts/fluidr3mono/</code>, from
+<a href="https://github.com/musescore/MuseScore/raw/v2.3.2/share/sound/FluidR3Mono_GM.sf3" rel="noopener" target="_blank">https://github.com/musescore/MuseScore/raw/v2.3.2/share/sound/FluidR3Mono_GM.sf3</a>. Its
+licence is MIT (Frank Wen 2000–2002, mono version Michael Cowgill 2014–16; see
+<code>LICENSE-FluidR3Mono.md</code> there).</p>
+<p><strong>How the new sounds were checked.</strong> Every new preset was rendered offline from that copy
+with <code>tools/soundfont.py render</code>. All of them sound, with peak levels from 0.02 to 0.20 and
+none silent. The kit rows were also worked out with a port of <code>DrumKit::fromSoundfont</code>.
+<code>validate.py</code> checks that every FluidR3Mono bank:program in kits.json exists, whenever the
+copy is present.</p>
+<p><strong>Limits of these sounds:</strong> FluidSynth sources don't glide; a SLIDE only overlaps the notes.
+The 808 lines therefore use "808 · Monosynth", which does glide. "Sine sub" (8:80) stays
+registered, but no preset uses it any more.</p>
+<h3 id="added-with-the-folk-metal-black-metal-post-punk-and-gregorian-packs-2026-10-10">Added with the folk, metal, black metal, post-punk and Gregorian packs (2026-10-10)</h3>
+<p>Sources from soundfonts already on milo (<code>SF2 Instruments/</code>; each preset found with
+<code>tools/soundfont.py presets</code> and rendered there: peaks 0.02–0.31 like the others, except
+<strong>Organ · Plein jeu</strong>, 0.66: lower its machine's VOL):</p>
+<table>
+<thead>
+<tr>
+<th>Machine</th>
+<th>Source</th>
+<th>Soundfont, bank:program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chords</td>
+<td>Guitar · Heavy rhythm</td>
+<td>Heavy Guitars 0:0</td>
+</tr>
+<tr>
+<td>chords, lead</td>
+<td>Guitar · Chorus</td>
+<td>Stratocaster 0:3 (STRAT VS chorus)</td>
+</tr>
+<tr>
+<td>chords</td>
+<td>Guitar · 12-string, Guitar · Acoustic</td>
+<td>Acoustic Guitars 0:8, 0:0</td>
+</tr>
+<tr>
+<td>chords</td>
+<td>Organ · Vox humana, Organ · Plein jeu</td>
+<td>Pipe Organ 0:45, 0:114</td>
+</tr>
+<tr>
+<td>chords, lead</td>
+<td>Harp</td>
+<td>FluidR3Mono_GM 0:46</td>
+</tr>
+<tr>
+<td>bass</td>
+<td>Squier bass</td>
+<td>Squierbass 0:0</td>
+</tr>
+<tr>
+<td>bass</td>
+<td>Organ · Bourdon 16</td>
+<td>Pipe Organ 0:59</td>
+</tr>
+<tr>
+<td>bass, lead</td>
+<td>Guitar · Heavy muted</td>
+<td>Heavy Guitars 0:4 (palm-muted)</td>
+</tr>
+<tr>
+<td>lead</td>
+<td>Guitar · Heavy lead, Guitar · Valve OD</td>
+<td>Heavy Guitars 0:2, Valve OD Guitar 0:0</td>
+</tr>
+<tr>
+<td>lead</td>
+<td>Choir, Voice oohs</td>
+<td>FluidR3Mono_GM 0:52, 0:53</td>
+</tr>
+<tr>
+<td>lead</td>
+<td>Fiddle, Banjo, Bagpipe, Recorder</td>
+<td>FluidR3Mono_GM 0:110, 0:105, 0:109, 0:74</td>
+</tr>
+<tr>
+<td>lead</td>
+<td>Organ · Krummhorn</td>
+<td>Pipe Organ 0:124</td>
+</tr>
+</tbody>
+</table>
+<p>Kits (<code>presetKits</code>, and the kit folder's machines the packs name):</p>
+<ul>
+<li><strong>Black Pearl 5</strong>, <strong>Red Zeppelin 5</strong>: the AVL acoustic kits, the soundfonts inside their
+  FluidPlug LV2s (<code>/zynthian/zynthian-plugins/lv2/&lt;kit&gt;.lv2/FluidPlug.sf2</code>; the <code>sf2/</code> links to
+  them are broken, their names hold a literal <code>*</code>). Velocity-layered, mapped by General MIDI
+  key (their samples are unnamed); rendered: kick 0.09, snare 0.05, a little under the drum
+  machines. DrumKit names such a kit after its bundle ("Black Pearl 5", not "FluidPlug").</li>
+<li><strong>Folk · bodhrán</strong>: FluidR3's Room kit with TOM the low floor tom (the bodhrán), PERC the
+  tambourine, CYMBAL the ride.</li>
+<li><strong>Orchestra · D</strong>: the orchestra kit with its timpani on D (TOM, key 50) and the A below
+  (HAT, key 45), a D tonic and dominant.</li>
+<li>From the kit folder: Boss DR55 (the Sisters of Mercy's Doktor Avalanche), Roland CR78.
+  <code>validate.py</code> knows the folder's files as listed on milo.</li>
+</ul>
+<h2 id="classical-major">Classical: Major</h2>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Waltz</td>
+<td>drums</td>
+<td>3 (3/4)</td>
+<td>Viennese waltz: timpani C/G on the I and V downbeats, triangle on the "pah-pah", bass drum and cymbals on the first one, snare roll into the phrase</td>
+<td>160–190</td>
+<td>Orchestra kit</td>
+</tr>
+<tr>
+<td>March</td>
+<td>drums</td>
+<td>2</td>
+<td>orchestral march in 2/4: field-snare rudiments, bass drum and clash cymbals on the strong beats, timpani tonic and dominant</td>
+<td>110–120</td>
+<td>Orchestra kit</td>
+</tr>
+<tr>
+<td>Galop</td>
+<td>drums</td>
+<td>2</td>
+<td>Offenbach galop (can-can): the snare's "ta-ta-ta", bass drum "oom" and cymbal "pah", triangle, stop-time V–I on the timpani</td>
+<td>140–160</td>
+<td>Orchestra kit</td>
+</tr>
+<tr>
+<td>Habanera</td>
+<td>drums</td>
+<td>2</td>
+<td>the habanera rhythm (dotted 8th, 16th, two 8ths) on castanets, tambourine, timpani tonic then dominant</td>
+<td>70–90</td>
+<td>Orchestra kit</td>
+</tr>
+<tr>
+<td>Timpani Cadence</td>
+<td>drums</td>
+<td>4</td>
+<td>maestoso: timpani alternating tonic and dominant, a dominant roll into the final tonic stroke with bass drum and cymbals</td>
+<td>70–90</td>
+<td>Orchestra kit</td>
+</tr>
+<tr>
+<td>Alberti Bass</td>
+<td>bass</td>
+<td>4</td>
+<td>low–high–middle–high eighths over I, IV6/4, V6/5 (Mozart K. 545 texture)</td>
+<td>110–140</td>
+<td>Cello</td>
+</tr>
+<tr>
+<td>Pachelbel Ground</td>
+<td>bass</td>
+<td>2</td>
+<td>Pachelbel's eight-note ground, in quarter notes</td>
+<td>50–70</td>
+<td>Cello</td>
+</tr>
+<tr>
+<td>Lament Bass</td>
+<td>bass</td>
+<td>4</td>
+<td>chromatic descending tetrachord from 1 to 5 in half notes, then IV–ii–V</td>
+<td>60–80</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Waltz Oom</td>
+<td>bass</td>
+<td>3 (3/4)</td>
+<td>the "oom" on each downbeat: I, IV, V, I</td>
+<td>160–190</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Octave Continuo</td>
+<td>bass</td>
+<td>2</td>
+<td>Baroque octave-leaping eighths down the scale (after the Air, BWV 1068)</td>
+<td>55–70</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Prelude Arpeggio</td>
+<td>lead</td>
+<td>4</td>
+<td>Bach WTC I C-major prelude figure, bars 1–3 and 5</td>
+<td>60–80</td>
+<td>Harpsichord</td>
+</tr>
+<tr>
+<td>Classical Phrase</td>
+<td>lead</td>
+<td>4</td>
+<td>a period's antecedent, ending on a half cadence</td>
+<td>90–120</td>
+<td>Violin</td>
+</tr>
+<tr>
+<td>Ode Theme</td>
+<td>lead</td>
+<td>4</td>
+<td>Beethoven's Ode to Joy, first four bars</td>
+<td>100–120</td>
+<td>Oboe</td>
+</tr>
+<tr>
+<td>Baroque Sequence</td>
+<td>lead</td>
+<td>2</td>
+<td>turning sixteenth figure stepping down each beat</td>
+<td>90–110</td>
+<td>Flute</td>
+</tr>
+<tr>
+<td>Fanfare</td>
+<td>lead</td>
+<td>2</td>
+<td>dotted triad calls rising to the octave</td>
+<td>100–120</td>
+<td>Trumpet</td>
+</tr>
+<tr>
+<td>Chorale Cadence</td>
+<td>chords</td>
+<td>4</td>
+<td>four-part SATB: I vi IV ii6 I6/4 V7 I, with strict voice leading</td>
+<td>60–80</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Pachelbel Progression</td>
+<td>chords</td>
+<td>2</td>
+<td>I V vi iii IV I IV V, with the upper voices stepping down</td>
+<td>50–70</td>
+<td>Strings · Ensemble</td>
+</tr>
+<tr>
+<td>Waltz Pah-Pah</td>
+<td>chords</td>
+<td>3 (3/4)</td>
+<td>chords on beats 2 and 3: I, IV6/4, V7, I</td>
+<td>160–190</td>
+<td>Pizzicato strings</td>
+</tr>
+<tr>
+<td>Prinner Pulse</td>
+<td>chords</td>
+<td>2</td>
+<td>the galant Prinner (IV–I6–vii°6–I) in repeated eighths</td>
+<td>90–120</td>
+<td>Strings · Bowed</td>
+</tr>
+<tr>
+<td>Circle of Fifths</td>
+<td>chords</td>
+<td>4</td>
+<td>I IV vii° iii vi ii V I in half notes</td>
+<td>70–100</td>
+<td>Harpsichord</td>
+</tr>
+</tbody>
+</table>
+<p>References: <a href="https://en.wikipedia.org/wiki/Lament_bass" rel="noopener" target="_blank">Lament bass (Wikipedia)</a>;
+<a href="https://musiciangoods.com/blogs/music-theory/music-theory-behind-canon-in-d" rel="noopener" target="_blank">Music theory behind Canon in D</a>;
+<a href="https://thelistenersclub.com/2012/04/15/the-listeners-club-the-art-of-the-ostinato/" rel="noopener" target="_blank">The art of the ostinato</a>;
+R. Gjerdingen, <em>Music in the Galant Style</em> (the Prinner).</p>
+<p>The public-domain scores, on IMSLP: Bach BWV 846 and BWV 1068, Pachelbel's Canon, Beethoven
+Symphony 9, Mozart K. 545, Bizet <em>Carmen</em>.</p>
+<h2 id="hip-hop-natural-minor">Hip-Hop: Natural Minor</h2>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boom Bap</td>
+<td>drums</td>
+<td>2</td>
+<td>kick on 1 and pushes, snare 2 and 4, eighth hats, ghost snare, open hat</td>
+<td>85–95</td>
+<td>SP1200 1</td>
+</tr>
+<tr>
+<td>Golden Era Swing</td>
+<td>drums</td>
+<td>2</td>
+<td>sixteenth hats to swing (SWING 58–62), skipping kick, rim ghosts</td>
+<td>88–98</td>
+<td>LINN9000 1</td>
+</tr>
+<tr>
+<td>Lo-Fi Lazy</td>
+<td>drums</td>
+<td>2</td>
+<td>soft, off-beat hats only, late kick, rim clicks</td>
+<td>70–85</td>
+<td>SP1200 1</td>
+</tr>
+<tr>
+<td>Old School 808</td>
+<td>drums</td>
+<td>2</td>
+<td>electro-rap kick, claps 2 and 4, cowbell</td>
+<td>95–110</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Jazz Rap</td>
+<td>drums</td>
+<td>2</td>
+<td>ride "ding, ding-a" and hi-hat foot over boom bap</td>
+<td>85–95</td>
+<td>Jazz · ride kit</td>
+</tr>
+<tr>
+<td>Boom Bap Root</td>
+<td>bass</td>
+<td>2</td>
+<td>roots on the kick, i→iv, VI walking back</td>
+<td>85–95</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Jazz Rap Walk</td>
+<td>bass</td>
+<td>2</td>
+<td>upright walking i–iv with pickups</td>
+<td>85–95</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>G-Funk Glide</td>
+<td>bass</td>
+<td>2</td>
+<td>Moog-style gliding octave and pentatonic line</td>
+<td>90–96</td>
+<td>Nekobi</td>
+</tr>
+<tr>
+<td>Lo-Fi Sub</td>
+<td>bass</td>
+<td>4</td>
+<td>long notes under i–VI–iv–v with pickups</td>
+<td>70–85</td>
+<td>Fretless</td>
+</tr>
+<tr>
+<td>Electro Funk</td>
+<td>bass</td>
+<td>2</td>
+<td>sixteenth octave pops with a slide</td>
+<td>100–112</td>
+<td>Nekobi</td>
+</tr>
+<tr>
+<td>Rhodes Riff</td>
+<td>lead</td>
+<td>2</td>
+<td>minor-pentatonic riff with a falling answer</td>
+<td>80–95</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Horn Stabs</td>
+<td>lead</td>
+<td>2</td>
+<td>chopped-soul horn hits and falls</td>
+<td>85–95</td>
+<td>Muted trumpet</td>
+</tr>
+<tr>
+<td>Vibes Loop</td>
+<td>lead</td>
+<td>2</td>
+<td>eighth arpeggios of i and iv</td>
+<td>75–90</td>
+<td>Vibes</td>
+</tr>
+<tr>
+<td>G-Funk Whistle</td>
+<td>lead</td>
+<td>2</td>
+<td>high portamento whistle line</td>
+<td>90–96</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Flute Loop</td>
+<td>lead</td>
+<td>2</td>
+<td>flute falling from the octave, turning on the third</td>
+<td>80–95</td>
+<td>Flute</td>
+</tr>
+<tr>
+<td>Boom Bap Keys</td>
+<td>chords</td>
+<td>2</td>
+<td>chopped i, then iv / III / VII stabs (CHORD SET sevenths)</td>
+<td>85–95</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Soul Loop</td>
+<td>chords</td>
+<td>2</td>
+<td>i7–iv7–VII–III, half a bar each</td>
+<td>80–95</td>
+<td>Strings · Ensemble</td>
+</tr>
+<tr>
+<td>Lo-Fi Ninths</td>
+<td>chords</td>
+<td>4</td>
+<td>im9–ivm9–VImaj9–v7, each a 16th late</td>
+<td>70–85</td>
+<td>Upright piano</td>
+</tr>
+<tr>
+<td>Dark Strings</td>
+<td>chords</td>
+<td>4</td>
+<td>i (two bars) – VI – v triads</td>
+<td>80–95</td>
+<td>Strings · Bowed</td>
+</tr>
+<tr>
+<td>Organ Vamp</td>
+<td>chords</td>
+<td>2</td>
+<td>soul-jazz i7–IV7 (Dorian IV) stabs</td>
+<td>90–100</td>
+<td>Jazz organ</td>
+</tr>
+</tbody>
+</table>
+<p>References: <a href="https://violetrecording.com/best-drum-patterns-for-hip-hop/" rel="noopener" target="_blank">Best drum patterns for hip hop</a>;
+<a href="https://blog.native-instruments.com/what-is-boom-bap/" rel="noopener" target="_blank">What is boom bap (Native Instruments)</a>;
+<a href="https://violetrecording.com/how-to-make-a-boom-bap-beat/" rel="noopener" target="_blank">How to make a boom bap beat</a>;
+<a href="https://www.audeobox.com/learn/fl-studio/how-to-make-boom-bap-beats-in-fl-studio/" rel="noopener" target="_blank">Boom bap in FL Studio</a>.</p>
+<h2 id="pop-major">Pop: Major</h2>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Four on the Floor</td>
+<td>drums</td>
+<td>2</td>
+<td>dance pop: kick every beat, claps 2 and 4, off-beat open hats</td>
+<td>118–128</td>
+<td>Roland TR909</td>
+</tr>
+<tr>
+<td>Half-Time Ballad</td>
+<td>drums</td>
+<td>2</td>
+<td>one snare a bar on 3</td>
+<td>130–150 (felt half)</td>
+<td>Standard kit</td>
+</tr>
+<tr>
+<td>80s Gated</td>
+<td>drums</td>
+<td>2</td>
+<td>big 2 and 4 snare, doubled kick, tom run</td>
+<td>110–125</td>
+<td>LINN9000 1</td>
+</tr>
+<tr>
+<td>808 Pop</td>
+<td>drums</td>
+<td>2</td>
+<td>half-time claps, sparse kicks, hat rolls</td>
+<td>130–150 (felt half)</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Motown Stomp</td>
+<td>drums</td>
+<td>2</td>
+<td>snare on all four beats, tambourine on 2 and 4</td>
+<td>120–135</td>
+<td>Room kit</td>
+</tr>
+<tr>
+<td>Axis Eighths</td>
+<td>bass</td>
+<td>4</td>
+<td>pumping eighths on I–V–vi–IV</td>
+<td>100–130</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Synth Octaves</td>
+<td>bass</td>
+<td>4</td>
+<td>octave-jumping eighths on vi–IV–I–V</td>
+<td>110–128</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Ballad Descent</td>
+<td>bass</td>
+<td>4</td>
+<td>I–V/7–vi–IV descending bass, walk-up home</td>
+<td>60–80</td>
+<td>Fretless</td>
+</tr>
+<tr>
+<td>Funk-Pop Sixteenths</td>
+<td>bass</td>
+<td>2</td>
+<td>syncopated sixteenths with octave pops</td>
+<td>105–120</td>
+<td>Slap bass</td>
+</tr>
+<tr>
+<td>Motown Walk</td>
+<td>bass</td>
+<td>2</td>
+<td>melodic pickups into I–vi–IV–V</td>
+<td>110–130</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Axis Hook</td>
+<td>lead</td>
+<td>2</td>
+<td>sung-style hook: repeated notes, leap to the fifth</td>
+<td>100–128</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Piano Ostinato</td>
+<td>lead</td>
+<td>2</td>
+<td>sixteenth ostinato grouped 3+3+2</td>
+<td>110–130</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Sax Hook</td>
+<td>lead</td>
+<td>2</td>
+<td>80s sax hook up to the octave</td>
+<td>100–120</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Pluck Arp</td>
+<td>lead</td>
+<td>4</td>
+<td>sixteenth arpeggios over I–V–vi–IV</td>
+<td>110–128</td>
+<td>Vibes</td>
+</tr>
+<tr>
+<td>Ballad Melody</td>
+<td>lead</td>
+<td>4</td>
+<td>long notes, ends open on 2</td>
+<td>60–80</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Axis Quarters</td>
+<td>chords</td>
+<td>4</td>
+<td>I–V–vi–IV in quarter notes</td>
+<td>90–120</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Minor-Start Pulse</td>
+<td>chords</td>
+<td>4</td>
+<td>vi–IV–I–V pulsing eighths</td>
+<td>110–128</td>
+<td>TAL NoiseMaker</td>
+</tr>
+<tr>
+<td>Doo-Wop Changes</td>
+<td>chords</td>
+<td>2</td>
+<td>50s I–vi–IV–V triads</td>
+<td>60–80</td>
+<td>Upright piano</td>
+</tr>
+<tr>
+<td>Royal Road</td>
+<td>chords</td>
+<td>4</td>
+<td>IV–V–iii–vi, each bar pushed 3+3+2</td>
+<td>90–110</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Ballad Strings</td>
+<td>chords</td>
+<td>4</td>
+<td>I–V/7–vi–IV–V with the stepping bass voiced in</td>
+<td>60–80</td>
+<td>Strings · Ensemble</td>
+</tr>
+</tbody>
+</table>
+<p>References: <a href="https://www.hooktheory.com/blog/chord-progression-search-patterns-and-trends/" rel="noopener" target="_blank">Hooktheory chord trends</a>;
+<a href="https://mixedinkey.com/captain-plugins/common-chord-progressions-pop-music/" rel="noopener" target="_blank">Common pop progressions (Mixed In Key)</a>;
+<a href="https://thedrumninja.com/common-drum-beats/" rel="noopener" target="_blank">15 common drum beats</a>;
+<a href="https://muted.io/drum-patterns/" rel="noopener" target="_blank">Drum patterns (muted.io)</a>.</p>
+<h2 id="rock-major-with-3-7-and-vivii-borrowed">Rock: Major, with ♭3, ♭7 and ♭VI/♭VII borrowed</h2>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Straight Backbeat</td>
+<td>drums</td>
+<td>2</td>
+<td>kick 1 and 3, snare 2 and 4, eighth hats</td>
+<td>100–140</td>
+<td>Power kit</td>
+</tr>
+<tr>
+<td>Arena Ride</td>
+<td>drums</td>
+<td>2</td>
+<td>driving eighths on the ride, doubled kicks</td>
+<td>110–140</td>
+<td>Power kit</td>
+</tr>
+<tr>
+<td>Half-Time Shuffle</td>
+<td>drums</td>
+<td>2</td>
+<td>backbeat on 3 with ghost notes (SWING about 66)</td>
+<td>80–95</td>
+<td>Room kit</td>
+</tr>
+<tr>
+<td>Bo Diddley Toms</td>
+<td>drums</td>
+<td>2</td>
+<td>3-2 "shave and a haircut" on toms, maracas</td>
+<td>100–125</td>
+<td>Room kit</td>
+</tr>
+<tr>
+<td>Gallop</td>
+<td>drums</td>
+<td>2</td>
+<td>eighth plus two sixteenths on the kick every beat</td>
+<td>140–180</td>
+<td>Power kit</td>
+</tr>
+<tr>
+<td>Root Eighths</td>
+<td>bass</td>
+<td>4</td>
+<td>pumping eighths I–♭VII–IV–I</td>
+<td>110–150</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Boogie Walk</td>
+<td>bass</td>
+<td>4</td>
+<td>1-3-5-6-♭7 boogie over I–IV–I–V</td>
+<td>140–170</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Blues-Rock Riff</td>
+<td>bass</td>
+<td>2</td>
+<td>minor-pentatonic unison riff with ♯4</td>
+<td>90–120</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Gallop Bass</td>
+<td>bass</td>
+<td>4</td>
+<td>gallop on I–♭VI–♭VII–I</td>
+<td>140–180</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Root–Fifth Two-Beat</td>
+<td>bass</td>
+<td>4</td>
+<td>country-rock root–fifth with a walk home</td>
+<td>100–130</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Pentatonic Lick</td>
+<td>lead</td>
+<td>2</td>
+<td>blues-rock lick, ♭3 sliding into 3</td>
+<td>90–120</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Honking Sax</td>
+<td>lead</td>
+<td>2</td>
+<td>rock'n'roll honks with a ♭7 growl</td>
+<td>140–170</td>
+<td>Tenor sax</td>
+</tr>
+<tr>
+<td>Anthem Hook</td>
+<td>lead</td>
+<td>4</td>
+<td>arena "whoa-oh" long notes</td>
+<td>110–140</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Clean Arpeggio</td>
+<td>lead</td>
+<td>4</td>
+<td>open-chord picking Iadd9–IV–vi–Vsus</td>
+<td>70–100</td>
+<td>Nylon guitar</td>
+</tr>
+<tr>
+<td>Boogie Piano</td>
+<td>lead</td>
+<td>2</td>
+<td>3–5 tremolo, then a run down with a ♭3–3 crush</td>
+<td>140–170</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Power I–♭VII–IV</td>
+<td>chords</td>
+<td>4</td>
+<td>chugged power chords</td>
+<td>110–150</td>
+<td>Guitar · Distortion</td>
+</tr>
+<tr>
+<td>Organ Pushes</td>
+<td>chords</td>
+<td>2</td>
+<td>R&amp;B-rock organ holds with stabs</td>
+<td>100–125</td>
+<td>Jazz organ</td>
+</tr>
+<tr>
+<td>♭VI–♭VII–I</td>
+<td>chords</td>
+<td>2</td>
+<td>Aeolian rock cadence, parallel triads</td>
+<td>100–140</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Piano Pump</td>
+<td>chords</td>
+<td>4</td>
+<td>I–IV–V–IV in a "1 2 3, 1 2 3, 1 2" push</td>
+<td>120–150</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Clean Strum</td>
+<td>chords</td>
+<td>4</td>
+<td>strummed I–V–IV–V, guitar voicings</td>
+<td>90–120</td>
+<td>Guitar · Clean</td>
+</tr>
+</tbody>
+</table>
+<p>References: <a href="https://thedrumninja.com/common-drum-beats/" rel="noopener" target="_blank">15 common drum beats (shuffle, half-time shuffle)</a>;
+<a href="https://www.gear4music.com/blog/?p=43811" rel="noopener" target="_blank">Basic drum beats (Gear4music)</a>;
+<a href="https://c.enwp.org/wiki/File:Characteristic_rock_and_disco_drum_patterns.png" rel="noopener" target="_blank">Rock and disco drum patterns</a>;
+the Bo Diddley beat (Wikipedia).</p>
+<h2 id="trap-natural-minor-with-harmonic-minor-7-and-phrygian-2">Trap: Natural Minor, with harmonic-minor 7 and Phrygian ♭2</h2>
+<p>The drum grid is sixteenths at the track's tempo, with the clap on beat 3: a half-time feel.</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Classic Trap</td>
+<td>drums</td>
+<td>2</td>
+<td>clap on 3, eighth hats with sixteenth rolls, open hat</td>
+<td>130–150</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Triplet Flow</td>
+<td>drums</td>
+<td>2</td>
+<td>hats grouped in threes against the beat</td>
+<td>130–150</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Drill</td>
+<td>drums</td>
+<td>2</td>
+<td>snare on 3 plus a late one, 3-3-2 skipping hats</td>
+<td>140–145</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Phonk Cowbell</td>
+<td>drums</td>
+<td>2</td>
+<td>cowbell riff, claps 2 and 4, Memphis kick</td>
+<td>120–140</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Sparse Snap</td>
+<td>drums</td>
+<td>2</td>
+<td>quarter hats with one roll, snap on 3</td>
+<td>140–160</td>
+<td>SP1200 1</td>
+</tr>
+<tr>
+<td>808 Root Glide</td>
+<td>bass</td>
+<td>2</td>
+<td>long root gliding up the octave, VII sliding home</td>
+<td>130–150</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Triplet 808</td>
+<td>bass</td>
+<td>2</td>
+<td>808 hits in threes</td>
+<td>130–150</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Drill Slides</td>
+<td>bass</td>
+<td>2</td>
+<td>slides through the ♭2 and the leading note</td>
+<td>140–145</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Phonk Bounce</td>
+<td>bass</td>
+<td>2</td>
+<td>short punchy hits</td>
+<td>120–140</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Harmonic Minor 808</td>
+<td>bass</td>
+<td>2</td>
+<td>raised 7th pulling to the root</td>
+<td>130–150</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Flute Riff</td>
+<td>lead</td>
+<td>2</td>
+<td>pentatonic flute riff, 3-3-2</td>
+<td>130–150</td>
+<td>Flute</td>
+</tr>
+<tr>
+<td>Bell Melody</td>
+<td>lead</td>
+<td>2</td>
+<td>sixteenth music-box figure</td>
+<td>130–150</td>
+<td>Music box</td>
+</tr>
+<tr>
+<td>Dark Piano</td>
+<td>lead</td>
+<td>2</td>
+<td>sparse piano, leading tone to octave</td>
+<td>130–150</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Triplet Synth</td>
+<td>lead</td>
+<td>2</td>
+<td>synth lead in threes</td>
+<td>130–150</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Phrygian Riff</td>
+<td>lead</td>
+<td>2</td>
+<td>drill string riff on the ♭2</td>
+<td>140–145</td>
+<td>Violin</td>
+</tr>
+<tr>
+<td>i–VI Pad</td>
+<td>chords</td>
+<td>4</td>
+<td>i and VI, two bars each</td>
+<td>130–150</td>
+<td>Strings · Ensemble</td>
+</tr>
+<tr>
+<td>i–iv–VI–V Stabs</td>
+<td>chords</td>
+<td>4</td>
+<td>stab and echo; V major (chromatic)</td>
+<td>130–150</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Choir i–VII–VI–VII</td>
+<td>chords</td>
+<td>4</td>
+<td>a bar each</td>
+<td>130–150</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Drill Pizzicato</td>
+<td>chords</td>
+<td>2</td>
+<td>i and ♭II plucked 3-3-2</td>
+<td>140–145</td>
+<td>Pizzicato strings</td>
+</tr>
+<tr>
+<td>Glassy Stabs</td>
+<td>chords</td>
+<td>2</td>
+<td>i–v–VI–VII, each half bar 3-3-2</td>
+<td>130–150</td>
+<td>Alien · Glassy</td>
+</tr>
+</tbody>
+</table>
+<p>References: <a href="https://violetrecording.com/best-drum-patterns-for-trap/" rel="noopener" target="_blank">Best drum patterns for trap</a>;
+<a href="https://sleepfreaks-dtm.com/en/produce-recipe/cubase-pro-10-musicseminar-1" rel="noopener" target="_blank">Creating trap rhythms (Cubase seminar)</a>;
+<a href="https://www.audeobox.com/learn/mpc-software/modern-trap-workflow/" rel="noopener" target="_blank">MPC modern trap workflow</a>;
+<a href="https://thedrumninja.com/how-to-make-trap-beats/" rel="noopener" target="_blank">How to make trap beats</a>.</p>
+<h2 id="reggaeton-natural-minor">Reggaeton: Natural Minor</h2>
+<p>The dembow: the kick on every beat, the snare on steps 4, 7, 12 and 15 (3-3-2 twice a bar).</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dembow Clásico</td>
+<td>drums</td>
+<td>2</td>
+<td>the dembow ("Dem Bow" riddim)</td>
+<td>88–98</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Perreo Lento</td>
+<td>drums</td>
+<td>2</td>
+<td>kick 1 and 3, claps on the "and"s, off-beat hats</td>
+<td>85–92</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Dembow Timbal</td>
+<td>drums</td>
+<td>2</td>
+<td>dembow with a cowbell line and a timbal roll</td>
+<td>90–98</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Dembow Dominicano</td>
+<td>drums</td>
+<td>2</td>
+<td>faster, doubled snare, sixteenth hats, claps 2 and 4</td>
+<td>115–130</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Moombahton</td>
+<td>drums</td>
+<td>2</td>
+<td>dembow under house claps and open hats</td>
+<td>105–110</td>
+<td>Roland TR909</td>
+</tr>
+<tr>
+<td>Dembow 808</td>
+<td>bass</td>
+<td>4</td>
+<td>tresillo roots i–VI–III–VII</td>
+<td>88–98</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Perreo Sub</td>
+<td>bass</td>
+<td>2</td>
+<td>held root sliding down through VII</td>
+<td>85–95</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Syncopated Synth</td>
+<td>bass</td>
+<td>2</td>
+<td>off-beat octave synth bass</td>
+<td>90–100</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Romántico Walk</td>
+<td>bass</td>
+<td>2</td>
+<td>eighth walk i–iv–VII–III</td>
+<td>85–95</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Offbeat Pump</td>
+<td>bass</td>
+<td>2</td>
+<td>Dominican off-beat eighths</td>
+<td>115–130</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Pluck Hook</td>
+<td>lead</td>
+<td>2</td>
+<td>tresillo synth hook</td>
+<td>88–98</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Guitarra Romántica</td>
+<td>lead</td>
+<td>2</td>
+<td>Andalusian 3-2-1 with the raised 7</td>
+<td>85–95</td>
+<td>Nylon guitar</td>
+</tr>
+<tr>
+<td>Flauta Perreo</td>
+<td>lead</td>
+<td>2</td>
+<td>short syncopated high flute</td>
+<td>88–98</td>
+<td>Flute</td>
+</tr>
+<tr>
+<td>Marimba Dembow</td>
+<td>lead</td>
+<td>2</td>
+<td>marimba in the dembow's rhythm</td>
+<td>90–98</td>
+<td>Marimba</td>
+</tr>
+<tr>
+<td>Sax Romántico</td>
+<td>lead</td>
+<td>2</td>
+<td>long sax notes, turn into the leading tone</td>
+<td>85–95</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>i–VI–III–VII Dembow</td>
+<td>chords</td>
+<td>4</td>
+<td>stabs in 3+3+2</td>
+<td>88–98</td>
+<td>TAL NoiseMaker</td>
+</tr>
+<tr>
+<td>Romántico Piano</td>
+<td>chords</td>
+<td>4</td>
+<td>i–iv–VII–III held</td>
+<td>85–95</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Andalusian Strum</td>
+<td>chords</td>
+<td>4</td>
+<td>i–VII–VI–V strummed (V chromatic)</td>
+<td>88–98</td>
+<td>Nylon guitar</td>
+</tr>
+<tr>
+<td>Pad VI–VII–i</td>
+<td>chords</td>
+<td>4</td>
+<td>sustained pad</td>
+<td>88–98</td>
+<td>Strings · Digital</td>
+</tr>
+<tr>
+<td>Organ Offbeats</td>
+<td>chords</td>
+<td>4</td>
+<td>off-beat stabs i–VI–i–v</td>
+<td>105–110</td>
+<td>Organ · House</td>
+</tr>
+</tbody>
+</table>
+<p>References: <a href="https://violetrecording.com/how-to-make-reggaeton-beats/" rel="noopener" target="_blank">How to make reggaeton beats</a>;
+<a href="https://www.hooktheory.com/theorytab/view/cnco/reggaeton-lento-(bailemos)" rel="noopener" target="_blank">Reggaetón Lento (Hooktheory)</a>;
+<a href="https://unison.audio/reggaeton-chord-progressions/" rel="noopener" target="_blank">Reggaeton chord progressions</a>;
+Wikipedia's "Dembow" (Shabba Ranks' "Dem Bow", Steely &amp; Clevie's "Poco Man Jam" riddim).</p>
+<h2 id="punk-major-with-3-7-and-vivii-borrowed">Punk: Major, with ♭3, ♭7 and ♭VI/♭VII borrowed</h2>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Skate Beat</td>
+<td>drums</td>
+<td>2</td>
+<td>polka: kick on the beats, snare on every "and"</td>
+<td>170–200</td>
+<td>Power kit</td>
+</tr>
+<tr>
+<td>D-Beat</td>
+<td>drums</td>
+<td>2</td>
+<td>Discharge beat: kick 1, &amp;1, &amp;2, 3, &amp;3, &4; crash eighths, no hat</td>
+<td>150–190</td>
+<td>Room kit</td>
+</tr>
+<tr>
+<td>Straight Eighths</td>
+<td>drums</td>
+<td>2</td>
+<td>Ramones-style eighth hats and backbeat</td>
+<td>160–190</td>
+<td>Standard kit</td>
+</tr>
+<tr>
+<td>Half-Time Breakdown</td>
+<td>drums</td>
+<td>2</td>
+<td>pop-punk breakdown with crash quarters and a tom fill</td>
+<td>140–180</td>
+<td>Power kit</td>
+</tr>
+<tr>
+<td>Ska Offbeat</td>
+<td>drums</td>
+<td>2</td>
+<td>off-beat hats, snare 2 and 4</td>
+<td>150–180</td>
+<td>Standard kit</td>
+</tr>
+<tr>
+<td>Pop-Punk Eighths</td>
+<td>bass</td>
+<td>4</td>
+<td>down-picked staccato eighths, I–V–vi–IV</td>
+<td>160–190</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Skate Walk-Up</td>
+<td>bass</td>
+<td>4</td>
+<td>eighths with walk-ups, I–IV–V–I</td>
+<td>170–200</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>D-Beat Riff</td>
+<td>bass</td>
+<td>2</td>
+<td>crust riff with ♭3 and ♯4</td>
+<td>150–180</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Ska Walk</td>
+<td>bass</td>
+<td>4</td>
+<td>walking quarters I–vi–IV–V</td>
+<td>140–170</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>New Wave Octaves</td>
+<td>bass</td>
+<td>4</td>
+<td>octave eighths I–IV–I–V</td>
+<td>140–160</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Pop-Punk Hook</td>
+<td>lead</td>
+<td>2</td>
+<td>repeated-note hook up to the fifth</td>
+<td>160–190</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Ska Horns</td>
+<td>lead</td>
+<td>2</td>
+<td>off-beat horn pushes and a fall</td>
+<td>150–180</td>
+<td>Trumpet</td>
+</tr>
+<tr>
+<td>Street Riff</td>
+<td>lead</td>
+<td>2</td>
+<td>Oi!/street-punk single-note riff</td>
+<td>150–180</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Gang Chant</td>
+<td>lead</td>
+<td>2</td>
+<td>"whoa-oh" long notes</td>
+<td>150–180</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Piano Pounding</td>
+<td>lead</td>
+<td>2</td>
+<td>high octave and fifth pounding eighths</td>
+<td>160–190</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Power I–IV–V</td>
+<td>chords</td>
+<td>4</td>
+<td>I–I–IV–V chugged eighths</td>
+<td>160–200</td>
+<td>Guitar · Distortion</td>
+</tr>
+<tr>
+<td>Pop-Punk Pushes</td>
+<td>chords</td>
+<td>4</td>
+<td>I–V–vi–IV, each change an eighth early</td>
+<td>160–190</td>
+<td>Guitar · Distortion</td>
+</tr>
+<tr>
+<td>Ska Upstrokes</td>
+<td>chords</td>
+<td>4</td>
+<td>off-beat chops I–vi–IV–V</td>
+<td>150–180</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Crust I–♭VI–♭VII</td>
+<td>chords</td>
+<td>2</td>
+<td>chugged I, then ♭VI–♭VII</td>
+<td>150–190</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Piano Bash</td>
+<td>chords</td>
+<td>4</td>
+<td>straight eighth triads I–IV–I–V</td>
+<td>160–190</td>
+<td>Grand piano</td>
+</tr>
+</tbody>
+</table>
+<p>References: <a href="https://en.wikipedia.org/wiki/D-beat" rel="noopener" target="_blank">D-beat (Wikipedia)</a>;
+<a href="https://drumhelper.com/learning-drums/punk-drum-beats-and-rhythms/" rel="noopener" target="_blank">Punk drum beats and rhythms</a>;
+<a href="https://www.pastemagazine.com/music/punk/the-history-of-the-punk-beat-in-10-songs" rel="noopener" target="_blank">The history of the punk beat in 10 songs</a>.</p>
+<h2 id="tropical-major-with-salsa-and-bachata-on-the-relative-minor-degree-6">Tropical: Major, with salsa and bachata on the relative minor (degree 6)</h2>
+<p>Latin "música tropical" without cumbia, which has its own pack below. Five styles, one preset
+per style for each instrument: salsa, merengue, bachata, vallenato, champeta. All play
+straight (SWING 50).</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo · swing</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Salsa</td>
+<td>drums</td>
+<td>2</td>
+<td>2-3 son clave; conga marcha (slap on 2, open tones on 4 and its "and"), tumba answer; campana on the beats; bombo on the 3-side's "and" of 2</td>
+<td>170–200, straight</td>
+<td>Latin · congas</td>
+</tr>
+<tr>
+<td>Merengue</td>
+<td>drums</td>
+<td>2</td>
+<td>güira on every beat with its "and-a"; tambora hand and stick strokes, the quintillo into beat 3; orquesta kick on every beat</td>
+<td>130–160, straight</td>
+<td>Latin · güira</td>
+</tr>
+<tr>
+<td>Bachata</td>
+<td>drums</td>
+<td>2</td>
+<td>bongo martillo eighths, low-bongo open tone on 4, güira keeping time</td>
+<td>120–140, straight</td>
+<td>Latin · güira</td>
+</tr>
+<tr>
+<td>Vallenato</td>
+<td>drums</td>
+<td>2</td>
+<td>paseo: caja hand strokes and rim slaps, guacharaca scrape</td>
+<td>90–110, straight</td>
+<td>Cumbia · room</td>
+</tr>
+<tr>
+<td>Champeta</td>
+<td>drums</td>
+<td>2</td>
+<td>drum machine up front, kick on 1, &amp;2 and 3, snare on 2 and 4, soukous cavacha sixteenths on the hats</td>
+<td>110–125, straight</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Salsa Tumbao</td>
+<td>bass</td>
+<td>4</td>
+<td>tresillo off-beats only (the "and" of 2, beat 4 held over the bar line), relative-minor i–iv–V–i</td>
+<td>170–200, straight</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Merengue Bass</td>
+<td>bass</td>
+<td>4</td>
+<td>on the beat and the "and" of 2, I and V</td>
+<td>130–160, straight</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Bachata Bass</td>
+<td>bass</td>
+<td>4</td>
+<td>root–fifth syncopations, relative-minor i–iv–V–i</td>
+<td>120–140, straight</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Vallenato Paseo</td>
+<td>bass</td>
+<td>4</td>
+<td>root and fifth with pickups, I–IV–V–I</td>
+<td>90–110, straight</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Champeta Bass</td>
+<td>bass</td>
+<td>4</td>
+<td>fast octave sixteenths, I–IV–V–IV</td>
+<td>110–125, straight</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Mambo Horns</td>
+<td>lead</td>
+<td>2</td>
+<td>syncopated horn call and answer, leading tone (♯5)</td>
+<td>170–200, straight</td>
+<td>Trumpet</td>
+</tr>
+<tr>
+<td>Sax Jaleo</td>
+<td>lead</td>
+<td>2</td>
+<td>merengue's running sixteenth arpeggio, I then V7</td>
+<td>130–160, straight</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Requinto</td>
+<td>lead</td>
+<td>2</td>
+<td>bachata lead-guitar arpeggios on i then V</td>
+<td>120–140, straight</td>
+<td>Nylon guitar</td>
+</tr>
+<tr>
+<td>Acordeón Paseo</td>
+<td>lead</td>
+<td>2</td>
+<td>accordion paseo melody, V then I</td>
+<td>90–110, straight</td>
+<td>Accordion</td>
+</tr>
+<tr>
+<td>Sebene Guitar</td>
+<td>lead</td>
+<td>2</td>
+<td>soukous sebene picking high on the neck</td>
+<td>110–125, straight</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Piano Montuno</td>
+<td>chords</td>
+<td>4</td>
+<td>syncopated montuno stabs, relative-minor i–iv–V7–i</td>
+<td>170–200, straight</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Merengue Brass</td>
+<td>chords</td>
+<td>4</td>
+<td>off-beat hits, I–I–V7–V7</td>
+<td>130–160, straight</td>
+<td>Brass section</td>
+</tr>
+<tr>
+<td>Segunda Strum</td>
+<td>chords</td>
+<td>4</td>
+<td>strummed on each beat, the 4th held, relative-minor i–iv–V–i</td>
+<td>120–140, straight</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Vallenato Guitar</td>
+<td>chords</td>
+<td>4</td>
+<td>strum pattern, I–IV–V–I</td>
+<td>90–110, straight</td>
+<td>Nylon guitar</td>
+</tr>
+<tr>
+<td>Champeta Stabs</td>
+<td>chords</td>
+<td>4</td>
+<td>synth stabs on the "e" after each beat, I–IV–V–IV</td>
+<td>110–125, straight</td>
+<td>TAL NoiseMaker</td>
+</tr>
+</tbody>
+</table>
+<p>References:
+- Salsa: <a href="https://www.wikipedia.org/wiki/Tumbao" rel="noopener" target="_blank">Tumbao (Wikipedia)</a>;
+  <a href="https://www.soundbrenner.com/blogs/articles/tumbao" rel="noopener" target="_blank">Tumbao (Soundbrenner)</a>;
+  <a href="https://www.talkbass.com/threads/latin-and-counting.366625/" rel="noopener" target="_blank">Latin and counting (TalkBass)</a>
+- Merengue: <a href="https://www.soundbrenner.com/blogs/articles/merengue-rhythm" rel="noopener" target="_blank">Merengue rhythm (Soundbrenner)</a>;
+  <a href="https://www.wikipedia.org/wiki/Merenque" rel="noopener" target="_blank">Merengue music (Wikipedia)</a>;
+  <a href="https://www.wikipedia.com/wiki/Perico_Ripiao" rel="noopener" target="_blank">Merengue típico (Wikipedia)</a>
+- Bachata: <a href="https://www.ubisoft.com/en-us/game/rocksmith/plus/news-updates/4JGuRsatSHe2lZ4XuGxuUF/breaking-down-bachata-part-1-overview" rel="noopener" target="_blank">Breaking down bachata, part 1</a>
+  and <a href="https://www.ubisoft.com/en-us/game/rocksmith/plus/news-updates/42YP2fih1AY3wVyZhWhLrZ/breaking-down-bachata-part-3-guitars" rel="noopener" target="_blank">part 3, guitars</a>
+- Vallenato: the Colombian university theses on paseo bass lines
+  (<a href="https://repositorio.upn.edu.co/bitstreams/a8d7eb05-b98d-43b9-8c23-10c73eb38508/download" rel="noopener" target="_blank">UPN</a>,
+  <a href="https://repository.unireformada.edu.co/bitstreams/235e80db-ab95-4fed-be63-fb1fa7493731/download" rel="noopener" target="_blank">Unireformada</a>)
+- Champeta: <a href="https://en.wikipedia.org/wiki/Champeta" rel="noopener" target="_blank">Champeta (Wikipedia)</a>;
+  <a href="https://daily.bandcamp.com/lists/palaneque-records-label-guide" rel="noopener" target="_blank">Palenque Records guide (Bandcamp Daily)</a></p>
+<h2 id="cumbia-major-with-the-minor-styles-on-the-relative-minor-degree-6">Cumbia: Major, with the minor styles on the relative minor (degree 6)</h2>
+<p>The drums play the "Cumbia" kits: PERC güiro, CLAP conga (llamador), TOM timbale, CYMBAL
+cowbell (campana). The güiro plays "chu-chucu": a stroke on the beat, then down-up on its
+"and-a".</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Colombiana</td>
+<td>drums</td>
+<td>2</td>
+<td>tambora on 1 and 3, llamador on 2 and 4, güiro every beat, the alegre answering</td>
+<td>85–100</td>
+<td>Cumbia · room</td>
+</tr>
+<tr>
+<td>Sonidera</td>
+<td>drums</td>
+<td>2</td>
+<td>slower; kick with a pickup, llamador on every "and", campana quarters, timbal fill</td>
+<td>80–92</td>
+<td>Cumbia · timbal</td>
+</tr>
+<tr>
+<td>Villera</td>
+<td>drums</td>
+<td>2</td>
+<td>harder: snare cracking on 2 and 4, kick on 1, the "a" of 2 and 3, timbal rolls</td>
+<td>95–105</td>
+<td>Cumbia · timbal</td>
+</tr>
+<tr>
+<td>Chicha</td>
+<td>drums</td>
+<td>2</td>
+<td>timbales' pattern over the güiro, conga off-beat eighths</td>
+<td>90–100</td>
+<td>Cumbia · room</td>
+</tr>
+<tr>
+<td>Digital</td>
+<td>drums</td>
+<td>2</td>
+<td>drum-machine cumbia: hats playing the güiro figure, claps on 2 and 4</td>
+<td>90–105</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Root–Fifth Tumbao</td>
+<td>bass</td>
+<td>2</td>
+<td>root for a dotted quarter, fifth anticipating; I then V</td>
+<td>85–100</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Tónica-Dominante</td>
+<td>bass</td>
+<td>4</td>
+<td>root on 1, fifth on 3, a pickup into each chord, I–IV–V–I</td>
+<td>85–100</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Sonidera Walk</td>
+<td>bass</td>
+<td>2</td>
+<td>round bass walking I up to IV and back</td>
+<td>80–92</td>
+<td>Fretless</td>
+</tr>
+<tr>
+<td>Villera i–VII</td>
+<td>bass</td>
+<td>2</td>
+<td>repeating keyboard bass on the relative minor's i–VII</td>
+<td>95–105</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Digital 808</td>
+<td>bass</td>
+<td>4</td>
+<td>the tumbao rhythm on an 808 over vi–IV–I–V, gliding into each root</td>
+<td>90–105</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Acordeón</td>
+<td>lead</td>
+<td>2</td>
+<td>accordion eighth runs</td>
+<td>85–100</td>
+<td>Accordion</td>
+</tr>
+<tr>
+<td>Caña de Millo</td>
+<td>lead</td>
+<td>2</td>
+<td>sixteenth trills, the cumbia's original cane flute</td>
+<td>85–100</td>
+<td>Flute</td>
+</tr>
+<tr>
+<td>Chicha Guitar</td>
+<td>lead</td>
+<td>2</td>
+<td>tremolo-picked pairs in the relative minor, the raised 7th to the tonic</td>
+<td>90–100</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Villera Lead</td>
+<td>lead</td>
+<td>2</td>
+<td>sharp keyboard lead around the relative minor</td>
+<td>95–105</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Orquesta Brass</td>
+<td>lead</td>
+<td>2</td>
+<td>1950s big-band cumbia call and answer</td>
+<td>90–105</td>
+<td>Trumpet</td>
+</tr>
+<tr>
+<td>Accordion Offbeats</td>
+<td>chords</td>
+<td>4</td>
+<td>off-beat accordion chords I–V–V–I</td>
+<td>85–100</td>
+<td>Accordion</td>
+</tr>
+<tr>
+<td>Sonidera Organ</td>
+<td>chords</td>
+<td>4</td>
+<td>combo organ on the "and" of 1 and 3, held; I–IV–V–I</td>
+<td>80–92</td>
+<td>Jazz organ</td>
+</tr>
+<tr>
+<td>Villera Stabs</td>
+<td>chords</td>
+<td>4</td>
+<td>two quick stabs each half bar, relative minor i–VII (vi–V)</td>
+<td>95–105</td>
+<td>TAL NoiseMaker</td>
+</tr>
+<tr>
+<td>Chicha Surf</td>
+<td>chords</td>
+<td>4</td>
+<td>surf guitar strums: i–VII–i–V of the relative minor (V major, chromatic)</td>
+<td>90–100</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Orquesta Hits</td>
+<td>chords</td>
+<td>4</td>
+<td>brass hits on the "and" of 2 and on 4, I–IV–V–I</td>
+<td>90–105</td>
+<td>Brass section</td>
+</tr>
+</tbody>
+</table>
+<p>References:
+- <a href="https://en.wikipedia.org/wiki/Cumbia_villera" rel="noopener" target="_blank">Cumbia villera (Wikipedia)</a>;
+  <a href="https://en.wikipedia.org/wiki/Cumbia_santafesina" rel="noopener" target="_blank">Cumbia santafesina (Wikipedia)</a>;
+  <a href="https://en.wikipedia.org/wiki/Guacharaca" rel="noopener" target="_blank">Guacharaca (Wikipedia)</a>
+- <a href="https://reverb.com/news/latin-beats-how-to-play-the-cumbia-style" rel="noopener" target="_blank">Latin Beats: cumbia on a drum kit and congas (Reverb)</a>;
+  <a href="https://orphiq.com/resources/what-is-cumbia" rel="noopener" target="_blank">What is cumbia (Orphiq)</a>
+- The Jamzone cumbia lesson, which gives the güira's down, down-up figure; its PDF link is now
+  dead.
+- Sergio Martín's gaita / porro / cumbia analysis in the <a href="https://archives.berklee.edu/node/50311/ocr" rel="noopener" target="_blank">Berklee archive</a>
+- Chicha: <a href="https://www.masterclass.com/articles/chicha-music-guide" rel="noopener" target="_blank">MasterClass chicha guide</a>;
+  <a href="https://newdirectionsinmusic.substack.com/p/my-hot-chicha-summer" rel="noopener" target="_blank">My Hot Chicha Summer</a>;
+  <a href="https://globalbassstudies.substack.com/p/im-here-to-convince-you-that-cumbia" rel="noopener" target="_blank">Cumbia is just like techno</a></p>
+<h2 id="piig-natural-minor-with-the-dorian-iv-and-the-harmonic-v">Piig: Natural Minor, with the Dorian IV and the harmonic V</h2>
+<p>After the candle-lit lo-fi hip-hop and neo-soul of Biig Piig's early EPs (<em>Big Fan of the
+Sesh</em>, <em>A World Without Snooze</em>, <em>No Place for Patience</em>): lazy 2- and 4-bar loops, muted
+drums (rim, shaker, brushes, soft kicks), a round legato bass, Rhodes and jazz-guitar 7th and
+9th chords, and saxes in the background. <strong>Play it in D minor at 79 BPM</strong>, the key and tempo
+of <em>24K</em> (songbpm.com; chord sites that say 150 count it in double time), with SWING 56–60.</p>
+<p>Three families, one preset of each instrument in each. A family's four presets share their
+chord changes, so they play together; the 2-bar drums loop under the 4-bar parts. The
+progressions come from the songs (Ultimate Guitar's chord sheets), and every line is original:</p>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Progression</th>
+<th>From</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Smoke</td>
+<td>i – IV – iv – VI VII (Dm G Gm Bb C)</td>
+<td><em>24K</em>: the Dorian IV (B natural) falling to the minor iv</td>
+</tr>
+<tr>
+<td>Lay Here</td>
+<td>i7 – V7</td>
+<td><em>Perdida</em> (Gm7 D7 there): the V's raised third</td>
+</tr>
+<tr>
+<td>Daffodil</td>
+<td>VII – iv – i – i</td>
+<td><em>Sunny</em> (Dm Am Em there)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Smoke Dust</td>
+<td>drums</td>
+<td>2</td>
+<td>dusty boom bap: kick on one and the "a" of two, sixteenth hats with holes, rim ghosts, an open hat turning bar two</td>
+<td>76–84</td>
+<td>SP1200 1</td>
+</tr>
+<tr>
+<td>Lay Here Bossa</td>
+<td>drums</td>
+<td>2</td>
+<td>a lazy bossa: surdo-like kick, side stick on the bossa clave, closed hat as the shaker</td>
+<td>76–84</td>
+<td>Standard kit</td>
+</tr>
+<tr>
+<td>Daffodil Brushes</td>
+<td>drums</td>
+<td>2</td>
+<td>ride "ding, ding-a", hat foot on 2 and 4, feathered kick, brush snare</td>
+<td>76–84</td>
+<td>Brush · ride</td>
+</tr>
+<tr>
+<td>Smoke Sub</td>
+<td>bass</td>
+<td>4</td>
+<td>round sustained sub gliding between roots, B natural under the IV, B flat under the iv</td>
+<td>76–84</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Lay Here Upright</td>
+<td>bass</td>
+<td>2</td>
+<td>bossa root and fifth, the raised 7th leading home</td>
+<td>76–84</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Daffodil Walk</td>
+<td>bass</td>
+<td>4</td>
+<td>held roots walking into each change</td>
+<td>76–84</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Smoke Alto</td>
+<td>lead</td>
+<td>4</td>
+<td>background alto rising to the octave, then the same fall over IV and iv</td>
+<td>76–84</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Lay Here Tenor</td>
+<td>lead</td>
+<td>2</td>
+<td>a tenor answering late in the bar, the V's third resolving</td>
+<td>76–84</td>
+<td>Tenor sax</td>
+</tr>
+<tr>
+<td>Daffodil Alto</td>
+<td>lead</td>
+<td>4</td>
+<td>long alto tones between the chords and a falling answer</td>
+<td>76–84</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Smoke Rhodes</td>
+<td>chords</td>
+<td>4</td>
+<td>i9 – IV9 – iv9 – VImaj7 VIIadd9, each a sixteenth late with a pushed re-hit</td>
+<td>76–84</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Lay Here Guitar</td>
+<td>chords</td>
+<td>2</td>
+<td>i7 – V7 comped in the bossa's eighths</td>
+<td>76–84</td>
+<td>Jazz guitar</td>
+</tr>
+<tr>
+<td>Daffodil Keys</td>
+<td>chords</td>
+<td>4</td>
+<td>VIIadd9 – iv9 – i9 – i11, laid late and touched again</td>
+<td>76–84</td>
+<td>Upright piano</td>
+</tr>
+</tbody>
+</table>
+<p>The texture the records have (vinyl crackle, a 12-bit sampler's grit, the tape's wobble, a
+low-pass on the chords) is not in a pattern: the machines' FX (a low-pass, DRIVE, a little
+reverb) get part of the way.</p>
+<p>References: <a href="https://songbpm.com/@biig-piig/24k" rel="noopener" target="_blank">24K, tempo and key (songbpm)</a>;
+<a href="https://www.ultimate-guitar.com/artist/biig_piig_618029" rel="noopener" target="_blank">Biig Piig chords and tabs (Ultimate Guitar)</a>:
+<em>Perdida</em>, <em>Sunny</em>, <em>Switch</em>, <em>Oh No</em>, <em>Feels Right</em>.</p>
+<h2 id="folk-major-the-modal-tunes-on-degree-2-dorian">Folk: Major, the modal tunes on degree 2 (Dorian)</h2>
+<p>Made for <strong>G major</strong>. The chords are the songs' (Ultimate Guitar): Knockin' on Heaven's Door
+(G D Am | G D C), The Times They Are A-Changin' in 3/4 (G Em C G | G Am C D), The House of the
+Rising Sun in 6/8 (Am C D F Am E Am E: the F and the E major from outside the key), Dirty Old
+Town and Whiskey in the Jar (I IV I | V vi), Scarborough Fair and Matty Groves (A Dorian in G
+major: ii I ii IV | ii IV V ii). Drunken Sailor is the traditional tune (public domain).</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dylan Shuffle</td>
+<td>drums</td>
+<td>2</td>
+<td>folk rock's train beat, the tambourine on the off-beats</td>
+<td>68–80</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Bodhran Jig</td>
+<td>drums</td>
+<td>3 (6/8)</td>
+<td>the bodhrán's eighths, 1 and 4 strong</td>
+<td>150–170</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Reel Stomp</td>
+<td>drums</td>
+<td>2</td>
+<td>a foot on every beat, bodhrán eighths, claps, tambourine sixteenths</td>
+<td>110–125</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Changin' Waltz</td>
+<td>drums</td>
+<td>3 (3/4)</td>
+<td>kick on one, the snare on two and three, the ride</td>
+<td>85–95</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Whiskey Gallop</td>
+<td>drums</td>
+<td>2</td>
+<td>driving eighths, the backbeat, a tom roll</td>
+<td>120–140</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Heaven's Door Roots</td>
+<td>bass</td>
+<td>2</td>
+<td>root and fifth under I V ii / I V IV</td>
+<td>68–75</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Jig Bass</td>
+<td>bass</td>
+<td>3 (6/8)</td>
+<td>root on 1, fifth on 4, the strong one louder</td>
+<td>150–170</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Rising Sun Walk</td>
+<td>bass</td>
+<td>6 (8 of 6/8)</td>
+<td>falling with the eight chords</td>
+<td>110–120</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Changin' Oom-Pah</td>
+<td>bass</td>
+<td>3 (3/4)</td>
+<td>the root, then the fifth twice</td>
+<td>85–95</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Dorian Drone</td>
+<td>bass</td>
+<td>4</td>
+<td>the A held, stepping to G, swelling and easing</td>
+<td>60–90</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Fiddle Jig</td>
+<td>lead</td>
+<td>3 (6/8)</td>
+<td>eighths in threes, the bow leaning on each first, a grace note snapped in early</td>
+<td>150–170</td>
+<td>Fiddle</td>
+</tr>
+<tr>
+<td>Banjo Roll</td>
+<td>lead</td>
+<td>2</td>
+<td>a Scruggs roll 3 + 3 + 2 over I and IV, accented</td>
+<td>100–120</td>
+<td>Banjo</td>
+</tr>
+<tr>
+<td>Whistle Air</td>
+<td>lead</td>
+<td>4</td>
+<td>a slow air, each long note led in by a cut played early</td>
+<td>60–75</td>
+<td>Recorder</td>
+</tr>
+<tr>
+<td>Drunken Sailor</td>
+<td>lead</td>
+<td>4</td>
+<td>the traditional shanty, in the Dorian of degree 2</td>
+<td>100–120</td>
+<td>Bagpipe</td>
+</tr>
+<tr>
+<td>Rising Sun Harp</td>
+<td>lead</td>
+<td>6 (8 of 6/8)</td>
+<td>the song's picking: root, fifth, octave, third, fifth, octave</td>
+<td>110–120</td>
+<td>Harp</td>
+</tr>
+<tr>
+<td>Heaven's Door Strum</td>
+<td>chords</td>
+<td>4</td>
+<td>G D Am / G D C strummed, down-up-down</td>
+<td>68–75</td>
+<td>Guitar · Acoustic</td>
+</tr>
+<tr>
+<td>Changin' 12-String</td>
+<td>chords</td>
+<td>6 (8 of 3/4)</td>
+<td>G Em C G / G Am C D, on one, two and three</td>
+<td>85–95</td>
+<td>Guitar · 12-string</td>
+</tr>
+<tr>
+<td>Rising Sun Accordion</td>
+<td>chords</td>
+<td>6 (8 of 6/8)</td>
+<td>the eight chords held a 6/8 bar each</td>
+<td>110–120</td>
+<td>Accordion</td>
+</tr>
+<tr>
+<td>Dirty Old Town Pah</td>
+<td>chords</td>
+<td>4</td>
+<td>I IV I / V vi, the accordion's off-beat "pah"</td>
+<td>100–120</td>
+<td>Accordion</td>
+</tr>
+<tr>
+<td>Scarborough Harp</td>
+<td>chords</td>
+<td>4</td>
+<td>ii I ii IV / ii IV V ii (A Dorian), held</td>
+<td>60–90</td>
+<td>Harp</td>
+</tr>
+</tbody>
+</table>
+<h2 id="heavy-metal-natural-minor-with-the-2-the-5-and-the-raised-7th">Heavy Metal: Natural Minor, with the ♭2, the ♭5 and the raised 7th</h2>
+<p>Made for <strong>E minor</strong>. From Ultimate Guitar's tabs and chord sheets: Black Sabbath's Paranoid
+(Em D G D Em) and Iron Man (B D D E E, G F♯ G F♯ G F♯ D D E E); Iron Maiden's The Trooper
+(E5 D G D, C5 D) and Fear of the Dark (Dm B♭ C: i VI VII); Judas Priest; Metallica's Master of
+Puppets (the chromatic fall from E); Motörhead's Ace of Spades. The drums are on the AVL kits.</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Paranoid Drive</td>
+<td>drums</td>
+<td>2</td>
+<td>eighth hats, backbeat, the kick pushing the "and"s</td>
+<td>160–165</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Maiden Gallop</td>
+<td>drums</td>
+<td>2</td>
+<td>the gallop on the kick, sixteenth hats (Clive Burr's)</td>
+<td>160–180</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Doom Half-Time</td>
+<td>drums</td>
+<td>2</td>
+<td>Sabbath's half time, the ride's quarters, a tom roll</td>
+<td>70–80</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Double Kick</td>
+<td>drums</td>
+<td>2</td>
+<td>sixteenth double bass, backbeat, crashes</td>
+<td>110–140</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Speed Rock</td>
+<td>drums</td>
+<td>2</td>
+<td>the kick on every eighth, the ride driving</td>
+<td>135–145</td>
+<td>Red Zeppelin 5</td>
+</tr>
+<tr>
+<td>Paranoid Eighths</td>
+<td>bass</td>
+<td>2</td>
+<td>i VII III VII i in eighths, picked hard on the beat</td>
+<td>160–165</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Harris Gallop</td>
+<td>bass</td>
+<td>4</td>
+<td>Steve Harris's gallop under i VI VII i, the eighth louder</td>
+<td>160–180</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Iron Riff</td>
+<td>bass</td>
+<td>4</td>
+<td>after Iron Man, slow, a slide into the first note</td>
+<td>70–80</td>
+<td>Guitar · Heavy muted</td>
+</tr>
+<tr>
+<td>Thrash Chromatic</td>
+<td>bass</td>
+<td>2</td>
+<td>a palm-muted E in sixteenths (@72–78), accented notes falling E D♯ D C♯</td>
+<td>180–200</td>
+<td>Guitar · Heavy muted</td>
+</tr>
+<tr>
+<td>Anthem Octaves</td>
+<td>bass</td>
+<td>2</td>
+<td>i VI VII in eighths jumping octaves</td>
+<td>140–160</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Trooper Twin Lead</td>
+<td>lead</td>
+<td>4</td>
+<td>a gallop melody climbing and falling</td>
+<td>160–175</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Iron Theme</td>
+<td>lead</td>
+<td>4</td>
+<td>Iron Man's riff an octave up</td>
+<td>70–80</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Pentatonic Lick</td>
+<td>lead</td>
+<td>2</td>
+<td>a blues lick, slides into the bend notes, ringing out</td>
+<td>80–110</td>
+<td>Guitar · Valve OD</td>
+</tr>
+<tr>
+<td>Harmonic Run</td>
+<td>lead</td>
+<td>2</td>
+<td>sixteenth arpeggios of i and the major V</td>
+<td>100–130</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Dark Anthem</td>
+<td>lead</td>
+<td>4</td>
+<td>long notes over i VI VII with pickups</td>
+<td>140–160</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Paranoid Power</td>
+<td>chords</td>
+<td>2</td>
+<td>Em D G D Em in palm-muted eighths</td>
+<td>160–165</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Trooper Gallop</td>
+<td>chords</td>
+<td>2</td>
+<td>E5 D C5 galloping (two voicings alternate so each hit sounds)</td>
+<td>160–175</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Iron Doom</td>
+<td>chords</td>
+<td>2</td>
+<td>B5 D5 E5, G5 F♯5, held</td>
+<td>70–80</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Anthem i-VI-VII</td>
+<td>chords</td>
+<td>4</td>
+<td>i VI VII, struck twice a bar</td>
+<td>140–160</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Chromatic Fall</td>
+<td>chords</td>
+<td>2</td>
+<td>E5 D♯5 D5 C♯5, then the ♭II</td>
+<td>180–200</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+</tbody>
+</table>
+<h2 id="black-metal-natural-minor-with-the-phrygian-2-and-the-5">Black Metal: Natural Minor, with the Phrygian ♭2 and the ♭5</h2>
+<p>Made for <strong>E minor</strong>. From Ultimate Guitar's tabs: Darkthrone's Transilvanian Hunger (a falling
+tremolo line over an open pedal), Burzum's Dunkelheit (Em arpeggios moving a half step up),
+Mayhem's Freezing Moon, Emperor's I Am the Black Wizards, Bathory's One Rode to Asa Bay
+(i VII … VI). The blast beat after Wikipedia's: the kick and the snare alternating sixteenths,
+a cymbal with each kick; the hammer blast all three together; the skank beat. SyncTimer stops
+at 200 BPM: the fastest presets sit just under it.</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Traditional Blast</td>
+<td>drums</td>
+<td>2</td>
+<td>kick and snare alternating sixteenths, the crash with the kick</td>
+<td>180–200</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Hammer Blast</td>
+<td>drums</td>
+<td>2</td>
+<td>kick, snare and cymbal together on the eighths</td>
+<td>180–200</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Skank Beat</td>
+<td>drums</td>
+<td>2</td>
+<td>kick on the beat, snare on its "and"</td>
+<td>160–190</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Frozen March</td>
+<td>drums</td>
+<td>2</td>
+<td>sixteenth double kick, the snare on three</td>
+<td>100–130</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Viking March</td>
+<td>drums</td>
+<td>2</td>
+<td>Bathory's slow epic, the floor toms answering</td>
+<td>80–100</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Tremolo Roots</td>
+<td>bass</td>
+<td>2</td>
+<td>i VI VII in eighths</td>
+<td>160–200</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Pedal Swell</td>
+<td>bass</td>
+<td>2</td>
+<td>the root in sixteenths swelling 70→118 and back</td>
+<td>160–200</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Phrygian Crawl</td>
+<td>bass</td>
+<td>4</td>
+<td>i and ♭II in half notes, the ♭5 passing</td>
+<td>100–180</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Symphonic Drone</td>
+<td>bass</td>
+<td>4</td>
+<td>i VI VII i held, swelling (Emperor's keyboards)</td>
+<td>any</td>
+<td>Organ · Bourdon 16</td>
+</tr>
+<tr>
+<td>Viking Walk</td>
+<td>bass</td>
+<td>4</td>
+<td>i VII i VII VI under the march</td>
+<td>80–100</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Hunger Tremolo</td>
+<td>lead</td>
+<td>4</td>
+<td>after Transilvanian Hunger: a falling line, each note tremolo-picked a beat (down 112, up 86)</td>
+<td>160–200</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Dunkelheit Arpeggio</td>
+<td>lead</td>
+<td>4</td>
+<td>Em arpeggio in eighths, then a half step up (F)</td>
+<td>100–130</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Frozen Melody</td>
+<td>lead</td>
+<td>4</td>
+<td>slow notes tremolo-picked half a bar each</td>
+<td>160–200</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Symphonic Choir</td>
+<td>lead</td>
+<td>4</td>
+<td>long sung notes over the drone</td>
+<td>any</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Tritone Riff</td>
+<td>lead</td>
+<td>2</td>
+<td>root, ♭2 and ♭5 in accented sixteenths</td>
+<td>140–180</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Hunger Chords</td>
+<td>chords</td>
+<td>4</td>
+<td>i VI VII i held</td>
+<td>160–200</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Phrygian Dread</td>
+<td>chords</td>
+<td>4</td>
+<td>i for two bars, the ♭II, back</td>
+<td>any</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Symphonic Strings</td>
+<td>chords</td>
+<td>4</td>
+<td>i iv V i, slow strings</td>
+<td>any</td>
+<td>Strings · Bowed</td>
+</tr>
+<tr>
+<td>Dunkelheit Shapes</td>
+<td>chords</td>
+<td>4</td>
+<td>Em, then F (the ♭II), two bars each</td>
+<td>100–130</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Cathedral Organ</td>
+<td>chords</td>
+<td>4</td>
+<td>i iv i V, in full</td>
+<td>60–90</td>
+<td>Organ · Plein jeu</td>
+</tr>
+</tbody>
+</table>
+<h2 id="post-punk-natural-minor-with-the-dorian-iv">Post-Punk: Natural Minor, with the Dorian IV</h2>
+<p>Made for <strong>A minor</strong>. The progressions are the bands' (Ultimate Guitar), each on its degrees of
+a minor key: The Cure's A Forest (Am C F D: i III VI IV, the Dorian major IV), Lullaby (i VI) and
+Boys Don't Cry (A Bm C♯m D in F♯ minor: III iv v VI); Joy Division's Love Will Tear Us Apart
+(D A Bm Em in B minor: III VII i iv), Disorder and She's Lost Control; Siouxsie and the Banshees'
+Spellbound (D Dorian: i7 VII IV); The Sisters of Mercy's Temple of Love (i III IV) and Lucretia My
+Reflection (i III iv); Bauhaus's Bela Lugosi's Dead. The bass leads (Peter Hook), high and
+melodic, some notes a little late (NUDGE).</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lost Control</td>
+<td>drums</td>
+<td>2</td>
+<td>sixteenth hats, the snare cracking, a syncopated kick</td>
+<td>140–150</td>
+<td>Room kit</td>
+</tr>
+<tr>
+<td>Tribal Toms</td>
+<td>drums</td>
+<td>2</td>
+<td>a floor-tom figure instead of the backbeat</td>
+<td>130–160</td>
+<td>Room kit</td>
+</tr>
+<tr>
+<td>Doktor Avalanche</td>
+<td>drums</td>
+<td>2</td>
+<td>the Sisters' drum machine: four on the floor, open hats on the "and"</td>
+<td>125–140</td>
+<td>Boss DR55</td>
+</tr>
+<tr>
+<td>Forest Run</td>
+<td>drums</td>
+<td>2</td>
+<td>A Forest's beat, an open hat on the "and" of four</td>
+<td>130–140</td>
+<td>Roland CR78</td>
+</tr>
+<tr>
+<td>Undead Dub</td>
+<td>drums</td>
+<td>2</td>
+<td>Bela Lugosi's rim-click clave, soft hats, toms</td>
+<td>115–125</td>
+<td>Room kit</td>
+</tr>
+<tr>
+<td>Hook Melody</td>
+<td>bass</td>
+<td>4</td>
+<td>the bass carrying the melody over III VII i iv, off-beats late</td>
+<td>145–150</td>
+<td>Squier bass</td>
+</tr>
+<tr>
+<td>Forest Pulse</td>
+<td>bass</td>
+<td>4</td>
+<td>A Forest's eighth-note pulse on i III VI IV</td>
+<td>130–140</td>
+<td>Squier bass</td>
+</tr>
+<tr>
+<td>Undead Dub Bass</td>
+<td>bass</td>
+<td>2</td>
+<td>a falling dub figure, all behind the beat</td>
+<td>115–125</td>
+<td>Squier bass</td>
+</tr>
+<tr>
+<td>Disorder Run</td>
+<td>bass</td>
+<td>2</td>
+<td>busy eighths climbing the minor</td>
+<td>155–165</td>
+<td>Squier bass</td>
+</tr>
+<tr>
+<td>Boys Walk</td>
+<td>bass</td>
+<td>2</td>
+<td>III iv v VI in eighths, up the scale</td>
+<td>155–170</td>
+<td>Squier bass</td>
+</tr>
+<tr>
+<td>Forest Arpeggio</td>
+<td>lead</td>
+<td>4</td>
+<td>a chorused arpeggio on i III VI IV</td>
+<td>130–140</td>
+<td>Guitar · Chorus</td>
+</tr>
+<tr>
+<td>Tear Apart Synth</td>
+<td>lead</td>
+<td>4</td>
+<td>a falling, singing synth figure</td>
+<td>145–150</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Spellbound Sixteenths</td>
+<td>lead</td>
+<td>4</td>
+<td>fast arpeggios on i VII IV</td>
+<td>145–150</td>
+<td>Guitar · Chorus</td>
+</tr>
+<tr>
+<td>Temple Chime</td>
+<td>lead</td>
+<td>2</td>
+<td>high ringing eighths over i III IV</td>
+<td>135–145</td>
+<td>Guitar · Valve OD</td>
+</tr>
+<tr>
+<td>Lullaby Creep</td>
+<td>lead</td>
+<td>2</td>
+<td>plucked notes tiptoeing, some early</td>
+<td>110–120</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Forest Chords</td>
+<td>chords</td>
+<td>4</td>
+<td>Am C F D(add9), struck and pushed</td>
+<td>130–140</td>
+<td>Guitar · Chorus</td>
+</tr>
+<tr>
+<td>Tear Apart Strings</td>
+<td>chords</td>
+<td>4</td>
+<td>III VII i iv on the string synth</td>
+<td>145–150</td>
+<td>Strings · Fat</td>
+</tr>
+<tr>
+<td>Boys Strum</td>
+<td>chords</td>
+<td>2</td>
+<td>III iv v VI in eighth strums</td>
+<td>155–170</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Spellbound Dorian</td>
+<td>chords</td>
+<td>4</td>
+<td>i7 VII IV i7–VII</td>
+<td>145–150</td>
+<td>Guitar · 12-string</td>
+</tr>
+<tr>
+<td>Lucretia Gloom</td>
+<td>chords</td>
+<td>4</td>
+<td>i III iv on the organ's vox humana</td>
+<td>125–135</td>
+<td>Organ · Vox humana</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gregorian-old-gothic-dorian">Gregorian (old gothic): Dorian</h2>
+<p>Made for <strong>D Dorian</strong> (SCALE Dorian, ROOT D), the chant's first mode. The Dies Irae (13th
+century, public domain) is the three phrases of the mfiles.co.uk MIDI: F E F D E C D D |
+F F G F E D C E | F E D A C D D. <strong>Organum Above</strong> (lead) and <strong>Organum Below</strong> (bass) sing it a
+perfect fifth over and a perfect fourth under, note for note, in its rhythm (organum's parallel
+fifths and fourths, after the Musica enchiriadis): any two of the three loop together. Dead Can
+Dance's i v VII IV (In Power We Entrust the Love Advocated: Am Em G D), a saltarello in 6/8, the
+drone under the chant, and a breakbeat under it the 90s way. The chant's notes swell to the
+phrase's middle (80–98) and lean a hair early or late.</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Part</th>
+<th>Bars</th>
+<th>What it is</th>
+<th>Tempo</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Processional</td>
+<td>drums</td>
+<td>2</td>
+<td>timpani D on one, A on three, the bass drum, a cymbal swell</td>
+<td>55–70</td>
+<td>Orchestra · D</td>
+</tr>
+<tr>
+<td>Saltarello</td>
+<td>drums</td>
+<td>3 (6/8)</td>
+<td>tambourine eighths (1 and 4 strong), the frame drum leaping</td>
+<td>150–170</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Chant Breakbeat</td>
+<td>drums</td>
+<td>2</td>
+<td>a lazy break under the chant</td>
+<td>92–100</td>
+<td>SP1200 1</td>
+</tr>
+<tr>
+<td>Wrath Timpani</td>
+<td>drums</td>
+<td>2</td>
+<td>the D, the A, a roll into the bar, the cymbal</td>
+<td>55–70</td>
+<td>Orchestra · D</td>
+</tr>
+<tr>
+<td>Ritual Frame</td>
+<td>drums</td>
+<td>2</td>
+<td>the frame drum's 3 + 3 + 2, the tambourine's shimmer</td>
+<td>70–90</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Ison Drone</td>
+<td>bass</td>
+<td>4</td>
+<td>the final held, the fifth a bar, a breath</td>
+<td>50–80</td>
+<td>Organ · Bourdon 16</td>
+</tr>
+<tr>
+<td>Organum Below</td>
+<td>bass</td>
+<td>8</td>
+<td>the Dies Irae a fourth under</td>
+<td>60–80</td>
+<td>Cello</td>
+</tr>
+<tr>
+<td>Open Fifths</td>
+<td>bass</td>
+<td>4</td>
+<td>D and A, two bars each, swelling</td>
+<td>50–80</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Ostinato Pulse</td>
+<td>bass</td>
+<td>4</td>
+<td>quarters on D growing 40→110, the A falling back</td>
+<td>60–90</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Dorian Ground</td>
+<td>bass</td>
+<td>4</td>
+<td>i v VII IV, roots held, a step into each</td>
+<td>60–90</td>
+<td>Cello</td>
+</tr>
+<tr>
+<td>Dies Irae</td>
+<td>lead</td>
+<td>8</td>
+<td>the chant, sung</td>
+<td>60–80</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Organum Above</td>
+<td>lead</td>
+<td>8</td>
+<td>the Dies Irae a fifth over</td>
+<td>60–80</td>
+<td>Voice oohs</td>
+</tr>
+<tr>
+<td>Krummhorn Estampie</td>
+<td>lead</td>
+<td>4</td>
+<td>a lively Dorian dance in eighths</td>
+<td>100–120</td>
+<td>Organ · Krummhorn</td>
+</tr>
+<tr>
+<td>Kyrie Melisma</td>
+<td>lead</td>
+<td>4</td>
+<td>one syllable over many notes, rising to the fifth</td>
+<td>55–70</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Saltarello Recorder</td>
+<td>lead</td>
+<td>3 (6/8)</td>
+<td>leaping eighths, 1 and 4 leaned on</td>
+<td>150–170</td>
+<td>Recorder</td>
+</tr>
+<tr>
+<td>Organum Fifths</td>
+<td>chords</td>
+<td>8</td>
+<td>open fifths D C A D, two bars each, sung</td>
+<td>55–80</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Dorian Cadence</td>
+<td>chords</td>
+<td>4</td>
+<td>i IV VII i (the mode's major IV)</td>
+<td>55–80</td>
+<td>Organ · Pipe 16+8+4</td>
+</tr>
+<tr>
+<td>Gothic Choir</td>
+<td>chords</td>
+<td>4</td>
+<td>i v VII IV, held</td>
+<td>60–90</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Vox Humana</td>
+<td>chords</td>
+<td>4</td>
+<td>Dsus2 Dm Dsus4 Dm</td>
+<td>50–80</td>
+<td>Organ · Vox humana</td>
+</tr>
+<tr>
+<td>Harp Psalter</td>
+<td>chords</td>
+<td>3 (6/8)</td>
+<td>i and VII on the dotted quarters</td>
+<td>150–170</td>
+<td>Harp</td>
+</tr>
+</tbody>
+</table>
+<p>References for the five packs:
+<a href="https://www.ultimate-guitar.com" rel="noopener" target="_blank">Ultimate Guitar</a> (each song's chord sheet or tab, found with
+<code>tools/genre-research/ug-chords.py</code>);
+<a href="https://en.wikipedia.org/wiki/Blast_beat" rel="noopener" target="_blank">Blast beat (Wikipedia)</a>;
+<a href="https://en.wikipedia.org/wiki/Organum" rel="noopener" target="_blank">Organum (Wikipedia)</a>;
+<a href="https://www.mfiles.co.uk/scores/gregorian-dies-irae.htm" rel="noopener" target="_blank">Dies Irae, score and MIDI (mfiles)</a>;
+<a href="https://www.soundbrenner.com/blogs/articles/jig-rhythm" rel="noopener" target="_blank">The jig rhythm (Soundbrenner)</a>;
+<a href="https://www.invisibleoranges.com/?p=44567" rel="noopener" target="_blank">A Matter of Life and Drums (Invisible Oranges)</a>
+(Clive Burr's sixteenth hats).</p>
+<h2 id="jazz">Jazz</h2>
+<p>The original pack. It has no <code>sound</code> field. See <code>jazz-presets/build.py</code>.</p>
+<h2 id="vuelo-flight-facilities">Vuelo (Flight Facilities)</h2>
+<p>Natural Minor; A minor is Arty Boy's key, C# minor Crave You's (the two templates, both at
+120: Crave You is 120 on every listing, Arty Boy's groove sits there too). The band's own
+progressions from their chord sheets (Ultimate Guitar, 2026-10-11): Arty Boy's verse F Am Em C
+(VI i v III) in its timing (the first chord a bar and a half, the second the last two beats:
+| F F F F | F F Am Am |), its pre-chorus F Am Dm E (VI i iv V, the major V chromatic), its
+chorus F Em (VI v); Crave You's C#m7 Gdim7 F#m7 B7sus4 (i7, a chromatic ♯iv°7, iv7, a chromatic
+VII7sus4), one bar each; Need You's Am G F G (i VII VI VII); Two Bodies' F C Am G (VI III i
+VII); Stranded's Gmaj7 A Em7 A Bm (VI VII iv VII i). The lines are original: nu-disco drums
+(a 909 four on the floor with claps and open hats on the off-beats, an 808 for Crave You's
+laid-back pulse, a Linn disco shuffle with 16th hats, a build with a snare roll into a
+crash), octave disco basses riding between the kicks, a slap riff, a sub with slides, the
+funk guitar riff with muted 16ths (@42), a Rhodes hook, a string rise written as a velocity
+swell, an 80s synth lead on slides, a lazy sax behind the beat (&gt;8).</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Bars</th>
+<th>BPM</th>
+<th>Sound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vuelo · Four On The Floor</td>
+<td>2</td>
+<td>118–124</td>
+<td>TR909 (MODS: the kit's TONE down a little)</td>
+</tr>
+<tr>
+<td>Vuelo · Crave Groove</td>
+<td>2</td>
+<td>116–122</td>
+<td>TR808</td>
+</tr>
+<tr>
+<td>Vuelo · Disco Shuffle</td>
+<td>2</td>
+<td>118–124</td>
+<td>LINN9000</td>
+</tr>
+<tr>
+<td>Vuelo · Arty Funk</td>
+<td>2</td>
+<td>116–122</td>
+<td>TR909 (MODS: the kit's LENGTH shorter)</td>
+</tr>
+<tr>
+<td>Vuelo · Build And Crash</td>
+<td>2</td>
+<td>118–124</td>
+<td>TR909</td>
+</tr>
+<tr>
+<td>Vuelo · Crave Walk</td>
+<td>4</td>
+<td>116–122</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Vuelo · Arty Pulse</td>
+<td>4</td>
+<td>116–122</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Vuelo · Octave Disco</td>
+<td>4</td>
+<td>118–124</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Vuelo · Sub Pulse</td>
+<td>4</td>
+<td>116–122</td>
+<td>Sine sub</td>
+</tr>
+<tr>
+<td>Vuelo · Slap Riff</td>
+<td>2</td>
+<td>116–122</td>
+<td>Slap bass</td>
+</tr>
+<tr>
+<td>Vuelo · Guitar Riff</td>
+<td>2</td>
+<td>116–122</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Vuelo · Rhodes Hook</td>
+<td>2</td>
+<td>116–122</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Vuelo · String Rise</td>
+<td>2</td>
+<td>116–124</td>
+<td>Violin</td>
+</tr>
+<tr>
+<td>Vuelo · Synth Slide</td>
+<td>2</td>
+<td>116–122</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Vuelo · Sax Line</td>
+<td>2</td>
+<td>116–122</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Vuelo · Arty Verse</td>
+<td>4</td>
+<td>116–122</td>
+<td>Guitar · Chorus</td>
+</tr>
+<tr>
+<td>Vuelo · Arty Pre</td>
+<td>4</td>
+<td>116–122</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Vuelo · Crave Loop</td>
+<td>4</td>
+<td>116–122</td>
+<td>Jazz guitar</td>
+</tr>
+<tr>
+<td>Vuelo · Chorus Stabs</td>
+<td>2</td>
+<td>118–124</td>
+<td>Organ · House</td>
+</tr>
+<tr>
+<td>Vuelo · String Pads</td>
+<td>4</td>
+<td>116–122</td>
+<td>Strings · Ensemble</td>
+</tr>
+</tbody>
+</table>
+<p>References: the chord sheets (ug-chords.py: Arty Boy 2137129, Crave You 1132236, Need You
+5587641, Stranded 3235883, Two Bodies 1931097), the user's charts of Arty Boy's strumming
+timing and Crave You's groove (minimal struck chords in the verse, a down-up rhythm in the
+chorus), SongBPM's 120 for Crave You, the band on their own sound (70s disco grooves, 909
+rhythms, slinky basslines: Boss Hunting and Mixmag interviews, 2017–2024).</p>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+</body>
+</html>
