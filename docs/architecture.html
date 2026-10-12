@@ -499,7 +499,7 @@ ravving's C++ objects standing in for the Python ones libzynthbox talks to:</p>
 </tr>
 <tr>
 <td><code>BeatRepeat</code></td>
-<td>ravving's own JACK client (<code>ravving-repeat</code>), first master insert: anchors at the 16th under way (sample accurate through <code>ZynthboxBridge::timerTickAtFrame</code>, SyncTimer's frame → tick map), lets it play out, then repeats the audio from the anchor every N 16ths; 1 ms fades at the seams, 3 ms crossfades in and out; lock-free (atomics, preallocated history and slice). Measured: a held repeat is exact (similarity 1.000 at its lag), its hits within 3 ms of the live grid</td>
+<td>ravving's own JACK client (<code>ravving-repeat</code>), first master insert: anchors at the 16th under way (sample accurate through <code>ZynthboxBridge::timerTickAtFrame</code>, SyncTimer's frame → tick map), lets it play out, then repeats the audio from the anchor every N 16ths; 1 ms fades at the seams, a 3 ms crossfade in and an eased 150 ms release out (the repeat gives way to the live sound, TODO 35); lock-free (atomics, preallocated history and slice). Measured: a held repeat is exact (similarity 1.000 at its lag), its hits within 3 ms of the live grid</td>
 <td>new (easyrave bends its sequencer instead)</td>
 </tr>
 <tr>
