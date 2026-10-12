@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/manual-interim.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html class="no-js" data-docs-base="../../docs/" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>マニュアル · ravving ドキュメント</title>
+<link href="../../site.css?v=56c8e55da8" rel="stylesheet"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E" rel="icon"/>
+</head>
+<body class="docs">
+<a class="skip" href="#doc">本文へ移動</a>
+<header class="nav">
+<div class="wrap">
+<a aria-label="ravving" class="brand" href="../index.html">
+<img alt="ravving" class="ravving" height="104" src="../../assets/ravving-wordmark.svg" width="822"/>
+</a>
+<nav aria-label="セクション"><a href="../features.html#features">機能</a> <a href="../features.html#shortcuts">ショートカット</a> <a aria-current="true" href="index.html">ドキュメント</a> <a href="../../api/index.html">API リファレンス</a></nav>
+<nav aria-label="Language" class="langs" translate="no">
+<a href="../../docs/manual.html" hreflang="en" lang="en">EN</a>
+<a href="../../es/docs/manual.html" hreflang="es" lang="es">ES</a>
+<a href="manual.html" hreflang="ja" lang="ja">日本語</a>
+</nav>
+</div>
+</header>
+<main class="wrap docs-wrap">
+<details class="docs-side" open="">
+<summary><span class="mono">ドキュメント</span></summary>
+<form class="docs-search" onsubmit="return false" role="search">
+<input aria-label="ドキュメントを検索" autocomplete="off" id="docs-search" placeholder="ドキュメントを検索… live fx、サウンドフォント" type="search"/>
+<ol hidden="" id="docs-results"></ol>
+</form>
+<nav aria-label="ドキュメント">
+<p class="mono">ravving を使う</p><ul>
+<li><a href="get-ravving.html">ravving を入手</a></li>
+<li><a href="load-a-preset.html">プリセットを読み込む</a></li>
+<li><a href="loop-to-song.html">ループを曲にする</a></li>
+<li><a href="export-a-track.html">曲を書き出して聴く</a></li>
+<li><a href="film-a-session.html">セッションを撮影する</a></li>
+<li><a href="send-to-phone.html">スマホにファイルを送る</a></li>
+<li><a href="troubleshooting.html">困ったときは</a></li>
+<li><a href="machines.html">マシン</a></li>
+<li><a href="first-beat.html">はじめてのビート</a></li>
+<li class="on"><a aria-current="page" href="manual.html">マニュアル</a><ul><li><a href="#the-five-pages">5 つのページ</a></li><li><a href="#installing">インストール</a></li><li><a href="#playing-and-editing">演奏と編集</a></li><li><a href="#the-header-and-the-mixer">ヘッダーと MIXER</a></li><li><a href="#sample-king">SAMPLE KING</a></li><li><a href="#the-pad-sampler">PAD SAMPLER</a></li><li><a href="#undo-and-redo">元に戻す・やり直す</a></li><li><a href="#sound-sources">音源</a></li><li><a href="#sections-and-the-song">セクションとソング</a></li><li><a href="#languages">言語</a></li><li><a href="#startup-splash">起動画面</a></li><li><a href="#exports-and-the-music-player">書き出しとミュージックプレーヤー</a></li><li><a href="#notes-outside-the-scale">スケール外の音</a></li><li><a href="#video-recordings-and-the-computer-link">ビデオ録画とコンピューター接続</a></li><li><a href="#sending-to-a-phone">スマホに送る</a></li><li><a href="#files">ファイル</a></li><li><a href="#usb-sticks">USB メモリー</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#the-music-player">ミュージックプレーヤー</a></li><li><a href="#audio-output">オーディオ出力</a></li><li><a href="#the-recorder">レコーダー</a></li><li><a href="#the-issues-center">お知らせセンター</a></li><li><a href="#where-your-files-live">ファイルの保存場所</a></li></ul></li>
+</ul>
+<p class="mono">パターンパック</p><ul>
+<li><a href="packs.html">ジャンルパック</a></li>
+</ul>
+<p class="mono">内部の仕組み</p><ul>
+<li><a href="../../docs/architecture.html">アーキテクチャ</a></li>
+<li><a href="../../docs/backend.html">バックエンドのクラス</a></li>
+<li><a href="../../docs/qml-components.html">QML コンポーネント</a></li>
+<li><a href="../../docs/undo-history.html">元に戻す履歴</a></li>
+<li><a href="../../docs/bluetooth.html">Bluetooth</a></li>
+<li><a href="../../docs/live-recording.html">ライブ録音</a></li>
+<li><a href="../../docs/engines.html">エンジン</a></li>
+<li><a href="../../docs/routing.html">オーディオグラフ</a></li>
+<li><a href="../../docs/translations.html">翻訳</a></li>
+<li><a href="../../docs/ui-rules.html">UI ルール</a></li>
+<li><a href="../../docs/extending.html">拡張する</a></li>
+<li><a href="../../docs/writing-the-guide.html">ガイドの書き方</a></li>
+<li><a href="../../docs/writing-code-docs.html">コードのドキュメント</a></li>
+<li><a href="../../docs/building.html">ビルド</a></li>
+<li><a href="../../docs/packaging.html">パッケージ</a></li>
+<li><a href="../../docs/testing.html">本体でのテスト</a></li>
+<li><a href="../../docs/debugging.html">デバッグ</a></li>
+<li><a href="../../docs/quality.html">品質</a></li>
+</ul>
+<p class="mono">コード</p><ul>
+<li><a href="../../api/index.html">API リファレンス</a></li>
+</ul>
+</nav>
+</details>
+<article class="doc" id="doc">
+<p class="mono doc-kicker"><b>ravving を使う</b> <span>/</span> <b translate="no">docs/manual-interim.md</b></p>
+<h1>マニュアル</h1>
+<p class="doc-blurb">5 つのページとそこで鳴るもの、ショートカット、元に戻す、音源、プリセット、テンプレート、セクションとソング、書き出し、ライブ録音、ファイル、USB メモリー、Bluetooth、レコーダー、お知らせセンター。</p>
+<p>これは暫定版のマニュアルです。各ページ、キー、ダイアログの働きを説明します。スクリーンショット付きのわかりやすいガイドも準備中です。</p>
+<h2 id="the-five-pages">5 つのページ</h2>
+<aside class="aru-tip"><span class="aru" data-mood="base" data-species="octopus"></span><p>やあ！5 つのキー、5 つのページ、8 台のマシン。さあ、音を出そう。</p></aside>
+<p>左にある 5 つの数字キーが、それぞれページを開きます：</p>
+<table>
+<thead>
+<tr>
+<th>キー</th>
+<th>ページ</th>
+<th>鳴るもの（ネームプレートに表示）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ドラム 1 · 2 · 3（もう一度 1 を押すと切り替え）</td>
+<td>それぞれにドラムキット：最初は Roland TR909、Roland TR808、LINN9000。本体のドラムマシンフォルダーにある好きなキットも使えます</td>
+</tr>
+<tr>
+<td>2</td>
+<td>コード</td>
+<td>TAL NoiseMaker とそのファクトリーサウンド、またはサウンドフォントの楽器（Rhodes、ヴィブラフォン、オルガン、ストリングス…）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ベース</td>
+<td>DISTRHO Nekobi（303 風のベース）、またはサウンドフォントのベース（ウッド、アコースティック、指弾き、フレットレス、シンセ）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>リード</td>
+<td>Calf Monosynth、またはサウンドフォントの楽器（Rhodes、ヴィブラフォン、ギター、サックス、フルート…）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>SAMPLE KING · PAD SAMPLER（もう一度 5 を押すと切り替え）</td>
+<td>8 スロットのサンプルバンクが 4 つ、または MPC スタイルの 16 パッド</td>
+</tr>
+</tbody>
+</table>
+<p>5 つのページは上部バーを共有します：キーとスケール、トランスポート、テンポとスウィング、LIVE FX、楽器、マスターボリューム。</p>
+<p>どのマシンも同じ部品でできています：</p>
+<ul>
+<li>ミックスストリップ</li>
+<li>MODS（音を形づくるノブ）</li>
+<li>パターンエディター</li>
+<li>SOUND EFFECTS のチェーン</li>
+</ul>
+<p>ソングは小節の頭で切り替わるセクションでできていて、セッション全体はプロジェクトに保存されます。</p>
+<h2 id="installing">インストール</h2>
+<p>ravving は Zynthbox Store の Apps カテゴリーから AppImage として入手します。AppImage は Zynthbox の上にセットアップページを開き、4 つの選択肢を出します：TRY IT、MAKE IT THE DEFAULT、ZYNTHBOX AT BOOT AGAIN、REMOVE RAVVING。ravving を削除しても、プロジェクト、テイク、録音は残ります。</p>
+<h2 id="playing-and-editing">演奏と編集</h2>
+<h3 id="shortcuts-youll-use-all-the-time">いつも使うショートカット</h3>
+<table>
+<thead>
+<tr>
+<th>押すキー</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ALT + ▲</td>
+<td>どこからでもヘッダーへ移動</td>
+</tr>
+<tr>
+<td>ALT + ステップキー 1–8</td>
+<td>LIVE FX のオン・オフ：DROP、NO KICK、ONLY KICK、CRUSH、LO PASS、HI PASS、STUTTER、LOOP</td>
+</tr>
+<tr>
+<td>ALT + ノブ 1–3</td>
+<td>PHASER、ECHO、HEAVY</td>
+</tr>
+<tr>
+<td>ALT + 大ノブ</td>
+<td>マスターボリューム</td>
+</tr>
+<tr>
+<td>MODE</td>
+<td>画面の楽器が OFF → LIVE → STEP + LIVE → OFF と切り替わる</td>
+</tr>
+<tr>
+<td>停止中に STOP</td>
+<td>パニック：鳴り続けている音をすべて止める</td>
+</tr>
+<tr>
+<td>マシンの <strong>S</strong> を長押し</td>
+<td>そのマシンだけをソロにする</td>
+</tr>
+</tbody>
+</table>
+<p>ALT を押している間、ステップキーがオレンジに光り、LIVE FX のパッドにキー番号が表示されます。</p>
+<h3 id="play-it-live">ライブで演奏する</h3>
+<p>MODE で LIVE をオンにすると、ステップキーが演奏できる鍵盤になります：</p>
+<ul>
+<li><strong>ベース、リード、コードの NOTES タブ：</strong>スケールが 16 個のキーに並びます。▲ ▼ でオクターブを変えます。</li>
+<li><strong>コードの CHORDS と SLOTS タブ：</strong>キーの 7 つのコードが並びます。</li>
+</ul>
+<h3 id="write-notes-step-by-step">ステップごとに音を書く</h3>
+<p>STEP 入力は、演奏した音をカーソルの位置に書き込みます。</p>
+<ul>
+<li>◀ ▶ でカーソルを 1 ステップ動かします。</li>
+<li>同時に押したキーは同じステップに入るので、コードは 1 列にまとまります。</li>
+<li>停止中は SELECT で選んだ行をカーソル位置に書き込みます：音符、または CHORDS ではコード。</li>
+<li>LIVE と STEP が両方オンのときは、▲ ▼ でオクターブではなく行を移動します。行に来るたびに音が鳴るので、先に耳で音を探せます。</li>
+</ul>
+<h3 id="touch-the-grid">グリッドに触れる</h3>
+<ul>
+<li><strong>1 本指</strong>で横にドラッグすると小節をめくります。ピアノロールでは行を上下にもドラッグでき、8 半音を超えるとオクターブが変わります。</li>
+<li><strong>2 本指</strong>でピンチしてズーム。</li>
+<li><strong>タップ</strong>は今までどおり音符のオン・オフ。</li>
+</ul>
+<p>ポインターはマウスをつないでいるときだけ表示されます。</p>
+<h3 id="save-and-open-projects">プロジェクトの保存と読み込み</h3>
+<ul>
+<li><strong>最初の SAVE</strong> ではプロジェクト名を尋ね、画面キーボードが表示されます。</li>
+<li><strong>2 回目以降の保存</strong>は上書きです。3 秒以内に SAVE を 2 回押します（AGAIN? と確認します）。</li>
+<li><strong>SAVED</strong> は保存後に変更がないという意味で、次に編集するとボタンが戻ります。</li>
+<li><strong>SAVE AS NEW</strong> は新しい名前を尋ねます。</li>
+</ul>
+<p>PROJECT ▾ にプロジェクトとデモが並びます。タップすると開きます。未保存の変更があるときは、もう一度タップして確定します。長押しか ★ でお気に入りになります。</p>
+<p>下の列はいつも開いているプロジェクトに働きます：NEW、TEMPLATES、IMPORT、次に SAVE AS NEW、そして EXPORT。</p>
+<h3 id="undo">元に戻す</h3>
+<p>ヘッダーの ↶ ↷ はプロジェクト全体を前後に戻します。マシンのページでは ALT + ◀ ▶ でも同じです。複数のマシンを一度に変えた操作は 1 ステップとして数えます：CLEAR ALL や、ベースとリードを両方動かしたキーの変更など。</p>
+<p>マシンのツールバーにある ↶ ↷ は、そのマシンの変更だけを戻します。</p>
+<p>戻るもの：</p>
+<ul>
+<li>パターンとスロット。</li>
+<li>構成：中身ごと削除したセクション、名前の変更、色、長さ、ソングの編集。</li>
+</ul>
+<p>戻らないもの：音色、ミックス、プロジェクトの設定。セクションを選ぶことも 1 ステップにはなりません。詳しくは<a href="#undo-and-redo">元に戻す・やり直す</a>へ。</p>
+<h3 id="lock-keep-a-stray-tap-from-changing-what-plays">LOCK：うっかりタップで演奏中の内容を変えない</h3>
+<p>LOCK はどのパターンツールバーでも最初のボタンです。オンの間、ノートグリッドには何も書き込まれません。セルのタップ、ステップキー、STEP 入力、SELECT の移動、ノートのノブはすべて受け付けず、LOCK が点滅して理由を知らせます。スクロール、ページ送り、試聴はできます。</p>
+<ul>
+<li><strong>PLAY</strong> で LOCK がオンになり、<strong>STOP</strong> でオフに戻ります。</li>
+<li><strong>再生中に LOCK をタップ</strong>すると編集できます。停止後もロック解除のままです。</li>
+<li><strong>停止中に LOCK をタップ</strong>するとグリッドをロックします。その後もロックされたままです。</li>
+</ul>
+<p>LOCK はすべてのページで共通で、テイク（●）は録音できます。</p>
+<aside class="aru-tip"><span class="aru" data-mood="metal" data-species="wolf"></span><p>思いきりヘドバンしよう。再生中は LOCK がビートを守ってくれる。</p></aside>
+<h3 id="select-move-notes-after-youve-written-them">SELECT：書いた音符を後から動かす</h3>
+<p>SELECT はベース、リード、コードのパターンツールバーの ♭♯ の隣にあります。オンの間、グリッドをタップすると音符を書く代わりに選択します。もう一度タップで選択解除。伸ばした音の尾をタップすると、その音符が選ばれます。</p>
+<ul>
+<li><strong>▲ ▼</strong> で選んだ音符をすべてキーの 1 音ぶん上下に動かします。♭♯ がオンなら半音ずつ。長さ、アクセント、スライドも一緒に動きます。</li>
+<li><strong>1 回の移動</strong>が元に戻す 1 ステップです。</li>
+<li><strong>コードのページでは</strong>、CHORDS ビューでコードを選んで 1 度ずつ動かします。NOTES ビューでは単音を選びます。伸ばしたコードは常にまとめて動きます。</li>
+<li><strong>SELECT を長押し</strong>すると全小節の音符（またはコード）をすべて選び、パターン全体を一度に動かせます。</li>
+<li><strong>SELECT をオフにする</strong>と選択が解除されます。</li>
+</ul>
+<h3 id="shape-a-single-note">1 つの音符を形づくる</h3>
+<p>ベースとリードでは SELECT で音符を選び、ノブ 1–3 を回してまとめて変えます。グリッド右上の表示に、最初に選んだ音符の値がノブのバッジ付きで出ます。</p>
+<table>
+<thead>
+<tr>
+<th>ノブ</th>
+<th>設定</th>
+<th>範囲</th>
+<th>1 クリック</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>LENGTH</strong>（明るいセル）</td>
+<td>1 ステップから 4 小節</td>
+<td>ステップ</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>VELOCITY</strong></td>
+<td>1–127</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>NUDGE</strong>（スウィングが置いた位置から）</td>
+<td>半ステップ前から半ステップ後まで</td>
+<td>1 ステップの 16 分の 1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>セルの長押しでも音符の長さを設定できます。</li>
+<li>ACCENT レーンのセルはベロシティに応じて塗られ、アクセント付きは明るい赤になります。そこをタップすると今までどおりアクセントが切り替わります：フル、または通常のベロシティに戻る。</li>
+<li>Q をオフにした LIVE テイクは、ヒットごとに nudge を記録します。</li>
+<li>これらの設定は音符と一緒に動き、1 クリックが元に戻す 1 ステップで、プロジェクトと保存したパターンプリセットに残ります。</li>
+</ul>
+<p>大ノブは音量のままで、フォーカスのあるダイヤルのグループは自分のノブを持ち続けます。</p>
+<h3 id="slots-write-with-whole-chords">SLOTS：コード単位で書く</h3>
+<p>コードのページでは、SLOTS でコードを 1 つずつ組み立てられます：</p>
+<ol>
+<li>スロットをタップします。</li>
+<li>コードキーを弾きます。次のスロットが自動で待機します。</li>
+<li>各スロットの長さを 1、2、4、8 小節から選びます。スロットの合計はパターンの 8 小節を超えません。「n / 8 BARS」の表示が数えます。</li>
+</ol>
+<p>スロットがコードのパターンを書き、PLAY で順番に鳴らします。いま鳴っているスロットが光ります。＋ で 4 つずつ最大 8 つまで増やし、− で減らします。</p>
+<p>CHORDS や NOTES ビューでパターンを変えると、ビューに PATTERN CHANGED と出てスロットが暗くなります。そのあとスロットを編集すると、パターンがスロットから作り直されます。元に戻すで編集を取り戻せます。</p>
+<h2 id="the-header-and-the-mixer">ヘッダーと MIXER</h2>
+<p>上部のヘッダーはすべてのページで共通です。ページのストリップから ▲ で移動し、◀ ▶ でグループを渡り、▼ か BACK でページに戻ります。</p>
+<h3 id="key-and-scale">キーとスケール</h3>
+<p>左の ROOT と SCALE でプロジェクトのキーを決めます。メロディーのマシンはすべてそれに従い、ベース、リード、コードはそのキーで鳴り、キーを変えるとフレーズも一緒に動きます。スケール外の音には専用の設定があります（下の「スケール外の音」）。</p>
+<h3 id="tempo-and-swing">テンポとスウィング</h3>
+<ul>
+<li><strong>BPM：</strong>テンポ。TEMPO グループにフォーカスがあるとき、ノブ 1 で設定します。ほかの機器が ravving のクロックを送っているときは、その機器のテンポを表示し、ここでは変えられません。</li>
+<li><strong>SWING：</strong>ノブ 2 で 50 %（イーブン）から 75 %（いちばん強いシャッフル）まで。ラベルをタップすると 8 分（SWING 8、ジャズ向け）と 16 分（SWING 16、ハウスやヒップホップ向け）を切り替えます。</li>
+</ul>
+<p>テンプレートとデモは、プロジェクトを始めるときに両方を設定します。</p>
+<h3 id="live-fx">LIVE FX</h3>
+<p>演奏しながらミックス全体を変える 8 つのパッド。ヘッダーでタップするか、ALT を押しながらステップキー 1–8 を押します。</p>
+<table>
+<thead>
+<tr>
+<th>パッド</th>
+<th>できること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DROP</td>
+<td>押している間はキックが消え、ハイパスがスイープで上がります。離すと両方戻ります。</td>
+</tr>
+<tr>
+<td>NO KICK、ONLY KICK</td>
+<td>キックをすべて消す、またはキック以外をすべて消す。片方をオンにするともう片方はオフになります。</td>
+</tr>
+<tr>
+<td>CRUSH</td>
+<td>ミックスをビットクラッシャーに通します。</td>
+</tr>
+<tr>
+<td>LO PASS、HI PASS</td>
+<td>フィルタースイープ：300 Hz まで下げる、または 950 Hz まで上げる。</td>
+</tr>
+<tr>
+<td>STUTTER</td>
+<td>押している間、いまの 16 分音符を繰り返します。</td>
+</tr>
+<tr>
+<td>LOOP</td>
+<td>押している間、いまの拍を繰り返します。</td>
+</tr>
+</tbody>
+</table>
+<p>NO KICK、ONLY KICK、LO PASS、HI PASS はタップでオン、もう一度タップでオフ。DROP と CRUSH は押している間だけ効き、0.5 秒押し続けると次にタップするまでオンのままです。CRUSH、STUTTER、LOOP の上でドラッグすると効き具合が変わります：ビット数を減らす、または繰り返しを短く・長くする。</p>
+<p>PHASER、ECHO、HEAVY はパッドの隣にあります。ALT を押しながらノブ 1–3 を回すと、どこからでも設定できます。</p>
+<h3 id="record-the-whole-mix">ミックス全体を録音</h3>
+<p><strong>ALT + ●</strong> で、どのページからでもスピーカーから出ている音をすべて WAV として録音に保存します。RECORD のライトが赤くなります。もう一度 <strong>ALT + ●</strong> で停止。ファイルはミュージックプレーヤーにあります。</p>
+<p>録音は一度に 1 つだけです。これが動いている間、レコーダーではテイクを録れません。</p>
+<h3 id="the-mixer">ミキサー</h3>
+<p><strong>✱</strong> で MIXER を開きます：すべての楽器を一度に、メーター付きのストリップで表示します。✱ か BACK で戻り、数字キーでそのページへ。</p>
+<ul>
+<li><strong>ストリップを選ぶ</strong>には ◀ ▶ かステップキー。ステップのライトがストリップを示し、ミュートは暗く、選んだものは白です。</li>
+<li><strong>ノブ 1</strong> でレベル、<strong>ノブ 2</strong> でパン、大ノブで細かいレベル。</li>
+<li><strong>SELECT</strong> でミュート、<strong>ALT + SELECT</strong> でソロ。</li>
+<li><strong>ネームプレートをタップ</strong>するとその楽器のページを開きます。</li>
+</ul>
+<h2 id="sample-king">SAMPLE KING</h2>
+<p>ページ 5 には 2 つのサンプラーがあります。もう一度 5 を押すと SAMPLE KING と PAD SAMPLER が切り替わり、ravving は使った方を覚えています。</p>
+<p>SAMPLE KING には 8 スロットのバンクが 4 つ（A〜D）あり、バンクごとにパターンがあります。画面に出ているバンクが鳴ります。</p>
+<h3 id="get-a-sound-in">音を入れる</h3>
+<p>スロット（グリッドの行）を選び、LOAD をタップしてサンプルを選びます。</p>
+<p>または録音します：● REC で本体の入力をそのままスロットに録音し、もう一度 ● で停止。テイクは最後の音のかたまりに合わせてトリミングされてスロットに入ります。INPUT でつないだ機器、ゲイン、モニターを設定します。</p>
+<h3 id="shape-it">形を整える</h3>
+<ul>
+<li>波形の開始と終了のハンドルをドラッグします。波形にフォーカスがあるときはノブ 1 と 2 でも動かせます。</li>
+<li>PITCH は上下 12 半音まで。</li>
+<li>REVERSE で逆再生。</li>
+</ul>
+<p>スロットはワンショットで鳴り、もう一度鳴らすと前の音を止めます。</p>
+<h3 id="chop-and-play-it">チョップして演奏する</h3>
+<ul>
+<li id="chop-it"><strong>チョップ。</strong>CHOP と AUTO CHOP で波形エディターを開き、切った断片をバンクのスロットに並べます（<a href="#the-wave-editor">波形エディター</a>を参照）。</li>
+<li id="play-it"><strong>鳴らす。</strong>ステップグリッドの各行がスロットで、下にアクセントの行があります。ノブ 1–3 で選んだ行のミュート、ソロ、レベルを設定します。ドラムと同じです。</li>
+<li id="play-it-live"><strong>ライブで鳴らす。</strong>LIVE をオンにするとステップキー 1–8 でスロットを鳴らし、キー 9 を押しながらでアクセント。MIDI キーボードでも鳴らせます。</li>
+</ul>
+<h2 id="the-pad-sampler">PAD SAMPLER</h2>
+<p>4 つのバンク（A〜D）に 16 パッド、MPC のような配置です。画面でパッドを選ぶと、そのサンプル、ツール、設定がパッドの横に出て、16 ステップが下に並びます。</p>
+<h3 id="get-a-sound-in_1">音を入れる</h3>
+<p>LOAD でパッドのサンプルを選びます。● REC で入力をパッドに録音します。SMART がオンなら、音が静かになると自動で止まります。どちらの場合も、最後の音のかたまりにトリミングされてパッドに入ります。</p>
+<ul>
+<li><strong>COPY</strong> でパッドを別のパッドにコピー。</li>
+<li><strong>CLEAR</strong> で空にします。</li>
+<li><strong>ERASE</strong> でパッドのヒットをパターンから消します。</li>
+</ul>
+<h3 id="how-a-pad-plays">パッドの鳴り方</h3>
+<ul>
+<li><strong>NOTE ON</strong> は押している間だけ鳴らします。オフならタップでサンプル全体を鳴らします（ワンショット）。</li>
+<li><strong>LOOP</strong> でループポイントから繰り返します。</li>
+<li><strong>REVERSE</strong> で逆再生。</li>
+<li><strong>MUTE</strong> で消音し、UNMUTE ALL ですべてのパッドを戻します。</li>
+</ul>
+<h3 id="tweak-a-pad">パッドを調整する</h3>
+<p>タブごとに 3 つの設定がノブ 1–3 に割り当てられ、◀ ▶ でタブを切り替えます：</p>
+<table>
+<thead>
+<tr>
+<th>タブ</th>
+<th>設定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TRIM</td>
+<td>開始と終了</td>
+</tr>
+<tr>
+<td>MIX</td>
+<td>音量とパン</td>
+</tr>
+<tr>
+<td>AMP ENV</td>
+<td>アタックとディケイ</td>
+</tr>
+<tr>
+<td>TUNE</td>
+<td>半音、次に微調整</td>
+</tr>
+<tr>
+<td>PLAY</td>
+<td>モノかポリ、ミュートグループ</td>
+</tr>
+<tr>
+<td>FILTER</td>
+<td>タイプ、カットオフ、レゾナンス</td>
+</tr>
+</tbody>
+</table>
+<h3 id="play-the-pads-live">パッドをライブで演奏する</h3>
+<p>LIVE をオンにすると 16 個のステップキーが 16 パッドになります。タップでパッドを鳴らし、0.5 秒押し続けるとラッチして、もう一度タップするまでループします。STOP でラッチしたループをすべて止めます。</p>
+<p><strong>PAD FX：</strong>パッドが鳴っている間に ECHO、TAPE STOP、SCRATCH、STUTTER、SKIP、REVERSE を押すとエフェクトがかかります。離すと元に戻ります。</p>
+<h3 id="16-levels">16 LEVELS</h3>
+<p>16 LVL をオンにすると、16 パッドすべてが選んでいたパッドを鳴らし、TYPE で振り分けます：</p>
+<ul>
+<li><strong>VELOCITY：</strong>弱から強へ。</li>
+<li><strong>TUNE：</strong>パッドごとに半音。</li>
+<li><strong>SCALE：</strong>プロジェクトのスケールを上へ。</li>
+</ul>
+<p>キットの MODS が、すべてのパッドの音量とチューニングを設定します。</p>
+<h3 id="the-wave-editor">波形エディター</h3>
+<p>2 つのサンプラーで共通です。CHOP はサンプルを 3 通りの方法で切ります：</p>
+<ul>
+<li><strong>REGIONS：</strong>等分に切る。</li>
+<li><strong>THRESHOLD：</strong>あるレベルより大きいヒットで切る。</li>
+<li><strong>MANUAL：</strong>波形をタップして切れ目を追加し、切れ目をタップして削除。</li>
+</ul>
+<p>AUTO CHOP はヒットで切った状態でエディターを開きます。エディターでは：</p>
+<ul>
+<li>◀ ▶ でチョップの種類を変え、大ノブで分割数かしきい値を設定します。</li>
+<li>NORMALISE でサンプルを最大レベルまで上げます。</li>
+<li>TRIM で両端の無音を削ります。</li>
+<li>APPLY で断片をバンクのスロットかパッドに送ります。</li>
+</ul>
+<h2 id="undo-and-redo">取り消しとやり直し</h2>
+<p>プロジェクトの履歴は 1 つです。ヘッダーの ↶ ↷（マシンのページでは ALT + ◀ ▶）で前後に移動し、トーストが各ステップの名前を出します（「UNDO · CHORDS + BASS」）。パターンツールバーにあるマシン自身の ↶ ↷ は、履歴のどこにあってもそのマシンの最後の変更だけを戻します。</p>
+<ul>
+<li><strong>元に戻るもの：</strong>各マシンの音符、ステップ、コード、スロット、アクセント、スライド、長さ、オートメーション、ライブのタイミング、そして構成：どのセクションがあるか、その順番、名前、色、長さ、ソング。削除したセクションは中身ごと元の場所に戻ります。</li>
+<li><strong>戻らないもの：</strong>音色、ミックス、エフェクト、プロジェクトの設定（テンポ、スウィング、キー）。セクションを選ぶことも 1 ステップにはなりません。</li>
+<li><strong>1 ステップ：</strong>複数のマシンを一度に変える操作は 1 ステップです。CLEAR ALL や、ベースとリードを動かすキーの変更など。続けて素早く行った変更（ノブを回す、ハンドルをドラッグする）や、録音したテイク全体も 1 ステップです。</li>
+<li>履歴は直近の 100 ステップを保持し、プロジェクトを開いたり新しく始めたりするとリセットされます。</li>
+</ul>
+<h2 id="sound-sources">音源</h2>
+<p>ベース、リード、コードは専用シンセの音でなくてもかまいません。ネームプレートをタップすると、そのマシンの音色が開きます：</p>
+<ul>
+<li><strong>まず専用のエンジン：</strong>BASS は 303、LEAD は Calf Monosynth、CHORDS は TAL NoiseMaker とそのファクトリーサウンド。</li>
+<li><strong>次にサウンドフォントの楽器</strong>。本体のサウンドフォントを FluidSynth で鳴らします：ウッドベースなどのベース、Rhodes、ヴィブラフォン、オルガン、ストリングス、サックス、フルートなど。</li>
+</ul>
+<p>選ぶとエンジンが入れ替わります。サウンドフォントの音色には専用の MODS があります：FILTER、ENVELOPE、MOTION。選択はプロジェクトに保存されます。</p>
+<h3 id="acoustic-sounds-for-jazz-and-friends">ジャズなどのためのアコースティック音色</h3>
+<table>
+<thead>
+<tr>
+<th>マシン</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>コード</td>
+<td><strong>Grand piano</strong>（Fazioli）、<strong>Upright piano</strong>（Kawai）、<strong>Jazz guitar</strong></td>
+</tr>
+<tr>
+<td>リード</td>
+<td><strong>Alto sax</strong>、<strong>Tenor sax</strong>、<strong>Grand piano</strong></td>
+</tr>
+<tr>
+<td>ベース</td>
+<td><strong>Upright</strong></td>
+</tr>
+</tbody>
+</table>
+<p>ドラムマシンのキット選択には ACOUSTIC グループもあります。FluidR3 サウンドフォントの General MIDI キットです：<strong>Jazz</strong> と <strong>Brush</strong>（ライドとハイハットのフットを行に入れたもの、またはクラッシュ入り）、<strong>Standard</strong>、<strong>Room</strong>。</p>
+<p>ジャズらしく聴かせるコツがあと 2 つ：</p>
+<ul>
+<li>ベースやリードの音符は 1 ステップより長くできます。セルを長押しすると、その行の音符がそこまで伸びます。</li>
+<li>ヘッダーのスウィングのラベルをタップすると、8 分（SWING 8）と 16 分（SWING 16）を切り替えます。</li>
+</ul>
+<h3 id="pads-and-textures-on-chords">CHORDS のパッドとテクスチャ</h3>
+<p>CHORDS にはイメージ付属のパッド系サウンドフォントもあり、選択画面で名前ごとにまとまっています：</p>
+<ul>
+<li><strong>Strings：</strong>Ensemble、Fat、Digital、Rise、Bowed、Piano。</li>
+<li><strong>Organ：</strong>Phaser、Pipe 16+8+4、House、Extreme。</li>
+<li><strong>Alien</strong>（「Ambients &amp; Drones」のフォントから）：The Thing、Strange voices、Crystal voice、Glassy、Winds、Chaos、The Pulse。</li>
+</ul>
+<p>伸ばして重ねるポリフォニックなマシンに合います：ボイシングが続く間コードが鳴り続け、キーがベースやリードと音程をそろえます。</p>
+<p>音色の選択画面は GROUP チップでリストをまとめ、★ でお気に入り（星か ALT + SELECT）、SORT で一覧順か A–Z。グループと並び順は楽器ごとに記憶されます。</p>
+<h3 id="pattern-presets-with-their-sound">音色付きのパターンプリセット</h3>
+<p>パターンツールバーの PRESET を開きます。SAVE CURRENT AS NEW は、パターンとマシンの音色（ソースまたはファクトリーサウンドと MODS）を一緒に保存します。ドラムではキットとキットの MODS を保存します。</p>
+<aside class="aru-tip"><span class="aru" data-mood="hiphop" data-species="octopus"></span><p>パックごとに独自のグルーヴと、そのために作られた音色が付いてくる。</p></aside>
+<p>保存するときは 2 つのスイッチで中身を決めます。ダイアログを開くたびに両方オンになっています：</p>
+<ul>
+<li><strong>WITH ITS SOUND：</strong>鳴っているソースまたはキット。</li>
+<li><strong>WITH ITS MODS：</strong>設定した MODS。誰も回していないノブは含まれません。</li>
+</ul>
+<p>両方オフなら、パターンだけを保存します。</p>
+<p>音色付きのプリセットは、ジャンルの下に ♪ と音色名が、MODS があれば「+ MODS」が表示されます。</p>
+<h3 id="loading-a-preset">プリセットを読み込む</h3>
+<p>プリセットダイアログ上部の 3 つのスイッチで、プリセットが持ち込むものを決めます：</p>
+<ul>
+<li><strong>WITH ITS SOUND</strong>（初期値はオフ）は、マシンをプリセットの音色に切り替えます。</li>
+<li><strong>WITH ITS MODS</strong>（初期値はオフ）は、プリセットの MODS のうち指定された部分だけを設定します。MODS のないプリセットはあなたの設定をそのままにします。</li>
+<li><strong>WITH ITS BARS</strong>（初期値はオン）は、プリセット自身の小節数を持ち込みます。オフなら、プリセットを最初の小節からいまの小節数に重ねます：短いプリセットは繰り返し、長いものは切ります。</li>
+</ul>
+<p>SOUND をオンにすると MODS もオンになります。音色は MODS と一緒に聴くものだからです。そのあと MODS だけをオフにもできます。MODS だけオンなら、プリセットの MODS をいま鳴っている音色に適用します。すべてオフならパターンだけを読み込みます。選択は記憶されます。</p>
+<p>SOUND と MODS はハイライトされたプリセットに従います：音色のないプリセットでは WITH ITS SOUND が、MODS のないプリセットでは WITH ITS MODS が薄くなり、それを持つプリセットでまた点灯します。</p>
+<h3 id="what-a-presets-sound-keeps">プリセットの音色に含まれるもの</h3>
+<p>本体にプリセットのソースやキットがなければ、音色のその部分はそのままです。サンプラーのプリセットは音色を持ちません。音はバンクの中にあるからです。ravving 付属のプリセットも音色を持ちません。USB メモリーにコピーしたプリセットは、ファイルの中に音色を持っています。</p>
+<h3 id="finding-presets">プリセットを探す</h3>
+<p>プリセットダイアログは音色の選択画面と同じように使えます：</p>
+<ul>
+<li><strong>ジャンルごとの GROUP チップ</strong>と、SORT：一覧順か A–Z。</li>
+<li><strong>★ お気に入り：</strong>プリセットを長押しするか、角の ★ をタップするか、ALT + SELECT。お気に入りは楽器ごとにプリセット名で記憶されるので、USB メモリーのプリセットと本体にコピーした同じプリセットは ★ を共有します。</li>
+</ul>
+<p>前回見たグループでは画面のプリセットが隠れてしまう場合、ダイアログは ALL で開きます。</p>
+<h3 id="templates">テンプレート</h3>
+<p>テンプレートはプロジェクトの始め方です：テンポ、スウィング、キー（ルートとスケール）、LIVE FX のノブ（PHASER、ECHO、HEAVY）。</p>
+<ol>
+<li>PROJECT ▾ → NEW の隣の TEMPLATES を開きます。</li>
+<li>SOURCE を選びます：本体、または USB メモリー（<code>ravving/presets/templates/</code> フォルダーから直接読み込み）。</li>
+<li>テンプレートを選ぶと、その設定で新しいプロジェクトが始まります。未保存の変更があれば、NEW と同じく先に確認します。</li>
+</ol>
+<p>SAVE TEMPLATE でいまのセッションの設定を本体にテンプレートとして保存し、DELETE で削除します。USB ダイアログの PRESETS でテンプレートを双方向にコピーできます。どのジャンルパックにもテンプレートが付き、キーごとに用意したパックもあります。</p>
+<h3 id="a-new-project-starts-clean">新しいプロジェクトはまっさらから</h3>
+<p>NEW は、テンプレートの有無にかかわらず、すべてのページを初期状態に戻します：</p>
+<ul>
+<li>各マシンに空のパターン（プリセットなし）</li>
+<li>各マシンの専用エンジンと、初期値の音色、ミックス、MODS、SOUND EFFECTS</li>
+<li>セクションは「A」の 1 つ</li>
+<li>LIVE FX は休止状態</li>
+</ul>
+<p>テンプレートはその上にテンポ、スウィング、キー、LIVE FX のノブを加えるだけです。デモのパターンはプロジェクトかプリセット経由でしか戻りません。</p>
+<h3 id="demos">デモ</h3>
+<p>ravving にはデモプロジェクトがいくつか付いています（PROJECT ▾ → DEMOS）。イメージ付属のサウンドフォントだけを使うので、どの MIKO でも同じ音で鳴ります。</p>
+<p>デモはほかのプロジェクトと同じように開けます。SAVE で変更をデモの名前の自分のプロジェクトとして保存します。デモそのものは変わらず、削除もできません。</p>
+<h2 id="sections-and-the-song">セクションとソング</h2>
+<p>ソングはひとつのループ以上のものです。<strong>セクション</strong>はすべてのマシンのパターンをまとめて持ち（イントロ、ヴァース、ブリッジ）、どのマシンが休むかも決めます。音色、エフェクト、レベル、テンポ、キーはプロジェクト全体のものなので、セクションを変えてもエンジンは再起動しません。</p>
+<p>セクションはライブです：画面のセクションが編集対象で、別のセクションを選んでも編集はそのセクションに残ります。最大 16 個まで作れ、プロジェクトに保存されます。</p>
+<h3 id="pick-a-section">セクションを選ぶ</h3>
+<ul>
+<li><strong>ALT + ステップキー 9–16</strong> でどのページからでもセクション 1–8 を選べます。ALT を押している間、セクションの色で光ります。ALT + 1–8 は LIVE FX のパッドのままです。</li>
+<li>大ノブの横にある <strong>X と Y</strong> で、どのページやダイアログからでも前後のセクションへ移動し、端まで行くと反対側に戻ります。切り替わる前にもう一度押すと、キューに追加せず選択をさらに進めます。セクションが 1 つだけなら、SONG ページで追加するようメッセージが出ます。</li>
+<li><strong>SONG ページ</strong>（下）にはセクションごとのキーがあります。</li>
+</ul>
+<p>再生中は、選んだセクションが次の小節の頭でぴったり切り替わります：音が抜けたり重なったりせず、パートが変わらないマシンはそのまま鳴り続けます。停止中はすぐに切り替わります。</p>
+<h3 id="when-a-switch-lands-bar-or-section">切り替えのタイミング：BAR か SECTION</h3>
+<p>SONG ページの SWITCH 設定はプロジェクトに保存されます：</p>
+<ul>
+<li><strong>BAR：</strong>選んだセクションが次の小節から始まります。</li>
+<li><strong>SECTION：</strong>鳴っているセクションが 1 周し終えるのを待ち、その小節の頭で切り替えます。その間キーが点滅し、鳴っているキーは点灯したままです。鳴っているセクションをもう一度選ぶとキャンセル、停止すると即座に切り替わります。1 小節のセクションは毎小節で終わります。</li>
+</ul>
+<p>切り替えは必ず小節の頭で起こり、小節の途中では起こりません。</p>
+<h3 id="queue-up-sections">セクションをキューに入れる</h3>
+<p>LOOP では選択を<strong>3 つまで</strong>並べられます。それぞれ 1 周鳴って次に移り、最後のものがループし続けます。</p>
+<ul>
+<li>キーにはキューの順番が表示されます：点滅する 1 が次です。</li>
+<li>キューにあるキーをもう一度選ぶと、キューから外れます。</li>
+<li>鳴っているセクションを選ぶとキューが空になります。</li>
+<li>4 つ目の選択は QUEUE FULL で断られます。</li>
+<li>停止すると最初のものが入り、残りは消えます。</li>
+</ul>
+<p>SONG では待機できる選択は 1 つだけで、新しく選ぶと置き換わります。</p>
+<h3 id="loop-or-once-for-each-machine">マシンごとの LOOP か ONCE</h3>
+<p>各マシンのストリップには ❚❚ の隣に LOOP | ONCE ボタンがあり、❚❚ と同じくセクションごとに保存されます。</p>
+<p>セクションの長さは最も長いパターン、または LENGTH で設定した長さです。短いパターンは初期設定で <strong>LOOP</strong> します：4 小節のリードの下で 2 小節のドラムが 2 回鳴ります。<strong>ONCE</strong> なら自分の小節を 1 回鳴らし、セクションが再び始まるまで休みます。</p>
+<p>休みは小節の頭ちょうどから始まり、鳴っている音は自然に消えます。休んでいる間は再生位置が表示されず、ライブで弾いた音は聞こえますが書き込まれません。</p>
+<h3 id="see-where-you-are">いまどこにいるか</h3>
+<ul>
+<li><strong>プレート：</strong>ヘッダーのプロジェクトプレートに、画面のセクションが番号付きの四角いキーとしてその色で表示されます。小節の頭を待つ間は点滅します。タップで SONG ページを開きます。</li>
+<li><strong>セクションが変わると</strong>、プレートがその色で流れ、楽器ページの枠が一度光ります。</li>
+<li><strong>セクションキー</strong>は、ここでも SONG ページでも、セクションの進み具合で満ちていきます。</li>
+</ul>
+<h3 id="section-keys-in-the-header">ヘッダーにセクションキー</h3>
+<p>プロジェクトプレートを長押しするか <strong>ALT + MODE</strong> を押すと、ヘッダーの LIVE FX パッドがセクションキーに入れ替わります。もう一度でパッドに戻ります。ALT を押している間 MODE はオレンジに光り、MODE だけなら入力モードの切り替えのままです。</p>
+<ul>
+<li>キーを<strong>タップ</strong>して選びます（再生中は次の小節で）。▶ が鳴っているキーを示し、進み具合で満ちていきます。</li>
+<li><strong>キーを上にスワイプ</strong>するとそのセクションを削除します。指についてきて、高さの半分を超えると飛んでいきます。最後のセクションは削除できません。</li>
+<li>入りきらないときは<strong>横にスワイプ</strong>します。ストリップは、現在のセクションやソングが到達したセクションまで自動でスライドします。</li>
+<li><strong>＋</strong> はストリップの最後に固定されています。</li>
+</ul>
+<p>キーがヘッダーにあるときは ALT + 1–16 でセクション 1–16 を選びます。ヘッダーのセクショングループにフォーカスがある間（◀ ▶ で移動）は、ステップキーだけで選べます。</p>
+<h3 id="the-song-page">ソングページ</h3>
+<p>どこからでも ALT + 1 で開き、もう一度押すと戻ります。MIXER と同じくヘッダーの下に表示されます。数字キーでも抜けられ、元のページが同じドラムマシンのまま戻ります。</p>
+<p>セクションは番号と名前の付いた四角いキーで、1 列に 8 つ並びます。1 列目は ALT キーに対応します。各キーには、そこで鳴るマシンごとに点が付きます。</p>
+<ul>
+<li><strong>タップ</strong>でセクションを選び、<strong>ダブルタップ</strong>で名前を変え、<strong>長押ししてドラッグ</strong>で移動。</li>
+<li><strong>×</strong> は 2 回目のタップで削除します。</li>
+<li><strong>＋</strong> で画面のセクションをコピー（A が A′ になります）。</li>
+</ul>
+<p>新しいセクションは、空（NEW）でもコピー（＋）でも、ソングの最後に加わり画面に表示されます。</p>
+<p>セクションの上の列には RENAME、NEW（空のセクション）、COLOUR、LENGTH（1–8 小節、または最長パターンに合わせる AUTO）、MOVE、ADD TO SONG があります。</p>
+<p><strong>ソング</strong>はブロックの列で、各ブロックの幅は小節数×リピート数です。ブロックを選んで移動、リピート（×1〜×16）の設定、削除ができます。</p>
+<table>
+<thead>
+<tr>
+<th>キー</th>
+<th>ソングページで</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>◀ ▶</td>
+<td>キーやブロックを移動</td>
+</tr>
+<tr>
+<td>▲ ▼</td>
+<td>セクションキーとソングの間を移動</td>
+</tr>
+<tr>
+<td>SELECT かステップキー</td>
+<td>選択</td>
+</tr>
+<tr>
+<td>ALT + ◀ ▶</td>
+<td>選んだキーやブロックを移動</td>
+</tr>
+<tr>
+<td>ノブ 1</td>
+<td>長さ</td>
+</tr>
+<tr>
+<td>ノブ 2</td>
+<td>リピート</td>
+</tr>
+<tr>
+<td>BACK</td>
+<td>閉じる</td>
+</tr>
+</tbody>
+</table>
+<h3 id="play-the-whole-song">ソング全体を再生する</h3>
+<p>SONG ページの LOOP | SONG で、PLAY が鳴らすものを決めます：画面のセクションをループするか、ソングを最初から最後まで。</p>
+<ul>
+<li><strong>SONG では</strong>各パートが時間どおりに準備され、ソングは終わりの小節の頭で止まります。鳴っているブロックに進み具合が出て、プレートにパートが「6/9」のように表示されます。</li>
+<li id="the-instrument-pages-follow-the-song"><strong>楽器のページはソングに従います。</strong>再生中はいつもどおりノートグリッドがロックされます（LOCK を参照）。ロックを外して編集すると、鳴っているセクションに入ります。</li>
+<li><strong>▶ PLAY FROM HERE</strong> で好きなブロックからソングを始めます。</li>
+<li>ソング再生中に<strong>手でセクションを選ぶ</strong>と、そのセクションの最初のパートへジャンプします。ソングで使っていないセクションなら LOOP に戻ります。</li>
+</ul>
+<p>全部を録るには EXPORT → WHAT：SONG でソング全体を余韻付きで 1 テイクに録ります。LOOP なら BARS × LOOPS を録ります。</p>
+<h2 id="languages">言語</h2>
+<p>ravving は英語、スペイン語、日本語に対応し、それぞれのミュージシャンの言葉を使います：BATERÍA、BOMBO、COMPÁS、ドラム、キック、小節。</p>
+<p>MENU → SETTINGS → LANGUAGE で選びます。初期値の SYSTEM は本体の言語に従います。画面はすぐに切り替わります。</p>
+<p>本体に印刷されたキー（MENU、ALT、SELECT…）とマシンの名前は印刷どおりのままです。ウェブページにもスペイン語と日本語のページがあり、上部バーで切り替えられます。開発者向けドキュメントは英語です。</p>
+<h2 id="startup-splash">起動画面</h2>
+<p>ravving は起動中にロゴを表示し、短い演出をしてからページに移ります。</p>
+<p>MENU → SETTINGS → STARTUP で見た目を選びます。次回の起動から反映されます：</p>
+<table>
+<thead>
+<tr>
+<th>見た目</th>
+<th>できること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ANIME</td>
+<td>5 つの flow-lens ロゴを素早く切り替えて glow のロゴへ</td>
+</tr>
+<tr>
+<td>GLOW</td>
+<td>ランダムに 1 つ、ハローが広がる</td>
+</tr>
+<tr>
+<td>STILL</td>
+<td>ランダムに 1 つ、フェード</td>
+</tr>
+<tr>
+<td>ZOOM</td>
+<td>流れるロゴが画面の外へ飛び出す</td>
+</tr>
+<tr>
+<td>ARU</td>
+<td>ピクセルのタコ、オオカミの子、エイリアンのどれかがランダムに、手を振ってジャンプ</td>
+</tr>
+<tr>
+<td>OFF</td>
+<td>演出なし</td>
+</tr>
+</tbody>
+</table>
+<p>スタジオを読み込んでいる間、起動画面は静止画なので起動が速いままです。</p>
+<h2 id="exports-and-the-music-player">書き出しとミュージックプレーヤー</h2>
+<p>PROJECT ▾ → EXPORT でプロジェクトを本体の外へ、ライブラリの <code>exports/</code> フォルダーに書き出します。2 種類あります。</p>
+<h3 id="a-track">トラック</h3>
+<p>スピーカーから聞こえるとおりの曲全体。ravving はプロジェクトを最初の拍から BARS × LOOPS 小節ぶん鳴らし、エコーのための TAIL を加えて、サンプル単位で正確に切って録音します。</p>
+<ul>
+<li><strong>形式：</strong>24 ビット WAV、FLAC、OGG Vorbis、MP3。</li>
+<li><strong>タグ：</strong>タイトル、アーティスト、アルバムまたはミックステープ、ジャンル、作曲者、コメント、日付、BPM。</li>
+<li><strong>カバー画像</strong>：タイトルとアーティストから描き、MADE WITH RAVVING を添えます。</li>
+<li><strong>JSON ファイル</strong>：同じ情報を横に保存します。</li>
+</ul>
+<p>マスターのレベルはそのまま保ちます。フルスケールを超える曲は −0.1 dBFS まで下げ、JSON ファイルにそう記します。</p>
+<p>ARTIST と COMPOSER はプロフィールの作者（MENU → SETTINGS：USER と AUTHOR）から始まります。前回入力した ALBUM と GENRE がまた候補に出ます。</p>
+<h3 id="a-bundle">バンドル</h3>
+<p>使っているサンプルをすべて含めたプロジェクトの <code>.ravv</code> zip で、ほかの ravving でもまったく同じに鳴ります。PROJECT ▾ → IMPORT で <code>exports/</code> と、転送が届くライブラリのメインフォルダーにあるバンドルが並び、プロジェクトに戻せます。</p>
+<h2 id="notes-outside-the-scale">スケール外の音</h2>
+<p>MENU → SETTINGS → INTERACTIONS に <strong>NOTES OUTSIDE THE SCALE</strong> があり、初期値はオンです。キー外の音を弾いたとき（MIDI キーボードなどで、リード、ベース、コードの NOTES で）の動作を決めます：</p>
+<ul>
+<li><strong>オン：</strong>音が鳴って記録され、ピアノロールの専用の行に入ります。</li>
+<li><strong>オフ：</strong>そこでは消音され、記録されません。</li>
+</ul>
+<p>ドラム、サンプラー、度数で弾くコードはこの設定に関係しません。</p>
+<h2 id="video-recordings-and-the-computer-link">ビデオ録画とコンピューター接続</h2>
+<p>コントロールセンターの LIVE REC カードでセッションを録画します。</p>
+<h3 id="start-a-recording">録画を始める</h3>
+<ol>
+<li><span>LIVE REC をタップします。ダイアログで WHAT（何を録るか）を聞かれます：</span><ul>
+<li><strong>VIDEO：</strong>画面か USB カメラの映像とマスターの音。ライブラリの <code>videos/</code> フォルダーに MP4 で保存します。</li>
+<li><strong>AUDIO ONLY：</strong>音だけ。書き出しフォルダーの TRACKS に 24 ビット WAV で保存します。</li>
+</ul>
+</li>
+<li>MIC を入れるかどうかを選びます。</li>
+<li>START をタップします。ダイアログが確認を兼ねるので、うっかりタップで録画が始まることはありません。</li>
+</ol>
+<p>LIVE REC がオンの間は、どのページからでも本体の RECORD キーで録画を始め、STOP で終えます。音楽は鳴り続けます。新しいプロジェクトにすると LIVE REC はオフになります。</p>
+<h3 id="video-settings">ビデオの設定</h3>
+<p>SETTINGS · VIDEO には次があります：</p>
+<ul>
+<li><strong>QUALITY：</strong>3 段階。どれも音に負担をかけません。</li>
+<li><strong>TIMER：</strong>録画開始前のカウントダウン。</li>
+<li><strong>SOURCE：</strong>画面か USB カメラ。</li>
+<li><strong>MIC：</strong>レコーダーの入力をビデオの音に加えます。</li>
+<li><strong>VOICE：</strong>ボイスオーバーのミックス（下を参照）。</li>
+</ul>
+<p>録画中のものにも反映されます。</p>
+<h3 id="talking-over-the-music">音楽に声を重ねる</h3>
+<p>MIC を入れると、ravving は声を音楽の上にミックスします：</p>
+<aside class="aru-tip"><span class="aru" data-mood="gregorian" data-species="alien"></span><p>一緒に歌おう。声が入ると音楽が下がり、止めると戻ってくる。</p></aside>
+<ul>
+<li>話している間は音楽が声の下に下がります：DUCK は −6、−12、−18 dB で、初期値は −12。</li>
+<li>声は +6 か +12 dB 上がり、ローカットとプレゼンスの持ち上げで聞き取りやすくなります。</li>
+<li>ravving は声とスピーカーからマイクに回り込む音を聞き分けるので、ビート自身で音楽が下がることはありません。</li>
+<li>リミッターがミックスのクリップを防ぎます。</li>
+</ul>
+<p>VIDEO をオンにした時点から、マイクの LEVEL が SETTINGS とプロジェクトプレートに表示されます。MIC TOO HOT はピークが −6 dBFS を超えているという意味なので、レコーダーの GAIN を下げます。レコーダーが GUITAR か LINE なら、入力はそのままミックスされます。</p>
+<h3 id="when-a-recording-ends">録画が終わったら</h3>
+<p>VIDEO SAVED か LIVE REC SAVED に次があります：</p>
+<ul>
+<li><strong>DELETE</strong>（左）。3 秒以内にもう一度タップで確定。</li>
+<li id="rename"><strong>RENAME。</strong>拡張子はそのままです。</li>
+<li><strong>SEND…</strong>：USB メモリー、コンピューター、スマホへ。</li>
+<li><strong>METADATA…</strong>（音声の録音のみ）。ファイルに対して書き出しダイアログを開き、タグ付け、カバーの作成、WAV・FLAC・OGG・MP3 での保存ができます。</li>
+</ul>
+<p>同じ SEND… はミュージックプレーヤーの曲、FILES、プリセットのダイアログにもあります。書き出しダイアログでは、新しい曲やバンドルを書き出しながらコンピューターへ送ることもできます。</p>
+<h3 id="your-computers">コンピューター</h3>
+<p>SETTINGS · COMPUTERS には、ネットワーク上のノート PC やパソコンを何台でも登録できます。</p>
+<ol>
+<li>ADD A COMPUTER をタップします。</li>
+<li>ホスト名、ユーザー名、パスワードを入力します。パスワードは一度だけ、本体の鍵をそのコンピューターにインストールするのに使います。</li>
+<li>送ったファイルはそのコンピューターのダウンロードフォルダーに届きます。</li>
+</ol>
+<p>各コンピューターに CHANGE（設定し直す）、TEST、FORGET があります。</p>
+<h2 id="sending-to-a-phone">スマホに送る</h2>
+<p>どの SEND… ボタンにも、USB メモリーとコンピューターの横に 3 つ目の送り先 <strong>PHONE · QR CODE</strong> があります。SEND… は FILES、VIDEO SAVED、ミュージックプレーヤー、プリセットのダイアログ、音色の選択画面にあります。iPhone を含むどのスマホでも、ペアリングもアプリもアカウントも不要です。</p>
+<ol>
+<li>スマホが本体と同じ Wi-Fi にあることを確認します。本体がネットワークにつながっていなければダイアログが知らせます。</li>
+<li>PHONE · QR CODE をタップすると QR コードが出ます。</li>
+<li>スマホのカメラを向けてリンクを開きます。</li>
+<li>Safari か Chrome がファイルをスマホのダウンロード（iPhone ではファイル App）に保存します。</li>
+</ol>
+<p>ダイアログには WAITING FOR THE PHONE、SENDING n %、DOWNLOADED ✓ と表示され、ファイル全体が届くとメッセージで知らせます。入力したい人のために、リンクも文字で表示されます。</p>
+<ul>
+<li>リンクはダイアログが開いている間、最大 15 分間使えます。ダイアログを閉じると終わります。</li>
+<li>送れるのは 1 回に 1 ファイルです。複数渡すと最初のものを送り、その旨を伝えます。</li>
+</ul>
+<h3 id="the-ravving-page-on-your-phone">スマホで見る ravving のページ</h3>
+<p>同じサーバーで <strong>ravving のページ</strong>（説明、機能、すべてのショートカット）も見られます。本体にはブラウザーがないので、SETTINGS → HELP → OPEN でスマホ用の QR コード、またはノート PC 用のアドレスとして表示します。</p>
+<p>QR コードは公開ページ <strong>https://ravving.github.io/</strong> を指し、どこからでも開けます。インターネットのない Wi-Fi 用に、本体のアドレス（<code>http://&lt;device&gt;:8098/help/</code>）がその下にあります。</p>
+<h2 id="files">ファイル</h2>
+<p>コントロールセンターの FILES カードには、ライブラリのすべてが種類ごとに新しい順で並びます：プロジェクト、テンプレート、プリセット、サンプル、テイク、レコーダーのテイク、録音、曲、バンドル、サウンドフォント、MIDI ファイル、ビデオ、受信したファイル。</p>
+<p>各ファイルに <strong>SEND…</strong>（USB メモリー、コンピューター、スマホ）と <strong>DELETE</strong> があります。ファイルを本体から出したり削除したりできるのは FILES だけです。PROJECT ダイアログは開く・保存・書き出しを、USB ページは USB メモリーからの取り込みを担当します。</p>
+<h3 id="browse-from-your-phone">スマホから見る</h3>
+<p>FILES の上にある <strong>PHONE · BROWSE</strong> で QR コードを表示し、同じ Wi-Fi のスマホやノート PC でライブラリをウェブページとして開けます：</p>
+<ul>
+<li>種類ごとのファイル数</li>
+<li>種類ごとのファイルと、その詳細、サイズ、日付</li>
+<li>ファイルごとの DOWNLOAD ボタン</li>
+</ul>
+<p>プロジェクトなどフォルダーのものは「本体上」と表示されます。リンクは、スマホから 15 分間何も要求がなくなるまで、ダイアログを閉じても開いたままです。その後はスマホにリンクの期限切れが表示されます。</p>
+<h2 id="usb-sticks">USB メモリー</h2>
+<p>USB メモリーを挿すと、ravving が必要なときにマウントします。終わったら EJECT（書き出しダイアログか USB ページ）を押し、安全になってから抜きます。</p>
+<h3 id="save-to-a-stick">USB メモリーに保存する</h3>
+<ul>
+<li><strong>書き出し：</strong>USB メモリーは書き出しダイアログに USB の行として表示されます。曲やバンドルはいつもどおり本体に保存され、USB メモリーの <code>ravving/exports/</code> か <code>ravving/projects/</code> フォルダーにもコピーされます。</li>
+<li><strong>保存したプロジェクト：</strong>FILES から送ります。SEND… が USB メモリー用のバンドルにまとめます。</li>
+<li><strong>USB メモリーからプロジェクトを開く：</strong>PROJECT ▾ → IMPORT に、本体のものと並んで、挿しているすべての USB メモリーのバンドルが表示されます。</li>
+</ul>
+<h3 id="the-usb-page">USB ページ</h3>
+<p>ドロワーの USB カードで USB ページを開きます。2 つの面があります：</p>
+<ul>
+<li><strong>ON USB</strong> は USB メモリーの中身を種類ごとに表示します：SAMPLES、SOUNDFONTS、PROJECTS、TRACKS、MIDI FILES。IMPORT をタップすると本体にコピーし、✓ ON DEVICE と表示されます。</li>
+<li><strong>FROM DEVICE</strong> はライブラリを表示し、各ファイルに TO USB があります。</li>
+</ul>
+<p>フォルダーパスの横の IMPORT ALL で、画面のフォルダーの新しいファイルを一度にすべてコピーします。サンプルパック丸ごとでもワンタップで、進行状況と STOP ボタンが出ます。</p>
+<p>取り込んだファイルの行き先：</p>
+<table>
+<thead>
+<tr>
+<th>種類</th>
+<th>場所</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>サンプル</td>
+<td><code>samples/imported/&lt;stick&gt;/</code>（USB メモリーのフォルダー構成のまま）</td>
+</tr>
+<tr>
+<td>サウンドフォント</td>
+<td><code>soundfonts/</code></td>
+</tr>
+<tr>
+<td>MIDI ファイル</td>
+<td><code>midi/</code></td>
+</tr>
+<tr>
+<td>曲</td>
+<td><code>exports/</code>（ミュージックプレーヤーが見つける場所）</td>
+</tr>
+<tr>
+<td>プロジェクト</td>
+<td>バンドルとして取り込み</td>
+</tr>
+</tbody>
+</table>
+<p>本体のキーでは：◀ ▶ で種類、ALT + ◀ ▶ で面を切り替え、▲ ▼ でファイルを選び、SELECT でコピー。EJECT はヘッダーにあります。</p>
+<h3 id="pattern-presets-from-a-stick">USB メモリーのパターンプリセット</h3>
+<p>パターンツールバーの PRESET を開きます。USB メモリーを挿していると SOURCE の行が出ます：DEVICE、または USB · とメモリーの名前。メモリーを選ぶと、そのマシン用のプリセットが表示され、コピーせずにそのまま鳴らせます。元に戻す 1 ステップでパターンが戻ります。</p>
+<p>ダイアログはいまのパターンの出どころで開き、そのプリセットに印が付きます。</p>
+<h3 id="soundfonts-from-a-stick">USB メモリーのサウンドフォント</h3>
+<p>取り込んだサウンドフォントはすぐに使えます：</p>
+<ul>
+<li>ドラムキットらしければ、キット選択の IMPORTED に入ります。</li>
+<li>中のプリセットはそれぞれコード、ベース、リードの音色になり、「フォント名 · プリセット名」として、フォントごとにまとめて表示されます。</li>
+</ul>
+<h3 id="more-than-one-stick-or-a-locked-one">複数の USB メモリー、またはロックされたもの</h3>
+<p>USB メモリーやパーティションが複数あると、USB カードがそれぞれの名前を出し、どれを開くか尋ねます。</p>
+<p>読み取り専用の USB メモリー（ロックされたもの、インストーラーのイメージ）はその旨を表示します。何もコピーされず、ページに FORMAT が出ます。FORMAT はメモリー全体を消去し、RAVVING という名前の書き込み可能な FAT32 パーティション 1 つにします。EJECT と FORMAT は、3 秒以内にもう一度押す必要があります。</p>
+<h2 id="bluetooth">Bluetooth</h2>
+<p>MENU → BLUETOOTH にデバイスが並びます：接続中のもの、ペアリング済みのもの、範囲内のものの順です。ペアリング済みで未接続のデバイスには「paired · not connected」と表示されます。</p>
+<h3 id="find-and-pair-a-device">デバイスを探してペアリングする</h3>
+<ol>
+<li>Bluetooth をオンにします。</li>
+<li>SCAN をタップします。スピーカー、ヘッドホン、スマホ、コンピューターを短時間で探します。</li>
+<li>デバイスをタップして行を開き、PAIR をタップします。</li>
+<li>ravving が上部で尋ねたら、パスキーを確認するか PIN を入力します。</li>
+</ol>
+<p>スピーカーが鳴っている間は SCAN が自動で始まりません。本体の共有の無線でスキャンすると Bluetooth の音が途切れるからです。VISIBLE にすると 3 分間スマホから本体が見つかり、ファイルを送ってもらえます。</p>
+<h3 id="what-a-devices-row-offers">デバイスの行でできること</h3>
+<ul>
+<li id="connect-disconnect"><strong>CONNECT / DISCONNECT。</strong></li>
+<li><strong>SEND…</strong> で書き出した曲やバンドルを送ります。進行状況は下に出ます。</li>
+<li><strong>PLAY THROUGH</strong> でスタジオの音をすべてスピーカーやヘッドホンに送ります。DEVICE OUTPUT で戻します。同じ選択はドロワーの AUDIO OUTPUT カードにも、ジャックや HDMI と並んであります。</li>
+<li><strong>SBC-XQ</strong> でこのデバイスの音質を選びます：オンなら SBC-XQ（データ量が多く音がきめ細かい）、オフなら通常の SBC（接続が弱くても安定）。設定していないデバイスは SETTINGS に従います。SBC-XQ でスピーカーの音が割れるなら、そのスピーカーだけオフにします。</li>
+<li><strong>FORGET</strong> でペアリングを解除します。</li>
+</ul>
+<p>スマホから送られたファイルはライブラリの <code>incoming/</code> フォルダーに届きます。バンドルは PROJECT ▾ → IMPORT に、曲はミュージックプレーヤーの「Received」に表示されます。</p>
+<h3 id="when-a-device-doesnt-connect">デバイスがつながらないとき</h3>
+<p>スリープ中、起動中、スマホとつながっているスピーカーには、約 35 秒の間にあと 3 回呼びかけます。その間、行には「waking…」と表示され、DISCONNECT で試行をやめます。それでも応答がなければ、ravving は NOT ANSWERING: FREE IT FROM A PHONE, OR TURN IT OFF AND ON と表示します。</p>
+<aside class="aru-tip"><span class="aru" data-mood="jazz" data-species="wolf"></span><p>スピーカーがうとうと？ravving はあきらめる前にあと 3 回呼びかけるよ。</p></aside>
+<h3 id="one-audio-device-at-a-time">オーディオデバイスは一度に 1 台</h3>
+<p>鳴らせるスピーカーやヘッドホンは一度に 1 台だけです。鳴っている間に 2 台目をつなぐと音がそちらに移り、1 台目は切断されます。</p>
+<p>Bluetooth がオンになると、ほかに何も鳴っていなければ、ravving は前回選んだ出力に一度だけ再接続します。</p>
+<p>音楽を送っている Bluetooth 出力が無音になったら、ravving が自動でもう一度音を送ります。それでも音が戻らなければ、お知らせセンターが知らせます。</p>
+<p>MIKO に入っている Zynthbox は Bluetooth に少し設定が必要ですが、ravving のセットアップが行います。</p>
+<h2 id="the-music-player">ミュージックプレーヤー</h2>
+<p>MENU → MUSIC PLAYER は、書き出した曲と ● の録音のためのフルスクリーンのプレーヤーです。DASHBOARD で戻ります。</p>
+<ul>
+<li><strong>左：</strong>TRACKS、ALBUMS、ARTISTS。</li>
+<li><strong>右：</strong>カバー、トランスポート、再生位置、音量、その下に QUEUE。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>キー</th>
+<th>できること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1, 2, 3</td>
+<td>ビューの切り替え</td>
+</tr>
+<tr>
+<td>▲ ▼</td>
+<td>曲を選ぶ</td>
+</tr>
+<tr>
+<td>選択</td>
+<td>再生</td>
+</tr>
+<tr>
+<td>PLAY</td>
+<td>一時停止</td>
+</tr>
+<tr>
+<td>STOP</td>
+<td>停止</td>
+</tr>
+<tr>
+<td>大ノブ</td>
+<td>音量</td>
+</tr>
+<tr>
+<td>ノブ 1</td>
+<td>曲の再生位置</td>
+</tr>
+<tr>
+<td>BACK</td>
+<td>閉じる</td>
+</tr>
+</tbody>
+</table>
+<p>プレーヤーを開くとビートが止まり、閉じるとプレーヤーが止まります。</p>
+<h2 id="audio-output">オーディオ出力</h2>
+<p>MENU → AUDIO OUTPUT でスタジオの音の出力先を選びます：</p>
+<ul>
+<li>本体のジャック（初期値）</li>
+<li>HDMI</li>
+<li>BLUETOOTH ダイアログでつないだ Bluetooth スピーカーやヘッドホン</li>
+</ul>
+<p>音は 1 か所からだけ、途切れずに出ます。ダイアログを開いている間、機器をつなぐとリストが更新されます。ミュージックプレーヤーも選んだ出力に従います。</p>
+<h3 id="your-choice-is-remembered">選択は記憶されます</h3>
+<p>出力がなくなると（ヘッドホンの電源を切ったときなど）、音はジャックに戻ります。再起動や再接続で出力が戻ればすぐに切り替わります。Bluetooth の出力では、Bluetooth がオンになったときに再接続できるよう ravving がアドレスを覚えておきます。ジャックを選ぶと記憶は消えます。</p>
+<h3 id="volume-and-quality">音量と音質</h3>
+<ul>
+<li><strong>ドロワーの OUTPUT スライダー</strong>（ノブ 2）でレベルを設定します：ジャックではアンプのレベル、それ以外は出力自体のレベル。</li>
+<li><strong>ドロワーの BRIGHTNESS スライダー</strong>（ノブ 1）で画面の明るさを設定します。画面が真っ暗なのは、たいていこれが最小になっているだけです。</li>
+<li><strong>SBC-XQ：</strong>ペアリングしたスピーカーやヘッドホンには、BLUETOOTH ダイアログにそれぞれ SBC-XQ のチップがあります。オフなら通常の SBC で鳴り、接続が弱くても安定します。個別に選んでいないデバイスは SETTINGS に従います。</li>
+</ul>
+<p>音楽を送っている出力が 6 秒間無音なら、ravving は一度だけ音を送り直します。それでも無音なら、お知らせセンターが知らせます。</p>
+<h2 id="the-recorder">レコーダー</h2>
+<p>MENU → RECORDER は、入力から演奏をそのまま録音するフルスクリーンのページです。ビートは鳴り続けるので、その上にテイクを録れます。</p>
+<h3 id="set-up-the-input">入力を設定する</h3>
+<ul>
+<li><strong>入力：</strong>MIC、GUITAR、LINE のタブ。</li>
+<li><strong>MONITOR</strong> とその LEVEL で自分の音を聞きます。</li>
+<li><strong>GAIN</strong>：メーターとジャックのライト付き。</li>
+<li><strong>● REC</strong>：入力レベルのグラフの横。</li>
+</ul>
+<p><strong>KEEP TAKES IN</strong> でテイクの保存先を決めます：</p>
+<ul>
+<li><strong>SAMPLES</strong>（<code>samples/recordings</code>）：サンプラーのブラウザーが見つける場所</li>
+<li><strong>TRACKS</strong>（ライブラリの <code>recordings</code>）：ミュージックプレーヤーが見つける場所</li>
+</ul>
+<p>テイクは入ってきたとおりに保存します：圧縮もトリミングも SMART での停止もなし。</p>
+<h3 id="effects-for-the-input">入力用のエフェクト</h3>
+<p>EFFECTS の列には入力用のエフェクトがあります。GUITAR ではアンプとペダル：AMP、OVERDRIVE、FUZZ、TUBE、WAH、HOT AMP。</p>
+<h3 id="your-recordings">録音</h3>
+<p>右には両方の場所の RECORDINGS が新しい順に並びます。それぞれに次があります：</p>
+<ul>
+<li id="play"><strong>▶ PLAY。</strong></li>
+<li><strong>TRIM</strong> と <strong>NORMALISE</strong>：横に新しい録音を作ります。</li>
+<li><strong>TO SAMPLE KING / TO PADS</strong>：スロットかパッドへ。</li>
+<li><strong>CHOP…</strong>：波形エディター経由で SAMPLE KING のバンクかパッドへ。</li>
+<li><strong>TO TRACKS / TO SAMPLES、RENAME</strong>、<strong>DELETE</strong>（2 回）。</li>
+</ul>
+<h3 id="the-tuner">チューナー</h3>
+<p>GUITAR のページにはチューナー（TUNER）があります。エフェクトの前の入力を聴いて、音名と何セントずれているかを ±50 の目盛りで表示します。チューニングの弦がボタンになっています。</p>
+<ul>
+<li><strong>AUTO</strong> は低い弦から順に進みます。3 セント以内を 0.8 秒保つと ✓ が付いて次の弦に移り、ALL STRINGS IN TUNE まで続きます。</li>
+<li><strong>MANUAL</strong> はタップした弦にとどまります。</li>
+<li><strong>TUNING</strong> でチューニングを選び、<strong>A4</strong> で基準音（430–450 Hz）を設定します。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>楽器</th>
+<th>チューニング</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ギター</td>
+<td>スタンダード、半音下げと全音下げ、ドロップ D と C、DADGAD、オープン D・G・E・C</td>
+</tr>
+<tr>
+<td>ベース</td>
+<td>4 弦と 5 弦、ドロップ D</td>
+</tr>
+<tr>
+<td>ウクレレ</td>
+<td>GCEA、バリトン</td>
+</tr>
+</tbody>
+</table>
+<p>チューナーは画面に表示している間だけ動きます。</p>
+<h3 id="keys">キー</h3>
+<table>
+<thead>
+<tr>
+<th>キー</th>
+<th>レコーダーでは</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>◀ ▶</td>
+<td>入力を選ぶ</td>
+</tr>
+<tr>
+<td>▲ ▼</td>
+<td>録音を選ぶ</td>
+</tr>
+<tr>
+<td>RECORD</td>
+<td>テイクを録る</td>
+</tr>
+<tr>
+<td>SELECT か PLAY</td>
+<td>選んだ録音を聴く</td>
+</tr>
+<tr>
+<td>STOP</td>
+<td>止める</td>
+</tr>
+<tr>
+<td>1, 2, 3</td>
+<td>ノブを INPUT、TUNER、EFFECTS に割り当てる</td>
+</tr>
+<tr>
+<td>大ノブ</td>
+<td>ゲイン</td>
+</tr>
+<tr>
+<td>BACK</td>
+<td>閉じる</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-issues-center">問題センター</h2>
+<p>メニューの ISSUES カード（MUSIC PLAYER、SETTINGS、USB カードの隣）は、いま本体で起きている問題を、わかりやすい言葉と対処法で知らせます。</p>
+<ul>
+<li><strong>ALL GOOD</strong>：問題なし。</li>
+<li><strong>それ以外</strong>は問題の数を、いちばん深刻なものの色で表示します。</li>
+</ul>
+<p>タップすると深刻な順に一覧が出ます。それぞれに詳細と提案があり、役立つときは RESTART RAVVING などのボタンも付きます。新しいエラーや警告はメッセージでも表示されます。</p>
+<p>見ているもの：</p>
+<ul>
+<li>サウンドエンジンがない、またはエンジンが起動できなかった</li>
+<li>現れなかったオーディオ接続や、音切れ</li>
+<li>本体のキーが反応しなくなった</li>
+<li>ミュージックプレーヤーが再生できない</li>
+<li>Bluetooth が使えない、または音が出ない出力</li>
+<li>失敗した書き出し、マウントできない USB メモリー、ほぼいっぱいのストレージ</li>
+</ul>
+<p>一覧の下には、ravving が最後に出した警告があります。</p>
+<h2 id="where-your-files-live">ファイルの保存場所</h2>
+<p>ravving は自分のフォルダーだけを使います：本体のサンプルライブラリを読み、書き込むのは次の場所だけです：</p>
+<table>
+<thead>
+<tr>
+<th>ルート</th>
+<th>本体上</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>config</td>
+<td><code>~/.config/ravving</code></td>
+<td>設定（入力の設定、UI の選択）</td>
+</tr>
+<tr>
+<td>state</td>
+<td><code>~/.local/state/ravving</code></td>
+<td>ライブセッション（<code>session.json</code>、シーケンス）。パージで削除</td>
+</tr>
+<tr>
+<td>cache</td>
+<td><code>~/.cache/ravving</code></td>
+<td>作り直せるもの：逆再生サンプル、生のテイク、LV2 ポートのキャッシュ</td>
+</tr>
+<tr>
+<td>library</td>
+<td><code>/zynthian/zynthian-my-data/ravving</code></td>
+<td>ユーザーの作品（再インストールしても残る）：<code>projects/</code>、<code>presets/</code>、<code>samples/</code>（テイクは <code>samples/takes/</code>、レコーダーのものは <code>samples/recordings/</code>、取り込んだバンドルのサンプルは <code>samples/imported/</code>）、<code>recordings/</code>（マスターとレコーダーの TRACKS）、<code>exports/</code></td>
+</tr>
+</tbody>
+</table>
+<p>デスクトップではライブラリは <code>~/.local/share/ravving</code> です。</p>
+</article>
+</main>
+<footer>
+<div class="wrap">
+<p>ravving は Camilo Higuita によるもので GPL‑3.0‑or‑later です。これらのページはリポジトリの markdown から tools/build-site-docs.py で生成されています。</p>
+</div>
+</footer>
+<script defer="" src="../../assets/aru.js?v=48f57bf155"></script>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
+  function load(done) {
+    if (index) return done();
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();
+(function () {
+  var NOTES = {
+    es: ["Esta página solo está en inglés.", "Documentación en español"],
+    ja: ["このページは英語のみです。", "日本語のドキュメント"]
+  };
+  var lang = document.documentElement.lang || "en";
+  var want;
+  try {
+    if (document.querySelector("nav.langs")) { localStorage.setItem("ravving-lang", lang); return; }
+    want = localStorage.getItem("ravving-lang");
+  } catch (e) { return; }
+  var note = NOTES[want];
+  if (!note) return;
+  var p = document.createElement("p");
+  p.className = "doc-langnote";
+  p.lang = want;
+  var a = document.createElement("a");
+  a.href = "../" + want + "/docs/index.html";
+  a.textContent = "← " + note[1];
+  p.append(note[0] + " ", a);
+  var doc = document.getElementById("doc");
+  doc.insertBefore(p, doc.firstChild);
+})();</script>
+</body>
+</html>

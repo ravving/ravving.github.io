@@ -10,7 +10,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Documentación · ravving</title>
-<link href="../../site.css?v=28f7125214" rel="stylesheet"/>
+<link href="../../site.css?v=56c8e55da8" rel="stylesheet"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E" rel="icon"/>
 </head>
 <body class="docs">
@@ -46,10 +46,10 @@
 <li><a href="troubleshooting.html">Cuando algo falla</a></li>
 <li><a href="machines.html">Las máquinas</a></li>
 <li><a href="first-beat.html">Tu primer beat</a></li>
-<li><a href="../../docs/manual.html">El manual</a></li>
+<li><a href="manual.html">El manual</a></li>
 </ul>
 <p class="mono">Los packs de patrones</p><ul>
-<li><a href="../../docs/packs.html">Los packs de géneros</a></li>
+<li><a href="packs.html">Los packs de géneros</a></li>
 </ul>
 <p class="mono">Por dentro</p><ul>
 <li><a href="../../docs/architecture.html">Arquitectura</a></li>
@@ -90,9 +90,9 @@
 <a class="doc-card" href="troubleshooting.html"><b>Cuando algo falla</b><span>Sin sonido, la pantalla oscura, Bluetooth, memorias USB y grabación: qué revisar y qué hacer.</span></a>
 <a class="doc-card" href="machines.html"><b>Las máquinas</b><span>Cada página de instrumento y los motores y sonidos que puede tocar, todos de código abierto.</span></a>
 <a class="doc-card" href="first-beat.html"><b>Tu primer beat</b><span>Del silencio a un proyecto guardado en pocos minutos: batería, una línea de bajo, tocar y guardar.</span></a>
-<a class="doc-card" href="../../docs/manual.html"><b>El manual</b><span>Las cinco páginas y lo que suena en ellas, los atajos, deshacer, las fuentes de sonido, los presets, las plantillas, las secciones y la canción, las exportaciones, LIVE REC, los archivos, las memorias USB, Bluetooth, el RECORDER y el centro de avisos.</span></a></div>
+<a class="doc-card" href="manual.html"><b>El manual</b><span>Las cinco páginas y lo que suena en ellas, los atajos, deshacer, las fuentes de sonido, los presets, las plantillas, las secciones y la canción, las exportaciones, LIVE REC, los archivos, las memorias USB, Bluetooth, el RECORDER y el centro de avisos.</span></a></div>
 <h2 id="the-pattern-packs">Los packs de patrones</h2>
-<div class="doc-cards"><a class="doc-card" href="../../docs/packs.html"><b>Los packs de géneros</b><span>Los packs de presets de patrones para una memoria USB: qué es cada preset, su tempo, su sonido, la escala en que está escrito y la plantilla que trae.</span></a></div>
+<div class="doc-cards"><a class="doc-card" href="packs.html"><b>Los packs de géneros</b><span>Los packs de presets de patrones para una memoria USB: qué es cada preset, su tempo, su sonido, la escala en que está escrito y la plantilla que trae.</span></a></div>
 <h2 id="under-the-hood">Por dentro</h2>
 <div class="doc-cards"><a class="doc-card" href="../../docs/architecture.html"><b>Arquitectura</b><span>Las capas, el recorrido de las teclas y el modelo de foco, el puente con libzynthbox, los archivos y el tema.</span></a>
 <a class="doc-card" href="../../docs/backend.html"><b>Clases del backend</b><span>Cada clase de la biblioteca del backend y cómo la usan las demás.</span></a>
@@ -175,6 +175,29 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
   var q = new URLSearchParams(location.search).get("q");
   if (q) { box.value = q; run(); }
+})();
+(function () {
+  var NOTES = {
+    es: ["Esta página solo está en inglés.", "Documentación en español"],
+    ja: ["このページは英語のみです。", "日本語のドキュメント"]
+  };
+  var lang = document.documentElement.lang || "en";
+  var want;
+  try {
+    if (document.querySelector("nav.langs")) { localStorage.setItem("ravving-lang", lang); return; }
+    want = localStorage.getItem("ravving-lang");
+  } catch (e) { return; }
+  var note = NOTES[want];
+  if (!note) return;
+  var p = document.createElement("p");
+  p.className = "doc-langnote";
+  p.lang = want;
+  var a = document.createElement("a");
+  a.href = "../" + want + "/docs/index.html";
+  a.textContent = "← " + note[1];
+  p.append(note[0] + " ", a);
+  var doc = document.getElementById("doc");
+  doc.insertBefore(p, doc.firstChild);
 })();</script>
 </body>
 </html>

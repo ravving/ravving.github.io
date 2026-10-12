@@ -1,0 +1,5047 @@
+<!DOCTYPE html>
+
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from data/secret/README.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html class="no-js" data-docs-base="../../docs/" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>ジャンルパック · ravving ドキュメント</title>
+<link href="../../site.css?v=56c8e55da8" rel="stylesheet"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E" rel="icon"/>
+</head>
+<body class="docs">
+<a class="skip" href="#doc">本文へ移動</a>
+<header class="nav">
+<div class="wrap">
+<a aria-label="ravving" class="brand" href="../index.html">
+<img alt="ravving" class="ravving" height="104" src="../../assets/ravving-wordmark.svg" width="822"/>
+</a>
+<nav aria-label="セクション"><a href="../features.html#features">機能</a> <a href="../features.html#shortcuts">ショートカット</a> <a aria-current="true" href="index.html">ドキュメント</a> <a href="../../api/index.html">API リファレンス</a></nav>
+<nav aria-label="Language" class="langs" translate="no">
+<a href="../../docs/packs.html" hreflang="en" lang="en">EN</a>
+<a href="../../es/docs/packs.html" hreflang="es" lang="es">ES</a>
+<a href="packs.html" hreflang="ja" lang="ja">日本語</a>
+</nav>
+</div>
+</header>
+<main class="wrap docs-wrap">
+<details class="docs-side" open="">
+<summary><span class="mono">ドキュメント</span></summary>
+<form class="docs-search" onsubmit="return false" role="search">
+<input aria-label="ドキュメントを検索" autocomplete="off" id="docs-search" placeholder="ドキュメントを検索… live fx、サウンドフォント" type="search"/>
+<ol hidden="" id="docs-results"></ol>
+</form>
+<nav aria-label="ドキュメント">
+<p class="mono">ravving を使う</p><ul>
+<li><a href="get-ravving.html">ravving を入手</a></li>
+<li><a href="load-a-preset.html">プリセットを読み込む</a></li>
+<li><a href="loop-to-song.html">ループを曲にする</a></li>
+<li><a href="export-a-track.html">曲を書き出して聴く</a></li>
+<li><a href="film-a-session.html">セッションを撮影する</a></li>
+<li><a href="send-to-phone.html">スマホにファイルを送る</a></li>
+<li><a href="troubleshooting.html">困ったときは</a></li>
+<li><a href="machines.html">マシン</a></li>
+<li><a href="first-beat.html">はじめてのビート</a></li>
+<li><a href="manual.html">マニュアル</a></li>
+</ul>
+<p class="mono">パターンパック</p><ul>
+<li class="on"><a aria-current="page" href="packs.html">ジャンル別パック</a><ul><li><a href="#play-a-pack">パックを鳴らす</a></li><li><a href="#the-notes-follow-your-key">音はキーに従う</a></li><li><a href="#tempo-and-swing">テンポとスウィング</a></li><li><a href="#templates">テンプレート</a></li><li><a href="#feel-velocity-nudge-and-length">ノリ：ベロシティ、ナッジ、長さ</a></li><li><a href="#34-and-68">3/4 と 6/8</a></li><li><a href="#making-a-pack">パックの作り方</a></li><li><a href="#sounds">音色</a></li><li><a href="#classical-major">クラシック：メジャー</a></li><li><a href="#hip-hop-natural-minor">ヒップホップ：ナチュラルマイナー</a></li><li><a href="#pop-major">ポップ：メジャー</a></li><li><a href="#rock-major-with-3-7-and-vivii-borrowed">ロック：メジャー（♭3、♭7、♭VI/♭VII を借用）</a></li><li><a href="#trap-natural-minor-with-harmonic-minor-7-and-phrygian-2">トラップ：ナチュラルマイナー（ハーモニックマイナーの 7 とフリジアンの ♭2）</a></li><li><a href="#reggaeton-natural-minor">レゲトン：ナチュラルマイナー</a></li><li><a href="#punk-major-with-3-7-and-vivii-borrowed">パンク：メジャー（♭3、♭7、♭VI/♭VII を借用）</a></li><li><a href="#tropical-major-with-salsa-and-bachata-on-the-relative-minor-degree-6">トロピカル：メジャー（サルサとバチャータは平行調のマイナー、6 度）</a></li><li><a href="#cumbia-major-with-the-minor-styles-on-the-relative-minor-degree-6">クンビア：メジャー（マイナーのスタイルは平行調のマイナー、6 度）</a></li><li><a href="#piig-natural-minor-with-the-dorian-iv-and-the-harmonic-v">Piig：ナチュラルマイナー（ドリアンの IV とハーモニックの V）</a></li><li><a href="#folk-major-the-modal-tunes-on-degree-2-dorian">フォーク：メジャー（旋法の曲は 2 度、ドリアン）</a></li><li><a href="#heavy-metal-natural-minor-with-the-2-the-5-and-the-raised-7th">ヘヴィメタル：ナチュラルマイナー（♭2、♭5、導音の 7 度）</a></li><li><a href="#black-metal-natural-minor-with-the-phrygian-2-and-the-5">ブラックメタル：ナチュラルマイナー（フリジアンの ♭2 と ♭5）</a></li><li><a href="#post-punk-natural-minor-with-the-dorian-iv">ポストパンク：ナチュラルマイナー（ドリアンの IV）</a></li><li><a href="#gregorian-old-gothic-dorian">グレゴリアン（古いゴシック）：ドリアン</a></li><li><a href="#solos-major-ballads-after-coltranes-ballads-and-chet-baker">ソロ：メジャー（コルトレーンの Ballads とチェット・ベイカー風のバラード）</a></li><li><a href="#jazz">ジャズ</a></li><li><a href="#vuelo-flight-facilities">Vuelo（Flight Facilities）</a></li><li><a href="#bebop-major-horn-solos-after-parker-coltrane-and-baker">ビバップ：メジャー（パーカー、コルトレーン、ベイカー風のホーンソロ）</a></li><li><a href="#rb-natural-minor-after-jorja-smith-and-snoh-aalegra">R&amp;B：ナチュラルマイナー（ジョルジャ・スミスとスノー・アレグラ風）</a></li><li><a href="#droon-natural-minor-after-sonder">Droon：ナチュラルマイナー（Sonder 風）</a></li><li><a href="#hollywood-natural-minor-lana-del-rey-under-old-hollywood-strings">ハリウッド：ナチュラルマイナー（往年のハリウッド風ストリングスとラナ・デル・レイ）</a></li><li><a href="#body-dorian-after-grimes-be-a-body">Body：ドリアン（グライムスの Be a Body 風）</a></li></ul></li>
+</ul>
+<p class="mono">内部の仕組み</p><ul>
+<li><a href="../../docs/architecture.html">アーキテクチャ</a></li>
+<li><a href="../../docs/backend.html">バックエンドのクラス</a></li>
+<li><a href="../../docs/qml-components.html">QML コンポーネント</a></li>
+<li><a href="../../docs/undo-history.html">元に戻す履歴</a></li>
+<li><a href="../../docs/bluetooth.html">Bluetooth</a></li>
+<li><a href="../../docs/live-recording.html">ライブ録音</a></li>
+<li><a href="../../docs/engines.html">エンジン</a></li>
+<li><a href="../../docs/routing.html">オーディオグラフ</a></li>
+<li><a href="../../docs/translations.html">翻訳</a></li>
+<li><a href="../../docs/ui-rules.html">UI ルール</a></li>
+<li><a href="../../docs/extending.html">拡張する</a></li>
+<li><a href="../../docs/writing-the-guide.html">ガイドの書き方</a></li>
+<li><a href="../../docs/writing-code-docs.html">コードのドキュメント</a></li>
+<li><a href="../../docs/building.html">ビルド</a></li>
+<li><a href="../../docs/packaging.html">パッケージ</a></li>
+<li><a href="../../docs/testing.html">本体でのテスト</a></li>
+<li><a href="../../docs/debugging.html">デバッグ</a></li>
+<li><a href="../../docs/quality.html">品質</a></li>
+</ul>
+<p class="mono">コード</p><ul>
+<li><a href="../../api/index.html">API リファレンス</a></li>
+</ul>
+</nav>
+</details>
+<article class="doc" id="doc">
+<p class="mono doc-kicker"><b>パターンパック</b> <span>/</span> <b translate="no">data/secret/README.md</b></p>
+<h1>ジャンル別パック</h1>
+<p class="doc-blurb">USB メモリー用のパターンプリセットパック：各プリセットの内容、テンポ、音色、書かれたスケール、付属のテンプレート。</p>
+<p>USB メモリーから読み込める 23 のパターンプリセットパック。ravving には最初から入っていません。どれもひとつのスタイルで書かれ、多くはそのスタイルを代表するバンドやレコードにならっています。</p>
+<table>
+<thead>
+<tr>
+<th>グループ</th>
+<th>パック</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ジャンル</td>
+<td>クラシック、ヒップホップ、ポップ、ロック、トラップ、レゲトン、パンク、トロピカル、クンビア、フォーク、ヘヴィメタル、ブラックメタル、ポストパンク</td>
+</tr>
+<tr>
+<td>ムードと時代</td>
+<td>グレゴリアン（古いゴシック）、Vuelo（Flight Facilities 風のニューディスコ）、ハリウッド（ラナ・デル・レイのビートに往年のハリウッド風ストリングス）</td>
+</tr>
+<tr>
+<td>1 曲</td>
+<td>Body（グライムスの Be a Body 風、特にイントロ）</td>
+</tr>
+<tr>
+<td>ソウル</td>
+<td>R&amp;B（ジョルジャ・スミスとスノー・アレグラ風）、Droon（Sonder 風）</td>
+</tr>
+<tr>
+<td>Solos</td>
+<td>ソロ（コルトレーンの <em>Ballads</em> とチェット・ベイカー風のバラード）、ビバップ（パーカー、コルトレーン、ベイカー風の速いホーンライン）</td>
+</tr>
+<tr>
+<td>その他</td>
+<td>ジャズと、小さめのスタイルパック Piig</td>
+</tr>
+</tbody>
+</table>
+<p>ほとんどのパックには、ドラム、ベース、リード、コードにそれぞれ 5 つずつプリセットがあります。ソロ、ビバップ、Body は 6 つ、Piig は 3 つです。</p>
+<h2 id="play-a-pack">パックを鳴らす</h2>
+<ol>
+<li>パックの <code>ravving</code> フォルダーを USB メモリーのいちばん上にコピーします。</li>
+<li>USB メモリーを MIKO に挿します。</li>
+<li>プリセットのダイアログを開いて <strong>SOURCE · USB</strong> を選びます。プリセットはメモリーから直接鳴ります。</li>
+</ol>
+<p>USB ページで取り込めば、本体に残しておけます。</p>
+<h2 id="the-notes-follow-your-key">音はキーに従う</h2>
+<p>音はスケールの度数で書かれているので、パックは設定したキーとスケールで鳴ります。パックごとにスケールは 1 つなので、4 つの楽器が一緒に鳴ります：</p>
+<ul>
+<li><strong>ナチュラルマイナー：</strong>ヒップホップ、トラップ、レゲトン、Piig、ヘヴィメタル、ブラックメタル、ポストパンク、Vuelo、R&amp;B、Droon、ハリウッド。</li>
+<li><strong>メジャー：</strong>クラシック、ポップ、ロック、パンク、トロピカル、クンビア、フォーク、ソロ、ビバップ。</li>
+<li><strong>ドリアン：</strong>グレゴリアン、Body。</li>
+</ul>
+<p>トロピカルのマイナー系（サルサ、バチャータ）とクンビアのマイナー系（ビジェラ、チチャ）は 6 度、つまり平行調のマイナーに置いています。だからパックはひとつのキーに収まり、C メジャーなら A マイナーで鳴ります。</p>
+<p>スケール外の音は ALTER を使います（ロックの ♭3 と ♭7、トラップの ♭2 など）。キー外のコードはクロマチックのボイシングを使います。</p>
+<h2 id="tempo-and-swing">テンポとスウィング</h2>
+<p>パターンはテンポもスウィングも保存しません。表には各プリセットのテンポを、16 ステップのグリッドでの 4 分音符の BPM で載せています。どのプリセットもイーブン（SWING 50）で鳴りますが、次は例外です：</p>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>SWING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hip-Hop · Golden Era Swing</td>
+<td>58–62</td>
+</tr>
+<tr>
+<td>Hip-Hop · Boom Bap、Lo-Fi Lazy と、そのベース、リード、コード</td>
+<td>お好みで 54–60。イーブンでも OK</td>
+</tr>
+<tr>
+<td>Hip-Hop · Jazz Rap、Jazz Rap Walk</td>
+<td>60–66</td>
+</tr>
+<tr>
+<td>Rock · Half-Time Shuffle</td>
+<td>66 前後、3 連のシャッフル</td>
+</tr>
+<tr>
+<td>Piig · すべてのプリセット</td>
+<td>56–60、MPC のゆるいスウィング</td>
+</tr>
+<tr>
+<td>Solos · すべてのプリセット</td>
+<td>8 分（EIGHTHS）で 54–58、バラードの揺れ。イーブンでも OK</td>
+</tr>
+<tr>
+<td>Bebop · すべてのプリセット</td>
+<td>8 分（EIGHTHS）で 58–64。Trane Countdown と Trane Drive はイーブンから 54 まで</td>
+</tr>
+<tr>
+<td>R&amp;B · すべてのプリセット</td>
+<td>16 分で 54–58、ゆったりしたポケット</td>
+</tr>
+<tr>
+<td>Droon · すべてのプリセット</td>
+<td>16 分で 56–60。Care のセットは 8 分（EIGHTHS）で 60–64</td>
+</tr>
+<tr>
+<td>Hollywood · すべてのプリセット</td>
+<td>52、ストリングスの下にほんの少しゆるいスウィング。イーブンでも OK</td>
+</tr>
+</tbody>
+</table>
+<p>一緒に鳴らすマシンには同じスウィングを設定します。</p>
+<h2 id="templates">テンプレート</h2>
+<p>どのパックにもテンプレートが 1 つ、なかには 2 つ付いています。テンプレートは、プリセットがいちばんよく鳴るテンポ、スウィング、キー、LIVE FX で新しいプロジェクトを始めます。プロジェクトのダイアログの TEMPLATES にあります。</p>
+<p>テンポはパックのテンポの中間です。キーはパックが書かれたキー、またはそのスタイルでよく使われるキーです。</p>
+<table>
+<thead>
+<tr>
+<th>パック</th>
+<th>テンポ</th>
+<th>キー</th>
+<th>スウィング</th>
+<th>PHASER · ECHO · HEAVY</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Classical</td>
+<td>100</td>
+<td>C メジャー</td>
+<td>50</td>
+<td>0 · 0.2 · 0</td>
+</tr>
+<tr>
+<td>Hip-Hop</td>
+<td>90</td>
+<td>C マイナー</td>
+<td>56</td>
+<td>0 · 0.15 · 0.35</td>
+</tr>
+<tr>
+<td>Pop</td>
+<td>116</td>
+<td>C メジャー</td>
+<td>50</td>
+<td>0 · 0.15 · 0.25</td>
+</tr>
+<tr>
+<td>Rock</td>
+<td>122</td>
+<td>E メジャー</td>
+<td>50</td>
+<td>0 · 0.05 · 0.35</td>
+</tr>
+<tr>
+<td>Trap</td>
+<td>140</td>
+<td>F マイナー</td>
+<td>50</td>
+<td>0 · 0.15 · 0.45</td>
+</tr>
+<tr>
+<td>Reggaeton</td>
+<td>93</td>
+<td>A マイナー</td>
+<td>50</td>
+<td>0 · 0.1 · 0.4</td>
+</tr>
+<tr>
+<td>Punk</td>
+<td>170</td>
+<td>A メジャー</td>
+<td>50</td>
+<td>0 · 0 · 0.5</td>
+</tr>
+<tr>
+<td>Tropical</td>
+<td>130</td>
+<td>C メジャー</td>
+<td>50</td>
+<td>0 · 0.1 · 0.2</td>
+</tr>
+<tr>
+<td>Cumbia</td>
+<td>95</td>
+<td>G メジャー</td>
+<td>50</td>
+<td>0.15 · 0.3 · 0.2</td>
+</tr>
+<tr>
+<td>Piig</td>
+<td>79</td>
+<td>D マイナー</td>
+<td>58</td>
+<td>0.15 · 0.25 · 0.3</td>
+</tr>
+<tr>
+<td>Folk</td>
+<td>110</td>
+<td>G メジャー</td>
+<td>50</td>
+<td>0 · 0.1 · 0</td>
+</tr>
+<tr>
+<td>Metal</td>
+<td>150</td>
+<td>E マイナー</td>
+<td>50</td>
+<td>0 · 0.05 · 0.6</td>
+</tr>
+<tr>
+<td>Black Metal</td>
+<td>170</td>
+<td>E マイナー</td>
+<td>50</td>
+<td>0 · 0.25 · 0.55</td>
+</tr>
+<tr>
+<td>Post-Punk</td>
+<td>142</td>
+<td>A マイナー</td>
+<td>50</td>
+<td>0.3 · 0.3 · 0.3</td>
+</tr>
+<tr>
+<td>Gregorian</td>
+<td>70</td>
+<td>D ドリアン</td>
+<td>50</td>
+<td>0 · 0.5 · 0</td>
+</tr>
+<tr>
+<td>Jazz</td>
+<td>120</td>
+<td>C マイナー</td>
+<td>62</td>
+<td>0 · 0.1 · 0</td>
+</tr>
+<tr>
+<td>Vuelo</td>
+<td>120</td>
+<td>A マイナー</td>
+<td>50</td>
+<td>0.1 · 0.15 · 0.3</td>
+</tr>
+<tr>
+<td>Vuelo · Crave</td>
+<td>120</td>
+<td>C# マイナー</td>
+<td>52</td>
+<td>0 · 0.25 · 0.25</td>
+</tr>
+<tr>
+<td>Solos</td>
+<td>64</td>
+<td>E♭ メジャー</td>
+<td>56（8 分）</td>
+<td>0 · 0.35 · 0</td>
+</tr>
+<tr>
+<td>Solos · Late Night</td>
+<td>58</td>
+<td>E♭ メジャー</td>
+<td>54（8 分）</td>
+<td>0 · 0.45 · 0</td>
+</tr>
+<tr>
+<td>Bebop</td>
+<td>160</td>
+<td>B♭ メジャー</td>
+<td>62（8 分）</td>
+<td>0 · 0.15 · 0</td>
+</tr>
+<tr>
+<td>Bebop · Ballad</td>
+<td>64</td>
+<td>B♭ メジャー</td>
+<td>58（8 分）</td>
+<td>0 · 0.3 · 0</td>
+</tr>
+<tr>
+<td>R&amp;B</td>
+<td>86</td>
+<td>E マイナー</td>
+<td>56</td>
+<td>0 · 0.25 · 0.25</td>
+</tr>
+<tr>
+<td>R&amp;B · Slow Jam</td>
+<td>75</td>
+<td>E マイナー</td>
+<td>58</td>
+<td>0 · 0.35 · 0.15</td>
+</tr>
+<tr>
+<td>Droon</td>
+<td>74</td>
+<td>E マイナー</td>
+<td>58</td>
+<td>0.1 · 0.35 · 0.2</td>
+</tr>
+<tr>
+<td>Droon · Care</td>
+<td>64</td>
+<td>B♭ マイナー</td>
+<td>62（8 分）</td>
+<td>0 · 0.4 · 0.15</td>
+</tr>
+<tr>
+<td>Hollywood</td>
+<td>72</td>
+<td>F マイナー</td>
+<td>52</td>
+<td>0 · 0.4 · 0.15</td>
+</tr>
+<tr>
+<td>Hollywood · Video Games</td>
+<td>62</td>
+<td>F# マイナー</td>
+<td>50</td>
+<td>0 · 0.45 · 0.1</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>140</td>
+<td>F ドリアン</td>
+<td>50</td>
+<td>0.1 · 0.35 · 0.25</td>
+</tr>
+<tr>
+<td>Body · Intro</td>
+<td>140</td>
+<td>F ドリアン</td>
+<td>50</td>
+<td>0.2 · 0.5 · 0.1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="feel-velocity-nudge-and-length">ノリ：ベロシティ、ナッジ、長さ</h2>
+<p>音符はそれぞれベロシティとナッジを持てます（SELECT のノブ 2 と 3 で設定するのと同じ）。パックはそれでノリを出しています：</p>
+<ul>
+<li>パームミュートの刻みとトレモロ</li>
+<li>フィドルの弓づかいと聖歌の膨らみ</li>
+<li>早めにはじく装飾音</li>
+<li>拍の後ろに座るダブのベース</li>
+</ul>
+<h2 id="34-and-68">3/4 と 6/8</h2>
+<p>3/4 や 6/8 のプリセットもあります。クラシックのワルツ 3 部作（Waltz、Waltz Oom、Waltz Pah-Pah）などです。16 ステップの 3 小節に 12 ステップの 4 小節が収まるので、一緒にループします。テンポは 4 分音符を 4 ステップと数えるので、付点 4 分 = 110 のジグは 165 と表示されます。</p>
+<h2 id="making-a-pack">パックの作り方</h2>
+<p>各パックはスクリプトで作り、チェッカーが ravving 自身の読み込み処理ですべてのパックを確かめます。</p>
+<pre><code>data/secret/&lt;genre&gt;-presets/build.py                     the generator (python3 build.py)
+data/secret/&lt;genre&gt;-presets/ravving/presets/&lt;drums|bass|lead|chords&gt;/patterns/&lt;Genre&gt; · &lt;Name&gt;.json
+data/secret/patternkit.py                                shared by the genre build.py files (not the jazz one)
+data/secret/validate.py                                  checks every pack against ravving's parsers
+</code></pre>
+<p>各プリセットファイルの形式：
+<code>{"ravving": "preset", "type": "pattern", "library": "&lt;x&gt;-presets.json", "preset": {"name", "genre", "chart", "sound"}}</code>.</p>
+<ul>
+<li><strong><code>chart</code>：</strong>パターン。付属ライブラリと同じ形式。</li>
+<li><strong><code>sound</code>：</strong>書かれた対象の音色。ベース、リード、コードは <code>{"soundSource": …}</code>、ドラムは <code>{"kit": …}</code>。</li>
+<li><strong>ベロシティとナッジ：</strong>patternkit が音符の <code>@64</code> と <code>&lt;10</code> / <code>&gt;10</code> トークン（1 ステップの 10 % 早く・遅く）から書き出し、chart の <code>VELOCITY</code> と <code>NUDGE</code> レーンに入ります。</li>
+<li><strong>長さ：</strong>音符の <code>_</code> ステップ。chart の HOLD レーンに入ります。</li>
+<li><strong>テンプレート：</strong><code>pack.template(…)</code> が <code>ravving/presets/templates/&lt;genre&gt;.json</code> を書き出し、2 つ目は自分の <code>name=</code> で書き出します。</li>
+</ul>
+<p>USB メモリーのプリセットは <code>PresetExchange::stickPatterns</code> と <code>loadStickPattern</code> を通ってダイアログに届きます。</p>
+<h2 id="sounds">音色</h2>
+<p>どのプリセットも書かれた対象の音色を記していて、WITH ITS SOUND がオンならそれを読み込みます。どれも MIKO にすでに入っているので、インストールは不要です。</p>
+<ul>
+<li><strong>ドラム：</strong>ドラムマシンのキットと、General MIDI サウンドフォントから選んだアコースティックキット。オーケストラ、クンビア、ラテンのキットなどは行をほかの楽器に割り当てています：オーケストラキットの TOM と HAT はティンパニ、ラテンのキットはコンガ、ボンゴ、ギロ、カウベルに入れ替わります。</li>
+<li><strong>ベース、リード、コード：</strong>サウンドフォントの楽器と、「808 · Monosynth」（Calf Monosynth で音から音へグライドするサブベース）。</li>
+</ul>
+<p>ドラムキットはキーに従わないので、オーケストラキットのティンパニは C でいちばんよく鳴ります。</p>
+<p>サウンドフォントの音色はグライドしません。SLIDE は音を重ねるだけです。だから 808 のラインは「808 · Monosynth」を使います。</p>
+<h2 id="classical-major">クラシック：メジャー</h2>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Waltz</td>
+<td>ドラム</td>
+<td>3 (3/4)</td>
+<td>ウィンナワルツ：I と V の強拍にティンパニの C/G、「パッパ」にトライアングル、1 拍目にバスドラムとシンバル、フレーズへのスネアロール</td>
+<td>160–190</td>
+<td>オーケストラキット</td>
+</tr>
+<tr>
+<td>March</td>
+<td>ドラム</td>
+<td>2</td>
+<td>2/4 のオーケストラ行進曲：フィールドスネアのルーディメント、強拍にバスドラムと合わせシンバル、ティンパニはトニックとドミナント</td>
+<td>110–120</td>
+<td>オーケストラキット</td>
+</tr>
+<tr>
+<td>Galop</td>
+<td>ドラム</td>
+<td>2</td>
+<td>オッフェンバックのギャロップ（カンカン）：スネアの「タタタ」、バスドラムの「ウン」とシンバルの「パッ」、トライアングル、ティンパニのストップタイムの V–I</td>
+<td>140–160</td>
+<td>オーケストラキット</td>
+</tr>
+<tr>
+<td>Habanera</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ハバネラのリズム（付点 8 分、16 分、8 分 2 つ）をカスタネットとタンバリンで、ティンパニはトニックからドミナント</td>
+<td>70–90</td>
+<td>オーケストラキット</td>
+</tr>
+<tr>
+<td>Timpani Cadence</td>
+<td>ドラム</td>
+<td>4</td>
+<td>マエストーソ：ティンパニがトニックとドミナントを交互に、ドミナントのロールから最後のトニックの一撃へバスドラムとシンバルと共に</td>
+<td>70–90</td>
+<td>オーケストラキット</td>
+</tr>
+<tr>
+<td>Alberti Bass</td>
+<td>ベース</td>
+<td>4</td>
+<td>I、IV6/4、V6/5 の上で低・高・中・高と動く 8 分（モーツァルト K. 545 の書法）</td>
+<td>110–140</td>
+<td>Cello</td>
+</tr>
+<tr>
+<td>Pachelbel Ground</td>
+<td>ベース</td>
+<td>2</td>
+<td>パッヘルベルの 8 音のグラウンドバス、4 分音符で</td>
+<td>50–70</td>
+<td>Cello</td>
+</tr>
+<tr>
+<td>Lament Bass</td>
+<td>ベース</td>
+<td>4</td>
+<td>1 から 5 へ半音で下がるテトラコード（2 分音符）、続いて IV–ii–V</td>
+<td>60–80</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Waltz Oom</td>
+<td>ベース</td>
+<td>3 (3/4)</td>
+<td>各強拍の「ウン」：I、IV、V、I</td>
+<td>160–190</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Octave Continuo</td>
+<td>ベース</td>
+<td>2</td>
+<td>オクターブ跳躍しながら音階を下るバロックの 8 分（G 線上のアリア BWV 1068 風）</td>
+<td>55–70</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Prelude Arpeggio</td>
+<td>リード</td>
+<td>4</td>
+<td>バッハ平均律第 1 巻ハ長調プレリュードの音型、1–3 小節と 5 小節</td>
+<td>60–80</td>
+<td>Harpsichord</td>
+</tr>
+<tr>
+<td>Classical Phrase</td>
+<td>リード</td>
+<td>4</td>
+<td>楽節の前半、半終止で終わる</td>
+<td>90–120</td>
+<td>Violin</td>
+</tr>
+<tr>
+<td>Ode Theme</td>
+<td>リード</td>
+<td>4</td>
+<td>ベートーヴェンの歓喜の歌、最初の 4 小節</td>
+<td>100–120</td>
+<td>Oboe</td>
+</tr>
+<tr>
+<td>Baroque Sequence</td>
+<td>リード</td>
+<td>2</td>
+<td>拍ごとに 1 段ずつ下がる回音の 16 分音型</td>
+<td>90–110</td>
+<td>Flute</td>
+</tr>
+<tr>
+<td>Fanfare</td>
+<td>リード</td>
+<td>2</td>
+<td>付点のついた三和音のコールがオクターブへ上がる</td>
+<td>100–120</td>
+<td>Trumpet</td>
+</tr>
+<tr>
+<td>Chorale Cadence</td>
+<td>コード</td>
+<td>4</td>
+<td>4 声の SATB：I vi IV ii6 I6/4 V7 I、厳格な声部進行</td>
+<td>60–80</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Pachelbel Progression</td>
+<td>コード</td>
+<td>2</td>
+<td>I V vi iii IV I IV V、上声が順次下行</td>
+<td>50–70</td>
+<td>Strings · Ensemble</td>
+</tr>
+<tr>
+<td>Waltz Pah-Pah</td>
+<td>コード</td>
+<td>3 (3/4)</td>
+<td>2 拍目と 3 拍目の和音：I、IV6/4、V7、I</td>
+<td>160–190</td>
+<td>Pizzicato strings</td>
+</tr>
+<tr>
+<td>Prinner Pulse</td>
+<td>コード</td>
+<td>2</td>
+<td>ギャラント様式のプリンナー（IV–I6–vii°6–I）を 8 分の連打で</td>
+<td>90–120</td>
+<td>Strings · Bowed</td>
+</tr>
+<tr>
+<td>Circle of Fifths</td>
+<td>コード</td>
+<td>4</td>
+<td>I IV vii° iii vi ii V I を 2 分音符で</td>
+<td>70–100</td>
+<td>Harpsichord</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references">参考資料</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Lament_bass" rel="noopener" target="_blank">Lament bass (Wikipedia)</a></li>
+<li><a href="https://musiciangoods.com/blogs/music-theory/music-theory-behind-canon-in-d" rel="noopener" target="_blank">Music theory behind Canon in D</a></li>
+<li><a href="https://thelistenersclub.com/2012/04/15/the-listeners-club-the-art-of-the-ostinato/" rel="noopener" target="_blank">The art of the ostinato</a></li>
+<li>R. Gjerdingen『<em>Music in the Galant Style</em>』（プリンナー）</li>
+</ul>
+<p>パブリックドメインの楽譜（IMSLP）：バッハ BWV 846 と BWV 1068、パッヘルベルのカノン、ベートーヴェン交響曲第 9 番、モーツァルト K. 545、ビゼー『<em>カルメン</em>』。</p>
+<h2 id="hip-hop-natural-minor">ヒップホップ：ナチュラルマイナー</h2>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boom Bap</td>
+<td>ドラム</td>
+<td>2</td>
+<td>1 拍目とプッシュにキック、2・4 にスネア、8 分のハット、ゴーストスネア、オープンハット</td>
+<td>85–95</td>
+<td>SP1200 1</td>
+</tr>
+<tr>
+<td>Golden Era Swing</td>
+<td>ドラム</td>
+<td>2</td>
+<td>スウィングさせる 16 分のハット（SWING 58–62）、跳ねるキック、リムのゴースト</td>
+<td>88–98</td>
+<td>LINN9000 1</td>
+</tr>
+<tr>
+<td>Lo-Fi Lazy</td>
+<td>ドラム</td>
+<td>2</td>
+<td>やわらかい裏拍のハットだけ、遅れたキック、リムクリック</td>
+<td>70–85</td>
+<td>SP1200 1</td>
+</tr>
+<tr>
+<td>Old School 808</td>
+<td>ドラム</td>
+<td>2</td>
+<td>エレクトロラップのキック、2・4 にクラップ、カウベル</td>
+<td>95–110</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Jazz Rap</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ブームバップの上にライドの「ディン、ディンガ」とハイハットのフット</td>
+<td>85–95</td>
+<td>Jazz · ライドキット</td>
+</tr>
+<tr>
+<td>Boom Bap Root</td>
+<td>ベース</td>
+<td>2</td>
+<td>キックに合わせたルート、i→iv、VI から歩いて戻る</td>
+<td>85–95</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Jazz Rap Walk</td>
+<td>ベース</td>
+<td>2</td>
+<td>ウッドベースのウォーキング i–iv、ピックアップ付き</td>
+<td>85–95</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>G-Funk Glide</td>
+<td>ベース</td>
+<td>2</td>
+<td>Moog 風にグライドするオクターブとペンタトニックのライン</td>
+<td>90–96</td>
+<td>Nekobi</td>
+</tr>
+<tr>
+<td>Lo-Fi Sub</td>
+<td>ベース</td>
+<td>4</td>
+<td>i–VI–iv–v の下で長い音、ピックアップ付き</td>
+<td>70–85</td>
+<td>Fretless</td>
+</tr>
+<tr>
+<td>Electro Funk</td>
+<td>ベース</td>
+<td>2</td>
+<td>16 分のオクターブのポップとスライド</td>
+<td>100–112</td>
+<td>Nekobi</td>
+</tr>
+<tr>
+<td>Rhodes Riff</td>
+<td>リード</td>
+<td>2</td>
+<td>マイナーペンタトニックのリフと下降する応答</td>
+<td>80–95</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Horn Stabs</td>
+<td>リード</td>
+<td>2</td>
+<td>チョップしたソウルのホーンのヒットとフォール</td>
+<td>85–95</td>
+<td>Muted trumpet</td>
+</tr>
+<tr>
+<td>Vibes Loop</td>
+<td>リード</td>
+<td>2</td>
+<td>i と iv の 8 分のアルペジオ</td>
+<td>75–90</td>
+<td>Vibes</td>
+</tr>
+<tr>
+<td>G-Funk Whistle</td>
+<td>リード</td>
+<td>2</td>
+<td>ポルタメントで高く鳴る口笛のライン</td>
+<td>90–96</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Flute Loop</td>
+<td>リード</td>
+<td>2</td>
+<td>オクターブから下りて 3 度で回るフルート</td>
+<td>80–95</td>
+<td>Flute</td>
+</tr>
+<tr>
+<td>Boom Bap Keys</td>
+<td>コード</td>
+<td>2</td>
+<td>チョップした i、続いて iv / III / VII のスタブ（CHORD SET は sevenths）</td>
+<td>85–95</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Soul Loop</td>
+<td>コード</td>
+<td>2</td>
+<td>i7–iv7–VII–III、各半小節</td>
+<td>80–95</td>
+<td>Strings · Ensemble</td>
+</tr>
+<tr>
+<td>Lo-Fi Ninths</td>
+<td>コード</td>
+<td>4</td>
+<td>im9–ivm9–VImaj9–v7、それぞれ 16 分遅れ</td>
+<td>70–85</td>
+<td>Upright piano</td>
+</tr>
+<tr>
+<td>Dark Strings</td>
+<td>コード</td>
+<td>4</td>
+<td>三和音 i（2 小節）– VI – v</td>
+<td>80–95</td>
+<td>Strings · Bowed</td>
+</tr>
+<tr>
+<td>Organ Vamp</td>
+<td>コード</td>
+<td>2</td>
+<td>ソウルジャズの i7–IV7（ドリアンの IV）のスタブ</td>
+<td>90–100</td>
+<td>Jazz organ</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_1">参考資料</h3>
+<ul>
+<li><a href="https://violetrecording.com/best-drum-patterns-for-hip-hop/" rel="noopener" target="_blank">Best drum patterns for hip hop</a></li>
+<li><a href="https://blog.native-instruments.com/what-is-boom-bap/" rel="noopener" target="_blank">What is boom bap (Native Instruments)</a></li>
+<li><a href="https://violetrecording.com/how-to-make-a-boom-bap-beat/" rel="noopener" target="_blank">How to make a boom bap beat</a></li>
+<li><a href="https://www.audeobox.com/learn/fl-studio/how-to-make-boom-bap-beats-in-fl-studio/" rel="noopener" target="_blank">Boom bap in FL Studio</a></li>
+</ul>
+<h2 id="pop-major">ポップ：メジャー</h2>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Four on the Floor</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ダンスポップ：毎拍キック、2・4 にクラップ、裏拍のオープンハット</td>
+<td>118–128</td>
+<td>Roland TR909</td>
+</tr>
+<tr>
+<td>Half-Time Ballad</td>
+<td>ドラム</td>
+<td>2</td>
+<td>1 小節に 1 回、3 拍目にスネア</td>
+<td>130–150（ハーフに感じる）</td>
+<td>Standard キット</td>
+</tr>
+<tr>
+<td>80s Gated</td>
+<td>ドラム</td>
+<td>2</td>
+<td>大きな 2・4 のスネア、ダブルのキック、タムのフィル</td>
+<td>110–125</td>
+<td>LINN9000 1</td>
+</tr>
+<tr>
+<td>808 Pop</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ハーフタイムのクラップ、まばらなキック、ハットのロール</td>
+<td>130–150（ハーフに感じる）</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Motown Stomp</td>
+<td>ドラム</td>
+<td>2</td>
+<td>4 拍すべてにスネア、2・4 にタンバリン</td>
+<td>120–135</td>
+<td>Room キット</td>
+</tr>
+<tr>
+<td>Axis Eighths</td>
+<td>ベース</td>
+<td>4</td>
+<td>I–V–vi–IV の上で刻む 8 分</td>
+<td>100–130</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Synth Octaves</td>
+<td>ベース</td>
+<td>4</td>
+<td>vi–IV–I–V の上でオクターブ跳躍する 8 分</td>
+<td>110–128</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Ballad Descent</td>
+<td>ベース</td>
+<td>4</td>
+<td>I–V/7–vi–IV の下降ベース、主音へ歩いて戻る</td>
+<td>60–80</td>
+<td>Fretless</td>
+</tr>
+<tr>
+<td>Funk-Pop Sixteenths</td>
+<td>ベース</td>
+<td>2</td>
+<td>オクターブのポップ入りシンコペーションの 16 分</td>
+<td>105–120</td>
+<td>Slap bass</td>
+</tr>
+<tr>
+<td>Motown Walk</td>
+<td>ベース</td>
+<td>2</td>
+<td>I–vi–IV–V へのメロディックなピックアップ</td>
+<td>110–130</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Axis Hook</td>
+<td>リード</td>
+<td>2</td>
+<td>歌うようなフック：同音の連打から 5 度へ跳躍</td>
+<td>100–128</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Piano Ostinato</td>
+<td>リード</td>
+<td>2</td>
+<td>3+3+2 にまとめた 16 分のオスティナート</td>
+<td>110–130</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Sax Hook</td>
+<td>リード</td>
+<td>2</td>
+<td>オクターブまで上がる 80 年代のサックスのフック</td>
+<td>100–120</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Pluck Arp</td>
+<td>リード</td>
+<td>4</td>
+<td>I–V–vi–IV の上の 16 分のアルペジオ</td>
+<td>110–128</td>
+<td>Vibes</td>
+</tr>
+<tr>
+<td>Ballad Melody</td>
+<td>リード</td>
+<td>4</td>
+<td>長い音、2 度で開いたまま終わる</td>
+<td>60–80</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Axis Quarters</td>
+<td>コード</td>
+<td>4</td>
+<td>I–V–vi–IV を 4 分音符で</td>
+<td>90–120</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Minor-Start Pulse</td>
+<td>コード</td>
+<td>4</td>
+<td>vi–IV–I–V で脈打つ 8 分</td>
+<td>110–128</td>
+<td>TAL NoiseMaker</td>
+</tr>
+<tr>
+<td>Doo-Wop Changes</td>
+<td>コード</td>
+<td>2</td>
+<td>50 年代の三和音 I–vi–IV–V</td>
+<td>60–80</td>
+<td>Upright piano</td>
+</tr>
+<tr>
+<td>Royal Road</td>
+<td>コード</td>
+<td>4</td>
+<td>IV–V–iii–vi、各小節を 3+3+2 で前のめりに</td>
+<td>90–110</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Ballad Strings</td>
+<td>コード</td>
+<td>4</td>
+<td>I–V/7–vi–IV–V、順次進行のベースをボイシングに含めて</td>
+<td>60–80</td>
+<td>Strings · Ensemble</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_2">参考資料</h3>
+<ul>
+<li><a href="https://www.hooktheory.com/blog/chord-progression-search-patterns-and-trends/" rel="noopener" target="_blank">Hooktheory chord trends</a></li>
+<li><a href="https://mixedinkey.com/captain-plugins/common-chord-progressions-pop-music/" rel="noopener" target="_blank">Common pop progressions (Mixed In Key)</a></li>
+<li><a href="https://thedrumninja.com/common-drum-beats/" rel="noopener" target="_blank">15 common drum beats</a></li>
+<li><a href="https://muted.io/drum-patterns/" rel="noopener" target="_blank">Drum patterns (muted.io)</a></li>
+</ul>
+<h2 id="rock-major-with-3-7-and-vivii-borrowed">ロック：メジャー（♭3、♭7、♭VI/♭VII を借用）</h2>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Straight Backbeat</td>
+<td>ドラム</td>
+<td>2</td>
+<td>1・3 にキック、2・4 にスネア、8 分のハット</td>
+<td>100–140</td>
+<td>Power キット</td>
+</tr>
+<tr>
+<td>Arena Ride</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ライドで突き進む 8 分、ダブルのキック</td>
+<td>110–140</td>
+<td>Power キット</td>
+</tr>
+<tr>
+<td>Half-Time Shuffle</td>
+<td>ドラム</td>
+<td>2</td>
+<td>3 拍目のバックビートとゴーストノート（SWING 66 前後）</td>
+<td>80–95</td>
+<td>Room キット</td>
+</tr>
+<tr>
+<td>Bo Diddley Toms</td>
+<td>ドラム</td>
+<td>2</td>
+<td>タムで 3-2 の「shave and a haircut」、マラカス</td>
+<td>100–125</td>
+<td>Room キット</td>
+</tr>
+<tr>
+<td>Gallop</td>
+<td>ドラム</td>
+<td>2</td>
+<td>毎拍キックで 8 分＋16 分 2 つ</td>
+<td>140–180</td>
+<td>Power キット</td>
+</tr>
+<tr>
+<td>Root Eighths</td>
+<td>ベース</td>
+<td>4</td>
+<td>I–♭VII–IV–I を刻む 8 分</td>
+<td>110–150</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Boogie Walk</td>
+<td>ベース</td>
+<td>4</td>
+<td>I–IV–I–V の上の 1-3-5-6-♭7 ブギー</td>
+<td>140–170</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Blues-Rock Riff</td>
+<td>ベース</td>
+<td>2</td>
+<td>♯4 入りのマイナーペンタトニックのユニゾンリフ</td>
+<td>90–120</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Gallop Bass</td>
+<td>ベース</td>
+<td>4</td>
+<td>I–♭VI–♭VII–I のギャロップ</td>
+<td>140–180</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Root–Fifth Two-Beat</td>
+<td>ベース</td>
+<td>4</td>
+<td>カントリーロックのルート–5 度、主音へ歩いて戻る</td>
+<td>100–130</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Pentatonic Lick</td>
+<td>リード</td>
+<td>2</td>
+<td>ブルースロックのリック、♭3 から 3 へスライド</td>
+<td>90–120</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Honking Sax</td>
+<td>リード</td>
+<td>2</td>
+<td>♭7 でうなるロックンロールのホンク</td>
+<td>140–170</td>
+<td>Tenor sax</td>
+</tr>
+<tr>
+<td>Anthem Hook</td>
+<td>リード</td>
+<td>4</td>
+<td>アリーナの「ウォーオー」の長い音</td>
+<td>110–140</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Clean Arpeggio</td>
+<td>リード</td>
+<td>4</td>
+<td>オープンコードのピッキング Iadd9–IV–vi–Vsus</td>
+<td>70–100</td>
+<td>Nylon guitar</td>
+</tr>
+<tr>
+<td>Boogie Piano</td>
+<td>リード</td>
+<td>2</td>
+<td>3–5 のトレモロ、続いて ♭3–3 をぶつけながら駆け下りる</td>
+<td>140–170</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Power I–♭VII–IV</td>
+<td>コード</td>
+<td>4</td>
+<td>刻むパワーコード</td>
+<td>110–150</td>
+<td>Guitar · Distortion</td>
+</tr>
+<tr>
+<td>Organ Pushes</td>
+<td>コード</td>
+<td>2</td>
+<td>R&amp;B ロックのオルガン、伸ばしとスタブ</td>
+<td>100–125</td>
+<td>Jazz organ</td>
+</tr>
+<tr>
+<td>♭VI–♭VII–I</td>
+<td>コード</td>
+<td>2</td>
+<td>エオリアンのロックの終止、平行の三和音</td>
+<td>100–140</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Piano Pump</td>
+<td>コード</td>
+<td>4</td>
+<td>I–IV–V–IV を「1 2 3、1 2 3、1 2」で押し出す</td>
+<td>120–150</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Clean Strum</td>
+<td>コード</td>
+<td>4</td>
+<td>ストロークの I–V–IV–V、ギターのボイシング</td>
+<td>90–120</td>
+<td>Guitar · Clean</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_3">参考資料</h3>
+<ul>
+<li><a href="https://thedrumninja.com/common-drum-beats/" rel="noopener" target="_blank">15 common drum beats (shuffle, half-time shuffle)</a></li>
+<li><a href="https://www.gear4music.com/blog/?p=43811" rel="noopener" target="_blank">Basic drum beats (Gear4music)</a></li>
+<li><a href="https://c.enwp.org/wiki/File:Characteristic_rock_and_disco_drum_patterns.png" rel="noopener" target="_blank">Rock and disco drum patterns</a></li>
+<li>ボ・ディドリー・ビート（Wikipedia）</li>
+</ul>
+<h2 id="trap-natural-minor-with-harmonic-minor-7-and-phrygian-2">トラップ：ナチュラルマイナー（ハーモニックマイナーの 7 とフリジアンの ♭2）</h2>
+<p>ドラムのグリッドは曲のテンポで 16 分、クラップは 3 拍目：ハーフタイムのノリです。</p>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Classic Trap</td>
+<td>ドラム</td>
+<td>2</td>
+<td>3 拍目にクラップ、16 分ロール入りの 8 分ハット、オープンハット</td>
+<td>130–150</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Triplet Flow</td>
+<td>ドラム</td>
+<td>2</td>
+<td>拍に逆らって 3 つずつまとめたハット</td>
+<td>130–150</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Drill</td>
+<td>ドラム</td>
+<td>2</td>
+<td>3 拍目のスネアと遅れたもう 1 発、3-3-2 で跳ねるハット</td>
+<td>140–145</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Phonk Cowbell</td>
+<td>ドラム</td>
+<td>2</td>
+<td>カウベルのリフ、2・4 にクラップ、メンフィスのキック</td>
+<td>120–140</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Sparse Snap</td>
+<td>ドラム</td>
+<td>2</td>
+<td>4 分のハットにロール 1 回、3 拍目にスナップ</td>
+<td>140–160</td>
+<td>SP1200 1</td>
+</tr>
+<tr>
+<td>808 Root Glide</td>
+<td>ベース</td>
+<td>2</td>
+<td>長いルートがオクターブへグライド、VII から主音へスライド</td>
+<td>130–150</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Triplet 808</td>
+<td>ベース</td>
+<td>2</td>
+<td>3 つずつの 808 のヒット</td>
+<td>130–150</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Drill Slides</td>
+<td>ベース</td>
+<td>2</td>
+<td>♭2 と導音を通るスライド</td>
+<td>140–145</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Phonk Bounce</td>
+<td>ベース</td>
+<td>2</td>
+<td>短くパンチのあるヒット</td>
+<td>120–140</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Harmonic Minor 808</td>
+<td>ベース</td>
+<td>2</td>
+<td>導音の 7 度がルートへ引っ張る</td>
+<td>130–150</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Flute Riff</td>
+<td>リード</td>
+<td>2</td>
+<td>ペンタトニックのフルートのリフ、3-3-2</td>
+<td>130–150</td>
+<td>Flute</td>
+</tr>
+<tr>
+<td>Bell Melody</td>
+<td>リード</td>
+<td>2</td>
+<td>16 分のオルゴールの音型</td>
+<td>130–150</td>
+<td>Music box</td>
+</tr>
+<tr>
+<td>Dark Piano</td>
+<td>リード</td>
+<td>2</td>
+<td>まばらなピアノ、導音からオクターブへ</td>
+<td>130–150</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Triplet Synth</td>
+<td>リード</td>
+<td>2</td>
+<td>3 つずつのシンセリード</td>
+<td>130–150</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Phrygian Riff</td>
+<td>リード</td>
+<td>2</td>
+<td>♭2 のドリルのストリングスのリフ</td>
+<td>140–145</td>
+<td>Violin</td>
+</tr>
+<tr>
+<td>i–VI Pad</td>
+<td>コード</td>
+<td>4</td>
+<td>i と VI、各 2 小節</td>
+<td>130–150</td>
+<td>Strings · Ensemble</td>
+</tr>
+<tr>
+<td>i–iv–VI–V Stabs</td>
+<td>コード</td>
+<td>4</td>
+<td>スタブとエコー、V はメジャー（クロマチック）</td>
+<td>130–150</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Choir i–VII–VI–VII</td>
+<td>コード</td>
+<td>4</td>
+<td>各 1 小節</td>
+<td>130–150</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Drill Pizzicato</td>
+<td>コード</td>
+<td>2</td>
+<td>i と ♭II を 3-3-2 で弾く</td>
+<td>140–145</td>
+<td>Pizzicato strings</td>
+</tr>
+<tr>
+<td>Glassy Stabs</td>
+<td>コード</td>
+<td>2</td>
+<td>i–v–VI–VII、半小節ごとに 3-3-2</td>
+<td>130–150</td>
+<td>Alien · Glassy</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_4">参考資料</h3>
+<ul>
+<li><a href="https://violetrecording.com/best-drum-patterns-for-trap/" rel="noopener" target="_blank">Best drum patterns for trap</a></li>
+<li><a href="https://sleepfreaks-dtm.com/en/produce-recipe/cubase-pro-10-musicseminar-1" rel="noopener" target="_blank">Creating trap rhythms (Cubase seminar)</a></li>
+<li><a href="https://www.audeobox.com/learn/mpc-software/modern-trap-workflow/" rel="noopener" target="_blank">MPC modern trap workflow</a></li>
+<li><a href="https://thedrumninja.com/how-to-make-trap-beats/" rel="noopener" target="_blank">How to make trap beats</a></li>
+</ul>
+<h2 id="reggaeton-natural-minor">レゲトン：ナチュラルマイナー</h2>
+<p>デンボウ：毎拍キック、スネアはステップ 4、7、12、15（1 小節に 3-3-2 が 2 回）。</p>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dembow Clásico</td>
+<td>ドラム</td>
+<td>2</td>
+<td>デンボウ（「Dem Bow」リディム）</td>
+<td>88–98</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Perreo Lento</td>
+<td>ドラム</td>
+<td>2</td>
+<td>1・3 にキック、「アンド」にクラップ、裏拍のハット</td>
+<td>85–92</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Dembow Timbal</td>
+<td>ドラム</td>
+<td>2</td>
+<td>カウベルのラインとティンバルのロール入りのデンボウ</td>
+<td>90–98</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Dembow Dominicano</td>
+<td>ドラム</td>
+<td>2</td>
+<td>速めに、ダブルのスネア、16 分のハット、2・4 にクラップ</td>
+<td>115–130</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Moombahton</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ハウスのクラップとオープンハットの下のデンボウ</td>
+<td>105–110</td>
+<td>Roland TR909</td>
+</tr>
+<tr>
+<td>Dembow 808</td>
+<td>ベース</td>
+<td>4</td>
+<td>トレシージョのルート i–VI–III–VII</td>
+<td>88–98</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Perreo Sub</td>
+<td>ベース</td>
+<td>2</td>
+<td>伸ばしたルートが VII を通って下りる</td>
+<td>85–95</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Syncopated Synth</td>
+<td>ベース</td>
+<td>2</td>
+<td>裏拍のオクターブのシンセベース</td>
+<td>90–100</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Romántico Walk</td>
+<td>ベース</td>
+<td>2</td>
+<td>8 分のウォーク i–iv–VII–III</td>
+<td>85–95</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Offbeat Pump</td>
+<td>ベース</td>
+<td>2</td>
+<td>ドミニカ風の裏拍の 8 分</td>
+<td>115–130</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Pluck Hook</td>
+<td>リード</td>
+<td>2</td>
+<td>トレシージョのシンセのフック</td>
+<td>88–98</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Guitarra Romántica</td>
+<td>リード</td>
+<td>2</td>
+<td>導音の 7 度を使ったアンダルシアの 3-2-1</td>
+<td>85–95</td>
+<td>Nylon guitar</td>
+</tr>
+<tr>
+<td>Flauta Perreo</td>
+<td>リード</td>
+<td>2</td>
+<td>短くシンコペーションする高いフルート</td>
+<td>88–98</td>
+<td>Flute</td>
+</tr>
+<tr>
+<td>Marimba Dembow</td>
+<td>リード</td>
+<td>2</td>
+<td>デンボウのリズムのマリンバ</td>
+<td>90–98</td>
+<td>Marimba</td>
+</tr>
+<tr>
+<td>Sax Romántico</td>
+<td>リード</td>
+<td>2</td>
+<td>長いサックスの音、導音へのターン</td>
+<td>85–95</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>i–VI–III–VII Dembow</td>
+<td>コード</td>
+<td>4</td>
+<td>3+3+2 のスタブ</td>
+<td>88–98</td>
+<td>TAL NoiseMaker</td>
+</tr>
+<tr>
+<td>Romántico Piano</td>
+<td>コード</td>
+<td>4</td>
+<td>伸ばした i–iv–VII–III</td>
+<td>85–95</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Andalusian Strum</td>
+<td>コード</td>
+<td>4</td>
+<td>ストロークの i–VII–VI–V（V はクロマチック）</td>
+<td>88–98</td>
+<td>Nylon guitar</td>
+</tr>
+<tr>
+<td>Pad VI–VII–i</td>
+<td>コード</td>
+<td>4</td>
+<td>伸ばしたパッド</td>
+<td>88–98</td>
+<td>Strings · Digital</td>
+</tr>
+<tr>
+<td>Organ Offbeats</td>
+<td>コード</td>
+<td>4</td>
+<td>裏拍のスタブ i–VI–i–v</td>
+<td>105–110</td>
+<td>Organ · House</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_5">参考資料</h3>
+<ul>
+<li><a href="https://violetrecording.com/how-to-make-reggaeton-beats/" rel="noopener" target="_blank">How to make reggaeton beats</a></li>
+<li><a href="https://www.hooktheory.com/theorytab/view/cnco/reggaeton-lento-(bailemos)" rel="noopener" target="_blank">Reggaetón Lento (Hooktheory)</a></li>
+<li><a href="https://unison.audio/reggaeton-chord-progressions/" rel="noopener" target="_blank">Reggaeton chord progressions</a></li>
+<li>Wikipedia の「Dembow」（シャバ・ランクスの「Dem Bow」、Steely &amp; Clevie の「Poco Man Jam」リディム）</li>
+</ul>
+<h2 id="punk-major-with-3-7-and-vivii-borrowed">パンク：メジャー（♭3、♭7、♭VI/♭VII を借用）</h2>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Skate Beat</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ポルカ：表拍にキック、すべての「アンド」にスネア</td>
+<td>170–200</td>
+<td>Power キット</td>
+</tr>
+<tr>
+<td>D-Beat</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ディスチャージ・ビート：キックは 1、&amp;1、&amp;2、3、&amp;3、&amp;4、8 分のクラッシュ、ハットなし</td>
+<td>150–190</td>
+<td>Room キット</td>
+</tr>
+<tr>
+<td>Straight Eighths</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ラモーンズ風の 8 分ハットとバックビート</td>
+<td>160–190</td>
+<td>Standard キット</td>
+</tr>
+<tr>
+<td>Half-Time Breakdown</td>
+<td>ドラム</td>
+<td>2</td>
+<td>4 分のクラッシュとタムのフィル入りのポップパンクのブレイクダウン</td>
+<td>140–180</td>
+<td>Power キット</td>
+</tr>
+<tr>
+<td>Ska Offbeat</td>
+<td>ドラム</td>
+<td>2</td>
+<td>裏拍のハット、2・4 にスネア</td>
+<td>150–180</td>
+<td>Standard キット</td>
+</tr>
+<tr>
+<td>Pop-Punk Eighths</td>
+<td>ベース</td>
+<td>4</td>
+<td>ダウンピッキングのスタッカート 8 分、I–V–vi–IV</td>
+<td>160–190</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Skate Walk-Up</td>
+<td>ベース</td>
+<td>4</td>
+<td>歩いて上がる 8 分、I–IV–V–I</td>
+<td>170–200</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>D-Beat Riff</td>
+<td>ベース</td>
+<td>2</td>
+<td>♭3 と ♯4 入りのクラストのリフ</td>
+<td>150–180</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Ska Walk</td>
+<td>ベース</td>
+<td>4</td>
+<td>4 分のウォーキング I–vi–IV–V</td>
+<td>140–170</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>New Wave Octaves</td>
+<td>ベース</td>
+<td>4</td>
+<td>オクターブの 8 分 I–IV–I–V</td>
+<td>140–160</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Pop-Punk Hook</td>
+<td>リード</td>
+<td>2</td>
+<td>5 度まで上がる同音連打のフック</td>
+<td>160–190</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Ska Horns</td>
+<td>リード</td>
+<td>2</td>
+<td>裏拍のホーンのプッシュとフォール</td>
+<td>150–180</td>
+<td>Trumpet</td>
+</tr>
+<tr>
+<td>Street Riff</td>
+<td>リード</td>
+<td>2</td>
+<td>Oi!／ストリートパンクの単音リフ</td>
+<td>150–180</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Gang Chant</td>
+<td>リード</td>
+<td>2</td>
+<td>「ウォーオー」の長い音</td>
+<td>150–180</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Piano Pounding</td>
+<td>リード</td>
+<td>2</td>
+<td>高いオクターブと 5 度を叩きつける 8 分</td>
+<td>160–190</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Power I–IV–V</td>
+<td>コード</td>
+<td>4</td>
+<td>刻む 8 分 I–I–IV–V</td>
+<td>160–200</td>
+<td>Guitar · Distortion</td>
+</tr>
+<tr>
+<td>Pop-Punk Pushes</td>
+<td>コード</td>
+<td>4</td>
+<td>I–V–vi–IV、各チェンジを 8 分早く</td>
+<td>160–190</td>
+<td>Guitar · Distortion</td>
+</tr>
+<tr>
+<td>Ska Upstrokes</td>
+<td>コード</td>
+<td>4</td>
+<td>裏拍のチョップ I–vi–IV–V</td>
+<td>150–180</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Crust I–♭VI–♭VII</td>
+<td>コード</td>
+<td>2</td>
+<td>刻む I、続いて ♭VI–♭VII</td>
+<td>150–190</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Piano Bash</td>
+<td>コード</td>
+<td>4</td>
+<td>イーブンの 8 分の三和音 I–IV–I–V</td>
+<td>160–190</td>
+<td>Grand piano</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_6">参考資料</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/D-beat" rel="noopener" target="_blank">D-beat (Wikipedia)</a></li>
+<li><a href="https://drumhelper.com/learning-drums/punk-drum-beats-and-rhythms/" rel="noopener" target="_blank">Punk drum beats and rhythms</a></li>
+<li><a href="https://www.pastemagazine.com/music/punk/the-history-of-the-punk-beat-in-10-songs" rel="noopener" target="_blank">The history of the punk beat in 10 songs</a></li>
+</ul>
+<h2 id="tropical-major-with-salsa-and-bachata-on-the-relative-minor-degree-6">トロピカル：メジャー（サルサとバチャータは平行調のマイナー、6 度）</h2>
+<p>クンビア以外のラテンの「ムシカ・トロピカル」（クンビアは下に専用パックがあります）。5 つのスタイルで、楽器ごとにスタイル 1 つにつきプリセット 1 つ：サルサ、メレンゲ、バチャータ、バジェナート、チャンペータ。どれもイーブン（SWING 50）です。</p>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ · スウィング</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Salsa</td>
+<td>ドラム</td>
+<td>2</td>
+<td>2-3 のソン・クラーベ、コンガのマルチャ（2 拍目にスラップ、4 拍目とそのアンドにオープントーン）、トゥンバの応答、拍にカンパーナ、3 側の 2 拍目のアンドにボンボ</td>
+<td>170–200、イーブン</td>
+<td>Latin · congas</td>
+</tr>
+<tr>
+<td>Merengue</td>
+<td>ドラム</td>
+<td>2</td>
+<td>毎拍のギラとその「アンダ」、タンボーラの手とスティックの打音、3 拍目へのキンティージョ、毎拍オルケスタのキック</td>
+<td>130–160、イーブン</td>
+<td>Latin · güira</td>
+</tr>
+<tr>
+<td>Bachata</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ボンゴのマルティージョの 8 分、4 拍目に低いボンゴのオープントーン、ギラがテンポをキープ</td>
+<td>120–140、イーブン</td>
+<td>Latin · güira</td>
+</tr>
+<tr>
+<td>Vallenato</td>
+<td>ドラム</td>
+<td>2</td>
+<td>パセオ：カハの手打ちとリムスラップ、グアチャラカのスクレイプ</td>
+<td>90–110、イーブン</td>
+<td>Cumbia · room</td>
+</tr>
+<tr>
+<td>Champeta</td>
+<td>ドラム</td>
+<td>2</td>
+<td>前に出たドラムマシン、キックは 1、&amp;2、3、スネアは 2・4、ハットにスークースのカヴァチャの 16 分</td>
+<td>110–125、イーブン</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Salsa Tumbao</td>
+<td>ベース</td>
+<td>4</td>
+<td>トレシージョの裏拍だけ（2 拍目のアンド、4 拍目は小節線をまたいでタイ）、平行調のマイナーで i–iv–V–i</td>
+<td>170–200、イーブン</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Merengue Bass</td>
+<td>ベース</td>
+<td>4</td>
+<td>表拍と 2 拍目のアンドに、I と V</td>
+<td>130–160、イーブン</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Bachata Bass</td>
+<td>ベース</td>
+<td>4</td>
+<td>ルート–5 度のシンコペーション、平行調のマイナーで i–iv–V–i</td>
+<td>120–140、イーブン</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Vallenato Paseo</td>
+<td>ベース</td>
+<td>4</td>
+<td>ピックアップ付きのルートと 5 度、I–IV–V–I</td>
+<td>90–110、イーブン</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Champeta Bass</td>
+<td>ベース</td>
+<td>4</td>
+<td>速いオクターブの 16 分、I–IV–V–IV</td>
+<td>110–125、イーブン</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Mambo Horns</td>
+<td>リード</td>
+<td>2</td>
+<td>シンコペーションするホーンのコール＆レスポンス、導音（♯5）</td>
+<td>170–200、イーブン</td>
+<td>Trumpet</td>
+</tr>
+<tr>
+<td>Sax Jaleo</td>
+<td>リード</td>
+<td>2</td>
+<td>メレンゲの駆ける 16 分のアルペジオ、I から V7 へ</td>
+<td>130–160、イーブン</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Requinto</td>
+<td>リード</td>
+<td>2</td>
+<td>バチャータのリードギターのアルペジオ、i から V へ</td>
+<td>120–140、イーブン</td>
+<td>Nylon guitar</td>
+</tr>
+<tr>
+<td>Acordeón Paseo</td>
+<td>リード</td>
+<td>2</td>
+<td>アコーディオンのパセオのメロディー、V から I へ</td>
+<td>90–110、イーブン</td>
+<td>Accordion</td>
+</tr>
+<tr>
+<td>Sebene Guitar</td>
+<td>リード</td>
+<td>2</td>
+<td>ネックの高い位置で弾くスークースのセベネ</td>
+<td>110–125、イーブン</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Piano Montuno</td>
+<td>コード</td>
+<td>4</td>
+<td>シンコペーションするモントゥーノのスタブ、平行調のマイナーで i–iv–V7–i</td>
+<td>170–200、イーブン</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Merengue Brass</td>
+<td>コード</td>
+<td>4</td>
+<td>裏拍のヒット、I–I–V7–V7</td>
+<td>130–160、イーブン</td>
+<td>Brass section</td>
+</tr>
+<tr>
+<td>Segunda Strum</td>
+<td>コード</td>
+<td>4</td>
+<td>毎拍のストローク、4 拍目は伸ばす、平行調のマイナーで i–iv–V–i</td>
+<td>120–140、イーブン</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Vallenato Guitar</td>
+<td>コード</td>
+<td>4</td>
+<td>ストロークのパターン、I–IV–V–I</td>
+<td>90–110、イーブン</td>
+<td>Nylon guitar</td>
+</tr>
+<tr>
+<td>Champeta Stabs</td>
+<td>コード</td>
+<td>4</td>
+<td>各拍のあとの「エ」にシンセのスタブ、I–IV–V–IV</td>
+<td>110–125、イーブン</td>
+<td>TAL NoiseMaker</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_7">参考資料</h3>
+<ul>
+<li>
+<ul>
+<li>Salsa: <a href="https://www.wikipedia.org/wiki/Tumbao" rel="noopener" target="_blank">Tumbao (Wikipedia)</a></li>
+</ul>
+</li>
+<li><a href="https://www.soundbrenner.com/blogs/articles/tumbao" rel="noopener" target="_blank">Tumbao (Soundbrenner)</a></li>
+<li><a href="https://www.talkbass.com/threads/latin-and-counting.366625/" rel="noopener" target="_blank">Latin and counting (TalkBass)</a> - Merengue: <a href="https://www.soundbrenner.com/blogs/articles/merengue-rhythm" rel="noopener" target="_blank">Merengue rhythm (Soundbrenner)</a></li>
+<li><a href="https://www.wikipedia.org/wiki/Merenque" rel="noopener" target="_blank">Merengue music (Wikipedia)</a></li>
+<li><a href="https://www.wikipedia.com/wiki/Perico_Ripiao" rel="noopener" target="_blank">Merengue típico (Wikipedia)</a> - Bachata: <a href="https://www.ubisoft.com/en-us/game/rocksmith/plus/news-updates/4JGuRsatSHe2lZ4XuGxuUF/breaking-down-bachata-part-1-overview" rel="noopener" target="_blank">Breaking down bachata, part 1</a>、<a href="https://www.ubisoft.com/en-us/game/rocksmith/plus/news-updates/42YP2fih1AY3wVyZhWhLrZ/breaking-down-bachata-part-3-guitars" rel="noopener" target="_blank">part 3, guitars</a> - Vallenato: パセオのベースラインに関するコロンビアの大学論文 (<a href="https://repositorio.upn.edu.co/bitstreams/a8d7eb05-b98d-43b9-8c23-10c73eb38508/download" rel="noopener" target="_blank">UPN</a>, <a href="https://repository.unireformada.edu.co/bitstreams/235e80db-ab95-4fed-be63-fb1fa7493731/download" rel="noopener" target="_blank">Unireformada</a>) - Champeta: <a href="https://en.wikipedia.org/wiki/Champeta" rel="noopener" target="_blank">Champeta (Wikipedia)</a></li>
+<li><a href="https://daily.bandcamp.com/lists/palaneque-records-label-guide" rel="noopener" target="_blank">Palenque Records guide (Bandcamp Daily)</a></li>
+</ul>
+<h2 id="cumbia-major-with-the-minor-styles-on-the-relative-minor-degree-6">クンビア：メジャー（マイナーのスタイルは平行調のマイナー、6 度）</h2>
+<p>ドラムは「Cumbia」キットで鳴ります：PERC はギロ、CLAP はコンガ（ジャマドール）、TOM はティンバル、CYMBAL はカウベル（カンパーナ）。ギロは「チュ・チュク」：拍で 1 回こすり、その「アンダ」でダウン・アップ。</p>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Colombiana</td>
+<td>ドラム</td>
+<td>2</td>
+<td>1・3 にタンボーラ、2・4 にジャマドール、毎拍ギロ、アレグレが応える</td>
+<td>85–100</td>
+<td>Cumbia · room</td>
+</tr>
+<tr>
+<td>Sonidera</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ゆっくりめ、ピックアップ付きのキック、すべてのアンドにジャマドール、4 分のカンパーナ、ティンバルのフィル</td>
+<td>80–92</td>
+<td>Cumbia · timbal</td>
+</tr>
+<tr>
+<td>Villera</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ハードに：2・4 で鳴り響くスネア、キックは 1、2 拍目の「ア」、3、ティンバルのロール</td>
+<td>95–105</td>
+<td>Cumbia · timbal</td>
+</tr>
+<tr>
+<td>Chicha</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ギロの上のティンバレスのパターン、裏拍のコンガの 8 分</td>
+<td>90–100</td>
+<td>Cumbia · room</td>
+</tr>
+<tr>
+<td>Digital</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ドラムマシンのクンビア：ハットがギロの音型、2・4 にクラップ</td>
+<td>90–105</td>
+<td>Roland TR808</td>
+</tr>
+<tr>
+<td>Root–Fifth Tumbao</td>
+<td>ベース</td>
+<td>2</td>
+<td>付点 4 分のルート、先取りする 5 度、I から V へ</td>
+<td>85–100</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Tónica-Dominante</td>
+<td>ベース</td>
+<td>4</td>
+<td>1 拍目にルート、3 拍目に 5 度、各コードへのピックアップ、I–IV–V–I</td>
+<td>85–100</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Sonidera Walk</td>
+<td>ベース</td>
+<td>2</td>
+<td>I から IV へ歩いて戻る丸いベース</td>
+<td>80–92</td>
+<td>Fretless</td>
+</tr>
+<tr>
+<td>Villera i–VII</td>
+<td>ベース</td>
+<td>2</td>
+<td>平行調のマイナーの i–VII で繰り返すキーボードベース</td>
+<td>95–105</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Digital 808</td>
+<td>ベース</td>
+<td>4</td>
+<td>vi–IV–I–V の上で 808 がトゥンバオのリズム、各ルートへグライド</td>
+<td>90–105</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Acordeón</td>
+<td>リード</td>
+<td>2</td>
+<td>アコーディオンの 8 分のパッセージ</td>
+<td>85–100</td>
+<td>Accordion</td>
+</tr>
+<tr>
+<td>Caña de Millo</td>
+<td>リード</td>
+<td>2</td>
+<td>16 分のトリル、クンビア本来の葦笛</td>
+<td>85–100</td>
+<td>Flute</td>
+</tr>
+<tr>
+<td>Chicha Guitar</td>
+<td>リード</td>
+<td>2</td>
+<td>平行調のマイナーでトレモロピッキングの 2 音、導音から主音へ</td>
+<td>90–100</td>
+<td>Guitar · Overdrive</td>
+</tr>
+<tr>
+<td>Villera Lead</td>
+<td>リード</td>
+<td>2</td>
+<td>平行調のマイナーを巡る鋭いキーボードのリード</td>
+<td>95–105</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Orquesta Brass</td>
+<td>リード</td>
+<td>2</td>
+<td>1950 年代ビッグバンドのクンビアのコール＆レスポンス</td>
+<td>90–105</td>
+<td>Trumpet</td>
+</tr>
+<tr>
+<td>Accordion Offbeats</td>
+<td>コード</td>
+<td>4</td>
+<td>裏拍のアコーディオンのコード I–V–V–I</td>
+<td>85–100</td>
+<td>Accordion</td>
+</tr>
+<tr>
+<td>Sonidera Organ</td>
+<td>コード</td>
+<td>4</td>
+<td>1 拍目と 3 拍目のアンドにコンボオルガン、伸ばす、I–IV–V–I</td>
+<td>80–92</td>
+<td>Jazz organ</td>
+</tr>
+<tr>
+<td>Villera Stabs</td>
+<td>コード</td>
+<td>4</td>
+<td>半小節ごとに 2 回の素早いスタブ、平行調のマイナーで i–VII（vi–V）</td>
+<td>95–105</td>
+<td>TAL NoiseMaker</td>
+</tr>
+<tr>
+<td>Chicha Surf</td>
+<td>コード</td>
+<td>4</td>
+<td>サーフギターのストローク：平行調のマイナーで i–VII–i–V（V はメジャー、クロマチック）</td>
+<td>90–100</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Orquesta Hits</td>
+<td>コード</td>
+<td>4</td>
+<td>2 拍目のアンドと 4 拍目にブラスのヒット、I–IV–V–I</td>
+<td>90–105</td>
+<td>Brass section</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_8">参考資料</h3>
+<ul>
+<li>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Cumbia_villera" rel="noopener" target="_blank">Cumbia villera (Wikipedia)</a></li>
+</ul>
+</li>
+<li><a href="https://en.wikipedia.org/wiki/Cumbia_santafesina" rel="noopener" target="_blank">Cumbia santafesina (Wikipedia)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Guacharaca" rel="noopener" target="_blank">Guacharaca (Wikipedia)</a> - <a href="https://reverb.com/news/latin-beats-how-to-play-the-cumbia-style" rel="noopener" target="_blank">Latin Beats: cumbia on a drum kit and congas (Reverb)</a></li>
+<li><a href="https://orphiq.com/resources/what-is-cumbia" rel="noopener" target="_blank">What is cumbia (Orphiq)</a> - Jamzone のクンビアのレッスン（ギラのダウン、ダウン・アップの音型）</li>
+<li>PDF へのリンクは切れています。 - セルヒオ・マルティンによるガイタ／ポロ／クンビアの分析（<a href="https://archives.berklee.edu/node/50311/ocr" rel="noopener" target="_blank">Berklee archive</a>） - チチャ：<a href="https://www.masterclass.com/articles/chicha-music-guide" rel="noopener" target="_blank">MasterClass chicha guide</a></li>
+<li><a href="https://newdirectionsinmusic.substack.com/p/my-hot-chicha-summer" rel="noopener" target="_blank">My Hot Chicha Summer</a></li>
+<li><a href="https://globalbassstudies.substack.com/p/im-here-to-convince-you-that-cumbia" rel="noopener" target="_blank">Cumbia is just like techno</a></li>
+</ul>
+<h2 id="piig-natural-minor-with-the-dorian-iv-and-the-harmonic-v">Piig：ナチュラルマイナー（ドリアンの IV とハーモニックの V）</h2>
+<p>Biig Piig の初期 EP（<em>Big Fan of the Sesh</em>、<em>A World Without Snooze</em>、<em>No Place for Patience</em>）の、キャンドルの灯りのようなローファイ・ヒップホップとネオソウルにならって。</p>
+<ul>
+<li>ゆったりした 2 小節と 4 小節のループ。</li>
+<li>抑えたドラム：リム、シェイカー、ブラシ、やわらかいキック。</li>
+<li>丸くレガートなベース。</li>
+<li>Rhodes とジャズギターの 7th・9th コード、背景にサックス。</li>
+</ul>
+<p><strong>D マイナー、79 BPM で鳴らします</strong>（SWING 56–60）。<em>24K</em> のキーとテンポです（songbpm.com）。150 とするコードサイトは倍テンポで数えています。</p>
+<p>3 つのファミリーがあり、それぞれに楽器ごとのプリセットが 1 つずつ。同じファミリーの 4 つのプリセットはコード進行を共有するので一緒に鳴り、2 小節のドラムが 4 小節のパートの下でループします。進行は曲から取り（Ultimate Guitar のコード譜）、フレーズはすべてオリジナルです：</p>
+<table>
+<thead>
+<tr>
+<th>ファミリー</th>
+<th>進行</th>
+<th>出典</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Smoke</td>
+<td>i – IV – iv – VI VII（Dm G Gm Bb C）</td>
+<td><em>24K</em>：ドリアンの IV（ナチュラルの B）がマイナーの iv へ落ちる</td>
+</tr>
+<tr>
+<td>Lay Here</td>
+<td>i7 – V7</td>
+<td><em>Perdida</em>（原曲は Gm7 D7）：V の上がった 3 度</td>
+</tr>
+<tr>
+<td>Daffodil</td>
+<td>VII – iv – i – i</td>
+<td><em>Sunny</em>（原曲は Dm Am Em）</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Smoke Dust</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ほこりっぽいブームバップ：1 拍目と 2 拍目の「ア」にキック、隙間のある 16 分のハット、リムのゴースト、2 小節目をひるがえすオープンハット</td>
+<td>76–84</td>
+<td>SP1200 1</td>
+</tr>
+<tr>
+<td>Lay Here Bossa</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ゆったりしたボサ：スルド風のキック、ボサのクラーベにサイドスティック、シェイカー代わりのクローズハット</td>
+<td>76–84</td>
+<td>Standard キット</td>
+</tr>
+<tr>
+<td>Daffodil Brushes</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ライドの「ディン、ディンガ」、2・4 にハットのフット、フェザーのキック、ブラシのスネア</td>
+<td>76–84</td>
+<td>Brush · ride</td>
+</tr>
+<tr>
+<td>Smoke Sub</td>
+<td>ベース</td>
+<td>4</td>
+<td>ルートの間をグライドする丸く伸びるサブ、IV の下はナチュラルの B、iv の下は B♭</td>
+<td>76–84</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Lay Here Upright</td>
+<td>ベース</td>
+<td>2</td>
+<td>ボサのルートと 5 度、導音が主音へ導く</td>
+<td>76–84</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Daffodil Walk</td>
+<td>ベース</td>
+<td>4</td>
+<td>各チェンジへ歩いて入る伸ばしたルート</td>
+<td>76–84</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Smoke Alto</td>
+<td>リード</td>
+<td>4</td>
+<td>背景のアルトがオクターブへ上がり、IV と iv の上で同じように下りる</td>
+<td>76–84</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Lay Here Tenor</td>
+<td>リード</td>
+<td>2</td>
+<td>小節の後半で応えるテナー、V の 3 度が解決する</td>
+<td>76–84</td>
+<td>Tenor sax</td>
+</tr>
+<tr>
+<td>Daffodil Alto</td>
+<td>リード</td>
+<td>4</td>
+<td>コードの間の長いアルトの音と下降する応答</td>
+<td>76–84</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Smoke Rhodes</td>
+<td>コード</td>
+<td>4</td>
+<td>i9 – IV9 – iv9 – VImaj7 VIIadd9、それぞれ 16 分遅れで、前のめりの弾き直し付き</td>
+<td>76–84</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Lay Here Guitar</td>
+<td>コード</td>
+<td>2</td>
+<td>ボサの 8 分でコンピングする i7 – V7</td>
+<td>76–84</td>
+<td>Jazz guitar</td>
+</tr>
+<tr>
+<td>Daffodil Keys</td>
+<td>コード</td>
+<td>4</td>
+<td>VIIadd9 – iv9 – i9 – i11、遅れて置き、もう一度触れる</td>
+<td>76–84</td>
+<td>Upright piano</td>
+</tr>
+</tbody>
+</table>
+<p>レコードの質感はパターンには入っていません：レコードのノイズ、12 ビットサンプラーのざらつき、テープの揺れ。マシンのエフェクトである程度近づけます：ローパス、DRIVE、少しのリバーブ。</p>
+<h3 id="references_9">参考資料</h3>
+<ul>
+<li><a href="https://songbpm.com/@biig-piig/24k" rel="noopener" target="_blank">24K, tempo and key (songbpm)</a></li>
+<li><a href="https://www.ultimate-guitar.com/artist/biig_piig_618029" rel="noopener" target="_blank">Biig Piig のコードとタブ譜（Ultimate Guitar）</a>：<em>Perdida</em>, <em>Sunny</em>, <em>Switch</em>, <em>Oh No</em>, <em>Feels Right</em></li>
+</ul>
+<h2 id="folk-major-the-modal-tunes-on-degree-2-dorian">フォーク：メジャー（旋法の曲は 2 度、ドリアン）</h2>
+<p><strong>G メジャー</strong>向け。コードは曲から取っています（Ultimate Guitar）：</p>
+<table>
+<thead>
+<tr>
+<th>曲</th>
+<th>コード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Knockin' on Heaven's Door</td>
+<td>G D Am, G D C</td>
+</tr>
+<tr>
+<td>The Times They Are A-Changin' (3/4)</td>
+<td>G Em C G, G Am C D</td>
+</tr>
+<tr>
+<td>The House of the Rising Sun (6/8)</td>
+<td>Am C D F Am E Am E（F と E メジャーはキー外）</td>
+</tr>
+<tr>
+<td>Dirty Old Town、Whiskey in the Jar</td>
+<td>I IV I, V vi</td>
+</tr>
+<tr>
+<td>Scarborough Fair、Matty Groves</td>
+<td>G メジャーの中の A ドリアン：ii I ii IV、ii IV V ii</td>
+</tr>
+</tbody>
+</table>
+<p>Drunken Sailor はパブリックドメインの伝承曲です。</p>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dylan Shuffle</td>
+<td>ドラム</td>
+<td>2</td>
+<td>フォークロックのトレインビート、裏拍にタンバリン</td>
+<td>68–80</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Bodhran Jig</td>
+<td>ドラム</td>
+<td>3 (6/8)</td>
+<td>バウロンの 8 分、1 と 4 が強い</td>
+<td>150–170</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Reel Stomp</td>
+<td>ドラム</td>
+<td>2</td>
+<td>毎拍の足踏み、バウロンの 8 分、クラップ、タンバリンの 16 分</td>
+<td>110–125</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Changin' Waltz</td>
+<td>ドラム</td>
+<td>3 (3/4)</td>
+<td>1 拍目にキック、2・3 拍目にスネア、ライド</td>
+<td>85–95</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Whiskey Gallop</td>
+<td>ドラム</td>
+<td>2</td>
+<td>突き進む 8 分、バックビート、タムのロール</td>
+<td>120–140</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Heaven's Door Roots</td>
+<td>ベース</td>
+<td>2</td>
+<td>I V ii / I V IV の下のルートと 5 度</td>
+<td>68–75</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Jig Bass</td>
+<td>ベース</td>
+<td>3 (6/8)</td>
+<td>1 にルート、4 に 5 度、強拍を大きく</td>
+<td>150–170</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Rising Sun Walk</td>
+<td>ベース</td>
+<td>6（6/8 の 8 小節）</td>
+<td>8 つのコードに沿って下りる</td>
+<td>110–120</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Changin' Oom-Pah</td>
+<td>ベース</td>
+<td>3 (3/4)</td>
+<td>ルート、続いて 5 度を 2 回</td>
+<td>85–95</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Dorian Drone</td>
+<td>ベース</td>
+<td>4</td>
+<td>伸ばした A から G へ、膨らんではゆるむ</td>
+<td>60–90</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Fiddle Jig</td>
+<td>リード</td>
+<td>3 (6/8)</td>
+<td>3 つずつの 8 分、弓が各 1 音目に寄りかかり、装飾音を早めにはじく</td>
+<td>150–170</td>
+<td>Fiddle</td>
+</tr>
+<tr>
+<td>Banjo Roll</td>
+<td>リード</td>
+<td>2</td>
+<td>I と IV の上のスクラッグス・ロール 3 + 3 + 2、アクセント付き</td>
+<td>100–120</td>
+<td>Banjo</td>
+</tr>
+<tr>
+<td>Whistle Air</td>
+<td>リード</td>
+<td>4</td>
+<td>ゆっくりしたエア、長い音の前に早めのカットを入れる</td>
+<td>60–75</td>
+<td>レコーダー</td>
+</tr>
+<tr>
+<td>Drunken Sailor</td>
+<td>リード</td>
+<td>4</td>
+<td>伝統的なシャンティ、2 度のドリアンで</td>
+<td>100–120</td>
+<td>Bagpipe</td>
+</tr>
+<tr>
+<td>Rising Sun Harp</td>
+<td>リード</td>
+<td>6（6/8 の 8 小節）</td>
+<td>曲のピッキング：ルート、5 度、オクターブ、3 度、5 度、オクターブ</td>
+<td>110–120</td>
+<td>Harp</td>
+</tr>
+<tr>
+<td>Heaven's Door Strum</td>
+<td>コード</td>
+<td>4</td>
+<td>G D Am / G D C をダウン・アップ・ダウンでストローク</td>
+<td>68–75</td>
+<td>Guitar · Acoustic</td>
+</tr>
+<tr>
+<td>Changin' 12-String</td>
+<td>コード</td>
+<td>6（3/4 の 8 小節）</td>
+<td>G Em C G / G Am C D を 1、2、3 拍目に</td>
+<td>85–95</td>
+<td>Guitar · 12-string</td>
+</tr>
+<tr>
+<td>Rising Sun Accordion</td>
+<td>コード</td>
+<td>6（6/8 の 8 小節）</td>
+<td>8 つのコードを 6/8 の 1 小節ずつ伸ばす</td>
+<td>110–120</td>
+<td>Accordion</td>
+</tr>
+<tr>
+<td>Dirty Old Town Pah</td>
+<td>コード</td>
+<td>4</td>
+<td>I IV I / V vi、アコーディオンの裏拍の「パッ」</td>
+<td>100–120</td>
+<td>Accordion</td>
+</tr>
+<tr>
+<td>Scarborough Harp</td>
+<td>コード</td>
+<td>4</td>
+<td>ii I ii IV / ii IV V ii（A ドリアン）、伸ばす</td>
+<td>60–90</td>
+<td>Harp</td>
+</tr>
+</tbody>
+</table>
+<h2 id="heavy-metal-natural-minor-with-the-2-the-5-and-the-raised-7th">ヘヴィメタル：ナチュラルマイナー（♭2、♭5、導音の 7 度）</h2>
+<p><strong>E マイナー</strong>向け。Ultimate Guitar のタブ譜とコード譜から：</p>
+<table>
+<thead>
+<tr>
+<th>曲</th>
+<th>リフまたはコード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Black Sabbath、Paranoid</td>
+<td>Em D G D Em</td>
+</tr>
+<tr>
+<td>Black Sabbath、Iron Man</td>
+<td>B D D E E, G F♯ G F♯ G F♯ D D E E</td>
+</tr>
+<tr>
+<td>Iron Maiden、The Trooper</td>
+<td>E5 D G D, C5 D</td>
+</tr>
+<tr>
+<td>Iron Maiden、Fear of the Dark</td>
+<td>Dm B♭ C（i VI VII）</td>
+</tr>
+<tr>
+<td>Metallica、Master of Puppets</td>
+<td>E からの半音下降</td>
+</tr>
+</tbody>
+</table>
+<p>Motörhead の Ace of Spades と Judas Priest も入っています。ドラムは AVL のキットです。</p>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Paranoid Drive</td>
+<td>ドラム</td>
+<td>2</td>
+<td>8 分のハット、バックビート、アンドを押すキック</td>
+<td>160–165</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Maiden Gallop</td>
+<td>ドラム</td>
+<td>2</td>
+<td>キックのギャロップ、16 分のハット（クライヴ・バー風）</td>
+<td>160–180</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Doom Half-Time</td>
+<td>ドラム</td>
+<td>2</td>
+<td>サバスのハーフタイム、ライドの 4 分、タムのロール</td>
+<td>70–80</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Double Kick</td>
+<td>ドラム</td>
+<td>2</td>
+<td>16 分のツーバス、バックビート、クラッシュ</td>
+<td>110–140</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Speed Rock</td>
+<td>ドラム</td>
+<td>2</td>
+<td>8 分ごとのキック、突き進むライド</td>
+<td>135–145</td>
+<td>Red Zeppelin 5</td>
+</tr>
+<tr>
+<td>Paranoid Eighths</td>
+<td>ベース</td>
+<td>2</td>
+<td>i VII III VII i を 8 分で、拍で強くピッキング</td>
+<td>160–165</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Harris Gallop</td>
+<td>ベース</td>
+<td>4</td>
+<td>i VI VII i の下のスティーヴ・ハリスのギャロップ、8 分を強く</td>
+<td>160–180</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Iron Riff</td>
+<td>ベース</td>
+<td>4</td>
+<td>Iron Man 風、ゆっくり、最初の音へスライド</td>
+<td>70–80</td>
+<td>Guitar · Heavy muted</td>
+</tr>
+<tr>
+<td>Thrash Chromatic</td>
+<td>ベース</td>
+<td>2</td>
+<td>パームミュートの E を 16 分で（@72–78）、アクセントの音が E D♯ D C♯ と下がる</td>
+<td>180–200</td>
+<td>Guitar · Heavy muted</td>
+</tr>
+<tr>
+<td>Anthem Octaves</td>
+<td>ベース</td>
+<td>2</td>
+<td>オクターブ跳躍する 8 分の i VI VII</td>
+<td>140–160</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Trooper Twin Lead</td>
+<td>リード</td>
+<td>4</td>
+<td>上り下りするギャロップのメロディー</td>
+<td>160–175</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Iron Theme</td>
+<td>リード</td>
+<td>4</td>
+<td>1 オクターブ上の Iron Man のリフ</td>
+<td>70–80</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Pentatonic Lick</td>
+<td>リード</td>
+<td>2</td>
+<td>ブルースのリック、ベンドの音へスライドして鳴らしきる</td>
+<td>80–110</td>
+<td>Guitar · Valve OD</td>
+</tr>
+<tr>
+<td>Harmonic Run</td>
+<td>リード</td>
+<td>2</td>
+<td>i とメジャーの V の 16 分のアルペジオ</td>
+<td>100–130</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Dark Anthem</td>
+<td>リード</td>
+<td>4</td>
+<td>i VI VII の上の長い音、ピックアップ付き</td>
+<td>140–160</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Paranoid Power</td>
+<td>コード</td>
+<td>2</td>
+<td>Em D G D Em をパームミュートの 8 分で</td>
+<td>160–165</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Trooper Gallop</td>
+<td>コード</td>
+<td>2</td>
+<td>E5 D C5 のギャロップ（2 つのボイシングを交互にして各ヒットを鳴らす）</td>
+<td>160–175</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Iron Doom</td>
+<td>コード</td>
+<td>2</td>
+<td>B5 D5 E5、G5 F♯5、伸ばす</td>
+<td>70–80</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Anthem i-VI-VII</td>
+<td>コード</td>
+<td>4</td>
+<td>i VI VII を 1 小節に 2 回</td>
+<td>140–160</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Chromatic Fall</td>
+<td>コード</td>
+<td>2</td>
+<td>E5 D♯5 D5 C♯5、続いて ♭II</td>
+<td>180–200</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+</tbody>
+</table>
+<h2 id="black-metal-natural-minor-with-the-phrygian-2-and-the-5">ブラックメタル：ナチュラルマイナー（フリジアンの ♭2 と ♭5）</h2>
+<p><strong>E マイナー</strong>向け。Ultimate Guitar のタブ譜から：</p>
+<ul>
+<li>Darkthrone、Transilvanian Hunger：開放弦のペダルの上で下降するトレモロのライン。</li>
+<li>Burzum、Dunkelheit：半音上がる Em のアルペジオ。</li>
+<li>Mayhem、Freezing Moon。Emperor、I Am the Black Wizards。</li>
+<li>Bathory、One Rode to Asa Bay：i VII … VI。</li>
+</ul>
+<p>ドラムは Wikipedia のブラストビートに従います：</p>
+<ul>
+<li><strong>ブラストビート：</strong>キックとスネアが 16 分で交互に、キックごとにシンバル。</li>
+<li><strong>ハンマーブラスト：</strong>3 つを同時に。</li>
+<li id="the-skank-beat"><strong>スカンクビート。</strong></li>
+</ul>
+<p>シーケンサーの上限は 200 BPM なので、いちばん速いプリセットはその少し下にしています。</p>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Traditional Blast</td>
+<td>ドラム</td>
+<td>2</td>
+<td>16 分で交互のキックとスネア、キックと一緒にクラッシュ</td>
+<td>180–200</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Hammer Blast</td>
+<td>ドラム</td>
+<td>2</td>
+<td>8 分でキック、スネア、シンバルを同時に</td>
+<td>180–200</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Skank Beat</td>
+<td>ドラム</td>
+<td>2</td>
+<td>表拍にキック、そのアンドにスネア</td>
+<td>160–190</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Frozen March</td>
+<td>ドラム</td>
+<td>2</td>
+<td>16 分のツーバス、3 拍目にスネア</td>
+<td>100–130</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Viking March</td>
+<td>ドラム</td>
+<td>2</td>
+<td>バソリーのゆっくりしたエピック、フロアタムが応える</td>
+<td>80–100</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Tremolo Roots</td>
+<td>ベース</td>
+<td>2</td>
+<td>i VI VII を 8 分で</td>
+<td>160–200</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Pedal Swell</td>
+<td>ベース</td>
+<td>2</td>
+<td>16 分のルートが 70→118 と膨らんで戻る</td>
+<td>160–200</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Phrygian Crawl</td>
+<td>ベース</td>
+<td>4</td>
+<td>i と ♭II を 2 分音符で、♭5 が経過</td>
+<td>100–180</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Symphonic Drone</td>
+<td>ベース</td>
+<td>4</td>
+<td>i VI VII i を伸ばして膨らませる（エンペラーのキーボード）</td>
+<td>任意</td>
+<td>Organ · Bourdon 16</td>
+</tr>
+<tr>
+<td>Viking Walk</td>
+<td>ベース</td>
+<td>4</td>
+<td>行進の下の i VII i VII VI</td>
+<td>80–100</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Hunger Tremolo</td>
+<td>リード</td>
+<td>4</td>
+<td>Transilvanian Hunger 風：下降するライン、各音を 1 拍トレモロ（下り 112、上り 86）</td>
+<td>160–200</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Dunkelheit Arpeggio</td>
+<td>リード</td>
+<td>4</td>
+<td>8 分の Em アルペジオ、続いて半音上（F）</td>
+<td>100–130</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Frozen Melody</td>
+<td>リード</td>
+<td>4</td>
+<td>ゆっくりした音を半小節ずつトレモロで</td>
+<td>160–200</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Symphonic Choir</td>
+<td>リード</td>
+<td>4</td>
+<td>ドローンの上で歌う長い音</td>
+<td>任意</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Tritone Riff</td>
+<td>リード</td>
+<td>2</td>
+<td>ルート、♭2、♭5 をアクセント付きの 16 分で</td>
+<td>140–180</td>
+<td>Guitar · Heavy lead</td>
+</tr>
+<tr>
+<td>Hunger Chords</td>
+<td>コード</td>
+<td>4</td>
+<td>i VI VII i を伸ばす</td>
+<td>160–200</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Phrygian Dread</td>
+<td>コード</td>
+<td>4</td>
+<td>i を 2 小節、♭II、そして戻る</td>
+<td>任意</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Symphonic Strings</td>
+<td>コード</td>
+<td>4</td>
+<td>i iv V i、ゆっくりしたストリングス</td>
+<td>任意</td>
+<td>Strings · Bowed</td>
+</tr>
+<tr>
+<td>Dunkelheit Shapes</td>
+<td>コード</td>
+<td>4</td>
+<td>Em、続いて F（♭II）、各 2 小節</td>
+<td>100–130</td>
+<td>Guitar · Heavy rhythm</td>
+</tr>
+<tr>
+<td>Cathedral Organ</td>
+<td>コード</td>
+<td>4</td>
+<td>i iv i V、フルボイシングで</td>
+<td>60–90</td>
+<td>Organ · Plein jeu</td>
+</tr>
+</tbody>
+</table>
+<h2 id="post-punk-natural-minor-with-the-dorian-iv">ポストパンク：ナチュラルマイナー（ドリアンの IV）</h2>
+<p><strong>A マイナー</strong>向け。進行はバンドの曲から取り（Ultimate Guitar）、それぞれマイナーキーの度数に置いています：</p>
+<table>
+<thead>
+<tr>
+<th>曲</th>
+<th>コード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The Cure、A Forest</td>
+<td>Am C F D：i III VI IV、ドリアンのメジャーの IV</td>
+</tr>
+<tr>
+<td>The Cure、Lullaby</td>
+<td>i VI</td>
+</tr>
+<tr>
+<td>The Cure、Boys Don't Cry</td>
+<td>F♯ マイナーの A Bm C♯m D：III iv v VI</td>
+</tr>
+<tr>
+<td>Joy Division、Love Will Tear Us Apart</td>
+<td>B マイナーの D A Bm Em：III VII i iv</td>
+</tr>
+<tr>
+<td>Siouxsie and the Banshees、Spellbound</td>
+<td>D ドリアン：i7 VII IV</td>
+</tr>
+<tr>
+<td>The Sisters of Mercy、Temple of Love</td>
+<td>i III IV</td>
+</tr>
+<tr>
+<td>The Sisters of Mercy、Lucretia My Reflection</td>
+<td>i III iv</td>
+</tr>
+</tbody>
+</table>
+<p>Joy Division の Disorder と She's Lost Control、Bauhaus の Bela Lugosi's Dead も入っています。ベースが主役で、ピーター・フックのように高くメロディックに、いくつかの音は少し遅れます。</p>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lost Control</td>
+<td>ドラム</td>
+<td>2</td>
+<td>16 分のハット、鳴り響くスネア、シンコペーションするキック</td>
+<td>140–150</td>
+<td>Room キット</td>
+</tr>
+<tr>
+<td>Tribal Toms</td>
+<td>ドラム</td>
+<td>2</td>
+<td>バックビートの代わりにフロアタムの音型</td>
+<td>130–160</td>
+<td>Room キット</td>
+</tr>
+<tr>
+<td>Doktor Avalanche</td>
+<td>ドラム</td>
+<td>2</td>
+<td>シスターズのドラムマシン：4 つ打ち、アンドにオープンハット</td>
+<td>125–140</td>
+<td>Boss DR55</td>
+</tr>
+<tr>
+<td>Forest Run</td>
+<td>ドラム</td>
+<td>2</td>
+<td>A Forest のビート、4 拍目のアンドにオープンハット</td>
+<td>130–140</td>
+<td>Roland CR78</td>
+</tr>
+<tr>
+<td>Undead Dub</td>
+<td>ドラム</td>
+<td>2</td>
+<td>Bela Lugosi のリムクリックのクラーベ、やわらかいハット、タム</td>
+<td>115–125</td>
+<td>Room キット</td>
+</tr>
+<tr>
+<td>Hook Melody</td>
+<td>ベース</td>
+<td>4</td>
+<td>III VII i iv の上でベースがメロディーを担う、裏拍は遅れて</td>
+<td>145–150</td>
+<td>Squier bass</td>
+</tr>
+<tr>
+<td>Forest Pulse</td>
+<td>ベース</td>
+<td>4</td>
+<td>i III VI IV の上の A Forest の 8 分の脈動</td>
+<td>130–140</td>
+<td>Squier bass</td>
+</tr>
+<tr>
+<td>Undead Dub Bass</td>
+<td>ベース</td>
+<td>2</td>
+<td>拍の後ろに置いた下降するダブの音型</td>
+<td>115–125</td>
+<td>Squier bass</td>
+</tr>
+<tr>
+<td>Disorder Run</td>
+<td>ベース</td>
+<td>2</td>
+<td>マイナーを上っていく忙しい 8 分</td>
+<td>155–165</td>
+<td>Squier bass</td>
+</tr>
+<tr>
+<td>Boys Walk</td>
+<td>ベース</td>
+<td>2</td>
+<td>III iv v VI を 8 分で音階を上る</td>
+<td>155–170</td>
+<td>Squier bass</td>
+</tr>
+<tr>
+<td>Forest Arpeggio</td>
+<td>リード</td>
+<td>4</td>
+<td>i III VI IV の上のコーラスのかかったアルペジオ</td>
+<td>130–140</td>
+<td>Guitar · Chorus</td>
+</tr>
+<tr>
+<td>Tear Apart Synth</td>
+<td>リード</td>
+<td>4</td>
+<td>下降して歌うシンセの音型</td>
+<td>145–150</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Spellbound Sixteenths</td>
+<td>リード</td>
+<td>4</td>
+<td>i VII IV の上の速いアルペジオ</td>
+<td>145–150</td>
+<td>Guitar · Chorus</td>
+</tr>
+<tr>
+<td>Temple Chime</td>
+<td>リード</td>
+<td>2</td>
+<td>i III IV の上で鳴り響く高い 8 分</td>
+<td>135–145</td>
+<td>Guitar · Valve OD</td>
+</tr>
+<tr>
+<td>Lullaby Creep</td>
+<td>リード</td>
+<td>2</td>
+<td>つま先立ちのように弾く音、いくつかは早めに</td>
+<td>110–120</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Forest Chords</td>
+<td>コード</td>
+<td>4</td>
+<td>Am C F D(add9) を叩いて前のめりに</td>
+<td>130–140</td>
+<td>Guitar · Chorus</td>
+</tr>
+<tr>
+<td>Tear Apart Strings</td>
+<td>コード</td>
+<td>4</td>
+<td>ストリングスシンセの III VII i iv</td>
+<td>145–150</td>
+<td>Strings · Fat</td>
+</tr>
+<tr>
+<td>Boys Strum</td>
+<td>コード</td>
+<td>2</td>
+<td>8 分のストロークで III iv v VI</td>
+<td>155–170</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Spellbound Dorian</td>
+<td>コード</td>
+<td>4</td>
+<td>i7 VII IV i7–VII</td>
+<td>145–150</td>
+<td>Guitar · 12-string</td>
+</tr>
+<tr>
+<td>Lucretia Gloom</td>
+<td>コード</td>
+<td>4</td>
+<td>オルガンのヴォクス・フマーナで i III iv</td>
+<td>125–135</td>
+<td>Organ · Vox humana</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gregorian-old-gothic-dorian">グレゴリアン（古いゴシック）：ドリアン</h2>
+<p><strong>D ドリアン</strong>（SCALE は Dorian、ROOT は D）向け。聖歌の第 1 旋法です。</p>
+<ul>
+<li><strong>ディエス・イレ：</strong>13 世紀、パブリックドメイン。mfiles.co.uk の MIDI の 3 つのフレーズです：F E F D E C D D | F F G F E D C E | F E D A C D D。</li>
+<li><strong>Organum Above</strong>（リード）と <strong>Organum Below</strong>（ベース）が、完全 5 度上と完全 4 度下で 1 音ずつ歌います。<em>ムジカ・エンキリアディス</em>にならったオルガヌムの平行 5 度と 4 度です。3 つのうちどの 2 つでも一緒にループします。</li>
+<li><strong>Dead Can Dance：</strong>In Power We Entrust the Love Advocated の i v VII IV（Am Em G D）。</li>
+<li><strong>ほかに：</strong>6/8 のサルタレッロ、聖歌の下のドローン、その下の 90 年代風ブレイクビーツ。</li>
+</ul>
+<p>聖歌の音はフレーズの中ほどへ向かって膨らみ、ほんの少し前や後ろに寄ります。</p>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Processional</td>
+<td>ドラム</td>
+<td>2</td>
+<td>1 拍目にティンパニの D、3 拍目に A、バスドラム、シンバルのスウェル</td>
+<td>55–70</td>
+<td>Orchestra · D</td>
+</tr>
+<tr>
+<td>Saltarello</td>
+<td>ドラム</td>
+<td>3 (6/8)</td>
+<td>タンバリンの 8 分（1 と 4 が強い）、跳ねるフレームドラム</td>
+<td>150–170</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Chant Breakbeat</td>
+<td>ドラム</td>
+<td>2</td>
+<td>聖歌の下のゆるいブレイク</td>
+<td>92–100</td>
+<td>SP1200 1</td>
+</tr>
+<tr>
+<td>Wrath Timpani</td>
+<td>ドラム</td>
+<td>2</td>
+<td>D、A、小節へのロール、シンバル</td>
+<td>55–70</td>
+<td>Orchestra · D</td>
+</tr>
+<tr>
+<td>Ritual Frame</td>
+<td>ドラム</td>
+<td>2</td>
+<td>フレームドラムの 3 + 3 + 2、きらめくタンバリン</td>
+<td>70–90</td>
+<td>Folk · bodhrán</td>
+</tr>
+<tr>
+<td>Ison Drone</td>
+<td>ベース</td>
+<td>4</td>
+<td>伸ばした終止音、5 度を 1 小節、ひと息</td>
+<td>50–80</td>
+<td>Organ · Bourdon 16</td>
+</tr>
+<tr>
+<td>Organum Below</td>
+<td>ベース</td>
+<td>8</td>
+<td>4 度下のディエス・イレ</td>
+<td>60–80</td>
+<td>Cello</td>
+</tr>
+<tr>
+<td>Open Fifths</td>
+<td>ベース</td>
+<td>4</td>
+<td>D と A、各 2 小節、膨らんで</td>
+<td>50–80</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Ostinato Pulse</td>
+<td>ベース</td>
+<td>4</td>
+<td>D の 4 分が 40→110 と膨らみ、A でまた下がる</td>
+<td>60–90</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Dorian Ground</td>
+<td>ベース</td>
+<td>4</td>
+<td>i v VII IV、伸ばしたルート、それぞれへ 1 歩ずつ</td>
+<td>60–90</td>
+<td>Cello</td>
+</tr>
+<tr>
+<td>Dies Irae</td>
+<td>リード</td>
+<td>8</td>
+<td>歌われる聖歌</td>
+<td>60–80</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Organum Above</td>
+<td>リード</td>
+<td>8</td>
+<td>5 度上のディエス・イレ</td>
+<td>60–80</td>
+<td>Voice oohs</td>
+</tr>
+<tr>
+<td>Krummhorn Estampie</td>
+<td>リード</td>
+<td>4</td>
+<td>8 分の活発なドリアンの舞曲</td>
+<td>100–120</td>
+<td>Organ · Krummhorn</td>
+</tr>
+<tr>
+<td>Kyrie Melisma</td>
+<td>リード</td>
+<td>4</td>
+<td>多くの音にひとつの音節、5 度へ上る</td>
+<td>55–70</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Saltarello Recorder</td>
+<td>リード</td>
+<td>3 (6/8)</td>
+<td>跳ねる 8 分、1 と 4 に寄りかかる</td>
+<td>150–170</td>
+<td>レコーダー</td>
+</tr>
+<tr>
+<td>Organum Fifths</td>
+<td>コード</td>
+<td>8</td>
+<td>空 5 度の D C A D、各 2 小節、歌って</td>
+<td>55–80</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Dorian Cadence</td>
+<td>コード</td>
+<td>4</td>
+<td>i IV VII i（旋法のメジャーの IV）</td>
+<td>55–80</td>
+<td>Organ · Pipe 16+8+4</td>
+</tr>
+<tr>
+<td>Gothic Choir</td>
+<td>コード</td>
+<td>4</td>
+<td>i v VII IV、伸ばす</td>
+<td>60–90</td>
+<td>Choir</td>
+</tr>
+<tr>
+<td>Vox Humana</td>
+<td>コード</td>
+<td>4</td>
+<td>Dsus2 Dm Dsus4 Dm</td>
+<td>50–80</td>
+<td>Organ · Vox humana</td>
+</tr>
+<tr>
+<td>Harp Psalter</td>
+<td>コード</td>
+<td>3 (6/8)</td>
+<td>付点 4 分で i と VII</td>
+<td>150–170</td>
+<td>Harp</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references-for-the-five-packs">5 つのパックの参考資料</h3>
+<ul>
+<li><a href="https://www.ultimate-guitar.com" rel="noopener" target="_blank">Ultimate Guitar</a> (each song's chord sheet or tab, found with <code>tools/genre-research/ug-chords.py</code>)</li>
+<li><a href="https://en.wikipedia.org/wiki/Blast_beat" rel="noopener" target="_blank">Blast beat (Wikipedia)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Organum" rel="noopener" target="_blank">Organum (Wikipedia)</a></li>
+<li><a href="https://www.mfiles.co.uk/scores/gregorian-dies-irae.htm" rel="noopener" target="_blank">Dies Irae, score and MIDI (mfiles)</a></li>
+<li><a href="https://www.soundbrenner.com/blogs/articles/jig-rhythm" rel="noopener" target="_blank">The jig rhythm (Soundbrenner)</a></li>
+<li><a href="https://www.invisibleoranges.com/?p=44567" rel="noopener" target="_blank">A Matter of Life and Drums (Invisible Oranges)</a> (Clive Burr's sixteenth hats)</li>
+</ul>
+<h2 id="solos-major-ballads-after-coltranes-ballads-and-chet-baker">ソロ：メジャー（コルトレーンの <em>Ballads</em> とチェット・ベイカー風のバラード）</h2>
+<p><strong>E♭ メジャー</strong>向け。テナーのバラードのキーです。マイナーのムードは 6 度（C マイナー）に置き、Devotion は 2 度（F ドリアン）でヴァンプします。</p>
+<p>リードの 1 度は E♭4 なので、管楽器ごとに音域があります：</p>
+<table>
+<thead>
+<tr>
+<th>管楽器</th>
+<th>範囲</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>テナー</td>
+<td>「5-」から「1+」、叫ぶように「2+」まで</td>
+</tr>
+<tr>
+<td>ソプラノ</td>
+<td>「5」から「3+」</td>
+</tr>
+<tr>
+<td>Trumpet</td>
+<td>「7-」から「6」</td>
+</tr>
+</tbody>
+</table>
+<p>LEAD のためのオリジナルのバラードソロ 6 曲。それぞれ、その上で聴くブラシ、ベース、コード付きです。物憂げで、息が長く、情熱的で、速いパッセージはありません。</p>
+<p>お手本はジョン・コルトレーン・カルテットの <em>Ballads</em>（Impulse!、1962–63、タイナー、ギャリソン、ジョーンズと）と、チェット・ベイカーのスローなトランペットです。引用は一切ありません：アルバムのスタンダードも録音されたソロも著作権があるからです。フレーズも進行もリズムもすべて新しく書いています。</p>
+<h3 id="the-playing">演奏</h3>
+<ul>
+<li>テンポ 56–70。</li>
+<li>6–12 ステップの長く伸ばす音、フレーズの間に 1 拍か半小節の間。</li>
+<li>フレーズごとにベロシティでスウェルを書いています：@60 から @100–110 へ上がって戻る。MODS が各音のアタックをやわらげ（サックスは ATTACK +2400 タイムセント、トランペットは +3600）、リリースを長くします。</li>
+<li>長い音はすべて 1 ステップの 8–16 % 遅れて置きます。ルバートの寄りかかりです。</li>
+<li>速い動きは装飾だけ：3、4 個の 16 分を早めに入れて長い音へ上っていく。</li>
+<li>長い音へのスクープかスラー（~）。</li>
+</ul>
+<h3 id="the-band">バンド</h3>
+<ul>
+<li><strong>コード：</strong>タイナー風のルートレスの 9th と 13th、So What の 4 度和音、ペダルの上で平行移動する 4 度、リディアンのクラスター、マイナーの iv（A♭m6）、バックドアの D♭9。それぞれ 1 小節か半小節伸ばしてから、ボイシングを変えます。</li>
+<li><strong>ベース：</strong>ギャリソンのツーフィール、全音符とペダルで。</li>
+<li><strong>ドラム：</strong>ブラシだけ。TONE と CUTOFF で暗くし、ダウンビートへクラッシュをロールで入れます。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vow Brushes</td>
+<td>ドラム</td>
+<td>2</td>
+<td>8 分で掃くブラシ、2・4 にスラップとフット、フェザーのキック、最後にライドが入る</td>
+<td>62–70</td>
+<td>Brush · ride</td>
+</tr>
+<tr>
+<td>Lament Swells</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ゆっくりしたブラシ、2・4 にスラップ、2 拍かけてロールするクラッシュがアクセントのダウンビートへ</td>
+<td>54–60</td>
+<td>Brush · crash</td>
+</tr>
+<tr>
+<td>Devotion Mallets</td>
+<td>ドラム</td>
+<td>2</td>
+<td>跳ねるライド、ペダルの周りを転がるタム、ループを締めるブラシのスラップ</td>
+<td>66–72</td>
+<td>Brush · ride</td>
+</tr>
+<tr>
+<td>Nocturne Whisper</td>
+<td>ドラム</td>
+<td>2</td>
+<td>1・3 にライド、フット、ブラシのタップ 2 回、クリック 1 回</td>
+<td>56–64</td>
+<td>Brush · ride</td>
+</tr>
+<tr>
+<td>Twilight Swirl</td>
+<td>ドラム</td>
+<td>2</td>
+<td>やわらかい 16 分のタップで描く渦、2・4 にスラップ、ツーフィールのキック</td>
+<td>58–66</td>
+<td>Brush · ride</td>
+</tr>
+<tr>
+<td>Rain Brushes</td>
+<td>ドラム</td>
+<td>2</td>
+<td>3 + 3 + 2 のブラシ、スラップは 4 拍目だけ、ループの頭にやわらかいクラッシュ</td>
+<td>54–62</td>
+<td>Brush · crash</td>
+</tr>
+<tr>
+<td>Vow Two</td>
+<td>ベース</td>
+<td>8</td>
+<td>拍の後ろの 2 分音符、各チェンジへ半音の 8 分</td>
+<td>62–70</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Lament Pedal</td>
+<td>ベース</td>
+<td>8</td>
+<td>ライン・クリシェの下で伸ばす C、2 分音符、G から戻る</td>
+<td>54–60</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Devotion Pedal</td>
+<td>ベース</td>
+<td>8</td>
+<td>4 小節にわたる F のペダルと 5 度とプッシュ、A♭、G、F、伸ばした C7、E から F へ</td>
+<td>66–72</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Nocturne Roots</td>
+<td>ベース</td>
+<td>8</td>
+<td>漂うラインの下で 1 小節に 1 音</td>
+<td>56–64</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Twilight Two</td>
+<td>ベース</td>
+<td>8</td>
+<td>ツーフィール、ルートと 5 度か 3 度、D から E♭ へ</td>
+<td>58–66</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Rain Long Tones</td>
+<td>ベース</td>
+<td>8</td>
+<td>全音符、A から B♭ へ、バックドアの D♭</td>
+<td>54–62</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Trane Vow</td>
+<td>リード</td>
+<td>8</td>
+<td>温かいメジャーのバラード（I vi ii V、iii VI7 ii iv、I VI7alt ii V）を長い音で言い換える：マイナーの iv の C♭ が下へスライド、半音で上って高い E♭ を叫ぶ</td>
+<td>62–70</td>
+<td>Tenor sax</td>
+</tr>
+<tr>
+<td>Trane Lament</td>
+<td>リード</td>
+<td>8</td>
+<td>ライン・クリシェとマイナーの ii–V の上の C マイナー：1 拍の沈黙、伸ばした G、G7 の ♭9 アルペジオを駆け上がって長い E♭5 の叫び、D が C へため息</td>
+<td>54–60</td>
+<td>Tenor sax</td>
+</tr>
+<tr>
+<td>Trane Devotion</td>
+<td>リード</td>
+<td>8</td>
+<td>情熱の 1 曲：F のペダルの上でやわらかい低い F から 8 小節かけて F5 まで上り、3 回叫んで（@104–110）、C7alt で帰る</td>
+<td>66–72</td>
+<td>Tenor sax · Bright</td>
+</tr>
+<tr>
+<td>Soprano Nocturne</td>
+<td>リード</td>
+<td>8</td>
+<td>IV iii ii I の上を漂うソプラノ（リディアンの ♯11）、マイナーの iv の C♭、G5 へのターン</td>
+<td>56–64</td>
+<td>Soprano sax</td>
+</tr>
+<tr>
+<td>Baker Twilight</td>
+<td>リード</td>
+<td>8</td>
+<td>ベイカーのメジャーのバラード（I ♯i°7 ii V、iii VI7 ii V、I vi ii V）：少ない音、低くやわらかく（@60–76）、すべて遅れて、G へスクープ</td>
+<td>58–66</td>
+<td>Trumpet · Cool</td>
+</tr>
+<tr>
+<td>Baker Rain</td>
+<td>リード</td>
+<td>8</td>
+<td>マイナーのベイカー：半小節の沈黙、E♭、C♭ を含むバックドアの iv–♭VII7、スクープ、G7 の B</td>
+<td>54–62</td>
+<td>Trumpet · Cool</td>
+</tr>
+<tr>
+<td>Vow Voicings</td>
+<td>コード</td>
+<td>8</td>
+<td>豊かなルートレスのボイシングを伸ばし、3 拍目でボイシングを変える（E♭maj9 から 6/9、Cm11 から Cm9、B♭13sus から ♭9）</td>
+<td>62–70</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Lament Line</td>
+<td>コード</td>
+<td>8</td>
+<td>伸ばした D の下で C B B♭ A と動く Cm、Dø G7alt、A♭maj7♯11 のクラスター、Cm(maj9)</td>
+<td>54–60</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Devotion Fourths</td>
+<td>コード</td>
+<td>8</td>
+<td>F のペダルの上で平行移動する 4 度和音、リディアンの IV、Gm11、C7alt から C7♯9</td>
+<td>66–72</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Nocturne Floating</td>
+<td>コード</td>
+<td>8</td>
+<td>1 小節に 1 コード、A♭maj9♯11 Gm11 Fm11 E♭6/9、続いてマイナーの iv と ii–V</td>
+<td>56–64</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Twilight Piano</td>
+<td>コード</td>
+<td>8</td>
+<td>I ♯i°7 ii V iii VI7 ii V I vi ii V、それぞれ伸ばしてボイシングを変える</td>
+<td>58–66</td>
+<td>Upright piano</td>
+</tr>
+<tr>
+<td>Rain Rhodes</td>
+<td>コード</td>
+<td>8</td>
+<td>Cm9 A♭maj9 Fm9 B♭13、E♭maj9、A♭m6 D♭9、E♭maj9 Cm7、Dø G7♭9</td>
+<td>54–62</td>
+<td>Rhodes</td>
+</tr>
+</tbody>
+</table>
+<p>音色は追加していません。MODS（ATTACK、RELEASE、ビブラート、TONE/CUTOFF）は milo でのレンダーチェックが必要です（調査ノートを参照）。最初の版（ビバップ：Bird Changes、Bird Blues、Trane Countdown、Trane Fourths、Baker Ballad、Baker Cool と、そのドラム、ベース、コード、B♭ メジャー）はコミット 3d3f71f にあります。</p>
+<h3 id="references_10">参考資料</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Ballads_(John_Coltrane_album)" rel="noopener" target="_blank">Ballads (Wikipedia)</a></li>
+<li><a href="https://positive-feedback.com/reviews/music-reviews/john-coltrane-quartet-ballads/" rel="noopener" target="_blank">Ballads review (Positive Feedback)</a></li>
+<li><a href="https://musicweb-international.com/jazz/2002/Apr02/Coltrane_ballads.htm" rel="noopener" target="_blank">Ballads review (MusicWeb International)</a></li>
+<li><a href="https://www.srf.ch/kultur/musik/musik-balladen-die-zweite-seele-des-john-coltrane" rel="noopener" target="_blank">Balladen, die zweite Seele des John Coltrane (SRF)</a></li>
+<li><a href="https://music.apple.com/album/1440747672" rel="noopener" target="_blank">Ballads, editorial notes (Apple Music)</a></li>
+<li><a href="https://michaelsjazzblog.com/?p=32" rel="noopener" target="_blank">You Don't Know What Love Is (Michael's jazz blog)</a></li>
+<li><a href="https://pianowithwillie.com/quartal-fourth-voicings/" rel="noopener" target="_blank">Quartal voicings (Piano with Willie)</a></li>
+<li><a href="https://jazz.com/encyclopedia/tyner-mccoy" rel="noopener" target="_blank">McCoy Tyner (jazz.com)</a></li>
+<li><a href="https://jazz.com/music/chet-baker-my-funny-valentine-1952" rel="noopener" target="_blank">Chet Baker: My Funny Valentine (jazz.com)</a></li>
+<li><a href="https://martinhackworth.substack.com/p/chet-bakers-long-goodbye" rel="noopener" target="_blank">Chet Baker's long goodbye (Hackworth)</a></li>
+</ul>
+<h2 id="jazz">Jazz</h2>
+<p>最初のパックです。<code>sound</code> フィールドはありません。<code>jazz-presets/build.py</code> を参照。</p>
+<h2 id="vuelo-flight-facilities">Vuelo（Flight Facilities）</h2>
+<p>ナチュラルマイナー。テンプレートは 2 つで、どちらも 120 BPM：<strong>Vuelo</strong> は Arty Boy のキーの A マイナー、<strong>Vuelo · Crave</strong> は Crave You のキーの C# マイナー。</p>
+<h3 id="the-songs">曲</h3>
+<p>バンド自身の進行（Ultimate Guitar のコード譜から）：</p>
+<table>
+<thead>
+<tr>
+<th>曲</th>
+<th>コード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arty Boy、ヴァース</td>
+<td>F Am Em C（VI i v III）：最初のコードは 1 小節半、2 つ目は最後の 2 拍</td>
+</tr>
+<tr>
+<td>Arty Boy、プレコーラス</td>
+<td>F Am Dm E（VI i iv V、メジャーの V はクロマチック）</td>
+</tr>
+<tr>
+<td>Arty Boy、コーラス</td>
+<td>F Em（VI v）</td>
+</tr>
+<tr>
+<td>Crave You</td>
+<td>C#m7 Gdim7 F#m7 B7sus4、各 1 小節（i7、クロマチックの ♯iv°7、iv7、クロマチックの VII7sus4）</td>
+</tr>
+<tr>
+<td>Need You</td>
+<td>Am G F G（i VII VI VII）</td>
+</tr>
+<tr>
+<td>Two Bodies</td>
+<td>F C Am G（VI III i VII）</td>
+</tr>
+<tr>
+<td>Stranded</td>
+<td>Gmaj7 A Em7 A Bm（VI VII iv VII i）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-playing_1">演奏</h3>
+<p>フレーズはオリジナルです：</p>
+<ul>
+<li><strong>ドラム：</strong>909 の 4 つ打ちに裏拍のクラップとオープンハット。808 が Crave You のゆったりした脈動を、Linn が 16 分ハットのディスコシャッフルを鳴らし、ビルドアップはスネアロールからクラッシュへ。</li>
+<li><strong>ベース：</strong>キックの間に乗るオクターブのディスコライン、スラップのリフ、スライド付きのサブ。</li>
+<li><strong>上物：</strong>ミュートした 16 分のファンクギターのリフ、Rhodes のフック、ベロシティのスウェルで書いたストリングスの上昇、スライドする 80 年代のシンセリード、拍の後ろでゆったり吹くサックス。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>小節</th>
+<th>BPM</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vuelo · Four On The Floor</td>
+<td>2</td>
+<td>118–124</td>
+<td>TR909（MODS：キットの TONE を少し下げる）</td>
+</tr>
+<tr>
+<td>Vuelo · Crave Groove</td>
+<td>2</td>
+<td>116–122</td>
+<td>TR808</td>
+</tr>
+<tr>
+<td>Vuelo · Disco Shuffle</td>
+<td>2</td>
+<td>118–124</td>
+<td>LINN9000</td>
+</tr>
+<tr>
+<td>Vuelo · Arty Funk</td>
+<td>2</td>
+<td>116–122</td>
+<td>TR909（MODS：キットの LENGTH を短く）</td>
+</tr>
+<tr>
+<td>Vuelo · Build And Crash</td>
+<td>2</td>
+<td>118–124</td>
+<td>TR909</td>
+</tr>
+<tr>
+<td>Vuelo · Crave Walk</td>
+<td>4</td>
+<td>116–122</td>
+<td>Finger bass</td>
+</tr>
+<tr>
+<td>Vuelo · Arty Pulse</td>
+<td>4</td>
+<td>116–122</td>
+<td>Synth bass</td>
+</tr>
+<tr>
+<td>Vuelo · Octave Disco</td>
+<td>4</td>
+<td>118–124</td>
+<td>Picked bass</td>
+</tr>
+<tr>
+<td>Vuelo · Sub Pulse</td>
+<td>4</td>
+<td>116–122</td>
+<td>Sine sub</td>
+</tr>
+<tr>
+<td>Vuelo · Slap Riff</td>
+<td>2</td>
+<td>116–122</td>
+<td>Slap bass</td>
+</tr>
+<tr>
+<td>Vuelo · Guitar Riff</td>
+<td>2</td>
+<td>116–122</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Vuelo · Rhodes Hook</td>
+<td>2</td>
+<td>116–122</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Vuelo · String Rise</td>
+<td>2</td>
+<td>116–124</td>
+<td>Violin</td>
+</tr>
+<tr>
+<td>Vuelo · Synth Slide</td>
+<td>2</td>
+<td>116–122</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Vuelo · Sax Line</td>
+<td>2</td>
+<td>116–122</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Vuelo · Arty Verse</td>
+<td>4</td>
+<td>116–122</td>
+<td>Guitar · Chorus</td>
+</tr>
+<tr>
+<td>Vuelo · Arty Pre</td>
+<td>4</td>
+<td>116–122</td>
+<td>Rhodes</td>
+</tr>
+<tr>
+<td>Vuelo · Crave Loop</td>
+<td>4</td>
+<td>116–122</td>
+<td>Jazz guitar</td>
+</tr>
+<tr>
+<td>Vuelo · Chorus Stabs</td>
+<td>2</td>
+<td>118–124</td>
+<td>Organ · House</td>
+</tr>
+<tr>
+<td>Vuelo · String Pads</td>
+<td>4</td>
+<td>116–122</td>
+<td>Strings · Ensemble</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_11">参考資料</h3>
+<ul>
+<li>コード譜（ug-chords.py：Arty Boy 2137129、Crave You 1132236、Need You 5587641、Stranded 3235883、Two Bodies 1931097）。</li>
+<li>Arty Boy のストロークと Crave You のグルーヴを手で書き起こした譜面：ヴァースは叩くコード、コーラスはダウン・アップのリズム。</li>
+<li>SongBPM による Crave You の 120。</li>
+<li>Boss Hunting と Mixmag のインタビュー（2017–2024）でバンドが語る自分たちのサウンド（70 年代ディスコのグルーヴ、909 のリズム、しなやかなベースライン）。</li>
+</ul>
+<h2 id="bebop-major-horn-solos-after-parker-coltrane-and-baker">ビバップ：メジャー（パーカー、コルトレーン、ベイカー風のホーンソロ）</h2>
+<p>速いホーンソロとそのコンピングを、専用のグループ（<code>Bebop · …</code>）に。</p>
+<p><strong>B♭ メジャー</strong>向け。管楽器のキーです。リードの 1 度は B♭4 なので、管楽器ごとに音域があります：</p>
+<table>
+<thead>
+<tr>
+<th>管楽器</th>
+<th>範囲</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>アルト</td>
+<td>「1-」から「7」</td>
+</tr>
+<tr>
+<td>テナー</td>
+<td>「5-」から「4」</td>
+</tr>
+<tr>
+<td>ソプラノ</td>
+<td>「1」から「4+」</td>
+</tr>
+<tr>
+<td>Trumpet</td>
+<td>「6-」から「7」</td>
+</tr>
+</tbody>
+</table>
+<p>LEAD のためのオリジナルのソロ 6 曲。それぞれ、その上で聴くコード、ベース、ドラム付きです。引用は一切ありません：演奏者の録音されたソロも曲も著作権があるからです。フレーズも進行もリズムもすべて新しく書いています。</p>
+<h3 id="the-progressions">進行</h3>
+<p>一般的な進行の型。コードはルートレスの A フォームと B フォーム：</p>
+<table>
+<thead>
+<tr>
+<th>型</th>
+<th>コード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>リズム・チェンジの A セクション</td>
+<td>I VI7、ii7 V7、I VI7、ii7 V7、I I7、IV7 ♯iv°7、iii7 VI7、ii7 V7</td>
+</tr>
+<tr>
+<td>8 小節のバップブルース</td>
+<td>I7、IV7、I7、v7 I7、IV7、♯iv°7、I7 vi7、ii7 V7</td>
+</tr>
+<tr>
+<td>ii–V–I の Countdown 式リハーモナイズ</td>
+<td>ii7 ♭II7、♭VImaj7 VII7、IIImaj7 V7、Imaj7</td>
+</tr>
+<tr>
+<td>モーダルなヴァンプ</td>
+<td>ii7 と 2 小節の V7sus を「So What」の 4 度和音で</td>
+</tr>
+<tr>
+<td>Ballad</td>
+<td>I vi ii V、iii VI ii V</td>
+</tr>
+<tr>
+<td>ミディアムのクール</td>
+<td>I、ii V、iii vi、ii V、IV、iv ♭VII、iii VI、ii V</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-playing_2">演奏</h3>
+<p>ここでは SWING を 8 分（EIGHTHS）にかけ、テンプレートが設定します。ライドの「ディン、ディンガ」とビバップの 8 分は、16 ステップのグリッドで 2 ステップ間隔に置かれます。</p>
+<ul>
+<li><strong>パーカー：</strong>コードトーン上の 8 分のライン、半音のアプローチノートとエンクロージャー付き。裏拍を少し強く、アプローチノートは早めにはじき、ブルーな ♭3 は 3 へスクープ。モチーフを提示して 1 拍ずらし、フレーズの間で息をつく。</li>
+<li><strong>コルトレーン：</strong>シーツ・オブ・サウンド。コードごとに 16 分の 1-2-3-5 のセルを上り、鏡写しで下り、各パッセージは頂点へ膨らむ。ソプラノのモーダルなソロは、ペンタトニックのセルと積み重ねた 4 度で E♭6 まで上り、高い音を 4 回叫ぶ。</li>
+<li><strong>ベイカー：</strong>少ない音を長くやわらかく、すべて拍の後ろに、スクープと息をつく余裕を持って。トランペットのカットオフを少し下げ、リリースを長くしています。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bird Bop</td>
+<td>ドラム</td>
+<td>2</td>
+<td>2・4 に寄りかかるライドの「ディン、ディンガ」、フット、スネアのおしゃべり、裏拍のキックのボム</td>
+<td>190–200</td>
+<td>Jazz · ride</td>
+</tr>
+<tr>
+<td>Bird Blues Swing</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ミディアムのバップ：ライド、フット、ゴースト付きで 2・4 に触れるスネア、1・3 にキック、タムのターン</td>
+<td>150–170</td>
+<td>Jazz · ride</td>
+</tr>
+<tr>
+<td>Trane Drive</td>
+<td>ドラム</td>
+<td>2</td>
+<td>8 分のライド、裏拍のスネアのアクセント、ループへのスネアロール</td>
+<td>130–150</td>
+<td>Jazz · ride</td>
+</tr>
+<tr>
+<td>Elvin Fourths</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ライド、4 拍に対して 3 ステップごとのタムと 6 ステップごとのキック、鳴り響くスネア</td>
+<td>150–170</td>
+<td>Jazz · ride</td>
+</tr>
+<tr>
+<td>Baker Brushes</td>
+<td>ドラム</td>
+<td>2</td>
+<td>8 分でスネアを掃くブラシ、フット、1 小節に 1 回のキック、ライドにひと触れ</td>
+<td>60–70</td>
+<td>Brush · ride</td>
+</tr>
+<tr>
+<td>Cool Two-Feel</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ライドにブラシ、フット、1・3 にキック、スネアにひと触れ</td>
+<td>110–130</td>
+<td>Brush · ride</td>
+</tr>
+<tr>
+<td>Bird Walk</td>
+<td>ベース</td>
+<td>8</td>
+<td>リズム・チェンジをウォーキング、拍にコードトーン、各チェンジへ半音で、2・4 に寄りかかる</td>
+<td>190–200</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Bird Blues Walk</td>
+<td>ベース</td>
+<td>8</td>
+<td>バップブルースをウォーキング、4 小節目と 8 小節目の最後の拍にゴーストのスキップ</td>
+<td>150–170</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Countdown Walk</td>
+<td>ベース</td>
+<td>4</td>
+<td>Countdown のリハーモナイズ、半小節ごとにルート、次へは 5 度か半音で</td>
+<td>130–150</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Garrison Pedal</td>
+<td>ベース</td>
+<td>8</td>
+<td>ヴァンプの下のペダル：1 拍目に C、3 拍目にその G、4 拍目のアンドでプッシュ、V7sus の下に F、A、B で主音へ戻る</td>
+<td>150–170</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Ballad Two</td>
+<td>ベース</td>
+<td>8</td>
+<td>2 分音符、ルートから 5 度か 3 度、それぞれ少し遅れて、最後の小節は上っていく</td>
+<td>60–70</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Cool Two-Beat</td>
+<td>ベース</td>
+<td>8</td>
+<td>各チェンジへ 8 分のピックアップを入れるツーフィール、最後の小節はウォーキング</td>
+<td>110–130</td>
+<td>Acoustic bass</td>
+</tr>
+<tr>
+<td>Bird Changes</td>
+<td>リード</td>
+<td>8</td>
+<td>リズム・チェンジの上のパーカー風ソロ：B♭6 を上り、F7 のビバップスケールを下り、ジャブとブルーな D♭、G のエンクロージャー、E°7 の構成音、ターンアラウンドとひと息</td>
+<td>190–200</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Bird Blues</td>
+<td>リード</td>
+<td>8</td>
+<td>パーカー風ブルース：3 度へのスクープ、経過する ♭7 と ♭5、1 拍ずらしたモチーフ、F E E♭ からスクープへ</td>
+<td>150–170</td>
+<td>Alto sax</td>
+</tr>
+<tr>
+<td>Trane Countdown</td>
+<td>リード</td>
+<td>4</td>
+<td>Countdown のリハーモナイズを駆けるシーツ・オブ・サウンド、膨らむ 16 分の 1-2-3-5 のセル、スライドして息をつく着地</td>
+<td>130–150（イーブン）</td>
+<td>Tenor sax · Bright</td>
+</tr>
+<tr>
+<td>Trane Fourths</td>
+<td>リード</td>
+<td>8</td>
+<td>モーダルなソロ：ペンタトニックのセル、4 度で E♭6 へ上り、4 度で下り、4 回叫んで、C で帰る</td>
+<td>150–170</td>
+<td>Soprano sax</td>
+</tr>
+<tr>
+<td>Baker Ballad</td>
+<td>リード</td>
+<td>8</td>
+<td>@62–80 の長い音、すべて拍の後ろ、G へのスクープ、半小節の間</td>
+<td>60–70</td>
+<td>Trumpet · Cool</td>
+</tr>
+<tr>
+<td>Baker Cool</td>
+<td>リード</td>
+<td>8</td>
+<td>狭い音域の歌うライン、フレーズは &gt;8 遅れ、長い F、iv の G♭、G7 の B を伸ばす</td>
+<td>110–130</td>
+<td>Trumpet · Cool</td>
+</tr>
+<tr>
+<td>Bird Changes Comp</td>
+<td>コード</td>
+<td>8</td>
+<td>表拍とアンドでコンピングするリズム・チェンジ、偶数小節は 1 拍目のアンドへ前倒し</td>
+<td>190–200</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Bird Blues Comp</td>
+<td>コード</td>
+<td>8</td>
+<td>アンドでコンピングするバップブルース、フォームを交互に</td>
+<td>150–170</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Countdown Comp</td>
+<td>コード</td>
+<td>4</td>
+<td>半小節ごとに 1 コードのリハーモナイズ、叩いて叩き直す、Imaj7 からその 6th へ</td>
+<td>130–150</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Fourths Vamp</td>
+<td>コード</td>
+<td>8</td>
+<td>1 拍目、2 拍目のアンド、4 拍目に 4 度和音のスタブ、16 分のプッシュ、上っていく。V7sus の小節は F の上で</td>
+<td>150–170</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Ballad Pads</td>
+<td>コード</td>
+<td>8</td>
+<td>I vi ii V iii VI ii V を伸ばし、3 拍目でもう一方のフォームでもう一度触れる</td>
+<td>60–70</td>
+<td>Upright piano</td>
+</tr>
+<tr>
+<td>Cool Comp</td>
+<td>コード</td>
+<td>8</td>
+<td>2・4 に短いギターのコード、4 拍目のアンドで各チェンジへプッシュ</td>
+<td>110–130</td>
+<td>Jazz guitar</td>
+</tr>
+</tbody>
+</table>
+<p>トランペットのバラードはわざと控えめに鳴ります。リードの VOL を上げるか、小さな部屋で聴いてください。</p>
+<h3 id="references_12">参考資料</h3>
+<ul>
+<li><a href="https://www.learnjazzstandards.com/blog/learning-jazz/jazz-theory/use-bebop-scales-like-pro/" rel="noopener" target="_blank">Use bebop scales like a pro (Learn Jazz Standards)</a></li>
+<li><a href="https://keyboardimprov.com/the-truth-about-bebop-scales/" rel="noopener" target="_blank">The truth about bebop scales (keyboardimprov)</a></li>
+<li><a href="https://www.premierguitar.com/lessons/jazz/charlie-parker-for-guitar" rel="noopener" target="_blank">Charlie Parker for guitar (Premier Guitar)</a></li>
+<li><a href="https://www.jazzguitar.be/blog/billies-bounce" rel="noopener" target="_blank">Billie's Bounce lesson (jazzguitar.be)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Coltrane_changes" rel="noopener" target="_blank">Coltrane changes (Wikipedia)</a></li>
+<li><a href="https://jjs.libraries.rutgers.edu/index.php/jjs/article/download/317/310/2430" rel="noopener" target="_blank">Coltrane in the Rutgers Journal of Jazz Studies</a></li>
+<li><a href="https://martinhackworth.substack.com/p/chet-bakers-long-goodbye" rel="noopener" target="_blank">Chet Baker's long goodbye (Hackworth)</a></li>
+<li>ベイカーの <em>But Not for Me</em> と <em>Autumn Leaves</em> のソロに関する USFQ の論文（<code>tools/genre-research/bebop.md</code>）</li>
+</ul>
+<h2 id="rb-natural-minor-after-jorja-smith-and-snoh-aalegra">R&amp;B：ナチュラルマイナー（ジョルジャ・スミスとスノー・アレグラ風）</h2>
+<p><strong>E マイナー</strong>向け。コード譜（Ultimate Guitar）での Be Honest、Teenage Fantasy、Fool For You のキーです。テンプレートは曲の 84–94 の中間、86 BPM で、16 分のゆるいスウィング。<strong>R&amp;B · Slow Jam</strong> は Fool For You の 75。</p>
+<h3 id="the-songs_1">曲</h3>
+<p>E マイナーの度数で：</p>
+<table>
+<thead>
+<tr>
+<th>曲</th>
+<th>コード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Be Honest</td>
+<td>VImaj7 V7 i i</td>
+</tr>
+<tr>
+<td>Teenage Fantasy</td>
+<td>iv V7 i VII</td>
+</tr>
+<tr>
+<td>Blue Lights</td>
+<td>VI VII i VII（メジャーキーの平行調のマイナー）</td>
+</tr>
+<tr>
+<td>Don't Watch Me Cry</td>
+<td>VII i VI III</td>
+</tr>
+<tr>
+<td>Fool For You</td>
+<td>i9 IV13 VIImaj7 v7 V7（A の上の F#m(♭9) の形はドリアンの IV13）</td>
+</tr>
+<tr>
+<td>Situationship</td>
+<td>i9 ii11（ドリアンの ii）</td>
+</tr>
+<tr>
+<td>Whoa</td>
+<td>VImaj7 V7 ♭vii9 i7</td>
+</tr>
+</tbody>
+</table>
+<p>メジャーの V、ドリアンの IV と ii、♭vii はクロマチックのボイシングです。どのコードもテンション付き：maj7、maj9、min9、11、13、7♯9、7♭9。フレーズはオリジナルです。</p>
+<h3 id="the-playing_3">演奏</h3>
+<ul>
+<li><strong>ドラム</strong>は、ヒットの置き場所とスウィングで後ろに寄りかかります。ドラムのチャートにはヒットごとのベロシティもナッジもないので、バックビートはアクセントのステップ、ゴーストノートは通常のヒットにしています。キックは 2 拍目の「ア」に、スネアの 16 分後のゴーストがスネアを引きずります。</li>
+<li><strong>ベースとリード</strong>は 1 ステップの 6–14 % 遅れ、装飾音は早めにはじきます。</li>
+<li><strong>歌のライン</strong>はペンタトニックのメリスマから長い音へ、スクープしてスウェル。</li>
+<li><strong>MODS：</strong>暗いキット（TONE）、長めの 808 の余韻、アタックのやわらかいストリングスとボイス、Rhodes とパッドのリリース、Rhodes にコーラス。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Honest Pocket</td>
+<td>ドラム</td>
+<td>2</td>
+<td>やわらかいアコースティックのポケット：2 拍目の「ア」へ押したキック、各バックビートの周りにゴーストスネア、16 分でハットを持ち上げる</td>
+<td>80–90</td>
+<td>Black Pearl 5（MODS：TONE を下げる）</td>
+</tr>
+<tr>
+<td>Lazy 808</td>
+<td>ドラム</td>
+<td>2</td>
+<td>余韻の長い 808、2・4 にスネアとクラップを重ね、16 分のハットロール、裏拍のリムクリック</td>
+<td>84–94</td>
+<td>TR808（MODS：LENGTH を上げる）</td>
+</tr>
+<tr>
+<td>Teenage Swing</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ネオソウルの寄りかかり：遅れたキック、16 分後のゴーストで引きずるスネア、4 拍目にクラップ</td>
+<td>84–92</td>
+<td>SP1200</td>
+</tr>
+<tr>
+<td>Rimshot Ballad</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ハーフタイム：3 拍目にリムショット、やわらかい 16 分のハット、ゴーストスネア</td>
+<td>68–78</td>
+<td>Room（MODS：TONE を下げる）</td>
+</tr>
+<tr>
+<td>Nineties Clap</td>
+<td>ドラム</td>
+<td>2</td>
+<td>Linn のクラップをスネアに重ね、ピックアップのクラップ、跳ねる 16 分のハット、オープンハット</td>
+<td>88–96</td>
+<td>LINN9000</td>
+</tr>
+<tr>
+<td>Honest Sub</td>
+<td>ベース</td>
+<td>4</td>
+<td>Be Honest の VI V i：拍の後ろの 808 のルート、V の D# とオクターブが主音へスライド</td>
+<td>80–90</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Fantasy Walk</td>
+<td>ベース</td>
+<td>2</td>
+<td>Teenage Fantasy の iv V7 i VII：各ルートのあとにミュートの 16 分、フィル、半音の G# で主音へ</td>
+<td>84–92</td>
+<td>Finger bass（MODS：CUTOFF を下げる）</td>
+</tr>
+<tr>
+<td>Fool Fretless</td>
+<td>ベース</td>
+<td>4</td>
+<td>Fool For You のチェンジ：長いルート、ドリアンの C#、コードの間のメロディックなウォーク</td>
+<td>70–80</td>
+<td>Fretless</td>
+</tr>
+<tr>
+<td>Cry Synth</td>
+<td>ベース</td>
+<td>2</td>
+<td>Don't Watch Me Cry の VII i VI III：ルート、ゴースト、オクターブのポップ、強拍は遅れて</td>
+<td>80–90</td>
+<td>Synth bass（MODS：CUTOFF を下げ、RESO を上げる）</td>
+</tr>
+<tr>
+<td>Situation Sub</td>
+<td>ベース</td>
+<td>2</td>
+<td>Situationship の i9 ii11：1 小節に 1 つのサブ、それぞれ次へスライド</td>
+<td>84–94</td>
+<td>Sine sub</td>
+</tr>
+<tr>
+<td>Honest Hum</td>
+<td>リード</td>
+<td>4</td>
+<td>VI V i の上の歌うライン：5 度からのため息、D# へのスクープ、7 度まで上るメリスマから主音へ</td>
+<td>80–90</td>
+<td>Voice oohs（MODS：やわらかいアタック、ビブラート）</td>
+</tr>
+<tr>
+<td>Aalegra Strings</td>
+<td>リード</td>
+<td>4</td>
+<td>Fool For You のチェンジの上で膨らむストリングスのライン、ドリアンの C#、V7 の D#</td>
+<td>70–80</td>
+<td>Strings（MODS：遅いアタック、長いリリース）</td>
+</tr>
+<tr>
+<td>Fantasy Glide</td>
+<td>リード</td>
+<td>2</td>
+<td>iv V7 i VII の上で声のように音の間をベンドするシンセのライン</td>
+<td>84–92</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Blue Light Flute</td>
+<td>リード</td>
+<td>2</td>
+<td>VI VII i VII の上の短く息まじりのコール、同音の連打、主音へのスクープ</td>
+<td>88–96</td>
+<td>Flute（MODS：ビブラート）</td>
+</tr>
+<tr>
+<td>Cry Answer</td>
+<td>リード</td>
+<td>4</td>
+<td>歌の隙間で応える Rhodes、どのフィルも装飾音ではじいて入る</td>
+<td>80–90</td>
+<td>Rhodes · Suitcase</td>
+</tr>
+<tr>
+<td>Honest Rhodes</td>
+<td>コード</td>
+<td>4</td>
+<td>VImaj9、V7♯9 から V7♭9、i9 と i11：長いコードを 2 拍目の「ア」で叩き直し、頭へプッシュ</td>
+<td>80–90</td>
+<td>Rhodes · Suitcase（MODS：コーラス）</td>
+</tr>
+<tr>
+<td>Fool Strings</td>
+<td>コード</td>
+<td>4</td>
+<td>i9 IV13 VIImaj9 v7 V7♭9 を各 1 小節伸ばし、弓でゆっくり入る</td>
+<td>70–80</td>
+<td>Strings · Ensemble</td>
+</tr>
+<tr>
+<td>Fantasy Keys</td>
+<td>コード</td>
+<td>2</td>
+<td>ピアノで iv9 V7♯9 i9 VII6/9、次のコードを 2 拍目の「ア」で先取り</td>
+<td>84–92</td>
+<td>Grand · Warm</td>
+</tr>
+<tr>
+<td>Situation Wurli</td>
+<td>コード</td>
+<td>2</td>
+<td>i9 と 4 度和音の ii11 をロング・ショート・ショートでコンピング</td>
+<td>84–94</td>
+<td>Wurlitzer（MODS：CUTOFF を下げる。VOL も下げる）</td>
+</tr>
+<tr>
+<td>Whoa Pads</td>
+<td>コード</td>
+<td>4</td>
+<td>息を吸い込むパッドで VImaj7 V7 ♭vii9 i7 を各 1 小節</td>
+<td>84–94</td>
+<td>Pad · Warm</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_13">参考資料</h3>
+<ul>
+<li>コード譜（Ultimate Guitar の ID、ug-chords.py）：</li>
+<li>ジョルジャ・スミス：Be Honest 2800520、Teenage Fantasy 2065615、Blue Lights 2723457、Don't Watch Me Cry 2239329。</li>
+<li>スノー・アレグラ：Fool For You 2452745、Situationship 4027984、Whoa 3085499、Lost You 3762680、I Want You Around 2622450、Find Someone Like You 2832151。</li>
+<li>SongBPM と AcousticBrainz のテンポ（<code>tools/genre-research/rnb.md</code>）</li>
+<li><a href="https://www.soundbridge.io/drum-programming-tips-for-producers-of-all-levels" rel="noopener" target="_blank">drum programming tips (soundbridge)</a></li>
+<li><a href="https://www.ujam.com/tutorials/how-to-make-neo-soul-drums/" rel="noopener" target="_blank">How to make neo-soul drums (UJAM)</a></li>
+<li><a href="https://violetrecording.com/how-to-add-groove-to-a-beat/" rel="noopener" target="_blank">How to add groove and swing (Violet Recording)</a></li>
+</ul>
+<h2 id="droon-natural-minor-after-sonder">Droon：ナチュラルマイナー（Sonder 風）</h2>
+<p>Sonder はブレント・ファイヤズ、Dpat、Atu の R&amp;B トリオです。お手本は EP <em>Into</em>（Feel、Lovely、Sirens、Too Fast、Baldwin Park、Searchin'、Care）とシングル What You Heard。<em>Into</em> の曲はすべてマイナーキーです。</p>
+<ul>
+<li><strong>Droon：</strong>E マイナー、74 BPM。Too Fast のキーとテンポです。EP のほかの曲は 62–82 で脈打ち、ハーフタイムに感じます。</li>
+<li><strong>Droon · Care：</strong>B♭ マイナー、64。Care と Searchin' のキーです。8 分が Care の 3 連の揺れへスウィングします。</li>
+</ul>
+<h3 id="the-songs_2">曲</h3>
+<p>E マイナーの度数で：</p>
+<table>
+<thead>
+<tr>
+<th>曲</th>
+<th>コード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Too Fast、リフレイン</td>
+<td>i VII i v、i VII i VI</td>
+</tr>
+<tr>
+<td>Too Fast、イントロ</td>
+<td>iv i VI ii i v i（ドリアンの ii はクロマチック）</td>
+</tr>
+<tr>
+<td>Too Fast、インタールード</td>
+<td>i VI iv VI III iv III i</td>
+</tr>
+<tr>
+<td>Care、コーラス</td>
+<td>iv(add9) v i7、タブ譜にある 3 つのアルペジオの形</td>
+</tr>
+<tr>
+<td>What You Heard</td>
+<td>VImaj7 IIImaj7 iv V7</td>
+</tr>
+</tbody>
+</table>
+<p>フレーズ、リフ、リズムはオリジナルです。</p>
+<h3 id="the-feel">ノリ</h3>
+<p>ゆっくり、広々として、物憂げに：</p>
+<ul>
+<li><strong>ドラム：</strong>まばらなキック、4 分と付点 8 分のハット、部屋にひとつだけ響くリムショット、長い 808 の余韻。どのキットも TONE で暗くし、テンプレートの ECHO がリバーブ代わり。</li>
+<li><strong>ベース：</strong>スライドするサブ、Care の 3-3-2 の指弾きベース、ウォーキングするフレットレス。</li>
+<li><strong>上物：</strong>ハンマリングの装飾音入りのクリーンでコーラスのかかったギター、Rhodes、10–14 % 後ろに寄せたファルセット、幽霊のようなボーカルパッド。レビューの言う「汚れのないギターと幽霊のようなバッキングボーカル」です。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Too Fast Drift</td>
+<td>ドラム</td>
+<td>2</td>
+<td>余韻の長い 808、2・4 にスネア、クラップは 1 回、ピックアップ付きの 4 分のハット</td>
+<td>70–78</td>
+<td>TR808（MODS：LENGTH を上げ、TONE を下げる）</td>
+</tr>
+<tr>
+<td>Care Lilt</td>
+<td>ドラム</td>
+<td>2</td>
+<td>3 連のノリに寄る付点 8 分（3 + 3 + 2）のハット、ターンの前にリム</td>
+<td>60–68</td>
+<td>SP1200（MODS：TONE を下げる）</td>
+</tr>
+<tr>
+<td>Sirens Space</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ミニマル：キック 1 発、3 拍目にリムショット、裏拍のハット、応える低いタム</td>
+<td>70–82</td>
+<td>Black Pearl 5（MODS：TONE を下げ、LENGTH を上げる）</td>
+</tr>
+<tr>
+<td>Searchin Knock</td>
+<td>ドラム</td>
+<td>2</td>
+<td>スネアとクラップを同時に、跳ねるキック、シェイカーのような裏拍の 16 分ハット</td>
+<td>70–78</td>
+<td>Room（MODS：TONE を下げる）</td>
+</tr>
+<tr>
+<td>Lovely Halftime</td>
+<td>ドラム</td>
+<td>2</td>
+<td>1 小節に 1 回 3 拍目にスネア、テンポを倍にする 8 分のハット、ループへのゴースト</td>
+<td>70–76</td>
+<td>Red Zeppelin 5（MODS：TONE を下げる）</td>
+</tr>
+<tr>
+<td>Too Fast Sub</td>
+<td>ベース</td>
+<td>4</td>
+<td>i VII i v i VII i VI：各ルートを伸ばし、そのオクターブから次へスライドで下りる</td>
+<td>70–78</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Care Line</td>
+<td>ベース</td>
+<td>4</td>
+<td>3-3-2 の揺れの iv v i i：やわらかい 2 打目、オクターブ、ハンマリングの装飾音</td>
+<td>60–68</td>
+<td>Finger bass（MODS：CUTOFF を下げる）</td>
+</tr>
+<tr>
+<td>Heard Walk</td>
+<td>ベース</td>
+<td>4</td>
+<td>What You Heard の VImaj7 IIImaj7 VImaj7 iv V7：遅れたルート、経過音、D#</td>
+<td>70–78</td>
+<td>Fretless</td>
+</tr>
+<tr>
+<td>Searchin Pulse</td>
+<td>ベース</td>
+<td>2</td>
+<td>遅れた 8 分の i VI、はじくオクターブ、各小節へのピックアップ</td>
+<td>70–78</td>
+<td>Synth bass（MODS：CUTOFF を下げる）</td>
+</tr>
+<tr>
+<td>Sirens Drone</td>
+<td>ベース</td>
+<td>4</td>
+<td>主音で 2 小節、VI で 2 小節、その間をスライド</td>
+<td>70–82</td>
+<td>Sine sub</td>
+</tr>
+<tr>
+<td>Too Fast Guitar</td>
+<td>リード</td>
+<td>2</td>
+<td>i VII i v の上のクリーンでコーラスのかかったフレーズ、どれもハンマリングの装飾音から入る</td>
+<td>70–78</td>
+<td>Guitar · Chorus（MODS：コーラス）</td>
+</tr>
+<tr>
+<td>Care Lick</td>
+<td>リード</td>
+<td>2</td>
+<td>マイナーペンタトニックのハンマリング、3 度へのスライド、ビブラートで伸ばす音</td>
+<td>60–68</td>
+<td>Guitar · Clean（MODS：ビブラート、コーラス）</td>
+</tr>
+<tr>
+<td>Feel Falsetto</td>
+<td>リード</td>
+<td>4</td>
+<td>拍のかなり後ろに置いた長く高い音、下へのスライド、半小節の間</td>
+<td>66–76</td>
+<td>Voice oohs（MODS：遅いアタック、長いリリース）</td>
+</tr>
+<tr>
+<td>Into Keys</td>
+<td>リード</td>
+<td>2</td>
+<td>i9 の構成音を上り、VI の上で下りる Rhodes のライン</td>
+<td>70–78</td>
+<td>Rhodes · Suitcase（MODS：コーラス）</td>
+</tr>
+<tr>
+<td>Lovely Glide</td>
+<td>リード</td>
+<td>2</td>
+<td>長い音の間のゆっくりしたグライド</td>
+<td>70–76</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Too Fast Strum</td>
+<td>コード</td>
+<td>4</td>
+<td>リフレインを半小節ごとに 1 コード、叩いて伸ばし、2 拍目の「ア」でまた拾う</td>
+<td>70–78</td>
+<td>Guitar · Chorus（MODS：コーラス）</td>
+</tr>
+<tr>
+<td>Care Chorus</td>
+<td>コード</td>
+<td>4</td>
+<td>iv(add9) v i7 i9 を 3-3-2 でストローク</td>
+<td>60–68</td>
+<td>Guitar · Clean</td>
+</tr>
+<tr>
+<td>Heard Rhodes</td>
+<td>コード</td>
+<td>4</td>
+<td>VImaj9 IIImaj7 VImaj9 iv9 V7♭9、それぞれ 16 分早く入って小節線をまたいで伸ばす</td>
+<td>70–78</td>
+<td>Rhodes · Suitcase</td>
+</tr>
+<tr>
+<td>Intro Ghosts</td>
+<td>コード</td>
+<td>4</td>
+<td>Too Fast のイントロの iv i VI ii i v i を幽霊のようなバッキングボーカルで、ゆっくり出入りする</td>
+<td>66–78</td>
+<td>Pad · Vocal（MODS：遅いアタック、長いリリース）</td>
+</tr>
+<tr>
+<td>Interlude Keys</td>
+<td>コード</td>
+<td>4</td>
+<td>Too Fast のインタールードの i VI iv VI III iv III i を、1 拍目と 2 拍目のアンドで叩く</td>
+<td>70–78</td>
+<td>Grand · Warm</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_14">参考資料</h3>
+<ul>
+<li>コード譜（ug-chords.py：Too Fast 2155579、What You Heard 5197296、Care のタブ譜 5376447）</li>
+<li>SongBPM と AcousticBrainz のテンポとキー（<code>tools/genre-research/droon.md</code>）</li>
+<li><a href="https://www.thelineofbestfit.com/features/track-by-track/sonder-into" rel="noopener" target="_blank">Sonder on Into, track by track (The Line of Best Fit)</a></li>
+<li><a href="https://www.albumoftheyear.org/album/70743-sonder-into.php" rel="noopener" target="_blank">Into (Album of the Year)</a></li>
+<li><a href="https://hypebeast.com/2017/2/sonder-into-ep-release-354" rel="noopener" target="_blank">Hypebeast</a></li>
+<li><a href="https://highclouds.org/rb-trio-sonder-release-their-90s-and-groovy-debut-ep-into/" rel="noopener" target="_blank">highclouds</a></li>
+<li><a href="https://www.okayplayer.com/sonder-brings-soulful-sultry-rb-with-new-into-ep/427549" rel="noopener" target="_blank">Okayplayer</a></li>
+</ul>
+<h2 id="hollywood-natural-minor-lana-del-rey-under-old-hollywood-strings">ハリウッド：ナチュラルマイナー（往年のハリウッド風ストリングスとラナ・デル・レイ）</h2>
+<p><strong>F マイナー</strong>向け。Blue Jeans と Honeymoon のキーです。コントラバスとチェロの低い F と C がストリングスの下に座り、オーケストラキットのティンパニは F まで届きます。</p>
+<p><em>Born to Die</em> から <em>Norman Fucking Rockwell!</em> までのラナ・デル・レイのビートと進行に、往年のハリウッドのオーケストラ：バイオリン、チェロ、ストリングスセクション、ハープ、チェレスタ、ティンパニ。ヴィンテージで映画的、そして物悲しく。</p>
+<h3 id="the-songs_3">曲</h3>
+<p>進行はコード譜から取り、スケールの度数に置いています：</p>
+<ul>
+<li>Video Games の i III v VI（F#m A C#m D）。</li>
+<li>Born to Die の VI i VII VI（C Em D C）。</li>
+<li>Blue Jeans の i VII IV（Fm E♭ B♭、メジャーの IV はここではクロマチックのコード）。</li>
+<li>Summertime Sadness の VI i VII iv（A C#m B F#m）。</li>
+<li>Honeymoon の i VI iv6 V7、3 拍子で。</li>
+<li>Venice Bitch のマイナー・プラガル C C7 F Fm6、平行調のメジャーで（III III7 VI vi6）。</li>
+</ul>
+<p>往年のハリウッドの劇伴は、マイナーのライン・クリシェ（Fm、Fm(maj7)、Fm7、Fm6、ボンドのテーマの「サスペンスのモチーフ」）とその下を下るラメントバス、半音のため息、膨らむトレモロのストリングス、ハープのグリッサンドを加えます。引用は一切ありません：曲には著作権があるので、スタイルを研究し（<code>tools/genre-research/hollywood.md</code>）、フレーズもメロディーもリズムもすべて新しく書いています。</p>
+<h3 id="the-playing_4">演奏</h3>
+<ul>
+<li>ゆっくり：56–88。ハーフタイムのビートは体感のテンポで書いています。</li>
+<li>弓のフレーズごとにベロシティのスウェルと、長く伸ばす音。</li>
+<li>ストリングスとチェロは 1 ステップの 6–10 % 遅れ。</li>
+<li>書き込んだトレモロ：同じ音の 16 分が @40 から @104 へ膨らんで戻る。</li>
+<li>ベロシティを上げながら上っていき、高い音で伸ばすハープのグリッサンド。</li>
+<li>チェレスタの装飾音は早めにはじき（&lt;12）、808 のサブにスライド。</li>
+</ul>
+<p>MODS で音を形づくります：</p>
+<ul>
+<li>ホールの響きのため、ストリングスの ATTACK を遅く（2400–4800）、RELEASE を長く</li>
+<li>ヴィンテージの音色のため FILTER を下げる</li>
+<li>ソロの弦に少し VIBRATO</li>
+<li>ドラムキットを暗くし（TONE）、SP1200 を 2 半音下げる</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Born To Die Beat</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ゆっくり重いヒップホップ：キックは 1 拍目、2 拍目の「ア」、3 拍目のアンド、2・4 に太いスネア、ゆるいハット、頭にクラッシュ</td>
+<td>80–88</td>
+<td>SP1200 1（MODS：TONE を下げ、−2 にチューニング）</td>
+</tr>
+<tr>
+<td>Summertime Halftime</td>
+<td>ドラム</td>
+<td>2</td>
+<td>体感テンポで書いたハーフタイムのビート：長い 808 のキック、4 拍目の前のスネアのスタッター、16 分に崩れるハット</td>
+<td>56–64</td>
+<td>TR808（MODS：TONE を下げ、LENGTH を長く）</td>
+</tr>
+<tr>
+<td>Honeymoon Waltz</td>
+<td>ドラム</td>
+<td>3 (3/4)</td>
+<td>3 拍子のブラシ：1 拍目にフェザーのキック、2・3 拍目にスラップ、ライド、ループへのドラッグ</td>
+<td>72–78</td>
+<td>Brush · ride</td>
+</tr>
+<tr>
+<td>Ultraviolence Room</td>
+<td>ドラム</td>
+<td>2</td>
+<td>大きな部屋のゆっくりしたライブバンド：ゴースト付きで 2・4 にスネア、8 分のハット、クラッシュ、タムのフィル</td>
+<td>70–80</td>
+<td>Black Pearl 5</td>
+</tr>
+<tr>
+<td>Timpani Swell</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ティンパニの F と C、C のロールがバスドラムと合わせシンバルへ、トライアングル</td>
+<td>60–72</td>
+<td>Orchestra · F</td>
+</tr>
+<tr>
+<td>Video Games Bows</td>
+<td>ベース</td>
+<td>4</td>
+<td>i III v VI：弓で弾く長いルート、だんだん強く、遅れて、各チェンジへ 2 歩のウォーク</td>
+<td>58–66</td>
+<td>Cello</td>
+</tr>
+<tr>
+<td>Born To Die Sub</td>
+<td>ベース</td>
+<td>4</td>
+<td>ビートの下の VI i VII VI：1 拍目と 2 拍目の「ア」にルート、次のルートへスライド</td>
+<td>80–88</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Lament Line</td>
+<td>ベース</td>
+<td>4</td>
+<td>ライン・クリシェの下のラメントバス：F E E♭ D D♭、B♭、伸ばした C、E から F へ</td>
+<td>60–72</td>
+<td>Contrabass</td>
+</tr>
+<tr>
+<td>Blue Jeans Pizz</td>
+<td>ベース</td>
+<td>4</td>
+<td>はじく i VII IV：拍の後ろのルートと 5 度、メジャーの IV のナチュラルの D、ループへ下りていくウォーク</td>
+<td>80–88</td>
+<td>Upright</td>
+</tr>
+<tr>
+<td>Honeymoon Sway</td>
+<td>ベース</td>
+<td>3 (3/4)</td>
+<td>i VI iv6 V7：各ルートに付点 2 分、先へ導く 4 分、V7 のナチュラルの E から F へ</td>
+<td>72–78</td>
+<td>Cello</td>
+</tr>
+<tr>
+<td>Video Games Violin</td>
+<td>リード</td>
+<td>4</td>
+<td>6 度から下りるため息、順次下りる高い A♭、マイナーの v の上の 9 度、VI の上で膨らむオクターブ</td>
+<td>58–66</td>
+<td>Violin · Warm</td>
+</tr>
+<tr>
+<td>Cello Lament</td>
+<td>リード</td>
+<td>4</td>
+<td>低い C から上り、半音で下る F E E♭ D D♭、iv の B♭、ドミナントの E を伸ばして膨らませる</td>
+<td>60–72</td>
+<td>Cello</td>
+</tr>
+<tr>
+<td>Celesta Box</td>
+<td>リード</td>
+<td>4</td>
+<td>VI i VII VI の上のオルゴール：8 分の分散和音、各小節の頂点の前に装飾音</td>
+<td>72–88</td>
+<td>Celesta</td>
+</tr>
+<tr>
+<td>Harp Sweeps</td>
+<td>リード</td>
+<td>4</td>
+<td>i VI III VII を 16 分で 2 オクターブ駆け上がり（@50→@98）、頂点を響かせたまま</td>
+<td>58–66</td>
+<td>Harp · Concert</td>
+</tr>
+<tr>
+<td>Tremolo Violins</td>
+<td>リード</td>
+<td>4</td>
+<td>サスペンスのトレモロ：膨らむ C、消えていく D♭ への半音のため息、F へ上がるナチュラルの E</td>
+<td>60–72</td>
+<td>Violin</td>
+</tr>
+<tr>
+<td>Video Games Strings</td>
+<td>コード</td>
+<td>4</td>
+<td>長い弓で i III v VI を各 1 小節：Fm(add9)、A♭maj7、Cm7、D♭maj7</td>
+<td>58–66</td>
+<td>Strings（MODS：遅い ATTACK、長い RELEASE、FILTER を下げる）</td>
+</tr>
+<tr>
+<td>Born To Die Stabs</td>
+<td>コード</td>
+<td>4</td>
+<td>サンプリングしたストリングスが打ち鳴らす VI i VII VI：1 拍目と 2 拍目のアンドにスタブ、3 拍目のアンドから伸ばす</td>
+<td>80–88</td>
+<td>Strings · Mood</td>
+</tr>
+<tr>
+<td>Line Cliché</td>
+<td>コード</td>
+<td>4</td>
+<td>Fm、Fm(maj7)、Fm7、Fm6、D♭maj7、B♭m6、ハーモニックの C7 からその ♭9 へ</td>
+<td>60–72</td>
+<td>Strings · Tremolo</td>
+</tr>
+<tr>
+<td>Honeymoon Piano</td>
+<td>コード</td>
+<td>3 (3/4)</td>
+<td>1 拍目で叩き、3 拍目でもう一度触れる i VI iv6 V7</td>
+<td>72–78</td>
+<td>Grand piano</td>
+</tr>
+<tr>
+<td>Venice Plagal</td>
+<td>コード</td>
+<td>4</td>
+<td>A♭ A♭7 D♭ D♭m6（メジャーのコードがマイナーに変わる）、続いて VI i VII iv、叩いてもう一度触れる</td>
+<td>72–80</td>
+<td>Piano + strings</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_15">参考資料</h3>
+<ul>
+<li>コード譜（<a href="https://www.ultimate-guitar.com" rel="noopener" target="_blank">Ultimate Guitar</a>、<code>tools/genre-research/ug-chords.py</code> で）</li>
+<li><a href="https://en.wikipedia.org/wiki/Video_Games_(Lana_Del_Rey_song)" rel="noopener" target="_blank">Video Games</a>, <a href="https://en.wikipedia.org/wiki/Summertime_Sadness" rel="noopener" target="_blank">Summertime Sadness</a>, <a href="https://en.wikipedia.org/wiki/Blue_Jeans_(Lana_Del_Rey_song)" rel="noopener" target="_blank">Blue Jeans</a>, <a href="https://en.wikipedia.org/wiki/Born_to_Die_(Lana_Del_Rey_song)" rel="noopener" target="_blank">Born to Die（曲）</a>, <a href="https://en.wikipedia.org/wiki/Born_to_Die_(album)" rel="noopener" target="_blank">Born to Die（アルバム）</a>, <a href="https://en.wikipedia.org/wiki/Ultraviolence_(album)" rel="noopener" target="_blank">Ultraviolence</a>, <a href="https://en.wikipedia.org/wiki/Honeymoon_(Lana_Del_Rey_album)" rel="noopener" target="_blank">Honeymoon</a>, <a href="https://en.wikipedia.org/wiki/Norman_Fucking_Rockwell!" rel="noopener" target="_blank">Norman Fucking Rockwell!</a>（Wikipedia）</li>
+<li>テンポとキー：<a href="https://songbpm.com/@lana-del-rey" rel="noopener" target="_blank">SongBPM</a></li>
+<li><a href="https://thesinglesjukebox.com/?p=2305" rel="noopener" target="_blank">The Singles Jukebox on Born to Die</a></li>
+<li><a href="https://www.sciencebase.com/science-blog/?p=58635" rel="noopener" target="_blank">The James Bond chord (Sciencebase)</a></li>
+<li><a href="https://www.clevelandorchestra.com/posts/the-thrilling-scores-of-bernard-herrmann" rel="noopener" target="_blank">The thrilling scores of Bernard Herrmann (Cleveland Orchestra)</a></li>
+</ul>
+<h2 id="body-dorian-after-grimes-be-a-body">Body：ドリアン（グライムスの Be a Body 風）</h2>
+<p>今回は 1 曲だけ：グライムスの <em>Visions</em> から Be a Body。イントロがパックの中心で、7 つのプリセットと 1 つのテンプレートはイントロだけを鳴らします。</p>
+<ul>
+<li><strong>Body：</strong>F ドリアン、140。曲のキーとテンポで、アルバムの跳ねるエコー付き。</li>
+<li><strong>Body · Intro：</strong>同じキーとテンポで、エコーを多めに、もやのためのゆっくりしたフェイザー。</li>
+</ul>
+<h3 id="the-songs_4">曲</h3>
+<p>F ドリアンの度数で、パートごとに：</p>
+<table>
+<thead>
+<tr>
+<th>パート</th>
+<th>コード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>イントロ、冒頭</td>
+<td>i IV VII VII（Fm B♭ E♭ E♭）</td>
+</tr>
+<tr>
+<td>イントロ、ループ</td>
+<td>i IV v v（Fm B♭ Cm Cm）</td>
+</tr>
+<tr>
+<td>イントロ、ターンアラウンド</td>
+<td>III IV（A♭ B♭）</td>
+</tr>
+<tr>
+<td>ヴァース</td>
+<td>i IV v v、続いて ii IV v v</td>
+</tr>
+<tr>
+<td>中間部</td>
+<td>IV と v を 2 小節ずつ揺らし、続いて III IV V</td>
+</tr>
+<tr>
+<td>コーラス</td>
+<td>i7 IV7 v7（Fm7 B♭7 Cm7）</td>
+</tr>
+<tr>
+<td>アウトロ</td>
+<td>I IV V、F メジャーで</td>
+</tr>
+</tbody>
+</table>
+<p>メジャーの V とアウトロのメジャーの I はクロマチックのボイシングです。曲のフレーズは 3 度を抜いているので、キーは F マイナーと F メジャーの間を漂い、パックのフレーズも同じようにしています。</p>
+<p>引用は一切ありません。曲には著作権があるので、プリセットはコード、キー、テンポ、構成だけを借り、フレーズもメロディーもリズムもすべて新しく書いています。</p>
+<h3 id="the-playing_5">演奏</h3>
+<ul>
+<li><strong>冒頭：</strong>80 年代のロックのラジオに似合うシンセのリフ。だから Intro Stabs はシンセブラスでサスコードを鳴らし、トップの声部を入れ替えます。</li>
+<li><strong>エコー：</strong>アルバム全体で 1/8 のディレイが跳ねています。テンプレートの ECHO がそれを担い、Intro Harp と Verse Bounce は書き込みで再現します：各音を 2 ステップ後にもう一度、弱く。</li>
+<li><strong>声：</strong>イントロではチョップした高い音節、そしてスクープ付きの長い音のフック。</li>
+<li><strong>ドラム：</strong>安いドラムマシン。イントロはチクタク鳴る 606、ドロップは 909 の 4 つ打ち、そしてシンコペーションする 808。</li>
+<li><strong>ベース：</strong>3-3-2 でオクターブを跳ぶ低いシンセベース、裏拍のレイヴベース、中間部をスライドする 808。</li>
+<li><strong>MODS：</strong>パッドにコーラス、スタブとチョップに短いリリース、ベースの CUTOFF を下げて少し RESO。</li>
+</ul>
+<h3 id="build-the-intro">イントロを組み立てる</h3>
+<p>イントロはレイヤーで鳴らします。Intro Tick、Intro Sub、Intro Stabs から始め、Intro Harp、Intro Chops、Intro Haze を足します。Intro Bells がターンアラウンドです。そのあと Drop Build から Rave Pulse へ、Mini Pulse と Juno Offbeats と一緒に。</p>
+<table>
+<thead>
+<tr>
+<th>プリセット</th>
+<th>パート</th>
+<th>小節</th>
+<th>内容</th>
+<th>テンポ</th>
+<th>音色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intro Tick</td>
+<td>ドラム</td>
+<td>2</td>
+<td>イントロのドラムマシン：1・3 拍目にキック、隙間のあるチクタクのハット、付点 8 分の間隔で跳ねるスネア、息を吸うオープンハット</td>
+<td>130–145</td>
+<td>TR606（MODS：TONE を下げる）</td>
+</tr>
+<tr>
+<td>Rave Pulse</td>
+<td>ドラム</td>
+<td>2</td>
+<td>ドロップ：4 つ打ち、2・4 にクラップ、すべての裏拍にオープンハット、その周りに 16 分のハット</td>
+<td>135–145</td>
+<td>TR909</td>
+</tr>
+<tr>
+<td>Visions Break</td>
+<td>ドラム</td>
+<td>2</td>
+<td>シンコペーションするエレクトロ：1 拍目と 2・3 拍目のアンドにキック、クラップとそのエコー、1 拍目の「ア」にリム</td>
+<td>130–145</td>
+<td>TR808（MODS：LENGTH を上げる）</td>
+</tr>
+<tr>
+<td>Half-Time</td>
+<td>ドラム</td>
+<td>2</td>
+<td>1 小節に 1 回 3 拍目にスネア、跳ねる 16 分のハット、遅れたキックとループへのタムロール</td>
+<td>135–145</td>
+<td>LINN9000（MODS：TONE を下げる）</td>
+</tr>
+<tr>
+<td>Drop Build</td>
+<td>ドラム</td>
+<td>2</td>
+<td>イントロからの抜け出し：4 分のキック、8 分から続いてアクセント付きの 16 分のスネア、ドロップの着地にクラッシュ</td>
+<td>135–145</td>
+<td>SP1200</td>
+</tr>
+<tr>
+<td>Gnarly Toms</td>
+<td>ドラム</td>
+<td>2</td>
+<td>タフなパーカッション：3-3-2 のキック、裏拍で応えるタム、4 拍目にクラップ、カウベルのチック</td>
+<td>130–145</td>
+<td>HR16（MODS：TONE を下げ、−2 にチューニング）</td>
+</tr>
+<tr>
+<td>Intro Sub</td>
+<td>ベース</td>
+<td>4</td>
+<td>イントロの i IV VII VII が低く入る：各ルートに付点 4 分、付点 4 分、4 分、ドリアンの D がループへ上っていく</td>
+<td>130–145</td>
+<td>Synth bass 2（MODS：CUTOFF を下げる）</td>
+</tr>
+<tr>
+<td>Mini Pulse</td>
+<td>ベース</td>
+<td>4</td>
+<td>16 分のループ i IV v v、3-3-2-3-3-2、ルートとそのオクターブが入れ替わり、頭へ下りていくウォーク</td>
+<td>135–145</td>
+<td>Synth bass 2（MODS：CUTOFF を下げ、RESO を上げる）</td>
+</tr>
+<tr>
+<td>Rave Offbeat</td>
+<td>ベース</td>
+<td>4</td>
+<td>アクセント付きの裏拍のレイヴベース、4 拍目の「ア」でオクターブをはじく</td>
+<td>135–145</td>
+<td>Nekobi</td>
+</tr>
+<tr>
+<td>Verse Bounce</td>
+<td>ベース</td>
+<td>4</td>
+<td>ヴァースの ii IV v v をはじき、各音の 1/8 エコーを書き込んで、オクターブが跳ねる</td>
+<td>135–145</td>
+<td>Synth bass（MODS：CUTOFF を下げる）</td>
+</tr>
+<tr>
+<td>Bridge Sub</td>
+<td>ベース</td>
+<td>8</td>
+<td>中間部の IV IV v v IV IV、III と IV、続いてメジャーの V：互いにスライドしていく長いルート</td>
+<td>135–145</td>
+<td>808 · Monosynth</td>
+</tr>
+<tr>
+<td>Outro Drive</td>
+<td>ベース</td>
+<td>4</td>
+<td>アウトロの I IV V V をイーブンの 8 分で、裏拍にオクターブ、ループへ駆け上がる</td>
+<td>135–145</td>
+<td>Synth bass 2（MODS：CUTOFF を下げる）</td>
+</tr>
+<tr>
+<td>Intro Harp</td>
+<td>リード</td>
+<td>4</td>
+<td>イントロのはじく音型：5 度、ルート、9 度を付点 8 分で、それぞれ 8 分後に弱くエコー</td>
+<td>130–145</td>
+<td>Harp · Concert（MODS：リリースを長く）</td>
+</tr>
+<tr>
+<td>Intro Chops</td>
+<td>リード</td>
+<td>4</td>
+<td>音節に刻んだ声：どもるような 16 分、3 度のない短く高い音、隙間</td>
+<td>130–145</td>
+<td>Synth voice（MODS：短いリリース）</td>
+</tr>
+<tr>
+<td>Intro Bells</td>
+<td>リード</td>
+<td>4</td>
+<td>III IV i IV の上のターンアラウンドのきらめき：短く高いフリック、早めにはじく装飾音</td>
+<td>130–145</td>
+<td>Celesta（MODS：リリースを長く）</td>
+</tr>
+<tr>
+<td>Voice Hook</td>
+<td>リード</td>
+<td>4</td>
+<td>i IV v v の上の歌うフック：長く高い音、7 度へのスクープ、5 度へ下りるため息、少し遅れて</td>
+<td>135–145</td>
+<td>Voice oohs（MODS：やわらかいアタック、ビブラート）</td>
+</tr>
+<tr>
+<td>Square Riff</td>
+<td>リード</td>
+<td>4</td>
+<td>シーケンスした 16 分のベースリードのリフ：ルート、5 度、オクターブ、2 拍目のアンドにアクセント、毎小節にランを 1 つ</td>
+<td>135–145</td>
+<td>Lead · Square（MODS：CUTOFF を下げ、RESO を上げる）</td>
+</tr>
+<tr>
+<td>Theremin Glide</td>
+<td>リード</td>
+<td>4</td>
+<td>i IV v v の上で互いにグライドする長い音</td>
+<td>130–145</td>
+<td>Calf Monosynth</td>
+</tr>
+<tr>
+<td>Intro Stabs</td>
+<td>コード</td>
+<td>4</td>
+<td>冒頭のリフ：F の上でシンコペーションするサスのスタブで i IV VII VII、トップの声部が揺れる</td>
+<td>130–145</td>
+<td>Synth brass（MODS：短いリリース、CUTOFF を下げる）</td>
+</tr>
+<tr>
+<td>Intro Haze</td>
+<td>コード</td>
+<td>8</td>
+<td>イントロ全体、i9 IV9 VIImaj7、続いて i9 IV9 v9、1 小節に 1 コード、ゆっくり入ってコーラス付き</td>
+<td>130–145</td>
+<td>Pad · Polysynth（MODS：コーラス、遅いアタック）</td>
+</tr>
+<tr>
+<td>Juno Offbeats</td>
+<td>コード</td>
+<td>4</td>
+<td>ループ i7 IV7 v7 v9 を裏拍の 8 分ごとにスタブ</td>
+<td>135–145</td>
+<td>TAL NoiseMaker</td>
+</tr>
+<tr>
+<td>Verse Choir</td>
+<td>コード</td>
+<td>8</td>
+<td>i7 IV7 v7、続いて ii7 IV7 v9、息を吸う声の雲のように</td>
+<td>135–145</td>
+<td>Pad · Choir（MODS：遅いアタック、長いリリース）</td>
+</tr>
+<tr>
+<td>Bridge Lift</td>
+<td>コード</td>
+<td>8</td>
+<td>3-3-2 の中間部：IV7 と v7、続いて III と IV、C メジャーの V がコーラスへ持ち上げる</td>
+<td>135–145</td>
+<td>Strings · Digital</td>
+</tr>
+<tr>
+<td>Major Ending</td>
+<td>コード</td>
+<td>4</td>
+<td>F メジャーのアウトロの I IV V V、ロング・ショート・ロング</td>
+<td>135–145</td>
+<td>Pad · Polysynth（MODS：コーラス）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references_16">参考資料</h3>
+<ul>
+<li><a href="https://www.hooktheory.com/theorytab/view/grimes/be-a-body" rel="noopener" target="_blank">Hooktheory</a> のコーラス：E♭ メジャー（F ドリアンの音）、ii7 V7 vi7、140 BPM</li>
+<li>Chordu のコードのタイムライン（<a href="https://chordu.com/chords-tabs-grimes-be-a-body-%E4%BE%98%E5%AF%82-video--id_Q713eHNFvuU" rel="noopener" target="_blank">アルバムの音源</a>と<a href="https://chordu.com/chords-tabs-grimes-be-a-body-%E4%BE%98%E5%AF%82-official-instrumental--id_P7GvNMYC1o4" rel="noopener" target="_blank">インスト版</a>）</li>
+<li>テンポ：<a href="https://songbpm.com/@grimes/be-a-body" rel="noopener" target="_blank">SongBPM</a> と AcousticBrainz（<code>tools/genre-research/be-a-body.md</code>）</li>
+<li><a href="https://reverbmachine.com/blog/grimes-synth-sounds/" rel="noopener" target="_blank">Grimes Synth Sounds (Reverb Machine)</a></li>
+<li>レビュー：<a href="https://theartsdesk.com/new-music/cd-grimes-visions" rel="noopener" target="_blank">The Arts Desk</a>、<a href="https://ra.co/reviews/10473" rel="noopener" target="_blank">RA</a>、<a href="https://www.thelineofbestfit.com/reviews/albums/grimes-visions-85691" rel="noopener" target="_blank">The Line of Best Fit</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Visions_(Grimes_album)" rel="noopener" target="_blank">Visions (Wikipedia)</a></li>
+</ul>
+</article>
+</main>
+<footer>
+<div class="wrap">
+<p>ravving は Camilo Higuita によるもので GPL‑3.0‑or‑later です。これらのページはリポジトリの markdown から tools/build-site-docs.py で生成されています。</p>
+</div>
+</footer>
+<script defer="" src="../../assets/aru.js?v=48f57bf155"></script>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
+  function load(done) {
+    if (index) return done();
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();
+(function () {
+  var NOTES = {
+    es: ["Esta página solo está en inglés.", "Documentación en español"],
+    ja: ["このページは英語のみです。", "日本語のドキュメント"]
+  };
+  var lang = document.documentElement.lang || "en";
+  var want;
+  try {
+    if (document.querySelector("nav.langs")) { localStorage.setItem("ravving-lang", lang); return; }
+    want = localStorage.getItem("ravving-lang");
+  } catch (e) { return; }
+  var note = NOTES[want];
+  if (!note) return;
+  var p = document.createElement("p");
+  p.className = "doc-langnote";
+  p.lang = want;
+  var a = document.createElement("a");
+  a.href = "../" + want + "/docs/index.html";
+  a.textContent = "← " + note[1];
+  p.append(note[0] + " ", a);
+  var doc = document.getElementById("doc");
+  doc.insertBefore(p, doc.firstChild);
+})();</script>
+</body>
+</html>

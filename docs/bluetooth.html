@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bluetooth · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=28f7125214">
+<link rel="stylesheet" href="../site.css?v=56c8e55da8">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -231,6 +231,29 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
   var q = new URLSearchParams(location.search).get("q");
   if (q) { box.value = q; run(); }
+})();
+(function () {
+  var NOTES = {
+    es: ["Esta página solo está en inglés.", "Documentación en español"],
+    ja: ["このページは英語のみです。", "日本語のドキュメント"]
+  };
+  var lang = document.documentElement.lang || "en";
+  var want;
+  try {
+    if (document.querySelector("nav.langs")) { localStorage.setItem("ravving-lang", lang); return; }
+    want = localStorage.getItem("ravving-lang");
+  } catch (e) { return; }
+  var note = NOTES[want];
+  if (!note) return;
+  var p = document.createElement("p");
+  p.className = "doc-langnote";
+  p.lang = want;
+  var a = document.createElement("a");
+  a.href = "../" + want + "/docs/index.html";
+  a.textContent = "← " + note[1];
+  p.append(note[0] + " ", a);
+  var doc = document.getElementById("doc");
+  doc.insertBefore(p, doc.firstChild);
 })();</script>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The manual · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=28f7125214">
+<link rel="stylesheet" href="../site.css?v=56c8e55da8">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -25,6 +25,11 @@
       <a href="../features.html#shortcuts">Shortcuts</a>
       <a href="index.html" aria-current="true">Docs</a>
       <a href="../api/index.html">API reference</a>
+    </nav>
+    <nav class="langs" aria-label="Language" translate="no">
+      <a href="manual.html" hreflang="en" lang="en">EN</a>
+      <a href="../es/docs/manual.html" hreflang="es" lang="es">ES</a>
+      <a href="../ja/docs/manual.html" hreflang="ja" lang="ja">日本語</a>
     </nav>
   </div>
 </header>
@@ -774,8 +779,8 @@ BOMBO, COMPÁS; ドラム, キック, 小節.</p>
 <p>Pick one in MENU → SETTINGS → LANGUAGE. SYSTEM, the default, follows the device's own language.
 The screen changes at once.</p>
 <p>The keys printed on the device (MENU, ALT, SELECT…) and the machines' names stay as printed.
-The webpage has Spanish and Japanese pages too, with a switcher in its top bar; the docs are in
-English.</p>
+The webpage has Spanish and Japanese pages too, with a switcher in its top bar; the developer
+docs are in English.</p>
 <h2 id="startup-splash">Startup splash</h2>
 <p>ravving shows its logo while it starts, then plays a short show into the page.</p>
 <p>Pick the look in MENU → SETTINGS → STARTUP. It applies from the next start:</p>
@@ -1000,15 +1005,15 @@ A whole sample pack is one tap, with a progress readout and a STOP button.</p>
 SELECT copies it, and EJECT sits in the header.</p>
 <h3 id="pattern-presets-from-a-stick">Pattern presets from a stick</h3>
 <p>Open a pattern toolbar's PRESET. With a stick in, a SOURCE row appears: DEVICE, or
-USB · <stick>. Pick the stick to see its presets for that machine and play one straight from
+USB · and the stick's name. Pick the stick to see its presets for that machine and play one straight from
 there, without copying it. One undo step puts your pattern back.</p>
 <p>The dialog opens on the source your current pattern came from, with that preset marked.</p>
 <h3 id="soundfonts-from-a-stick">Soundfonts from a stick</h3>
 <p>A soundfont you import works right away:</p>
 <ul>
 <li>If it looks like a drum kit, it joins the kit picker under IMPORTED.</li>
-<li>Every preset in it becomes a sound for the chords, bass and lead, listed as
-  "<font> · <preset>" and grouped by font.</li>
+<li>Every preset in it becomes a sound for the chords, bass and lead, listed as the font's
+  name · the preset's name, and grouped by font.</li>
 </ul>
 <h3 id="more-than-one-stick-or-a-locked-one">More than one stick, or a locked one</h3>
 <p>With several sticks or partitions plugged in, the USB card names each one and asks which to
@@ -1350,6 +1355,29 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
   var q = new URLSearchParams(location.search).get("q");
   if (q) { box.value = q; run(); }
+})();
+(function () {
+  var NOTES = {
+    es: ["Esta página solo está en inglés.", "Documentación en español"],
+    ja: ["このページは英語のみです。", "日本語のドキュメント"]
+  };
+  var lang = document.documentElement.lang || "en";
+  var want;
+  try {
+    if (document.querySelector("nav.langs")) { localStorage.setItem("ravving-lang", lang); return; }
+    want = localStorage.getItem("ravving-lang");
+  } catch (e) { return; }
+  var note = NOTES[want];
+  if (!note) return;
+  var p = document.createElement("p");
+  p.className = "doc-langnote";
+  p.lang = want;
+  var a = document.createElement("a");
+  a.href = "../" + want + "/docs/index.html";
+  a.textContent = "← " + note[1];
+  p.append(note[0] + " ", a);
+  var doc = document.getElementById("doc");
+  doc.insertBefore(p, doc.firstChild);
 })();</script>
 </body>
 </html>

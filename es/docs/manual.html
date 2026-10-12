@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/manual-interim.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html class="no-js" data-docs-base="../../docs/" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>El manual · documentación de ravving</title>
+<link href="../../site.css?v=56c8e55da8" rel="stylesheet"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E" rel="icon"/>
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Ir al texto</a>
+<header class="nav">
+<div class="wrap">
+<a aria-label="ravving" class="brand" href="../index.html">
+<img alt="ravving" class="ravving" height="104" src="../../assets/ravving-wordmark.svg" width="822"/>
+</a>
+<nav aria-label="Secciones"><a href="../features.html#features">Funciones</a> <a href="../features.html#shortcuts">Atajos</a> <a aria-current="true" href="index.html">Documentación</a> <a href="../../api/index.html">Referencia de la API</a></nav>
+<nav aria-label="Language" class="langs" translate="no">
+<a href="../../docs/manual.html" hreflang="en" lang="en">EN</a>
+<a href="manual.html" hreflang="es" lang="es">ES</a>
+<a href="../../ja/docs/manual.html" hreflang="ja" lang="ja">日本語</a>
+</nav>
+</div>
+</header>
+<main class="wrap docs-wrap">
+<details class="docs-side" open="">
+<summary><span class="mono">Documentación</span></summary>
+<form class="docs-search" onsubmit="return false" role="search">
+<input aria-label="Buscar en la documentación" autocomplete="off" id="docs-search" placeholder="Buscar en la documentación… live fx, soundfonts" type="search"/>
+<ol hidden="" id="docs-results"></ol>
+</form>
+<nav aria-label="Documentación">
+<p class="mono">Usar ravving</p><ul>
+<li><a href="get-ravving.html">Consigue ravving</a></li>
+<li><a href="load-a-preset.html">Cargar un preset</a></li>
+<li><a href="loop-to-song.html">Convierte tu loop en una canción</a></li>
+<li><a href="export-a-track.html">Exporta un tema y escúchalo</a></li>
+<li><a href="film-a-session.html">Graba tu sesión en vídeo</a></li>
+<li><a href="send-to-phone.html">Envía un archivo a tu teléfono</a></li>
+<li><a href="troubleshooting.html">Cuando algo falla</a></li>
+<li><a href="machines.html">Las máquinas</a></li>
+<li><a href="first-beat.html">Tu primer beat</a></li>
+<li class="on"><a aria-current="page" href="manual.html">El manual</a><ul><li><a href="#the-five-pages">Las cinco páginas</a></li><li><a href="#installing">Instalación</a></li><li><a href="#playing-and-editing">Tocar y editar</a></li><li><a href="#the-header-and-the-mixer">La cabecera y el MIXER</a></li><li><a href="#sample-king">SAMPLE KING</a></li><li><a href="#the-pad-sampler">El PAD SAMPLER</a></li><li><a href="#undo-and-redo">Deshacer y rehacer</a></li><li><a href="#sound-sources">Fuentes de sonido</a></li><li><a href="#sections-and-the-song">Las secciones y la canción</a></li><li><a href="#languages">Idiomas</a></li><li><a href="#startup-splash">Pantalla de inicio</a></li><li><a href="#exports-and-the-music-player">Exportaciones y el reproductor</a></li><li><a href="#notes-outside-the-scale">Notas fuera de la escala</a></li><li><a href="#video-recordings-and-the-computer-link">Grabaciones de vídeo y el enlace con el ordenador</a></li><li><a href="#sending-to-a-phone">Enviar a un teléfono</a></li><li><a href="#files">Archivos</a></li><li><a href="#usb-sticks">Memorias USB</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#the-music-player">El reproductor de música</a></li><li><a href="#audio-output">Salida de audio</a></li><li><a href="#the-recorder">La GRABADORA</a></li><li><a href="#the-issues-center">El centro de avisos</a></li><li><a href="#where-your-files-live">Dónde están tus archivos</a></li></ul></li>
+</ul>
+<p class="mono">Los packs de patrones</p><ul>
+<li><a href="packs.html">Los packs de géneros</a></li>
+</ul>
+<p class="mono">Por dentro</p><ul>
+<li><a href="../../docs/architecture.html">Arquitectura</a></li>
+<li><a href="../../docs/backend.html">Clases del backend</a></li>
+<li><a href="../../docs/qml-components.html">Componentes QML</a></li>
+<li><a href="../../docs/undo-history.html">El historial de deshacer</a></li>
+<li><a href="../../docs/bluetooth.html">Bluetooth</a></li>
+<li><a href="../../docs/live-recording.html">Grabaciones en vivo</a></li>
+<li><a href="../../docs/engines.html">Los motores</a></li>
+<li><a href="../../docs/routing.html">El grafo de audio</a></li>
+<li><a href="../../docs/translations.html">Traducciones</a></li>
+<li><a href="../../docs/ui-rules.html">Reglas de UI</a></li>
+<li><a href="../../docs/extending.html">Ampliar ravving</a></li>
+<li><a href="../../docs/writing-the-guide.html">Escribir la guía</a></li>
+<li><a href="../../docs/writing-code-docs.html">Documentar el código</a></li>
+<li><a href="../../docs/building.html">Compilar</a></li>
+<li><a href="../../docs/packaging.html">Empaquetar</a></li>
+<li><a href="../../docs/testing.html">Pruebas en el aparato</a></li>
+<li><a href="../../docs/debugging.html">Depuración</a></li>
+<li><a href="../../docs/quality.html">Calidad</a></li>
+</ul>
+<p class="mono">El código</p><ul>
+<li><a href="../../api/index.html">Referencia de la API</a></li>
+</ul>
+</nav>
+</details>
+<article class="doc" id="doc">
+<p class="mono doc-kicker"><b>Usar ravving</b> <span>/</span> <b translate="no">docs/manual-interim.md</b></p>
+<h1>El manual</h1>
+<p class="doc-blurb">Las cinco páginas y lo que suena en ellas, los atajos, deshacer, las fuentes de sonido, los presets, las plantillas, las secciones y la canción, las exportaciones, LIVE REC, los archivos, las memorias USB, Bluetooth, la GRABADORA y el centro de avisos.</p>
+<p>Este es el manual provisional: qué hace cada página, tecla y diálogo. Pronto llegará una guía más amable con capturas de pantalla.</p>
+<h2 id="the-five-pages">Las cinco páginas</h2>
+<aside class="aru-tip"><span class="aru" data-mood="base" data-species="octopus"></span><p>¡Hola! Cinco teclas, cinco páginas, ocho máquinas. Vamos a hacer ruido.</p></aside>
+<p>Cada una de las cinco teclas numéricas de la izquierda abre una página:</p>
+<table>
+<thead>
+<tr>
+<th>Tecla</th>
+<th>Página</th>
+<th>Qué suena (lo muestra la placa)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>BATERÍA 1 · 2 · 3 (pulsa 1 otra vez para cambiar)</td>
+<td>Un kit de batería cada una: Roland TR909, Roland TR808 y LINN9000 para empezar, o cualquier kit de la carpeta de cajas de ritmos del aparato</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ACORDES</td>
+<td>TAL NoiseMaker con sus sonidos de fábrica, o un instrumento de soundfont (Rhodes, vibráfono, órgano, cuerdas…)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>BAJO</td>
+<td>DISTRHO Nekobi, un bajo estilo 303, o un bajo de soundfont (contrabajo, acústico, con dedos, sin trastes, sintetizado)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>LEAD</td>
+<td>Calf Monosynth, o un instrumento de soundfont (Rhodes, vibráfono, guitarra, saxo, flauta…)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>SAMPLE KING · PAD SAMPLER (pulsa 5 otra vez para alternar)</td>
+<td>Cuatro bancos de ocho ranuras de samples, o dieciséis pads al estilo MPC</td>
+</tr>
+</tbody>
+</table>
+<p>Las cinco páginas comparten la barra superior: tonalidad y escala, transporte, tempo y swing, los LIVE FX, los instrumentos y el volumen general.</p>
+<p>Todas las máquinas tienen las mismas partes:</p>
+<ul>
+<li>una tira de mezcla;</li>
+<li>sus MODS, las perillas que dan forma a su sonido;</li>
+<li>su editor de patrones;</li>
+<li>una cadena de SOUND EFFECTS.</li>
+</ul>
+<p>Una canción está hecha de SECCIONES que cambian al final del compás, y toda tu sesión se guarda en un proyecto.</p>
+<h2 id="installing">Instalación</h2>
+<p>ravving llega desde la categoría Apps de la Zynthbox Store como AppImage. La AppImage abre una página de instalación sobre Zynthbox con cuatro opciones: TRY IT, MAKE IT THE DEFAULT, ZYNTHBOX AT BOOT AGAIN, REMOVE RAVVING. Los proyectos, las tomas y las grabaciones se quedan al quitar ravving.</p>
+<h2 id="playing-and-editing">Tocar y editar</h2>
+<h3 id="shortcuts-youll-use-all-the-time">Atajos que usarás todo el rato</h3>
+<table>
+<thead>
+<tr>
+<th>Pulsa</th>
+<th>Qué pasa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ALT + ▲</td>
+<td>Salta a la cabecera, desde cualquier sitio</td>
+</tr>
+<tr>
+<td>ALT + teclas de paso 1–8</td>
+<td>Activa y desactiva los LIVE FX: DROP, NO KICK, ONLY KICK, CRUSH, LO PASS, HI PASS, STUTTER, LOOP</td>
+</tr>
+<tr>
+<td>ALT + perillas 1–3</td>
+<td>PHASER, ECHO y HEAVY</td>
+</tr>
+<tr>
+<td>ALT + perilla grande</td>
+<td>Volumen general</td>
+</tr>
+<tr>
+<td>MODE</td>
+<td>El instrumento en pantalla pasa OFF → LIVE → STEP + LIVE → OFF</td>
+</tr>
+<tr>
+<td>STOP, con todo parado</td>
+<td>Pánico: se cortan todas las notas sostenidas</td>
+</tr>
+<tr>
+<td>Pulsación larga en la <strong>S</strong> de una máquina</td>
+<td>Deja esa máquina sola</td>
+</tr>
+</tbody>
+</table>
+<p>Mientras mantienes ALT, las teclas de paso se iluminan en naranja y los pads de LIVE FX muestran sus números de tecla.</p>
+<h3 id="play-it-live">Tócalo en vivo</h3>
+<p>Activa LIVE con MODE y las teclas de paso se convierten en algo que puedes tocar:</p>
+<ul>
+<li><strong>Bajo, lead y la pestaña NOTES de los acordes:</strong> la escala se reparte por las 16 teclas. ▲ ▼ cambian la octava.</li>
+<li><strong>Las pestañas CHORDS y SLOTS de los acordes:</strong> tienes los siete acordes de tu tonalidad.</li>
+</ul>
+<h3 id="write-notes-step-by-step">Escribe notas paso a paso</h3>
+<p>La entrada STEP escribe lo que tocas en un cursor.</p>
+<ul>
+<li>◀ ▶ mueven el cursor un paso.</li>
+<li>Las teclas que mantienes a la vez caen en el mismo paso, así que un acorde va en una columna.</li>
+<li>Con el transporte parado, SELECT escribe la fila seleccionada en el cursor: una nota, o el acorde en CHORDS.</li>
+<li>Con LIVE y STEP activados, ▲ ▼ recorren las filas en lugar de la octava. Cada fila suena al llegar a ella, así que puedes buscar la nota de oído primero.</li>
+</ul>
+<h3 id="touch-the-grid">Toca la cuadrícula</h3>
+<ul>
+<li><strong>Un dedo</strong> arrastra de lado para pasar los compases. En un piano roll también arrastra las filas arriba y abajo; pasados ocho semitonos, cambia la octava.</li>
+<li><strong>Dos dedos</strong> pellizcan para hacer zoom.</li>
+<li><strong>Un toque</strong> sigue activando o quitando una nota.</li>
+</ul>
+<p>El puntero solo aparece con un ratón conectado.</p>
+<h3 id="save-and-open-projects">Guardar y abrir proyectos</h3>
+<ul>
+<li><strong>El primer SAVE</strong> pide el nombre del proyecto y aparece el teclado en pantalla.</li>
+<li><strong>Los siguientes guardados</strong> escriben encima. Pulsa SAVE dos veces en tres segundos (pregunta AGAIN?).</li>
+<li><strong>SAVED</strong> quiere decir que nada ha cambiado desde entonces; el botón se despierta con tu siguiente edición.</li>
+<li><strong>SAVE AS NEW</strong> pide un nombre nuevo.</li>
+</ul>
+<p>PROJECT ▾ lista tus proyectos y las demos. Toca uno para abrirlo. Si tienes cambios sin guardar, tócalo una segunda vez para confirmar. Una pulsación larga o ★ marca un proyecto como favorito.</p>
+<p>La fila de abajo siempre trabaja sobre el proyecto que tienes abierto: NEW, TEMPLATES e IMPORT, luego SAVE AS NEW, luego EXPORT.</p>
+<h3 id="undo">Deshacer</h3>
+<p>Los ↶ ↷ de la cabecera llevan todo el proyecto atrás y adelante. ALT + ◀ ▶ hacen lo mismo en las páginas de las máquinas. Un cambio que tocó varias máquinas a la vez cuenta como un paso: CLEAR ALL, o un cambio de tonalidad que movió el bajo y el lead.</p>
+<p>Los ↶ ↷ propios de una máquina, en su barra, deshacen solo los cambios de esa máquina.</p>
+<p>Qué vuelve:</p>
+<ul>
+<li>Los patrones y las ranuras.</li>
+<li>La estructura: una sección quitada con su contenido, un cambio de nombre, un color, una duración y los cambios en la canción.</li>
+</ul>
+<p>Qué no: los sonidos, la mezcla y los ajustes del proyecto. Elegir una sección tampoco es un paso. Más en <a href="#undo-and-redo">Deshacer y rehacer</a>.</p>
+<h3 id="lock-keep-a-stray-tap-from-changing-what-plays">LOCK: que un toque perdido no cambie lo que suena</h3>
+<p>LOCK es el primer botón de cada barra de patrón. Mientras está activado, las cuadrículas de notas no escriben nada. Se rechazan los toques en las celdas, las teclas de paso, la entrada STEP, los movimientos de SELECT y las perillas de nota, y LOCK parpadea para decirte por qué. Aún puedes desplazarte, pasar páginas y escuchar.</p>
+<ul>
+<li><strong>PLAY</strong> activa LOCK. <strong>STOP</strong> lo vuelve a quitar.</li>
+<li><strong>Toca LOCK mientras suena</strong> para editar igualmente. Después sigue desbloqueado al parar.</li>
+<li><strong>Toca LOCK con todo parado</strong> para bloquear las cuadrículas. Después sigue bloqueado.</li>
+</ul>
+<p>Hay un LOCK para todas las páginas, y una toma (●) sigue grabando.</p>
+<aside class="aru-tip"><span class="aru" data-mood="metal" data-species="wolf"></span><p>Haz headbanging todo lo que quieras: mientras suena, LOCK protege tu ritmo.</p></aside>
+<h3 id="select-move-notes-after-youve-written-them">SELECT: mueve notas después de escribirlas</h3>
+<p>SELECT está en la barra de patrón del bajo, el lead y los acordes, junto a ♭♯. Mientras está activado, un toque en la cuadrícula elige una nota en lugar de escribirla. Tócala otra vez para soltarla. Un toque en la cola de una nota sostenida elige esa nota.</p>
+<ul>
+<li><strong>▲ ▼</strong> mueven todas las notas elegidas una nota de la tonalidad arriba o abajo. Con ♭♯ activado, se mueven un semitono. La duración, el acento y el slide van con ellas.</li>
+<li><strong>Cada movimiento</strong> es un paso de deshacer.</li>
+<li><strong>En la página de acordes,</strong> la vista CHORDS elige acordes y los mueve un grado. La vista NOTES elige notas sueltas. Un acorde sostenido siempre se mueve entero.</li>
+<li><strong>Una pulsación larga en SELECT</strong> elige todas las notas (o acordes) de todos los compases, para mover todo el patrón de una vez.</li>
+<li><strong>Al quitar SELECT</strong> se sueltan las elecciones.</li>
+</ul>
+<h3 id="shape-a-single-note">Da forma a una sola nota</h3>
+<p>En el bajo y el lead, elige notas con SELECT y gira las perillas 1–3 para cambiarlas juntas. Un indicador arriba a la derecha de la cuadrícula muestra los valores de la primera nota elegida, con las insignias de las perillas.</p>
+<table>
+<thead>
+<tr>
+<th>Perilla</th>
+<th>Ajuste</th>
+<th>Rango</th>
+<th>Un clic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>LENGTH</strong> (las celdas más claras)</td>
+<td>de 1 paso a 4 compases</td>
+<td>un paso</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>VELOCITY</strong></td>
+<td>1–127</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>NUDGE</strong>, desde donde el swing pone la nota</td>
+<td>de medio paso antes a medio paso después</td>
+<td>un dieciseisavo de paso</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Una pulsación larga en una celda también ajusta la duración de una nota.</li>
+<li>La celda del carril ACCENT se llena según la velocidad, en rojo brillante si lleva acento. Un toque ahí sigue cambiando el acento: completo, o de vuelta a la velocidad normal.</li>
+<li>Una toma LIVE con Q desactivado graba un nudge para cada golpe.</li>
+<li>Estos ajustes se mueven con la nota, cada clic es un paso de deshacer, y se guardan con el proyecto y en un preset de patrón guardado.</li>
+</ul>
+<p>La perilla grande sigue siendo el volumen, y un grupo de diales con el foco conserva sus propias perillas.</p>
+<h3 id="slots-write-with-whole-chords">SLOTS: escribe con acordes enteros</h3>
+<p>En la página de acordes, SLOTS te deja componer acorde por acorde:</p>
+<ol>
+<li>Toca una ranura.</li>
+<li>Toca una tecla de acorde. La siguiente ranura se prepara sola.</li>
+<li>Ajusta la duración de cada ranura: 1, 2, 4 u 8 compases. Todas las ranuras juntas nunca pasan de los ocho compases del patrón; el indicador "n / 8 BARS" lleva la cuenta.</li>
+</ol>
+<p>Las ranuras escriben el patrón de acordes, y PLAY las toca en orden con la ranura actual iluminada. ＋ añade cuatro ranuras más, hasta ocho, y − las quita.</p>
+<p>Si cambias el patrón en la vista CHORDS o NOTES, la vista dice PATTERN CHANGED y atenúa las ranuras. Editar una ranura reconstruye entonces el patrón desde las ranuras. Deshacer recupera tus ediciones.</p>
+<h2 id="the-header-and-the-mixer">La cabecera y el MIXER</h2>
+<p>Todas las páginas comparten la cabecera de arriba. ▲ desde la tira de una página llega a ella, ◀ ▶ recorren sus grupos, y ▼ o BACK vuelven a la página.</p>
+<h3 id="key-and-scale">Tonalidad y escala</h3>
+<p>ROOT y SCALE, a la izquierda, fijan la tonalidad del proyecto. Todas las máquinas melódicas la siguen: el bajo, el lead y los acordes tocan en esa tonalidad, y un cambio de tonalidad mueve sus líneas con ella. Las notas de fuera de la escala tienen su propio ajuste (Notas fuera de la escala, más abajo).</p>
+<h3 id="tempo-and-swing">Tempo y swing</h3>
+<ul>
+<li><strong>BPM:</strong> el tempo. Con el grupo TEMPO con el foco, la perilla 1 lo ajusta. Cuando otro aparato marca el reloj de ravving, muestra el tempo de ese aparato y no se puede cambiar aquí.</li>
+<li><strong>SWING:</strong> la perilla 2, del 50 % (recto) al 75 % (el shuffle más marcado). Toca su rótulo para hacer swing en las corcheas (SWING 8, para jazz) o en las semicorcheas (SWING 16, para house y hip hop).</li>
+</ul>
+<p>Las plantillas y las demos ajustan ambos al empezar un proyecto.</p>
+<h3 id="live-fx">LIVE FX</h3>
+<p>Ocho pads que cambian toda la mezcla mientras tocas. Tócalos en la cabecera, o mantén ALT y pulsa las teclas de paso 1–8.</p>
+<table>
+<thead>
+<tr>
+<th>Pad</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DROP</td>
+<td>Mientras lo mantienes, el bombo se corta y un paso alto sube. Ambos vuelven al soltar.</td>
+</tr>
+<tr>
+<td>NO KICK, ONLY KICK</td>
+<td>Silencia todos los bombos, o todo menos los bombos. Uno apaga al otro.</td>
+</tr>
+<tr>
+<td>CRUSH</td>
+<td>La mezcla pasa por un bit crusher.</td>
+</tr>
+<tr>
+<td>LO PASS, HI PASS</td>
+<td>Un barrido de filtro: hacia abajo hasta 300 Hz, o hacia arriba hasta 950 Hz.</td>
+</tr>
+<tr>
+<td>STUTTER</td>
+<td>Mientras lo mantienes, se repite el dieciseisavo actual.</td>
+</tr>
+<tr>
+<td>LOOP</td>
+<td>Mientras lo mantienes, se repite el tiempo actual.</td>
+</tr>
+</tbody>
+</table>
+<p>NO KICK, ONLY KICK, LO PASS y HI PASS se activan con un toque y se apagan con otro. DROP y CRUSH actúan mientras los mantienes; mantén uno medio segundo y se queda activo hasta el siguiente toque. Arrastrar sobre CRUSH, STUTTER o LOOP cambia cuánto: menos bits, o una repetición más corta o más larga.</p>
+<p>PHASER, ECHO y HEAVY están junto a los pads. Mantén ALT y gira las perillas 1–3 para ajustarlos desde cualquier sitio.</p>
+<h3 id="record-the-whole-mix">Grabar la mezcla completa</h3>
+<p><strong>ALT + ●</strong> graba todo lo que suena por los altavoces, desde cualquier página, como un WAV entre tus grabaciones. La luz de RECORD se pone roja. Pulsa <strong>ALT + ●</strong> otra vez para parar. Encontrarás el archivo en el reproductor de música.</p>
+<p>Solo puede haber una grabación a la vez: mientras esta graba, la GRABADORA no puede grabar tomas.</p>
+<h3 id="the-mixer">El MEZCLADOR</h3>
+<p><strong>✱</strong> abre el MIXER: todos los instrumentos a la vez, cada uno en su tira con un medidor. Pulsa ✱ o BACK para volver, o una tecla numérica para ir a esa página.</p>
+<ul>
+<li><strong>Elige una tira</strong> con ◀ ▶ o una tecla de paso. Las luces de paso muestran las tiras: las silenciadas, tenues; la elegida, en blanco.</li>
+<li><strong>La perilla 1</strong> ajusta su nivel, <strong>la perilla 2</strong> su panorama, y la perilla grande un nivel fino.</li>
+<li><strong>SELECT</strong> lo silencia, y <strong>ALT + SELECT</strong> lo deja solo.</li>
+<li><strong>Un toque en una placa</strong> abre la página de ese instrumento.</li>
+</ul>
+<h2 id="sample-king">SAMPLE KING</h2>
+<p>La página 5 tiene dos samplers. Pulsa 5 otra vez para cambiar entre SAMPLE KING y el PAD SAMPLER; ravving recuerda cuál usaste.</p>
+<p>SAMPLE KING te da cuatro bancos (de A a D) de ocho ranuras, y cada banco tiene su propio patrón. Suena el banco que está en pantalla.</p>
+<h3 id="get-a-sound-in">Mete un sonido</h3>
+<p>Elige una ranura (su fila en la cuadrícula) y toca LOAD para escoger uno de tus samples.</p>
+<p>O grábalo: ● REC graba la entrada del aparato directamente en la ranura, y ● otra vez para. La toma cae en la ranura, recortada a su última ráfaga de sonido. INPUT ajusta lo que está conectado, la ganancia y la escucha.</p>
+<h3 id="shape-it">Dale forma</h3>
+<ul>
+<li>Arrastra las asas de inicio y fin sobre la forma de onda. Cuando la forma de onda tiene el foco, las perillas 1 y 2 también las mueven.</li>
+<li>Ajusta PITCH hasta 12 semitonos arriba o abajo.</li>
+<li>Activa REVERSE para tocarlo al revés.</li>
+</ul>
+<p>Una ranura suena en one-shot: volver a tocarla corta el golpe anterior.</p>
+<h3 id="chop-and-play-it">Trocéalo y tócalo</h3>
+<ul>
+<li id="chop-it"><strong>Trocéalo.</strong> CHOP y AUTO CHOP abren el editor de onda y reparten los trozos por las ranuras de un banco (ver <a href="#the-wave-editor">el editor de onda</a>).</li>
+<li id="play-it"><strong>Tócalo.</strong> Cada fila de la cuadrícula de pasos es una ranura, con una fila de acentos debajo. Las perillas 1–3 ajustan el mute, el solo y el nivel de la fila elegida, igual que en la batería.</li>
+<li id="play-it-live"><strong>Tócalo en vivo.</strong> Activa LIVE y las teclas de paso 1–8 tocan las ranuras, con la tecla 9 mantenida para los acentos. Un teclado MIDI también las toca.</li>
+</ul>
+<h2 id="the-pad-sampler">El PAD SAMPLER</h2>
+<p>Dieciséis pads en cuatro bancos (de A a D), dispuestos como en una MPC. Elige un pad en pantalla y su sample, sus herramientas y sus ajustes aparecen junto a los pads; sus 16 pasos quedan debajo.</p>
+<h3 id="get-a-sound-in_1">Mete un sonido</h3>
+<p>LOAD elige un sample para el pad. ● REC graba la entrada en él. Con SMART activado, la toma para sola cuando el sonido se calla. En ambos casos, el pad lo recibe recortado a su última ráfaga.</p>
+<ul>
+<li><strong>COPY</strong> copia un pad en otro.</li>
+<li><strong>CLEAR</strong> lo vacía.</li>
+<li><strong>ERASE</strong> quita los golpes del pad del patrón.</li>
+</ul>
+<h3 id="how-a-pad-plays">Cómo suena un pad</h3>
+<ul>
+<li><strong>NOTE ON</strong> toca el pad solo mientras lo mantienes. Desactivado, un toque reproduce el sample entero (one-shot).</li>
+<li><strong>LOOP</strong> lo repite desde el punto de loop.</li>
+<li><strong>REVERSE</strong> lo toca al revés.</li>
+<li><strong>MUTE</strong> lo silencia, y UNMUTE ALL devuelve todos los pads.</li>
+</ul>
+<h3 id="tweak-a-pad">Ajusta un pad</h3>
+<p>Las pestañas ponen tres ajustes cada una en las perillas 1–3, y ◀ ▶ cambian de pestaña:</p>
+<table>
+<thead>
+<tr>
+<th>Pestaña</th>
+<th>Ajustes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TRIM</td>
+<td>inicio y fin</td>
+</tr>
+<tr>
+<td>MIX</td>
+<td>volumen y panorama</td>
+</tr>
+<tr>
+<td>AMP ENV</td>
+<td>ataque y caída</td>
+</tr>
+<tr>
+<td>TUNE</td>
+<td>semitonos, luego ajuste fino</td>
+</tr>
+<tr>
+<td>PLAY</td>
+<td>mono o poli, y un grupo de mute</td>
+</tr>
+<tr>
+<td>FILTER</td>
+<td>tipo, corte y resonancia</td>
+</tr>
+</tbody>
+</table>
+<h3 id="play-the-pads-live">Toca los pads en vivo</h3>
+<p>Activa LIVE y las 16 teclas de paso se convierten en los 16 pads. Un toque toca un pad. Mantén uno medio segundo y se engancha, en bucle hasta que lo vuelvas a tocar. STOP termina todos los bucles enganchados.</p>
+<p><strong>PAD FX:</strong> mientras suena un pad, mantén ECHO, TAPE STOP, SCRATCH, STUTTER, SKIP o REVERSE para echarle un efecto. Suelta y vuelve a la normalidad.</p>
+<h3 id="16-levels">16 LEVELS</h3>
+<p>Activa 16 LVL y los dieciséis pads tocan el pad que tenías elegido, repartido según TYPE:</p>
+<ul>
+<li><strong>VELOCITY:</strong> de suave a fuerte.</li>
+<li><strong>TUNE:</strong> un semitono por pad.</li>
+<li><strong>SCALE:</strong> subiendo por la escala de tu proyecto.</li>
+</ul>
+<p>Los MODS del kit ajustan el volumen y la afinación del kit para todos los pads.</p>
+<h3 id="the-wave-editor">El editor de onda</h3>
+<p>Lo comparten los dos samplers. CHOP corta un sample en trozos de tres maneras:</p>
+<ul>
+<li><strong>REGIONS:</strong> trozos iguales.</li>
+<li><strong>THRESHOLD:</strong> en los golpes más fuertes que un nivel.</li>
+<li><strong>MANUAL:</strong> toca la onda para añadir un corte, y toca un corte para quitarlo.</li>
+</ul>
+<p>AUTO CHOP abre el editor directamente sobre los golpes. En el editor:</p>
+<ul>
+<li>◀ ▶ cambian el tipo de corte, y la perilla grande ajusta los trozos o el umbral.</li>
+<li>NORMALISE sube el sample a nivel completo.</li>
+<li>TRIM corta el silencio de los dos extremos.</li>
+<li>APPLY envía los trozos a las ranuras de un banco o a los pads.</li>
+</ul>
+<h2 id="undo-and-redo">Deshacer y rehacer</h2>
+<p>El proyecto tiene un solo historial. Los ↶ ↷ de la cabecera (y ALT + ◀ ▶ en las páginas de las máquinas) lo recorren atrás y adelante, y un aviso nombra cada paso ("UNDO · CHORDS + BASS"). Los ↶ ↷ propios de una máquina, en su barra de patrón, deshacen solo el último cambio de esa máquina, esté donde esté en el historial.</p>
+<ul>
+<li><strong>Qué se deshace:</strong> las notas, pasos, acordes, ranuras, acentos, slides, duraciones, automatización y tiempos en vivo de cada máquina, y la estructura: qué secciones hay, su orden, nombres, colores y duraciones, y la canción. Una sección quitada vuelve entera, en su sitio.</li>
+<li><strong>Qué no:</strong> los sonidos, la mezcla, los efectos y los ajustes del proyecto (tempo, swing, tonalidad). Elegir una sección tampoco es un paso.</li>
+<li><strong>Un paso:</strong> un cambio que toca varias máquinas a la vez es un paso, como CLEAR ALL o un cambio de tonalidad que mueve el bajo y el lead. También lo son los cambios rápidos seguidos (girar una perilla, arrastrar un asa) y una toma grabada entera.</li>
+<li>El historial guarda los últimos 100 pasos, y empieza de cero al abrir un proyecto o empezar uno nuevo.</li>
+</ul>
+<h2 id="sound-sources">Fuentes de sonido</h2>
+<p>El bajo, el lead y los acordes no tienen por qué sonar a su propio sintetizador. Toca la placa para abrir los sonidos de la máquina:</p>
+<ul>
+<li><strong>Primero su propio motor:</strong> el 303 en BASS, Calf Monosynth en LEAD, TAL NoiseMaker y sus sonidos de fábrica en CHORDS.</li>
+<li><strong>Después los instrumentos de soundfont</strong>, tocados por FluidSynth desde los soundfonts del propio aparato: un contrabajo y otros bajos, Rhodes, vibráfono, órgano, cuerdas, saxo, flauta y más.</li>
+</ul>
+<p>Elegir uno cambia un motor por el otro. Un sonido de soundfont tiene sus propios MODS: FILTER, ENVELOPE y MOTION. Tu elección se guarda con el proyecto.</p>
+<h3 id="acoustic-sounds-for-jazz-and-friends">Sonidos acústicos para el jazz y compañía</h3>
+<table>
+<thead>
+<tr>
+<th>Máquina</th>
+<th>Sonidos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACORDES</td>
+<td><strong>Grand piano</strong> (Fazioli), <strong>Upright piano</strong> (Kawai), <strong>Jazz guitar</strong></td>
+</tr>
+<tr>
+<td>LEAD</td>
+<td><strong>Alto sax</strong>, <strong>Tenor sax</strong>, <strong>Grand piano</strong></td>
+</tr>
+<tr>
+<td>BAJO</td>
+<td><strong>Upright</strong></td>
+</tr>
+</tbody>
+</table>
+<p>El selector de kits de las cajas de ritmos también tiene un grupo ACOUSTIC. Son kits General MIDI del soundfont FluidR3: <strong>Jazz</strong> y <strong>Brush</strong> (con el ride y el pedal de hi-hat en sus filas, o con el crash), <strong>Standard</strong> y <strong>Room</strong>.</p>
+<p>Dos cosas más ayudan a que el jazz suene bien:</p>
+<ul>
+<li>Una nota de bajo o de lead puede durar más que un paso. Mantén pulsada una celda para estirar hasta ella la nota de la fila.</li>
+<li>Toca el rótulo de swing de la cabecera para hacer swing en las corcheas (SWING 8) o en las semicorcheas (SWING 16).</li>
+</ul>
+<h3 id="pads-and-textures-on-chords">Pads y texturas en CHORDS</h3>
+<p>CHORDS también tiene los soundfonts de pads de la imagen, agrupados por nombre en su selector:</p>
+<ul>
+<li><strong>Strings:</strong> Ensemble, Fat, Digital, Rise, Bowed, Piano.</li>
+<li><strong>Organ:</strong> Phaser, Pipe 16+8+4, House, Extreme.</li>
+<li><strong>Alien,</strong> de los soundfonts "Ambients &amp; Drones": The Thing, Strange voices, Crystal voice, Glassy, Winds, Chaos, The Pulse.</li>
+</ul>
+<p>Encajan en una máquina sostenida y polifónica: los acordes se mantienen mientras dura la voz, y la tonalidad los mantiene afinados con el bajo y el lead.</p>
+<p>Los selectores de sonidos agrupan sus listas con chips GROUP, ★ para tus favoritos (la estrella, o ALT + SELECT) y SORT, como en la lista o A–Z. Recuerdan el grupo y el orden por instrumento.</p>
+<h3 id="pattern-presets-with-their-sound">Presets de patrón, con su sonido</h3>
+<p>Abre PRESET en una barra de patrón. SAVE CURRENT AS NEW guarda el patrón junto con el sonido de la máquina: su fuente o sonido de fábrica, y sus MODS. En la batería guarda el kit y los MODS del kit.</p>
+<aside class="aru-tip"><span class="aru" data-mood="hiphop" data-species="octopus"></span><p>Cada pack trae su propio groove, y el sonido para el que se escribió.</p></aside>
+<p>Al guardar, dos interruptores deciden qué entra. Los dos están activados cada vez que se abre el diálogo:</p>
+<ul>
+<li><strong>WITH ITS SOUND:</strong> la fuente o el kit que está sonando.</li>
+<li><strong>WITH ITS MODS:</strong> los MODS que has ajustado. Una perilla que nadie tocó se queda fuera.</li>
+</ul>
+<p>Con los dos desactivados, solo se guarda el patrón.</p>
+<p>Un preset que lleva un sonido muestra ♪ y el nombre del sonido bajo su género, más "+ MODS" cuando guarda MODS.</p>
+<h3 id="loading-a-preset">Cargar un preset</h3>
+<p>Tres interruptores arriba en el diálogo de presets deciden qué trae un preset:</p>
+<ul>
+<li><strong>WITH ITS SOUND</strong> (desactivado por defecto) cambia la máquina al sonido del preset.</li>
+<li><strong>WITH ITS MODS</strong> (desactivado por defecto) ajusta los MODS del preset, solo las partes que nombra. Un preset sin MODS deja los tuyos como están.</li>
+<li><strong>WITH ITS BARS</strong> (activado por defecto) trae el número de compases del preset. Desactivado, el preset se coloca sobre tus compases desde el primero: un preset más corto se repite, uno más largo se corta.</li>
+</ul>
+<p>Al activar SOUND también se activa MODS, porque un sonido se oye con sus MODS. Después puedes volver a apagar MODS. MODS solo trae los MODS de un preset al sonido que ya suena. Con todos desactivados, solo se carga el patrón. Tus elecciones se recuerdan.</p>
+<p>SOUND y MODS siguen al preset resaltado: uno sin sonido atenúa WITH ITS SOUND, y uno sin MODS atenúa WITH ITS MODS. Vuelven a encenderse en un preset que los tenga.</p>
+<h3 id="what-a-presets-sound-keeps">Qué guarda el sonido de un preset</h3>
+<p>Si el aparato no tiene la fuente o el kit de un preset, esa parte del sonido se queda como está. Los presets de los samplers no guardan sonido, porque su sonido está en sus bancos. Los presets que vienen con ravving tampoco guardan sonido. Un preset copiado a una memoria lleva su sonido en su archivo.</p>
+<h3 id="finding-presets">Encontrar presets</h3>
+<p>El diálogo de presets funciona como los selectores de sonidos:</p>
+<ul>
+<li><strong>Un chip GROUP por género</strong>, y SORT: como en la lista o A–Z.</li>
+<li><strong>★ favoritos:</strong> mantén pulsado un preset, toca la ★ de su esquina o pulsa ALT + SELECT. Los favoritos se guardan por instrumento según el nombre del preset, así que un preset de una memoria y el mismo copiado al aparato comparten su ★.</li>
+</ul>
+<p>El diálogo se abre en ALL cuando el grupo que viste por última vez ocultaría el preset en pantalla.</p>
+<h3 id="templates">Plantillas</h3>
+<p>Una plantilla es cómo empieza un proyecto: su tempo, swing, tonalidad (tónica y escala) y las perillas de LIVE FX (PHASER, ECHO, HEAVY).</p>
+<ol>
+<li>Abre PROJECT ▾ → TEMPLATES, junto a NEW.</li>
+<li>Elige SOURCE: el aparato, o una memoria USB (leída directamente de su carpeta <code>ravving/presets/templates/</code>).</li>
+<li>Elige una plantilla. Empieza un proyecto nuevo con esos ajustes. Si hay cambios sin guardar, pregunta antes, igual que NEW.</li>
+</ol>
+<p>SAVE TEMPLATE guarda los ajustes de tu sesión actual como plantilla en el aparato, y DELETE quita una. PRESETS en el diálogo USB copia plantillas en los dos sentidos. Cada pack de género trae una plantilla, y algunos packs tienen una para cada tonalidad.</p>
+<h3 id="a-new-project-starts-clean">Un proyecto nuevo empieza limpio</h3>
+<p>NEW, con o sin plantilla, devuelve todas las páginas a sus valores por defecto:</p>
+<ul>
+<li>un patrón vacío en cada máquina, sin preset cargado;</li>
+<li>el motor propio de cada máquina con el sonido, la mezcla, los MODS y los SOUND EFFECTS por defecto;</li>
+<li>una sección, "A";</li>
+<li>los LIVE FX en reposo.</li>
+</ul>
+<p>Una plantilla solo añade encima su tempo, swing, tonalidad y las perillas de LIVE FX. Los patrones de las demos solo vuelven con un proyecto o un preset.</p>
+<h3 id="demos">Demos</h3>
+<p>ravving trae unos cuantos proyectos de demo, en PROJECT ▾ → DEMOS. Solo usan los soundfonts de la propia imagen, así que suenan igual en cualquier MIKO.</p>
+<p>Abre una demo como cualquier proyecto. SAVE guarda tus cambios como proyecto propio con el nombre de la demo; la demo en sí nunca cambia y no se puede borrar.</p>
+<h2 id="sections-and-the-song">Las secciones y la canción</h2>
+<p>Una canción es más que un loop. Una <strong>sección</strong> guarda el patrón de cada máquina a la vez (una intro, una estrofa, un puente) y qué máquinas descansan en ella. Los sonidos, efectos, niveles, tempo y tonalidad son de todo el proyecto, así que cambiar de sección nunca reinicia un motor.</p>
+<p>Las secciones están vivas: la que está en pantalla es la que editas, y tus ediciones se quedan en ella al elegir otra. Puedes tener hasta 16, y se guardan con el proyecto.</p>
+<h3 id="pick-a-section">Elige una sección</h3>
+<ul>
+<li><strong>ALT + teclas de paso 9–16</strong> eligen las secciones 1–8 desde cualquier página. Se iluminan con los colores de las secciones mientras mantienes ALT. ALT + 1–8 siguen siendo los pads de LIVE FX.</li>
+<li><strong>X e Y</strong>, las dos teclas junto a la perilla grande, van a la sección anterior y siguiente desde cualquier página o diálogo, dando la vuelta. Pulsa otra vez antes de que llegue el cambio para mover la elección más allá en lugar de poner otra en cola. Con una sola sección, un mensaje te dice que añadas más en la página SONG.</li>
+<li><strong>La página SONG</strong> (más abajo) tiene una tecla para cada sección.</li>
+</ul>
+<p>Mientras suena la música, una elección entra en el siguiente final de compás, justo a tiempo: no se pierde ni se duplica ninguna nota, y las máquinas cuya parte no cambia siguen tocando. Con todo parado, la elección es inmediata.</p>
+<h3 id="when-a-switch-lands-bar-or-section">Cuándo llega un cambio: BAR o SECTION</h3>
+<p>El ajuste SWITCH de la página SONG se guarda con el proyecto:</p>
+<ul>
+<li><strong>BAR:</strong> la sección que eliges entra en el siguiente compás.</li>
+<li><strong>SECTION:</strong> espera a que la sección que suena termine su vuelta, y cambia en ese final de compás. Mientras tanto su tecla parpadea, y la que suena sigue encendida. Elige otra vez la que suena para cancelar; para el transporte para cambiar al instante. Una sección de un compás termina en cada compás.</li>
+</ul>
+<p>Un cambio siempre cae en un final de compás, nunca a mitad.</p>
+<h3 id="queue-up-sections">Pon secciones en cola</h3>
+<p>En LOOP puedes poner en fila <strong>hasta tres</strong> elecciones. Cada una suena una vuelta, luego entra la siguiente, y la última sigue en bucle.</p>
+<ul>
+<li>Las teclas muestran su puesto en la cola: un 1 parpadeando es la siguiente.</li>
+<li>Elige otra vez una tecla en cola para sacarla de la cola.</li>
+<li>Elige la sección que suena para vaciar la cola.</li>
+<li>Una cuarta elección se rechaza con QUEUE FULL.</li>
+<li>Parar pone la primera en su sitio y descarta el resto.</li>
+</ul>
+<p>En SONG, solo espera una elección a la vez, y una nueva la sustituye.</p>
+<h3 id="loop-or-once-for-each-machine">LOOP u ONCE para cada máquina</h3>
+<p>La tira de cada máquina tiene un botón LOOP | ONCE junto a ❚❚, guardado por sección como ❚❚.</p>
+<p>Una sección dura lo que su patrón más largo, o lo que ajustes en su LENGTH. Un patrón más corto hace <strong>LOOP</strong> por defecto: dos compases de batería suenan dos veces bajo un lead de cuatro compases. En <strong>ONCE</strong>, toca sus propios compases una vez y descansa hasta que la sección vuelve a empezar.</p>
+<p>El descanso empieza justo en el final de compás, y una nota que suena termina de forma natural. Mientras descansa no se ve el cursor de reproducción, y un golpe que tocas en vivo se oye pero no se escribe.</p>
+<h3 id="see-where-you-are">Mira dónde estás</h3>
+<ul>
+<li><strong>La placa:</strong> la placa de proyecto de la cabecera muestra la sección en pantalla como una tecla cuadrada con su número, en su color. Parpadea mientras espera el final de compás. Tócala para abrir la página SONG.</li>
+<li><strong>Cuando cambia una sección,</strong> la placa se barre con su color y la página del instrumento brilla alrededor de su marco, una vez.</li>
+<li><strong>Las teclas de sección</strong> se llenan con el avance de la sección, aquí y en la página SONG.</li>
+</ul>
+<h3 id="section-keys-in-the-header">Teclas de sección en la cabecera</h3>
+<p>Mantén pulsada la placa de proyecto, o pulsa <strong>ALT + MODE</strong>, para cambiar los pads de LIVE FX de la cabecera por las teclas de sección. Repite para recuperar los pads. MODE se ilumina en naranja mientras mantienes ALT; MODE solo sigue cambiando el modo de entrada.</p>
+<ul>
+<li><strong>Toca</strong> una tecla para elegirla (en el siguiente compás si suena). ▶ marca la que suena, y su avance la llena.</li>
+<li><strong>Desliza una tecla hacia arriba</strong> para quitar esa sección. Sigue a tu dedo y sale volando pasada la mitad de su altura. La última sección no se puede quitar.</li>
+<li><strong>Desliza de lado</strong> cuando hay más de las que caben. La tira también se desplaza hasta la sección que pasa a ser la actual, o a la que llega la canción.</li>
+<li><strong>＋</strong> se queda fijo al final de la tira.</li>
+</ul>
+<p>Con las teclas en la cabecera, ALT + 1–16 eligen las secciones 1–16. Mientras el grupo de secciones de la cabecera tiene el foco (◀ ▶ hasta él), las teclas de paso solas las eligen.</p>
+<h3 id="the-song-page">La página CANCIÓN</h3>
+<p>Ábrela con ALT + 1 desde cualquier sitio, y púlsalo otra vez para volver. Está bajo la cabecera, como el MIXER. Una tecla numérica también sale de ella: la página de la que venías vuelve como la dejaste, en la misma caja de ritmos.</p>
+<p>Las secciones son teclas cuadradas con su número y nombre, ocho por fila. La primera fila coincide con las teclas ALT. Cada tecla tiene un punto por cada máquina que suena en ella.</p>
+<ul>
+<li><strong>Un toque</strong> elige una sección, <strong>doble toque</strong> le cambia el nombre, <strong>mantener y arrastrar</strong> la mueve.</li>
+<li><strong>×</strong> la borra, tras un segundo toque.</li>
+<li><strong>＋</strong> copia la sección en pantalla (A pasa a ser A′).</li>
+</ul>
+<p>Una sección nueva, vacía (NEW) o copiada (＋), se une al final de la canción y pasa a ser la que está en pantalla.</p>
+<p>La fila sobre las secciones tiene RENAME, NEW (una sección vacía), COLOUR, LENGTH (1–8 compases, o AUTO para el patrón más largo), MOVE y ADD TO SONG.</p>
+<p><strong>La canción</strong> es una tira de bloques, cada uno tan ancho como sus compases por sus repeticiones. Elige un bloque para moverlo, ajustar sus repeticiones (×1 a ×16) o quitarlo.</p>
+<table>
+<thead>
+<tr>
+<th>Tecla</th>
+<th>En la página CANCIÓN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>◀ ▶</td>
+<td>Recorre las teclas o los bloques</td>
+</tr>
+<tr>
+<td>▲ ▼</td>
+<td>Pasa entre las teclas de sección y la canción</td>
+</tr>
+<tr>
+<td>SELECT o una tecla de paso</td>
+<td>Elegir</td>
+</tr>
+<tr>
+<td>ALT + ◀ ▶</td>
+<td>Mueve la tecla o el bloque elegido</td>
+</tr>
+<tr>
+<td>Perilla 1</td>
+<td>Duración</td>
+</tr>
+<tr>
+<td>Perilla 2</td>
+<td>Repeticiones</td>
+</tr>
+<tr>
+<td>BACK</td>
+<td>Salir</td>
+</tr>
+</tbody>
+</table>
+<h3 id="play-the-whole-song">Toca la canción entera</h3>
+<p>LOOP | SONG en la página SONG decide qué toca PLAY: la sección en pantalla, en bucle, o la canción de principio a fin.</p>
+<ul>
+<li><strong>En SONG,</strong> cada parte está lista a tiempo, y la canción para en el final de compás tras su fin. El bloque que suena muestra su avance, y la placa muestra la parte, como "6/9".</li>
+<li id="the-instrument-pages-follow-the-song"><strong>Las páginas de instrumento siguen a la canción.</strong> Sus cuadrículas de notas están bloqueadas mientras suena, como siempre que suena música (ver LOCK). Desbloquéalas para editar, y tu edición va a la sección que suena.</li>
+<li><strong>▶ PLAY FROM HERE</strong> empieza la canción en cualquier bloque.</li>
+<li><strong>Elegir una sección a mano</strong> mientras suena la canción salta a la primera parte de esa sección. Una sección que la canción no usa vuelve a LOOP.</li>
+</ul>
+<p>Para grabarlo todo, EXPORT → WHAT: SONG graba la canción entera en una toma, más su cola. LOOP graba en cambio BARS × LOOPS.</p>
+<h2 id="languages">Idiomas</h2>
+<p>ravving habla inglés, español y japonés, con las palabras que usan los músicos en cada uno: BATERÍA, BOMBO, COMPÁS; ドラム, キック, 小節.</p>
+<p>Elige uno en MENU → SETTINGS → LANGUAGE. SYSTEM, el valor por defecto, sigue el idioma del aparato. La pantalla cambia al instante.</p>
+<p>Las teclas impresas en el aparato (MENU, ALT, SELECT…) y los nombres de las máquinas se quedan como están impresos. La web también tiene páginas en español y japonés, con un selector en su barra superior; la documentación para desarrolladores está en inglés.</p>
+<h2 id="startup-splash">Pantalla de inicio</h2>
+<p>ravving muestra su logo mientras arranca, y luego hace un breve espectáculo hasta la página.</p>
+<p>Elige el aspecto en MENU → SETTINGS → STARTUP. Se aplica desde el siguiente arranque:</p>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ANIME</td>
+<td>Cortes rápidos por los cinco logos flow-lens hasta el de brillo</td>
+</tr>
+<tr>
+<td>GLOW</td>
+<td>Uno al azar, con su halo creciendo</td>
+</tr>
+<tr>
+<td>STILL</td>
+<td>Uno al azar, con un fundido</td>
+</tr>
+<tr>
+<td>ZOOM</td>
+<td>El logo fluido saliendo disparado más allá de la pantalla</td>
+</tr>
+<tr>
+<td>ARU</td>
+<td>El pulpo pixelado, el cachorro de lobo o el alien, al azar, saludando y saltando</td>
+</tr>
+<tr>
+<td>OFF</td>
+<td>Sin espectáculo</td>
+</tr>
+</tbody>
+</table>
+<p>Mientras carga el estudio, la pantalla de inicio es una imagen fija, para que el arranque siga siendo rápido.</p>
+<h2 id="exports-and-the-music-player">Exportaciones y el reproductor de música</h2>
+<p>PROJECT ▾ → EXPORT saca tu proyecto del aparato, a la carpeta <code>exports/</code> de la biblioteca. Hay dos tipos.</p>
+<h3 id="a-track">Una pista</h3>
+<p>Toda la producción tal como la oyen los altavoces. ravving toca el proyecto desde su primer tiempo durante BARS × LOOPS compases, más un TAIL para los ecos, y lo graba cortado a la muestra exacta.</p>
+<ul>
+<li><strong>Formatos:</strong> WAV de 24 bits, FLAC, OGG Vorbis o MP3.</li>
+<li><strong>Etiquetas:</strong> título, artista, álbum o mixtape, género, compositor, comentario, fecha y BPM.</li>
+<li><strong>Una portada,</strong> dibujada a partir del título y el artista, con MADE WITH RAVVING.</li>
+<li><strong>Un archivo JSON</strong> al lado con los mismos datos.</li>
+</ul>
+<p>El nivel del master se mantiene tal cual. Un tema que pasaría del máximo se baja a −0,1 dBFS, y el archivo JSON lo indica.</p>
+<p>ARTIST y COMPOSER empiezan con el autor de tu perfil (MENU → SETTINGS: USER y AUTHOR). Se vuelven a ofrecer el ALBUM y el GENRE que escribiste la última vez.</p>
+<h3 id="a-bundle">Un paquete</h3>
+<p>Un zip <code>.ravv</code> del proyecto con todos los samples que usa, para que otro ravving lo toque exactamente igual. PROJECT ▾ → IMPORT lista los paquetes de <code>exports/</code> y de la carpeta principal de la biblioteca, donde llegan las transferencias, y convierte uno en proyecto.</p>
+<h2 id="notes-outside-the-scale">Notas fuera de la escala</h2>
+<p>MENU → SETTINGS → INTERACTIONS tiene <strong>NOTES OUTSIDE THE SCALE</strong>, activado por defecto. Decide qué pasa cuando tocas una nota fuera de tu tonalidad, por ejemplo en un teclado MIDI, en el lead, el bajo o NOTES de los acordes:</p>
+<ul>
+<li><strong>Activado:</strong> la nota suena y se graba, en su propia fila del piano roll.</li>
+<li><strong>Desactivado:</strong> ahí se silencia y nunca se graba.</li>
+</ul>
+<p>La batería, los samplers y los acordes tocados por grado ignoran este ajuste.</p>
+<h2 id="video-recordings-and-the-computer-link">Grabaciones de vídeo y el enlace con el ordenador</h2>
+<p>La tarjeta LIVE REC del centro de control graba tu sesión.</p>
+<h3 id="start-a-recording">Empieza una grabación</h3>
+<ol>
+<li><span>Toca LIVE REC. Un diálogo pregunta WHAT grabar:</span><ul>
+<li><strong>VIDEO:</strong> la pantalla o una cámara USB con el sonido del master, guardado como MP4 en la carpeta <code>videos/</code> de la biblioteca.</li>
+<li><strong>AUDIO ONLY:</strong> solo el sonido, un WAV de 24 bits entre tus TRACKS en la carpeta de exportaciones.</li>
+</ul>
+</li>
+<li>Elige si el MIC entra.</li>
+<li>Toca START. El diálogo es la confirmación, así que un toque perdido nunca empieza una grabación.</li>
+</ol>
+<p>Mientras LIVE REC está activado, la tecla RECORD del aparato empieza una grabación y STOP la termina, desde cualquier página. La música sigue sonando. Un proyecto nuevo apaga LIVE REC.</p>
+<h3 id="video-settings">Ajustes de vídeo</h3>
+<p>SETTINGS · VIDEO tiene:</p>
+<ul>
+<li><strong>QUALITY:</strong> tres niveles, y ninguno le cuesta nada al sonido.</li>
+<li><strong>TIMER:</strong> una cuenta atrás antes de que empiece la grabación.</li>
+<li><strong>SOURCE:</strong> la pantalla o una cámara USB.</li>
+<li><strong>MIC:</strong> pone la entrada de la GRABADORA en el sonido del vídeo.</li>
+<li><strong>VOICE:</strong> la mezcla de voz encima, más abajo.</li>
+</ul>
+<p>También se aplican a una grabación que ya está en marcha.</p>
+<h3 id="talking-over-the-music">Hablar por encima de la música</h3>
+<p>Con el MIC dentro, ravving mezcla tu voz sobre la música:</p>
+<aside class="aru-tip"><span class="aru" data-mood="gregorian" data-species="alien"></span><p>Canta encima: la música baja bajo tu voz y vuelve cuando paras.</p></aside>
+<ul>
+<li>Mientras hablas, la música baja bajo tu voz: DUCK −6, −12 o −18 dB, −12 por defecto.</li>
+<li>Tu voz se sube +6 o +12 dB y se aclara, con un corte de graves y un realce de presencia.</li>
+<li>ravving distingue tu voz de lo que se cuela de los altavoces en el micrófono, para que el ritmo no se baje a sí mismo.</li>
+<li>Un limitador evita que la mezcla sature.</li>
+</ul>
+<p>El LEVEL del micrófono se muestra desde que VIDEO está activado, en SETTINGS y en la placa del proyecto. MIC TOO HOT quiere decir que sus picos pasan de −6 dBFS: baja el GAIN de la GRABADORA. Con la GRABADORA en GUITAR o LINE, la entrada se mezcla tal cual.</p>
+<h3 id="when-a-recording-ends">Cuando termina una grabación</h3>
+<p>VIDEO SAVED o LIVE REC SAVED ofrece:</p>
+<ul>
+<li><strong>DELETE,</strong> a la izquierda. Un segundo toque en tres segundos lo confirma.</li>
+<li id="rename"><strong>RENAME.</strong> El archivo conserva su extensión.</li>
+<li><strong>SEND…</strong> a una memoria USB, uno de tus ordenadores o tu teléfono.</li>
+<li><strong>METADATA…</strong> para una grabación de audio. Abre el diálogo de exportación sobre el archivo para etiquetarlo, dibujar su portada y guardarlo como WAV, FLAC, OGG o MP3.</li>
+</ul>
+<p>El mismo SEND… está en los temas del reproductor, en FILES y en los diálogos de presets. El diálogo de exportación también puede enviar un tema o paquete nuevo a un ordenador según se escribe.</p>
+<h3 id="your-computers">Tus ordenadores</h3>
+<p>SETTINGS · COMPUTERS guarda cualquier número de portátiles o PC de tu red.</p>
+<ol>
+<li>Toca ADD A COMPUTER.</li>
+<li>Escribe su host, tu nombre de usuario y tu contraseña. La contraseña se usa una vez, para instalar la clave del aparato en ese ordenador.</li>
+<li>Los archivos que envías llegan a la carpeta Descargas de ese ordenador.</li>
+</ol>
+<p>Cada ordenador tiene CHANGE (configurarlo de nuevo), TEST y FORGET.</p>
+<h2 id="sending-to-a-phone">Enviar a un teléfono</h2>
+<p>Cada botón SEND… tiene un tercer destino, junto a las memorias USB y los ordenadores: <strong>PHONE · QR CODE</strong>. Encontrarás SEND… en FILES, VIDEO SAVED, el reproductor, los diálogos de presets y el selector de sonidos. Funciona con cualquier teléfono, iPhone incluido, sin emparejar, sin app y sin cuenta.</p>
+<ol>
+<li>Asegúrate de que el teléfono está en la misma Wi-Fi que el aparato. El diálogo te avisa si el aparato no está en una red.</li>
+<li>Toca PHONE · QR CODE. Aparece un código QR.</li>
+<li>Apunta la cámara del teléfono hacia él y abre el enlace.</li>
+<li>Safari o Chrome guarda el archivo en las Descargas del teléfono (Archivos en un iPhone).</li>
+</ol>
+<p>El diálogo muestra WAITING FOR THE PHONE, luego SENDING n %, luego DOWNLOADED ✓, y un mensaje te avisa cuando ha llegado el archivo entero. El enlace también aparece escrito, por si prefieres teclearlo.</p>
+<ul>
+<li>El enlace funciona mientras el diálogo está abierto, hasta 15 minutos. Cerrar el diálogo lo termina.</li>
+<li>Envía un archivo cada vez. Si le das varios, envía el primero y lo dice.</li>
+</ul>
+<h3 id="the-ravving-page-on-your-phone">La página de ravving en tu teléfono</h3>
+<p>El mismo servidor también lleva <strong>la página de ravving</strong>: las instrucciones, las funciones y todos los atajos. El aparato no tiene navegador propio, así que SETTINGS → HELP → OPEN muestra la página como un código QR para un teléfono, o una dirección para un portátil.</p>
+<p>El código QR apunta a la página pública, <strong>https://ravving.github.io/</strong>, que funciona desde cualquier sitio. La dirección propia del aparato está debajo (<code>http://&lt;device&gt;:8098/help/</code>), para una Wi-Fi sin internet.</p>
+<h2 id="files">Archivos</h2>
+<p>La tarjeta FILES del centro de control muestra todo lo de tu biblioteca por tipo, lo más nuevo primero: proyectos, plantillas, presets, samples, tomas, las tomas de la GRABADORA, grabaciones, temas, paquetes, soundfonts, archivos MIDI, vídeos y archivos recibidos.</p>
+<p>Cada archivo tiene <strong>SEND…</strong> (una memoria USB, uno de tus ordenadores o tu teléfono) y <strong>DELETE</strong>. FILES es el único sitio donde los archivos salen del aparato o se borran. El diálogo PROJECT abre, guarda y exporta, y la página USB trae los archivos de una memoria.</p>
+<h3 id="browse-from-your-phone">Navega desde tu teléfono</h3>
+<p><strong>PHONE · BROWSE</strong>, arriba en FILES, muestra un código QR que abre tu biblioteca como páginas web en un teléfono o portátil de la misma Wi-Fi:</p>
+<ul>
+<li>cada tipo, con cuántos archivos tiene;</li>
+<li>los archivos de cada tipo, con sus detalles, tamaño y fecha;</li>
+<li>un botón DOWNLOAD para cada archivo.</li>
+</ul>
+<p>Los proyectos, y todo lo que sea una carpeta, aparecen como "en el aparato". El enlace sigue abierto hasta que pasan 15 minutos sin que el teléfono pida nada, aunque el diálogo esté cerrado. Después, el teléfono dice que el enlace ha caducado.</p>
+<h2 id="usb-sticks">Memorias USB</h2>
+<p>Conecta una memoria USB y ravving la monta cuando la necesita. Cuando termines, pulsa EJECT (en el diálogo de exportación o en la página USB) y saca la memoria cuando sea seguro.</p>
+<h3 id="save-to-a-stick">Guardar en una memoria</h3>
+<ul>
+<li><strong>Exportaciones:</strong> una memoria aparece como una fila USB en el diálogo de exportación. Tu tema o paquete se guarda en el aparato como siempre, y además se copia a la carpeta <code>ravving/exports/</code> o <code>ravving/projects/</code> de la memoria.</li>
+<li><strong>Un proyecto guardado:</strong> envíalo desde FILES. SEND… lo empaqueta en un paquete para la memoria.</li>
+<li><strong>Abrir un proyecto desde una memoria:</strong> PROJECT ▾ → IMPORT lista los paquetes de todas las memorias conectadas, junto a los del aparato.</li>
+</ul>
+<h3 id="the-usb-page">La página USB</h3>
+<p>La tarjeta USB del cajón abre la página USB. Tiene dos lados:</p>
+<ul>
+<li><strong>ON USB</strong> lista lo que hay en la memoria por tipo: SAMPLES, SOUNDFONTS, PROJECTS, TRACKS y MIDI FILES. Toca IMPORT para copiar uno al aparato; luego dice ✓ ON DEVICE.</li>
+<li><strong>FROM DEVICE</strong> lista tu biblioteca, cada archivo con TO USB.</li>
+</ul>
+<p>IMPORT ALL, junto a la ruta de la carpeta, copia de una vez todos los archivos nuevos de la carpeta en pantalla. Un pack de samples entero es un solo toque, con un indicador de progreso y un botón STOP.</p>
+<p>Los archivos que importas llegan aquí:</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Dónde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Samples</td>
+<td><code>samples/imported/&lt;stick&gt;/</code>, conservando las carpetas de la memoria</td>
+</tr>
+<tr>
+<td>Soundfonts</td>
+<td><code>soundfonts/</code></td>
+</tr>
+<tr>
+<td>Archivos MIDI</td>
+<td><code>midi/</code></td>
+</tr>
+<tr>
+<td>Temas</td>
+<td><code>exports/</code>, donde los encuentra el reproductor</td>
+</tr>
+<tr>
+<td>Proyectos</td>
+<td>importados como paquete</td>
+</tr>
+</tbody>
+</table>
+<p>Con las teclas del aparato: ◀ ▶ cambian el tipo, ALT + ◀ ▶ cambian de lado, ▲ ▼ eligen un archivo, SELECT lo copia, y EJECT está en la cabecera.</p>
+<h3 id="pattern-presets-from-a-stick">Presets de patrón desde una memoria</h3>
+<p>Abre PRESET en una barra de patrón. Con una memoria dentro, aparece una fila SOURCE: DEVICE, o USB · y el nombre de la memoria. Elige la memoria para ver sus presets para esa máquina y tocar uno directamente desde ahí, sin copiarlo. Un paso de deshacer devuelve tu patrón.</p>
+<p>El diálogo se abre en la fuente de la que vino tu patrón actual, con ese preset marcado.</p>
+<h3 id="soundfonts-from-a-stick">Soundfonts desde una memoria</h3>
+<p>Un soundfont que importas funciona al instante:</p>
+<ul>
+<li>Si parece un kit de batería, se une al selector de kits bajo IMPORTED.</li>
+<li>Cada preset que contiene se convierte en un sonido para los acordes, el bajo y el lead, listado como el nombre del soundfont · el nombre del preset, y agrupado por soundfont.</li>
+</ul>
+<h3 id="more-than-one-stick-or-a-locked-one">Más de una memoria, o una bloqueada</h3>
+<p>Con varias memorias o particiones conectadas, la tarjeta USB nombra cada una y pregunta cuál abrir.</p>
+<p>Una memoria de solo lectura (una memoria bloqueada, o una imagen de instalación) lo dice. No se copia nada en ella, y su página ofrece FORMAT. FORMAT borra la memoria entera y deja una sola partición FAT32 escribible llamada RAVVING. EJECT y FORMAT necesitan una segunda pulsación en tres segundos.</p>
+<h2 id="bluetooth">Bluetooth</h2>
+<p>MENU → BLUETOOTH lista tus dispositivos: primero los conectados, luego los emparejados, luego los que están al alcance. Un dispositivo emparejado al que no estás conectado dice "paired · not connected".</p>
+<h3 id="find-and-pair-a-device">Busca y empareja un dispositivo</h3>
+<ol>
+<li>Activa Bluetooth.</li>
+<li>Toca SCAN. Es una búsqueda corta de altavoces, auriculares, teléfonos y ordenadores.</li>
+<li>Toca el dispositivo para abrir su fila, y luego toca PAIR.</li>
+<li>Confirma la clave, o escribe el PIN, cuando ravving lo pida arriba.</li>
+</ol>
+<p>SCAN no empieza solo mientras suena un altavoz, porque una búsqueda hace que el sonido Bluetooth se entrecorte en la radio compartida del aparato. VISIBLE deja que un teléfono encuentre el aparato durante tres minutos, para que pueda enviarte un archivo.</p>
+<h3 id="what-a-devices-row-offers">Qué ofrece la fila de un dispositivo</h3>
+<ul>
+<li id="connect-disconnect"><strong>CONNECT / DISCONNECT.</strong></li>
+<li><strong>SEND…</strong> envía un tema o paquete exportado; el progreso corre por abajo.</li>
+<li><strong>PLAY THROUGH</strong> envía todo el sonido del estudio a un altavoz o unos auriculares. DEVICE OUTPUT lo devuelve. La misma elección está en la tarjeta AUDIO OUTPUT del cajón, con los jacks y HDMI.</li>
+<li><strong>SBC-XQ</strong> elige la calidad de sonido para este dispositivo: activado para SBC-XQ, sonido más fino con más datos; desactivado para SBC normal, más robusto con un enlace débil. Los dispositivos que no has ajustado siguen SETTINGS. Si un altavoz suena áspero con SBC-XQ, apágalo para ese altavoz.</li>
+<li><strong>FORGET</strong> lo desempareja.</li>
+</ul>
+<p>Los archivos que te envía un teléfono llegan a la carpeta <code>incoming/</code> de la biblioteca. Un paquete aparece en PROJECT ▾ → IMPORT, y un tema en el reproductor bajo "Received".</p>
+<h3 id="when-a-device-doesnt-connect">Cuando un dispositivo no se conecta</h3>
+<p>A un altavoz dormido, despertándose u ocupado con un teléfono se le llama tres veces más durante unos 35 segundos. Mientras tanto su fila dice "waking…", y DISCONNECT deja de intentarlo. Si sigue sin responder, ravving dice NOT ANSWERING: FREE IT FROM A PHONE, OR TURN IT OFF AND ON.</p>
+<aside class="aru-tip"><span class="aru" data-mood="jazz" data-species="wolf"></span><p>¿El altavoz se está durmiendo? ravving lo llama tres veces más antes de rendirse.</p></aside>
+<h3 id="one-audio-device-at-a-time">Un dispositivo de audio a la vez</h3>
+<p>Solo suena un altavoz o unos auriculares a la vez. Conectar un segundo mientras otro suena le pasa el sonido, y el primero se desconecta.</p>
+<p>Cuando se activa Bluetooth, ravving reconecta una vez la salida que elegiste la última vez, si no suena nada más.</p>
+<p>Si una salida Bluetooth se queda muda mientras se le envía música, ravving vuelve a llevarle el sonido por sí solo. Si eso no recupera el sonido, te lo dice el centro de avisos.</p>
+<p>Zynthbox, tal como viene en el MIKO, necesita un pequeño ajuste para Bluetooth, y la instalación de ravving se encarga de ello.</p>
+<h2 id="the-music-player">El reproductor de música</h2>
+<p>MENU → MUSIC PLAYER es un reproductor a pantalla completa para tus temas exportados y tus grabaciones ●. DASHBOARD te devuelve.</p>
+<ul>
+<li><strong>A la izquierda:</strong> TRACKS, ALBUMS y ARTISTS.</li>
+<li><strong>A la derecha:</strong> la portada, el transporte, la posición y el volumen, sobre la QUEUE.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Tecla</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1, 2, 3</td>
+<td>Cambia de vista</td>
+</tr>
+<tr>
+<td>▲ ▼</td>
+<td>Elige un tema</td>
+</tr>
+<tr>
+<td>SELECCIONAR</td>
+<td>Tócalo</td>
+</tr>
+<tr>
+<td>PLAY</td>
+<td>Pausa</td>
+</tr>
+<tr>
+<td>STOP</td>
+<td>Parar</td>
+</tr>
+<tr>
+<td>Perilla grande</td>
+<td>Volumen</td>
+</tr>
+<tr>
+<td>Perilla 1</td>
+<td>Posición en el tema</td>
+</tr>
+<tr>
+<td>BACK</td>
+<td>Salir</td>
+</tr>
+</tbody>
+</table>
+<p>Abrir el reproductor para el ritmo, y salir de él para el reproductor.</p>
+<h2 id="audio-output">Salida de audio</h2>
+<p>MENU → AUDIO OUTPUT elige adónde va el sonido del estudio:</p>
+<ul>
+<li>los jacks del aparato, por defecto;</li>
+<li>HDMI;</li>
+<li>cualquier altavoz o auriculares Bluetooth conectados en el diálogo BLUETOOTH.</li>
+</ul>
+<p>El sonido sale por un solo sitio, sin cortes. La lista se actualiza mientras el diálogo está abierto, según se conectan cosas. El reproductor también sigue la salida que elijas.</p>
+<h3 id="your-choice-is-remembered">Tu elección se recuerda</h3>
+<p>Cuando la salida desaparece, por ejemplo al apagar los auriculares, el sonido vuelve a los jacks. Vuelve a tu salida en cuanto está de nuevo, tras un reinicio o una reconexión. Para una salida Bluetooth, ravving guarda su dirección para que Bluetooth pueda reconectarla al activarse. Elegir los jacks olvida tu elección.</p>
+<h3 id="volume-and-quality">Volumen y calidad</h3>
+<ul>
+<li><strong>El deslizador OUTPUT del cajón</strong> (perilla 2) ajusta el nivel: el del amplificador en los jacks, o el propio de la salida en los demás casos.</li>
+<li><strong>El deslizador BRIGHTNESS del cajón</strong> (perilla 1) ajusta el brillo de la pantalla. Una pantalla negra a menudo es solo este al mínimo.</li>
+<li><strong>SBC-XQ:</strong> cada altavoz o auriculares emparejados tienen su propio chip SBC-XQ en el diálogo BLUETOOTH. Desactivado suena con SBC normal, más robusto con un enlace débil. Los dispositivos sin elección propia siguen SETTINGS.</li>
+</ul>
+<p>Si una salida se queda muda seis segundos mientras se le envía música, ravving vuelve a llevarle el sonido una vez. Si sigue muda, te lo dice el centro de avisos.</p>
+<h2 id="the-recorder">La GRABADORA</h2>
+<p>MENU → RECORDER es una página a pantalla completa para grabar lo que tocas por la entrada, mientras lo tocas. El ritmo sigue, así que puedes grabar una toma encima.</p>
+<h3 id="set-up-the-input">Prepara la entrada</h3>
+<ul>
+<li><strong>La entrada:</strong> una pestaña para MIC, GUITAR o LINE.</li>
+<li><strong>MONITOR</strong> y su LEVEL, para oírte.</li>
+<li><strong>GAIN,</strong> con un medidor, y luces para los jacks.</li>
+<li><strong>● REC,</strong> junto a una gráfica del nivel de entrada.</li>
+</ul>
+<p><strong>KEEP TAKES IN</strong> decide adónde van las tomas:</p>
+<ul>
+<li><strong>SAMPLES</strong> (<code>samples/recordings</code>), donde las encuentran los navegadores de los samplers;</li>
+<li><strong>TRACKS</strong> (las <code>recordings</code> de la biblioteca), donde las encuentra el reproductor.</li>
+</ul>
+<p>Una toma se guarda tal como entró: sin compresión, sin recorte y sin parada SMART.</p>
+<h3 id="effects-for-the-input">Efectos para la entrada</h3>
+<p>La fila EFFECTS tiene efectos pensados para la entrada. En GUITAR tienes amplis y pedales: AMP, OVERDRIVE, FUZZ, TUBE, WAH y HOT AMP.</p>
+<h3 id="your-recordings">Tus grabaciones</h3>
+<p>A la derecha están las RECORDINGS de los dos sitios, la más nueva primero. Cada una tiene:</p>
+<ul>
+<li id="play"><strong>▶ PLAY.</strong></li>
+<li><strong>TRIM</strong> y <strong>NORMALISE,</strong> que crean una grabación nueva al lado.</li>
+<li><strong>TO SAMPLE KING / TO PADS,</strong> a una ranura o un pad.</li>
+<li><strong>CHOP…,</strong> al banco de SAMPLE KING o a los pads, pasando por el editor de onda.</li>
+<li><strong>TO TRACKS / TO SAMPLES, RENAME</strong> y <strong>DELETE</strong> (dos veces).</li>
+</ul>
+<h3 id="the-tuner">El afinador</h3>
+<p>En GUITAR la página tiene un TUNER. Escucha la entrada antes de los efectos y muestra la nota y cuántos cents está desviada, en una escala de ±50. Las cuerdas de la afinación son botones.</p>
+<ul>
+<li><strong>AUTO</strong> recorre las cuerdas desde la más grave. Mantén una cuerda a menos de 3 cents durante 0,8 s y se marca ✓, luego sale la siguiente, hasta ALL STRINGS IN TUNE.</li>
+<li><strong>MANUAL</strong> se queda en la cuerda que tocas.</li>
+<li><strong>TUNING</strong> elige una afinación, y <strong>A4</strong> ajusta el tono de referencia (430–450 Hz).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Instrumento</th>
+<th>Afinaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Guitarra</td>
+<td>estándar, medio tono y un tono abajo, drop D y C, DADGAD, open D, G, E y C</td>
+</tr>
+<tr>
+<td>Bajo</td>
+<td>4 y 5 cuerdas, drop D</td>
+</tr>
+<tr>
+<td>Ukelele</td>
+<td>GCEA, barítono</td>
+</tr>
+</tbody>
+</table>
+<p>El afinador solo funciona mientras está en pantalla.</p>
+<h3 id="keys">Teclas</h3>
+<table>
+<thead>
+<tr>
+<th>Tecla</th>
+<th>En la GRABADORA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>◀ ▶</td>
+<td>Elige la entrada</td>
+</tr>
+<tr>
+<td>▲ ▼</td>
+<td>Elige una grabación</td>
+</tr>
+<tr>
+<td>RECORD</td>
+<td>Graba una toma</td>
+</tr>
+<tr>
+<td>SELECT o PLAY</td>
+<td>Escucha la grabación elegida</td>
+</tr>
+<tr>
+<td>STOP</td>
+<td>Detenlo</td>
+</tr>
+<tr>
+<td>1, 2, 3</td>
+<td>Pon las perillas en INPUT, TUNER o EFFECTS</td>
+</tr>
+<tr>
+<td>Perilla grande</td>
+<td>Ganancia</td>
+</tr>
+<tr>
+<td>BACK</td>
+<td>Salir</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-issues-center">El centro de avisos</h2>
+<p>La tarjeta ISSUES del menú, junto a MUSIC PLAYER, SETTINGS y la tarjeta USB, te dice qué falla en el aparato ahora mismo, con palabras sencillas y qué hacer.</p>
+<ul>
+<li><strong>ALL GOOD</strong> cuando no falla nada.</li>
+<li><strong>Si no,</strong> el número de avisos, iluminado con el color del peor.</li>
+</ul>
+<p>Tócala para ver la lista completa, la peor primero. Cada aviso tiene sus detalles, una sugerencia y un botón cuando ayuda, como RESTART RAVVING. Los errores y avisos nuevos también saltan como mensaje.</p>
+<p>Qué vigila:</p>
+<ul>
+<li>que falte el motor de sonido, o un motor que no pudo arrancar;</li>
+<li>conexiones de audio que nunca aparecieron, y cortes de audio;</li>
+<li>que las teclas del aparato dejen de responder;</li>
+<li>que el reproductor no pueda reproducir;</li>
+<li>Bluetooth no disponible, o una salida que no da sonido;</li>
+<li>una exportación que falló, una memoria USB que no se montó, el almacenamiento casi lleno.</li>
+</ul>
+<p>Bajo la lista están los últimos avisos que escribió ravving.</p>
+<h2 id="where-your-files-live">Dónde están tus archivos</h2>
+<p>ravving se mantiene en sus propias carpetas: lee la biblioteca de samples del aparato y solo escribe en estos sitios:</p>
+<table>
+<thead>
+<tr>
+<th>Raíz</th>
+<th>En el aparato</th>
+<th>Qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>config</td>
+<td><code>~/.config/ravving</code></td>
+<td>ajustes (la configuración de la entrada, las elecciones de la interfaz)</td>
+</tr>
+<tr>
+<td>state</td>
+<td><code>~/.local/state/ravving</code></td>
+<td>la sesión en vivo (<code>session.json</code>, la secuencia); se borra con una purga</td>
+</tr>
+<tr>
+<td>cache</td>
+<td><code>~/.cache/ravving</code></td>
+<td>reconstruible: samples invertidos, tomas en bruto, la caché de puertos LV2</td>
+</tr>
+<tr>
+<td>library</td>
+<td><code>/zynthian/zynthian-my-data/ravving</code></td>
+<td>el trabajo del usuario, conservado entre reinstalaciones: <code>projects/</code>, <code>presets/</code>, <code>samples/</code> (tomas en <code>samples/takes/</code>, las de la GRABADORA en <code>samples/recordings/</code>, los samples de los paquetes importados en <code>samples/imported/</code>), <code>recordings/</code> (los TRACKS del master y de la GRABADORA), <code>exports/</code></td>
+</tr>
+</tbody>
+</table>
+<p>En un ordenador de escritorio la biblioteca es <code>~/.local/share/ravving</code>.</p>
+</article>
+</main>
+<footer>
+<div class="wrap">
+<p>ravving es de Camilo Higuita, GPL‑3.0‑or‑later; estas páginas se generan a partir del markdown del repositorio con tools/build-site-docs.py.</p>
+</div>
+</footer>
+<script defer="" src="../../assets/aru.js?v=48f57bf155"></script>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
+  function load(done) {
+    if (index) return done();
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();
+(function () {
+  var NOTES = {
+    es: ["Esta página solo está en inglés.", "Documentación en español"],
+    ja: ["このページは英語のみです。", "日本語のドキュメント"]
+  };
+  var lang = document.documentElement.lang || "en";
+  var want;
+  try {
+    if (document.querySelector("nav.langs")) { localStorage.setItem("ravving-lang", lang); return; }
+    want = localStorage.getItem("ravving-lang");
+  } catch (e) { return; }
+  var note = NOTES[want];
+  if (!note) return;
+  var p = document.createElement("p");
+  p.className = "doc-langnote";
+  p.lang = want;
+  var a = document.createElement("a");
+  a.href = "../" + want + "/docs/index.html";
+  a.textContent = "← " + note[1];
+  p.append(note[0] + " ", a);
+  var doc = document.getElementById("doc");
+  doc.insertBefore(p, doc.firstChild);
+})();</script>
+</body>
+</html>

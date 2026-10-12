@@ -10,7 +10,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>ドキュメント · ravving</title>
-<link href="../../site.css?v=28f7125214" rel="stylesheet"/>
+<link href="../../site.css?v=56c8e55da8" rel="stylesheet"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E" rel="icon"/>
 </head>
 <body class="docs">
@@ -46,10 +46,10 @@
 <li><a href="troubleshooting.html">困ったときは</a></li>
 <li><a href="machines.html">マシン</a></li>
 <li><a href="first-beat.html">はじめてのビート</a></li>
-<li><a href="../../docs/manual.html">マニュアル</a></li>
+<li><a href="manual.html">マニュアル</a></li>
 </ul>
 <p class="mono">パターンパック</p><ul>
-<li><a href="../../docs/packs.html">ジャンルパック</a></li>
+<li><a href="packs.html">ジャンルパック</a></li>
 </ul>
 <p class="mono">内部の仕組み</p><ul>
 <li><a href="../../docs/architecture.html">アーキテクチャ</a></li>
@@ -90,9 +90,9 @@
 <a class="doc-card" href="troubleshooting.html"><b>困ったときは</b><span>音が出ない、画面が暗い、Bluetooth、USB メモリー、録音：確認することと対処法。</span></a>
 <a class="doc-card" href="machines.html"><b>マシン</b><span>各楽器ページと、そこで鳴らせるエンジンと音色。すべてオープンソース。</span></a>
 <a class="doc-card" href="first-beat.html"><b>はじめてのビート</b><span>無音から保存したプロジェクトまで数分で：ドラム、ベースライン、再生して保存。</span></a>
-<a class="doc-card" href="../../docs/manual.html"><b>マニュアル</b><span>5 つのページとそこで鳴るもの、ショートカット、元に戻す、音源、プリセット、テンプレート、セクションと曲、書き出し、LIVE REC、ファイル、USB メモリー、Bluetooth、RECORDER、お知らせセンター。</span></a></div>
+<a class="doc-card" href="manual.html"><b>マニュアル</b><span>5 つのページとそこで鳴るもの、ショートカット、元に戻す、音源、プリセット、テンプレート、セクションと曲、書き出し、LIVE REC、ファイル、USB メモリー、Bluetooth、RECORDER、お知らせセンター。</span></a></div>
 <h2 id="the-pattern-packs">パターンパック</h2>
-<div class="doc-cards"><a class="doc-card" href="../../docs/packs.html"><b>ジャンルパック</b><span>USB メモリー用のパターンプリセットパック：各プリセットの内容、テンポ、音色、書かれたスケール、付属のテンプレート。</span></a></div>
+<div class="doc-cards"><a class="doc-card" href="packs.html"><b>ジャンルパック</b><span>USB メモリー用のパターンプリセットパック：各プリセットの内容、テンポ、音色、書かれたスケール、付属のテンプレート。</span></a></div>
 <h2 id="under-the-hood">内部の仕組み</h2>
 <div class="doc-cards"><a class="doc-card" href="../../docs/architecture.html"><b>アーキテクチャ</b><span>レイヤー、ハードウェア入力の流れとフォーカスモデル、libzynthbox との橋渡し、ファイル、テーマ。</span></a>
 <a class="doc-card" href="../../docs/backend.html"><b>バックエンドのクラス</b><span>バックエンドライブラリの各クラスと、ほかからの使われ方。</span></a>
@@ -175,6 +175,29 @@ if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side
   box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
   var q = new URLSearchParams(location.search).get("q");
   if (q) { box.value = q; run(); }
+})();
+(function () {
+  var NOTES = {
+    es: ["Esta página solo está en inglés.", "Documentación en español"],
+    ja: ["このページは英語のみです。", "日本語のドキュメント"]
+  };
+  var lang = document.documentElement.lang || "en";
+  var want;
+  try {
+    if (document.querySelector("nav.langs")) { localStorage.setItem("ravving-lang", lang); return; }
+    want = localStorage.getItem("ravving-lang");
+  } catch (e) { return; }
+  var note = NOTES[want];
+  if (!note) return;
+  var p = document.createElement("p");
+  p.className = "doc-langnote";
+  p.lang = want;
+  var a = document.createElement("a");
+  a.href = "../" + want + "/docs/index.html";
+  a.textContent = "← " + note[1];
+  p.append(note[0] + " ", a);
+  var doc = document.getElementById("doc");
+  doc.insertBefore(p, doc.firstChild);
 })();</script>
 </body>
 </html>
