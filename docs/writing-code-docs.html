@@ -38,24 +38,17 @@
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
-<li><a href="video.html">Video recordings and the computer link</a></li>
-<li><a href="history.html">Undo and redo</a></li>
-<li><a href="bluetooth.html">Bluetooth</a></li>
-<li><a href="scripting-projects.html">Building a project by script</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">The designs</p><ul>
-<li><a href="sections-plan.html">Sections and the song</a></li>
-<li><a href="sampler-plan.html">SAMPLE KING</a></li>
-<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
-<li><a href="recorder-plan.html">The RECORDER</a></li>
-<li><a href="streaming-plan.html">Streaming</a></li>
-<li><a href="design-reference.html">The design reference</a></li>
-</ul>
 <p class="mono">Under the hood</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
@@ -67,7 +60,6 @@
 <li><a href="testing.html">Testing on the device</a></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
-<li><a href="todo.html">What is pending</a></li>
 </ul>
 <p class="mono">The code</p><ul>
 <li><a href="../api/index.html">API reference</a></li>
@@ -95,8 +87,8 @@ plugin base types first.</p>
    and clamping, the thread it runs on (GUI thread, audio thread, a worker), who owns what it
    hands out, its invariants and its side effects (what it saves, emits, starts).</li>
 <li><strong>Never write history or AI-style context</strong>, in a QDoc block or in any <code>//</code> comment: no
-   "used to", "was changed", "previously", "no longer", "now X instead of Y", no dates
-   ("found 2026-10-12"), no "the user asked", no story of a past bug or of why something was
+   <code>used to</code>, <code>was changed</code>, <code>previously</code>, <code>no longer</code>, <code>now X instead of Y</code>, no dates
+   (<code>found 2026-10-12</code>), no <code>the user asked</code>, no story of a past bug or of why something was
    changed. A <code>//</code> comment inside the code is welcome only when it explains a non-obvious
    technical reason that is true of the code as it is ("muted rather than unlinked, so the
    jacks' sink keeps clocking the graph"). A measurement that justifies a constant is a fact
@@ -160,11 +152,13 @@ of...", "whether ...". The groups (<code>\ingroup</code>) are the areas of the r
   namespace, property, method, signal, enum and free function the headers of <code>src/</code> and
   <code>setup/</code> declare and fails on any without a QDoc block (the READ, WRITE and NOTIFY members
   of a documented property, destructors and deleted functions are exempt). It also reads every
-  comment of <code>src/**/*.cpp|h</code> and <code>setup/</code> for history: dates, "used to", "previously", "no
-  longer", "any more", "was changed / replaced / removed", "now X instead of Y", "the user
-  asked", "found on ...", "fixed in", "regression" and the like (the list is <code>BANNED</code> in the
+  comment of <code>src/**/*.cpp|h</code> and <code>setup/</code> for history: dates, <code>used to</code>, <code>previously</code>,
+  <code>no longer</code>, <code>any more</code>, <code>was changed / replaced / removed</code>, <code>now X instead of Y</code>, <code>the user
+  asked</code>, <code>found on ...</code>,
+  <code>fixed in</code>, <code>regression</code> and the like (the list is <code>BANNED</code> in the
   script). <code>--rule api</code> or <code>--rule comments</code> runs one rule; <code>--list</code> prints every entity with
-  its state.</li>
+  its state. <code>python3 tools/check-docs-history.py</code> (ctest <code>docs-history</code>) applies the same list
+  to the published docs (the pages <code>tools/build-site-docs.py</code> renders), outside code spans.</li>
 <li><code>python3 tools/build-api-docs.py --check</code> (ctest <code>api-docs-current</code>) generates the reference
   into a temporary folder and fails when QDoc printed a warning (an undocumented parameter, a
   link to nothing, an <code>\fn</code> that matches no declaration) or when <code>site/api/</code> differs from it.

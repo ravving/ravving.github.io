@@ -38,24 +38,17 @@
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
-<li><a href="video.html">Video recordings and the computer link</a></li>
-<li><a href="history.html">Undo and redo</a></li>
-<li><a href="bluetooth.html">Bluetooth</a></li>
-<li><a href="scripting-projects.html">Building a project by script</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">The designs</p><ul>
-<li><a href="sections-plan.html">Sections and the song</a></li>
-<li><a href="sampler-plan.html">SAMPLE KING</a></li>
-<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
-<li><a href="recorder-plan.html">The RECORDER</a></li>
-<li><a href="streaming-plan.html">Streaming</a></li>
-<li><a href="design-reference.html">The design reference</a></li>
-</ul>
 <p class="mono">Under the hood</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
 <li class="on"><a href="engines.html" aria-current="page">The engines</a><ul><li><a href="#the-mods-one-profile-per-engine-dataenginesjson">The MODS: one profile per engine (data/engines.json)</a></li><li><a href="#nekobi-bass-track-3">Nekobi: BASS (track 3)</a></li><li><a href="#tal-noisemaker-chords-track-4">TAL-NoiseMaker: CHORDS (track 4)</a></li><li><a href="#calf-monosynth-lead-track-5">Calf Monosynth: LEAD (track 5)</a></li><li><a href="#fluidsynth-drums-13-tracks-02">FluidSynth: DRUMS 1–3 (tracks 0–2)</a></li><li><a href="#samplersynth-sample-king-track-6">SamplerSynth: SAMPLE KING (track 6)</a></li><li><a href="#the-audio-input-hifiberry-dacadc-pro-pcm1863">The audio input (HiFiBerry DAC+ADC Pro, PCM1863)</a></li><li><a href="#the-input-effects-datainput-fxjson">The input effects (data/input-fx.json)</a></li><li><a href="#effects">Effects</a></li></ul></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
@@ -67,7 +60,6 @@
 <li><a href="testing.html">Testing on the device</a></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
-<li><a href="todo.html">What is pending</a></li>
 </ul>
 <p class="mono">The code</p><ul>
 <li><a href="../api/index.html">API reference</a></li>
@@ -77,13 +69,12 @@
   <article class="doc" id="doc">
 <p class="mono doc-kicker">Under the hood <span>/</span> docs/engines.md</p>
 <h1>The engines</h1>
-<p class="doc-blurb">Every engine ravving plays, the port facts it relies on and what was measured.</p>
+<p class="doc-blurb">Every engine ravving plays and the port facts it relies on.</p>
 
-<p>What ravving relies on for each engine, where each fact comes from, and what was measured on
-the device. The port facts come from the engine mods' research (<code>~/Coding/&lt;engine&gt;_mod/docs/
-RESEARCH.md</code>, decoded from each engine's own source); read the mod before changing an
-engine's <code>engine.controls</code> in <code>data/kits.json</code> or its MODS profile in <code>data/engines.json</code>.
-Audited 2026-10-05.</p>
+<p>What ravving relies on for each engine and where each fact comes from. The port facts come
+from the engine mods' research (each mod's <code>docs/RESEARCH.md</code>, decoded from the engine's own
+source); read the mod before changing an engine's <code>engine.controls</code> in <code>data/kits.json</code> or its
+MODS profile in <code>data/engines.json</code>.</p>
 <h2 id="the-mods-one-profile-per-engine-dataenginesjson">The MODS: one profile per engine (data/engines.json)</h2>
 <p>What a page lets the user tweak of an engine (its SOUND MODIFIERS, the MODS cards, and its
 expressions, such as the lead ribbon's vibrato) is the <strong>engine's</strong>, not the machine's: one profile
@@ -177,7 +168,6 @@ device (<code>device.sh call &lt;machine&gt;.activeSound setValue CARD KNOB 0..1
 </tr>
 </tbody>
 </table>
-<p>Measured: ~1 % CPU; the bass track ~0.067 RMS playing.</p>
 <h2 id="tal-noisemaker-chords-track-4">TAL-NoiseMaker: CHORDS (track 4)</h2>
 <p><code>http://kunz.corrupt.ch/products/tal-noisemaker</code>. Research: <code>noizemakr_mod</code>.</p>
 <table>
@@ -226,7 +216,6 @@ device (<code>device.sh call &lt;machine&gt;.activeSound setValue CARD KNOB 0..1
 </tr>
 </tbody>
 </table>
-<p>Measured: ~1.5 % CPU holding a 4-note chord, ~6 % playing; the chords track ~0.07 RMS.</p>
 <h2 id="calf-monosynth-lead-track-5">Calf Monosynth: LEAD (track 5)</h2>
 <p><code>http://calf.sourceforge.net/plugins/Monosynth</code>. Research: <code>calf_monosynth_mod</code> (+ its
 <code>engine-symbols.txt</code>).</p>
@@ -264,7 +253,6 @@ device (<code>device.sh call &lt;machine&gt;.activeSound setValue CARD KNOB 0..1
 </tr>
 </tbody>
 </table>
-<p>Measured: ~0.5–1 % CPU; the lead track ~0.086 RMS playing, ~0.16 while the ribbon plays.</p>
 <h2 id="fluidsynth-drums-13-tracks-02">FluidSynth: DRUMS 1–3 (tracks 0–2)</h2>
 <p>FluidSynth 2.4.4 (a process, not an LV2), one per drum machine with its kit's soundfont.
 Research: <code>fluidsynth2_mod</code>.</p>
@@ -282,7 +270,7 @@ Research: <code>fluidsynth2_mod</code>.</p>
 </tr>
 <tr>
 <td>reverb / chorus CCs are sends of at most 20 %; the effects' settings have no CC</td>
-<td>none sent; measured: with FluidSynth's own reverb and chorus on or off, a snare's tail is silent either way (CC 91 stays 0 and the 909 kit sends none): the drums carry no hidden reverb</td>
+<td>none sent: with FluidSynth's own reverb and chorus on or off, a snare's tail is silent either way (CC 91 stays 0 and the 909 kit sends none): the drums carry no hidden reverb</td>
 </tr>
 <tr>
 <td>started like zynthbox-qml: <code>-g 1</code>, <code>synth.polyphony=64</code>, MMA bank select</td>
@@ -305,7 +293,7 @@ path with its choices is what a project saves.</p>
 <h2 id="samplersynth-sample-king-track-6">SamplerSynth: SAMPLE KING (track 6)</h2>
 <p>libzynthbox's own sampler: no process, clips (ClipAudioSource) played in the audio thread.
 Facts from libzynthbox's source (<code>SamplerSynthVoice.cpp</code>, <code>ClipAudioSourceSliceSettings.cpp</code>,
-<code>AudioLevels.cpp</code>) and measured on milo.</p>
+<code>AudioLevels.cpp</code>).</p>
 <table>
 <thead>
 <tr>
@@ -319,12 +307,12 @@ Facts from libzynthbox's source (<code>SamplerSynthVoice.cpp</code>, <code>ClipA
 <td>only the release is set (8 ms, the choke's fade)</td>
 </tr>
 <tr>
-<td><strong>every voice faded in over ~165 ms</strong> (started at gain 0, ramped 0.0001 a frame since b487712): a 0 dBFS kick peaked at 0.096</td>
-<td>patched in libzynthbox (a voice starts at its gain; only aftertouch changes ramp), installed on milo; reported in <code>~/Coding/libzynthbox-bug-reports.md</code></td>
+<td>a stock libzynthbox fades <strong>every voice in over ~165 ms</strong> (started at gain 0, ramped 0.0001 a frame)</td>
+<td>needs a patched libzynthbox (a voice starts at its gain; only aftertouch changes ramp)</td>
 </tr>
 <tr>
 <td>a one-shot retriggered on the same clip and slice stops its previous voice (<code>SamplerSynthVoice.cpp:392</code>)</td>
-<td>the slots choke themselves as easyrave's do; no <code>exclusivityGroup</code> needed</td>
+<td>the slots choke themselves; no <code>exclusivityGroup</code> needed</td>
 </tr>
 <tr>
 <td>one-shots cannot play backwards (only loops and granular do)</td>
@@ -344,8 +332,6 @@ Facts from libzynthbox's source (<code>SamplerSynthVoice.cpp</code>, <code>ClipA
 </tr>
 </tbody>
 </table>
-<p>Measured: a 0 dBFS kick at velocity 100 peaks 19 ms after its onset (the drum's own shape)
-once patched.</p>
 <h2 id="the-audio-input-hifiberry-dacadc-pro-pcm1863">The audio input (HiFiBerry DAC+ADC Pro, PCM1863)</h2>
 <table>
 <thead>
@@ -356,7 +342,7 @@ once patched.</p>
 </thead>
 <tbody>
 <tr>
-<td>the five jacks, left to right: 1 headphones, 2–3 line outputs (speaker icon), 4–5 inputs (mic icon); jack 4 is the left channel (ADC input VINL1), jack 5 the right (a plug not fully home showed up on the other channel)</td>
+<td>the five jacks, left to right: 1 headphones, 2–3 line outputs (speaker icon), 4–5 inputs (mic icon); jack 4 is the left channel (ADC input VINL1), jack 5 the right</td>
 <td>MIC and GUITAR record the jack with the signal (<code>activeJack</code>: picked between takes when one jack is 10 dB over the other and above −45 dBFS; mixing both added the empty input's noise, audibly), so either jack works; LINE is stereo; INPUT lights each jack's level (AudioLevels' capture meter, rewired to the real inputs); monitor on headphones in jack 1</td>
 </tr>
 <tr>
@@ -364,11 +350,11 @@ once patched.</p>
 <td>found by the card each start (<code>InputPorts</code>)</td>
 </tr>
 <tr>
-<td>input noise is mostly the room around the cables: a switched-off mic on jack 4 read −52 dBFS (in bursts) with the user at the desk, −75 dBFS once they left (ravving stopped or playing alike); screen brightness, mic bias, one or two ADC inputs made no difference beyond the run-to-run spread</td>
-<td>— (a ground loop through the USB-Ethernet link to a charging laptop is the usual suspect)</td>
+<td>input noise is mostly the room around the cables (a ground loop through a USB-Ethernet link to a charging laptop is the usual suspect); screen brightness, mic bias, one or two ADC inputs make no difference</td>
+<td>—</td>
 </tr>
 <tr>
-<td>the ADC's input mux is <code>ADC Left/Right Input</code>; <code>ADC … Capture Source</code> did not change what was heard</td>
+<td>the ADC's input mux is <code>ADC Left/Right Input</code>; <code>ADC … Capture Source</code> does not change what is heard</td>
 <td>the selection is left as Zynthbox sets it</td>
 </tr>
 <tr>
@@ -386,9 +372,9 @@ once patched.</p>
 </tbody>
 </table>
 <h2 id="the-input-effects-datainput-fxjson">The input effects (data/input-fx.json)</h2>
-<p>Ports from <code>lv2info</code> on milo (2026-10-05); the chains are in the presets file. A silent mic on
-milo (+40 dB PGA) measured −48 dBFS of noise in bursts, mostly under 300 Hz (27–28 Hz, 162 Hz),
-16 dB over the empty input: CLEAN cuts it with a 24 dB/octave high-pass and a gate.</p>
+<p>Ports from <code>lv2info</code> on the device; the chains are in the presets file. A silent mic at +40 dB
+PGA picks up noise in bursts, mostly under 300 Hz: CLEAN cuts it with a 24 dB/octave high-pass
+and a gate.</p>
 <table>
 <thead>
 <tr>
@@ -440,12 +426,12 @@ milo (+40 dB PGA) measured −48 dBFS of noise in bursts, mostly under 300 Hz (2
 </tbody>
 </table>
 <p>A mono plugin in the chain takes both sides summed and feeds both sides of what follows
-(<code>JackWiring::setInputChain</code>). Measured with several presets started (a dozen jalv processes): about 1–2 % CPU each over
-3 s (<code>top</code>), the busiest 5.6 %; load average 1.7–2.7 on the Pi 5's four cores.</p>
+(<code>JackWiring::setInputChain</code>). Each plugin of a chain is a jalv process of its own, about
+1–2 % CPU each.</p>
 <h2 id="effects">Effects</h2>
 <p>Calf Saturator (DRIVE), Calf Crusher (CRUSH), Calf Phaser (PHASER), Dragonfly Room (REVERB),
 TAP Echo (DELAY) have no mods; their ports come from <code>lv2info</code> and were calibrated by
-measurement (<code>tools/lv2probe.sh</code>, see <code>debugging.md</code>). The beat repeat (STUTTER, LOOP) is
+measurement (<code>tools/lv2probe.sh</code>, see <a href="debugging.html">debugging.md</a>). The beat repeat (STUTTER, LOOP) is
 ravving's own JACK client.</p>
   </article>
 </main>

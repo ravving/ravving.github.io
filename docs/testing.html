@@ -38,24 +38,17 @@
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
-<li><a href="video.html">Video recordings and the computer link</a></li>
-<li><a href="history.html">Undo and redo</a></li>
-<li><a href="bluetooth.html">Bluetooth</a></li>
-<li><a href="scripting-projects.html">Building a project by script</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">The designs</p><ul>
-<li><a href="sections-plan.html">Sections and the song</a></li>
-<li><a href="sampler-plan.html">SAMPLE KING</a></li>
-<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
-<li><a href="recorder-plan.html">The RECORDER</a></li>
-<li><a href="streaming-plan.html">Streaming</a></li>
-<li><a href="design-reference.html">The design reference</a></li>
-</ul>
 <p class="mono">Under the hood</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
@@ -64,10 +57,9 @@
 <li><a href="writing-code-docs.html">Writing code documentation</a></li>
 <li><a href="building.html">Building</a></li>
 <li><a href="packaging.html">Packaging</a></li>
-<li class="on"><a href="testing.html" aria-current="page">Testing on the device</a><ul><li><a href="#the-tools">The tools</a></li><li><a href="#where-to-listen">Where to listen</a></li><li><a href="#the-feature-suite">The feature suite</a></li><li><a href="#sections-on-the-bar-line">SECTIONS on the bar line</a></li><li><a href="#the-exports-suite">The exports suite</a></li><li><a href="#projects-that-still-resolve">Projects that still resolve</a></li><li><a href="#recipes">Recipes</a></li><li><a href="#the-audio-graph">The audio graph</a></li></ul></li>
+<li class="on"><a href="testing.html" aria-current="page">Testing on the device</a><ul><li><a href="#the-tools">The tools</a></li><li><a href="#where-to-listen">Where to listen</a></li><li><a href="#the-feature-suite">The feature suite</a></li><li><a href="#sections-on-the-bar-line">SECTIONS on the bar line</a></li><li><a href="#the-exports-suite">The exports suite</a></li><li><a href="#projects-that-still-resolve">Projects that still resolve</a></li><li><a href="#recipes">Recipes</a></li><li><a href="#the-audio-graph">The audio graph</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#live-recordings">Live recordings</a></li><li><a href="#building-a-project-by-script">Building a project by script</a></li></ul></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
-<li><a href="todo.html">What is pending</a></li>
 </ul>
 <p class="mono">The code</p><ul>
 <li><a href="../api/index.html">API reference</a></li>
@@ -77,16 +69,19 @@
   <article class="doc" id="doc">
 <p class="mono doc-kicker">Under the hood <span>/</span> docs/testing.md</p>
 <h1>Testing on the device</h1>
-<p class="doc-blurb">device.sh, the fifo hooks, the suites, the screenshot tour.</p>
+<p class="doc-blurb">device.sh, the fifo hooks, the suites, Bluetooth and live recording tests, building a project by script.</p>
 
-<p>Every tool used to drive, hear, measure and watch ravving on a Zynthbox, from the laptop.
+<p>The tools that drive, hear, measure and watch ravving on a Zynthbox, from the laptop.
 The pieces are small scripts in <code>tools/</code>; this page is the recipe book that strings them
-together. For the first-time set-up (SSH, the build loop) see <code>README.md</code>; for what each
-backend piece does, <code>docs/architecture.md</code>; for the sound and timing checks that were run
-when a feature was built, <code>docs/debugging.md</code> and <code>docs/quality.md</code>.</p>
+together. For the build loop see <a href="building.html">building.md</a>; for what each backend piece
+does, <a href="architecture.html">architecture.md</a>; for the device recipes and the code checks,
+<a href="debugging.html">debugging.md</a> and <a href="quality.html">quality.md</a>.</p>
 <p>The rule for every test: <strong>iterate with a local build</strong> (<code>tools/device.sh deploy</code>), never the
-AppImage; the AppImage and its release check (<code>docs/packaging.md</code>) are for minor releases.</p>
+AppImage; the AppImage and its release check (<a href="packaging.html">packaging.md</a>) are for minor releases.</p>
 <h2 id="the-tools">The tools</h2>
+<p>Like zynthbox-qml, ravving reads CUIA commands from webconf's fifo
+(<code>echo cuia/SWITCH_PLAY_RELEASED &gt; /tmp/webconf-writes-to-this-fifo</code>), and the <code>call</code>, <code>get</code> and
+<code>set</code> lines below; <code>tools/device.sh</code> writes them over ssh.</p>
 <table>
 <thead>
 <tr>
@@ -117,7 +112,7 @@ AppImage; the AppImage and its release check (<code>docs/packaging.md</code>) ar
 </tr>
 <tr>
 <td><code>tools/device.sh call OBJECT METHOD ARGS…</code></td>
-<td>call a backend method: a machine by its kits.json key (<code>pads</code>, <code>sampler</code>, <code>drums1</code>, <code>bass</code>, <code>chords</code>, <code>lead</code>), <code>studio</code>, <code>input</code>, <code>take</code>, <code>exporter</code>, <code>music</code> (and <code>music.library</code>), <code>profile</code>, <code>drives</code> (USB sticks: <code>call drives eject /dev/sda1</code>), <code>usb</code> (the USB page: <code>call usb scan</code>, <code>call usb importEntry samples /media/root/EVS/x.wav</code>, <code>call usb exportEntry soundfonts /zynthian/…/x.sf2</code>; <code>usbPopup</code> opens it: <code>call controlCenter run usb</code>), <code>bluetooth</code> (<code>call bluetooth startDiscovery</code>, <code>get bluetooth devices</code>, <code>call bluetooth pair AA:BB:…</code>, <code>call bluetooth useAsOutput AA:BB:… true</code>, <code>call bluetooth sendFile AA:BB:… /path</code>), or a QML item by objectName (<code>window showPlayer true</code>, <code>window showRecorder true</code>, <code>exportPopup open</code>, <code>settingsPopup open</code>, <code>bluetoothPopup open</code>, <code>projectPicker open</code> then <code>projectPicker actionTriggered 4</code> for IMPORT (the index counts the dividers: OPEN 0, EXPORT 1, NEW 2, TEMPLATES 3, IMPORT 4, SAVE AS NEW 6), <code>playerPage</code>, <code>controlCenter</code>); any <code>Q_INVOKABLE</code> or slot, arguments converted (<code>call pads loadSample 0 /path.wav</code>, <code>call pads setFlag 0 looping true</code>, <code>call pads loadPreset "Boom Bap"</code>, <code>call input record</code>, <code>call input record true</code> for a RECORDER take; <code>set input.effects preset OVERDRIVE</code>; <code>get input.tuner frequency</code>; <code>call ravving setLogRules "ravving.cuia.debug=true"</code> turns a log category on while running: each key, who took it and the focus chain), <code>video</code> (<code>set video countdown 0</code>, <code>call video start</code> / <code>stop</code> / <code>toggle</code>, <code>get video state</code> / <code>lastFile</code> / <code>lastInfo</code>, <code>set video quality high</code>) and <code>computer</code> (<code>call computer setup HOST USER PASSWORD 22</code>, <code>check</code>, <code>send /path</code>, <code>forget</code>), <code>files</code> (the FILES browser: <code>get files kinds</code>, <code>call files entries videos</code>, <code>call files presetFile "pattern::bass-presets.json::My Bassline 1"</code>; <code>filesPopup open</code>, <code>filesPopup showKind presets</code>, <code>filesPopup openFolder BASS</code>: the drawer's dialogs open by script only once the MENU drawer has been shown since the start, so press MENU twice first); the journal logs each call</td>
+<td>call a backend method: a machine by its kits.json key (<code>pads</code>, <code>sampler</code>, <code>drums1</code>, <code>bass</code>, <code>chords</code>, <code>lead</code>), <code>studio</code>, <code>input</code>, <code>take</code>, <code>exporter</code>, <code>music</code> (and <code>music.library</code>), <code>profile</code>, <code>drives</code> (USB sticks: <code>call drives eject /dev/sda1</code>), <code>usb</code> (the USB page: <code>call usb scan</code>, <code>call usb importEntry samples /media/root/EVS/x.wav</code>, <code>call usb exportEntry soundfonts /zynthian/…/x.sf2</code>; <code>usbPopup</code> opens it: <code>call controlCenter run usb</code>), <code>bluetooth</code> (<code>call bluetooth startDiscovery</code>, <code>get bluetooth devices</code>, <code>call bluetooth pair AA:BB:…</code>, <code>call bluetooth useAsOutput AA:BB:… true</code>, <code>call bluetooth sendFile AA:BB:… /path</code>), or a QML item by objectName (<code>window showPlayer true</code>, <code>window showRecorder true</code>, <code>exportPopup open</code>, <code>settingsPopup open</code>, <code>bluetoothPopup open</code>, <code>projectPicker open</code> then <code>projectPicker actionTriggered 4</code> for IMPORT (the index counts the dividers: NEW 0, TEMPLATES 1, IMPORT 2, SAVE AS NEW 4, EXPORT 6), <code>playerPage</code>, <code>controlCenter</code>); any <code>Q_INVOKABLE</code> or slot, arguments converted (<code>call pads loadSample 0 /path.wav</code>, <code>call pads setFlag 0 looping true</code>, <code>call pads loadPreset "Boom Bap"</code>, <code>call input record</code>, <code>call input record true</code> for a RECORDER take; <code>set input.effects preset OVERDRIVE</code>; <code>get input.tuner frequency</code>; <code>call ravving setLogRules "ravving.cuia.debug=true"</code> turns a log category on while running: each key, who took it and the focus chain), <code>video</code> (<code>set video countdown 0</code>, <code>call video start</code> / <code>stop</code> / <code>toggle</code>, <code>get video state</code> / <code>lastFile</code> / <code>lastInfo</code>, <code>set video quality high</code>) and <code>computer</code> (<code>call computer setup HOST USER PASSWORD 22</code>, <code>check</code>, <code>send /path</code>, <code>forget</code>), <code>files</code> (the FILES browser: <code>get files kinds</code>, <code>call files entries videos</code>, <code>call files presetFile "pattern::bass-presets.json::My Bassline 1"</code>; <code>filesPopup open</code>, <code>filesPopup showKind presets</code>, <code>filesPopup openFolder BASS</code>: the drawer's dialogs open by script only once the MENU drawer has been shown since the start, so press MENU twice first); the journal logs each call</td>
 </tr>
 <tr>
 <td><code>tools/device.sh tap X Y</code></td>
@@ -133,7 +128,7 @@ AppImage; the AppImage and its release check (<code>docs/packaging.md</code>) ar
 </tr>
 <tr>
 <td><code>tools/audio-impact.sh [SECONDS] [idle\|playing\|both]</code></td>
-<td>what the screen, polls and watchers cost the sound: frames/s, CPU per thread group, realtime-thread page faults, xruns (<code>docs/quality.md</code> §10); <code>idle</code> presses nothing, so it is safe while someone plays</td>
+<td>what the screen, polls and watchers cost the sound: frames/s, CPU per thread group, realtime-thread page faults, xruns (<a href="quality.html">quality.md</a>); <code>idle</code> presses nothing, so it is safe while someone plays</td>
 </tr>
 <tr>
 <td><code>tools/device.sh gallery [DIR]</code></td>
@@ -145,7 +140,7 @@ AppImage; the AppImage and its release check (<code>docs/packaging.md</code>) ar
 </tr>
 <tr>
 <td><code>tools/device.sh bt [ADDR] [SINCE]</code> / <code>bt capture [SECONDS] [FILE]</code></td>
-<td>why a Bluetooth device does (not) connect or play, read-only (tools/bt-diagnose.sh: config, endpoints, codecs, the device's journal and a tally of failures), and an HCI trace with btmon while you connect it (docs/debugging.md, docs/bluetooth.md)</td>
+<td>why a Bluetooth device does (not) connect or play, read-only (tools/bt-diagnose.sh: config, endpoints, codecs, the device's journal and a tally of failures), and an HCI trace with btmon while you connect it (<a href="debugging.html">debugging.md</a>)</td>
 </tr>
 <tr>
 <td><code>tools/device.sh play FILE.mid</code></td>
@@ -173,7 +168,7 @@ AppImage; the AppImage and its release check (<code>docs/packaging.md</code>) ar
 </tr>
 <tr>
 <td><code>tools/profile-taps.sh</code>, <code>tools/qml-profile.sh</code>, <code>tools/boot-timing.sh</code></td>
-<td>responsiveness, QML profiling, start-up time (<code>docs/quality.md</code>)</td>
+<td>responsiveness, QML profiling, start-up time (<a href="quality.html">quality.md</a>)</td>
 </tr>
 <tr>
 <td><code>tools/static-analysis.sh</code></td>
@@ -189,11 +184,11 @@ AppImage; the AppImage and its release check (<code>docs/packaging.md</code>) ar
 </tr>
 <tr>
 <td><code>tools/bluetooth-setup.sh [--check]</code></td>
-<td>set a device up for Bluetooth (packages, the two drop-ins, services) and check every step (<code>docs/bluetooth.md</code>)</td>
+<td>set a device up for Bluetooth (packages, the two drop-ins, services) and check every step (<a href="packaging.html">packaging.md</a>)</td>
 </tr>
 <tr>
 <td><code>tools/soundfont-check.sh</code></td>
-<td>every soundfont kits.json uses, checked on the device: exists, can sound, the preset exists, a chord comes out offline (<code>docs/quality.md</code> §7)</td>
+<td>every soundfont kits.json uses, checked on the device: exists, can sound, the preset exists, a chord comes out offline (<a href="quality.html">quality.md</a>)</td>
 </tr>
 <tr>
 <td><code>tools/drums-test.sh</code></td>
@@ -205,7 +200,7 @@ AppImage; the AppImage and its release check (<code>docs/packaging.md</code>) ar
 </tr>
 <tr>
 <td><code>tools/video-test.sh</code></td>
-<td>the video recorder suite (docs/video.md): a recording over the fifo while playing, its MP4 (streams, starts, length, frame rate), the ring's dropped frames, the graph's xruns meanwhile, RECORD / STOP by the keys, the TIMER and its cancel, VIDEO off</td>
+<td>the video recorder suite (<a href="architecture.html">architecture.md</a>, "Live recordings"): a recording over the fifo while playing, its MP4 (streams, starts, length, frame rate), the ring's dropped frames, the graph's xruns meanwhile, RECORD / STOP by the keys, the TIMER and its cancel, VIDEO off</td>
 </tr>
 <tr>
 <td><code>tools/share-test.sh [FILE]</code></td>
@@ -229,11 +224,11 @@ AppImage; the AppImage and its release check (<code>docs/packaging.md</code>) ar
 </tr>
 <tr>
 <td><code>tools/examples/lofi-say-it.sh</code></td>
-<td>a whole project built by script (<code>docs/scripting-projects.md</code>): the recipe for making music over the fifo</td>
+<td>a whole project built by script ("Building a project by script", below): the recipe for making music over the fifo</td>
 </tr>
 <tr>
 <td><code>tools/appimage-test.sh</code>, <code>tools/store-register.py</code>, <code>tools/store-launch.sh</code></td>
-<td>the Store AppImage release check (<code>docs/packaging.md</code>)</td>
+<td>the Store AppImage release check (<a href="packaging.html">packaging.md</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -263,14 +258,12 @@ some land, some are replaced before their bar), then A and REST in turn, and
 bright): every 8th once (no gap near 600 ms, none under 200), on time (each onset within
 15 ms of one grid fitted through them all), the sound changing only on an onset that begins
 a bar, the rests whole bars from a bar line. What was open before is opened again (saved
-first when it had changes). 2026-10-09 on milo: 7/7, 152 eighths, 13 changes all on bar
-lines, every 8th within 13.3 ms of a 299.997 ms grid. Read the timing against the grid, not
-gap by gap: the detector reads a kick 2.7 ms early and a hat 3.0 ms late (each ±2.6 ms), so
-a gap across a change carries both errors (one gap read 22.7 ms off in an earlier run while
-every onset was within 11 ms of the grid).</p>
+first when it had changes). Read the timing against the grid, not gap by gap: the detector
+reads a kick 2.7 ms early and a hat 3.0 ms late (each ±2.6 ms), so a gap across a change
+carries both errors.</p>
 <h2 id="the-exports-suite">The exports suite</h2>
 <p><code>sh tools/export-test.sh</code> runs the exports and the music player as checks on the device
-against whatever project is open (27 checks, all passing on milo with "Lo-fi Say It"): the
+against whatever project is open (27 checks): the
 profile's author fallback, a 2-bar WAV export that starts busy, plays the transport, stops it,
 lasts exactly 2 bars + 1 s at the project's tempo (to the sample), is 24-bit at the engine's
 rate, carries its tags (python3-taglib reads them back), its cover PNG and a sidecar that says
@@ -300,8 +293,8 @@ project pointing at nothing, and it then opens on another sound, silently. Three
   <code>data/demos</code> against the repo's kits.json and engines.json (sources, MODS knobs, automation
   lanes, kit roles, sections and the song).</li>
 <li><strong>Over the device's saved projects:</strong> <code>tools/device.sh projects</code> (<code>-v</code> for every project) runs it
-  on milo against the installed data and files too: kit soundfonts, samples (a take saved before
-  the takes moved to <code>samples/takes/</code> is found there, as ravving finds it), imported soundfonts,
+  on the device against the installed data and files too: kit soundfonts, samples (an older take
+  outside <code>samples/takes/</code> is found there too, as ravving finds it), imported soundfonts,
   the TAL factory sounds. Run it after a data change, before a release.</li>
 <li><strong>In ravving, each time a project opens:</strong> the machines note what they could not resolve as
   they restore it (<code>ProjectCheck</code>, <code>Machine::checkSaved()</code>: nothing is read twice, nothing runs
@@ -333,19 +326,173 @@ step and read which item accepted each key; <code>ALT + ▲</code> must land on 
 anywhere. Key 5 opens page 5 and, pressed again, toggles between SAMPLE KING and the PAD
 SAMPLER; the choice survives restarts, so check the nameplate in a screenshot before
 sending taps at a panel (a hold on the wrong one writes a step).</p>
-<p><strong>Reference audio</strong> for sampling tests lives in the library:
-<code>/zynthian/zynthian-my-data/ravving/samples/refs/</code> (<code>movie.wav</code> and <code>movie-intro-16s.wav</code>
-from the user's "04 - Movie", <code>nina-free*.wav</code>); the originals are in
-<code>~/Coding/refs/audio/</code> on the laptop.</p>
-<p id="live-jam-test-to-run"><strong>Live jam test (to run).</strong> After the snippet works alone, build a lo-fi hip hop jam around
-it: drums, bass, chords and lead with the sampled audio on the pads, recorded with the
-header's ● into <code>recordings/</code>, as the thEx jam was made.</p>
+<p><strong>Reference audio</strong> for sampling tests lives in the library's <code>samples/refs/</code> folder
+(<code>/zynthian/zynthian-my-data/ravving/samples/refs/</code>).</p>
 <h2 id="the-audio-graph">The audio graph</h2>
 <p><code>tools/device.sh graph all -s 60</code> checks the PipeWire / JACK graph ravving runs in (rates
 and periods against the driver's, linked nodes that are not running, the audio threads'
-priorities, xruns over a minute, the ravving links). <code>docs/routing.md</code> has the map of what
-ravving wires, the tools (pw-top, pw-dump, pw-dot, jack_iodelay…) and the measurements.</p>
+priorities, xruns over a minute, the ravving links). <a href="routing.html">routing.md</a> has the map of
+what ravving wires and the tools (pw-top, pw-dump, pw-dot, jack_iodelay…).</p>
 <p><code>tools/issues-test.sh</code> checks the issues center end to end (reports over the fifo, order, dismiss, clear, the drawer card and the dialog).</p>
+<h2 id="bluetooth">Bluetooth</h2>
+<p>The basic checks: <code>sh tools/bluetooth-setup.sh --check</code>. With a device at hand, over the
+fifo:</p>
+<pre><code class="language-sh">tools/device.sh call bluetooth startDiscovery; sleep 10; tools/device.sh get bluetooth devices
+tools/device.sh call bluetooth pair 84:D3:52:35:80:99        # a speaker pairs without a prompt
+tools/device.sh get bluetooth pairing                        # a phone: {kind confirm, passkey} → answerPairing true
+tools/device.sh call bluetooth useAsOutput 84:D3:52:35:80:99 true
+tools/device.sh cuia SWITCH_PLAY_RELEASED                    # heard on the speaker
+tools/device.sh call bluetooth sendFile AA:BB:CC:DD:EE:FF &quot;/zynthian/zynthian-my-data/ravving/exports/Lo-fi Say It.wav&quot;
+</code></pre>
+<p>What to measure:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>How, on the device</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>signal (RSSI, dBm: −30 excellent, −67…−70 good, below −80 drops)</td>
+<td><code>bluetoothctl info ADDR</code> (RSSI while scanning), <code>hcitool rssi ADDR</code> once connected</td>
+</tr>
+<tr>
+<td>link quality / packet loss</td>
+<td><code>hcitool lq ADDR</code> (255 = best); <code>btmon -w /tmp/bt.snoop</code> during playback and count retransmissions</td>
+</tr>
+<tr>
+<td>A2DP codec and latency</td>
+<td><code>pw-cli info &lt;bluez sink id&gt;</code> (<code>api.bluez5.codec</code>: SBC by default, aptX / LDAC when both sides have it); <code>pw-top</code> for the sink node's quantum and the graph's (the studio stays at 256 / 48000; the Bluetooth node runs its own)</td>
+</tr>
+<tr>
+<td>OBEX throughput</td>
+<td><code>transfer.transferred</code> over time (<code>get bluetooth transfer</code>)</td>
+</tr>
+<tr>
+<td>what BlueZ sees</td>
+<td><code>btmon</code> (HCI trace), <code>busctl --system tree org.bluez</code>, <code>journalctl -u bluetooth</code></td>
+</tr>
+<tr>
+<td>what WirePlumber does</td>
+<td><code>journalctl --user -u wireplumber</code>, with <code>systemctl --user set-environment WIREPLUMBER_DEBUG=3</code> and a restart for the monitor's own lines</td>
+</tr>
+</tbody>
+</table>
+<h2 id="live-recordings">Live recordings</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tools/video-test.sh</code></td>
+<td>the feature suite on the device (41 checks): a recording over the fifo while playing, the MP4's streams, starts, length and frame rate, the ring's dropped frames, the graph's xruns meanwhile, RECORD / STOP by the device keys (the music goes on), the TIMER and its cancel, VIDEO off, the computer link's state</td>
+</tr>
+<tr>
+<td><code>tools/computer-link-test.sh</code></td>
+<td>the computer link end to end against the device's own sshd (21 checks): a throwaway local user stands in for the computer (set up with the password, the key installed, Downloads found, a wrong password told apart, a file sent and compared, the key removed → refused); the user is removed and the previous computer put back</td>
+</tr>
+<tr>
+<td><code>tools/share-test.sh [FILE]</code></td>
+<td>the phone share from the laptop (31 checks): the newest video offered over the fifo, fetched with curl and compared (size, md5), a Range → 206, HEAD, 404s, the deliveries counted, stop → connection refused</td>
+</tr>
+<tr>
+<td><code>tools/video-mic-check.sh [SECONDS]</code></td>
+<td>a recording with the mic while the music is stopped, its audio measured (speak when told)</td>
+</tr>
+<tr>
+<td><code>tools/video-sync-check.sh</code></td>
+<td>the sync mechanism alone (a synthetic audio feeder + x11grab + the remux), PASS when both streams start together</td>
+</tr>
+<tr>
+<td><code>tools/video-encode-impact.sh [SECONDS]</code></td>
+<td>the tiers' cost while playing; mirror any change to the encoder arguments here and re-measure</td>
+</tr>
+</tbody>
+</table>
+<p>Scripts: <code>set video countdown 0</code>, <code>call video start</code>, <code>get video state</code>, <code>call video stop</code>,
+<code>get video lastFile</code>, <code>get video lastInfo</code>, <code>call video toggle</code>, <code>set video quality high</code>,
+<code>set video source camera</code>, <code>get video cameras</code>; <code>call computer setup HOST USER PASSWORD 22</code>,
+<code>call computer check</code>, <code>call computer send /path/file</code>, <code>call computer forget</code>.</p>
+<h2 id="building-a-project-by-script">Building a project by script</h2>
+<p>Everything a finger does on the device, a script can do through the remote-control fifo: load
+samples, write patterns, pick sounds, set the key and the tempo, save the result as a project.
+<code>tools/examples/five-am/</code> (the 5AM demo: sections and the song by script, <code>build.py</code> writing
+the lines, <code>run.sh</code> sending them) and <code>tools/examples/lofi-say-it.sh</code> (a lo-fi hip hop project
+built on the changes of "Say It (Over and Over Again)") are complete ones; copy one for the
+next. A loop in the shell that reads a file line by line and calls <code>tools/device.sh</code> loses
+all but the first line (the ssh inside reads the loop's stdin): send the lines from one script
+on the device (run.sh) or use <code>ssh -n</code>.</p>
+<h3 id="the-loop">The loop</h3>
+<pre><code class="language-sh">FIFO=/tmp/webconf-writes-to-this-fifo
+send() { timeout 2 sh -c &quot;echo \&quot;$1\&quot; &gt; $FIFO&quot;; sleep 0.2; }
+call() { local line=&quot;call&quot;; for a in &quot;$@&quot;; do line=&quot;$line|$a&quot;; done; send &quot;$line&quot;; }
+setp() { send &quot;set|$1|$2|$3&quot;; }
+get()  { send &quot;get|$1|$2&quot;; journalctl --user -u ravving --since '-5s' --no-pager | grep 'fifo get' | tail -1 | sed 's/.*= //'; }
+</code></pre>
+<p>A script runs on the device (copy it there, as the example does with itself); every call
+is one line on the fifo and takes about a fifth of a second, so a full project is a few
+hundred lines and a couple of minutes. <code>tools/device.sh call|set|get</code> do the same one at a
+time from the laptop.</p>
+<h3 id="the-recipe-in-order">The recipe, in order</h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Calls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>keep what is there, start clean</td>
+<td><code>get studio.projects dirty</code>, <code>call studio.projects saveAs NAME</code>; <code>call studio.projects newProject</code></td>
+</tr>
+<tr>
+<td>tempo, swing, key</td>
+<td><code>set studio bpm 74</code>, <code>set studio swing 0.58</code> (and <code>set studio swingEighths true</code> for jazz: the off-beat 8ths swing, not the 16ths; the header's SWING 8 / 16, tapped), <code>call header setKey ROOT SCALE</code> (root 0–11 from C, scale an index into Rave.scales: 0 natural minor, 1 major, 2 Dorian…). <strong>NEW resets the key to C minor</strong>: set it before writing anything in a key</td>
+</tr>
+<tr>
+<td>drums</td>
+<td><code>call drumsN clear</code>, <code>call drumsN toggleStep ROW STEP</code>, <code>toggleAccent STEP</code>; rows by <code>get drumsN rows</code>; <code>call drumsN saveAsPreset</code> keeps the beat as "My Beat N"</td>
+</tr>
+<tr>
+<td>chords</td>
+<td><code>set chords bars 8</code> (the most a pattern holds), <code>set chords viewBar B</code>, then per step <code>call chords setStepNotes STEP "48,52,55,58"</code> (MIDI notes; a note outside the key makes the voicing chromatic). A run of the same voicing on consecutive steps is <strong>one held chord</strong>; an empty step ends it. Diatonic shortcuts: <code>setChord STEP DEGREE</code>, or SLOTS: <code>assignSlot SLOT DEGREE</code> + <code>cycleSlotBars SLOT</code>. <code>saveAsPreset</code> keeps a chart as "My Progression N" (a longer form = several presets to switch between)</td>
+</tr>
+<tr>
+<td>bass, lead</td>
+<td><code>set bass bars 8</code>, <code>set bass viewBar B</code>, <code>call bass setNote STEP NOTE</code> (MIDI; C2 = 36 for the bass, C4 = 60 for the lead, see kits.json <code>baseNote</code>), <code>setNoteLength STEP STEPS</code> (a note lasts one step unless set: a half note is 8, up to 64, into the next bars), <code>toggleAccent STEP</code>, <code>toggleSlide STEP</code>; any note is accepted, in the key or not, and a preset keeps it exactly (the chart's ALTER and HOLD lanes)</td>
+</tr>
+<tr>
+<td>drum kits</td>
+<td><code>call drums1 loadKit PATH</code>: a kit file, or a preset inside a soundfont with chosen rows (<code>…/FluidR3Mono_GM.sf3#128:32?CYMBAL=51&amp;HAT=44</code>, the Jazz kit with its ride and hi-hat foot; <a href="engines.html">engines.md</a>); <code>call drumsN setRowLevel ROW 0..1</code></td>
+</tr>
+<tr>
+<td>sounds</td>
+<td><code>call bass chooseSoundSource Upright</code> (names from <code>get bass soundSources</code>), <code>call chords loadSoundPreset NAME</code> for TAL's factory sounds, <code>call bass.sound setValue CARD KNOB 0..1</code> for the synth's own SOUND MODIFIERS</td>
+</tr>
+<tr>
+<td>pads</td>
+<td><code>call pads clearPad N</code>, <code>call pads loadSample N PATH [start length]</code>, <code>call pads chopRegions N COUNT FIRSTPAD</code>, <code>set pads selectedPad N</code> + <code>call pads setValue MIX VOLUME 0.95</code>, <code>set pads bars 8</code>, <code>set pads viewBar B</code> + <code>toggleStep PAD STEP</code>; a long one-shot (a 16 s intro) needs a loop long enough not to retrigger it: 8 bars at 74 BPM is 26 s</td>
+</tr>
+<tr>
+<td>SAMPLE KING</td>
+<td><code>call sampler loadSample SLOT PATH</code>; <code>set ravving samplerMachine 1</code> puts the pads on key 5</td>
+</tr>
+<tr>
+<td>save</td>
+<td><code>call studio.projects saveAs NAME</code> (a name typed in the dialog would do the same); <code>get studio.projects current</code> to check</td>
+</tr>
+<tr>
+<td>sections and the song</td>
+<td>the section on screen is what the calls above edit; <code>call studio.sections rename s1 DROP</code>, <code>duplicate s1</code> (a copy, placed after the section ON SCREEN, which it becomes), <code>setBars ID 1–8</code>, <code>set MACHINE paused true</code> (it rests in this section), <code>move FROM TO</code> (the list), <code>removeFromSong 0</code> / <code>appendToSong ID</code> / <code>setRepeats INDEX N</code> (the song), <code>set studio.sections mode 1</code> (SONG), <code>pick ID</code> (the one on screen when saved)</td>
+</tr>
+</tbody>
+</table>
   </article>
 </main>
 <footer>

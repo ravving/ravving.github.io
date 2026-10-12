@@ -38,24 +38,17 @@
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
-<li><a href="video.html">Video recordings and the computer link</a></li>
-<li><a href="history.html">Undo and redo</a></li>
-<li><a href="bluetooth.html">Bluetooth</a></li>
-<li><a href="scripting-projects.html">Building a project by script</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">The designs</p><ul>
-<li><a href="sections-plan.html">Sections and the song</a></li>
-<li><a href="sampler-plan.html">SAMPLE KING</a></li>
-<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
-<li><a href="recorder-plan.html">The RECORDER</a></li>
-<li><a href="streaming-plan.html">Streaming</a></li>
-<li><a href="design-reference.html">The design reference</a></li>
-</ul>
 <p class="mono">Under the hood</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
@@ -67,7 +60,6 @@
 <li><a href="testing.html">Testing on the device</a></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
-<li><a href="todo.html">What is pending</a></li>
 </ul>
 <p class="mono">The code</p><ul>
 <li><a href="../api/index.html">API reference</a></li>
@@ -79,10 +71,10 @@
 <h1>Extending</h1>
 <p class="doc-blurb">Adding a machine, an engine, SOUND MODIFIERS, an effect, an issues-center check.</p>
 
-<p>The recipes for growing ravving the way the drums and the bass were built. Read
-<code>architecture.md</code> first for the layers; this is the how-to. The code rules hold throughout:
+<p>The recipes for growing ravving. Read <a href="architecture.html">architecture.md</a> first for the
+layers; this is the how-to. The code rules hold throughout:
 reuse a part before writing a new one, keep each class to one job, and give every public
-API its QDoc block in the <code>.cpp</code> (docs/writing-code-docs.md) and every non-obvious line an
+API its QDoc block in the <code>.cpp</code> (<a href="writing-code-docs.html">writing-code-docs.md</a>) and every non-obvious line an
 inline comment that says why.</p>
 <h2 id="a-new-machine-a-pages-instrument">A new machine (a page's instrument)</h2>
 <p>The drums and the bass share everything except what is specific to them. A new machine
@@ -142,7 +134,7 @@ kits.json <code>engine</code> object:</p>
 <p>A new kind (setBfree, sfizz, a sampler…) is one more subclass run through <code>ConsoleProcess</code>
 (libzynthbox's ProcessWrapper: restarted on a crash, startup commands, a console prompt)
 and one more <code>type</code> in <code>createEngine()</code>. Choose an engine by measuring it first
-(<code>debugging.md</code>: synthprobe/analyse): velocity response, glide, CPU (<code>top</code>), level.</p>
+(<a href="debugging.html">debugging.md</a>: synthprobe/analyse): velocity response, glide, CPU (<code>top</code>), level.</p>
 <h2 id="sound-modifiers-an-engines-own-controls">SOUND MODIFIERS: an engine's own controls</h2>
 <p>A machine's SOUND MODIFIERS are data: its <code>sound</code> in kits.json, which <code>Machine</code> turns into a
 <code>SoundControls</code> (<code>machine.sound</code>). Cards of knobs, each driving an engine port by its LV2
@@ -162,12 +154,12 @@ shows as a <code>WaveCycler</code> (SAW, SQR, TRI, SIN are drawn); each choice s
 Ports with no knob go in <code>engine.controls</code>. A live control a page plays (the ribbon's
 vibrato) is an <code>expression</code>: <code>"expressions": {"vibrato": {"symbol": "lfo2pitch", "max": 60}}</code>,
 played with <code>machine.setExpression("vibrato", amount)</code>.</p>
-<p id="get-the-ports-right-from-the-mods"><strong>Get the ports right from the mods.</strong> Every engine Zynthbox ships has a mod in
-<code>~/Coding/&lt;engine&gt;_mod/</code> whose <code>docs/RESEARCH.md</code> decodes its ports from the engine's own
+<p id="get-the-ports-right-from-the-mods"><strong>Get the ports right from the mods.</strong> Every engine Zynthbox ships has an engine mod
+whose <code>docs/RESEARCH.md</code> decodes its ports from the engine's own
 source: which are logarithmic, how enums quantise (TAL: <code>i / den</code>, rounded, 1-based), which
 envelope drives what (Calf: EG1 → cutoff, EG2 → amp), what a port called <code>volume</code> really
 does. Read it before writing a machine's <code>engine.controls</code> and <code>sound</code>, and record what
-ravving relies on in <code>engines.md</code>. Studio connects the
+ravving relies on in <a href="engines.html">engines.md</a>. Studio connects the
 controls to the engine and sends them all whenever it (re)starts; values are saved with
 the machine. Read a plugin's port ranges with <code>lv2info</code> and check what its numbers mean in
 its source: an LV2 range is not always the unit its own GUI shows.</p>
@@ -194,7 +186,7 @@ its source: an LV2 range is not always the unit its own GUI shows.</p>
 <h2 id="hardware-and-focus">Hardware and focus</h2>
 <ul>
 <li>Handle keys with the <code>Hardware</code> attached property (like <code>Keys</code>); an unaccepted event
-  bubbles to the parent. See <code>architecture.md</code> for the signal list.</li>
+  bubbles to the parent. See <a href="architecture.html">architecture.md</a> for the signal list.</li>
 <li>A machine's vertical order (strip → SOUND MODIFIERS → editor → SOUND EFFECTS) lives in
   <code>MachineModule</code>: pages only call <code>focusUp()</code> / <code>focusDown()</code> at their editor's edge.</li>
 <li>Knob-driven controls go in a <code>KnobGroup</code> (targets need <code>value</code>, <code>from</code>, <code>to</code>, <code>knobStep</code>,
@@ -204,8 +196,11 @@ its source: an LV2 range is not always the unit its own GUI shows.</p>
 </ul>
 <h2 id="before-committing">Before committing</h2>
 <p>Build clean (no warnings), run the desktop screenshots (no QML warnings), deploy, check on
-the device (screenshot + measurement), update <code>architecture.md</code> and these guides, then
-commit as a single line authored by the user.</p>
+the device (screenshot + measurement), update the docs this change touches (and the page's
+features or shortcuts), rebuild the site's pages, then commit. A gotcha met on the way is
+written down for the maintainers, not in these docs.</p>
+<p>A change the user can undo goes through the project's history: see "The undo history" in
+<a href="undo-history.html">architecture.md</a>.</p>
 <h2 id="reporting-a-problem-to-the-issues-center">Reporting a problem to the issues center</h2>
 <p>Every component owns a check pass: at start, and whenever something fails or recovers, it
 tells the center (<code>src/backend/diagnostics.h</code>):</p>

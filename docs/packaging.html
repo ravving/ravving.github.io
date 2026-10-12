@@ -38,24 +38,17 @@
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
-<li><a href="video.html">Video recordings and the computer link</a></li>
-<li><a href="history.html">Undo and redo</a></li>
-<li><a href="bluetooth.html">Bluetooth</a></li>
-<li><a href="scripting-projects.html">Building a project by script</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">The designs</p><ul>
-<li><a href="sections-plan.html">Sections and the song</a></li>
-<li><a href="sampler-plan.html">SAMPLE KING</a></li>
-<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
-<li><a href="recorder-plan.html">The RECORDER</a></li>
-<li><a href="streaming-plan.html">Streaming</a></li>
-<li><a href="design-reference.html">The design reference</a></li>
-</ul>
 <p class="mono">Under the hood</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
@@ -67,7 +60,6 @@
 <li><a href="testing.html">Testing on the device</a></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
-<li><a href="todo.html">What is pending</a></li>
 </ul>
 <p class="mono">The code</p><ul>
 <li><a href="../api/index.html">API reference</a></li>
@@ -77,7 +69,7 @@
   <article class="doc" id="doc">
 <p class="mono doc-kicker">Under the hood <span>/</span> docs/packaging.md</p>
 <h1>Packaging</h1>
-<p class="doc-blurb">The Store AppImage, the setup page, what the device needs.</p>
+<p class="doc-blurb">The Store AppImage, the setup page, what the device needs, Bluetooth on a fresh device.</p>
 
 <p>ravving reaches a device as an <strong>AppImage</strong> in the Store's Apps category, the way zynthbox-qml
 installs any app: the Store downloads the file into <code>~/.local/share/zynthbox/apps/&lt;author&gt;/&lt;name&gt;/</code>,
@@ -89,7 +81,7 @@ against the Qt, libzynthbox, zyncoder and Zynthbox QML modules the device alread
 bundles no libraries at all: just ravving, the setup program and the data. In particular the
 device must have the <code>qml-style-zynthbox</code> package (the Zynthbox QtQuick Controls style ravving
 selects at startup) and the <code>qml-module-zynthbox</code> package it imports (<code>io.zynthbox.ui</code>), as
-every stock Zynthbox does; see the README's build section for the whole chain. What the AppImage
+every stock Zynthbox does; see <a href="building.html">building.md</a>, "What ravving is made of", for the whole chain. What the AppImage
 starts is not ravving but <strong>ravving-setup</strong> (<code>setup/</code>), a page over zynthbox-qml that installs
 ravving from the bundle and picks which UI the device runs.</p>
 <h2 id="what-the-device-needs">What the device needs</h2>
@@ -107,8 +99,7 @@ ravving from the bundle and picks which UI the device runs.</p>
   warning in the issues centre: "MUSIC PLAYER will not work", what it costs, the package for the
   device's admins.</li>
 </ul>
-<p>What 0.2.0 needs that a Zynthbox image may not have (all on milo; several installed by hand
-during development):</p>
+<p>What ravving needs that a Zynthbox image may not have:</p>
 <table>
 <thead>
 <tr>
@@ -156,7 +147,7 @@ during development):</p>
 <tr>
 <td>SAMPLE KING one-shots</td>
 <td>libzynthbox's fix for notes cutting each other (exclusivity group −1)</td>
-<td><strong>not upstream yet</strong> (~/Coding/libzynthbox-bug-reports.md): a stock libzynthbox cuts a one-shot when the next starts; not detectable from ravving</td>
+<td>a libzynthbox patch not in a stock libzynthbox: there a one-shot is cut when the next starts; not detectable from ravving</td>
 </tr>
 </tbody>
 </table>
@@ -166,7 +157,7 @@ programs, package, the feature and its effect), and to this table.</p>
 <pre><code>AppRun                          nx-apphub's launcher: exec usr/bin/ravving-setup
 ravving.desktop, ravving.png    the entry the Store lists (Name &quot;Ravving&quot;, the icon: a 256 × 256 PNG,
 .DirIcon                        also .DirIcon, from which libappimage makes the thumbnail zynthbox-qml's
-                                Apps grid shows; an SVG one came out blank, 0.2.0's first build)
+                                Apps grid shows; a PNG, since an SVG one renders blank)
 usr/bin/ravving                 the app
 usr/bin/ravving-setup           the page the AppImage opens
 usr/share/ravving/              kits.json, engines.json, the presets, requirements.json,
@@ -243,7 +234,7 @@ modelled on the kit's vvave bundle (UriHerrera/storage, <code>AppImages/vvave/ap
   <code>APPIMAGE_EXTRACT_AND_RUN=1</code>, and needs <code>ARCH</code> set because AppRun is a script.</li>
 </ul>
 <p>From the laptop:</p>
-<pre><code class="language-sh">tools/device.sh appimage [OUT_DIR]     # default OUT_DIR ~/Coding/store-packages
+<pre><code class="language-sh">tools/device.sh appimage [OUT_DIR]     # default OUT_DIR: the Store packages folder beside the repo
 </code></pre>
 <p>syncs the source, installs nx-apphub on the device if it is missing
 (<code>tools/install-nx-apphub.sh</code>: patchelf and the Python dependencies from Debian, the CLI from
@@ -261,7 +252,7 @@ its git checkout into a venv), runs <code>tools/build-appimage.sh</code> there a
   step row) into the same output folder;</li>
 <li><code>device.sh gallery [OUT_DIR]</code> screenshots each of the five pages of the ravving that is
   running on the device (<code>ravving-1-drums.png</code> … <code>ravving-5-sampler.png</code>, 1280 × 800, by
-  the number keys) into <code>~/Coding/store-packages/gallery/</code>; pick three for the page.
+  the number keys) into the Store packages folder's <code>gallery/</code>; pick three for the page.
   Load a project worth showing first: the shots are of whatever is on screen.</li>
 </ul>
 <h2 id="before-a-release-the-translations">Before a release: the translations</h2>
@@ -276,10 +267,9 @@ scripts or the unit), from the laptop:</p>
 tools/appimage-test.sh --no-build # the AppImage already in the device's dist/
 tools/appimage-test.sh --keep     # leave the entry in the device's Apps list afterwards
 </code></pre>
-<p>Run it on a freshly booted device. It switches between the two UIs six times in a few minutes,
-and after a few walks in a row (2026-10-10, the third) zynthbox-qml hung loading its sketchpad
-("Starting engine JV/Helm") and only a reboot cleared it: a Zynthbox / PipeWire wedge after many
-fast restarts, not ravving's. After a fresh boot the same walk passed.</p>
+<p>Run it on a freshly booted device. It switches between the two UIs six times in a few minutes;
+several walks in a row can leave zynthbox-qml hung loading its sketchpad ("Starting engine
+…"), a Zynthbox / PipeWire wedge after many fast restarts that only a reboot clears.</p>
 <p>It builds the AppImage (<code>device.sh appimage</code>), installs it as the Store would
 (<code>tools/store-register.py install</code>, which registers with libappimage, extracts the AppDir and
 points the desktop entry at its AppRun), checks the AppDir's contents, then walks the page and
@@ -299,7 +289,7 @@ that kills zynthbox-qml kills the page too, as in real use. Screenshots and the 
 every step go to <code>analysis/appimage-test-&lt;date&gt;/</code> (eyeball the page shots: dimmed tiles,
 messages). The user's ravving settings (<code>~/.config/ravving</code>) and live session
 (<code>~/.local/state/ravving</code>) are copied aside before the walk's purge and put back at the end, a
-failed step included (a walk without this wiped them, 2026-10-10). Whatever the device had before is put back at the end: a dev install by
+failed step included. Whatever the device had before is put back at the end: a dev install by
 <code>cmake --install</code>, ravving as the boot default by <code>default-app.sh ravving</code>; the Store entry
 is removed unless <code>--keep</code>. A failed assertion stops the run and prints the device's status;
 the device is then left mid-walk, and <code>tools/device.sh default zynthbox</code> or <code>ravving</code> brings
@@ -321,11 +311,57 @@ A desktop look without a device:</p>
   RAVVING_SETUP_SHOT=setup.png ./build/setup/ravving-setup
 </code></pre>
 <h2 id="bluetooth-on-a-fresh-device">Bluetooth on a fresh device</h2>
-<p>A stock Zynthbox cannot start <code>bluetooth.service</code> and registers no A2DP endpoints
-(<code>docs/bluetooth.md</code>). <code>cmake --install</code> puts ravving's two drop-ins in place; the packages
-(<code>bluez-obexd</code>, <code>libspa-0.2-bluetooth</code>, <code>libkf6bluezqt6</code>) and the service restarts are
-<code>tools/bluetooth-setup.sh</code>'s job, which the setup program should run (or the AppImage's
-first start), and which <code>--check</code> verifies afterwards.</p>
+<p>A stock Zynthbox (Debian 13, BlueZ 5.82, PipeWire 1.4, WirePlumber 0.5) cannot start
+<code>bluetooth.service</code> and registers no A2DP endpoints:</p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Cause</th>
+<th>Fix (shipped by ravving)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bluetooth.service</code> fails at boot (status 203/EXEC), the adapter stays DOWN, the control center says "its service is not running"</td>
+<td>zynthian-sys's drop-in <code>/etc/systemd/system/bluetooth.service.d/01-disable-sap-plugin.conf</code> starts <code>/usr/lib/bluetooth/bluetoothd</code>, which Debian 13 moved to <code>/usr/libexec/bluetooth/</code></td>
+<td><code>data/systemd/50-ravving-bluetoothd-path.conf</code>, installed to the same drop-in folder: the same flags (<code>--compat --experimental --noplugin=sap</code>) with the path that exists</td>
+</tr>
+<tr>
+<td>a speaker or headphones pair but will not connect: <code>org.bluez.Error.Failed br-connection-profile-unavailable</code>; the adapter's UUIDs (<code>bluetoothctl show</code>) list no Audio Source / Audio Sink</td>
+<td>WirePlumber's Bluetooth monitor (<code>monitors/bluez.lua</code>) waits for a logind "active" seat before creating the BlueZ handle that registers the A2DP endpoints; the root <code>startx</code> session never reports one, so the monitor never starts and BlueZ has nothing to connect the device to</td>
+<td><code>data/wireplumber/50-ravving-bluetooth.conf</code>, installed to <code>/etc/wireplumber/wireplumber.conf.d/</code>: <code>wireplumber.profiles.main.monitor.bluez.seat-monitoring = disabled</code></td>
+</tr>
+<tr>
+<td>no audio over Bluetooth at all</td>
+<td><code>libspa-0.2-bluetooth</code> (PipeWire's A2DP / HFP plugin with the SBC, aptX, FastStream, LDAC codecs) is not installed</td>
+<td><code>apt install libspa-0.2-bluetooth</code>, then a WirePlumber restart (it loads the plugin at start)</td>
+</tr>
+<tr>
+<td>no file transfer</td>
+<td><code>bluez-obexd</code> (the OBEX daemon, <code>obex.service</code> in the user session, D-Bus activated as <code>org.bluez.obex</code>) is not installed</td>
+<td><code>apt install bluez-obexd</code></td>
+</tr>
+<tr>
+<td>the Qt side</td>
+<td>ravving links KDE's BluezQt (<code>libkf6bluezqt6</code>, present on the image; <code>libkf6bluezqt-dev</code> to build)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><code>tools/bluetooth-setup.sh</code> does all of it on a device and checks every step
+(<code>--check</code> only checks); <code>cmake --install</code> puts the two drop-ins in place as well. After the
+setup <code>bluetoothctl show</code> lists Audio Source, Audio Sink, Handsfree and Handsfree Audio Gateway.</p>
+<p><code>cmake --install</code> puts ravving's two drop-ins in place; the packages (<code>bluez-obexd</code>,
+<code>libspa-0.2-bluetooth</code>, <code>libkf6bluezqt6</code>) and the service restarts are
+<code>tools/bluetooth-setup.sh</code>'s job, which the setup program should run (or the AppImage's first
+start), and which <code>--check</code> verifies afterwards. After the setup <code>bluetoothctl show</code> lists
+Audio Source, Audio Sink, Handsfree and Handsfree Audio Gateway. ravving's WirePlumber drop-in
+also sets <code>bluetooth.autoswitch-to-headset-profile = false</code> (so recording from headphones
+never switches them to HFP) and <code>bluez5.enable-sbc-xq</code>. One more setting is the device's own,
+set by hand on a new image since BlueZ reads no drop-in folder: <code>FastConnectable = true</code> under
+<code>[General]</code> in <code>/etc/bluetooth/main.conf</code>, so a speaker or headphones paging the device connect
+within a fraction of a second.</p>
   </article>
 </main>
 <footer>

@@ -38,24 +38,17 @@
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
-<li><a href="video.html">Video recordings and the computer link</a></li>
-<li><a href="history.html">Undo and redo</a></li>
-<li><a href="bluetooth.html">Bluetooth</a></li>
-<li><a href="scripting-projects.html">Building a project by script</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">The designs</p><ul>
-<li><a href="sections-plan.html">Sections and the song</a></li>
-<li><a href="sampler-plan.html">SAMPLE KING</a></li>
-<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
-<li><a href="recorder-plan.html">The RECORDER</a></li>
-<li><a href="streaming-plan.html">Streaming</a></li>
-<li><a href="design-reference.html">The design reference</a></li>
-</ul>
 <p class="mono">Under the hood</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
@@ -67,7 +60,6 @@
 <li><a href="testing.html">Testing on the device</a></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
-<li><a href="todo.html">What is pending</a></li>
 </ul>
 <p class="mono">The code</p><ul>
 <li><a href="../api/index.html">API reference</a></li>
@@ -79,12 +71,11 @@
 <h1>UI rules</h1>
 <p class="doc-blurb">The shared base types, action against state buttons, one ✕ to leave, readable palettes.</p>
 
-<p>ravving's screens share one look, taken from easyrave's: machines with side rails and a face in
+<p>ravving's screens share one look: machines with side rails and a face in
 their own finish, controls grouped on strips, work areas recessed in wells, a dark header band on
 top. These rules keep every new screen in it. <code>tools/check-ui.py</code> checks them over the QML (a
 laptop test, <code>ctest -R ui-rules</code>, and <code>tools/static-analysis.sh ui</code>); <code>tools/ui-rules.json</code> holds
-the rules and their exceptions, and is where a new rule goes. The <code>ravving-ui</code> skill
-(<code>~/.claude/skills/ravving-ui</code>) walks through building a page by them.</p>
+the rules and their exceptions, and is where a new rule goes.</p>
 <h2 id="shared-base-types">Shared base types</h2>
 <p>Use the component; never redraw it.</p>
 <table>
@@ -208,7 +199,7 @@ the rules and their exceptions, and is where a new rule goes. The <code>ravving-
   of one group hugs it (SAVE PATTERN AS's KEEP, NamePopup's <code>options</code> under <code>optionsLabel</code>). A
   page's toolbar rows too: the SONG page's top bar (its title, SWITCH, PLAYS), its section and
   song rows, the pattern toolbars.</li>
-<li>So a dialog reads in rows and groups at a glance, as a page does, and a wrapping row no longer
+<li>So a dialog reads in rows and groups at a glance, as a page does, and a wrapping row never
   leaves a lone chip on a line of its own. <em>Checked:</em> <code>dialog-groups-on-bands</code> (a GroupLabel in a
   *Popup.qml outside a ToolStrip); one band per row is the reviewer's to see.</li>
 </ul>

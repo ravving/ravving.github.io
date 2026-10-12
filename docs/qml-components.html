@@ -1,0 +1,310 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/qml-components.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QML components · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+      <a href="../api/index.html">API reference</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li class="on"><a href="qml-components.html" aria-current="page">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="translations.html">Translations</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="writing-code-docs.html">Writing code documentation</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+</ul>
+<p class="mono">The code</p><ul>
+<li><a href="../api/index.html">API reference</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">Under the hood <span>/</span> docs/qml-components.md</p>
+<h1>QML components</h1>
+<p class="doc-blurb">The shared base types, the pages and their parts.</p>
+
+<p>The QML components in <code>qml/</code>: the shared base types, the pages and their parts. They follow the <a href="ui-rules.html">UI rules</a>.</p>
+<p>Studio machines are shown by <code>MachinePanel</code> (a MachineModule backed by a Machine: level, pan,
+❚❚, effects, sound, REC/takes, STEP cursor, LIVE pad and keyboard bookkeeping), extended by
+<code>DrumMachinePanel</code> (step grid; pads = rows, key 9 = accent), <code>MonoMachinePanel</code> (mono
+<code>PianoRoll</code> with <code>pattern: machine</code>; in LIVE all 16 step keys play the scale from the root upwards and ▲ ▼ shift the octave (with STEP on, playing or not, they walk the rows, each heard: <code>previewSelection</code>, and SELECT writes the row: <code>writeSelection</code> / <code>selectionKey</code>, shared in <code>MachinePanel</code>);
+with <code>showRibbon</code> the lead's <code>Ribbon</code>: its notes go through the same LIVE path, a slide
+starts the next note before ending the last so the engine glides, drag up = vibrato) and
+<code>ChordMachinePanel</code> (the nameplate shows the loaded TAL sound's title, POLY-6 for its own; a tap opens the sound picker, a double tap rebuilds its own sound from TAL's start-up sound, the engine's controls and the default knobs; CHORDS / NOTES / SLOTS tabs: <code>ChordRoll</code>, a poly <code>PianoRoll</code> on the
+same steps, <code>ChordSlots</code>; ◀ ▶ switch them while the editor has the focus (<code>moveView</code>,
+<code>viewCount</code>); the step keys and ▲ ▼ work on the view on screen; CHORD SET,
+chord keys played as pads that also fill an armed slot; LIVE follows the tab: on CHORDS / SLOTS pads 1–7 = the degrees' chords, on NOTES all 16 pads play single scale notes (note keys), ▲ ▼ the octave while LIVE (the rows with STEP on; SELECT writes the selected chord or note);
+▲ ▼ = octave while LIVE) and <code>SamplerMachinePanel</code> (<code>SampleScreen</code> with the slot's waveform and trim
+handles, a KnobGroup itself: a tap on it or ▲ from the grid's top row gives knob 1 to the start
+handle and knob 2 to the end, ▼ gives the knobs back to the rows, LOAD with hold-to-hear previews, ▶, CLEAR, REVERSE, ● REC and INPUT (<code>InputPopup</code>),
+PITCH; the step grid over the bank's slots; BANK A–D chips and ◀ ▶; pads 1–8 = slots, key 9 =
+accent; knobs 1–3 = the selected row's mute, solo, level). <code>MachinePage</code> is the page around any of them: it forwards
+the step keys, ▲ ▼, the header hand-off and an external keyboard to its <code>panel</code>
+(<code>BassPage</code>, <code>LeadPage</code>, <code>ChordsPage</code> only declare their panel).</p>
+<p>All of <code>qml/</code> is one QML module, <code>Ravving</code>, built by <code>qt_add_qml_module</code> into the binary
+(qmlcachegen bytecode, typed bindings compiled to C++) and loaded with
+<code>loadFromModule("Ravving", "Main")</code>; <code>Hardware</code> and <code>HardwareEvent</code> join it through
+<code>QML_ELEMENT</code>. Every file imports <code>Ravving</code>; there are no relative imports. For development,
+<code>RAVVING_QML_DIR</code> makes <code>QmlSourceOverride</code> (a URL interceptor) serve the <code>.qml</code> files from a
+source tree instead, so QML edits need only a restart.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Rave</code> (singleton)</td>
+<td>machine finishes (colours), instruments strip, scales, chord sets, music helpers</td>
+</tr>
+<tr>
+<td><code>Session</code> (singleton)</td>
+<td>global state: key, scale, tempo, swing, transport clock, live FX, mute/solo; the views instead of the page (<code>mixView</code>, <code>songView</code>, <code>playerView</code>, one at a time); <code>sectionWaiting</code> / <code>sectionBlink</code> for a section waiting for its bar; the modal layers up (<code>overlays</code>, <code>inputBlocked</code>)</td>
+</tr>
+<tr>
+<td><code>RaveHeader</code></td>
+<td>the top bar shared by all pages; the ROOT and SCALE pickers without captions; the project's name on an engraved plate between SCALE and EDIT (200 px at most, a long name loses its middle; "•" while unsaved); a faint vertical meter of the master's level beside the MASTER dial (always drawn, so the dial never moves); SAVE asks the project's name the first time (<code>NamePopup</code>) and otherwise wants a second press within three seconds (SAVE AGAIN), SAVE AS NEW always asks; PROJECT ▾ has NEW, SAVE AS NEW, EXPORT (<code>exportRequested</code> → Main.qml's <code>ExportPopup</code>), IMPORT (a <code>ChoicePopup</code> of the .ravv bundles found: <code>studio.exporter.importable()</code>, imported and opened unless the session is unsaved) and DELETE</td>
+</tr>
+<tr>
+<td><code>NamePopup</code></td>
+<td>a name asked of the user: one text field with Qt's on-screen keyboard under it (as WifiPopup), OK / CANCEL, SELECT keeps, BACK cancels</td>
+</tr>
+<tr>
+<td><code>ExportPopup</code></td>
+<td>EXPORT: file name, title, artist, album / mixtape, genre, composer, comment, the cover drawn as typed (<code>image://albumart</code>), FORMAT (WAV 24-bit / FLAC / OGG / MP3), BARS × LOOPS + TAIL with the length; EXPORT TRACK (progress shown, CANCEL) and EXPORT .RAVV; shrinks over the on-screen keyboard and scrolls the field into view; ▲ ▼ fields, ◀ ▶ format, knobs 1–3 bars / loops / tail, SELECT exports, BACK closes</td>
+</tr>
+<tr>
+<td><code>SettingsPopup</code></td>
+<td>the profile: USER and AUTHOR, saved as typed</td>
+</tr>
+<tr>
+<td><code>MusicPlayerPage</code></td>
+<td>the MUSIC PLAYER, a full-screen view over the dashboard (<code>Session.playerView</code>, the control center's DASHBOARD / MUSIC PLAYER switch): left the library (TRACKS sorted by NEWEST / TITLE / ARTIST / ALBUM / LONGEST, ALBUMS and ARTISTS grids opening as lists with PLAY ALL / QUEUE ALL), a tap plays now, + queues; right the cover, the track, a position bar (tap to seek), ⏮ ▶ / ❚❚ ■ ⏭ REPEAT, VOLUME, and the QUEUE (tap plays, ✕ drops, CLEAR). Keys 1 2 3 or ◀ ▶ the views, ▲ ▼ the cursor, SELECT plays, PLAY pauses, STOP, big knob volume, knob 1 position, MENU the control center, BACK leaves. Opening it stops the transport, leaving it stops the player</td>
+</tr>
+<tr>
+<td><code>InstrumentChip</code>, <code>GroupLabel</code>, <code>LedDisplay</code></td>
+<td>header parts; a chip draws its machine's track level as a slim bar along its bottom (the mixer's colours), only while the machine sounds, from the header's <code>meters</code> (<code>studio.meters()</code> read ten times a second; the pads' second track counts too)</td>
+</tr>
+<tr>
+<td><code>Machine</code> (sound sources)</td>
+<td><code>soundSources</code> / <code>soundSource</code> / <code>chooseSoundSource()</code>: kits.json <code>sources</code> after the machine's own engine (<code>sourceName</code>); <code>engineConfig()</code> is the chosen one, saved as <code>soundSource</code> in the state; the studio restarts the engine on a change (<code>Studio::restartEngine</code>: <code>JackWiring::removeSynth</code> forgets the old ports, <code>SoundEngine::stop</code> ends its process, a new engine is started and wired with the same DRIVE insert). <code>soundControlsApply</code> hides the SOUND MODIFIERS on another source</td>
+</tr>
+<tr>
+<td><code>MachinePanel</code> (STEP entry)</td>
+<td>◀ ▶ in STEP entry while stopped move the entry cursor a step (<code>moveCursor</code>, wrapping in the pattern) on every panel, instead of switching views or banks; keys held together join one step (<code>Machine::writeWithPrevious</code>: the second key goes where the first went, the cursor advances once)</td>
+</tr>
+<tr>
+<td><code>MachineModule</code></td>
+<td>a machine panel: strip, SOUND MODIFIERS, the editor, SOUND EFFECTS. The editor keeps the height it has with both sections closed and scrolls under an open one (a Flickable; a line with dots in the accent along an edge says content continues beyond it) instead of being squashed</td>
+</tr>
+<tr>
+<td><code>Nameplate</code>, <code>FxChain</code>, <code>PatternToolbar</code></td>
+<td>machine panel parts</td>
+</tr>
+<tr>
+<td><code>StepGrid</code></td>
+<td>drum/slot rows × 16 steps (+ ACC); drums, sampler and the PAD SAMPLER's lane</td>
+</tr>
+<tr>
+<td><code>PianoRoll</code></td>
+<td>notes × 16 steps, mono (a MonoMachine: bass, lead) or poly (a ChordMachine's NOTES view: <code>noteSets</code>, <code>toggleNote</code>), ACCENT/SLIDE lanes. Two fingers pinch to zoom (rows kept 18–56 px tall, so the range follows the scale and the height) and drag to scroll; a scroll past an octave shifts the owner's octave (<code>octaveScrolled</code>), so OCT − / + shows what is on screen. ▲ ▼ select a note row (<code>currentNote</code>; a tap or a note played live selects too) and a step key writes that note. <code>heldNotes</code> lights the rows played live; a held note without a row shows as an edge marker ("▲ G4" / "▼ E2") or, outside the scale, a lit line between its neighbours with its name Gestures: a one-finger drag scrolls the rows (DragHandler, the gesture locked to its first axis; past 8 semitones <code>octaveScrolled</code> shifts the owner's octave) or pages the bars sideways (one bar per 120 px, the content following the finger), two fingers pinch to zoom and scroll; a tap toggles a cell. The row count is set by the zoom (<code>rowCount</code>), so scrolling never resizes the rows or the ACC / SLIDE lanes (fixed 20 px)</td>
+</tr>
+<tr>
+<td><code>WaveCycler</code></td>
+<td>the wave switch: LEDs per choice, the waveform drawn (SAW SQR TRI SIN), its name; tap = next, one knob detent = one choice</td>
+</tr>
+<tr>
+<td><code>ChordRoll</code></td>
+<td>scale degrees × 16 steps on a ChordMachine; runs joined; custom voicings ★ on their lowest degree; a selected degree row (▲ ▼, step keys), held degrees lit</td>
+</tr>
+<tr>
+<td><code>ChordSlots</code></td>
+<td>the SLOTS view: four cards (chord, numeral, bars); tap arms, hold empties, the bars button cycles 1/2/4/8</td>
+</tr>
+<tr>
+<td><code>Ribbon</code></td>
+<td>touch ribbon over two octaves from the lead's base note, snapped to the scale; <code>note</code> and <code>vibrato</code> (drag up)</td>
+</tr>
+<tr>
+<td><code>KeyCap</code>, <code>Chip</code>, <code>RaveKnob</code></td>
+<td>the controls: drum key, LED pill toggle, labelled dial (a QQC Dial for the touch handling, drawn by <code>DialFace</code>: the ring, the body and the pointer all in Qt Quick Shapes on the curve renderer, in one frame, so nothing drifts by a sub-pixel (a Rectangle body beside the Shape ring read as off-centre on the cards); crisp from 26 px up; groove, accent value arc from the start or from the centre for ranges around zero, body, pointer)</td>
+</tr>
+<tr>
+<td><code>KnobGroup</code>, <code>KnobBadge</code></td>
+<td>a focusable group the device knobs drive; the knob indicator</td>
+</tr>
+<tr>
+<td><code>RaveComboBox</code></td>
+<td>a drop-down (ROOT, SCALE, CHORD SETS) whose list opens as a dialog centred on the screen (the dialog card, a title, 48 px rows) that the device works while open: arrows / big knob move, SELECT picks and closes, BACK closes; the focus goes back where it was</td>
+</tr>
+<tr>
+<td><code>ControlCenter</code>, <code>ControlCard</code>, <code>LevelSlider</code>, <code>Glyph</code></td>
+<td>the menu drawer's control center: cards (a glyph, title, detail; toggle cards lamp-lit while on), the iOS-style pill slider (relative drag, a KnobGroup target), vector line icons</td>
+</tr>
+<tr>
+<td><code>MachineStrip</code></td>
+<td>a machine's strip (nameplate, role, PAN, VOL, REC, ❚❚, STEP and a hairline on a machine's page (<code>showStepModes</code>, <code>stepModeEdited</code>), LIVE, S, M; a KnobGroup for PAN and VOL), the top of every MachineModule and the MIXER's rows; <code>level</code>/<code>pan</code>/<code>paused</code> come in, edits go out (<code>levelEdited</code>…)</td>
+</tr>
+<tr>
+<td><code>MixerPage</code></td>
+<td>the MIXER: every machine folded to its MachineStrip on its own finish, one under another, a slim meter of its track (<code>Studio::meters()</code>, 20 times a second while on screen) under each; ▲ ▼ / step keys pick a machine (its strip takes knobs 1–2), SELECT mutes, ALT + SELECT solos, a nameplate opens the page. <code>Session.mixView</code> is its switch: ✱, the header's EDIT / MIX, the control center</td>
+</tr>
+<tr>
+<td><code>SongPage</code></td>
+<td>SONG (<code>studio.sections</code>): the StackLayout's seventh view, under the header as the MIXER (<code>Session.songView</code>, the project plate opens and closes it). SECTIONS at a finger's size: square keys wearing their number, their name under, a dot per sounding machine, the one on screen filled in its colour (blinking while it waits for the bar: <code>Session.sectionBlink</code>, its timer running only then), eight a row (the first row is ALT + step keys 9–16), ＋ a copy of the one on screen; tap picks, double tap renames (NamePopup), hold and drag moves, × deletes (second tap). A row for the section on screen: RENAME, NEW, COLOUR, LENGTH (AUTO), MOVE, ADD TO SONG. The SONG as a strip of blocks as wide as bars × repeats, a row for the block picked: MOVE, REPEATS, REMOVE. Keys: ◀ ▶ walk, ▲ ▼ between, SELECT picks, step keys pick, ALT + ◀ ▶ move, knob 1 the length, knob 2 the repeats. Idle it draws nothing (0 frames/s measured)</td>
+</tr>
+<tr>
+<td><code>RavePopup</code>, <code>ModalDim</code>, <code>DialogHeader</code></td>
+<td>the dialogs' base (centred, modal, focus taken and given back) and the dark layer behind dialogs, drop-down lists and the menu</td>
+</tr>
+<tr>
+<td><code>ChoicePopup</code></td>
+<td>a grid picker (kits, presets, samples) with the same hardware; names wrap to two lines, subtitles elide in the middle; <code>previewable</code>: holding an item previews it until let go</td>
+</tr>
+<tr>
+<td><code>InputPopup</code>, <code>InputMeter</code></td>
+<td>INPUT: MIC / GUITAR / LINE, GAIN, MONITOR and its LEVEL, ● REC, and EFFECTS (OFF or a preset, its three knobs); the knobs work on one row, ▲ ▼ pick INPUT or EFFECTS, ◀ ▶ the mode or the preset (+ big knob for fine gain); the input's peak meter (−60…0 dBFS, yellow from −18, red from −6, held peak, CLIP)</td>
+</tr>
+<tr>
+<td><code>SampleScreen</code></td>
+<td>the sampler slot's screen: libzynthbox's <code>WaveFormItem</code> (made at run time), trim handles, darkened trimmed-out parts, a take's time and meter while recording</td>
+</tr>
+<tr>
+<td><code>PadSamplerPanel</code></td>
+<td>the PAD SAMPLER (MPC-style): PadGrid + the pad's SampleScreen, tools (LOAD, ● REC with SMART stop, CLEAR, COPY, ERASE, 16 LVL, CHOP, AUTO CHOP), Pad Play chips, the live PAD FX row, one tab card (TRIM · MIX · AMP ENV · TUNE · PLAY · FILTER · FLT ENV) on knobs 1–3, the lane (a StepGrid of the selected pad + ACC); ◀ ▶ tabs, ▲ ▼ lane → pads → strip; LIVE = the 16 step keys are the pads</td>
+</tr>
+<tr>
+<td><code>PadGrid</code></td>
+<td>a pad that sounds beams (its colour pulsing over it, the border lit: the machine's <code>playing</code>); the MPC's 4 × 4 pads (13–16 top, 1–4 bottom): number, name, 16 hit dots, pad colour, mute tint, selection, held flash, latched-loop ring; tap / hold / long press</td>
+</tr>
+<tr>
+<td><code>PadState</code></td>
+<td>the PAD SAMPLER in QML only (the backend's interface to come): 16 pads with <code>params[tab][knob]</code> 0..1 and Pad Play flags, the bar's steps, the <code>lane</code> single-row view, the tabs and switch choices</td>
+</tr>
+<tr>
+<td><code>WaveEditorPopup</code></td>
+<td>the wave editor both samplers share: the sample large with its trim, CHOP by REGIONS 4/8/16 (big knob), THRESHOLD (the machine's <code>detectTransients</code>, knob = threshold) or MANUAL (taps on the wave), the cuts drawn and numbered; APPLY / SELECT → the owner's <code>applyChop</code> (pieces onto the pads from pad 1, or the bank's slots from slot 1); NORMALISE / TRIM → <code>trimToNewFile</code>. Both machines expose the same three methods and <code>transientsDetected</code></td>
+</tr>
+<tr>
+<td><code>RavePage</code></td>
+<td>page base: a FocusScope receiving the hardware</td>
+</tr>
+</tbody>
+</table>
+<p>Pages combine these and hold only page-specific logic: the bassline generator, the bank
+switching, the chord cursor. Generic controls (buttons, combo boxes, sliders, tabs) come from the Zynthbox Quick Controls
+style, so they follow the active SVG theme; the dials are ravving's own (<code>DialFace</code>), since the
+theme's SVG dial breaks up at the small sizes the machines use.
+The machine-specific parts (key caps, nameplates, grids) are drawn in QML from each machine's
+finish in <code>Rave.machines</code>.</p>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  function load(done) {
+    if (index) return done();
+    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
+</body>
+</html>

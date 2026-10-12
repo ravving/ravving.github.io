@@ -38,36 +38,28 @@
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
-<li><a href="video.html">Video recordings and the computer link</a></li>
-<li><a href="history.html">Undo and redo</a></li>
-<li><a href="bluetooth.html">Bluetooth</a></li>
-<li><a href="scripting-projects.html">Building a project by script</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">The designs</p><ul>
-<li><a href="sections-plan.html">Sections and the song</a></li>
-<li><a href="sampler-plan.html">SAMPLE KING</a></li>
-<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
-<li><a href="recorder-plan.html">The RECORDER</a></li>
-<li><a href="streaming-plan.html">Streaming</a></li>
-<li><a href="design-reference.html">The design reference</a></li>
-</ul>
 <p class="mono">Under the hood</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
 <li><a href="ui-rules.html">UI rules</a></li>
 <li><a href="extending.html">Extending</a></li>
 <li><a href="writing-code-docs.html">Writing code documentation</a></li>
-<li class="on"><a href="building.html" aria-current="page">Building</a><ul><li><a href="#project-layout">Project layout</a></li><li><a href="#the-build-folders">The build folders</a></li><li><a href="#faster-builds">Faster builds</a></li><li><a href="#profiling-the-build">Profiling the build</a></li><li><a href="#the-site">The site</a></li></ul></li>
+<li class="on"><a href="building.html" aria-current="page">Building</a><ul><li><a href="#what-ravving-is-made-of">What ravving is made of</a></li><li><a href="#dependencies">Dependencies</a></li><li><a href="#the-qml">The QML</a></li><li><a href="#run-on-a-desktop">Run on a desktop</a></li><li><a href="#environment-variables">Environment variables</a></li><li><a href="#project-layout">Project layout</a></li><li><a href="#the-build-folders">The build folders</a></li><li><a href="#faster-builds">Faster builds</a></li><li><a href="#profiling-the-build">Profiling the build</a></li><li><a href="#the-site">The site</a></li><li><a href="#the-documentation-rules">The documentation rules</a></li></ul></li>
 <li><a href="packaging.html">Packaging</a></li>
 <li><a href="testing.html">Testing on the device</a></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
-<li><a href="todo.html">What is pending</a></li>
 </ul>
 <p class="mono">The code</p><ul>
 <li><a href="../api/index.html">API reference</a></li>
@@ -77,8 +69,175 @@
   <article class="doc" id="doc">
 <p class="mono doc-kicker">Under the hood <span>/</span> docs/building.md</p>
 <h1>Building</h1>
-<p class="doc-blurb">The CMake layout, the build folders, faster builds, profiling the build, the site.</p>
+<p class="doc-blurb">What ravving is made of, the dependencies, the CMake layout, the build folders, faster builds, the site, the documentation rules.</p>
 
+<h2 id="what-ravving-is-made-of">What ravving is made of</h2>
+<p>What ravving is made of, all taken from the device (nothing is bundled, by the AppImage either): ravving
+runs on the <strong>Zynthbox QtQuick Controls style</strong> (<code>qml-style-zynthbox</code>, picked by name in
+<code>main.cpp</code>, so there is no build-time check: a missing style shows the Basic look and
+unthemed controls), and that style imports <strong><code>io.zynthbox.ui</code></strong> (ZUI, from
+<code>qml-module-zynthbox</code>: Button, CheckBox, Switch, Menu and TextField read their theme from it)
+and the KDE Frameworks it draws with (Kirigami, KSvg, Plasma). The audio engine comes from
+<strong>libzynthbox</strong> (<code>io.zynthbox.components</code>) and <strong>zyncoder</strong>, both loaded at run time. So the
+order is: libzynthbox + zyncoder, qml-module-zynthbox, qml-style-zynthbox, then ravving; on a
+stock Zynthbox they are the installed <code>libzynthbox</code>, <code>qml-module-zynthbox</code> and
+<code>qml-style-zynthbox</code> packages, and a rebuilt module or style must be installed before ravving
+is tried. The music player plays through <strong>Qt Multimedia</strong> (<code>qt6-multimedia-dev</code> to build;
+<code>libqt6multimedia6</code> with its FFmpeg plugin at run time, both on the image; its sound goes
+out through PulseAudio, so ravving's service wants <code>pipewire-pulse.service</code>, which a
+Zynthbox has but leaves off; the player's stream runs at its own adapted quantum and leaves
+the graph at 256 frames, 48 kHz), and the exports
+use <strong>TagLib</strong> (<code>libtag1-dev</code>), <strong>zlib</strong> and <strong>libsndfile</strong> with its FLAC, Vorbis and LAME
+encoders.</p>
+<p>The sound itself comes from programs and data the Zynthbox image ships, started and wired
+by ravving at run time and bundled by nothing: <strong>jalv</strong> (the LV2 host) with the <strong>LV2
+plugins</strong> the machines and effects name by URI in <code>data/kits.json</code> and <code>src/backend/</code>
+(TAL NoiseMaker, DISTRHO Nekobi, Calf Monosynth, Calf Crusher and Phaser, Dragonfly Room
+Reverb, TAP Echo; <code>tools/lv2probe.sh</code> checks a URI on the device), <strong>FluidSynth 2</strong> for the
+drum kits and the soundfont sound sources, the <strong>soundfonts</strong> under
+<code>/zynthian/zynthian-data/soundfonts</code> (the SFZ Drum Machines kits, <code>SF2 Instruments</code> with
+<code>FluidR3Mono_GM.sf3</code> and <code>ACBass.sf3</code>), and <strong>PipeWire's JACK</strong> (<code>pw-jack</code>) with Zynthbox's
+MIDI routing (ZLRouter, a2j). A machine whose plugin or soundfont is missing starts silent
+and says so in the journal; <a href="engines.html">engines.md</a> has what each engine does and expects.</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>On the device (Debian 13 arm64, as a Zynthbox image is) the build needs, by Debian name:</p>
+<table>
+<thead>
+<tr>
+<th>For</th>
+<th>Packages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the toolchain</td>
+<td><code>cmake</code>, <code>ninja-build</code>, <code>g++</code>, <code>pkg-config</code></td>
+</tr>
+<tr>
+<td>Qt 6 (Core, Gui, Qml, Quick, QuickControls2, Concurrent, Network, DBus, Multimedia)</td>
+<td><code>qt6-base-dev</code>, <code>qt6-declarative-dev</code>, <code>qt6-multimedia-dev</code></td>
+</tr>
+<tr>
+<td>Bluetooth (KDE's BluezQt over BlueZ's D-Bus API)</td>
+<td><code>libkf6bluezqt-dev</code></td>
+</tr>
+<tr>
+<td>the audio processors and the graph probe (JACK's API; PipeWire's library at run time)</td>
+<td><code>libjack-jackd2-dev</code></td>
+</tr>
+<tr>
+<td>exports: the audio files, their tags, the .ravv bundles</td>
+<td><code>libsndfile1-dev</code>, <code>libtag-dev</code> (TagLib 2; <code>libtag1-dev</code> on older images), <code>zlib1g-dev</code></td>
+</tr>
+<tr>
+<td>the tools (<code>tools/*.py</code>) and syncing a checkout</td>
+<td><code>python3</code>, <code>rsync</code></td>
+</tr>
+</tbody>
+</table>
+<p>Everything else ravving needs it finds at run time on a stock Zynthbox: libzynthbox and
+zyncoder, <code>qml-module-zynthbox</code> and <code>qml-style-zynthbox</code> with the KDE Frameworks they draw
+with (Kirigami, KSvg, Plasma), <code>libqt6multimedia6</code> with its FFmpeg plugin, PipeWire with
+<code>pipewire-jack</code> (<code>pw-jack</code>), <code>pipewire-bin</code> (<code>pw-loopback</code>, <code>pw-link</code>, <code>pw-dump</code>, <code>pw-top</code>)
+and <code>pipewire-pulse</code> (left off by the image; ravving's service wants it), <code>udisks2</code> and
+<code>util-linux</code> (USB sticks: <code>udisksctl</code>, <code>lsblk</code>), jalv with the LV2 plugins and FluidSynth
+with the soundfonts named below. Bluetooth needs three packages the image lacks,
+<code>bluez-obexd</code>, <code>libspa-0.2-bluetooth</code> and <code>libkf6bluezqt6</code>, plus two drop-ins ravving
+installs: <code>tools/bluetooth-setup.sh</code> does all of it (<a href="packaging.html">packaging.md</a>, "Bluetooth on a fresh device").</p>
+<pre><code class="language-sh">tools/device.sh deploy                 # from the laptop: sync, build, install, restart, wait
+# or by hand (rsync without -a: older laptop mtimes would make ninja skip changed files)
+rsync -rlp --checksum --exclude build --exclude .git ./ root@milo.local:/root/ravving/
+ssh root@milo.local
+cd /root/ravving
+cmake -S . -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr
+cmake --build build &amp;&amp; cmake --install build
+systemctl --user daemon-reload
+systemctl --user start ravving        # try it once: stops zynthbox-qml (the services conflict)
+systemctl --user start zynthbox-qml   # and back
+</code></pre>
+<p>To make ravving the device's UI (it starts at boot, and zynthbox-qml is masked so nothing
+brings it back), and to return to stock Zynthbox with nothing of ravving left in systemd:</p>
+<pre><code class="language-sh">/usr/share/ravving/default-app.sh ravving
+/usr/share/ravving/default-app.sh zynthbox           # add --purge to uninstall ravving too
+/usr/share/ravving/default-app.sh status
+</code></pre>
+<p>From the laptop, <code>tools/device.sh default ravving|zynthbox|status</code> does the same.
+<code>default-app.sh run ravving|zynthbox</code> switches for the session only (the boot default stays),
+which is what ravving's own menu offers under POWER → ZYNTHBOX.</p>
+<h2 id="the-qml">The QML</h2>
+<p>The QML is compiled into the binary (the <code>Ravving</code> QML module: qmlcachegen bytecode and C++
+for typed bindings), so a QML change is a rebuild like any other, and QML errors show at
+build time. To try QML on the device without rebuilding, copy the <code>qml/</code> folder over and
+start ravving with <code>RAVVING_QML_DIR</code> pointing at it.</p>
+<h2 id="run-on-a-desktop">Run on a desktop</h2>
+<pre><code class="language-sh">cmake -S . -B build -G Ninja &amp;&amp; cmake --build build
+RAVVING_WINDOWED=1 RAVVING_NO_ZYNTHBOX=1 RAVVING_STYLE=Basic ./build/ravving
+# or straight from the source tree's QML, no rebuild between QML edits:
+RAVVING_WINDOWED=1 RAVVING_NO_ZYNTHBOX=1 RAVVING_STYLE=Basic RAVVING_QML_DIR=$PWD/qml ./build/ravving
+</code></pre>
+<p>On a desktop without a terminal, Qt logs to journald; add <code>QT_FORCE_STDERR_LOGGING=1</code> to see
+QML warnings.</p>
+<p>Keys (they send the same events as the device): <code>1</code>–<code>5</code> number keys ·
+<code>q w e r t y u i a s d f g h j k</code> the 16 step keys · arrows · <code>Enter</code> select · <code>Esc</code> back ·
+<code>Space</code> play · <code>Backspace</code> stop · <code>o</code> metronome · <code>m</code> menu · <code>z</code>/<code>x</code>, <code>c</code>/<code>v</code>, <code>b</code>/<code>n</code> knobs 1–3 down/up ·
+<code>,</code>/<code>.</code> big knob.</p>
+<h2 id="environment-variables">Environment variables</h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RAVVING_WINDOWED=1</code></td>
+<td>windowed instead of fullscreen</td>
+</tr>
+<tr>
+<td><code>RAVVING_NO_ZYNTHBOX=1</code></td>
+<td>skip libzynthbox (UI only)</td>
+</tr>
+<tr>
+<td><code>RAVVING_STYLE</code></td>
+<td>Quick Controls style (default <code>Zynthbox</code>)</td>
+</tr>
+<tr>
+<td><code>RAVVING_QML_DIR</code></td>
+<td>read the QML from this folder (a source tree's <code>qml/</code>) instead of the copy compiled in</td>
+</tr>
+<tr>
+<td><code>RAVVING_DATA_DIR</code></td>
+<td>read <code>kits.json</code> and the theme (<code>plasma/desktoptheme/</code>) from this folder (desktop: <code>$PWD/data</code>; the plasmarc then comes from <code>build/config/</code>)</td>
+</tr>
+<tr>
+<td><code>RAVVING_HOME</code></td>
+<td>one folder for everything ravving writes (<code>config/</code>, <code>state/</code>, <code>cache/</code>, <code>library/</code>), for a sandboxed run</td>
+</tr>
+<tr>
+<td><code>RAVVING_LIBRARY</code></td>
+<td>the library alone (projects, presets, samples, recordings) somewhere else</td>
+</tr>
+<tr>
+<td><code>RAVVING_PROJECT_DIR</code></td>
+<td>the session folder alone (default <code>~/.local/state/ravving</code>)</td>
+</tr>
+<tr>
+<td><code>RAVVING_SCREENSHOT_DIR</code></td>
+<td>capture every page to PNGs there, then quit</td>
+</tr>
+<tr>
+<td><code>RAVVING_GDB=1</code></td>
+<td>(service) run under gdb, backtrace to the journal</td>
+</tr>
+<tr>
+<td><code>QT_LOGGING_RULES="ravving.cuia.debug=true"</code></td>
+<td>log every hardware event (CUIA, knobs)</td>
+</tr>
+</tbody>
+</table>
+<p>For the service, set them with <code>systemctl --user set-environment NAME=value</code> and clear them
+with <code>unset-environment</code>.</p>
 <h2 id="project-layout">Project layout</h2>
 <p>One CMake project, its targets each with the CMakeLists.txt of their sources (the source files
 themselves are where they were: the split is of the CMake files only):</p>
@@ -147,42 +306,12 @@ check uninstall only what <code>cmake --install</code> put on the system, and th
 its staging trees (<code>build-release/stage</code>, <code>build-release/appimage</code>). Keeping them is what keeps
 builds incremental.</p>
 <h2 id="faster-builds">Faster builds</h2>
-<p>A clean build of 0.2.0, laptop, 4 cores, <code>RelWithDebInfo</code> (the device's settings), 2026-10-10:</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>as it was</th>
-<th><code>RAVVING_QML_AOT=OFF</code> + <code>RAVVING_PCH=ON</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>C++ compile (CPU)</td>
-<td>829 s</td>
-<td>499 s (precompiled Qt headers)</td>
-</tr>
-<tr>
-<td>QML compile (CPU)</td>
-<td>740 s</td>
-<td>156 s (bytecode only)</td>
-</tr>
-<tr>
-<td>qmlcachegen (CPU)</td>
-<td>134 s</td>
-<td>22 s</td>
-</tr>
-<tr>
-<td><strong>wall clock</strong></td>
-<td><strong>426 s</strong></td>
-<td><strong>190 s</strong></td>
-</tr>
-</tbody>
-</table>
-<p>The device (a Pi 5, 4 cores) takes about as long as the laptop for the same work.</p>
+<p>The development build (<code>build/</code>) compiles about twice as fast as the release build: the QML
+as bytecode only and the Qt headers precompiled. The device (a Pi 5, 4 cores) takes about as
+long as a 4-core laptop for the same work.</p>
 <ul>
 <li><strong><code>RAVVING_QML_AOT</code></strong> (default ON). qmlcachegen compiles each QML file's bindings into C++,
-  which then has to be compiled: on the Pi that was 40 % of a build. OFF keeps the QML
+  which then has to be compiled: on the Pi that is 40 % of a build. OFF keeps the QML
   precompiled but as bytecode only (<code>--only-bytecode</code>): the bindings run in Qt's interpreter and
   JIT, which is fine to develop with; a release keeps ON (<code>build-release/</code>).</li>
 <li><strong><code>RAVVING_PCH</code></strong> (default ON): the Qt headers nearly every file includes (QObject, QString,
@@ -191,22 +320,19 @@ builds incremental.</p>
   before with the same flags comes from its cache (after a reconfigure, switching branches).</li>
 <li><strong>The device builds at the lowest priority</strong> (<code>nice -n 19 ionice -c 3</code> in <code>device.sh
   deploy</code>): not faster, but a build beside the music does not take the audio's time.</li>
+<li id="the-backend-is-a-library-of-its-own"><strong>The backend is a library of its own.</strong> <code>src/backend</code> (and <code>zynthboxbridge</code>) build as the
+  static library <code>ravving_backend</code>, outside the QML module: Qt's type registration reads the
+  metadata of every QObject class in the QML module's target, so a backend header inside it
+  would regenerate every QML file's compiled C++. QML reaches the backend through context
+  properties (<code>studio</code>, <code>ravving</code>…), which need no registration; the LOOP / SONG values of
+  <code>Sections</code> are two numbers in <code>Rave.qml</code> (<code>Rave.sectionsLoop</code>, <code>Rave.sectionsSong</code>). A
+  backend header edit recompiles no QML.</li>
 </ul>
 <h3 id="a-corrupted-ninja-log-rebuilds-everything">A corrupted ninja log rebuilds everything</h3>
 <p><code>ninja: warning: premature end of file; recovering</code> means <code>build/.ninja_deps</code> was cut short (a
 build killed mid-run, two builds at once in one folder): ninja then trusts nothing it built and
 plans every step on every build. <code>ninja -C build -t recompact</code>, then one full build, puts it
-right (2026-10-10: every laptop build had been doing all 336 steps). Never run two builds in one
-build folder; let a build finish rather than kill it.</p>
-<h3 id="why-one-header-edit-recompiled-every-qml-file">Why one header edit recompiled every QML file</h3>
-<p>The QML module is built from the <code>ravving</code> target, and Qt's type registration reads the
-metadata of every QObject class in that target. Any change to a backend header (machine.h,
-studio.h…) regenerated it, and with it every QML file's compiled C++: minutes for a one-line
-change. Fixed by building <code>src/backend</code> (and <code>zynthboxbridge</code>) as its own static library,
-<code>ravving_backend</code>, outside the QML module: QML reaches it through context properties (<code>studio</code>,
-<code>ravving</code>…), which need no registration, and the one type it registered, <code>Sections</code> (for its
-LOOP / SONG enum), is now two numbers in <code>Rave.qml</code> (<code>Rave.sectionsLoop</code>, <code>Rave.sectionsSong</code>).
-Touching <code>machine.h</code> then: 157 s and every QML file before, <strong>19 s and no QML</strong> after.</p>
+right. Never run two builds in one build folder; let a build finish rather than kill it.</p>
 <h2 id="profiling-the-build">Profiling the build</h2>
 <p><code>tools/build-profile.sh [OUT_DIR] [-- cmake options]</code> builds ravving from clean with clang and
 <code>-ftime-trace</code> (<code>RAVVING_TIME_TRACE</code>) in <code>analysis/build-profile/build</code> (never <code>build/</code>), then:</p>
@@ -228,23 +354,18 @@ it reports their includes as unused everywhere. Read it with care: it knows no Q
 would swap <code>&lt;QVariantMap&gt;</code> for Qt's internal <code>&lt;qvariant.h&gt;</code>: ignore those), and it does not see
 moc's generated code, so it calls a header unneeded where a Q_PROPERTY exposes a pointer to that
 class (<code>machine.h</code>'s SoundControls and TrackEffects, <code>devicecontrols.h</code>'s Wifi): moc needs the
-complete type there. The first pass (2026-10-10) found nothing else to change.</p>
+complete type there.</p>
 <p><strong>Unity builds</strong> (<code>RAVVING_UNITY</code>, the backend only: the app target carries qmlcachegen's and
 rcc's generated sources, and AUTOMOC's <code>mocs_compilation.cpp</code> stays out of the batches on its own)
 are there to measure, not on by default: many backend files define file-local constants with
 the same names (<code>MaxBars</code>, <code>AuditionMs</code>…), which collide once a batch merges them.</p>
-<p>What the first profile found (laptop, clean, 182 s): parsing 154 s, optimising and code
-generation 180 s across 85 files; with precompiled headers only <code>QQuickItem</code> remains an
-expensive header (4 files, about 1 s each); no single hotspot: the heaviest files are the
-machines, the exporter and moc's <code>mocs_compilation.cpp</code> (about 15 s each), and the costliest
-template sets are Qt's containers (<code>QMap::insert</code>, <code>QList::append</code>) and <code>QObject::connect</code>.</p>
 <h2 id="the-site">The site</h2>
 <p><code>site/</code> is the page ravving serves at <code>http://&lt;device&gt;:8098/help/</code> (the shortcuts, the features
 and the documentation; <code>site/README.md</code> says how it is made and how to retake a screenshot).
 It is installed as it is (<code>install(DIRECTORY site …)</code>, this README left out), so it must be
 plain static files with relative references, and its documentation pages are generated into
 the repository:</p>
-<pre><code class="language-sh">python3 tools/build-site-docs.py          # README.md, docs/*.md, data/secret/README.md → site/docs/*.html
+<pre><code class="language-sh">python3 tools/build-site-docs.py          # docs/*.md, data/secret/README.md → site/docs/*.html
 python3 tools/build-site-docs.py --list   # the pages
 python3 tools/build-site-docs.py --plain  # the script's own converter, as on a machine without python-markdown
 </code></pre>
@@ -252,20 +373,46 @@ python3 tools/build-site-docs.py --plain  # the script's own converter, as on a 
 page's sidebar (every section, its heading and text): the search runs in the browser alone,
 so it works on the public page and on the device's own copy without internet. <code>--check</code> (the
 <code>site-docs-current</code> test) compares the pages and the index with what the markdown gives.</p>
+<p>Only the developer docs (<code>docs/</code>) and the packs page are rendered; the webpage's manual is
+<code>docs/manual-interim.md</code> until the user guide (<code>guide/</code>) replaces it. The script never reads
+<code>notes/</code>, <code>guide/_material/</code> or <code>.claude/</code>, and two tests keep it so:</p>
+<ul>
+<li><code>docs-fences</code> (<code>tools/check-docs-fences.py</code>): no page in PAGES lives in those folders, and
+  no rendered page links or includes anything from them;</li>
+<li><code>docs-history</code> (<code>tools/check-docs-history.py</code>): no page in PAGES tells history or carries
+  the wording of the requests behind a feature (dates, <code>used to</code>, <code>found on milo</code>, the design
+  reference's name…: the phrases of <code>tools/check-cpp-docs.py</code>'s BANNED list and a few more).</li>
+</ul>
 <p>The page is public at https://ravving.github.io/: <code>sh tools/publish-site.sh</code> copies <code>site/</code>
 (this README left out) into a clone of the <code>ravving/ravving.github.io</code> repository, commits it
 under the source commit and pushes; that repository's workflow deploys its own content as the
-Pages artifact on every push. Nothing there needs access to this repository (which may be
-private) and no secret is kept anywhere. Run it once <code>site/</code> is committed.</p>
-<p>The rule (README, "Documentation"): the docs and the page follow every change, in the same
+Pages artifact on every push. Nothing there needs access to this repository and no secret is
+kept anywhere. Run it once <code>site/</code> is committed.</p>
+<p>The rule ("The documentation rules", below): the docs and the page follow every change, in the same
 commit; <code>python3 tools/build-site-docs.py --check</code> (ctest <code>site-docs-current</code>) fails when the
-rendered pages no longer match the markdown.</p>
+rendered pages do not match the markdown.</p>
 <p>The C++ API reference is <code>site/api/</code>, generated by QDoc from the sources' <code>/*! */</code> blocks
 with <code>python3 tools/build-api-docs.py</code> (Qt 6's qdoc; <code>--check</code> is ctest <code>api-docs-current</code>)
-and committed the same way; docs/writing-code-docs.md has the rules and the details.</p>
+and committed the same way; <a href="writing-code-docs.html">writing-code-docs.md</a> has the rules and the details.</p>
 <p>Run it after editing a doc and commit <code>site/docs/</code> with the markdown. It uses python-markdown
 when it is installed (Arch <code>python-markdown</code>, Debian <code>python3-markdown</code>) and its own small
 converter otherwise; <code>PAGES</code> in the script lists the documents, their groups and blurbs.</p>
+<h2 id="the-documentation-rules">The documentation rules</h2>
+<ul>
+<li id="the-docs-and-the-page-follow-every-change"><strong>The docs and the page follow every change.</strong> A feature added, changed or removed is not
+  done until the same commit updates what says it: the developer docs (<code>docs/*.md</code>) it belongs
+  in, the manual (<code>docs/manual-interim.md</code>, until the user guide in <code>guide/</code> replaces it), and
+  the page in <code>site/</code> (the SHORTCUTS row of a key, the FEATURES highlight or grouped item of a
+  feature, translated through po-site/), then <code>python3 tools/build-site-docs.py</code>. Push, then
+  <code>sh tools/publish-site.sh</code> puts it at https://ravving.github.io/; the device's copy follows
+  the next deploy.</li>
+<li id="the-docs-say-what-the-code-does-now"><strong>The docs say what the code does now.</strong> No dates, no history, no measurements of the day,
+  no traps met, no wording from the requests behind a feature: those are kept for the
+  maintainers outside the published docs (<code>ctest -R docs-history</code> enforces the phrases).</li>
+<li><strong>Every new or changed C++ API comes with its QDoc in the same commit</strong>
+  (<a href="writing-code-docs.html">writing-code-docs.md</a>; <code>ctest -R cpp-docs</code>, <code>ctest -R api-docs-current</code>).</li>
+<li><strong>Every release has its translations reviewed</strong> (<a href="translations.html">translations.md</a>).</li>
+</ul>
   </article>
 </main>
 <footer>

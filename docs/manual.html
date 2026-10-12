@@ -3,7 +3,7 @@
   ravving on MIKO: the documentation.
   Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
   SPDX-License-Identifier: GPL-3.0-or-later
-  Rendered from README.md by tools/build-site-docs.py: edit the markdown, not this file.
+  Rendered from docs/manual-interim.md by tools/build-site-docs.py: edit the markdown, not this file.
 -->
 <html lang="en" class="no-js">
 <head>
@@ -37,25 +37,18 @@
     </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
-<li class="on"><a href="manual.html" aria-current="page">The manual</a><ul><li><a href="#build-and-run-on-the-device">Build and run on the device</a></li><li><a href="#sending-to-a-phone">Sending to a phone</a></li><li><a href="#distribution-the-store-appimage">Distribution: the Store AppImage</a></li><li><a href="#run-on-a-desktop">Run on a desktop</a></li><li><a href="#theme">Theme</a></li><li><a href="#sound-sources">Sound sources</a></li><li><a href="#sections-and-the-song">Sections and the song</a></li><li><a href="#ui-rules">UI rules</a></li><li><a href="#languages">Languages</a></li><li><a href="#startup-splash">Startup splash</a></li><li><a href="#exports-and-the-music-player">Exports and the music player</a></li><li><a href="#video-recordings-and-the-computer-link">Video recordings and the computer link</a></li><li><a href="#files">Files</a></li><li><a href="#usb-sticks">USB sticks</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#audio-output">Audio output</a></li><li><a href="#the-recorder">The RECORDER</a></li><li><a href="#the-issues-center">The issues center</a></li><li><a href="#the-audio-graph">The audio graph</a></li><li><a href="#where-ravving-keeps-its-files">Where ravving keeps its files</a></li><li><a href="#environment-variables">Environment variables</a></li><li><a href="#remote-control">Remote control</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#license">License</a></li></ul></li>
-<li><a href="video.html">Video recordings and the computer link</a></li>
-<li><a href="history.html">Undo and redo</a></li>
-<li><a href="bluetooth.html">Bluetooth</a></li>
-<li><a href="scripting-projects.html">Building a project by script</a></li>
+<li class="on"><a href="manual.html" aria-current="page">The manual</a><ul><li><a href="#installing">Installing</a></li><li><a href="#playing-and-editing">Playing and editing</a></li><li><a href="#sample-king">SAMPLE KING</a></li><li><a href="#the-pad-sampler">The PAD SAMPLER</a></li><li><a href="#undo-and-redo">Undo and redo</a></li><li><a href="#sound-sources">Sound sources</a></li><li><a href="#sections-and-the-song">Sections and the song</a></li><li><a href="#languages">Languages</a></li><li><a href="#startup-splash">Startup splash</a></li><li><a href="#exports-and-the-music-player">Exports and the music player</a></li><li><a href="#video-recordings-and-the-computer-link">Video recordings and the computer link</a></li><li><a href="#sending-to-a-phone">Sending to a phone</a></li><li><a href="#files">Files</a></li><li><a href="#usb-sticks">USB sticks</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#audio-output">Audio output</a></li><li><a href="#the-recorder">The RECORDER</a></li><li><a href="#the-issues-center">The issues center</a></li><li><a href="#where-your-files-live">Where your files live</a></li></ul></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">The designs</p><ul>
-<li><a href="sections-plan.html">Sections and the song</a></li>
-<li><a href="sampler-plan.html">SAMPLE KING</a></li>
-<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
-<li><a href="recorder-plan.html">The RECORDER</a></li>
-<li><a href="streaming-plan.html">Streaming</a></li>
-<li><a href="design-reference.html">The design reference</a></li>
-</ul>
 <p class="mono">Under the hood</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
@@ -67,7 +60,6 @@
 <li><a href="testing.html">Testing on the device</a></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
-<li><a href="todo.html">What is pending</a></li>
 </ul>
 <p class="mono">The code</p><ul>
 <li><a href="../api/index.html">API reference</a></li>
@@ -75,13 +67,12 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker">Using ravving <span>/</span> README.md</p>
+<p class="mono doc-kicker">Using ravving <span>/</span> docs/manual-interim.md</p>
 <h1>The manual</h1>
-<p class="doc-blurb">The five pages and what plays on them, the shortcuts, sound sources, presets, templates, sections and the song, exports, files, USB sticks, Bluetooth, the RECORDER, the issues center.</p>
+<p class="doc-blurb">The five pages and what plays on them, the shortcuts, undo, sound sources, presets, templates, sections and the song, exports, LIVE REC, files, USB sticks, Bluetooth, the RECORDER, the issues center.</p>
 
-<p>A groovebox app for the Zynthbox, modelled on <a href="https://easyrave.com" rel="noopener" target="_blank">easyrave.com</a>'s page.
-It replaces zynthbox-qml on the device and starts the same way, but it is a separate program:
-a C++ Qt 6 app on top of libzynthbox, with no Python.</p>
+<p>This is the interim manual: what each page, key and dialog does. A friendlier guide with
+screenshots is on its way.</p>
 <p>Each of the five left-column number keys opens a page:</p>
 <table>
 <thead>
@@ -121,7 +112,7 @@ a C++ Qt 6 app on top of libzynthbox, with no Python.</p>
 <td>5</td>
 <td>Sampler (press 5 again to switch)</td>
 <td>SAMPLE KING · PAD SAMPLER</td>
-<td>libzynthbox's SamplerSynth: four banks of eight slots, or sixteen MPC-style pads on the step keys with takes, pad FX, 16 levels and a shared wave editor</td>
+<td>a sampler: four banks of eight slots, or sixteen MPC-style pads on the step keys with takes, pad FX, 16 levels and a shared wave editor</td>
 </tr>
 </tbody>
 </table>
@@ -129,161 +120,11 @@ a C++ Qt 6 app on top of libzynthbox, with no Python.</p>
 the instruments strip and master; every machine has a mix strip, SOUND MODIFIERS, its
 pattern editor and a SOUND EFFECTS chain; a song is made of SECTIONS that change on the
 bar line, and the whole session lives in projects.</p>
-<p><strong>Status:</strong> every page plays and is saved. Each machine runs on libzynthbox (patterns,
-SyncTimer, the mixer chain, the sampler) with its engine started and wired by ravving; a
-project keeps patterns, sounds, effects, samples and the key, tempo and mix. See
-<a href="architecture.html">docs/architecture.md</a> for the pieces, <a href="engines.html">docs/engines.md</a>
-for the engines and <a href="mpc-sampler-plan.html">docs/mpc-sampler-plan.md</a> for the PAD SAMPLER.</p>
-<h2 id="build-and-run-on-the-device">Build and run on the device</h2>
-<p>The build folders, the build options and how long a build takes are in
-<a href="building.html">docs/building.md</a>: the development build (<code>build/</code>) compiles the QML as
-bytecode with precompiled Qt headers (a clean build 426 s → 190 s), the AppImage's
-(<code>build-release/</code>) compiles it fully; what the device must have is in
-<a href="packaging.html">docs/packaging.md</a>, "What the device needs". The CMake project is split by
-target ("Project layout" there): the top-level <code>CMakeLists.txt</code> holds the project, its options,
-dependencies and install rules; <code>src/backend/CMakeLists.txt</code> the <code>ravving_backend</code> library;
-<code>src/CMakeLists.txt</code> the <code>ravving</code> app with its <code>Ravving</code> QML module (the QML stays in <code>qml/</code>);
-<code>setup/</code> and <code>tests/</code> their own programs.</p>
-<p>What ravving is made of, all taken from the device (nothing is bundled, by the AppImage either): ravving
-runs on the <strong>Zynthbox QtQuick Controls style</strong> (<code>qml-style-zynthbox</code>, picked by name in
-<code>main.cpp</code>, so there is no build-time check: a missing style shows the Basic look and
-unthemed controls), and that style imports <strong><code>io.zynthbox.ui</code></strong> (ZUI, from
-<code>qml-module-zynthbox</code>: Button, CheckBox, Switch, Menu and TextField read their theme from it)
-and the KDE Frameworks it draws with (Kirigami, KSvg, Plasma). The audio engine comes from
-<strong>libzynthbox</strong> (<code>io.zynthbox.components</code>) and <strong>zyncoder</strong>, both loaded at run time. So the
-order is: libzynthbox + zyncoder, qml-module-zynthbox, qml-style-zynthbox, then ravving; on a
-stock Zynthbox they are the installed <code>libzynthbox</code>, <code>qml-module-zynthbox</code> and
-<code>qml-style-zynthbox</code> packages, and a rebuilt module or style must be installed before ravving
-is tried. The music player plays through <strong>Qt Multimedia</strong> (<code>qt6-multimedia-dev</code> to build;
-<code>libqt6multimedia6</code> with its FFmpeg plugin at run time, both on the image; its sound goes
-out through PulseAudio, so ravving's service wants <code>pipewire-pulse.service</code>, which a
-Zynthbox has but leaves off; measured on milo with pw-top, the service and the player's
-stream leave the graph at its 256-frame, 48 kHz quantum with no new xruns, the player's own
-stream running adapted at 1680 frames), and the exports
-use <strong>TagLib</strong> (<code>libtag1-dev</code>), <strong>zlib</strong> and <strong>libsndfile</strong> with its FLAC, Vorbis and LAME
-encoders.</p>
-<p>The sound itself comes from programs and data the Zynthbox image ships, started and wired
-by ravving at run time and bundled by nothing: <strong>jalv</strong> (the LV2 host) with the <strong>LV2
-plugins</strong> the machines and effects name by URI in <code>data/kits.json</code> and <code>src/backend/</code>
-(TAL NoiseMaker, DISTRHO Nekobi, Calf Monosynth, Calf Crusher and Phaser, Dragonfly Room
-Reverb, TAP Echo; <code>tools/lv2probe.sh</code> checks a URI on the device), <strong>FluidSynth 2</strong> for the
-drum kits and the soundfont sound sources, the <strong>soundfonts</strong> under
-<code>/zynthian/zynthian-data/soundfonts</code> (the SFZ Drum Machines kits, <code>SF2 Instruments</code> with
-<code>FluidR3Mono_GM.sf3</code> and <code>ACBass.sf3</code>), and <strong>PipeWire's JACK</strong> (<code>pw-jack</code>) with Zynthbox's
-MIDI routing (ZLRouter, a2j). A machine whose plugin or soundfont is missing starts silent
-and says so in the journal; <code>docs/engines.md</code> has what each engine does and expects.</p>
-<h3 id="build-dependencies">Build dependencies</h3>
-<p>On the device (Debian 13 arm64, as a Zynthbox image is) the build needs, by Debian name:</p>
-<table>
-<thead>
-<tr>
-<th>For</th>
-<th>Packages</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>the toolchain</td>
-<td><code>cmake</code>, <code>ninja-build</code>, <code>g++</code>, <code>pkg-config</code></td>
-</tr>
-<tr>
-<td>Qt 6 (Core, Gui, Qml, Quick, QuickControls2, Concurrent, Network, DBus, Multimedia)</td>
-<td><code>qt6-base-dev</code>, <code>qt6-declarative-dev</code>, <code>qt6-multimedia-dev</code></td>
-</tr>
-<tr>
-<td>Bluetooth (KDE's BluezQt over BlueZ's D-Bus API)</td>
-<td><code>libkf6bluezqt-dev</code></td>
-</tr>
-<tr>
-<td>the audio processors and the graph probe (JACK's API; PipeWire's library at run time)</td>
-<td><code>libjack-jackd2-dev</code></td>
-</tr>
-<tr>
-<td>exports: the audio files, their tags, the .ravv bundles</td>
-<td><code>libsndfile1-dev</code>, <code>libtag-dev</code> (TagLib 2; <code>libtag1-dev</code> on older images), <code>zlib1g-dev</code></td>
-</tr>
-<tr>
-<td>the tools (<code>tools/*.py</code>) and syncing a checkout</td>
-<td><code>python3</code>, <code>rsync</code></td>
-</tr>
-</tbody>
-</table>
-<p>Everything else ravving needs it finds at run time on a stock Zynthbox: libzynthbox and
-zyncoder, <code>qml-module-zynthbox</code> and <code>qml-style-zynthbox</code> with the KDE Frameworks they draw
-with (Kirigami, KSvg, Plasma), <code>libqt6multimedia6</code> with its FFmpeg plugin, PipeWire with
-<code>pipewire-jack</code> (<code>pw-jack</code>), <code>pipewire-bin</code> (<code>pw-loopback</code>, <code>pw-link</code>, <code>pw-dump</code>, <code>pw-top</code>)
-and <code>pipewire-pulse</code> (left off by the image; ravving's service wants it), <code>udisks2</code> and
-<code>util-linux</code> (USB sticks: <code>udisksctl</code>, <code>lsblk</code>), jalv with the LV2 plugins and FluidSynth
-with the soundfonts named below. Bluetooth needs three packages the image lacks,
-<code>bluez-obexd</code>, <code>libspa-0.2-bluetooth</code> and <code>libkf6bluezqt6</code>, plus two drop-ins ravving
-installs: <code>tools/bluetooth-setup.sh</code> does all of it (docs/bluetooth.md).</p>
-<pre><code class="language-sh">tools/device.sh deploy                 # from the laptop: sync, build, install, restart, wait
-# or by hand (rsync without -a: older laptop mtimes would make ninja skip changed files)
-rsync -rlp --checksum --exclude build --exclude .git ./ root@milo.local:/root/ravving/
-ssh root@milo.local
-cd /root/ravving
-cmake -S . -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr
-cmake --build build &amp;&amp; cmake --install build
-systemctl --user daemon-reload
-systemctl --user start ravving        # try it once: stops zynthbox-qml (the services conflict)
-systemctl --user start zynthbox-qml   # and back
-</code></pre>
-<p>To make ravving the device's UI (it starts at boot, and zynthbox-qml is masked so nothing
-brings it back), and to return to stock Zynthbox with nothing of ravving left in systemd:</p>
-<pre><code class="language-sh">/usr/share/ravving/default-app.sh ravving
-/usr/share/ravving/default-app.sh zynthbox           # add --purge to uninstall ravving too
-/usr/share/ravving/default-app.sh status
-</code></pre>
-<p>From the laptop, <code>tools/device.sh default ravving|zynthbox|status</code> does the same.
-<code>default-app.sh run ravving|zynthbox</code> switches for the session only (the boot default stays),
-which is what ravving's own menu offers under POWER → ZYNTHBOX.</p>
-<h2 id="sending-to-a-phone">Sending to a phone</h2>
-<p>Every SEND… button (the FILES browser, VIDEO SAVED, the music player's tracks, the presets
-dialogs, the sound picker) has a third destination beside the USB sticks and the computer:
-<strong>PHONE · QR CODE</strong>. It opens a dialog with a QR code of a link to the file, served by ravving
-itself (<code>FileShare</code>, a one-file HTTP server on port 8098 or the next free one, at a path of
-128 random bits); point the phone's camera app at the screen, open the link it shows, and
-Safari or Chrome saves the file to the phone's Downloads (Files on an iPhone). The phone must
-be on the same Wi-Fi as the device (the link is the device's Wi-Fi address; the dialog says
-when the device is on no network); no pairing, no app and no account are needed, which
-makes it the way to an iPhone (Bluetooth's file push does not exist there). The link lives
-while the dialog is open, 15 minutes at most; closing it stops the server. One file at a
-time: given several, the first one goes and the dialog says so. The dialog shows the link in
-words too (to type it), and WAITING FOR THE PHONE / SENDING n % / DOWNLOADED ✓ as it goes; a
-toast says when the whole file has reached the phone. <code>tools/share-test.sh</code> checks it from
-the laptop (docs/testing.md); over the fifo: <code>call share offer /path/file</code>, <code>get share url</code>,
-<code>get share status</code>, <code>call share stop</code>.</p>
-<p>The same server carries <strong>the ravving page</strong> (<code>site/</code>, the instructions, the features and
-every hardware shortcut): SETTINGS → HELP → OPEN shows its address as a QR code
-(<code>get share helpUrl</code>, <code>http://&lt;device&gt;:8098/help/</code>), since the device has no browser of its
-own; a phone's camera opens it, a laptop types it. The site is installed beside the data
-(<code>share/ravving/site</code>) and served while ravving runs, from any folder under it, nothing above.
-The same page is public at <strong>https://ravving.github.io/</strong> (the dialog's QR code is that one,
-reachable from anywhere; the device's own address is under it for a Wi-Fi without internet):
-<code>tools/publish-site.sh</code> pushes this repository's <code>site/</code> into the <code>ravving/ravving.github.io</code>
-repository, whose workflow deploys it (docs/building.md).</p>
-<h2 id="distribution-the-store-appimage">Distribution: the Store AppImage</h2>
-<p>For everyone else ravving comes from the Zynthbox Store's Apps category as an AppImage built
-on the device (<code>tools/device.sh appimage</code>). The AppImage opens a setup page over Zynthbox
-with four choices: try it, make it the default, Zynthbox at boot again, remove.
-<code>tools/appimage-test.sh</code> builds it and walks all of that on the device as the release check.
-See <a href="packaging.html">docs/packaging.md</a>.</p>
-<p>The QML is compiled into the binary (the <code>Ravving</code> QML module: qmlcachegen bytecode and C++
-for typed bindings), so a QML change is a rebuild like any other, and QML errors show at
-build time. To try QML on the device without rebuilding, copy the <code>qml/</code> folder over and
-start ravving with <code>RAVVING_QML_DIR</code> pointing at it.</p>
-<h2 id="run-on-a-desktop">Run on a desktop</h2>
-<pre><code class="language-sh">cmake -S . -B build -G Ninja &amp;&amp; cmake --build build
-RAVVING_WINDOWED=1 RAVVING_NO_ZYNTHBOX=1 RAVVING_STYLE=Basic ./build/ravving
-# or straight from the source tree's QML, no rebuild between QML edits:
-RAVVING_WINDOWED=1 RAVVING_NO_ZYNTHBOX=1 RAVVING_STYLE=Basic RAVVING_QML_DIR=$PWD/qml ./build/ravving
-</code></pre>
-<p>On a desktop without a terminal, Qt logs to journald; add <code>QT_FORCE_STDERR_LOGGING=1</code> to see
-QML warnings.</p>
-<p>Keys (they send the same events as the device): <code>1</code>–<code>5</code> number keys ·
-<code>q w e r t y u i a s d f g h j k</code> the 16 step keys · arrows · <code>Enter</code> select · <code>Esc</code> back ·
-<code>Space</code> play · <code>Backspace</code> stop · <code>o</code> metronome · <code>m</code> menu · <code>z</code>/<code>x</code>, <code>c</code>/<code>v</code>, <code>b</code>/<code>n</code> knobs 1–3 down/up ·
-<code>,</code>/<code>.</code> big knob.</p>
+<h2 id="installing">Installing</h2>
+<p>ravving comes from the Zynthbox Store's Apps category as an AppImage. The AppImage opens a
+setup page over Zynthbox with four choices: TRY IT, MAKE IT THE DEFAULT, ZYNTHBOX AT BOOT
+AGAIN, REMOVE RAVVING. Projects, takes and recordings stay when ravving is removed.</p>
+<h2 id="playing-and-editing">Playing and editing</h2>
 <p>Shortcuts on the device: <code>ALT</code> + <code>▲</code> jumps to the app header from anywhere; <code>ALT</code> + step
 keys 1–8 toggle the header's LIVE FX in their order (DROP, NO KICK, ONLY KICK, CRUSH, LO
 PASS, HI PASS, STUTTER, LOOP; the keys light orange while ALT is held and the pads show their
@@ -306,7 +147,7 @@ asks again. PROJECT ▾ lists the projects and the demos: a tap opens one (a sec
 there are unsaved changes), a long press or ★ makes it a favourite; its one row of actions
 works on the project open: NEW, TEMPLATES, IMPORT | SAVE AS NEW | EXPORT. The pointer is shown
 only while a mouse is plugged in.</p>
-<p><strong>Undo</strong> (docs/history.md): the header's ↶ ↷ (and ALT + ◀ ▶ on the machine pages) walk the
+<p><strong>Undo</strong>: the header's ↶ ↷ (and ALT + ◀ ▶ on the machine pages) walk the
 project's timeline back and forth, a change that touched several machines at once (CLEAR ALL,
 a key change snapping the bass and the lead) being one step; a machine's toolbar ↶ ↷ undo
 that machine's own changes only. Patterns and slots are undone, and so is the arrangement:
@@ -359,95 +200,140 @@ with its knob badges (the big knob stays the volume; a focused dial group keeps 
 <p>They move with the note (▲ ▼ ◀ ▶ in SELECT), are one UNDO a detent, and are kept with the project
 and in a saved pattern preset (the chart's <code>HOLD</code> lane, and <code>VELOCITY</code> and <code>NUDGE</code>, by step: a
 velocity, a % of a step).</p>
-<p><strong>SLOTS</strong> (chords page) composes with whole chords, after easyrave's: tap a slot, play a chord
+<p><strong>SLOTS</strong> (chords page) composes with whole chords: tap a slot, play a chord
 key (the next slot arms itself), set each slot's length (1, 2, 4 or 8 bars, never past the
 pattern's eight in all: "n / 8 BARS"); the slots write the chord pattern and PLAY plays them
 in order, the slot playing lit with its bar. ＋ adds four more slots (up to eight), − takes
 them away. The slots generate the pattern: once the CHORDS or NOTES view changes it, the view
 says PATTERN CHANGED and dims the slots, and editing a slot rebuilds from them (UNDO brings
 the edits back).</p>
-<h2 id="theme">Theme</h2>
-<p>ravving wears one theme, fixed in code: <code>RAVVING_THEME</code> in the top-level CMakeLists.txt names the folder
-under <code>data/plasma/desktoptheme/</code> that ships with the app (<code>ravving-theme</code>: the Miko theme).
-The app makes its bundled <code>config/plasmarc</code> its only plasmarc, so neither zynthbox-qml's
-theme chooser (<code>~/.config/plasmarc</code>) nor any user file can change it; the journal line
-<code>ravving: theme …</code> says what a run wears. To change the look, change the theme folder or
-<code>RAVVING_THEME</code>, and rebuild.</p>
+<h2 id="sample-king">SAMPLE KING</h2>
+<p>Page 5 holds two samplers. Press 5 again to swap between SAMPLE KING and the PAD SAMPLER;
+ravving remembers which one you used.</p>
+<p>SAMPLE KING gives you four banks (A to D) of eight slots, and each bank has its own pattern.
+The bank on screen is the one that plays.</p>
+<ul>
+<li id="get-a-sound-in"><strong>Get a sound in.</strong> Pick a slot (its row in the grid) and hit LOAD to choose one of your
+  samples. Or record one: ● REC records the device's input straight into the slot, ● again
+  stops, and the take lands there trimmed to its last burst of sound. INPUT sets up what's
+  plugged in, the gain and the monitor.</li>
+<li id="shape-it"><strong>Shape it.</strong> Drag the start and end handles on the waveform (or use knobs 1 and 2 once the
+  waveform has the focus), set PITCH up to 12 semitones up or down, and flip REVERSE to play it
+  backwards. A slot plays one-shot: hitting it again cuts the last hit off.</li>
+<li id="chop-it"><strong>Chop it.</strong> CHOP and AUTO CHOP open the wave editor and spread the pieces over a bank's
+  slots (see <a href="#the-wave-editor">the wave editor</a> below).</li>
+<li id="play-it"><strong>Play it.</strong> Each row of the step grid is a slot, with an accent row under them, and knobs
+  1–3 set the selected row's mute, solo and level, just like the drums. Turn LIVE on and step
+  keys 1–8 play the slots, with key 9 held for accents. A MIDI keyboard plays them too.</li>
+</ul>
+<h2 id="the-pad-sampler">The PAD SAMPLER</h2>
+<p>Sixteen pads in four banks (A to D), laid out like an MPC. Pick a pad on screen and its sample,
+its tools and its settings show up beside the pads; its 16 steps sit underneath.</p>
+<ul>
+<li id="get-a-sound-in-2"><strong>Get a sound in.</strong> LOAD picks a sample for the pad. ● REC records the input into it; with
+  SMART on, the take stops by itself once the sound goes quiet, and the pad gets it trimmed to
+  its last burst. COPY copies a pad onto another, CLEAR empties it, and ERASE removes the pad's
+  hits from the pattern.</li>
+<li id="how-it-plays"><strong>How it plays.</strong> NOTE ON plays the pad only while you hold it; with it off, a tap plays the
+  whole sample (one-shot). LOOP loops it from the loop point, REVERSE plays it backwards, and
+  MUTE silences it (UNMUTE ALL brings every pad back).</li>
+<li id="tweak-it"><strong>Tweak it.</strong> The tabs TRIM, MIX, AMP ENV, TUNE, PLAY and FILTER each put three settings on
+  knobs 1–3, and ◀ ▶ switch tabs. That's the start and end, the volume and pan, the attack and
+  decay, the tuning (semitones, then fine), mono or poly with a mute group, and a filter with
+  its type, cutoff and resonance.</li>
+<li id="play-it-live"><strong>Play it live.</strong> Turn LIVE on and the 16 step keys become the 16 pads. A tap plays a pad; hold
+  one for half a second and it latches, looping until you tap it again. STOP ends every latched
+  loop.</li>
+<li id="pad-fx"><strong>PAD FX.</strong> While a pad plays, hold ECHO, TAPE STOP, SCRATCH, STUTTER, SKIP or REVERSE to throw
+  an effect on it. Let go and it's back to normal.</li>
+<li id="16-levels"><strong>16 LEVELS.</strong> Switch 16 LVL on and all sixteen pads play the pad you had selected, spread by
+  TYPE: VELOCITY (soft to hard), TUNE (a semitone per pad) or SCALE (up your project's scale).
+  The kit's SOUND MODIFIERS set the kit's volume and tuning for every pad.</li>
+</ul>
+<h3 id="the-wave-editor">The wave editor</h3>
+<p>Both samplers share it. CHOP cuts a sample into pieces three ways: REGIONS (equal slices),
+THRESHOLD (at the hits louder than a level) and MANUAL (tap the wave to add a cut, tap a cut to
+remove it). AUTO CHOP opens it straight on the hits. ◀ ▶ change the chop type, the big knob
+sets the slices or the threshold, NORMALISE raises the sample to full level, TRIM cuts the
+silence at both ends, and APPLY sends the pieces to a bank's slots or to the pads.</p>
+<h2 id="undo-and-redo">Undo and redo</h2>
+<p>The project has one history. The header's ↶ ↷ (and ALT + ◀ ▶ on the machine pages) walk it
+back and forth, and a toast names each step ("UNDO · CHORDS + BASS"). A machine's own ↶ ↷ on
+its pattern toolbar undo that machine's last change only, wherever it is in the history.</p>
+<ul>
+<li><strong>What is undone:</strong> every machine's notes, steps, chords, slots, accents, slides, lengths,
+  automation and live timing, and the arrangement: which sections there are, their order,
+  names, colours and lengths, and the song. A section removed comes back whole, in its place.</li>
+<li><strong>What is not:</strong> the sounds, the mix, the effects and the project's settings (tempo, swing,
+  key). Picking a section is not a step either.</li>
+<li><strong>One step:</strong> a change that touches several machines at once (CLEAR ALL, a key change that
+  snaps the bass and the lead) is one step; so are quick changes in a row (a knob turning, a
+  handle dragged) and a whole recorded take.</li>
+<li>The history keeps the last 100 steps, and starts afresh when a project is opened or a new
+  one begins.</li>
+</ul>
 <h2 id="sound-sources">Sound sources</h2>
 <p>Bass, lead and chords can sound like something other than their synth: a tap on the
 nameplate opens the machine's sounds, its own engine first (the 303, Calf Monosynth, TAL
 NoiseMaker and its factory sounds) and then soundfont instruments played by FluidSynth
-(an upright and other basses, Rhodes, vibes, organ, strings, sax, flute…; the list is
-<code>sources</code> in <code>data/kits.json</code>, from the device's General MIDI and instrument soundfonts).
-Choosing one stops the engine and starts the other in its place, wired the same way; a
+(an upright and other basses, Rhodes, vibes, organ, strings, sax, flute…, from the device's
+General MIDI and instrument soundfonts). Choosing one stops the engine and starts the other in
+its place; a
 soundfont source has SOUND MODIFIERS of its own (FILTER, ENVELOPE, MOTION). The choice is
 kept with the project. Acoustic sources for jazz and the like: <strong>Grand piano</strong> (Fazioli) and
 <strong>Upright piano</strong> (Kawai) and a <strong>Jazz guitar</strong> on CHORDS, <strong>Alto</strong> and <strong>Tenor sax</strong> and a
 <strong>Grand piano</strong> on LEAD, the <strong>Upright</strong> on BASS.</p>
 <p>The drum machines' kit picker has an ACOUSTIC group: General MIDI kits picked inside
 FluidR3's font (<strong>Jazz</strong> and <strong>Brush</strong> with the ride and the hi-hat foot on their rows, or
-with the crash; <strong>Standard</strong>, <strong>Room</strong>; <code>presetKits</code> in <code>data/kits.json</code>, see
-docs/engines.md). Bass and lead notes can last longer than a step (a long press on a cell
-stretches the row's note up to it; <code>setNoteLength</code> by script), and the header's swing,
+with the crash; <strong>Standard</strong>, <strong>Room</strong>). Bass and lead notes can last longer than a step (a long press on a cell
+stretches the row's note up to it), and the header's swing,
 tapped on its caption, swings the 8ths as jazz does (SWING 8) or the 16ths (SWING 16).</p>
 <p id="pattern-presets-with-their-sound-and-mods"><strong>Pattern presets with their sound and MODS.</strong> SAVE CURRENT AS NEW in the presets dialog
-(PRESET on a pattern toolbar) keeps the machine's sound with the pattern, under the preset's
-optional <code>"sound"</code> next to its <code>"chart"</code>: a subset of the machine's sound state (<code>soundSource</code>,
-<code>soundPreset</code>, the MODS <code>sound</code>, <code>sourceSound</code> and <code>sourceSounds</code>; the drums' <code>kit</code> and the
-kit's MODS). SAVE PATTERN AS has <strong>WITH ITS SOUND</strong> (the source or kit playing, its factory
-sound) and <strong>WITH ITS MODS</strong> (the MODS that are set: one nobody turned is left out,
-PresetLibrary::setParts), both on each time it opens; both off, the pattern alone. A curated
-pack may name just a source or a kit, or add MODS too (<code>data/secret/patternkit.py</code>). Such
+(PRESET on a pattern toolbar) keeps the machine's sound with the pattern, its source or factory sound, its MODS, or for the drums the kit and the kit's MODS. SAVE PATTERN AS has <strong>WITH ITS SOUND</strong> (the source or kit playing, its factory
+sound) and <strong>WITH ITS MODS</strong> (the MODS that are set: one nobody turned is left out), both on each time it opens; both off, the pattern alone. A curated
+pack may name just a source or a kit, or add MODS too. Such
 presets say ♪ and the sound's name under their genre, "+ MODS" when they keep MODS, and the
 dialog then shows <strong>WITH ITS SOUND</strong> and <strong>WITH ITS MODS</strong> (off by default, remembered in the
 profile under <code>presets/withSound</code> and <code>presets/withMods</code>): loading one also switches the
-machine to its sound, and sets its MODS, only the parts the preset names
-(PresetLibrary::soundParts, Machine::applySoundParts, the path MY SOUNDS takes): a preset with
+machine to its sound, and sets its MODS, only the parts the preset names (as MY SOUNDS does):
+a preset with
 no MODS leaves the machine's MODS as they are. Turning SOUND on turns MODS on too (a sound is
 heard with its MODS); MODS then turns off on its own, and on alone it brings a preset's MODS to
-the sound already playing. Both off, only the pattern loads, as before. A source or kit this device does not have leaves that part of the
-sound as it is (one line in the log). The samplers' presets keep no sound (theirs is in their
+the sound already playing. Both off, only the pattern loads. A source or kit this device does not have leaves that part of the
+sound as it is. The samplers' presets keep no sound (theirs is in their
 banks), nor do the shipped ones; a preset copied to a stick carries its sound in its file.
 Beside it, <strong>WITH ITS BARS</strong> (on by default, <code>presets/withBars</code>): off, a preset keeps the
 pattern's bar count instead of bringing its own, laid over it from the first bar (a shorter
-preset repeats to fill it, a longer one is cut; PresetLibrary::fitChart), so the bar pages
+preset repeats to fill it, a longer one is cut), so the bar pages
 stay as they are.
 The presets dialog is organised as the sound pickers are: a GROUP chip per genre, SORT (as
 listed / A–Z) and ★ favourites (a long press, the ★ at a preset's corner, ALT + SELECT), kept
-per library (<code>favourites/presets-drums</code>, <code>-bass</code>…) by the preset's name, so a stick's preset
+per instrument by the preset's name, so a stick's preset
 and the same one taken in share their ★; it opens on ALL when the group last shown would hide
 the preset on screen.</p>
-<p>A whole project can be built by script over the remote-control fifo, samples, patterns,
-sounds and all: <code>tools/examples/lofi-say-it.sh</code> is one, <code>docs/scripting-projects.md</code> the
-recipe.</p>
 <p id="templates"><strong>Templates.</strong> PROJECT ▾ → TEMPLATES (beside NEW) lists project templates: a template is how a
 project starts, its tempo, swing, key (root and scale) and LIVE FX knobs (PHASER, ECHO, HEAVY).
-SOURCE picks the device's or a USB stick's (read straight from its <code>ravving/presets/templates/</code>),
-as the pattern presets' dialog does. Choosing one is NEW with those set (asking first over
+SOURCE picks the device's or a USB stick's (read straight from its <code>ravving/presets/templates/</code>
+folder), as the pattern presets' dialog does. Choosing one is NEW with those set (asking first over
 unsaved changes, as NEW does). SAVE TEMPLATE keeps the session's own as one of the device's
-(DELETE removes it); the USB dialog's PRESETS copies templates either way. Every genre pack in
-<code>data/secret</code> ships one beside its patterns (or more: the Vuelo pack has one per key).</p>
+(DELETE removes it); the USB dialog's PRESETS copies templates either way. Every genre pack ships one beside its patterns (or more: the Vuelo pack has one per key).</p>
 <p id="a-new-project-starts-clean"><strong>A new project starts clean.</strong> NEW, and NEW from a template, put every page back to its
 defaults: an empty pattern on each machine (no preset loaded), its own engine and the default
 sound, mix, MODS and SOUND EFFECTS, one section "A", the LIVE FX at rest; a template sets only
-its tempo, swing, key and LIVE FX knobs on top (<code>Studio::cleanProjectState</code>). The shipped demo
+its tempo, swing, key and LIVE FX knobs on top. The shipped demo
 patterns come back only through a project or a preset.</p>
 <p id="demos"><strong>Demos.</strong> Ravving ships three projects to open from PROJECT ▾ → DEMOS: <strong>Autumn Leaves</strong>
 (a jazz trio and alto sax at 146 BPM, swung 8ths, sections A1 A2 B C and a solo chorus) and
 <strong>5AM</strong> (dark electronic pop at 188 BPM in D harmonic minor over Dm – Gm – A – Dm, the changes
 of Grimes' "4ÆM", everything else written for ravving: a 909 two-step on a breakbeat, an
 acid bass, a pumping pad and a lead hook, in six sections with a four-bar HUSH before the
-last drop; its generator is <code>tools/examples/five-am/</code>) and <strong>B3rlin</strong> (dark techno at 135 BPM
-in G Phrygian after Native Instruments' dark techno and Minimal Audio's hard techno write-ups:
-a 909 floor with light layers of drive on the kick, the 909's ride and a rim on a three-bar
+last drop) and <strong>B3rlin</strong> (dark techno at 135 BPM in G Phrygian: a 909 floor with light layers of drive on the kick, the 909's ride and a rim on a three-bar
 loop, the 808's toms on a five-bar one, a sidechained bass rumble, a filtered lead sequence
 falling a minor second, a sinister pad and a stab; INTRO · RUMBLE · RIDE · PEAK ×2 · BREAK
-(no kick, the bass on, a snare roll) · PEAK ×2 · OUTRO; <code>tools/examples/b3rlin/</code>). They live in <code>data/demos/</code> (installed
-read-only beside kits.json) and use only the image's own soundfonts, so they play the same on
+(no kick, the bass on, a snare roll) · PEAK ×2 · OUTRO). They are installed read-only with
+ravving and use only the image's own soundfonts, so they play the same on
 any Zynthbox. A demo opens like a project; SAVE keeps the changes as a project of the user's
-under the demo's name, the demo itself never changes, and it cannot be deleted. A new demo is
-a project JSON dropped into <code>data/demos/</code> that names no sample or file outside
-<code>/zynthian/zynthian-data</code>.</p>
+under the demo's name, the demo itself never changes, and it cannot be deleted.</p>
 <h2 id="sections-and-the-song">Sections and the song</h2>
 <p>A song is more than one loop. A <strong>section</strong> holds every machine's pattern at once (an intro,
 a verse, a bridge) and which machines rest in it; the sounds, effects, levels, tempo and key
@@ -473,13 +359,11 @@ one on screen is the one you edit, and what you edit stays in it when you pick a
   leaves the queue, the one playing picked empties it, a fourth pick is refused (QUEUE FULL),
   stopping puts the first in place and drops the rest. In SONG one pick waits, a new one
   taking its place.
-  There is no BEAT: libzynthbox's playfield swaps clips on a bar line only.</p>
+  A switch always lands on a bar line, never on a beat.</p>
 </li>
 <li id="switching-on-the-bar-line"><strong>Switching on the bar line.</strong> A section picked while the transport plays takes over on the
-  next bar, sample-accurately: each machine writes it into its track's other clip and
-  libzynthbox swaps the two on the bar's first tick, so no note drops or doubles (a machine
-  whose part does not change keeps playing). Stopped, a pick is immediate. Measured with
-  <code>tools/sections-test.sh</code>: every change on a bar line, every 8th on the grid.</li>
+  next bar, sample-accurately, so no note drops or doubles (a machine whose part does not
+  change keeps playing). Stopped, a pick is immediate.</li>
 <li id="the-plate"><strong>The plate.</strong> The header's project plate wears the section on screen as a square key with
   its number, in its colour, blinking while it waits for the bar; a tap opens the SONG page.</li>
 <li><strong>X and Y</strong> (the two keys beside the big knob) go to the previous and the next section from
@@ -501,7 +385,7 @@ one on screen is the one you edit, and what you edit stays in it when you pick a
   the bar line) the plate sweeps in its colour and the instrument page glows round its frame in
   it, once; the section keys (here and on the SONG page) fill with the section's progress.</li>
 <li><strong>The SONG page</strong>, under the header like the MIXER (ALT + 1 from anywhere, again to go back),
-  wears its own nameplate as an instrument does and follows easyrave's SECTIONS shelf at a
+  wears its own nameplate as an instrument does and lays the sections out at a
   finger's size, in a frame as the instruments' grids: square keys wearing their number with the name under (eight a row, the first
   row being the ALT keys), a dot per sounding machine; tap picks, double tap renames, hold and
   drag moves, × deletes (a second tap), ＋ copies the section on screen (A → A′). Under them:
@@ -519,43 +403,28 @@ whenever the music plays (LOCK, below); unlocked, an edit goes into the section 
 ▶ PLAY FROM HERE starts it at any block; a section picked by hand while it plays
 jumps to its first part (one the song does not have goes back to LOOP). EXPORT → WHAT: SONG
 records the whole song in one take, its own length plus the tail; LOOP is BARS × LOOPS.</p>
-<p>Up to 16 sections; saved with the project (a project from before opens as one section, "A").
-The design and what each phase measured: <a href="sections-plan.html">docs/sections-plan.md</a>.</p>
+<p>Up to 16 sections, saved with the project.</p>
 <p>CHORDS also carries the image's pad soundfonts, grouped by name in its picker: <strong>Strings</strong>
 (Ensemble, Fat, Digital, Rise, Bowed, Piano), <strong>Organ</strong> (Phaser,
 Pipe 16+8+4, House, Extreme) and <strong>Alien</strong> (the "Ambients &amp; Drones" fonts: The Thing, Strange
-voices, Crystal voice, Glassy, Winds, Chaos, The Pulse), each a FluidSynth preset from
-<code>/zynthian/zynthian-data/soundfonts</code>. A sustained, polyphonic machine suits them: the chords
-hold while the voicing lasts, and the key keeps them in tune with the bass and lead. <code>tools/soundfont.py categorise --json FONT…</code> proposes entries for more fonts. The
+voices, Crystal voice, Glassy, Winds, Chaos, The Pulse), each from the device's own soundfonts. A sustained, polyphonic machine suits them: the chords
+hold while the voicing lasts, and the key keeps them in tune with the bass and lead. The
 sound pickers group their lists (GROUP chips, ★ for the favourites you mark with the star or
 ALT + SELECT, SORT as listed or A–Z) and remember the group and sort per instrument.</p>
-<h2 id="ui-rules">UI rules</h2>
-<p>ravving's screens share one look (easyrave's machines: rails and a face in their own finish,
-controls grouped on strips, work areas in wells, a dark header band). <code>docs/ui-rules.md</code> has the
-rules: squared <code>ActionButton</code>s for actions and rounded chips for states, one ✕ (<code>CloseButton</code>) to
-leave and no CLOSE / CANCEL buttons, an <code>EmptyNote</code> in every empty view, <code>Chassis</code> / <code>PageHeader</code>
-for pages, and palettes readable by WCAG contrast. <code>tools/check-ui.py</code> checks them
-(<code>ctest -R ui-rules</code>, <code>tools/static-analysis.sh ui</code>) from <code>tools/ui-rules.json</code>, where new rules go.</p>
 <h2 id="languages">Languages</h2>
 <p>ravving speaks English, Spanish and Japanese, with the words musicians use in each (BATERÍA,
 BOMBO, COMPÁS; ドラム, キック, 小節). MENU → SETTINGS → LANGUAGE: SYSTEM (the default) follows
 the device's own language, or pick English, Español or 日本語; the screen changes at once. The
 keys printed on the device (MENU, ALT, SELECT…) and the machines' names stay as printed. The
 webpage has Spanish and Japanese pages too (the switcher in its top bar); the docs are in
-English. It is KI18n with gettext catalogs: one catalog per language for the app (po/) and one
-for the page (po-site/), so a new language is two files to translate. <strong>Every release has its
-translations reviewed.</strong> <code>docs/translations.md</code> has how it works, the glossary and the steps.</p>
+English.</p>
 <h2 id="startup-splash">Startup splash</h2>
-<p>ravving shows its logo while it starts (StartupSplash, qml/Splash.qml and SplashLook.qml), from
-the moment libzynthbox is up until the page is ready, then plays a short show into the page.
+<p>ravving shows its logo while it starts, until the page is ready, then plays a short show into
+the page.
 MENU → SETTINGS → STARTUP picks the look, from the next start: ANIME (fast cuts through the five
 flow-lens logos into the glow one), GLOW (one at random, its halo swelling), STILL (one at random,
-a fade), ZOOM (the fluid logo rushing out past the screen) or OFF. While the studio loads the
-splash is a still picture: an animation meanwhile kept the screen redrawn every frame and made the
-start 2–3 s longer on milo; with the still it costs about 0.2–0.35 s. The show plays in the page's
-own window (kwin keeps a full-screen window above a "stay on top" one). The logos are the effect
-SVGs drawn without their backgrounds (data/branding/make-splash.sh); the album art's wordmark is
-data/branding/ravving-wordmark.svg.</p>
+a fade), ZOOM (the fluid logo rushing out past the screen) or OFF. While the studio loads, the splash is a still
+picture, so the start stays quick.</p>
 <h2 id="exports-and-the-music-player">Exports and the music player</h2>
 <p>PROJECT ▾ → EXPORT writes the project out of the device, into the library's <code>exports/</code> folder:</p>
 <ul>
@@ -582,7 +451,7 @@ WHAT, a VIDEO (the screen or a USB camera with the master's sound, an MP4 in the
 exports folder), whether the MIC is in, and START (the dialog is the confirmation, so a
 stray tap never starts a recording; ending one is a single tap; a new project switches
 LIVE REC off). While LIVE REC is on, the device's RECORD key starts a recording and STOP
-ends it (the music goes on), from any page; SETTINGS · VIDEO has the QUALITY (three tiers measured at 0 xruns), the TIMER counted down before a
+ends it (the music goes on), from any page; SETTINGS · VIDEO has the QUALITY (three tiers, none of which costs the sound a thing), the TIMER counted down before a
 recording, the SOURCE, MIC (the RECORDER's input in the video's sound) and VOICE, the
 voice-over mix: while the mic carries a voice the music ducks under it (DUCK −6 / −12 / −18
 dB, −12 by default) and the voice is lifted (+6 / +12 dB) and made crisp (a low cut and a
@@ -601,8 +470,26 @@ and the export dialog can send a new track or bundle to a computer as it is writ
 <p>SETTINGS · COMPUTERS holds any number of computers (laptops or PCs on the network, over
 SSH): ADD A COMPUTER asks for its host, user and password, the password is used once to
 install the device's one key there, and files land in that computer's Downloads folder; each
-has CHANGE (set up again, TEST, FORGET). <code>docs/video.md</code> has the design, the measurements
-and the tests (<code>tools/video-test.sh</code>, <code>tools/video-voice-check.sh</code>, <code>tools/computer-link-test.sh</code>).</p>
+has CHANGE (set up again, TEST, FORGET).</p>
+<h2 id="sending-to-a-phone">Sending to a phone</h2>
+<p>Every SEND… button (the FILES browser, VIDEO SAVED, the music player's tracks, the presets
+dialogs, the sound picker) has a third destination beside the USB sticks and the computer:
+<strong>PHONE · QR CODE</strong>. It opens a dialog with a QR code of a link to the file, served by ravving
+itself at a random, unguessable address; point the phone's camera app at the screen, open the link it shows, and
+Safari or Chrome saves the file to the phone's Downloads (Files on an iPhone). The phone must
+be on the same Wi-Fi as the device (the link is the device's Wi-Fi address; the dialog says
+when the device is on no network); no pairing, no app and no account are needed, which
+makes it the way to an iPhone (Bluetooth's file push does not exist there). The link lives
+while the dialog is open, 15 minutes at most; closing it stops the server. One file at a
+time: given several, the first one goes and the dialog says so. The dialog shows the link in
+words too (to type it), and WAITING FOR THE PHONE / SENDING n % / DOWNLOADED ✓ as it goes; a
+toast says when the whole file has reached the phone.</p>
+<p>The same server carries <strong>the ravving page</strong> (the instructions, the features and every
+hardware shortcut): SETTINGS → HELP → OPEN shows its address as a QR code
+(<code>http://&lt;device&gt;:8098/help/</code>), since the device has no browser of its own; a phone's camera
+opens it, a laptop types it. The same page is public at <strong>https://ravving.github.io/</strong> (the
+dialog's QR code is that one, reachable from anywhere; the device's own address is under it
+for a Wi-Fi without internet).</p>
 <h2 id="files">Files</h2>
 <p>The control center's FILES card browses everything in the library by kind (projects,
 templates, presets, samples, takes, the RECORDER's takes, recordings, tracks, bundles,
@@ -612,20 +499,19 @@ place files leave the device or are deleted; the PROJECT dialog opens, saves and
 and the USB page brings a stick's files in. <strong>PHONE · BROWSE</strong> in its header shows a QR code
 of the same library as pages for a phone (or a laptop) on the Wi-Fi: every kind with its
 count, each kind's files with their detail, size and date, and a DOWNLOAD per file, served
-by ravving itself (<code>FileShare.openBrowse</code>, a random path that lives until 15 minutes pass
-with no request from the phone, the dialog closed or not; <code>get share browseUrl</code> over the
-fifo); a project or anything that is a folder is listed as "on the device"; a link that ran
+by ravving itself (the link lives until 15 minutes pass with no request from the phone,
+the dialog closed or not); a project or anything that is a folder is listed as "on the device"; a link that ran
 out says so on the phone.</p>
 <h2 id="usb-sticks">USB sticks</h2>
 <p>A stick plugged in shows up as a USB row in the export dialog (a Zynthbox
 runs udisks but mounts nothing by itself; ravving mounts the stick when it needs it): the
 track or bundle is written to the library as always and copied to the stick's <code>ravving/
 exports/</code> or <code>ravving/projects/</code> folder, then EJECT (in the dialog or on the USB page)
-flushes, unmounts and powers it off so it can be pulled. PROJECT ▾ → TO USB bundles the
-highlighted saved project onto the stick, and IMPORT lists the bundles found on every stick
-(its <code>ravving/projects/</code> and its root) beside the device's own. The project dialog also keeps
-favourites (★, a long press).</p>
-<p>The drawer's USB card opens the <strong>USB page</strong> (<code>usb</code>, UsbLibrary): ON USB lists what the stick
+flushes, unmounts and powers it off so it can be pulled. To put a saved project on a stick,
+send it from FILES (SEND… bundles it for the stick); PROJECT ▾ → IMPORT lists the bundles found
+on every stick (its <code>ravving/projects/</code> and its root) beside the device's own. The project
+dialog also keeps favourites (★, a long press).</p>
+<p>The drawer's USB card opens the <strong>USB page</strong>: ON USB lists what the stick
 holds by kind (SAMPLES, SOUNDFONTS, PROJECTS, TRACKS, MIDI FILES: found anywhere on it, its
 <code>ravving/&lt;kind&gt;</code> folders first, system folders skipped), each with IMPORT (✓ ON DEVICE once the
 library has it); FROM DEVICE lists the library's, each with TO USB. Samples land in
@@ -635,10 +521,8 @@ import. One copy at a time, through a part file, a copy onto the stick synced be
 The presets dialog (a pattern toolbar's PRESET) has a SOURCE row when a stick is in: DEVICE,
 or USB · <stick>, which lists that machine's pattern presets in the stick's
 <code>ravving/presets/&lt;drums|bass|lead|chords&gt;/patterns</code> and plays the one picked straight from
-there, without taking it in (usb.patternPresets / usb.loadPattern; one UNDO puts the pattern
-back). The dialog opens on the source the pattern on screen came from (the stick a preset was
-played from, while it is in), with that preset marked. <code>data/secret/jazz-presets/</code> (not installed) builds a pack laid out that way: five jazz
-patterns for each of the drums, the bass, the lead and the chords, to copy to a stick.
+there, without taking it in (one UNDO puts the pattern back). The dialog opens on the source the pattern on screen came from (the stick a preset was
+played from, while it is in), with that preset marked.
 IMPORT ALL beside the folder path brings every new file of the folder on screen and its
 folders in one go (a sample pack is one tap: IMPORTING 12 / 229 · STOP, one look through the
 stick and one message at the end; 229 samples in well under a minute).
@@ -648,40 +532,29 @@ open. A read-only stick (an installer's ISO image, a locked stick) says so: noth
 to copy to it, exports and TO USB skip it, and its page shows FORMAT, which erases the whole
 stick into one writable FAT32 partition labelled RAVVING (EJECT and FORMAT both want a second
 press within three seconds).</p>
-<p>A soundfont brought in is used at once (Studio.refreshImported, also at every start): one that
+<p>A soundfont brought in is used at once: one that
 looks like a drum kit (three drum roles or more in its sample names) joins the kit picker under
 IMPORTED, and every preset of every imported font is a chords / bass / lead source,
 "<font> · <preset>", grouped by font in the sound pickers.</p>
 <h2 id="bluetooth">Bluetooth</h2>
-<p>MENU → BLUETOOTH works the way a phone's does: the switch, SCAN (a short scan of classic
+<p>MENU → BLUETOOTH has the switch, SCAN (a short scan of classic
 devices; it starts on its own only while no speaker plays, since a scan breaks up a
-playing Bluetooth link on the Pi's shared radio), and VISIBLE (milo can be found for three
+playing Bluetooth link on the Pi's shared radio), and VISIBLE (the device can be found for three
 minutes, so a phone can send it a file); the devices connected first, then paired, then in
 range. A tap on one opens its row: PAIR (a passkey to confirm or a PIN to
 type is asked in the head), CONNECT / DISCONNECT, SEND… (an exported track or bundle, picked
 next; the progress runs along the bottom), PLAY THROUGH for a speaker or headphones (the
 whole studio's sound switches to it, DEVICE OUTPUT brings it back; the same choice sits in
 the drawer's AUDIO OUTPUT card with the jacks and HDMI) and FORGET. Files sent to
-milo land in the library's <code>incoming/</code> folder: a bundle shows in PROJECT ▾ → IMPORT, a track in
-the music player under "Received". Built on KDE's BluezQt over BlueZ; sound through PipeWire's
-Bluetooth plugin (<code>libspa-0.2-bluetooth</code>) and files through <code>bluez-obexd</code>, both installed on
-the image by ravving's setup. Ravving also ships the drop-in that lets <code>bluetooth.service</code>
-start at all on a Zynthbox (its own drop-in names a bluetoothd path Debian 13 moved), and a
-WirePlumber drop-in that lets its Bluetooth monitor run without a logind seat. The whole
-setup, with its checks and the troubleshooting table, is <code>docs/bluetooth.md</code>;
-<code>tools/bluetooth-setup.sh</code> applies it to a device.</p>
-<p>Connecting behaves like a phone too. A speaker that does not answer (asleep, waking up, or
-busy with a phone) is paged again three more times over about 35 s (the row reads
-"waking…"; DISCONNECT from the fifo stops it) before COULD NOT CONNECT. One audio device plays
-at a time: BlueZ keeps one A2DP endpoint per codec for every device, and PipeWire registers
-one SBC source, so while the Sony headphones stream SBC an SBC-only speaker (the LG SJ1)
-cannot set up its audio (bluetoothd logs "Unable to select SEP", the call fails with
-br-connection-create-socket) however often it is retried. A device that answered but could
-not connect while another audio device is connected is therefore handed the link: SWITCHING
-FROM · the other device, which is disconnected, and the connection is made again. PLAY
-THROUGH routes once the connection is made. When Bluetooth comes on (a start, the switch) the
-output kept is connected again, once, if nothing else plays; ravving never pages in a loop,
-since a speaker in standby wakes up when paged.</p>
+the device land in the library's <code>incoming/</code> folder: a bundle shows in PROJECT ▾ → IMPORT, a track in
+the music player under "Received". A stock Zynthbox needs a little setup for Bluetooth, which
+ravving's setup applies.</p>
+<p>A speaker that does not answer (asleep, waking up, or busy with a phone) is called again
+three more times over about 35 s (the row reads "waking…"; DISCONNECT stops it) before COULD
+NOT CONNECT. One audio device plays at a time: connecting a second one while another plays
+hands the sound over (SWITCHING FROM · the other device, which is disconnected). PLAY THROUGH
+routes once the connection is made. When Bluetooth comes on (a start, the switch) the output
+kept is connected again, once, if nothing else plays.</p>
 <p>MENU → MUSIC PLAYER (and DASHBOARD to come back) is a full-screen player for the exported
 tracks and the ● recordings: TRACKS (sorted), ALBUMS and ARTISTS on the left, the cover,
 transport, position and volume on the right over the QUEUE. Keys 1 2 3 switch the views, ▲ ▼
@@ -689,32 +562,22 @@ pick, SELECT plays, PLAY pauses, STOP stops, the big knob is the volume and knob
 BACK leaves. Opening the player stops the transport and leaving it stops the player.</p>
 <h2 id="audio-output">Audio output</h2>
 <p>MENU → AUDIO OUTPUT picks where the studio's sound goes: the device's jacks (the default),
-HDMI, or any Bluetooth speaker or headphones connected in the BLUETOOTH dialog. The jacks
-stay the JACK graph's clock whatever is chosen; another output is fed through a loopback
-of ravving's own with a 2048-frame buffer, the master's output linked to it and the jacks
-muted (not unlinked: an unlinked jacks sink is suspended and the Bluetooth transport becomes
-the graph's clock, which stalled everything silently once, 2026-10-12), so the sound is
-glitch-free and comes out of one place only (making the Bluetooth sink PipeWire's default
-sink did neither, as measured on milo). The choice is
+HDMI, or any Bluetooth speaker or headphones connected in the BLUETOOTH dialog. The sound is
+glitch-free and comes out of one place only. The choice is
 kept: when the output goes away (headphones turned off) the sound falls back to the jacks,
 and it goes back to the output once it is there again (a restart, a reconnection; a
 Bluetooth output's address is kept with it, so that Bluetooth can connect it when it comes
-on); picking the jacks forgets it. The dialog's list follows PipeWire while it is open. The music player,
+on); picking the jacks forgets it. The dialog's list follows what is plugged in while it is open. The music player,
 which plays beside the master, follows the output picked too. The drawer's OUTPUT slider
 (knob 2) sets the amplifier's level on the jacks and the chosen sink's own level otherwise.
 Each paired speaker or headphones has its own SBC-XQ chip in the BLUETOOTH dialog (open its
 row): off plays it on plain SBC, sturdier over a weak link, whatever SETTINGS says for the
-rest; a device without its own choice follows SETTINGS. A Bluetooth output gets its codec first and is routed to once its new sink
-is there, whether it comes back on its own or is picked: routing first and switching the codec
-after replaced the sink under a live loopback. While another output plays, ravving listens to
-what goes into its loopback and what comes out:
-music going in with silence coming out for six seconds is routed again once (a fresh
-loopback), and if it is still silent the issues center says the output plays no sound
-(2026-10-12: after a Bluetooth codec switch the LG speaker went silent with every node
-"running" and nothing said so).</p>
+rest; a device without its own choice follows SETTINGS. While another output plays, ravving listens to what it sends there: if the
+music goes out but nothing plays for six seconds, it routes the sound again once, and if it
+is still silent the issues center says the output plays no sound.</p>
 <h2 id="the-recorder">The RECORDER</h2>
 <p>MENU → RECORDER is a full-screen page (as the music player) for recording the input freely,
-as played (docs/recorder-plan.md). The transport keeps going, so a take can be played over the
+as played. The transport keeps going, so a take can be played over the
 beat. The input is a tab (MIC · GUITAR · LINE); under the bar, MONITOR and its LEVEL, the jack
 lights, the GAIN with the meter, ● REC beside a graph of the incoming level, KEEP TAKES IN
 (SAMPLES: <code>samples/recordings</code>, the samplers' browsers list them; TRACKS: the library's
@@ -729,9 +592,8 @@ cents on a ±50 scale, the strings of the tuning as buttons. AUTO goes through t
 the lowest: a string held within 3 cents for 0.8 s is marked ✓ and the next one is up, until
 ALL STRINGS IN TUNE; MANUAL keeps the string tapped. TUNING picks a tuning (guitar standard,
 half and full step down, drop D and C, DADGAD, open D, G, E and C; bass 4 and 5 strings, drop
-D; ukulele GCEA and baritone), A4 the reference (430–450 Hz). The pitch is McLeod's method as
-guitarix's tuner has it (src/backend/pitchdetector.h, tested in tests/tst_pitchdetector.cpp);
-its JACK client runs only while the tuner is on screen.</p>
+D; ukulele GCEA and baritone), A4 the reference (430–450 Hz). The tuner runs only while it is on
+screen.</p>
 <p>Keys: ◀ ▶ the input, ▲ ▼ the recordings, RECORD a take, SELECT or PLAY hears the recording
 picked (STOP stops it), the number keys move the knobs between INPUT (1), TUNER (2) and
 EFFECTS (3), the big knob is the gain, BACK leaves.</p>
@@ -741,23 +603,14 @@ wrong on the device right now, in plain words, with what to do about it: ALL GOO
 count lit in the worst severity's colour, and the full list in the dialog, worst first, each with its detail, a suggestion and an action button where one
 exists (RESTART RAVVING, GDB OFF · RESTART). Every component runs its own check pass and
 reports: the sound engine missing, an engine that could not start, audio connections that
-never appeared, audio dropouts (xruns counted every minute), the device's keys dying
+never appeared, audio dropouts (counted every minute), the device's keys dying
 (zyncoder's GPIO thread, read off stderr), the music player without its PulseAudio bridge,
 Bluetooth unavailable, an export that failed, a USB stick that would not mount, storage
 nearly full, the gdb aid left on. New errors and warnings also show as a toast. Under the
-list, the last warnings ravving printed. <code>docs/extending.md</code> says how a component reports.</p>
-<h2 id="the-audio-graph">The audio graph</h2>
-<p>Everything runs in PipeWire's graph through its JACK library, at the sound card's 48 kHz
-and 256 frames: libzynthbox's passthroughs, the jalv inserts, and FluidSynth, which is told
-the graph's clock so its node is neither resampled nor buffered beyond two periods.
-<code>tools/device.sh graph all</code> checks the clocks, the links, the threads and the xruns in one
-go; <code>docs/routing.md</code> maps what ravving wires and records what was measured (among it:
-running ravving under gdb costs the graph 20 to 40 xruns a minute, so the RAVVING_GDB
-aid is for crash hunts only).</p>
-<h2 id="where-ravving-keeps-its-files">Where ravving keeps its files</h2>
-<p>Nothing of ravving's goes into zynthbox-qml's folders, and nothing of zynthbox-qml's is
-written: ravving reads the device's sample library and writes only to its own places
-(<code>src/backend/paths.h</code>), following the XDG base directories:</p>
+list, the last warnings ravving printed.</p>
+<h2 id="where-your-files-live">Where your files live</h2>
+<p>ravving keeps to its own folders: it reads the device's sample library and writes only to
+these places:</p>
 <table>
 <thead>
 <tr>
@@ -789,117 +642,7 @@ written: ravving reads the device's sample library and writes only to its own pl
 </tr>
 </tbody>
 </table>
-<p>On a desktop the library is <code>~/.local/share/ravving</code>. An older ravving's files are moved
-into this layout at the first start, and the session's and projects' sample paths with them.</p>
-<h2 id="environment-variables">Environment variables</h2>
-<table>
-<thead>
-<tr>
-<th>Variable</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>RAVVING_WINDOWED=1</code></td>
-<td>windowed instead of fullscreen</td>
-</tr>
-<tr>
-<td><code>RAVVING_NO_ZYNTHBOX=1</code></td>
-<td>skip libzynthbox (UI only)</td>
-</tr>
-<tr>
-<td><code>RAVVING_STYLE</code></td>
-<td>Quick Controls style (default <code>Zynthbox</code>)</td>
-</tr>
-<tr>
-<td><code>RAVVING_QML_DIR</code></td>
-<td>read the QML from this folder (a source tree's <code>qml/</code>) instead of the copy compiled in</td>
-</tr>
-<tr>
-<td><code>RAVVING_DATA_DIR</code></td>
-<td>read <code>kits.json</code> and the theme (<code>plasma/desktoptheme/</code>) from this folder (desktop: <code>$PWD/data</code>; the plasmarc then comes from <code>build/config/</code>)</td>
-</tr>
-<tr>
-<td><code>RAVVING_HOME</code></td>
-<td>one folder for everything ravving writes (<code>config/</code>, <code>state/</code>, <code>cache/</code>, <code>library/</code>), for a sandboxed run</td>
-</tr>
-<tr>
-<td><code>RAVVING_LIBRARY</code></td>
-<td>the library alone (projects, presets, samples, recordings) somewhere else</td>
-</tr>
-<tr>
-<td><code>RAVVING_PROJECT_DIR</code></td>
-<td>the session folder alone (older name; default <code>~/.local/state/ravving</code>)</td>
-</tr>
-<tr>
-<td><code>RAVVING_SCREENSHOT_DIR</code></td>
-<td>capture every page to PNGs there, then quit</td>
-</tr>
-<tr>
-<td><code>RAVVING_GDB=1</code></td>
-<td>(service) run under gdb, backtrace to the journal</td>
-</tr>
-<tr>
-<td><code>QT_LOGGING_RULES="ravving.cuia.debug=true"</code></td>
-<td>log every hardware event (CUIA, knobs)</td>
-</tr>
-</tbody>
-</table>
-<p>For the service, set them with <code>systemctl --user set-environment NAME=value</code> and clear them
-with <code>unset-environment</code>.</p>
-<h2 id="remote-control">Remote control</h2>
-<p>Like zynthbox-qml, ravving reads CUIA commands from webconf's fifo:</p>
-<pre><code class="language-sh">echo cuia/SWITCH_PLAY_RELEASED &gt; /tmp/webconf-writes-to-this-fifo
-</code></pre>
-<h2 id="documentation">Documentation</h2>
-<p id="the-rule-the-docs-and-the-page-follow-every-change"><strong>The rule: the docs and the page follow every change.</strong> A feature added, changed or removed
-is not done until the same commit updates what says it: this README or the <code>docs/*.md</code> it
-belongs in, and the page in <code>site/</code> (the SHORTCUTS row of a key, the FEATURES highlight or
-grouped item of a feature), then <code>python3 tools/build-site-docs.py</code> (the rendered
-<code>site/docs/</code> is committed; <code>--check</code>, run by <code>ctest -R site-docs-current</code>, fails when it is
-stale). Push, then <code>sh tools/publish-site.sh</code> puts it at https://ravving.github.io/; the
-device's copy follows the next deploy.</p>
-<p><strong>The code rule: every new or changed C++ API comes with its QDoc in the same commit.</strong> The
-C++ of <code>src/</code>, <code>src/backend/</code> and <code>setup/</code> is documented in <code>/*! ... */</code> blocks in the <code>.cpp</code>
-files (every public class, property, method, signal and enum: concise and technical, what the
-code does now, never its history), and <code>python3 tools/build-api-docs.py</code> regenerates the API
-reference in <code>site/api/</code> (committed, linked from the page as API reference). <code>ctest -R cpp-docs</code>
-fails on an undocumented public API or a comment that tells history; <code>ctest -R api-docs-current</code>
-on a QDoc warning or a stale <code>site/api/</code>. <code>docs/writing-code-docs.md</code> has the rules and how to
-write the blocks.</p>
-<ul>
-<li><code>docs/TODO.md</code>: what is pending, queued features, cosmetic fixes seen, housekeeping (read first when picking the work up)</li>
-<li><code>docs/routing.md</code>: the JACK / PipeWire / MIDI graph ravving makes, the tools to look at it and measure it, what was measured</li>
-<li>
-<p><code>docs/bluetooth.md</code>: what a Zynthbox needs for Bluetooth (packages, two drop-ins), how ravving's Bluetooth fits, how to test and troubleshoot it</p>
-</li>
-<li>
-<p><code>docs/architecture.md</code>: the layers, input and focus, every backend class and component.</p>
-</li>
-<li><code>docs/extending.md</code>: adding a machine (page), an engine, SOUND MODIFIERS, an effect.</li>
-<li><code>docs/debugging.md</code>: testing on the device with <code>tools/</code> (deploy, keys, screenshots,
-  MIDI, measuring sound, logging) and the traps met so far.</li>
-<li><code>docs/engines.md</code>: every engine ravving plays, the port facts it relies on (from the
-  engine mods' research) and what was measured.</li>
-<li><code>docs/quality.md</code>: the code quality and performance checks (clang-tidy, clazy, startup
-  timing, QML profiling, the screenshot tour), their baselines and the traps met.</li>
-<li><code>docs/sampler-plan.md</code>: research and phases for SAMPLE KING (and live voice / guitar FX).</li>
-<li><code>docs/sections-plan.md</code>: SECTIONS and the song: the design, the decisions, the phases and
-  what each one measured.</li>
-<li><code>docs/scripting-projects.md</code>: building a whole project by script over the fifo.</li>
-<li><code>docs/testing.md</code>: the device test tools and suites (<code>pads-test.sh</code>, <code>sections-test.sh</code>…).</li>
-<li><code>docs/design-reference.md</code>: the design reference, machine by machine.</li>
-<li><code>docs/translations.md</code>: KI18n, keys against display text, the glossary, the webpage's
-  catalogs, adding a language and the review every release.</li>
-<li><code>docs/writing-code-docs.md</code>: the QDoc rules for the C++, the checks and building the API
-  reference (<code>site/api/</code>).</li>
-</ul>
-<h2 id="license">License</h2>
-<p>GPL-3.0-or-later. Copyright (C) 2026 Camilo Higuita.</p>
-<p>Third-party code bundled with the source: <code>src/backend/thirdparty/qrcodegen/</code> is the QR Code
-generator library (C++) by Project Nayuki, https://www.nayuki.io/page/qr-code-generator-library,
-MIT License (Copyright (c) Project Nayuki); its licence text is kept in the files' headers.</p>
+<p>On a desktop the library is <code>~/.local/share/ravving</code>.</p>
   </article>
 </main>
 <footer>

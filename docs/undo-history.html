@@ -3,13 +3,13 @@
   ravving on MIKO: the documentation.
   Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
   SPDX-License-Identifier: GPL-3.0-or-later
-  Rendered from docs/history.md by tools/build-site-docs.py: edit the markdown, not this file.
+  Rendered from docs/undo-history.md by tools/build-site-docs.py: edit the markdown, not this file.
 -->
 <html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Undo and redo · ravving docs</title>
+<title>The undo history · ravving docs</title>
 <link rel="stylesheet" href="../site.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
@@ -38,24 +38,17 @@
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
-<li><a href="video.html">Video recordings and the computer link</a></li>
-<li class="on"><a href="history.html" aria-current="page">Undo and redo</a><ul><li><a href="#what-is-undone">What is undone</a></li><li><a href="#two-ways-back">Two ways back</a></li><li><a href="#what-becomes-one-step">What becomes one step</a></li><li><a href="#when-the-history-forgets">When the history forgets</a></li><li><a href="#the-api">The API</a></li><li><a href="#making-something-undoable">Making something undoable</a></li><li><a href="#notes">Notes</a></li></ul></li>
-<li><a href="bluetooth.html">Bluetooth</a></li>
-<li><a href="scripting-projects.html">Building a project by script</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">The designs</p><ul>
-<li><a href="sections-plan.html">Sections and the song</a></li>
-<li><a href="sampler-plan.html">SAMPLE KING</a></li>
-<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
-<li><a href="recorder-plan.html">The RECORDER</a></li>
-<li><a href="streaming-plan.html">Streaming</a></li>
-<li><a href="design-reference.html">The design reference</a></li>
-</ul>
 <p class="mono">Under the hood</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li class="on"><a href="undo-history.html" aria-current="page">The undo history</a><ul><li><a href="#what-is-undone">What is undone</a></li><li><a href="#two-ways-back">Two ways back</a></li><li><a href="#what-becomes-one-step">What becomes one step</a></li><li><a href="#when-the-history-forgets">When the history forgets</a></li><li><a href="#the-api">The API</a></li><li><a href="#making-something-undoable">Making something undoable</a></li><li><a href="#notes">Notes</a></li></ul></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
@@ -67,7 +60,6 @@
 <li><a href="testing.html">Testing on the device</a></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
-<li><a href="todo.html">What is pending</a></li>
 </ul>
 <p class="mono">The code</p><ul>
 <li><a href="../api/index.html">API reference</a></li>
@@ -75,20 +67,20 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker">Using ravving <span>/</span> docs/history.md</p>
-<h1>Undo and redo</h1>
-<p class="doc-blurb">One history for the project: what is undone, what becomes one step, the machines&#x27; own ↶ ↷.</p>
+<p class="mono doc-kicker">Under the hood <span>/</span> docs/undo-history.md</p>
+<h1>The undo history</h1>
+<p class="doc-blurb">What is undone, what becomes one step, the History API, making a feature undoable.</p>
 
+<p>How ravving undoes and redoes edits: the History class, what is recorded, and how a new feature becomes undoable. The classes are in the API reference.</p>
 <p>Ravving has one undo history for the project, <code>History</code> (<code>src/backend/history.*</code>), published
 to QML as <code>studio.history</code>. Everything that can be undone goes through it; nothing keeps an
 undo stack of its own.</p>
 <h2 id="what-is-undone">What is undone</h2>
-<p>Today the <strong>patterns</strong>: every machine's notes, steps, chords, slots, accents, slides,
-lengths, automation, live timing and its preset's name (<code>Machine::historyState()</code>). Not the
-sound (source, factory sound, MODS), the mix (level, pan, mute), the effects or the project's
-settings (tempo, swing, key): those were left out on purpose (2026-10-09). Anything can join
-later by becoming a participant (below).</p>
-<p>And the <strong>arrangement</strong> (<code>Sections::historyState()</code>, "SECTIONS", 2026-10-10): which sections
+<p>The <strong>patterns</strong>: every machine's notes, steps, chords, slots, accents, slides, lengths,
+automation, live timing and its preset's name (<code>Machine::historyState()</code>). Not the sound
+(source, factory sound, MODS), the mix (level, pan, mute), the effects or the project's
+settings (tempo, swing, key). Anything can join by becoming a participant (below).</p>
+<p>And the <strong>arrangement</strong> (<code>Sections::historyState()</code>, "SECTIONS"): which sections
 there are, in which order, their names, colours and lengths, and the song. A section removed is
 put aside with its content (<code>Sections::m_removed</code>), so undoing the removal brings it back whole,
 in its place and in the song; redoing it hands over to the neighbour as REMOVE did. What is not
@@ -136,7 +128,7 @@ other: putting back the bass's last pattern cannot break the chords'.</p>
 The history keeps <code>History::Depth</code> (100) steps.</p>
 <h2 id="when-the-history-forgets">When the history forgets</h2>
 <ul>
-<li><code>forget(participant)</code>: its state was replaced wholesale, so its steps go (a section
+<li><code>forget(participant)</code>: its state is replaced wholesale, so its steps go (a section
   picked: undoing into a section that is not on screen would be a surprise; an engine
   attached again).</li>
 <li><code>clear()</code>: a project opened or NEW (<code>Studio::applyProjectState()</code>).</li>
@@ -206,7 +198,7 @@ The history keeps <code>History::Depth</code> (100) steps.</p>
 <ul>
 <li><code>historyState()</code> is computed after every change, so keep it cheap (a map of the content);
   the machines' is their <code>contentState()</code> less the sound and the view.</li>
-<li>One machine's undo clears the timeline's redo (what it would redo no longer matches what
+<li>One machine's undo clears the timeline's redo (what it would redo does not match what
   is there); the timeline's undo of a step a machine was part of is redone by that
   machine's ↷ too (it falls back to the timeline's redo).</li>
 </ul>
