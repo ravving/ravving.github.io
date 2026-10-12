@@ -535,34 +535,45 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .landing-alt { margin: 14px auto 0; color: var(--ink-3); font-size: 14px; max-width: 60ch; }
 .landing-alt a { color: var(--ink-2); }
 
-/* the three points: lit cards, each with its mascot on a screen well and the step keys chasing in
-   its signal colour (--c); they lift and glow under the pointer */
+/* the three points, each in an instrument page's finish (qml/components/Rave.qml machines: the
+   face's gradient, the rails at its ends, its ink, accent and glow, its well), with the machine's
+   neon nameplate and the mascot in the well over the step lights; they lift under the pointer */
 .landing-points { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px);
   margin-top: clamp(56px, 9vw, 112px); text-align: left; }
-.point { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 14px 14px 22px; border-radius: 14px;
-  background: linear-gradient(180deg, var(--panel-2), var(--panel)); border: 1px solid var(--hair-soft);
-  box-shadow: inset 0 1px 0 var(--cap-top), 0 18px 40px rgba(0, 0, 0, 0.35);
-  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.25s, border-color 0.25s; }
-.point::before { content: ""; position: absolute; inset: 0 22px auto; height: 2px; border-radius: 2px; background: var(--c); box-shadow: 0 0 14px var(--c); }
-.point:hover, .point:focus-within { transform: translateY(-6px); border-color: color-mix(in srgb, var(--c) 45%, transparent);
-  box-shadow: inset 0 1px 0 var(--cap-top), 0 24px 50px rgba(0, 0, 0, 0.45), 0 0 40px color-mix(in srgb, var(--c) 22%, transparent); }
-.point-screen { position: relative; display: grid; place-items: center; height: 168px; margin-bottom: 8px; border-radius: 8px; overflow: hidden;
-  background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--c) 22%, #0b0b0d), #0b0b0d 70%); border: 1px solid #000; }
+.point { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 16px 30px 24px; border-radius: 10px;
+  color: var(--ink); background: linear-gradient(180deg, var(--top), var(--bottom));
+  border: 1px solid #000; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 18px 40px rgba(0, 0, 0, 0.45);
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.25s; }
+/* the rails: the chassis's end cheeks, in the finish's rail colour */
+.point::before, .point::after { content: ""; position: absolute; top: -1px; bottom: -1px; width: 14px; background: var(--rail);
+  border: 1px solid #000; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -2px 0 rgba(0, 0, 0, 0.35); }
+.point::before { left: -1px; border-radius: 10px 3px 3px 10px; }
+.point::after { right: -1px; border-radius: 3px 10px 10px 3px; }
+.point:hover, .point:focus-within { transform: translateY(-6px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 24px 50px rgba(0, 0, 0, 0.55), 0 0 44px color-mix(in srgb, var(--glow) 28%, transparent); }
+.point-plate { align-self: flex-start; padding: 7px 12px; border-radius: 6px; background: linear-gradient(180deg, #2a2a2e, #0e0e10);
+  border: 1px solid #000; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12); }
+.point-plate span { display: block; font-family: var(--font-cap); font-style: italic; font-size: 13px; line-height: 1.05; letter-spacing: 0.02em;
+  color: var(--plate); text-shadow: 0 0 6px var(--plate), 0 0 14px color-mix(in srgb, var(--plate) 60%, transparent); }
+.point-screen { position: relative; display: grid; place-items: center; height: 168px; margin-bottom: 8px; border-radius: 6px; overflow: hidden;
+  background: radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--glow) 18%, #0b0b0d), #0b0b0d 72%);
+  border: 1px solid #000; box-shadow: 0 0 0 4px var(--well), inset 0 2px 8px rgba(0, 0, 0, 0.7); }
 .point-screen .aru { width: 96px; height: 96px; margin-bottom: 14px; }
 .point-leds { position: absolute; left: 12px; right: 12px; bottom: 10px; display: grid; grid-template-columns: repeat(16, 1fr); gap: 3px; }
-.point-leds i { height: 5px; border-radius: 1px; background: color-mix(in srgb, var(--c) 18%, #1b1b1d);
+.point-leds i { height: 6px; border-radius: 1.5px; background: color-mix(in srgb, var(--glow) 16%, #1b1b1d);
   animation: point-chase 1.6s steps(1) calc(var(--n) * 0.1s) infinite; }
 .point:nth-child(2) .point-leds i { animation-delay: calc(var(--n) * 0.1s + 0.5s); }
 .point:nth-child(3) .point-leds i { animation-delay: calc(var(--n) * 0.1s + 1s); }
-@keyframes point-chase { 0% { background: var(--c); box-shadow: 0 0 8px var(--c); } 12% { background: color-mix(in srgb, var(--c) 18%, #1b1b1d); box-shadow: none; } }
-.point-kicker { margin: 0; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); padding: 0 8px; }
-.point-kicker b { color: var(--c); font-weight: 500; margin-right: 6px; }
-.landing-points h2 { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.05; margin: 0; padding: 0 8px; text-transform: uppercase; letter-spacing: -0.01em; }
-.landing-points p:not(.point-kicker) { margin: 0; padding: 0 8px; color: var(--ink-2); max-width: 40ch; }
-.point-more { margin: 6px 8px 0; color: var(--c); font-weight: 600; text-decoration: none; }
-.point-more::after { content: " →"; transition: margin 0.2s; }
-.point-more:hover::after { margin-left: 4px; }
-@media (prefers-reduced-motion: reduce) { .point, .point-more::after { transition: none; } .point-leds i { animation: none; } .point:hover { transform: none; } }
+@keyframes point-chase { 0% { background: var(--glow); box-shadow: 0 0 8px var(--glow); } 12% { background: color-mix(in srgb, var(--glow) 16%, #1b1b1d); box-shadow: none; } }
+.point-kicker { margin: 0; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
+.point-kicker b { color: var(--c); font-weight: 600; margin-right: 6px; }
+.landing-points h2 { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.05; margin: 0; text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
+.landing-points p:not(.point-kicker) { margin: 0; color: var(--dim); max-width: 40ch; }
+.point-more { margin-top: 6px; align-self: flex-start; padding: 9px 14px 8px; border-radius: 4px; color: var(--ink); font-weight: 600; text-decoration: none;
+  background: var(--cap); border: 1px solid var(--cap-border); border-bottom-width: 3px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+.point-more::after { content: " →"; color: var(--c); }
+.point-more:hover { transform: translateY(1px); border-bottom-width: 2px; }
+@media (prefers-reduced-motion: reduce) { .point { transition: none; } .point-leds i { animation: none; } .point:hover { transform: none; } }
 .landing-more { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin: clamp(40px, 6vw, 72px) auto clamp(48px, 7vw, 96px); }
 .landing-more a { color: var(--ink); font-weight: 600; }
 @media (max-width: 720px) { .landing-points { grid-template-columns: 1fr; } }
