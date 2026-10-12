@@ -283,17 +283,18 @@ python3 tools/site-i18n.py render     # po-site → site/es/ and site/ja/
 <li>the rendered pages are older than their catalogs.</li>
 </ul>
 <h2 id="the-webpage">The webpage</h2>
-<p><code>tools/site-i18n.py extract</code> collects the text of site/index.html, site/features.html and the user
-guide's pages (site/docs/get-ravving.html, machines.html, first-beat.html, as
-<code>tools/build-site-docs.py</code> renders them) into po-site/ravving-site.pot:</p>
+<p><code>tools/site-i18n.py extract</code> collects the text of site/index.html, site/features.html, the docs
+home (site/docs/index.html) and the user guide's pages (get-ravving.html, machines.html,
+first-beat.html and the how-tos, as <code>tools/build-site-docs.py</code> renders them; its <code>PAGES</code> lists
+them) into po-site/ravving-site.pot:</p>
 <ul>
 <li>every block of text (a heading, a paragraph, a row's words), with its inline <code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>
   and <code>&lt;br&gt;</code>;</li>
 <li>the <code>alt</code>, <code>title</code>, <code>aria-label</code> and <code>placeholder</code> attributes;</li>
 <li>site.js's captions and marks.</li>
 </ul>
-<p><code>render</code> writes site/<lang>/index.html, site/<lang>/features.html, site/<lang>/docs/ (the guide's
-pages) and site/<lang>/site.js. A link to a translated page stays in the language; any other
+<p><code>render</code> writes site/<lang>/index.html, site/<lang>/features.html, site/<lang>/docs/ (the docs
+home and the guide's pages) and site/<lang>/site.js. A link to a translated page stays in the language; any other
 goes to the English one, so the manual and the developer docs stay English. The language
 switcher in the top bar links the three languages.</p>
 <p>Text sitting loose beside other elements (<code>&lt;h3&gt;Five keys. &lt;span&gt;…&lt;/span&gt;&lt;/h3&gt;</code>) can't become a
