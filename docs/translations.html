@@ -102,42 +102,47 @@ webpage (site/) is translated from catalogs of its own. The docs stay in English
 <h2 id="how-it-works">How it works</h2>
 <ul>
 <li id="the-domain"><strong>The domain.</strong> <code>Localization</code> (src/backend/localization.cpp) sets the application domain
-  <code>ravving</code> right after the <code>QGuiApplication</code> is made, as the KI18n guide asks, and adds the
-  build tree's <code>locale/</code> folder so a build runs translated before it is installed. The
-  installed catalogs are <code>/usr/share/locale/&lt;lang&gt;/LC_MESSAGES/ravving.mo</code> (CMake's
-  <code>ki18n_install(po)</code>; the AppImage's <code>default-app.sh install</code> copies them too).</li>
+  <code>ravving</code> right after the <code>QGuiApplication</code> is made, as the KI18n guide asks. It also adds the
+  build tree's <code>locale/</code> folder, so a build runs translated before it's installed.</li>
+<li><strong>The catalogs</strong> install to <code>/usr/share/locale/&lt;lang&gt;/LC_MESSAGES/ravving.mo</code>, through
+  CMake's <code>ki18n_install(po)</code>. The AppImage's <code>default-app.sh install</code> copies them too.</li>
 <li id="qml"><strong>QML.</strong> <code>KLocalization::setupLocalizedContext(&amp;engine)</code> (KF 6.8 and later) puts <code>i18n</code>,
   <code>i18nc</code>, <code>i18np</code> and <code>i18ncp</code> on the root context, so QML calls them bare.</li>
 <li id="settings-language"><strong>SETTINGS · LANGUAGE.</strong> SYSTEM (the default) follows the device's own language; English,
   Español and 日本語 pick one. The choice is kept in the profile settings (<code>ui/language</code>).</li>
 <li id="live-switching"><strong>Live switching.</strong> A change sets <code>KLocalizedString::setLanguages</code>, sends
-  <code>QEvent::LanguageChange</code> to the application and calls <code>QQmlEngine::retranslate()</code>: every
-  binding that calls <code>i18n…</code> is evaluated again, so the screen changes at once. C++ models
-  whose rows carry display text (the video tiers, FILES, the USB page, the audio outputs) catch
-  the <code>LanguageChange</code> event, as the Qt guide does for plain QObjects, and emit their NOTIFY.</li>
+  <code>QEvent::LanguageChange</code> to the application and calls <code>QQmlEngine::retranslate()</code>. Every
+  binding that calls <code>i18n…</code> runs again, so the screen changes at once.</li>
+<li><strong>C++ models</strong> whose rows carry display text (the video tiers, FILES, the USB page, the audio
+  outputs) catch <code>LanguageChange</code>, as the Qt guide does for plain QObjects, and emit NOTIFY.</li>
 <li id="numbers-and-dates"><strong>Numbers and dates.</strong> C++ formats them through KI18n (<code>subs(value, 0, 'f', 1)</code>); QML uses
   <code>Rave.num(value, decimals)</code>, the locale of the language picked. Dates use <code>QLocale</code> of the
   first language KI18n uses.</li>
 </ul>
 <h2 id="keys-stay-keys">Keys stay keys</h2>
-<p>Only display text is translated. A text that is stored, compared, sent or looked up stays
-English: the machine roles, preset and kit names, scale names, group names, the effect and
-knob names in data/engines.json, the menu ids, the fifo names, the CUIA names. The display is
-translated where it is drawn.</p>
+<p>Only display text is translated, where it's drawn. Text that's stored, compared, sent or
+looked up stays English:</p>
 <ul>
-<li><strong>QML:</strong> <code>Rave.kli18nc(context, key)</code> marks a key for extraction and returns it unchanged
+<li>the machine roles, preset and kit names, scale names and group names;</li>
+<li>the effect and knob names in data/engines.json;</li>
+<li>
+<p>the menu ids, the fifo names and the CUIA names.</p>
+</li>
+<li>
+<p><strong>QML:</strong> <code>Rave.kli18nc(context, key)</code> marks a key for extraction and returns it unchanged
   (the QML side of KI18n's <code>kli18nc</code>, as Qt's <code>QT_TR_NOOP</code>). The helpers translate at draw
   time: <code>Rave.group</code>, <code>Rave.drumRow</code>, <code>Rave.param</code>, <code>Rave.paramGroup</code>, <code>Rave.effect</code>,
   <code>Rave.choice</code>, <code>Rave.tuning</code>, <code>Rave.stringInstrument</code>, <code>Rave.inputMode</code>. Menus dispatch by
-  <code>id</code>, never by the text shown.</li>
+  <code>id</code>, never by the text shown.</p>
+</li>
 <li><strong>C++:</strong> tables of display text are <code>KLazyLocalizedString</code> (<code>kli18nc</code>), turned into text with
   <code>.toString()</code> when read, so a language change shows at once. A message with values is a
   <code>KLocalizedString</code> template (<code>ki18nc(…).subs(…)</code>) passed on and finished where it is shown.</li>
 <li><strong>List models</strong> carry a display role beside the key, as Qt's <code>QAbstractListModel</code> examples
   do: the key for the logic, the display text for the screen.</li>
-<li id="data"><strong>Data.</strong> <code>tools/i18n-data.py</code> writes the vocabulary of the data files (drum rows, the
-  engines' knobs and cards, effects, scales, tunings, groups) as <code>i18nc</code> calls into the
-  extraction, as KDE's <code>rc.cpp</code> does, under the same contexts the helpers use.</li>
+<li id="data"><strong>Data.</strong> <code>tools/i18n-data.py</code> writes the data files' vocabulary as <code>i18nc</code> calls into the
+  extraction, as KDE's <code>rc.cpp</code> does, under the helpers' contexts. That's the drum rows, the
+  engines' knobs and cards, effects, scales, tunings and groups.</li>
 </ul>
 <h2 id="contexts-and-markers">Contexts and markers</h2>
 <p>Every call is <code>i18nc</code> with a context saying what the text is, starting with a KDE UI marker:
@@ -264,17 +269,27 @@ after adding text.</p>
 python3 tools/check-translations.py   # the ctest translations-current
 python3 tools/site-i18n.py render     # po-site → site/es/ and site/ja/
 </code></pre>
-<p><code>check-translations.py</code> fails when a template is stale, a catalog does not compile
-(<code>msgfmt --check</code>), a text is untranslated or fuzzy, a translation drops a placeholder (<code>%1</code>)
-or a markup tag (<code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>), or the rendered pages are older than their catalogs.</p>
+<p><code>check-translations.py</code> fails when:</p>
+<ul>
+<li>a template is stale, or a catalog doesn't compile (<code>msgfmt --check</code>);</li>
+<li>a text is untranslated or fuzzy;</li>
+<li>a translation drops a placeholder (<code>%1</code>) or a markup tag (<code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>);</li>
+<li>the rendered pages are older than their catalogs.</li>
+</ul>
 <h2 id="the-webpage">The webpage</h2>
-<p><code>tools/site-i18n.py extract</code> collects every block of text in site/index.html and site/features.html (a heading, a
-paragraph, a row's words, with their inline <code>&lt;b&gt;</code>, <code>&lt;a&gt;</code> and <code>&lt;br&gt;</code>), the <code>alt</code>, <code>title</code> and
-<code>aria-label</code> attributes, and site.js's captions and marks, into po-site/ravving-site.pot.
-<code>render</code> writes site/<lang>/index.html and site.js with the links pointing one folder up; the
-language switcher in the page's top bar links the three. <code>&lt;kbd&gt;</code>, <code>&lt;code&gt;</code> and anything marked
-<code>translate="no"</code> stay as they are. The page's catalogs live in po-site/, not po/, because
-<code>ki18n_install</code> compiles every catalog in po/ into the device's install.</p>
+<p><code>tools/site-i18n.py extract</code> collects the text of site/index.html and site/features.html into
+po-site/ravving-site.pot:</p>
+<ul>
+<li>every block of text (a heading, a paragraph, a row's words), with its inline <code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>
+  and <code>&lt;br&gt;</code>;</li>
+<li>the <code>alt</code>, <code>title</code> and <code>aria-label</code> attributes;</li>
+<li>site.js's captions and marks.</li>
+</ul>
+<p><code>render</code> writes site/<lang>/index.html, site/<lang>/features.html and site.js, with the links
+pointing one folder up. The language switcher in the top bar links the three languages.
+<code>&lt;kbd&gt;</code>, <code>&lt;code&gt;</code> and anything marked <code>translate="no"</code> stay as they are.</p>
+<p>The page's catalogs live in po-site/, not po/: <code>ki18n_install</code> compiles every catalog in po/
+into the device's install.</p>
 <h2 id="adding-a-language">Adding a language</h2>
 <ol>
 <li><code>msginit --no-translator --no-wrap -l &lt;lang&gt; -i po/ravving.pot -o po/&lt;lang&gt;/ravving.po</code>, and

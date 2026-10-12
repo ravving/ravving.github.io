@@ -48,7 +48,7 @@
 <p class="mono">Under the hood</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="backend.html">Backend classes</a></li>
-<li class="on"><a href="qml-components.html" aria-current="page">QML components</a></li>
+<li class="on"><a href="qml-components.html" aria-current="page">QML components</a><ul><li><a href="#pages-and-controls">Pages and controls</a></li></ul></li>
 <li><a href="undo-history.html">The undo history</a></li>
 <li><a href="bluetooth.html">Bluetooth</a></li>
 <li><a href="live-recording.html">Live recordings</a></li>
@@ -76,29 +76,56 @@
 <p class="doc-blurb">The shared base types, the pages and their parts.</p>
 
 <p>The QML components in <code>qml/</code>: the shared base types, the pages and their parts. They follow the <a href="ui-rules.html">UI rules</a>.</p>
-<p>Studio machines are shown by <code>MachinePanel</code> (a MachineModule backed by a Machine: level, pan,
-❚❚, effects, sound, REC/takes, STEP cursor, LIVE pad and keyboard bookkeeping), extended by
-<code>DrumMachinePanel</code> (step grid; pads = rows, key 9 = accent), <code>MonoMachinePanel</code> (mono
-<code>PianoRoll</code> with <code>pattern: machine</code>; in LIVE all 16 step keys play the scale from the root upwards and ▲ ▼ shift the octave (with STEP on, playing or not, they walk the rows, each heard: <code>previewSelection</code>, and SELECT writes the row: <code>writeSelection</code> / <code>selectionKey</code>, shared in <code>MachinePanel</code>);
-with <code>showRibbon</code> the lead's <code>Ribbon</code>: its notes go through the same LIVE path, a slide
-starts the next note before ending the last so the engine glides, drag up = vibrato) and
-<code>ChordMachinePanel</code> (the nameplate shows the loaded TAL sound's title, POLY-6 for its own; a tap opens the sound picker, a double tap rebuilds its own sound from TAL's start-up sound, the engine's controls and the default knobs; CHORDS / NOTES / SLOTS tabs: <code>ChordRoll</code>, a poly <code>PianoRoll</code> on the
-same steps, <code>ChordSlots</code>; ◀ ▶ switch them while the editor has the focus (<code>moveView</code>,
-<code>viewCount</code>); the step keys and ▲ ▼ work on the view on screen; CHORD SET,
-chord keys played as pads that also fill an armed slot; LIVE follows the tab: on CHORDS / SLOTS pads 1–7 = the degrees' chords, on NOTES all 16 pads play single scale notes (note keys), ▲ ▼ the octave while LIVE (the rows with STEP on; SELECT writes the selected chord or note);
-▲ ▼ = octave while LIVE) and <code>SamplerMachinePanel</code> (<code>SampleScreen</code> with the slot's waveform and trim
-handles, a KnobGroup itself: a tap on it or ▲ from the grid's top row gives knob 1 to the start
-handle and knob 2 to the end, ▼ gives the knobs back to the rows, LOAD with hold-to-hear previews, ▶, CLEAR, REVERSE, ● REC and INPUT (<code>InputPopup</code>),
-PITCH; the step grid over the bank's slots; BANK A–D chips and ◀ ▶; pads 1–8 = slots, key 9 =
-accent; knobs 1–3 = the selected row's mute, solo, level). <code>MachinePage</code> is the page around any of them: it forwards
-the step keys, ▲ ▼, the header hand-off and an external keyboard to its <code>panel</code>
-(<code>BassPage</code>, <code>LeadPage</code>, <code>ChordsPage</code> only declare their panel).</p>
-<p>All of <code>qml/</code> is one QML module, <code>Ravving</code>, built by <code>qt_add_qml_module</code> into the binary
-(qmlcachegen bytecode, typed bindings compiled to C++) and loaded with
-<code>loadFromModule("Ravving", "Main")</code>; <code>Hardware</code> and <code>HardwareEvent</code> join it through
-<code>QML_ELEMENT</code>. Every file imports <code>Ravving</code>; there are no relative imports. For development,
-<code>RAVVING_QML_DIR</code> makes <code>QmlSourceOverride</code> (a URL interceptor) serve the <code>.qml</code> files from a
-source tree instead, so QML edits need only a restart.</p>
+<p>Studio machines are shown by <code>MachinePanel</code>: a MachineModule backed by a Machine. It keeps the
+level, pan, ❚❚, effects, sound, REC and takes, the STEP cursor, the LIVE pads and the keyboard
+bookkeeping.</p>
+<p><code>MachinePage</code> is the page around any panel: it forwards the step keys, ▲ ▼, the
+header hand-off and an external keyboard to its <code>panel</code>. <code>BassPage</code>, <code>LeadPage</code> and
+<code>ChordsPage</code> only declare their panel.</p>
+<h3 id="drummachinepanel">DrumMachinePanel</h3>
+<p>The step grid. In LIVE, the pads are the rows and key 9 adds the accent.</p>
+<h3 id="monomachinepanel">MonoMachinePanel</h3>
+<p>A mono <code>PianoRoll</code> with <code>pattern: machine</code>.</p>
+<ul>
+<li><strong>LIVE:</strong> all 16 step keys play the scale up from the root, and ▲ ▼ shift the octave.</li>
+<li><strong>STEP on:</strong> ▲ ▼ walk the rows, each one heard (<code>previewSelection</code>), and SELECT writes the row
+  (<code>writeSelection</code> / <code>selectionKey</code>, shared in <code>MachinePanel</code>).</li>
+<li><strong>The lead's <code>Ribbon</code></strong> (<code>showRibbon</code>): its notes take the same LIVE path. A slide starts the
+  next note before ending the last, so the engine glides, and dragging up adds vibrato.</li>
+</ul>
+<h3 id="chordmachinepanel">ChordMachinePanel</h3>
+<ul>
+<li><strong>The nameplate</strong> shows the loaded TAL sound's title, or POLY-6 for its own. A tap opens the
+  sound picker. A double tap rebuilds its own sound from TAL's start-up sound, the engine's
+  controls and the default knobs.</li>
+<li><strong>CHORDS / NOTES / SLOTS tabs:</strong> <code>ChordRoll</code>, a poly <code>PianoRoll</code> on the same steps, and
+  <code>ChordSlots</code>. ◀ ▶ switch them while the editor has the focus (<code>moveView</code>, <code>viewCount</code>). The
+  step keys and ▲ ▼ work on the view on screen.</li>
+<li><strong>CHORD SET</strong>, and the chord keys played as pads, which also fill an armed slot.</li>
+<li><strong>LIVE follows the tab:</strong> on CHORDS and SLOTS, pads 1–7 are the degrees' chords. On NOTES, all
+  16 pads play single scale notes, and ▲ ▼ change the octave. With STEP on, ▲ ▼ walk the rows
+  and SELECT writes the chord or note.</li>
+</ul>
+<h3 id="samplermachinepanel">SamplerMachinePanel</h3>
+<ul>
+<li><strong><code>SampleScreen</code>:</strong> the slot's waveform and trim handles, and a KnobGroup itself. A tap on it,
+  or ▲ from the grid's top row, gives knob 1 to the start handle and knob 2 to the end. ▼ gives
+  the knobs back to the rows.</li>
+<li><strong>Buttons:</strong> LOAD (with hold-to-hear previews), ▶, CLEAR, REVERSE, ● REC, INPUT (<code>InputPopup</code>)
+  and PITCH.</li>
+<li><strong>The step grid</strong> over the bank's slots, with BANK A–D chips and ◀ ▶.</li>
+<li><strong>LIVE:</strong> pads 1–8 are the slots and key 9 the accent. Knobs 1–3 are the selected row's mute,
+  solo and level.</li>
+</ul>
+<p>All of <code>qml/</code> is one QML module, <code>Ravving</code>, built into the binary by <code>qt_add_qml_module</code>. It's
+compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
+<code>loadFromModule("Ravving", "Main")</code>.</p>
+<ul>
+<li><code>Hardware</code> and <code>HardwareEvent</code> join it through <code>QML_ELEMENT</code>.</li>
+<li>Every file imports <code>Ravving</code>; there are no relative imports.</li>
+<li>For development, <code>RAVVING_QML_DIR</code> makes <code>QmlSourceOverride</code>, a URL interceptor, serve the
+  <code>.qml</code> files from a source tree. QML edits then need only a restart.</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -181,7 +208,7 @@ source tree instead, so QML edits need only a restart.</p>
 </tr>
 <tr>
 <td><code>KeyCap</code>, <code>Chip</code>, <code>RaveKnob</code></td>
-<td>the controls: drum key, LED pill toggle, labelled dial (a QQC Dial for the touch handling, drawn by <code>DialFace</code>: the ring, the body and the pointer all in Qt Quick Shapes on the curve renderer, in one frame, so nothing drifts by a sub-pixel (a Rectangle body beside the Shape ring read as off-centre on the cards); crisp from 26 px up; groove, accent value arc from the start or from the centre for ranges around zero, body, pointer)</td>
+<td>the controls: drum key, LED pill toggle, labelled dial (a QQC Dial for the touch handling, drawn by <code>DialFace</code>: the ring, the body and the pointer all in Qt Quick Shapes on the curve renderer, in one frame, so nothing drifts by a sub-pixel; crisp from 26 px up; groove, accent value arc from the start or from the centre for ranges around zero, body, pointer)</td>
 </tr>
 <tr>
 <td><code>KnobGroup</code>, <code>KnobBadge</code></td>
@@ -205,7 +232,7 @@ source tree instead, so QML edits need only a restart.</p>
 </tr>
 <tr>
 <td><code>SongPage</code></td>
-<td>SONG (<code>studio.sections</code>): the StackLayout's seventh view, under the header as the MIXER (<code>Session.songView</code>, the project plate opens and closes it). SECTIONS at a finger's size: square keys wearing their number, their name under, a dot per sounding machine, the one on screen filled in its colour (blinking while it waits for the bar: <code>Session.sectionBlink</code>, its timer running only then), eight a row (the first row is ALT + step keys 9–16), ＋ a copy of the one on screen; tap picks, double tap renames (NamePopup), hold and drag moves, × deletes (second tap). A row for the section on screen: RENAME, NEW, COLOUR, LENGTH (AUTO), MOVE, ADD TO SONG. The SONG as a strip of blocks as wide as bars × repeats, a row for the block picked: MOVE, REPEATS, REMOVE. Keys: ◀ ▶ walk, ▲ ▼ between, SELECT picks, step keys pick, ALT + ◀ ▶ move, knob 1 the length, knob 2 the repeats. Idle it draws nothing (0 frames/s measured)</td>
+<td>SONG (<code>studio.sections</code>): the StackLayout's seventh view, under the header as the MIXER (<code>Session.songView</code>, the project plate opens and closes it). SECTIONS at a finger's size: square keys wearing their number, their name under, a dot per sounding machine, the one on screen filled in its colour (blinking while it waits for the bar: <code>Session.sectionBlink</code>, its timer running only then), eight a row (the first row is ALT + step keys 9–16), ＋ a copy of the one on screen; tap picks, double tap renames (NamePopup), hold and drag moves, × deletes (second tap). A row for the section on screen: RENAME, NEW, COLOUR, LENGTH (AUTO), MOVE, ADD TO SONG. The SONG as a strip of blocks as wide as bars × repeats, a row for the block picked: MOVE, REPEATS, REMOVE. Keys: ◀ ▶ walk, ▲ ▼ between, SELECT picks, step keys pick, ALT + ◀ ▶ move, knob 1 the length, knob 2 the repeats. Idle, it draws nothing</td>
 </tr>
 <tr>
 <td><code>RavePopup</code>, <code>ModalDim</code>, <code>DialogHeader</code></td>
@@ -232,10 +259,6 @@ source tree instead, so QML edits need only a restart.</p>
 <td>a pad that sounds beams (its colour pulsing over it, the border lit: the machine's <code>playing</code>); the MPC's 4 × 4 pads (13–16 top, 1–4 bottom): number, name, 16 hit dots, pad colour, mute tint, selection, held flash, latched-loop ring; tap / hold / long press</td>
 </tr>
 <tr>
-<td><code>PadState</code></td>
-<td>the PAD SAMPLER in QML only (the backend's interface to come): 16 pads with <code>params[tab][knob]</code> 0..1 and Pad Play flags, the bar's steps, the <code>lane</code> single-row view, the tabs and switch choices</td>
-</tr>
-<tr>
 <td><code>WaveEditorPopup</code></td>
 <td>the wave editor both samplers share: the sample large with its trim, CHOP by REGIONS 4/8/16 (big knob), THRESHOLD (the machine's <code>detectTransients</code>, knob = threshold) or MANUAL (taps on the wave), the cuts drawn and numbered; APPLY / SELECT → the owner's <code>applyChop</code> (pieces onto the pads from pad 1, or the bank's slots from slot 1); NORMALISE / TRIM → <code>trimToNewFile</code>. Both machines expose the same three methods and <code>transientsDetected</code></td>
 </tr>
@@ -245,12 +268,17 @@ source tree instead, so QML edits need only a restart.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="pages-and-controls">Pages and controls</h2>
 <p>Pages combine these and hold only page-specific logic: the bassline generator, the bank
-switching, the chord cursor. Generic controls (buttons, combo boxes, sliders, tabs) come from the Zynthbox Quick Controls
-style, so they follow the active SVG theme; the dials are ravving's own (<code>DialFace</code>), since the
-theme's SVG dial breaks up at the small sizes the machines use.
-The machine-specific parts (key caps, nameplates, grids) are drawn in QML from each machine's
-finish in <code>Rave.machines</code>.</p>
+switching, the chord cursor.</p>
+<ul>
+<li><strong>Generic controls</strong> (buttons, combo boxes, sliders, tabs) come from the Zynthbox Quick
+  Controls style, so they follow the active SVG theme.</li>
+<li><strong>The dials</strong> are ravving's own (<code>DialFace</code>): the theme's SVG dial breaks up at the small
+  sizes the machines use.</li>
+<li><strong>The machine parts</strong> (key caps, nameplates, grids) are drawn in QML from each machine's
+  finish in <code>Rave.machines</code>.</li>
+</ul>
   </article>
 </main>
 <footer>

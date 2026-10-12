@@ -84,13 +84,17 @@ undo stack of its own.</p>
 automation, live timing and its preset's name (<code>Machine::historyState()</code>). Not the sound
 (source, factory sound, MODS), the mix (level, pan, mute), the effects or the project's
 settings (tempo, swing, key). Anything can join by becoming a participant (below).</p>
-<p>And the <strong>arrangement</strong> (<code>Sections::historyState()</code>, "SECTIONS"): which sections
-there are, in which order, their names, colours and lengths, and the song. A section removed is
-put aside with its content (<code>Sections::m_removed</code>), so undoing the removal brings it back whole,
-in its place and in the song; redoing it hands over to the neighbour as REMOVE did. What is not
-in it: the section on screen (a pick is no step, so an undo never switches what plays; a section
-added and then undone is the one exception, the first section takes over) and the machines'
-content (theirs). The removed sections are forgotten when a project is opened.</p>
+<p>And the <strong>arrangement</strong> (<code>Sections::historyState()</code>, "SECTIONS"): which sections there are,
+their order, names, colours and lengths, and the song.</p>
+<ul>
+<li><strong>A removed section</strong> is put aside with its content (<code>Sections::m_removed</code>). Undoing the
+  removal brings it back whole, in its place and in the song. Redoing it hands over to the
+  neighbour, as REMOVE did.</li>
+<li><strong>Not in it:</strong> the section on screen, and the machines' content (they have their own). A pick
+  is no step, so an undo never switches what plays. The one exception is a section added and
+  then undone: the first section takes over.</li>
+<li><strong>Opening a project</strong> forgets the removed sections.</li>
+</ul>
 <h2 id="two-ways-back">Two ways back</h2>
 <table>
 <thead>
@@ -202,9 +206,9 @@ The history keeps <code>History::Depth</code> (100) steps.</p>
 <ul>
 <li><code>historyState()</code> is computed after every change, so keep it cheap (a map of the content);
   the machines' is their <code>contentState()</code> less the sound and the view.</li>
-<li>One machine's undo clears the timeline's redo (what it would redo does not match what
-  is there); the timeline's undo of a step a machine was part of is redone by that
-  machine's ↷ too (it falls back to the timeline's redo).</li>
+<li>One machine's undo clears the timeline's redo, since what it would redo doesn't match what's there.</li>
+<li>A timeline undo of a step a machine was part of can be redone by that machine's ↷ too: it
+  falls back to the timeline's redo.</li>
 </ul>
   </article>
 </main>

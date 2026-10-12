@@ -399,43 +399,66 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 </tbody>
 </table>
-<p>Contracts found the hard way (libzynthbox crashes or stays silent otherwise):
-- <code>SketchpadTrack.samples</code> must hold ten entries (PatternModel reads sample slots 0–9).
-- SamplerSynth makes a track's <code>channel_N-sampleM</code> ports only while a clip is registered on
-  that slot: wire exactly the loaded ones, again whenever they change.
-- AudioLevels starts every recorder set to record: a take turns the master's writer off
-  (<code>setRecordGlobalPlayback(false)</code>), the mix turns the port recorder off.
-- AudioLevels' own capture meter (<code>captureA/B</code>) reads the speakers under PipeWire (it takes
-  the first <code>system:</code> outputs, the monitor): meter the input through the port recorder.
-- PipeWire has a second "Built-in Audio Stereo" (the Dummy card): its ports get a number
-  suffix (<code>capture_FL-17167</code>); the plain names are the HiFiBerry's.
-- PlayGridManager's <code>zlSketchpad</code> must be set before playing (SyncTimer dereferences it).
-- A pattern only plays while PlayfieldManager has its clip in PlayingState, and stopping
-  resets every clip: the clips are re-launched from <code>Sketchpad::startPlayback()</code>.
-- Never call <code>Plugin::shutdown()</code>; exit with <code>_exit()</code> (see the exit row below).</p>
-<p id="kits"><strong>Kits.</strong> <code>data/kits.json</code> holds every machine: <code>drumMachines</code> (track, Zynthian channel,
-engine, default kit and preset) and <code>machines</code> by <code>kind</code> (<code>mono</code>: bass on track 3, lead on
-track 5; <code>chords</code>: track 4), each with its engine (type, LV2 URI, fixed <code>controls</code>), its
-<code>sound</code> (SOUND MODIFIERS), <code>presets</code> file, <code>defaultPreset</code>, <code>baseNote</code> and velocities. Studio
-builds them generically and publishes the non-drum ones as <code>studio.machines.&lt;key&gt;</code>. Also the kit folder (the 40 drum-machine soundfonts in
-zynthian-data). Grid rows are not written by hand: <code>DrumKit</code> reads them out of the kit
-(soundfonts are not General MIDI: the 909's clap is on 50, the Linn's on 39). Tapping a
-machine's nameplate opens <code>ChoicePopup</code> with every kit; <code>DrumMachine::loadKit()</code> moves each
-hit to the new kit's note for its role (keeping accents), the engine reloads the soundfont
-(<code>SoundEngine::reconfigure</code>), and the choice is saved in the session (<code>session.json</code>). A
-double tap on the nameplate goes back to the default kit (<code>resetKit()</code>). A new engine type
-is one <code>SoundEngine</code> subclass plus a line in <code>SoundEngine::createEngine()</code>.</p>
-<p><strong>Presets</strong> are factory beats (House, Techno, Electro, Breaks, Hip Hop, Groove, Empty) that
-replace the pattern. They are drum charts written per role (<code>"KICK": "X...x..."</code>, X = an
-accented hit), so every preset plays on every kit. The toolbar's PRESET button shows the loaded
-preset (• once edited) and opens a <code>ChoicePopup</code> by genre; SAVE CURRENT AS NEW stores the
-pattern as "My Beat N" in <code>Paths::presets()/drum-presets.json</code>, and DELETE removes a
-user preset. The other machines save the same way into their own file, named by the factory
-file's <code>userName</code> ("My Bassline N", "My Progression N", "My Melody N", "My Pattern N").</p>
-<p id="row-mix"><strong>Row mix.</strong> Each row's level, mute and solo are kept per role (they survive kit changes) and
-live in the hits' velocities: level 0.8 → velocity 100, an accent hits ×1.27 harder, and a
-muted or soloed-out row gets velocity −1, PatternModel's "do not play". Accents are kept by the
-machine and saved in the session with the row mix, never read back from velocities.</p>
+<h3 id="libzynthboxs-contracts">libzynthbox's contracts</h3>
+<p>Break one and libzynthbox crashes or stays silent:</p>
+<ul>
+<li><code>SketchpadTrack.samples</code> must hold ten entries (PatternModel reads sample slots 0–9).</li>
+<li>SamplerSynth makes a track's <code>channel_N-sampleM</code> ports only while a clip is registered on
+  that slot: wire exactly the loaded ones, again whenever they change.</li>
+<li>AudioLevels starts every recorder set to record: a take turns the master's writer off
+  (<code>setRecordGlobalPlayback(false)</code>), the mix turns the port recorder off.</li>
+<li>AudioLevels' own capture meter (<code>captureA/B</code>) reads the speakers under PipeWire (it takes
+  the first <code>system:</code> outputs, the monitor): meter the input through the port recorder.</li>
+<li>PipeWire has a second "Built-in Audio Stereo" (the Dummy card): its ports get a number
+  suffix (<code>capture_FL-17167</code>); the plain names are the HiFiBerry's.</li>
+<li>PlayGridManager's <code>zlSketchpad</code> must be set before playing (SyncTimer dereferences it).</li>
+<li>A pattern only plays while PlayfieldManager has its clip in PlayingState, and stopping
+  resets every clip: the clips are re-launched from <code>Sketchpad::startPlayback()</code>.</li>
+<li>Never call <code>Plugin::shutdown()</code>; exit with <code>_exit()</code> (see the exit row below).</li>
+</ul>
+<h3 id="kits">Kits</h3>
+<p><code>data/kits.json</code> holds every machine:</p>
+<ul>
+<li><code>drumMachines</code>: track, Zynthian channel, engine, default kit and preset.</li>
+<li><code>machines</code>, by <code>kind</code>: <code>mono</code> (bass on track 3, lead on track 5) and <code>chords</code> (track 4). Each
+  has its engine (type, LV2 URI, fixed <code>controls</code>), its <code>sound</code> (SOUND MODIFIERS), a <code>presets</code>
+  file, <code>defaultPreset</code>, <code>baseNote</code> and velocities.</li>
+<li>The kit folder: the 40 drum-machine soundfonts in zynthian-data.</li>
+</ul>
+<p>Studio builds the machines generically and publishes the non-drum ones as
+<code>studio.machines.&lt;key&gt;</code>. A new engine type is one <code>SoundEngine</code> subclass plus a line in
+<code>SoundEngine::createEngine()</code>.</p>
+<h3 id="drum-kits">Drum kits</h3>
+<p>Grid rows aren't written by hand: <code>DrumKit</code> reads them out of the kit, since the soundfonts
+aren't General MIDI (the 909's clap is on 50, the Linn's on 39).</p>
+<ul>
+<li>A tap on a machine's nameplate opens <code>ChoicePopup</code> with every kit.</li>
+<li><code>DrumMachine::loadKit()</code> moves each hit to the new kit's note for its role, keeping accents.
+  The engine reloads the soundfont (<code>SoundEngine::reconfigure</code>), and the session keeps the
+  choice (<code>session.json</code>).</li>
+<li>A double tap on the nameplate goes back to the default kit (<code>resetKit()</code>).</li>
+</ul>
+<h3 id="presets">Presets</h3>
+<p>Factory beats that replace the pattern: House, Techno, Electro, Breaks, Hip Hop, Groove and
+Empty. They're drum charts written per role (<code>"KICK": "X...x..."</code>, X = an accented hit), so
+every preset plays on every kit.</p>
+<ul>
+<li>The toolbar's PRESET button shows the loaded preset (• once edited) and opens a
+  <code>ChoicePopup</code> by genre.</li>
+<li>SAVE CURRENT AS NEW stores the pattern as "My Beat N" in
+  <code>Paths::presets()/drum-presets.json</code>, and DELETE removes a user preset.</li>
+<li>The other machines save the same way into their own file, named by the factory file's
+  <code>userName</code>: "My Bassline N", "My Progression N", "My Melody N", "My Pattern N".</li>
+</ul>
+<h3 id="row-mix">Row mix</h3>
+<p>Each row's level, mute and solo are kept per role, so they survive kit changes. They live in
+the hits' velocities:</p>
+<ul>
+<li>level 0.8 → velocity 100, and an accent hits ×1.27 harder;</li>
+<li>a muted or soloed-out row gets velocity −1, PatternModel's "do not play".</li>
+</ul>
+<p>The machine keeps the accents and saves them in the session with the row mix. They're never
+read back from velocities.</p>
 <p>The session lives in <code>Paths::state()</code> (<code>~/.local/state/ravving</code>; an explicit path: libzynthbox's
 MidiRouter renames the application to "zynthbox-qml" while it initialises).</p>
 <p id="the-pattern-interface"><strong>The pattern interface.</strong> <code>StepGrid</code> and <code>PatternToolbar</code> only draw and forward to a
