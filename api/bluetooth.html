@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- bluetooth.cpp -->
-  <meta name="description" content="Bluetooth the way a phone does it, published to QML as bluetooth: switch it on, find what is around, pair, connect, then send a file to a device or play through it.">
+  <meta name="description" content="The Bluetooth adapter and devices, published to QML as bluetooth: power, scan, pair, connect, send and receive files, and play through an audio device.">
   <meta name="keywords" content="class">
   <title>Bluetooth Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">Bluetooth Class</h1>
 <!-- $$$Bluetooth-brief -->
-<p>Bluetooth the way a phone does it, published to QML as <code translate="no">bluetooth</code>: switch it on, find what is around, pair, connect, then send a file to a device or play through it. <a href="#details">More...</a></p>
+<p>The Bluetooth adapter and devices, published to QML as <code translate="no">bluetooth</code>: power, scan, pair, connect, send and receive files, and play through an audio device. <a href="#details">More...</a></p>
 <!-- @@@Bluetooth -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;bluetooth.h&gt;</code></td></tr>
@@ -143,10 +143,11 @@
 <!-- $$$Bluetooth-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Pairing shows a passkey to confirm (or asks for a PIN on older devices). A connected device either takes a file (a track or a <code translate="no">.ravv</code> bundle to a phone or a computer, OBEX Object Push) or plays the sound (a speaker or headphones, A2DP: the master switched to it and back). The device can be made discoverable so a phone sends files the other way; what arrives lands in the library's <code translate="no">incoming</code> folder (a number added to a name already taken) and is announced with <a href="bluetooth.html#fileReceived" translate="no">fileReceived</a>().</p>
-<p>Built on KDE's BluezQt (BlueZ over D-Bus): a Manager for the adapter and the devices, a pairing agent (DisplayYesNo), an ObexManager with Object Push sessions for sending and an OBEX agent for receiving. The audio side is PipeWire's: once an audio device connects, WirePlumber makes its sink (<code translate="no">bluez_output.&lt;address&gt;.1</code>), and <a href="bluetooth.html#useAsOutput" translate="no">useAsOutput</a>() hands that sink to <a href="audiooutputs.html" translate="no">AudioOutputs</a>, which routes the master to it; switched off, on disconnect, forget or exit, the sound goes back to the jacks. Scans are short and classic-only (<a href="bluetooth.html#startDiscovery" translate="no">startDiscovery</a>()).</p>
-<p>Connecting works the way a phone's does too. A device that does not answer the page (a speaker asleep or waking up, or busy with a phone) is paged again after 2, 5 and 10 s instead of failing at once. One audio device plays at a time: BlueZ has one local A2DP endpoint per codec, shared by every device (PipeWire registers one SBC source), so while headphones stream SBC an SBC-only speaker's A2DP is refused (bluetoothd logs &quot;Unable to select SEP&quot;). A device that answered but could not connect while another audio device is connected is handed the link: the other is disconnected and the connection made again. PLAY THROUGH routes once the connection is made. When Bluetooth comes on, the output kept by <a href="audiooutputs.html" translate="no">AudioOutputs</a> is connected again if nothing else plays, once, never in a loop, since paging a speaker in standby wakes it.</p>
-<p>The devices BlueZ lists are kept in devices as plain maps for QML, rebuilt 150 ms after any change; the agents fill pairing and transfer the same way. state is <code translate="no">unavailable</code> (with reason) until BlueZ answers: on a Zynthbox the stock drop-in starts bluetoothd from a path that does not exist on Debian 13, so ravving installs a drop-in with the right one (<code translate="no">data/systemd</code>, docs/bluetooth.md). Everything runs on the GUI thread, the D-Bus calls asynchronously; outcomes worth a toast come as <a href="bluetooth.html#notify" translate="no">notify</a>().</p>
+<p>Built on BluezQt (BlueZ over D-Bus): a Manager for the adapter and the devices, a pairing agent with the DisplayYesNo capability, an ObexManager with Object Push sessions for sending, and an OBEX agent for receiving. Received files are saved in the library's <code translate="no">incoming</code> folder, renamed with a number when the name is taken, and announced with <a href="bluetooth.html#fileReceived" translate="no">fileReceived</a>().</p>
+<p>Audio devices are played through over A2DP. When one connects, WirePlumber creates its sink (<code translate="no">bluez_output.&lt;address&gt;.1</code>); <a href="bluetooth.html#useAsOutput" translate="no">useAsOutput</a>() hands that sink to <a href="audiooutputs.html" translate="no">AudioOutputs</a>, which routes the master to it. Disconnecting, forgetting or quitting sends the sound back to the jacks.</p>
+<p>Connecting a device that does not answer the page is retried after 2, 5 and 10 s. BlueZ registers one local A2DP endpoint per codec, shared by every device, so only one audio device streams a given codec at a time: a device refused while another audio device is connected is handed the link (the other is disconnected and the connection retried). When the adapter comes on, the output kept by <a href="audiooutputs.html" translate="no">AudioOutputs</a> is connected once if no other audio device is connected.</p>
+<p>Scans are 12 s long and classic (BR/EDR) only, see <a href="bluetooth.html#startDiscovery" translate="no">startDiscovery</a>().</p>
+<p>devices is rebuilt 150 ms after any BlueZ change; pairing and transfer are set by the agents. state is <code translate="no">unavailable</code>, with reason, until BlueZ answers. Everything runs on the GUI thread with asynchronous D-Bus calls; outcomes shown to the user come as <a href="bluetooth.html#notify" translate="no">notify</a>().</p>
 </div>
 <!-- @@@Bluetooth -->
 <div class="prop">
@@ -168,7 +169,7 @@
 <div class="fnitem">
 <!-- $$$busy-prop$$$busy$$$busyChanged -->
 <h3 class="fn" translate="no" id="busy-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">busy</span> : <span class="type">QVariantMap</span></h3>
-<p>what is under way per device, as a map of address to <code translate="no">pairing</code>, <code translate="no">connecting</code>, <code translate="no">waking</code> (paged again: it did not answer), <code translate="no">switching</code> (another audio device is let go for it), <code translate="no">disconnecting</code> or <code translate="no">routing</code>, until it worked or failed. The device's row shows it and holds its buttons. Clearing an entry (<a href="bluetooth.html#disconnectDevice" translate="no">disconnectDevice</a>(), <a href="bluetooth.html#forget" translate="no">forget</a>()) also stops the pages still to come.</p>
+<p>what is under way per device, as a map of address to <code translate="no">pairing</code>, <code translate="no">connecting</code>, <code translate="no">waking</code> (paged again: it did not answer), <code translate="no">switching</code> (another audio device is let go for it), <code translate="no">disconnecting</code> or <code translate="no">routing</code>, until it succeeds or fails. Clearing an entry (<a href="bluetooth.html#disconnectDevice" translate="no">disconnectDevice</a>(), <a href="bluetooth.html#forget" translate="no">forget</a>()) also stops the pages still to come.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>busy</b></span>() const</td></tr>

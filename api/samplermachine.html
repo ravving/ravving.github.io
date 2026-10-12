@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- samplermachine.cpp -->
-  <meta name="description" content="The SAMPLER (easyrave's SAMPLE KING): a Machine playing samples on libzynthbox's SamplerSynth, with four banks (A to D) of eight sample slots and steps each.">
+  <meta name="description" content="The SAMPLE KING sampler: a Machine playing samples on libzynthbox's SamplerSynth, with four banks (A to D) of eight sample slots and steps each.">
   <meta name="keywords" content="class">
   <title>SamplerMachine Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">SamplerMachine Class</h1>
 <!-- $$$SamplerMachine-brief -->
-<p>The SAMPLER (easyrave's SAMPLE KING): a Machine playing samples on libzynthbox's SamplerSynth, with four banks (A to D) of eight sample slots and steps each. <a href="#details">More...</a></p>
+<p>The SAMPLE KING sampler: a Machine playing samples on libzynthbox's SamplerSynth, with four banks (A to D) of eight sample slots and steps each. <a href="#details">More...</a></p>
 <!-- @@@SamplerMachine -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;samplermachine.h&gt;</code></td></tr>
@@ -158,7 +158,7 @@
 <!-- $$$SamplerMachine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The bank on screen is the one that plays. Each loaded slot is one ClipAudioSource on the machine's sketchpad track (slot <i>i</i> on sample slot <i>i</i> % 5, row <i>i</i> / 5), set up on its root slice: its key zone and root note are the slot's note (kits.json's <code translate="no">baseNote</code> + <i>i</i>), so a pattern note or a live key plays exactly that sample, untransposed. It plays one-shot (a retrigger cuts the voice before, as easyrave's slots choke); PITCH is the slice's pitch (±12 semitones); the trim (start and length, as fractions of the file) is its start and length; REVERSE plays a reversed copy of the file, rendered once in a worker thread into the cache folder. The track is <code translate="no">sample-trig</code>, so its PatternModel sends its notes to SamplerSynth for the clips the track publishes (<a href="sketchpadtrack.html#setSamples" translate="no">SketchpadTrack::setSamples</a>()).</p>
+<p>The bank on screen is the one that plays. Each loaded slot is one ClipAudioSource on the machine's sketchpad track (slot <i>i</i> on sample slot <i>i</i> % 5, row <i>i</i> / 5), set up on its root slice: its key zone and root note are the slot's note (kits.json's <code translate="no">baseNote</code> + <i>i</i>), so a pattern note or a live key plays exactly that sample, untransposed. It plays one-shot (a retrigger cuts the voice before); PITCH is the slice's pitch (±12 semitones); the trim (start and length, as fractions of the file) is its start and length; REVERSE plays a reversed copy of the file, rendered once in a worker thread into the cache folder. The track is <code translate="no">sample-trig</code>, so its PatternModel sends its notes to SamplerSynth for the clips the track publishes (<a href="sketchpadtrack.html#setSamples" translate="no">SketchpadTrack::setSamples</a>()).</p>
 <p>The step grid is StepGrid's pattern interface, as <a href="drummachine.html" translate="no">DrumMachine</a>'s: the rows are the slots, with an ACC row and per-row level, mute and solo kept in the velocities. Presets (<code translate="no">sampler-presets.json</code>) are rhythms over the slots: &quot;1&quot; to &quot;8&quot; a row each, &quot;x&quot; a hit and &quot;X&quot; an accented one, so the grid has a groove as soon as sounds are dropped in. The bank on screen is not part of the undo history, and a section keeps the banks' hits, not their samples.</p>
 </div>
 <!-- @@@SamplerMachine -->
