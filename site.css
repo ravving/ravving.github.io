@@ -493,10 +493,11 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 
 /* the device comes in: rises from a tilt, its screen lights up, the step keys run once */
 .landing-device { position: relative; max-width: 980px; margin: clamp(28px, 5vw, 56px) auto 0; perspective: 1400px; }
-.landing-device > img { position: relative; width: 100%; height: auto; transform-origin: 50% 100%;
+/* the device, its screen and its step keys move in as one; the screen boots once it has landed */
+.landing-stage { position: relative; transform-origin: 50% 100%; animation: landing-rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.landing-stage > img { position: relative; display: block; width: 100%; height: auto;
   /* the render sits on black: clipped to the enclosure, as on the features page */
-  clip-path: inset(6.6% 5.1% 7.5% 5.5% round 1.6% / 2.1%);
-  animation: landing-rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  clip-path: inset(6.6% 5.1% 7.5% 5.5% round 1.6% / 2.1%); }
 .landing-glow { position: absolute; inset: 20% 10% 0; border-radius: 50%;
   background: radial-gradient(closest-side, rgba(242, 93, 10, 0.32), transparent);
   filter: blur(40px); animation: landing-glow 2s ease-out 0.4s both; }
@@ -505,14 +506,14 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
    rushing at the viewer and fading as it grows, the colour going a moment later */
 .landing-screen { position: absolute; left: 22.96%; top: 17.28%; width: 53.9%; height: 43.95%; background: #06050a;
   border-radius: 1.2%; overflow: hidden; display: grid; place-items: center; pointer-events: none;
-  animation: landing-power 0.5s ease-in-out 2.25s both; }
-.landing-splash { position: relative; width: 84%; animation: landing-zoom 0.85s cubic-bezier(0.55, 0.085, 0.68, 0.53) 1.9s both; }
-.landing-fade { position: relative; animation: landing-logo 1.65s 0.9s both; }
+  animation: landing-power 0.5s ease-in-out 2.75s both; }
+.landing-splash { position: relative; width: 84%; animation: landing-zoom 0.85s cubic-bezier(0.55, 0.085, 0.68, 0.53) 2.4s both; }
+.landing-fade { position: relative; animation: landing-logo 1.65s 1.4s both; }
 .landing-fade img { display: block; width: 100%; height: auto; }
-.landing-halo { position: absolute; inset: 0; animation: landing-halo 1s ease-in-out 1s both; }
+.landing-halo { position: absolute; inset: 0; animation: landing-halo 1s ease-in-out 1.5s both; }
 .landing-steps { position: absolute; left: 21.6%; top: 65.6%; width: 49.6%; height: 5.2%; pointer-events: none;
   background: linear-gradient(90deg, transparent 0, rgba(255, 232, 33, 0) 40%, rgba(255, 232, 33, 0.55) 50%, rgba(255, 232, 33, 0) 60%, transparent 100%);
-  background-size: 300% 100%; mix-blend-mode: screen; animation: landing-run 1.1s ease-in-out 2.8s both; }
+  background-size: 300% 100%; mix-blend-mode: screen; animation: landing-run 1.1s ease-in-out 3.3s both; }
 @keyframes landing-rise { from { opacity: 0; transform: translateY(60px) rotateX(18deg) scale(0.94); } to { opacity: 1; transform: none; } }
 @keyframes landing-glow { from { opacity: 0; } to { opacity: 1; } }
 @keyframes landing-power { from { opacity: 1; } to { opacity: 0; } }
@@ -523,9 +524,17 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 @keyframes landing-run { from { background-position: 100% 0; opacity: 1; } to { background-position: 0 0; opacity: 0; } }
 
 .landing-get { margin: clamp(28px, 4vw, 44px) auto 0; }
-.landing-button { display: inline-block; padding: 16px 28px; border-radius: 999px; background: var(--orange); color: #111;
-  font-weight: 700; font-size: 17px; text-decoration: none; letter-spacing: 0.01em; box-shadow: 0 8px 30px rgba(242, 93, 10, 0.35); }
-.landing-button:hover, .landing-button:focus-visible { background: var(--amber); }
+/* the download is one of the device's keys: a charcoal cap, its legend lit, pressed on hover */
+.landing-button { display: inline-flex; align-items: center; gap: 12px; padding: 15px 26px 14px; border-radius: 4px;
+  background: linear-gradient(180deg, #2a2d2e, var(--cap)); color: var(--orange); text-decoration: none;
+  font-family: var(--font-cap); font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(242, 93, 10, 0.55);
+  box-shadow: inset 0 1px 0 var(--cap-top), 0 3px 0 var(--cap-edge), 0 10px 24px rgba(0, 0, 0, 0.45);
+  transition: transform 0.12s, box-shadow 0.12s, color 0.2s; }
+.landing-button::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px currentColor; }
+.landing-button:hover, .landing-button:focus-visible { color: var(--amber); transform: translateY(2px);
+  box-shadow: inset 0 1px 0 var(--cap-top), 0 1px 0 var(--cap-edge), 0 6px 16px rgba(0, 0, 0, 0.45); }
+.landing-button:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
 .landing-alt { margin: 14px auto 0; color: var(--ink-3); font-size: 14px; max-width: 60ch; }
 .landing-alt a { color: var(--ink-2); }
 
@@ -539,6 +548,7 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .nav nav.langs a { white-space: nowrap; }
 @media (max-width: 480px) { .landing .nav nav[aria-label="Sections"] a[href$="#shortcuts"] { display: none; } }
 @media (prefers-reduced-motion: reduce) {
-  .landing-device img, .landing-glow, .landing-screen, .landing-steps { animation: none; }
+  .landing-stage, .landing-glow, .landing-screen, .landing-steps { animation: none; }
+  .landing-button { transition: none; }
   .landing-screen, .landing-steps { display: none; }
 }
