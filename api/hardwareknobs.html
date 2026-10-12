@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- hardwareknobs.cpp -->
+  <meta name="description" content="Polls the device's four knobs (zyncoder's zynpots) and reports them as relative turns or absolute positions.">
+  <meta name="keywords" content="class">
+  <title>HardwareKnobs Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>HardwareKnobs</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">HardwareKnobs Class</h1>
+<!-- $$$HardwareKnobs-brief -->
+<p>Polls the device's four knobs (zyncoder's zynpots) and reports them as relative turns or absolute positions. <a href="#details">More...</a></p>
+<!-- @@@HardwareKnobs -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;hardwareknobs.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="hardwareknobs-members.html">List of all members, including inherited members</a></li>
+<li>HardwareKnobs is part of <a href="ravving-app.html">App and hardware input</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="hardwareknobs.html#HardwareKnobs" translate="no">HardwareKnobs</a></b>(void *<i>zyncoder</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="hardwareknobs.html#isAbsolute" translate="no">isAbsolute</a></b>(int <i>knob</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="hardwareknobs.html#isPolling" translate="no">isPolling</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="hardwareknobs.html#moved" translate="no">moved</a></b>(int <i>knob</i>, qreal <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="hardwareknobs.html#turned" translate="no">turned</a></b>(int <i>knob</i>, int <i>delta</i>)</td></tr>
+</table></div>
+<!-- $$$HardwareKnobs-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Knobs 0 to 2 are the small knobs, knob 3 the big one. Every 20 ms each knob whose value changed is read through libzyncoder's zynpot functions:</p>
+<ul>
+<li>an endless encoder (every knob on the older kits, the big knob on all of them) emits <a href="hardwareknobs.html#turned" translate="no">turned</a>() with the detents moved, and is recentred near the ends of its range so it never runs out;</li>
+<li>a fixed-end pot (the three small knobs of the Z2_V5B kit) emits <a href="hardwareknobs.html#moved" translate="no">moved</a>() with its position 0..1. Readings within 2 raw steps of the recent average are ignored as jitter, and the last 16 raw steps at either end snap to the end, so a control's minimum and maximum are always reached.</li>
+</ul>
+<p>The kit comes from <code translate="no">ZYNTHIAN_WIRING_LAYOUT</code>; Z2_V5 and Z2_V5B mount the small knobs reversed, which an inverted range compensates for. Ported from zynthbox-qml's <code translate="no">zynthian_qt_gui.py</code> (the zselector setup, <code translate="no">zyncoder_read()</code> and <code translate="no">knobAbsoluteCuiaEmitter()</code>). zynthbox-qml sends these as KNOBn_UP/DOWN/ABSOLUTE CUIA commands; MidiRouter's CUIA queue carries no value, so this class signals Ravving directly.</p>
+</div>
+<!-- @@@HardwareKnobs -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$HardwareKnobs[overload1]$$$HardwareKnobsvoid*QObject* -->
+<h3 class="fn" translate="no" id="HardwareKnobs"><code class="details extra" translate="no">[explicit]</code> HardwareKnobs::<span class="name">HardwareKnobs</span>(<span class="type">void</span> *<i>zyncoder</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Looks up the zynpot functions in <i translate="no">zyncoder</i>, the dlopen() handle of an initialised libzyncoder (<code translate="no">init_zynlib</code> called), sets up the four knobs' ranges and starts polling. When the functions are missing (a desktop) it logs a warning, reports a &quot;No device knobs&quot; issue (Issues) and does not poll. <i translate="no">parent</i> is the QObject parent.</p>
+<!-- @@@HardwareKnobs -->
+</div>
+<div class="fnitem">
+<!-- $$$isAbsolute[overload1]$$$isAbsoluteint -->
+<h3 class="fn" translate="no" id="isAbsolute"><span class="type">bool</span> HardwareKnobs::<span class="name">isAbsolute</span>(<span class="type">int</span> <i>knob</i>) const</h3>
+<p>Returns whether <i translate="no">knob</i> (0 to 3) is a fixed-end pot rather than an endless encoder; <code translate="no">false</code> for an index out of range.</p>
+<!-- @@@isAbsolute -->
+</div>
+<div class="fnitem">
+<!-- $$$isPolling[overload1]$$$isPolling -->
+<h3 class="fn" translate="no" id="isPolling"><span class="type">bool</span> HardwareKnobs::<span class="name">isPolling</span>() const</h3>
+<p>Returns whether the zynpot functions were found and polling runs.</p>
+<!-- @@@isPolling -->
+</div>
+<div class="fnitem">
+<!-- $$$moved[overload1]$$$movedintqreal -->
+<h3 class="fn" translate="no" id="moved"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> HardwareKnobs::<span class="name">moved</span>(<span class="type">int</span> <i>knob</i>, <span class="type">qreal</span> <i>value</i>)</h3>
+<p>Emitted when the fixed pot <i translate="no">knob</i> (0 to 2) settled at <i translate="no">value</i>, 0.0 (fully left) to 1.0 (fully right).</p>
+<!-- @@@moved -->
+</div>
+<div class="fnitem">
+<!-- $$$turned[overload1]$$$turnedintint -->
+<h3 class="fn" translate="no" id="turned"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> HardwareKnobs::<span class="name">turned</span>(<span class="type">int</span> <i>knob</i>, <span class="type">int</span> <i>delta</i>)</h3>
+<p>Emitted when the endless <i translate="no">knob</i> (0 to 3) moved by <i translate="no">delta</i> detents; positive is clockwise.</p>
+<!-- @@@turned -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- inputeffects.cpp -->
+  <meta name="description" content="The live effects on the device input, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;input&lt;@op&gt;.&lt;/@op&gt;effects: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded.">
+  <meta name="keywords" content="class">
+  <title>InputEffects Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>InputEffects</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">InputEffects Class</h1>
+<!-- $$$InputEffects-brief -->
+<p>The live effects on the device input, published to QML as <code translate="no">studio.input.effects</code>: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded. <a href="#details">More...</a></p>
+<!-- @@@InputEffects -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;inputeffects.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="inputeffects-members.html">List of all members, including inherited members</a></li>
+<li>InputEffects is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="inputeffects.html#about-prop" translate="no">about</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="inputeffects.html#knobs-prop" translate="no">knobs</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="inputeffects.html#preset-prop" translate="no">preset</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="inputeffects.html#presets-prop" translate="no">presets</a></b> : const QStringList</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#InputEffects" translate="no">InputEffects</a></b>(const QString &amp;<i>presetsFile</i>, ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#about-prop" translate="no">about</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;AudioInsert *&gt; </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#chain" translate="no">chain</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#knobs-prop" translate="no">knobs</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#preset-prop" translate="no">preset</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#presets-prop" translate="no">presets</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#presetsFor" translate="no">presetsFor</a></b>(const QString &amp;<i>mode</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#setActive" translate="no">setActive</a></b>(bool <i>active</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#setBpm" translate="no">setBpm</a></b>(int <i>bpm</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#setKnob" translate="no">setKnob</a></b>(int <i>index</i>, qreal <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#setMode" translate="no">setMode</a></b>(const QString &amp;<i>mode</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#preset-prop" translate="no">setPreset</a></b>(const QString &amp;<i>name</i>)</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#chainChanged" translate="no">chainChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#knobs-prop" translate="no">knobsChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#preset-prop" translate="no">presetChanged</a></b>()</td></tr>
+</table></div>
+<!-- $$$InputEffects-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p><a href="inputrecorder.html" translate="no">InputRecorder</a> wires the chain (<a href="inputeffects.html#chain" translate="no">chain</a>()). The presets are data (<code translate="no">data/input-fx.json</code>): each a chain of plugins with fixed controls and three knobs, a knob moving one or more ports across a range (linear or log). Only the preset in use runs: its plugins start when it is picked (a second or two) and stop when another is, since every running jalv costs the audio graph each period whether wired or not (thirteen running at once make the output drop out every few seconds); and it runs only while the input is in use (<a href="inputeffects.html#setActive" translate="no">setActive</a>()). The knobs are kept per preset for the session. Delays marked <code translate="no">bpm</code> follow the studio's tempo. OFF (no preset) is the plain input. GUI thread only.</p>
+</div>
+<!-- @@@InputEffects -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$about-prop$$$about$$$presetChanged -->
+<h3 class="fn" translate="no" id="about-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">about</span> : <span class="type">QString</span></h3>
+<p>This property holds a line for the screen saying what the preset in use does.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>about</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="inputeffects.html#preset-prop" translate="no">presetChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@about -->
+</div>
+<div class="fnitem">
+<!-- $$$knobs-prop$$$knobs$$$knobsChanged -->
+<h3 class="fn" translate="no" id="knobs-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">knobs</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the three knobs of the preset in use, as maps with <code translate="no">name</code> and <code translate="no">value</code> (0..1); empty while OFF.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>knobs</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>knobsChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@knobs -->
+</div>
+<div class="fnitem">
+<!-- $$$preset-prop$$$preset$$$setPresetconstQString&$$$presetChanged -->
+<h3 class="fn" translate="no" id="preset-prop"><span class="name">preset</span> : <span class="type">QString</span></h3>
+<p>This property holds the preset in use; empty for OFF, the plain input. An unknown name means OFF.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>preset</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setPreset</b></span>(const QString &amp;<i>name</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>presetChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@preset -->
+</div>
+<div class="fnitem">
+<!-- $$$presets-prop$$$presets -->
+<h3 class="fn" translate="no" id="presets-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">presets</span> : const <span class="type">QStringList</span></h3>
+<p>This property holds the presets' names, in the file's order.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>presets</b></span>() const</td></tr>
+</table></div>
+<!-- @@@presets -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$InputEffects[overload1]$$$InputEffectsconstQString&ZynthboxBridge*QObject* -->
+<h3 class="fn" translate="no" id="InputEffects">InputEffects::<span class="name">InputEffects</span>(const <span class="type">QString</span> &amp;<i>presetsFile</i>, <span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Reads the presets from <i translate="no">presetsFile</i> (<code translate="no">data/input-fx.json</code>), with their plugins run through <i translate="no">bridge</i> (null: nothing runs), with the given <i translate="no">parent</i>.</p>
+<!-- @@@InputEffects -->
+</div>
+<div class="fnitem">
+<!-- $$$chain[overload1]$$$chain -->
+<h3 class="fn" translate="no" id="chain"><span class="type">QList</span>&lt;<span class="type"><a href="audioinsert.html" translate="no">AudioInsert</a></span> *&gt; InputEffects::<span class="name">chain</span>() const</h3>
+<p>Returns the plugins the input runs through now, in order; empty while OFF, inactive or on a desktop.</p>
+<!-- @@@chain -->
+</div>
+<div class="fnitem">
+<!-- $$$chainChanged[overload1]$$$chainChanged -->
+<h3 class="fn" translate="no" id="chainChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> InputEffects::<span class="name">chainChanged</span>()</h3>
+<p>Emitted when the chain changed (another preset, or a plugin restarted): it is wired again.</p>
+<!-- @@@chainChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$presetsFor[overload1]$$$presetsForconstQString& -->
+<h3 class="fn" translate="no" id="presetsFor"><code class="details extra" translate="no">[invokable]</code> <span class="type">QStringList</span> InputEffects::<span class="name">presetsFor</span>(const <span class="type">QString</span> &amp;<i>mode</i>) const</h3>
+<p>Returns the presets made for the input <i translate="no">mode</i> (<code translate="no">mic</code>, <code translate="no">guitar</code> or <code translate="no">line</code>: a preset's <code translate="no">modes</code> in input-fx.json; a preset without is for all), in order.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@presetsFor -->
+</div>
+<div class="fnitem">
+<!-- $$$setActive[overload1]$$$setActivebool -->
+<h3 class="fn" translate="no" id="setActive"><span class="type">void</span> InputEffects::<span class="name">setActive</span>(<span class="type">bool</span> <i>active</i>)</h3>
+<p>Sets whether the input is in use (<i translate="no">active</i>: a page or a dialog shows it, a take runs). The preset's plugins run only then and stop otherwise; the preset stays picked.</p>
+<!-- @@@setActive -->
+</div>
+<div class="fnitem">
+<!-- $$$setBpm[overload1]$$$setBpmint -->
+<h3 class="fn" translate="no" id="setBpm"><span class="type">void</span> InputEffects::<span class="name">setBpm</span>(<span class="type">int</span> <i>bpm</i>)</h3>
+<p>Sets the studio's tempo, <i translate="no">bpm</i>, for the delays that follow it.</p>
+<!-- @@@setBpm -->
+</div>
+<div class="fnitem">
+<!-- $$$setKnob[overload1]$$$setKnobintqreal -->
+<h3 class="fn" translate="no" id="setKnob"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> InputEffects::<span class="name">setKnob</span>(<span class="type">int</span> <i>index</i>, <span class="type">qreal</span> <i>value</i>)</h3>
+<p>Turns knob <i translate="no">index</i> (0 to 2) of the preset in use to <i translate="no">value</i> (0..1) and sends it to its ports.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setKnob -->
+</div>
+<div class="fnitem">
+<!-- $$$setMode[overload1]$$$setModeconstQString& -->
+<h3 class="fn" translate="no" id="setMode"><span class="type">void</span> InputEffects::<span class="name">setMode</span>(const <span class="type">QString</span> &amp;<i>mode</i>)</h3>
+<p>Sets the input's <i translate="no">mode</i>; a preset not made for it goes OFF.</p>
+<!-- @@@setMode -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

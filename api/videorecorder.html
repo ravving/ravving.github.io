@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- videorecorder.cpp -->
+  <meta name="description" content="Video recordings of a session (LIVE REC), published to QML as video: the screen or a USB camera with the master's sound, as one MP4 in the library's videos folder (Paths::videos()), or the sound alone.">
+  <meta name="keywords" content="class">
+  <title>VideoRecorder Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>VideoRecorder</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">VideoRecorder Class</h1>
+<!-- $$$VideoRecorder-brief -->
+<p>Video recordings of a session (LIVE REC), published to QML as <code translate="no">video</code>: the screen or a USB camera with the master's sound, as one MP4 in the library's videos folder (<a href="paths.html#videos" translate="no">Paths::videos</a>()), or the sound alone. <a href="#details">More...</a></p>
+<!-- @@@VideoRecorder -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;videorecorder.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="videorecorder-members.html">List of all members, including inherited members</a></li>
+<li>VideoRecorder is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<div class="table"><table class="propsummary" translate="no">
+<tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="videorecorder.html#active-prop" translate="no">active</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#armed-prop" translate="no">armed</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#audioDroppedMs-prop" translate="no">audioDroppedMs</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#available-prop" translate="no">available</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#camera-prop" translate="no">camera</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#cameras-prop" translate="no">cameras</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#countdown-prop" translate="no">countdown</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#countdownLeft-prop" translate="no">countdownLeft</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#countdowns-prop" translate="no">countdowns</a></b> : const QVariantList</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#elapsed-prop" translate="no">elapsed</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#error-prop" translate="no">error</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#folder-prop" translate="no">folder</a></b> : const QString</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#lastFile-prop" translate="no">lastFile</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#lastInfo-prop" translate="no">lastInfo</a></b> : QVariantMap</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#mic-prop" translate="no">mic</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#micHot-prop" translate="no">micHot</a></b> : bool</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="videorecorder.html#micLevel-prop" translate="no">micLevel</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#micLive-prop" translate="no">micLive</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#mode-prop" translate="no">mode</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#qualities-prop" translate="no">qualities</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#quality-prop" translate="no">quality</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#recording-prop" translate="no">recording</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#recordings-prop" translate="no">recordings</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#showKeys-prop" translate="no">showKeys</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#source-prop" translate="no">source</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#state-prop" translate="no">state</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#unavailableReason-prop" translate="no">unavailableReason</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#voiceActive-prop" translate="no">voiceActive</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#voiceDuck-prop" translate="no">voiceDuck</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#voiceDucks-prop" translate="no">voiceDucks</a></b> : const QVariantList</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#voiceLift-prop" translate="no">voiceLift</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#voiceLifts-prop" translate="no">voiceLifts</a></b> : const QVariantList</li>
+</ul>
+</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#VideoRecorder" translate="no">VideoRecorder</a></b>(Studio *<i>studio</i>, bool <i>live</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#active-prop" translate="no">active</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#adopt" translate="no">adopt</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#armed-prop" translate="no">armed</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#audioDroppedMs-prop" translate="no">audioDroppedMs</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#audioOnly" translate="no">audioOnly</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#available-prop" translate="no">available</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#camera-prop" translate="no">camera</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#cameras-prop" translate="no">cameras</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#countdown-prop" translate="no">countdown</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#countdownLeft-prop" translate="no">countdownLeft</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#countdowns-prop" translate="no">countdowns</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#elapsed-prop" translate="no">elapsed</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#error-prop" translate="no">error</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#folder-prop" translate="no">folder</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#lastFile-prop" translate="no">lastFile</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#lastInfo-prop" translate="no">lastInfo</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#mic-prop" translate="no">mic</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#micHot-prop" translate="no">micHot</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#micLevel-prop" translate="no">micLevel</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#micLive-prop" translate="no">micLive</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#mode-prop" translate="no">mode</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#qualities-prop" translate="no">qualities</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#quality-prop" translate="no">quality</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#recording-prop" translate="no">recording</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#recordings-prop" translate="no">recordings</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#refreshCameras" translate="no">refreshCameras</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#refreshRecordings" translate="no">refreshRecordings</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#remove" translate="no">remove</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#rename" translate="no">rename</a></b>(const QString &amp;<i>path</i>, const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#armed-prop" translate="no">setArmed</a></b>(bool <i>armed</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#camera-prop" translate="no">setCamera</a></b>(const QString &amp;<i>device</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#countdown-prop" translate="no">setCountdown</a></b>(int <i>seconds</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#mic-prop" translate="no">setMic</a></b>(bool <i>on</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#mode-prop" translate="no">setMode</a></b>(const QString &amp;<i>mode</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#quality-prop" translate="no">setQuality</a></b>(const QString &amp;<i>quality</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#showKeys-prop" translate="no">setShowKeys</a></b>(bool <i>on</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#source-prop" translate="no">setSource</a></b>(const QString &amp;<i>source</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#voiceDuck-prop" translate="no">setVoiceDuck</a></b>(int <i>db</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#voiceLift-prop" translate="no">setVoiceLift</a></b>(int <i>db</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#showKeys-prop" translate="no">showKeys</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#source-prop" translate="no">source</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#start" translate="no">start</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#state-prop" translate="no">state</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#stop" translate="no">stop</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#takesKey" translate="no">takesKey</a></b>(const QString &amp;<i>cuia</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#toggle" translate="no">toggle</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#unavailableReason-prop" translate="no">unavailableReason</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#voiceActive-prop" translate="no">voiceActive</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#voiceDuck-prop" translate="no">voiceDuck</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#voiceDucks-prop" translate="no">voiceDucks</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#voiceLift-prop" translate="no">voiceLift</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#voiceLifts-prop" translate="no">voiceLifts</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#armed-prop" translate="no">armedChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#available-prop" translate="no">availableChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#cameras-prop" translate="no">camerasChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#countdownLeft-prop" translate="no">countdownLeftChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#elapsed-prop" translate="no">elapsedChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#failed" translate="no">failed</a></b>(const QString &amp;<i>reason</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#finished" translate="no">finished</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#lastFile-prop" translate="no">lastFileChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#micHot-prop" translate="no">micChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#notify" translate="no">notify</a></b>(const QString &amp;<i>text</i>, const QString &amp;<i>color</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#recordings-prop" translate="no">recordingsChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#state-prop" translate="no">stateChanged</a></b>()</td></tr>
+</table></div>
+<!-- $$$VideoRecorder-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The control center's VIDEO card starts one; while VIDEO is on (armed) the device's RECORD key starts a recording and STOP ends it, from any page, as the header's record and stop do on the screen (<a href="videorecorder.html#takesKey" translate="no">takesKey</a>()). How a recording is made (docs/video.md has the measurements):</p>
+<ul>
+<li>The sound is tapped from the master's last outputs (what the speakers get, LIVE FX inserts included) by <a href="audiotap.html" translate="no">AudioTap</a>, ravving's own JACK client with a 21-second ring, and fed to ffmpeg through a named pipe as raw float samples. It never goes through AudioLevels (the header's record and the samplers' record-to-pad stay free) nor ffmpeg's JACK input (whose 85 ms ring an SD-card stall would overrun).</li>
+<li>The picture is ffmpeg's x11grab of the display (or v4l2 of the camera), encoded with libx264 on two threads at nice 10 (the Pi 5 has no hardware encoder). The tiers in qualities were measured with <code translate="no">tools/audio-impact.sh</code>: none costs xruns.</li>
+<li>Sync: ffmpeg stamps every frame with the wall clock (<code translate="no">-use_wallclock_as_timestamps</code>), the tap knows the wall-clock moment of its first sample (<a href="audiotap.html#startRealtimeUs" translate="no">AudioTap::startRealtimeUs</a>()), and ffmpeg is told it (<code translate="no">-itsoffset</code>); with <code translate="no">-copyts</code> both streams sit on the same clock in the file, to the millisecond. The recording goes to a Matroska file first (readable even after a crash, which an MP4 without its index is not), then one <code translate="no">-c copy</code> remux cuts the head to the first video frame (the audio began half a second earlier, while ffmpeg started) and writes the MP4 with its index up front and its tags.</li>
+</ul>
+<p>The states (state): <code translate="no">off</code> (VIDEO not on), <code translate="no">ready</code> (on: RECORD starts), <code translate="no">countdown</code> (the TIMER's seconds; STOP cancels), <code translate="no">starting</code> (ffmpeg coming up), <code translate="no">recording</code>, <code translate="no">saving</code> (the remux: a few seconds). <a href="videorecorder.html#finished" translate="no">finished</a>() or <a href="videorecorder.html#failed" translate="no">failed</a>() tell the end; the VIDEO SAVED dialog's SEND... takes the file to a stick, the computer or the phone.</p>
+<p>The settings (<code translate="no">ravving/video</code>: SETTINGS, VIDEO and the LIVE REC dialog) are mode, source, quality, countdown, camera, mic (the RECORDER's input mixed into the sound: <a href="inputrecorder.html#setListener" translate="no">InputRecorder::setListener</a>() feeds the tap's mic ports), the voice-over levels and <a href="videorecorder.html#showKeys-prop" translate="no">showKeys</a>. Labels are translated again on a language change. GUI thread only.</p>
+</div>
+<!-- @@@VideoRecorder -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$active-prop$$$active$$$stateChanged -->
+<h3 class="fn" translate="no" id="active-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">active</span> : <span class="type">bool</span></h3>
+<p>This property holds whether a session is under way: countdown, starting, recording or saving.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>active</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#state-prop" translate="no">stateChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@active -->
+</div>
+<div class="fnitem">
+<!-- $$$armed-prop$$$armed$$$setArmedbool$$$armedChanged -->
+<h3 class="fn" translate="no" id="armed-prop"><span class="name">armed</span> : <span class="type">bool</span></h3>
+<p>This property holds whether VIDEO is on: RECORD and STOP (and the header's record and stop) work on the video.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>armed</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setArmed</b></span>(bool <i>armed</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>armedChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@armed -->
+</div>
+<div class="fnitem">
+<!-- $$$audioDroppedMs-prop$$$audioDroppedMs$$$stateChanged -->
+<h3 class="fn" translate="no" id="audioDroppedMs-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">audioDroppedMs</span> : <span class="type">qreal</span></h3>
+<p>This property holds the audio the ring could not hold in the last recording, in milliseconds; 0 when healthy.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>audioDroppedMs</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#state-prop" translate="no">stateChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@audioDroppedMs -->
+</div>
+<div class="fnitem">
+<!-- $$$available-prop$$$available$$$availableChanged -->
+<h3 class="fn" translate="no" id="available-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">available</span> : <span class="type">bool</span></h3>
+<p>This property holds whether a recording can be made here: ffmpeg, a display and the audio tap.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>available</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>availableChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@available -->
+</div>
+<div class="fnitem">
+<!-- $$$camera-prop$$$camera$$$setCameraconstQString&$$$settingsChanged -->
+<h3 class="fn" translate="no" id="camera-prop"><span class="name">camera</span> : <span class="type">QString</span></h3>
+<p>This property holds the camera device chosen among cameras.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>camera</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setCamera</b></span>(const QString &amp;<i>device</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>settingsChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@camera -->
+</div>
+<div class="fnitem">
+<!-- $$$cameras-prop$$$cameras$$$camerasChanged -->
+<h3 class="fn" translate="no" id="cameras-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">cameras</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the USB cameras seen in <code translate="no">/sys/class/video4linux</code>, as maps with <code translate="no">device</code> and <code translate="no">name</code>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>cameras</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>camerasChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@cameras -->
+</div>
+<div class="fnitem">
+<!-- $$$countdown-prop$$$countdown$$$setCountdownint$$$settingsChanged -->
+<h3 class="fn" translate="no" id="countdown-prop"><span class="name">countdown</span> : <span class="type">int</span></h3>
+<p>This property holds the TIMER before a recording starts: 0, 3, 5 or 10 seconds.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>countdown</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setCountdown</b></span>(int <i>seconds</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@countdown -->
+</div>
+<div class="fnitem">
+<!-- $$$countdownLeft-prop$$$countdownLeft$$$countdownLeftChanged -->
+<h3 class="fn" translate="no" id="countdownLeft-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">countdownLeft</span> : <span class="type">int</span></h3>
+<p>This property holds the countdown's seconds left.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>countdownLeft</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>countdownLeftChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@countdownLeft -->
+</div>
+<div class="fnitem">
+<!-- $$$countdowns-prop$$$countdowns -->
+<h3 class="fn" translate="no" id="countdowns-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">countdowns</span> : const <span class="type">QVariantList</span></h3>
+<p>This property holds the TIMER choices, in seconds: 0, 3, 5, 10.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>countdowns</b></span>() const</td></tr>
+</table></div>
+<!-- @@@countdowns -->
+</div>
+<div class="fnitem">
+<!-- $$$elapsed-prop$$$elapsed$$$elapsedChanged -->
+<h3 class="fn" translate="no" id="elapsed-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">elapsed</span> : <span class="type">int</span></h3>
+<p>This property holds the seconds recorded so far while recording, else of the last recording.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>elapsed</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>elapsedChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@elapsed -->
+</div>
+<div class="fnitem">
+<!-- $$$error-prop$$$error$$$stateChanged -->
+<h3 class="fn" translate="no" id="error-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">error</span> : <span class="type">QString</span></h3>
+<p>what went wrong last; empty when nothing did.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>error</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#state-prop" translate="no">stateChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@error -->
+</div>
+<div class="fnitem">
+<!-- $$$folder-prop$$$folder -->
+<h3 class="fn" translate="no" id="folder-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">folder</span> : const <span class="type">QString</span></h3>
+<p>This property holds the videos folder.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>folder</b></span>() const</td></tr>
+</table></div>
+<!-- @@@folder -->
+</div>
+<div class="fnitem">
+<!-- $$$lastFile-prop$$$lastFile$$$lastFileChanged -->
+<h3 class="fn" translate="no" id="lastFile-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">lastFile</span> : <span class="type">QString</span></h3>
+<p>This property holds the file of the last recording; empty before any.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>lastFile</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>lastFileChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@lastFile -->
+</div>
+<div class="fnitem">
+<!-- $$$lastInfo-prop$$$lastInfo$$$lastFileChanged -->
+<h3 class="fn" translate="no" id="lastInfo-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">lastInfo</span> : <span class="type">QVariantMap</span></h3>
+<p>This property holds the last recording, as a map with <code translate="no">path</code>, <code translate="no">file</code>, <code translate="no">seconds</code>, <code translate="no">bytes</code>, <code translate="no">width</code> and <code translate="no">height</code>; empty before any.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>lastInfo</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#lastFile-prop" translate="no">lastFileChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@lastInfo -->
+</div>
+<div class="fnitem">
+<!-- $$$mic-prop$$$mic$$$setMicbool$$$settingsChanged -->
+<h3 class="fn" translate="no" id="mic-prop"><span class="name">mic</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the RECORDER's input (its mode, the jack in use, its gain and effects) is mixed into the sound (<a href="inputrecorder.html#setListener" translate="no">InputRecorder::setListener</a>() into <a href="audiotap.html" translate="no">AudioTap</a>'s mic ports).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>mic</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setMic</b></span>(bool <i>on</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@mic -->
+</div>
+<div class="fnitem">
+<!-- $$$micHot-prop$$$micHot$$$micChanged -->
+<h3 class="fn" translate="no" id="micHot-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">micHot</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the mic peaked above -6 dBFS within the last two seconds: the RECORDER's gain is too high and the limiter works instead of headroom.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>micHot</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>micChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@micHot -->
+</div>
+<div class="fnitem">
+<!-- $$$micLevel-prop$$$micLevel$$$micChanged -->
+<h3 class="fn" translate="no" id="micLevel-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">micLevel</span> : <span class="type">qreal</span></h3>
+<p>This property holds the mic's peak in dBFS over the last tenth of a second, before the lift; -200 for silence.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>micLevel</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#micHot-prop" translate="no">micChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@micLevel -->
+</div>
+<div class="fnitem">
+<!-- $$$micLive-prop$$$micLive$$$micChanged -->
+<h3 class="fn" translate="no" id="micLive-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">micLive</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the mic is wired into the tap: while VIDEO is on with mic and the device has an input, so the meter reads before the recording starts.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>micLive</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#micHot-prop" translate="no">micChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@micLive -->
+</div>
+<div class="fnitem">
+<!-- $$$mode-prop$$$mode$$$setModeconstQString&$$$settingsChanged -->
+<h3 class="fn" translate="no" id="mode-prop"><span class="name">mode</span> : <span class="type">QString</span></h3>
+<p>what a LIVE REC makes: <code translate="no">video</code> (the picture with the sound, an MP4 in the videos folder) or <code translate="no">audio</code> (the sound alone, a 24-bit WAV among the exported tracks, which LIVE REC SAVED's METADATA tags through the Exporter). The mic and the voice over apply to both.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>mode</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setMode</b></span>(const QString &amp;<i>mode</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@mode -->
+</div>
+<div class="fnitem">
+<!-- $$$qualities-prop$$$qualities$$$settingsChanged -->
+<h3 class="fn" translate="no" id="qualities-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">qualities</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the quality tiers, as maps with <code translate="no">id</code>, <code translate="no">label</code> and <code translate="no">about</code>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>qualities</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@qualities -->
+</div>
+<div class="fnitem">
+<!-- $$$quality-prop$$$quality$$$setQualityconstQString&$$$settingsChanged -->
+<h3 class="fn" translate="no" id="quality-prop"><span class="name">quality</span> : <span class="type">QString</span></h3>
+<p>This property holds the quality tier: <code translate="no">low</code>, <code translate="no">medium</code> or <code translate="no">high</code> (qualities).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>quality</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setQuality</b></span>(const QString &amp;<i>quality</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@quality -->
+</div>
+<div class="fnitem">
+<!-- $$$recording-prop$$$recording$$$stateChanged -->
+<h3 class="fn" translate="no" id="recording-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">recording</span> : <span class="type">bool</span></h3>
+<p>This property holds whether frames are being written: starting or recording.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>recording</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#state-prop" translate="no">stateChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@recording -->
+</div>
+<div class="fnitem">
+<!-- $$$recordings-prop$$$recordings$$$recordingsChanged -->
+<h3 class="fn" translate="no" id="recordings-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">recordings</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the recordings in the folder, newest first, as maps with <code translate="no">path</code>, <code translate="no">file</code>, <code translate="no">bytes</code> and <code translate="no">modified</code>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>recordings</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>recordingsChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@recordings -->
+</div>
+<div class="fnitem">
+<!-- $$$showKeys-prop$$$showKeys$$$setShowKeysbool$$$settingsChanged -->
+<h3 class="fn" translate="no" id="showKeys-prop"><span class="name">showKeys</span> : <span class="type">bool</span></h3>
+<p>whether, while recording, every device key pressed (ALT combinations and knob turns too) is named in a notice at the screen's bottom, so the video shows what was played. On by default.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>showKeys</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setShowKeys</b></span>(bool <i>on</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@showKeys -->
+</div>
+<div class="fnitem">
+<!-- $$$source-prop$$$source$$$setSourceconstQString&$$$settingsChanged -->
+<h3 class="fn" translate="no" id="source-prop"><span class="name">source</span> : <span class="type">QString</span></h3>
+<p>This property holds the picture: <code translate="no">screen</code> or <code translate="no">camera</code>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>source</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setSource</b></span>(const QString &amp;<i>source</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@source -->
+</div>
+<div class="fnitem">
+<!-- $$$state-prop$$$state$$$stateChanged -->
+<h3 class="fn" translate="no" id="state-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">state</span> : <span class="type">QString</span></h3>
+<p><code translate="no">off</code>, <code translate="no">ready</code>, <code translate="no">countdown</code>, <code translate="no">starting</code>, <code translate="no">recording</code> or <code translate="no">saving</code> (see the class description).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>state</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>stateChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@state -->
+</div>
+<div class="fnitem">
+<!-- $$$unavailableReason-prop$$$unavailableReason$$$availableChanged -->
+<h3 class="fn" translate="no" id="unavailableReason-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">unavailableReason</span> : <span class="type">QString</span></h3>
+<p>why not, when available is <code translate="no">false</code>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>unavailableReason</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#available-prop" translate="no">availableChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@unavailableReason -->
+</div>
+<div class="fnitem">
+<!-- $$$voiceActive-prop$$$voiceActive$$$micChanged -->
+<h3 class="fn" translate="no" id="voiceActive-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">voiceActive</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the voice over is ducking the music now.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>voiceActive</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#micHot-prop" translate="no">micChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@voiceActive -->
+</div>
+<div class="fnitem">
+<!-- $$$voiceDuck-prop$$$voiceDuck$$$setVoiceDuckint$$$settingsChanged -->
+<h3 class="fn" translate="no" id="voiceDuck-prop"><span class="name">voiceDuck</span> : <span class="type">int</span></h3>
+<p>by how many dB the music ducks under the voice, one of <a href="videorecorder.html#voiceDucks-prop" translate="no">voiceDucks</a> (0 none); applied at once, to a recording under way too (<a href="audiotap.html#setVoiceOver" translate="no">AudioTap::setVoiceOver</a>()).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>voiceDuck</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setVoiceDuck</b></span>(int <i>db</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@voiceDuck -->
+</div>
+<div class="fnitem">
+<!-- $$$voiceDucks-prop$$$voiceDucks -->
+<h3 class="fn" translate="no" id="voiceDucks-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">voiceDucks</span> : const <span class="type">QVariantList</span></h3>
+<p>This property holds the choices of <a href="videorecorder.html#voiceDuck-prop" translate="no">voiceDuck</a>, in dB.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>voiceDucks</b></span>() const</td></tr>
+</table></div>
+<!-- @@@voiceDucks -->
+</div>
+<div class="fnitem">
+<!-- $$$voiceLift-prop$$$voiceLift$$$setVoiceLiftint$$$settingsChanged -->
+<h3 class="fn" translate="no" id="voiceLift-prop"><span class="name">voiceLift</span> : <span class="type">int</span></h3>
+<p>by how many dB the mic is lifted while it carries a voice, one of <a href="videorecorder.html#voiceLifts-prop" translate="no">voiceLifts</a>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>voiceLift</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setVoiceLift</b></span>(int <i>db</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@voiceLift -->
+</div>
+<div class="fnitem">
+<!-- $$$voiceLifts-prop$$$voiceLifts -->
+<h3 class="fn" translate="no" id="voiceLifts-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">voiceLifts</span> : const <span class="type">QVariantList</span></h3>
+<p>This property holds the choices of <a href="videorecorder.html#voiceLift-prop" translate="no">voiceLift</a>, in dB.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>voiceLifts</b></span>() const</td></tr>
+</table></div>
+<!-- @@@voiceLifts -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$VideoRecorder[overload1]$$$VideoRecorderStudio*boolQObject* -->
+<h3 class="fn" translate="no" id="VideoRecorder">VideoRecorder::<span class="name">VideoRecorder</span>(<span class="type"><a href="studio.html" translate="no">Studio</a></span> *<i>studio</i>, <span class="type">bool</span> <i>live</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the recorder of <i translate="no">studio</i>'s master, with the given <i translate="no">parent</i>. With <i translate="no">live</i> false (no audio engine: a desktop) nothing is recorded.</p>
+<!-- @@@VideoRecorder -->
+</div>
+<div class="fnitem">
+<!-- $$$adopt[overload1]$$$adoptconstQString& -->
+<h3 class="fn" translate="no" id="adopt"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> VideoRecorder::<span class="name">adopt</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Makes the file at <i translate="no">path</i> stand for the last recording from now on (LIVE REC SAVED's METADATA wrote the tagged track in place of the WAV): <a href="videorecorder.html#lastFile-prop" translate="no">lastFile</a> and <a href="videorecorder.html#lastInfo-prop" translate="no">lastInfo</a> follow it.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@adopt -->
+</div>
+<div class="fnitem">
+<!-- $$$audioOnly[overload1]$$$audioOnly -->
+<h3 class="fn" translate="no" id="audioOnly"><span class="type">bool</span> VideoRecorder::<span class="name">audioOnly</span>() const</h3>
+<p>Returns whether mode is <code translate="no">audio</code>.</p>
+<!-- @@@audioOnly -->
+</div>
+<div class="fnitem">
+<!-- $$$failed[overload1]$$$failedconstQString& -->
+<h3 class="fn" translate="no" id="failed"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> VideoRecorder::<span class="name">failed</span>(const <span class="type">QString</span> &amp;<i>reason</i>)</h3>
+<p>Emitted when a recording could not be made or saved, with the <i translate="no">reason</i> to show.</p>
+<!-- @@@failed -->
+</div>
+<div class="fnitem">
+<!-- $$$finished[overload1]$$$finishedconstQString& -->
+<h3 class="fn" translate="no" id="finished"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> VideoRecorder::<span class="name">finished</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Emitted when a recording was saved at <i translate="no">path</i>.</p>
+<!-- @@@finished -->
+</div>
+<div class="fnitem">
+<!-- $$$notify[overload1]$$$notifyconstQString&constQString& -->
+<h3 class="fn" translate="no" id="notify"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> VideoRecorder::<span class="name">notify</span>(const <span class="type">QString</span> &amp;<i>text</i>, const <span class="type">QString</span> &amp;<i>color</i>)</h3>
+<p>Emitted with a short status <i translate="no">text</i> to show as a toast in <i translate="no">color</i> (a CSS colour).</p>
+<!-- @@@notify -->
+</div>
+<div class="fnitem">
+<!-- $$$refreshCameras[overload1]$$$refreshCameras -->
+<h3 class="fn" translate="no" id="refreshCameras"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> VideoRecorder::<span class="name">refreshCameras</span>()</h3>
+<p>Looks for USB cameras again (a camera plugged in).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@refreshCameras -->
+</div>
+<div class="fnitem">
+<!-- $$$refreshRecordings[overload1]$$$refreshRecordings -->
+<h3 class="fn" translate="no" id="refreshRecordings"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> VideoRecorder::<span class="name">refreshRecordings</span>()</h3>
+<p>Reads the videos folder again.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@refreshRecordings -->
+</div>
+<div class="fnitem">
+<!-- $$$remove[overload1]$$$removeconstQString& -->
+<h3 class="fn" translate="no" id="remove"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> VideoRecorder::<span class="name">remove</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Deletes the recording at <i translate="no">path</i>. Returns <code translate="no">false</code> when it is not there or not in the folder.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@remove -->
+</div>
+<div class="fnitem">
+<!-- $$$rename[overload1]$$$renameconstQString&constQString& -->
+<h3 class="fn" translate="no" id="rename"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> VideoRecorder::<span class="name">rename</span>(const <span class="type">QString</span> &amp;<i>path</i>, const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Renames the recording at <i translate="no">path</i> in the library's folder to <i translate="no">name</i> (its stem: the extension stays, what cannot be in a file name is dropped, a name already taken gets &quot; 2&quot;...). Returns the new path, or an empty string when the file kept its name. The last recording's info follows the new name.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@rename -->
+</div>
+<div class="fnitem">
+<!-- $$$start[overload1]$$$start -->
+<h3 class="fn" translate="no" id="start"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> VideoRecorder::<span class="name">start</span>()</h3>
+<p>Switches VIDEO on and begins a recording, after the TIMER's countdown if any.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@start -->
+</div>
+<div class="fnitem">
+<!-- $$$stop[overload1]$$$stop -->
+<h3 class="fn" translate="no" id="stop"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> VideoRecorder::<span class="name">stop</span>()</h3>
+<p>Ends the recording (it is saved, and the transport stops with it: the session is over) or the countdown (nothing is saved); VIDEO stays on.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@stop -->
+</div>
+<div class="fnitem">
+<!-- $$$takesKey[overload1]$$$takesKeyconstQString& -->
+<h3 class="fn" translate="no" id="takesKey"><span class="type">bool</span> VideoRecorder::<span class="name">takesKey</span>(const <span class="type">QString</span> &amp;<i>cuia</i>)</h3>
+<p>Offers the device key <i translate="no">cuia</i> to the video before anything else sees it. Returns <code translate="no">true</code> when the video took it: RECORD while VIDEO is on and idle starts a recording, STOP while a session runs stops it.</p>
+<!-- @@@takesKey -->
+</div>
+<div class="fnitem">
+<!-- $$$toggle[overload1]$$$toggle -->
+<h3 class="fn" translate="no" id="toggle"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> VideoRecorder::<span class="name">toggle</span>()</h3>
+<p>The VIDEO card's tap: off starts a recording; during a session stops it and switches VIDEO off; armed and idle switches VIDEO off.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@toggle -->
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>
+</div>

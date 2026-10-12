@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- padsamplermachine.cpp -->
+  <meta name="description" content="The PAD SAMPLER: an MPC-style sampler (docs/mpc-sampler-plan.md), a Machine playing 16 pads on libzynthbox's SamplerSynth, in four banks (A to D) of 16 pads and steps each.">
+  <meta name="keywords" content="class">
+  <title>PadSamplerMachine Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>PadSamplerMachine</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">PadSamplerMachine Class</h1>
+<!-- $$$PadSamplerMachine-brief -->
+<p>The PAD SAMPLER: an MPC-style sampler (docs/mpc-sampler-plan.md), a Machine playing 16 pads on libzynthbox's SamplerSynth, in four banks (A to D) of 16 pads and steps each. <a href="#details">More...</a></p>
+<!-- @@@PadSamplerMachine -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;padsamplermachine.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="machine.html" translate="no">Machine</a></td></tr>
+</table></div>
+<ul>
+<li><a href="padsamplermachine-members.html">List of all members, including inherited members</a></li>
+<li>PadSamplerMachine is part of <a href="ravving-machines.html">Machines</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<div class="table"><table class="propsummary" translate="no">
+<tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#accents-prop" translate="no">accents</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#bank-prop" translate="no">bank</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#bankCount-prop" translate="no">bankCount</a></b> : const int</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#choices-prop" translate="no">choices</a></b> : const QVariantMap</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#fxPad-prop" translate="no">fxPad</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#heldFx-prop" translate="no">heldFx</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#kit-prop" translate="no">kit</a></b> : QObject* const</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#pad-prop" translate="no">pad</a></b> : QVariantMap</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#padFx-prop" translate="no">padFx</a></b> : const QStringList</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#pads-prop" translate="no">pads</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#playPositions-prop" translate="no">playPositions</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#playing-prop" translate="no">playing</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#root-prop" translate="no">root</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#rowLevels-prop" translate="no">rowLevels</a></b> : QVariantList</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#rowMuted-prop" translate="no">rowMuted</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#rowSoloed-prop" translate="no">rowSoloed</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#rows-prop" translate="no">rows</a></b> : QStringList</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#scale-prop" translate="no">scale</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#secondTrack-prop" translate="no">secondTrack</a></b> : const int</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#selectedPad-prop" translate="no">selectedPad</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#sixteenLevels-prop" translate="no">sixteenLevels</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#sixteenLevelsPad-prop" translate="no">sixteenLevelsPad</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#sixteenLevelsType-prop" translate="no">sixteenLevelsType</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#steps-prop" translate="no">steps</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#tab-prop" translate="no">tab</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#tabs-prop" translate="no">tabs</a></b> : const QVariantList</li>
+<li class="fn" translate="no"><b><a href="padsamplermachine.html#values-prop" translate="no">values</a></b> : QVariantMap</li>
+</ul>
+</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#PadSamplerMachine" translate="no">PadSamplerMachine</a></b>(const QVariantMap &amp;<i>config</i>, const QVariantMap &amp;<i>state</i>, PresetLibrary *<i>presets</i>, GlobalEffects *<i>globalEffects</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#accents-prop" translate="no">accents</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#applyChop" translate="no">applyChop</a></b>(int <i>pad</i>, const QVariantList &amp;<i>boundaries</i>, int <i>firstPad</i> = 0)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#attachSecond" translate="no">attachSecond</a></b>(QObject *<i>pattern</i>, SketchpadTrack *<i>track</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#attachSecondSpare" translate="no">attachSecondSpare</a></b>(QObject *<i>pattern</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#audition" translate="no">audition</a></b>(int <i>pad</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#bank-prop" translate="no">bank</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#bankCount-prop" translate="no">bankCount</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#choices-prop" translate="no">choices</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#chopRegions" translate="no">chopRegions</a></b>(int <i>pad</i>, int <i>count</i>, int <i>firstPad</i> = 0)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#clearPad" translate="no">clearPad</a></b>(int <i>pad</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#copyPad" translate="no">copyPad</a></b>(int <i>from</i>, int <i>to</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#detectTransients" translate="no">detectTransients</a></b>(int <i>pad</i>, qreal <i>threshold</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#doubleSequence" translate="no">doubleSequence</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#erasePad" translate="no">erasePad</a></b>(int <i>pad</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#fxPad-prop" translate="no">fxPad</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#halveSequence" translate="no">halveSequence</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#heldFx-prop" translate="no">heldFx</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#kit-prop" translate="no">kit</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#loadSample" translate="no">loadSample</a></b>(int <i>pad</i>, const QString &amp;<i>path</i>, qreal <i>start</i> = 0, qreal <i>length</i> = 1)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;int&gt; </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#loadedSampleNumbers" translate="no">loadedSampleNumbers</a></b>(bool <i>second</i> = false) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#pad-prop" translate="no">pad</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#padForNote" translate="no">padForNote</a></b>(int <i>note</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#padFx-prop" translate="no">padFx</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#pads-prop" translate="no">pads</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#playPositions-prop" translate="no">playPositions</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#playing-prop" translate="no">playing</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#root-prop" translate="no">root</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#rowLevels-prop" translate="no">rowLevels</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#rowMuted-prop" translate="no">rowMuted</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#rowSoloed-prop" translate="no">rowSoloed</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#rows-prop" translate="no">rows</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#scale-prop" translate="no">scale</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#secondTrack-prop" translate="no">secondTrack</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#selectedPad-prop" translate="no">selectedPad</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#bank-prop" translate="no">setBank</a></b>(int <i>bank</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setBridge" translate="no">setBridge</a></b>(ZynthboxBridge *<i>bridge</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setCacheFolder" translate="no">setCacheFolder</a></b>(const QString &amp;<i>folder</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setFlag" translate="no">setFlag</a></b>(int <i>pad</i>, const QString &amp;<i>flag</i>, bool <i>on</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#heldFx-prop" translate="no">setHeldFx</a></b>(const QString &amp;<i>fx</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setLatched" translate="no">setLatched</a></b>(int <i>pad</i>, bool <i>latched</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#root-prop" translate="no">setRoot</a></b>(int <i>root</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setRowLevel" translate="no">setRowLevel</a></b>(int <i>row</i>, qreal <i>level</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setRowMuted" translate="no">setRowMuted</a></b>(int <i>row</i>, bool <i>muted</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setRowSoloed" translate="no">setRowSoloed</a></b>(int <i>row</i>, bool <i>soloed</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#scale-prop" translate="no">setScale</a></b>(const QVariantList &amp;<i>scale</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#selectedPad-prop" translate="no">setSelectedPad</a></b>(int <i>pad</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#sixteenLevels-prop" translate="no">setSixteenLevels</a></b>(bool <i>on</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#tab-prop" translate="no">setTab</a></b>(int <i>tab</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setValue" translate="no">setValue</a></b>(const QString &amp;<i>title</i>, const QString &amp;<i>knob</i>, qreal <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#sixteenLevels-prop" translate="no">sixteenLevels</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#sixteenLevelsPad-prop" translate="no">sixteenLevelsPad</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#sixteenLevelsType-prop" translate="no">sixteenLevelsType</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#steps-prop" translate="no">steps</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#stopAll" translate="no">stopAll</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#tab-prop" translate="no">tab</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#tabs-prop" translate="no">tabs</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#toggleAccent" translate="no">toggleAccent</a></b>(int <i>step</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#toggleLatch" translate="no">toggleLatch</a></b>(int <i>pad</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#toggleStep" translate="no">toggleStep</a></b>(int <i>row</i>, int <i>step</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#trimToNewFile" translate="no">trimToNewFile</a></b>(int <i>pad</i>, bool <i>normalise</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#unmuteAll" translate="no">unmuteAll</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#values-prop" translate="no">values</a></b>() const</td></tr>
+</table></div>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#checkSaved" translate="no">checkSaved</a></b>(const QVariantMap &amp;<i>state</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#sectionBars" translate="no">sectionBars</a></b>(const QVariantMap &amp;<i>content</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setSwing" translate="no">setSwing</a></b>(int <i>swing</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#state" translate="no">state</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#stopLive" translate="no">stopLive</a></b>(int <i>key</i>) override</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#auditioned" translate="no">auditioned</a></b>(int <i>pad</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#bankChanged" translate="no">bankChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#fxPadChanged" translate="no">fxPadChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#heldFxChanged" translate="no">heldFxChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#keyChanged" translate="no">keyChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#loadedSlotsChanged" translate="no">loadedSlotsChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#padsChanged" translate="no">padsChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#playPositionsChanged" translate="no">playPositionsChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#playingChanged" translate="no">playingChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#selectedPadChanged" translate="no">selectedPadChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#sixteenLevelsChanged" translate="no">sixteenLevelsChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#stepsChanged" translate="no">stepsChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#tabChanged" translate="no">tabChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#transientsDetected" translate="no">transientsDetected</a></b>(int <i>pad</i>, const QVariantList &amp;<i>onsets</i>)</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#LevelNoteBase-var" translate="no">LevelNoteBase</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#PadCount-var" translate="no">PadCount</a></b></td></tr>
+</table></div>
+<!-- $$$PadSamplerMachine-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The bank on screen is the one that plays. Each loaded pad is one ClipAudioSource set up on its root slice from the pad's parameters: its key zone and root note are the pad's note (kits.json <code translate="no">baseNote</code> + pad: pad 1 on C1 by default, so a drum controller plays it as a kick), so a pattern note or a live key plays exactly that pad. A sketchpad track has ten sample slots and its pattern reads exactly those, so pads 1 to 10 live on the machine's track and pads 11 to 16 on a second one (kits.json <code translate="no">secondTrack</code>), whose pattern the machine keeps in step with its own (length, loop, swing, the hits of pads 11 to 16) and whose live notes go out on that track. Both tracks' sample outputs are wired into the first track's lane, so the kit has one level, one pan and one SOUND EFFECTS chain (<a href="jackwiring.html#setSampleOutputs" translate="no">JackWiring::setSampleOutputs</a>()).</p>
+<p>A pad's parameters are kept as the tab cards show them (values by tab and knob, each 0..1; tabs) and mapped to the slice: TRIM (start, end, loop point), MIX (volume as velocity, pan), AMP ENV (attack, decay or release), TUNE (semitones, fine), PLAY (mono or poly, mute group as an exclusivity group) and FILTER (below). AMP ENV's VEL SENS, TUNE's WARP, PLAY's OFFSET and the FLT ENV tab are kept with the pad but not applied. The Pad Play flags (<a href="padsamplermachine.html#setFlag" translate="no">setFlag</a>()): NOTE ON (plays while held) or one shot, LOOP (from the loop point), REVERSE (a reversed copy of the file, rendered once), MUTE, SOLO and 16 LEVELS.</p>
+<p>FILTER puts an equaliser band (two for the 4-pole types) of the chosen type (OFF, CLASSIC, LPF2, LPF4, HPF2, HPF4, BPF2, BPF4) on the pad's clip at the cutoff, with the resonance as its Q, as far as libzynthbox applies a clip's equaliser to its voices.</p>
+<p>Live play: a tap plays a pad once (<a href="padsamplermachine.html#audition" translate="no">audition</a>()); a long press latches it looping (<a href="padsamplermachine.html#setLatched" translate="no">setLatched</a>()): the pad switches to looping and its note is held until it is tapped again; <a href="padsamplermachine.html#stopAll" translate="no">stopAll</a>() (STOP) ends every latched pad. A latched pad ignores <a href="padsamplermachine.html#stopLive" translate="no">stopLive</a>().</p>
+<p>The kit's own knobs (kit, a <a href="padkitcontrols.html" translate="no">PadKitControls</a> shown as the SOUND MODIFIERS): KIT volume, SEMI and FINE added to every pad's tune, and 16 LEVELS. With 16 LEVELS on (<a href="padsamplermachine.html#sixteenLevels-prop" translate="no">setSixteenLevels</a>()), the sixteen pads all play the pad selected when it was switched on, the source, by TYPE: VELOCITY (pad 1 softest, 16 hardest), TUNE (a semitone per pad, the original on pad 4) or SCALE (the pads step through the header's key, root and scale, from pad 4). TUNE and SCALE are sixteen extra slices on the source pad's clip, each on its own note (<a href="padsamplermachine.html#LevelNoteBase-var" translate="no">LevelNoteBase</a> + pad) with its pitch. Hits played while the mode is on are the bank's level hits, kept apart from the pads' own and shown as the pads' steps meanwhile.</p>
+<p>PAD FX (<a href="padsamplermachine.html#heldFx-prop" translate="no">heldFx</a>, held while a pad plays; the MPC's Pad FX) act on the clip of <a href="padsamplermachine.html#fxPad-prop" translate="no">fxPad</a> (the last pad played live or latched, else the selected one), so they colour every voice of that pad:</p>
+<ul>
+<li>ECHO: the kit's echo throw, the pad's sound flung into the delay while held;</li>
+<li>TAPE STOP: the clip's speed runs down to a crawl over a second, back to full on release (a one-shot stopped this way ends);</li>
+<li>SCRATCH: the speed wobbles, slow and fast, around full while held;</li>
+<li>STUTTER: the pad retriggers every 16th of the tempo while held;</li>
+<li>SKIP: the pad restarts an 8th of a bar past where it was playing, its start put back on release;</li>
+<li>REVERSE: the pad plays its reversed copy from where it was while held, forwards again on release (it restarts the pad; the reversed copy must exist, which the pad's REVERSE flag or an earlier hold renders).</li>
+</ul>
+<p>The step grid is the drums' pattern interface (rows are the pads, with an ACC row and per-row level, mute and solo as velocities). Presets (<code translate="no">pads-presets.json</code>) are rhythms over the pads: &quot;1&quot; to &quot;16&quot; a row each, &quot;x&quot; a hit and &quot;X&quot; an accented one.</p>
+</div>
+<!-- @@@PadSamplerMachine -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$accents-prop$$$accents$$$stepsChanged -->
+<h3 class="fn" translate="no" id="accents-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">accents</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the bar on screen's accents, 16 booleans.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>accents</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#stepsChanged" translate="no">stepsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@accents -->
+</div>
+<div class="fnitem">
+<!-- $$$bank-prop$$$bank$$$setBankint$$$bankChanged -->
+<h3 class="fn" translate="no" id="bank-prop"><span class="name">bank</span> : <span class="type">int</span></h3>
+<p>This property holds the bank on screen and playing, 0 to 3 (A to D).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>bank</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setBank</b></span>(int <i>bank</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#bankChanged" translate="no">bankChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@bank -->
+</div>
+<div class="fnitem">
+<!-- $$$bankCount-prop$$$bankCount -->
+<h3 class="fn" translate="no" id="bankCount-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">bankCount</span> : const <span class="type">int</span></h3>
+<p>This property holds the number of banks: 4.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>bankCount</b></span>() const</td></tr>
+</table></div>
+<!-- @@@bankCount -->
+</div>
+<div class="fnitem">
+<!-- $$$choices-prop$$$choices -->
+<h3 class="fn" translate="no" id="choices-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">choices</span> : const <span class="type">QVariantMap</span></h3>
+<p>This property holds the switch knobs' choices, by knob: POLY (MONO, POLY), WARP (OFF, STRETCH, PITCH) and TYPE (the filter types).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>choices</b></span>() const</td></tr>
+</table></div>
+<!-- @@@choices -->
+</div>
+<div class="fnitem">
+<!-- $$$fxPad-prop$$$fxPad$$$fxPadChanged -->
+<h3 class="fn" translate="no" id="fxPad-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">fxPad</span> : <span class="type">int</span></h3>
+<p>This property holds the pad the PAD FX work on: the last pad played live or latched, else the selected one.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>fxPad</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#fxPadChanged" translate="no">fxPadChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@fxPad -->
+</div>
+<div class="fnitem">
+<!-- $$$heldFx-prop$$$heldFx$$$setHeldFxconstQString&$$$heldFxChanged -->
+<h3 class="fn" translate="no" id="heldFx-prop"><span class="name">heldFx</span> : <span class="type">QString</span></h3>
+<p>This property holds the PAD FX held, or empty for none. Setting it ends the one held before; an unknown name means none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>heldFx</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setHeldFx</b></span>(const QString &amp;<i>fx</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#heldFxChanged" translate="no">heldFxChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@heldFx -->
+</div>
+<div class="fnitem">
+<!-- $$$kit-prop$$$kit -->
+<h3 class="fn" translate="no" id="kit-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">kit</span> : <span class="type">QObject</span>* const</h3>
+<p>This property holds the kit's knobs (the SOUND MODIFIERS), a <a href="padkitcontrols.html" translate="no">PadKitControls</a> owned by the machine.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QObject *</td><td class="memItemRight bottomAlign"><span class="name"><b>kit</b></span>() const</td></tr>
+</table></div>
+<!-- @@@kit -->
+</div>
+<div class="fnitem">
+<!-- $$$pad-prop$$$pad$$$padsChanged -->
+<h3 class="fn" translate="no" id="pad-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">pad</span> : <span class="type">QVariantMap</span></h3>
+<p>This property holds the selected pad's entry of pads.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>pad</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#padsChanged" translate="no">padsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@pad -->
+</div>
+<div class="fnitem">
+<!-- $$$padFx-prop$$$padFx -->
+<h3 class="fn" translate="no" id="padFx-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">padFx</span> : const <span class="type">QStringList</span></h3>
+<p>This property holds the PAD FX names: ECHO, REVERSE, SKIP, STUTTER, SCRATCH, TAPE STOP.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>padFx</b></span>() const</td></tr>
+</table></div>
+<!-- @@@padFx -->
+</div>
+<div class="fnitem">
+<!-- $$$pads-prop$$$pads$$$padsChanged -->
+<h3 class="fn" translate="no" id="pads-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">pads</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the pads of the bank on screen, as maps with <code translate="no">name</code>, <code translate="no">path</code>, <code translate="no">loaded</code>, <code translate="no">seconds</code>, <code translate="no">color</code>, <code translate="no">params</code>, <code translate="no">noteOn</code>, <code translate="no">looping</code>, <code translate="no">reverse</code>, <code translate="no">muted</code>, <code translate="no">soloed</code>, <code translate="no">sixteenLevels</code> and <code translate="no">latched</code>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>pads</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#padsChanged" translate="no">padsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@pads -->
+</div>
+<div class="fnitem">
+<!-- $$$playPositions-prop$$$playPositions$$$playPositionsChanged -->
+<h3 class="fn" translate="no" id="playPositions-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">playPositions</span> : <span class="type">QVariantList</span></h3>
+<p>where each pad's clip is in its file, 0..1, or -1 when silent: the screen's playhead. Updated at most every 66 ms.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>playPositions</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#playPositionsChanged" translate="no">playPositionsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@playPositions -->
+</div>
+<div class="fnitem">
+<!-- $$$playing-prop$$$playing$$$playingChanged -->
+<h3 class="fn" translate="no" id="playing-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">playing</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds which pads sound right now: the grid's beam.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>playing</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#playingChanged" translate="no">playingChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@playing -->
+</div>
+<div class="fnitem">
+<!-- $$$root-prop$$$root$$$setRootint$$$keyChanged -->
+<h3 class="fn" translate="no" id="root-prop"><span class="name">root</span> : <span class="type">int</span></h3>
+<p>This property holds the header's key root, 0 (C) to 11, for the SCALE levels.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>root</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setRoot</b></span>(int <i>root</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#keyChanged" translate="no">keyChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@root -->
+</div>
+<div class="fnitem">
+<!-- $$$rowLevels-prop$$$rowLevels$$$padsChanged -->
+<h3 class="fn" translate="no" id="rowLevels-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">rowLevels</span> : <span class="type">QVariantList</span></h3>
+<p>each pad's level, 0..1.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>rowLevels</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#padsChanged" translate="no">padsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@rowLevels -->
+</div>
+<div class="fnitem">
+<!-- $$$rowMuted-prop$$$rowMuted$$$padsChanged -->
+<h3 class="fn" translate="no" id="rowMuted-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">rowMuted</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds whether each pad is muted.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>rowMuted</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#padsChanged" translate="no">padsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@rowMuted -->
+</div>
+<div class="fnitem">
+<!-- $$$rowSoloed-prop$$$rowSoloed$$$padsChanged -->
+<h3 class="fn" translate="no" id="rowSoloed-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">rowSoloed</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds whether each pad is soloed.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>rowSoloed</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#padsChanged" translate="no">padsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@rowSoloed -->
+</div>
+<div class="fnitem">
+<!-- $$$rows-prop$$$rows$$$padsChanged -->
+<h3 class="fn" translate="no" id="rows-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">rows</span> : <span class="type">QStringList</span></h3>
+<p>This property holds the grid rows: each pad's name (&quot;1 · Kick&quot;, &quot;2 · &mdash;&quot;...).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>rows</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#padsChanged" translate="no">padsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@rows -->
+</div>
+<div class="fnitem">
+<!-- $$$scale-prop$$$scale$$$setScaleconstQVariantList&$$$keyChanged -->
+<h3 class="fn" translate="no" id="scale-prop"><span class="name">scale</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the header's scale, as semitone intervals from the root, for the SCALE levels.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>scale</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setScale</b></span>(const QVariantList &amp;<i>scale</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#keyChanged" translate="no">keyChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@scale -->
+</div>
+<div class="fnitem">
+<!-- $$$secondTrack-prop$$$secondTrack -->
+<h3 class="fn" translate="no" id="secondTrack-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">secondTrack</span> : const <span class="type">int</span></h3>
+<p>This property holds the sketchpad track pads 11 to 16 play on, for meters that follow both tracks; -1 for none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>secondTrack</b></span>() const</td></tr>
+</table></div>
+<!-- @@@secondTrack -->
+</div>
+<div class="fnitem">
+<!-- $$$selectedPad-prop$$$selectedPad$$$setSelectedPadint$$$selectedPadChanged -->
+<h3 class="fn" translate="no" id="selectedPad-prop"><span class="name">selectedPad</span> : <span class="type">int</span></h3>
+<p>This property holds the pad the screen and the cards work on, 0 to 15.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>selectedPad</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setSelectedPad</b></span>(int <i>pad</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#selectedPadChanged" translate="no">selectedPadChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@selectedPad -->
+</div>
+<div class="fnitem">
+<!-- $$$sixteenLevels-prop$$$sixteenLevels$$$setSixteenLevelsbool$$$sixteenLevelsChanged -->
+<h3 class="fn" translate="no" id="sixteenLevels-prop"><span class="name">sixteenLevels</span> : <span class="type">bool</span></h3>
+<p>This property holds whether 16 LEVELS is on. Switching it on makes the selected pad the source.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>sixteenLevels</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setSixteenLevels</b></span>(bool <i>on</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#sixteenLevelsChanged" translate="no">sixteenLevelsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@sixteenLevels -->
+</div>
+<div class="fnitem">
+<!-- $$$sixteenLevelsPad-prop$$$sixteenLevelsPad$$$sixteenLevelsChanged -->
+<h3 class="fn" translate="no" id="sixteenLevelsPad-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">sixteenLevelsPad</span> : <span class="type">int</span></h3>
+<p>This property holds the source pad of 16 LEVELS.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>sixteenLevelsPad</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#sixteenLevelsChanged" translate="no">sixteenLevelsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@sixteenLevelsPad -->
+</div>
+<div class="fnitem">
+<!-- $$$sixteenLevelsType-prop$$$sixteenLevelsType$$$sixteenLevelsChanged -->
+<h3 class="fn" translate="no" id="sixteenLevelsType-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">sixteenLevelsType</span> : <span class="type">QString</span></h3>
+<p>This property holds the 16 LEVELS type in force: <code translate="no">VELOCITY</code>, <code translate="no">TUNE</code> or <code translate="no">SCALE</code>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>sixteenLevelsType</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#sixteenLevelsChanged" translate="no">sixteenLevelsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@sixteenLevelsType -->
+</div>
+<div class="fnitem">
+<!-- $$$steps-prop$$$steps$$$stepsChanged -->
+<h3 class="fn" translate="no" id="steps-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">steps</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the bar on screen's hits, as a list per pad of 16 booleans; the level hits while 16 LEVELS is on.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>steps</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#stepsChanged" translate="no">stepsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@steps -->
+</div>
+<div class="fnitem">
+<!-- $$$tab-prop$$$tab$$$setTabint$$$tabChanged -->
+<h3 class="fn" translate="no" id="tab-prop"><span class="name">tab</span> : <span class="type">int</span></h3>
+<p>This property holds the tab card on screen.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>tab</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setTab</b></span>(int <i>tab</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#tabChanged" translate="no">tabChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@tab -->
+</div>
+<div class="fnitem">
+<!-- $$$tabs-prop$$$tabs -->
+<h3 class="fn" translate="no" id="tabs-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">tabs</span> : const <span class="type">QVariantList</span></h3>
+<p>This property holds the tab cards, in the MPC Sample's order, as maps with <code translate="no">title</code> and <code translate="no">params</code> (the knobs and their defaults): TRIM, MIX, AMP ENV, TUNE, PLAY, FILTER, FLT ENV.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>tabs</b></span>() const</td></tr>
+</table></div>
+<!-- @@@tabs -->
+</div>
+<div class="fnitem">
+<!-- $$$values-prop$$$values$$$padsChanged -->
+<h3 class="fn" translate="no" id="values-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">values</span> : <span class="type">QVariantMap</span></h3>
+<p>ParamCard's store: the selected pad's values by tab title and knob name, 0..1.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>values</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="padsamplermachine.html#padsChanged" translate="no">padsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@values -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$PadSamplerMachine[overload1]$$$PadSamplerMachineconstQVariantMap&constQVariantMap&PresetLibrary*GlobalEffects*QObject* -->
+<h3 class="fn" translate="no" id="PadSamplerMachine">PadSamplerMachine::<span class="name">PadSamplerMachine</span>(const <span class="type">QVariantMap</span> &amp;<i>config</i>, const <span class="type">QVariantMap</span> &amp;<i>state</i>, <span class="type"><a href="presetlibrary.html" translate="no">PresetLibrary</a></span> *<i>presets</i>, <span class="type"><a href="globaleffects.html" translate="no">GlobalEffects</a></span> *<i>globalEffects</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the PAD SAMPLER from <i translate="no">config</i> (its kits.json object, with <code translate="no">baseNote</code> and <code translate="no">secondTrack</code>) and the project's <i translate="no">state</i>, which also carries <code translate="no">bank</code> and <code translate="no">banks</code> (a list of maps with <code translate="no">pads</code>, <code translate="no">steps</code>, <code translate="no">accents</code> and <code translate="no">bars</code>). <i translate="no">presets</i>, <i translate="no">globalEffects</i> and <i translate="no">parent</i> are as for Machine.</p>
+<!-- @@@PadSamplerMachine -->
+</div>
+<div class="fnitem">
+<!-- $$$applyChop[overload1]$$$applyChopintconstQVariantList&int -->
+<h3 class="fn" translate="no" id="applyChop"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">applyChop</span>(<span class="type">int</span> <i>pad</i>, const <span class="type">QVariantList</span> &amp;<i>boundaries</i>, <span class="type">int</span> <i>firstPad</i> = 0)</h3>
+<p>Cuts the sample of <i translate="no">pad</i> at <i translate="no">boundaries</i> (sorted fractions of the file inside the pad's window; the window's ends are added) and puts the pieces on the pads from <i translate="no">firstPad</i> on, as many as fit: each piece is the same file with its own trim and the source pad's settings.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@applyChop -->
+</div>
+<div class="fnitem">
+<!-- $$$attachSecond[overload1]$$$attachSecondQObject*SketchpadTrack* -->
+<h3 class="fn" translate="no" id="attachSecond"><span class="type">void</span> PadSamplerMachine::<span class="name">attachSecond</span>(<span class="type">QObject</span> *<i>pattern</i>, <span class="type"><a href="sketchpadtrack.html" translate="no">SketchpadTrack</a></span> *<i>track</i>)</h3>
+<p>Attaches the second track's <i translate="no">pattern</i> and its sketchpad <i translate="no">track</i> (pads 11 to 16); called after <a href="machine.html#attach" translate="no">attach</a>().</p>
+<!-- @@@attachSecond -->
+</div>
+<div class="fnitem">
+<!-- $$$attachSecondSpare[overload1]$$$attachSecondSpareQObject* -->
+<h3 class="fn" translate="no" id="attachSecondSpare"><span class="type">void</span> PadSamplerMachine::<span class="name">attachSecondSpare</span>(<span class="type">QObject</span> *<i>pattern</i>)</h3>
+<p>Gives the second track its other clip, <i translate="no">pattern</i>, which takes turns with it as the first track's clips do (<a href="machine.html#attachSpare" translate="no">Machine::attachSpare</a>()).</p>
+<!-- @@@attachSecondSpare -->
+</div>
+<div class="fnitem">
+<!-- $$$audition[overload1]$$$auditionint -->
+<h3 class="fn" translate="no" id="audition"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">audition</span>(<span class="type">int</span> <i>pad</i>)</h3>
+<p>Plays <i translate="no">pad</i> once now: a one-shot in full, one pass of a looping or NOTE ON pad. Emits <a href="padsamplermachine.html#auditioned" translate="no">auditioned</a>().</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@audition -->
+</div>
+<div class="fnitem">
+<!-- $$$auditioned[overload1]$$$auditionedint -->
+<h3 class="fn" translate="no" id="auditioned"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">auditioned</span>(<span class="type">int</span> <i>pad</i>)</h3>
+<p>Emitted when <i translate="no">pad</i> was played by a tap; the grid flashes it.</p>
+<!-- @@@auditioned -->
+</div>
+<div class="fnitem">
+<!-- $$$bankChanged -->
+<h3 class="fn" translate="no" id="bankChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">bankChanged</span>()</h3>
+<p>Emitted when the bank on screen changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for property <a href="padsamplermachine.html#bank-prop" translate="no">bank</a>. </p>
+</div><!-- @@@bankChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$checkSaved[overload1]$$$checkSavedconstQVariantMap& -->
+<h3 class="fn" translate="no" id="checkSaved"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">checkSaved</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>) const</h3>
+<p>Reimplements: <a href="machine.html#checkSaved" translate="no">Machine::checkSaved</a>(const QVariantMap &amp;state) const.</p>
+<p>Adds every sample the banks in <i translate="no">state</i> name to Machine's checks.</p>
+<!-- @@@checkSaved -->
+</div>
+<div class="fnitem">
+<!-- $$$chopRegions[overload1]$$$chopRegionsintintint -->
+<h3 class="fn" translate="no" id="chopRegions"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">chopRegions</span>(<span class="type">int</span> <i>pad</i>, <span class="type">int</span> <i>count</i>, <span class="type">int</span> <i>firstPad</i> = 0)</h3>
+<p>Cuts the window of <i translate="no">pad</i> into <i translate="no">count</i> equal pieces (AUTO CHOP) and puts them on the pads from <i translate="no">firstPad</i> on, as <a href="padsamplermachine.html#applyChop" translate="no">applyChop</a>().</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@chopRegions -->
+</div>
+<div class="fnitem">
+<!-- $$$clearPad[overload1]$$$clearPadint -->
+<h3 class="fn" translate="no" id="clearPad"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">clearPad</span>(<span class="type">int</span> <i>pad</i>)</h3>
+<p>Empties <i translate="no">pad</i>: its sample and settings go.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@clearPad -->
+</div>
+<div class="fnitem">
+<!-- $$$copyPad[overload1]$$$copyPadintint -->
+<h3 class="fn" translate="no" id="copyPad"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">copyPad</span>(<span class="type">int</span> <i>from</i>, <span class="type">int</span> <i>to</i>)</h3>
+<p>Copies the sample and settings of pad <i translate="no">from</i> onto pad <i translate="no">to</i> (the MPC's COPY + pad).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@copyPad -->
+</div>
+<div class="fnitem">
+<!-- $$$detectTransients[overload1]$$$detectTransientsintqreal -->
+<h3 class="fn" translate="no" id="detectTransients"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">detectTransients</span>(<span class="type">int</span> <i>pad</i>, <span class="type">qreal</span> <i>threshold</i>)</h3>
+<p>Finds the onsets in the window of <i translate="no">pad</i> above <i translate="no">threshold</i> (0..1 of the loudest peak) in a worker thread (<a href="audiofile.html#transients" translate="no">AudioFile::transients</a>()); <a href="padsamplermachine.html#transientsDetected" translate="no">transientsDetected</a>() follows.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@detectTransients -->
+</div>
+<div class="fnitem">
+<!-- $$$doubleSequence[overload1]$$$doubleSequence -->
+<h3 class="fn" translate="no" id="doubleSequence"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">doubleSequence</span>()</h3>
+<p>Doubles the pattern: its hits are repeated. Does nothing when it would pass <a href="machine.html#MaxBars-var" translate="no">Machine::MaxBars</a>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@doubleSequence -->
+</div>
+<div class="fnitem">
+<!-- $$$erasePad[overload1]$$$erasePadint -->
+<h3 class="fn" translate="no" id="erasePad"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">erasePad</span>(<span class="type">int</span> <i>pad</i>)</h3>
+<p>Empties the hits of <i translate="no">pad</i> in the bank on screen (the MPC's ERASE + pad).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@erasePad -->
+</div>
+<div class="fnitem">
+<!-- $$$fxPadChanged -->
+<h3 class="fn" translate="no" id="fxPadChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">fxPadChanged</span>()</h3>
+<p>Emitted when <a href="padsamplermachine.html#fxPad-prop" translate="no">fxPad</a> changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for property <a href="padsamplermachine.html#fxPad-prop" translate="no">fxPad</a>. </p>
+</div><!-- @@@fxPadChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$halveSequence[overload1]$$$halveSequence -->
+<h3 class="fn" translate="no" id="halveSequence"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">halveSequence</span>()</h3>
+<p>Halves the pattern: its second half is dropped. Does nothing on one bar.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@halveSequence -->
+</div>
+<div class="fnitem">
+<!-- $$$heldFxChanged -->
+<h3 class="fn" translate="no" id="heldFxChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">heldFxChanged</span>()</h3>
+<p>Emitted when <a href="padsamplermachine.html#heldFx-prop" translate="no">heldFx</a> changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for property <a href="padsamplermachine.html#heldFx-prop" translate="no">heldFx</a>. </p>
+</div><!-- @@@heldFxChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$keyChanged -->
+<h3 class="fn" translate="no" id="keyChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">keyChanged</span>()</h3>
+<p>Emitted when root or scale changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="padsamplermachine.html#root-prop" translate="no">root</a> and <a href="padsamplermachine.html#scale-prop" translate="no">scale</a>. </p>
+</div><!-- @@@keyChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$loadSample[overload1]$$$loadSampleintconstQString&qrealqreal -->
+<h3 class="fn" translate="no" id="loadSample"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">loadSample</span>(<span class="type">int</span> <i>pad</i>, const <span class="type">QString</span> &amp;<i>path</i>, <span class="type">qreal</span> <i>start</i> = 0, <span class="type">qreal</span> <i>length</i> = 1)</h3>
+<p>Puts the sample file <i translate="no">path</i> on <i translate="no">pad</i>, trimmed to <i translate="no">start</i> and <i translate="no">length</i> (a fraction of what follows the start, as <a href="inputrecorder.html" translate="no">InputRecorder</a>'s takes come).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@loadSample -->
+</div>
+<div class="fnitem">
+<!-- $$$loadedSampleNumbers[overload1]$$$loadedSampleNumbersbool -->
+<h3 class="fn" translate="no" id="loadedSampleNumbers"><span class="type">QList</span>&lt;<span class="type">int</span>&gt; PadSamplerMachine::<span class="name">loadedSampleNumbers</span>(<span class="type">bool</span> <i>second</i> = false) const</h3>
+<p>Returns SamplerSynth's sample output numbers (1 to 10, its port numbers) of the loaded pads on the machine's track, or on the second track when <i translate="no">second</i> is true.</p>
+<!-- @@@loadedSampleNumbers -->
+</div>
+<div class="fnitem">
+<!-- $$$loadedSlotsChanged[overload1]$$$loadedSlotsChanged -->
+<h3 class="fn" translate="no" id="loadedSlotsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">loadedSlotsChanged</span>()</h3>
+<p>Emitted when the set of loaded pads changed; the wiring follows (<a href="padsamplermachine.html#loadedSampleNumbers" translate="no">loadedSampleNumbers</a>()).</p>
+<!-- @@@loadedSlotsChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$padForNote[overload1]$$$padForNoteint -->
+<h3 class="fn" translate="no" id="padForNote"><code class="details extra" translate="no">[invokable]</code> <span class="type">int</span> PadSamplerMachine::<span class="name">padForNote</span>(<span class="type">int</span> <i>note</i>) const</h3>
+<p>Returns the pad an external keyboard's <i translate="no">note</i> plays: the pads' notes from <code translate="no">baseNote</code> up, any other note wrapping round the sixteen.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@padForNote -->
+</div>
+<div class="fnitem">
+<!-- $$$padsChanged -->
+<h3 class="fn" translate="no" id="padsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">padsChanged</span>()</h3>
+<p>Emitted when the pads of the bank on screen changed: samples, settings, flags or mix.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="padsamplermachine.html#pad-prop" translate="no">pad</a>, <a href="padsamplermachine.html#pads-prop" translate="no">pads</a>, <a href="padsamplermachine.html#rowLevels-prop" translate="no">rowLevels</a>, <a href="padsamplermachine.html#rowMuted-prop" translate="no">rowMuted</a>, <a href="padsamplermachine.html#rowSoloed-prop" translate="no">rowSoloed</a>, <a href="padsamplermachine.html#rows-prop" translate="no">rows</a>, and <a href="padsamplermachine.html#values-prop" translate="no">values</a>. </p>
+</div><!-- @@@padsChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$playPositionsChanged -->
+<h3 class="fn" translate="no" id="playPositionsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">playPositionsChanged</span>()</h3>
+<p>Emitted when <a href="padsamplermachine.html#playPositions-prop" translate="no">playPositions</a> changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for property <a href="padsamplermachine.html#playPositions-prop" translate="no">playPositions</a>. </p>
+</div><!-- @@@playPositionsChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$playingChanged -->
+<h3 class="fn" translate="no" id="playingChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">playingChanged</span>()</h3>
+<p>Emitted when playing changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for property <a href="padsamplermachine.html#playing-prop" translate="no">playing</a>. </p>
+</div><!-- @@@playingChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$sectionBars[overload1]$$$sectionBarsconstQVariantMap& -->
+<h3 class="fn" translate="no" id="sectionBars"><code class="details extra" translate="no">[override virtual]</code> <span class="type">int</span> PadSamplerMachine::<span class="name">sectionBars</span>(const <span class="type">QVariantMap</span> &amp;<i>content</i>) const</h3>
+<p>Reimplements: <a href="machine.html#sectionBars" translate="no">Machine::sectionBars</a>(const QVariantMap &amp;content) const.</p>
+<p>Returns the length of the bank <i translate="no">content</i> plays: the bank on screen's.</p>
+<!-- @@@sectionBars -->
+</div>
+<div class="fnitem">
+<!-- $$$selectedPadChanged -->
+<h3 class="fn" translate="no" id="selectedPadChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">selectedPadChanged</span>()</h3>
+<p>Emitted when <a href="padsamplermachine.html#selectedPad-prop" translate="no">selectedPad</a> changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for property <a href="padsamplermachine.html#selectedPad-prop" translate="no">selectedPad</a>. </p>
+</div><!-- @@@selectedPadChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$setBridge[overload1]$$$setBridgeZynthboxBridge* -->
+<h3 class="fn" translate="no" id="setBridge"><span class="type">void</span> PadSamplerMachine::<span class="name">setBridge</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>)</h3>
+<p>Gives the machine libzynthbox's <i translate="no">bridge</i>, through which it makes the pads' clips; set before the machine is attached.</p>
+<!-- @@@setBridge -->
+</div>
+<div class="fnitem">
+<!-- $$$setCacheFolder[overload1]$$$setCacheFolderconstQString& -->
+<h3 class="fn" translate="no" id="setCacheFolder"><span class="type">void</span> PadSamplerMachine::<span class="name">setCacheFolder</span>(const <span class="type">QString</span> &amp;<i>folder</i>)</h3>
+<p>Sets the <i translate="no">folder</i> where reversed copies of samples are kept.</p>
+<!-- @@@setCacheFolder -->
+</div>
+<div class="fnitem">
+<!-- $$$setFlag[overload1]$$$setFlagintconstQString&bool -->
+<h3 class="fn" translate="no" id="setFlag"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">setFlag</span>(<span class="type">int</span> <i>pad</i>, const <span class="type">QString</span> &amp;<i>flag</i>, <span class="type">bool</span> <i>on</i>)</h3>
+<p>Sets the Pad Play flag <i translate="no">flag</i> of <i translate="no">pad</i> to <i translate="no">on</i>: <code translate="no">noteOn</code>, <code translate="no">looping</code>, <code translate="no">reverse</code>, <code translate="no">muted</code>, <code translate="no">soloed</code> or <code translate="no">sixteenLevels</code>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setFlag -->
+</div>
+<div class="fnitem">
+<!-- $$$setLatched[overload1]$$$setLatchedintbool -->
+<h3 class="fn" translate="no" id="setLatched"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">setLatched</span>(<span class="type">int</span> <i>pad</i>, <span class="type">bool</span> <i>latched</i>)</h3>
+<p>Latches <i translate="no">pad</i> looping when <i translate="no">latched</i> is true (its note held, the pad switched to looping until unlatched), or ends it.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setLatched -->
+</div>
+<div class="fnitem">
+<!-- $$$setRowLevel[overload1]$$$setRowLevelintqreal -->
+<h3 class="fn" translate="no" id="setRowLevel"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">setRowLevel</span>(<span class="type">int</span> <i>row</i>, <span class="type">qreal</span> <i>level</i>)</h3>
+<p>Sets the level of pad <i translate="no">row</i> to <i translate="no">level</i>, 0..1.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setRowLevel -->
+</div>
+<div class="fnitem">
+<!-- $$$setRowMuted[overload1]$$$setRowMutedintbool -->
+<h3 class="fn" translate="no" id="setRowMuted"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">setRowMuted</span>(<span class="type">int</span> <i>row</i>, <span class="type">bool</span> <i>muted</i>)</h3>
+<p>Mutes pad <i translate="no">row</i> when <i translate="no">muted</i> is true, or unmutes it.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><p><b>See also </b><a href="padsamplermachine.html#rowMuted-prop" translate="no">rowMuted</a>().</p>
+<!-- @@@setRowMuted -->
+</div>
+<div class="fnitem">
+<!-- $$$setRowSoloed[overload1]$$$setRowSoloedintbool -->
+<h3 class="fn" translate="no" id="setRowSoloed"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">setRowSoloed</span>(<span class="type">int</span> <i>row</i>, <span class="type">bool</span> <i>soloed</i>)</h3>
+<p>Solos pad <i translate="no">row</i> when <i translate="no">soloed</i> is true, or takes its solo off.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><p><b>See also </b><a href="padsamplermachine.html#rowSoloed-prop" translate="no">rowSoloed</a>().</p>
+<!-- @@@setRowSoloed -->
+</div>
+<div class="fnitem">
+<!-- $$$setSwing[overload1]$$$setSwingint -->
+<h3 class="fn" translate="no" id="setSwing"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">setSwing</span>(<span class="type">int</span> <i>swing</i>)</h3>
+<p>Reimplements: <a href="machine.html#setSwing" translate="no">Machine::setSwing</a>(int swing).</p>
+<p>Applies <i translate="no">swing</i> to the second track's pattern too.</p>
+<!-- @@@setSwing -->
+</div>
+<div class="fnitem">
+<!-- $$$setValue[overload1]$$$setValueconstQString&constQString&qreal -->
+<h3 class="fn" translate="no" id="setValue"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">setValue</span>(const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>knob</i>, <span class="type">qreal</span> <i>value</i>)</h3>
+<p>Sets the knob <i translate="no">knob</i> of the tab card <i translate="no">title</i> of the selected pad to <i translate="no">value</i>, 0..1, as ParamCard's store, and applies it to the pad's clip.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setValue -->
+</div>
+<div class="fnitem">
+<!-- $$$sixteenLevelsChanged -->
+<h3 class="fn" translate="no" id="sixteenLevelsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">sixteenLevelsChanged</span>()</h3>
+<p>Emitted when 16 LEVELS was switched, its source pad or its type changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="padsamplermachine.html#sixteenLevels-prop" translate="no">sixteenLevels</a>, <a href="padsamplermachine.html#sixteenLevelsPad-prop" translate="no">sixteenLevelsPad</a>, and <a href="padsamplermachine.html#sixteenLevelsType-prop" translate="no">sixteenLevelsType</a>. </p>
+</div><!-- @@@sixteenLevelsChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$state[overload1]$$$state -->
+<h3 class="fn" translate="no" id="state"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QVariantMap</span> PadSamplerMachine::<span class="name">state</span>() const</h3>
+<p>Reimplements: <a href="machine.html#state" translate="no">Machine::state</a>() const.</p>
+<p>Adds the bank on screen and every bank's pads, steps, level hits, accents and length.</p>
+<!-- @@@state -->
+</div>
+<div class="fnitem">
+<!-- $$$stepsChanged -->
+<h3 class="fn" translate="no" id="stepsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">stepsChanged</span>()</h3>
+<p>Emitted when steps or accents changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="padsamplermachine.html#accents-prop" translate="no">accents</a> and <a href="padsamplermachine.html#steps-prop" translate="no">steps</a>. </p>
+</div><!-- @@@stepsChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$stopAll[overload1]$$$stopAll -->
+<h3 class="fn" translate="no" id="stopAll"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">stopAll</span>()</h3>
+<p>Ends every latched pad (STOP).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@stopAll -->
+</div>
+<div class="fnitem">
+<!-- $$$stopLive[overload1]$$$stopLiveint -->
+<h3 class="fn" translate="no" id="stopLive"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">stopLive</span>(<span class="type">int</span> <i>key</i>)</h3>
+<p>Reimplements: <a href="machine.html#stopLive" translate="no">Machine::stopLive</a>(int key).</p>
+<p>Ends the sound of the live <i translate="no">key</i>, unless its pad is latched.</p>
+<!-- @@@stopLive -->
+</div>
+<div class="fnitem">
+<!-- $$$tabChanged -->
+<h3 class="fn" translate="no" id="tabChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">tabChanged</span>()</h3>
+<p>Emitted when tab changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for property <a href="padsamplermachine.html#tab-prop" translate="no">tab</a>. </p>
+</div><!-- @@@tabChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$toggleAccent[overload1]$$$toggleAccentint -->
+<h3 class="fn" translate="no" id="toggleAccent"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">toggleAccent</span>(<span class="type">int</span> <i>step</i>)</h3>
+<p>Flips the accent of <i translate="no">step</i> of the bar on screen.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@toggleAccent -->
+</div>
+<div class="fnitem">
+<!-- $$$toggleLatch[overload1]$$$toggleLatchint -->
+<h3 class="fn" translate="no" id="toggleLatch"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">toggleLatch</span>(<span class="type">int</span> <i>pad</i>)</h3>
+<p>Latches <i translate="no">pad</i> when it is not latched, else ends it.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@toggleLatch -->
+</div>
+<div class="fnitem">
+<!-- $$$toggleStep[overload1]$$$toggleStepintint -->
+<h3 class="fn" translate="no" id="toggleStep"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">toggleStep</span>(<span class="type">int</span> <i>row</i>, <span class="type">int</span> <i>step</i>)</h3>
+<p>Flips the hit of pad <i translate="no">row</i> on <i translate="no">step</i> of the bar on screen (a level hit while 16 LEVELS is on); setting one also plays it.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@toggleStep -->
+</div>
+<div class="fnitem">
+<!-- $$$transientsDetected[overload1]$$$transientsDetectedintconstQVariantList& -->
+<h3 class="fn" translate="no" id="transientsDetected"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">transientsDetected</span>(<span class="type">int</span> <i>pad</i>, const <span class="type">QVariantList</span> &amp;<i>onsets</i>)</h3>
+<p>Emitted when <a href="padsamplermachine.html#detectTransients" translate="no">detectTransients</a>() found the <i translate="no">onsets</i> (fractions of the file) in the window of <i translate="no">pad</i>.</p>
+<!-- @@@transientsDetected -->
+</div>
+<div class="fnitem">
+<!-- $$$trimToNewFile[overload1]$$$trimToNewFileintbool -->
+<h3 class="fn" translate="no" id="trimToNewFile"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">trimToNewFile</span>(<span class="type">int</span> <i>pad</i>, <span class="type">bool</span> <i>normalise</i>)</h3>
+<p>Writes the window of <i translate="no">pad</i> to a new file in the library, normalised to -1 dBFS when <i translate="no">normalise</i> is true, and puts it on the pad untrimmed: the wave editor's TRIM and NORMALISE.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@trimToNewFile -->
+</div>
+<div class="fnitem">
+<!-- $$$unmuteAll[overload1]$$$unmuteAll -->
+<h3 class="fn" translate="no" id="unmuteAll"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">unmuteAll</span>()</h3>
+<p>Unmutes every pad of the bank on screen.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@unmuteAll -->
+</div>
+<div class="vars">
+<h2>Member Variable Documentation</h2>
+</div>
+<div class="fnitem">
+<!-- $$$LevelNoteBase -->
+<h3 class="fn" translate="no" id="LevelNoteBase-var">const <span class="type">int</span> PadSamplerMachine::<span class="name">LevelNoteBase</span></h3>
+<p>This variable holds the note the first 16 LEVELS slice answers to (64); the pads' own notes sit far below.</p>
+<!-- @@@LevelNoteBase -->
+</div>
+<div class="fnitem">
+<!-- $$$PadCount -->
+<h3 class="fn" translate="no" id="PadCount-var">const <span class="type">int</span> PadSamplerMachine::<span class="name">PadCount</span></h3>
+<p>This variable holds the pads in a bank: 16.</p>
+<!-- @@@PadCount -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

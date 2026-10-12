@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- soundcontrols.cpp -->
+  <meta name="description" content="A machine's SOUND MODIFIERS: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's cc: and gen: controls, by symbol).">
+  <meta name="keywords" content="class">
+  <title>SoundControls Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>SoundControls</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">SoundControls Class</h1>
+<!-- $$$SoundControls-brief -->
+<p>A machine's SOUND MODIFIERS: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's <code translate="no">cc</code>: and <code translate="no">gen</code>: controls, by symbol). <a href="#details">More...</a></p>
+<!-- @@@SoundControls -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;soundcontrols.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="soundcontrols-members.html">List of all members, including inherited members</a></li>
+<li>SoundControls is part of <a href="ravving-machines.html">Machines</a>.</li>
+</ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols-card.html" translate="no">Card</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols-choice.html" translate="no">Choice</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols-knob.html" translate="no">Knob</a></b></td></tr>
+</table></div>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="soundcontrols.html#cards-prop" translate="no">cards</a></b> : const QVariantList</li>
+<li class="fn" translate="no"><b><a href="soundcontrols.html#values-prop" translate="no">values</a></b> : QVariantMap</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#SoundControls" translate="no">SoundControls</a></b>(const QVariantList &amp;<i>config</i>, const QVariantMap &amp;<i>startControls</i> = {}, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#adopt" translate="no">adopt</a></b>(const QVariantMap &amp;<i>engineValues</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#cards-prop" translate="no">cards</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#engineControls" translate="no">engineControls</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#has" translate="no">has</a></b>(const QString &amp;<i>cardKnob</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#restore" translate="no">restore</a></b>(const QVariantMap &amp;<i>state</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#setValue" translate="no">setValue</a></b>(const QString &amp;<i>card</i>, const QString &amp;<i>knob</i>, double <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#state" translate="no">state</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#symbols" translate="no">symbols</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#values-prop" translate="no">values</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#values-prop" translate="no">changed</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#controlChanged" translate="no">controlChanged</a></b>(const QString &amp;<i>symbol</i>, double <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#valueSet" translate="no">valueSet</a></b>(const QString &amp;<i>card</i>, const QString &amp;<i>knob</i>, double <i>value</i>)</td></tr>
+</table></div>
+<!-- $$$SoundControls-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Published to QML as <code translate="no">machine.sound</code>, with the same store interface as the SOUND EFFECTS (ParamCard reads values and calls <a href="soundcontrols.html#setValue" translate="no">setValue</a>()), so the same cards show both. The cards are data: each engine's profile in <code translate="no">data/engines.json</code> (<a href="engineprofiles.html" translate="no">EngineProfiles</a>), shown for the source that plays it:</p>
+<pre class="cpp plain" translate="no"><code class="text">
+ &quot;sound&quot;: [ { &quot;title&quot;: &quot;FILTER&quot;, &quot;knobs&quot;: [
+     { &quot;name&quot;: &quot;CUTOFF&quot;, &quot;symbol&quot;: &quot;cutoff&quot;, &quot;min&quot;: 0, &quot;max&quot;: 100, &quot;default&quot;: 0.3 } ] },
+   { &quot;title&quot;: &quot;WAVE&quot;, &quot;knobs&quot;: [ { &quot;name&quot;: &quot;WAVE&quot;, &quot;default&quot;: 0, &quot;choices&quot;: [
+     { &quot;label&quot;: &quot;SAW&quot;, &quot;controls&quot;: { &quot;osc1waveform&quot;: 0, &quot;osc1pw&quot;: 0.5 } },
+     { &quot;label&quot;: &quot;SQR&quot;, &quot;controls&quot;: { &quot;osc1waveform&quot;: 0.5, &quot;osc1pw&quot;: 0.5 } } ] } ] } ]
+</code></pre>
+<p>Knob values are 0..1 everywhere. A knob maps that onto <code translate="no">min</code> .. <code translate="no">max</code> of its <code translate="no">symbol</code>, linearly, or with <code translate="no">&quot;curve&quot;: &quot;log&quot;</code> exponentially (min × (max / min)^value, for ports an engine treats as logarithmic, such as Calf's cutoff, envelope times and portamento; <code translate="no">min</code> must be over 0). A knob with <code translate="no">choices</code> is a switch (a waveform, a mode): its value snaps to choice <i>i</i> of <i>n</i> at <i>i</i> / (<i>n</i> - 1), and each choice sets its <code translate="no">controls</code> (several ports at once; every choice should name the same ports), or just its <code translate="no">value</code> on the knob's <code translate="no">symbol</code>; QML draws it as a WaveCycler rather than a dial. The values are saved with the machine and sent to the engine on every change (<a href="soundcontrols.html#controlChanged" translate="no">controlChanged</a>()) and whenever it starts (<a href="soundcontrols.html#engineControls" translate="no">engineControls</a>()). GUI thread only.</p>
+</div>
+<!-- @@@SoundControls -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$cards-prop$$$cards -->
+<h3 class="fn" translate="no" id="cards-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">cards</span> : const <span class="type">QVariantList</span></h3>
+<p>This property holds the cards for ParamCardRow, as maps with <code translate="no">title</code>, <code translate="no">params</code> (the knob names) and <code translate="no">choices</code> (the switch knobs' labels, by knob).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>cards</b></span>() const</td></tr>
+</table></div>
+<!-- @@@cards -->
+</div>
+<div class="fnitem">
+<!-- $$$values-prop$$$values$$$changed -->
+<h3 class="fn" translate="no" id="values-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">values</span> : <span class="type">QVariantMap</span></h3>
+<p>every knob's value, 0..1, as a map of card title to a map of knob name to value.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>values</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>changed</b></span>()</td></tr>
+</table></div>
+<!-- @@@values -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$SoundControls[overload1]$$$SoundControlsconstQVariantList&constQVariantMap&QObject* -->
+<h3 class="fn" translate="no" id="SoundControls"><code class="details extra" translate="no">[explicit]</code> SoundControls::<span class="name">SoundControls</span>(const <span class="type">QVariantList</span> &amp;<i>config</i>, const <span class="type">QVariantMap</span> &amp;<i>startControls</i> = {}, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Builds the cards from <i translate="no">config</i>, the cards of an engine's profile, with the given <i translate="no">parent</i>. A knob on one of the source's own engine controls, <i translate="no">startControls</i> (kits.json's <code translate="no">engine.controls</code>), starts where the source puts it, read back through its mapping as <a href="soundcontrols.html#adopt" translate="no">adopt</a>() does; any other starts at the profile's default.</p>
+<!-- @@@SoundControls -->
+</div>
+<div class="fnitem">
+<!-- $$$adopt[overload1]$$$adoptconstQVariantMap& -->
+<h3 class="fn" translate="no" id="adopt"><span class="type">void</span> SoundControls::<span class="name">adopt</span>(const <span class="type">QVariantMap</span> &amp;<i>engineValues</i>)</h3>
+<p>Shows the values the engine took, <i translate="no">engineValues</i> (symbol to value; a sound preset was loaded): each knob reads them back through its mapping (a switch takes the nearest choice). Nothing is sent to the engine. Values outside a knob's range sit at its end.</p>
+<!-- @@@adopt -->
+</div>
+<div class="fnitem">
+<!-- $$$controlChanged[overload1]$$$controlChangedconstQString&double -->
+<h3 class="fn" translate="no" id="controlChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> SoundControls::<span class="name">controlChanged</span>(const <span class="type">QString</span> &amp;<i>symbol</i>, <span class="type">double</span> <i>value</i>)</h3>
+<p>Emitted with the engine control <i translate="no">symbol</i>'s new <i translate="no">value</i>, in the engine's units.</p>
+<!-- @@@controlChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$engineControls[overload1]$$$engineControls -->
+<h3 class="fn" translate="no" id="engineControls"><span class="type">QVariantMap</span> SoundControls::<span class="name">engineControls</span>() const</h3>
+<p>Returns every control at its current value, in the engine's units (symbol to value).</p>
+<!-- @@@engineControls -->
+</div>
+<div class="fnitem">
+<!-- $$$has[overload1]$$$hasconstQString& -->
+<h3 class="fn" translate="no" id="has"><span class="type">bool</span> SoundControls::<span class="name">has</span>(const <span class="type">QString</span> &amp;<i>cardKnob</i>) const</h3>
+<p>Returns whether it has the knob <i translate="no">cardKnob</i>, written <code translate="no">CARD/KNOB</code> (an automation lane's, a saved value's).</p>
+<!-- @@@has -->
+</div>
+<div class="fnitem">
+<!-- $$$restore[overload1]$$$restoreconstQVariantMap& -->
+<h3 class="fn" translate="no" id="restore"><span class="type">QStringList</span> SoundControls::<span class="name">restore</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>)</h3>
+<p>Takes the saved <i translate="no">state</i>, replacing the current values (missing knobs go back to their defaults), and sends every control to the engine again (<a href="soundcontrols.html#controlChanged" translate="no">controlChanged</a>()). Returns the saved knobs it has no knob for; they are dropped, and <a href="projectcheck.html" translate="no">ProjectCheck</a> notes them.</p>
+<!-- @@@restore -->
+</div>
+<div class="fnitem">
+<!-- $$$setValue[overload1]$$$setValueconstQString&constQString&double -->
+<h3 class="fn" translate="no" id="setValue"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SoundControls::<span class="name">setValue</span>(const <span class="type">QString</span> &amp;<i>card</i>, const <span class="type">QString</span> &amp;<i>knob</i>, <span class="type">double</span> <i>value</i>)</h3>
+<p>Sets <i translate="no">knob</i> of <i translate="no">card</i> to <i translate="no">value</i> (clamped to 0..1, snapped to a choice for a switch) and sends what it drives to the engine (<a href="soundcontrols.html#controlChanged" translate="no">controlChanged</a>()). Unknown knobs are ignored.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setValue -->
+</div>
+<div class="fnitem">
+<!-- $$$state[overload1]$$$state -->
+<h3 class="fn" translate="no" id="state"><span class="type">QVariantMap</span> SoundControls::<span class="name">state</span>() const</h3>
+<p>Returns what the project keeps: <code translate="no">CARD/KNOB</code> to 0..1.</p>
+<!-- @@@state -->
+</div>
+<div class="fnitem">
+<!-- $$$symbols[overload1]$$$symbols -->
+<h3 class="fn" translate="no" id="symbols"><span class="type">QStringList</span> SoundControls::<span class="name">symbols</span>() const</h3>
+<p>Returns every engine control a knob drives (a switch's choices' too), sorted: to check them against the engine's ports.</p>
+<!-- @@@symbols -->
+</div>
+<div class="fnitem">
+<!-- $$$valueSet[overload1]$$$valueSetconstQString&constQString&double -->
+<h3 class="fn" translate="no" id="valueSet"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> SoundControls::<span class="name">valueSet</span>(const <span class="type">QString</span> &amp;<i>card</i>, const <span class="type">QString</span> &amp;<i>knob</i>, <span class="type">double</span> <i>value</i>)</h3>
+<p>Emitted when <i translate="no">knob</i> of <i translate="no">card</i> was set to <i translate="no">value</i> (0..1), by the user or by automation.</p>
+<!-- @@@valueSet -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

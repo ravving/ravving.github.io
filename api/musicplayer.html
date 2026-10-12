@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- musicplayer.cpp -->
+  <meta name="description" content="The music player, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;music: a queue of the library's tracks (MusicLibrary) played one after the other through Qt Multimedia.">
+  <meta name="keywords" content="class">
+  <title>MusicPlayer Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>MusicPlayer</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">MusicPlayer Class</h1>
+<!-- $$$MusicPlayer-brief -->
+<p>The music player, published to QML as <code translate="no">studio.music</code>: a queue of the library's tracks (<a href="musiclibrary.html" translate="no">MusicLibrary</a>) played one after the other through Qt Multimedia. <a href="#details">More...</a></p>
+<!-- @@@MusicPlayer -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;musicplayer.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="musicplayer-members.html">List of all members, including inherited members</a></li>
+<li>MusicPlayer is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<div class="table"><table class="propsummary" translate="no">
+<tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="musicplayer.html#active-prop" translate="no">active</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="musicplayer.html#available-prop" translate="no">available</a></b> : const bool</li>
+<li class="fn" translate="no"><b><a href="musicplayer.html#current-prop" translate="no">current</a></b> : QVariantMap</li>
+<li class="fn" translate="no"><b><a href="musicplayer.html#duration-prop" translate="no">duration</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="musicplayer.html#index-prop" translate="no">index</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="musicplayer.html#library-prop" translate="no">library</a></b> : QObject* const</li>
+<li class="fn" translate="no"><b><a href="musicplayer.html#mediaState-prop" translate="no">mediaState</a></b> : QString</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="musicplayer.html#paused-prop" translate="no">paused</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="musicplayer.html#playing-prop" translate="no">playing</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="musicplayer.html#position-prop" translate="no">position</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="musicplayer.html#queue-prop" translate="no">queue</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="musicplayer.html#repeat-prop" translate="no">repeat</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="musicplayer.html#volume-prop" translate="no">volume</a></b> : qreal</li>
+</ul>
+</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#MusicPlayer" translate="no">MusicPlayer</a></b>(QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#active-prop" translate="no">active</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#available-prop" translate="no">available</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#clearQueue" translate="no">clearQueue</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#current-prop" translate="no">current</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#duration-prop" translate="no">duration</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#enqueue" translate="no">enqueue</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#enqueueAll" translate="no">enqueueAll</a></b>(const QVariantList &amp;<i>paths</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#index-prop" translate="no">index</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#library-prop" translate="no">library</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#mediaState-prop" translate="no">mediaState</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#next" translate="no">next</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#pause" translate="no">pause</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#paused-prop" translate="no">paused</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#playAt" translate="no">playAt</a></b>(int <i>i</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#playNow" translate="no">playNow</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#playing-prop" translate="no">playing</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#position-prop" translate="no">position</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#previous" translate="no">previous</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#queue-prop" translate="no">queue</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#removeAt" translate="no">removeAt</a></b>(int <i>i</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#repeat-prop" translate="no">repeat</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#resume" translate="no">resume</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#seek" translate="no">seek</a></b>(qreal <i>seconds</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#setOutputSink" translate="no">setOutputSink</a></b>(const QString &amp;<i>sink</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#repeat-prop" translate="no">setRepeat</a></b>(bool <i>repeat</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#volume-prop" translate="no">setVolume</a></b>(qreal <i>volume</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#stop" translate="no">stop</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#togglePause" translate="no">togglePause</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#volume-prop" translate="no">volume</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#positionChanged" translate="no">positionChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#queueChanged" translate="no">queueChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#repeat-prop" translate="no">repeatChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#stateChanged" translate="no">stateChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="musicplayer.html#volume-prop" translate="no">volumeChanged</a></b>()</td></tr>
+</table></div>
+<!-- $$$MusicPlayer-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>QMediaPlayer with an audio output decodes WAV, FLAC, Ogg and MP3 alike (FFmpeg), and the sound goes out through PipeWire beside the studio's own graph rather than through it, to the output picked (<a href="musicplayer.html#setOutputSink" translate="no">setOutputSink</a>(): <a href="audiooutputs.html" translate="no">AudioOutputs</a>' current sink, the jacks or a Bluetooth device). It does not touch libzynthbox: a format its sampler cannot read must never reach the audio thread (libzynthbox bug report 16). The studio's transport pauses the player when it starts, so the two never sound at once.</p>
+<p>The queue is the right-hand list of the player page: <a href="musicplayer.html#playNow" translate="no">playNow</a>() puts a track in after the one playing and plays it, <a href="musicplayer.html#enqueue" translate="no">enqueue</a>() adds it at the end, <a href="musicplayer.html#playAt" translate="no">playAt</a>() jumps to one, <a href="musicplayer.html#next" translate="no">next</a>() and <a href="musicplayer.html#previous" translate="no">previous</a>() step, and a track that ends starts the next (round again with repeat). Pause keeps the position; <a href="musicplayer.html#seek" translate="no">seek</a>() moves inside the track.</p>
+<p>Qt Multimedia is there only while a track is loaded: the media player and its audio output are made when one starts and deleted when the player stops (STOP, the end of the queue, the player page closed), so no decoder and no PipeWire stream is left beside the studio meanwhile. GUI thread only.</p>
+</div>
+<!-- @@@MusicPlayer -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$active-prop$$$active$$$stateChanged -->
+<h3 class="fn" translate="no" id="active-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">active</span> : <span class="type">bool</span></h3>
+<p>This property holds whether a track is loaded, playing or paused.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>active</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="musicplayer.html#stateChanged" translate="no">stateChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@active -->
+</div>
+<div class="fnitem">
+<!-- $$$available-prop$$$available -->
+<h3 class="fn" translate="no" id="available-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">available</span> : const <span class="type">bool</span></h3>
+<p>This property holds whether anything can sound: always <code translate="no">true</code> with Qt Multimedia.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>available</b></span>() const</td></tr>
+</table></div>
+<!-- @@@available -->
+</div>
+<div class="fnitem">
+<!-- $$$current-prop$$$current$$$queueChanged -->
+<h3 class="fn" translate="no" id="current-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">current</span> : <span class="type">QVariantMap</span></h3>
+<p>This property holds the track playing; an empty map for none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>current</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="musicplayer.html#queueChanged" translate="no">queueChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@current -->
+</div>
+<div class="fnitem">
+<!-- $$$duration-prop$$$duration$$$stateChanged -->
+<h3 class="fn" translate="no" id="duration-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">duration</span> : <span class="type">qreal</span></h3>
+<p>how long the track is, in seconds.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>duration</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="musicplayer.html#stateChanged" translate="no">stateChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@duration -->
+</div>
+<div class="fnitem">
+<!-- $$$index-prop$$$index$$$queueChanged -->
+<h3 class="fn" translate="no" id="index-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">index</span> : <span class="type">int</span></h3>
+<p>This property holds the index of the track playing in the queue; -1 for none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>index</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="musicplayer.html#queueChanged" translate="no">queueChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@index -->
+</div>
+<div class="fnitem">
+<!-- $$$library-prop$$$library -->
+<h3 class="fn" translate="no" id="library-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">library</span> : <span class="type">QObject</span>* const</h3>
+<p>This property holds the tracks the player plays from, a <a href="musiclibrary.html" translate="no">MusicLibrary</a> owned by the player.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QObject *</td><td class="memItemRight bottomAlign"><span class="name"><b>library</b></span>() const</td></tr>
+</table></div>
+<!-- @@@library -->
+</div>
+<div class="fnitem">
+<!-- $$$mediaState-prop$$$mediaState$$$positionChanged -->
+<h3 class="fn" translate="no" id="mediaState-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">mediaState</span> : <span class="type">QString</span></h3>
+<p>This property holds the media object's own state, for tests, such as &quot;PlayingState · LoadedMedia · 5034 ms&quot;.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>mediaState</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="musicplayer.html#positionChanged" translate="no">positionChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@mediaState -->
+</div>
+<div class="fnitem">
+<!-- $$$paused-prop$$$paused$$$stateChanged -->
+<h3 class="fn" translate="no" id="paused-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">paused</span> : <span class="type">bool</span></h3>
+<p>This property holds whether a track is paused.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>paused</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="musicplayer.html#stateChanged" translate="no">stateChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@paused -->
+</div>
+<div class="fnitem">
+<!-- $$$playing-prop$$$playing$$$stateChanged -->
+<h3 class="fn" translate="no" id="playing-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">playing</span> : <span class="type">bool</span></h3>
+<p>This property holds whether sound is running.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>playing</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="musicplayer.html#stateChanged" translate="no">stateChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@playing -->
+</div>
+<div class="fnitem">
+<!-- $$$position-prop$$$position$$$positionChanged -->
+<h3 class="fn" translate="no" id="position-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">position</span> : <span class="type">qreal</span></h3>
+<p>where the track is, in seconds.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>position</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="musicplayer.html#positionChanged" translate="no">positionChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@position -->
+</div>
+<div class="fnitem">
+<!-- $$$queue-prop$$$queue$$$queueChanged -->
+<h3 class="fn" translate="no" id="queue-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">queue</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the queue, as tracks in the library's form (<a href="musiclibrary.html#tracks-prop" translate="no">MusicLibrary::tracks</a>).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>queue</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="musicplayer.html#queueChanged" translate="no">queueChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@queue -->
+</div>
+<div class="fnitem">
+<!-- $$$repeat-prop$$$repeat$$$setRepeatbool$$$repeatChanged -->
+<h3 class="fn" translate="no" id="repeat-prop"><span class="name">repeat</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the queue starts over when it ends.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>repeat</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setRepeat</b></span>(bool <i>repeat</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>repeatChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@repeat -->
+</div>
+<div class="fnitem">
+<!-- $$$volume-prop$$$volume$$$setVolumeqreal$$$volumeChanged -->
+<h3 class="fn" translate="no" id="volume-prop"><span class="name">volume</span> : <span class="type">qreal</span></h3>
+<p>This property holds the player's own volume, 0..1 (its output's), remembered in the settings; 0.8 by default.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>volume</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setVolume</b></span>(qreal <i>volume</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>volumeChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@volume -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$MusicPlayer[overload1]$$$MusicPlayerQObject* -->
+<h3 class="fn" translate="no" id="MusicPlayer"><code class="details extra" translate="no">[explicit]</code> MusicPlayer::<span class="name">MusicPlayer</span>(<span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the player and its library, with the given <i translate="no">parent</i>. Nothing of Qt Multimedia is made until a track starts.</p>
+<!-- @@@MusicPlayer -->
+</div>
+<div class="fnitem">
+<!-- $$$clearQueue[overload1]$$$clearQueue -->
+<h3 class="fn" translate="no" id="clearQueue"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">clearQueue</span>()</h3>
+<p>Empties the queue and stops.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@clearQueue -->
+</div>
+<div class="fnitem">
+<!-- $$$enqueue[overload1]$$$enqueueconstQString& -->
+<h3 class="fn" translate="no" id="enqueue"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">enqueue</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Adds the track at <i translate="no">path</i> at the end of the queue; it starts when nothing plays.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@enqueue -->
+</div>
+<div class="fnitem">
+<!-- $$$enqueueAll[overload1]$$$enqueueAllconstQVariantList& -->
+<h3 class="fn" translate="no" id="enqueueAll"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">enqueueAll</span>(const <span class="type">QVariantList</span> &amp;<i>paths</i>)</h3>
+<p>Adds the tracks at <i translate="no">paths</i> at the end of the queue; the first starts when nothing plays.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@enqueueAll -->
+</div>
+<div class="fnitem">
+<!-- $$$next[overload1]$$$next -->
+<h3 class="fn" translate="no" id="next"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">next</span>()</h3>
+<p>Plays the next track of the queue (the first again with repeat).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@next -->
+</div>
+<div class="fnitem">
+<!-- $$$pause[overload1]$$$pause -->
+<h3 class="fn" translate="no" id="pause"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">pause</span>()</h3>
+<p>Pauses the track, keeping its position.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@pause -->
+</div>
+<div class="fnitem">
+<!-- $$$playAt[overload1]$$$playAtint -->
+<h3 class="fn" translate="no" id="playAt"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">playAt</span>(<span class="type">int</span> <i>i</i>)</h3>
+<p>Plays the queue's track at index <i translate="no">i</i>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@playAt -->
+</div>
+<div class="fnitem">
+<!-- $$$playNow[overload1]$$$playNowconstQString& -->
+<h3 class="fn" translate="no" id="playNow"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">playNow</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Puts the track at <i translate="no">path</i> in after the one playing and plays it now.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@playNow -->
+</div>
+<div class="fnitem">
+<!-- $$$positionChanged -->
+<h3 class="fn" translate="no" id="positionChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MusicPlayer::<span class="name">positionChanged</span>()</h3>
+<p>Emitted when position or <a href="musicplayer.html#mediaState-prop" translate="no">mediaState</a> changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="musicplayer.html#mediaState-prop" translate="no">mediaState</a> and <a href="musicplayer.html#position-prop" translate="no">position</a>. </p>
+</div><!-- @@@positionChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$previous[overload1]$$$previous -->
+<h3 class="fn" translate="no" id="previous"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">previous</span>()</h3>
+<p>Restarts the track when it is more than 3 s in or the first; otherwise plays the one before.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@previous -->
+</div>
+<div class="fnitem">
+<!-- $$$queueChanged -->
+<h3 class="fn" translate="no" id="queueChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MusicPlayer::<span class="name">queueChanged</span>()</h3>
+<p>Emitted when the queue, the index or the current track changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="musicplayer.html#current-prop" translate="no">current</a>, <a href="musicplayer.html#index-prop" translate="no">index</a>, and <a href="musicplayer.html#queue-prop" translate="no">queue</a>. </p>
+</div><!-- @@@queueChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$removeAt[overload1]$$$removeAtint -->
+<h3 class="fn" translate="no" id="removeAt"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">removeAt</span>(<span class="type">int</span> <i>i</i>)</h3>
+<p>Takes the queue's track at index <i translate="no">i</i> out. When it is the one playing, the next takes its place, or the sound stops.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@removeAt -->
+</div>
+<div class="fnitem">
+<!-- $$$resume[overload1]$$$resume -->
+<h3 class="fn" translate="no" id="resume"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">resume</span>()</h3>
+<p>Resumes the paused track, or plays the first queued track when none is loaded.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@resume -->
+</div>
+<div class="fnitem">
+<!-- $$$seek[overload1]$$$seekqreal -->
+<h3 class="fn" translate="no" id="seek"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">seek</span>(<span class="type">qreal</span> <i>seconds</i>)</h3>
+<p>Moves to <i translate="no">seconds</i> inside the track.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@seek -->
+</div>
+<div class="fnitem">
+<!-- $$$setOutputSink[overload1]$$$setOutputSinkconstQString& -->
+<h3 class="fn" translate="no" id="setOutputSink"><span class="type">void</span> MusicPlayer::<span class="name">setOutputSink</span>(const <span class="type">QString</span> &amp;<i>sink</i>)</h3>
+<p>Plays into the PipeWire <i translate="no">sink</i> (<a href="audiooutputs.html#currentSink-prop" translate="no">AudioOutputs::currentSink</a>()), followed live; the default output when it is not found.</p>
+<!-- @@@setOutputSink -->
+</div>
+<div class="fnitem">
+<!-- $$$stateChanged -->
+<h3 class="fn" translate="no" id="stateChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MusicPlayer::<span class="name">stateChanged</span>()</h3>
+<p>Emitted when playing, paused, active or duration changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="musicplayer.html#active-prop" translate="no">active</a>, <a href="musicplayer.html#duration-prop" translate="no">duration</a>, <a href="musicplayer.html#paused-prop" translate="no">paused</a>, and <a href="musicplayer.html#playing-prop" translate="no">playing</a>. </p>
+</div><!-- @@@stateChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$stop[overload1]$$$stop -->
+<h3 class="fn" translate="no" id="stop"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">stop</span>()</h3>
+<p>Stops: the sound ends and Qt Multimedia's objects go; the track stays current at its start.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@stop -->
+</div>
+<div class="fnitem">
+<!-- $$$togglePause[overload1]$$$togglePause -->
+<h3 class="fn" translate="no" id="togglePause"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MusicPlayer::<span class="name">togglePause</span>()</h3>
+<p>Pauses the track playing, or resumes.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@togglePause -->
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>
+</div>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- index.qdoc -->
+  <meta name="description" content="The studio, the song's sections, the undo history, projects, templates and presets.">
+  <title>Studio and projects | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li>Studio and projects</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Studio and projects</h1>
+<!-- $$$ravving-studio-description -->
+<div class="descr" id="details">
+<div class="table"><table class="annotated">
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="history.html">History</a></p></td><td class="tblDescr"><p>Project's undo history, published to QML as studio.history</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="historyparticipant.html">HistoryParticipant</a></p></td><td class="tblDescr"><p>Interface of an object whose changes History can undo</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="localization.html">Localization</a></p></td><td class="tblDescr"><p>Interface's language (KI18n), published to QML as localization (docs/translations.md)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="namedstore.html">NamedStore</a></p></td><td class="tblDescr"><p>User's own named entries of one kind, kept in a JSON file of their own ({&quot;presets&quot;: [{&quot;name&quot;: ..., ...}, ...]})</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="presetexchange.html">PresetExchange</a></p></td><td class="tblDescr"><p>User's presets as files to share on a USB stick: the pattern presets they saved (a machine's PresetLibrary: the toolbar's PRESET), the sounds they saved (a machine's MY SOUNDS) and their project templates</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="presetlibrary.html">PresetLibrary</a></p></td><td class="tblDescr"><p>A machine's pattern presets: the factory ones from its data file and the user's own, kept in a file of their own (NamedStore) so they survive across projects</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="projectcheck.html">ProjectCheck</a></p></td><td class="tblDescr"><p>What a project names that is missing, noted while it opens (docs/testing.md, &quot;Projects that still resolve&quot;)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="projects.html">Projects</a></p></td><td class="tblDescr"><p>Saved projects behind the header's SAVE and PROJECT menu, published to QML as studio.projects</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="sections.html">Sections</a></p></td><td class="tblDescr"><p>SECTIONS: the parts of a song (an intro, a verse, a bridge), each holding every machine's pattern at once, and the song: the sections in order, each played a number of times (docs/sections-plan.md); published to QML as studio.sections</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="sections-host.html">Sections::Host</a></p></td><td class="tblDescr"><p>What Sections needs of the machines; the studio implements it</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="sketchpad.html">Sketchpad</a></p></td><td class="tblDescr"><p>Sketchpad as libzynthbox sees it: PlayGridManager's zlSketchpad</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="sketchpadtrack.html">SketchpadTrack</a></p></td><td class="tblDescr"><p>One sketchpad track as libzynthbox's PatternModel sees it</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="studio.html">Studio</a></p></td><td class="tblDescr"><p>Ravving's backend root, published to QML as studio: the machines, the transport and the project</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="takerecorder.html">TakeRecorder</a></p></td><td class="tblDescr"><p>A machine's REC: a fresh take of what is played LIVE on it, recorded into its pattern as easyrave's per-machine REC does; published to QML as studio.take</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="templates.html">Templates</a></p></td><td class="tblDescr"><p>Project templates, published to QML as studio.templates: how a project starts out, not what it plays</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="userprofile.html">UserProfile</a></p></td><td class="tblDescr"><p>Who uses the device, published to QML as profile: the names the exports put on every track and bundle, and the device's own settings</p></td></tr>
+</table></div>
+</div>
+<!-- @@@ravving-studio -->
+<div class="table"><table class="annotated">
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="history.html">History</a></p></td><td class="tblDescr"><p>Project's undo history, published to QML as studio.history</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="historyparticipant.html">HistoryParticipant</a></p></td><td class="tblDescr"><p>Interface of an object whose changes History can undo</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="localization.html">Localization</a></p></td><td class="tblDescr"><p>Interface's language (KI18n), published to QML as localization (docs/translations.md)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="namedstore.html">NamedStore</a></p></td><td class="tblDescr"><p>User's own named entries of one kind, kept in a JSON file of their own ({&quot;presets&quot;: [{&quot;name&quot;: ..., ...}, ...]})</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="presetexchange.html">PresetExchange</a></p></td><td class="tblDescr"><p>User's presets as files to share on a USB stick: the pattern presets they saved (a machine's PresetLibrary: the toolbar's PRESET), the sounds they saved (a machine's MY SOUNDS) and their project templates</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="presetlibrary.html">PresetLibrary</a></p></td><td class="tblDescr"><p>A machine's pattern presets: the factory ones from its data file and the user's own, kept in a file of their own (NamedStore) so they survive across projects</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="projectcheck.html">ProjectCheck</a></p></td><td class="tblDescr"><p>What a project names that is missing, noted while it opens (docs/testing.md, &quot;Projects that still resolve&quot;)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="projects.html">Projects</a></p></td><td class="tblDescr"><p>Saved projects behind the header's SAVE and PROJECT menu, published to QML as studio.projects</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="sections.html">Sections</a></p></td><td class="tblDescr"><p>SECTIONS: the parts of a song (an intro, a verse, a bridge), each holding every machine's pattern at once, and the song: the sections in order, each played a number of times (docs/sections-plan.md); published to QML as studio.sections</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="sections-host.html">Sections::Host</a></p></td><td class="tblDescr"><p>What Sections needs of the machines; the studio implements it</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="sketchpad.html">Sketchpad</a></p></td><td class="tblDescr"><p>Sketchpad as libzynthbox sees it: PlayGridManager's zlSketchpad</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="sketchpadtrack.html">SketchpadTrack</a></p></td><td class="tblDescr"><p>One sketchpad track as libzynthbox's PatternModel sees it</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="studio.html">Studio</a></p></td><td class="tblDescr"><p>Ravving's backend root, published to QML as studio: the machines, the transport and the project</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="takerecorder.html">TakeRecorder</a></p></td><td class="tblDescr"><p>A machine's REC: a fresh take of what is played LIVE on it, recorded into its pattern as easyrave's per-machine REC does; published to QML as studio.take</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="templates.html">Templates</a></p></td><td class="tblDescr"><p>Project templates, published to QML as studio.templates: how a project starts out, not what it plays</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="userprofile.html">UserProfile</a></p></td><td class="tblDescr"><p>Who uses the device, published to QML as profile: the names the exports put on every track and bundle, and the device's own settings</p></td></tr>
+</table></div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

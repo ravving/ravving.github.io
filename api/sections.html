@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- sections.cpp -->
+  <meta name="description" content="SECTIONS: the parts of a song (an intro, a verse, a bridge), each holding every machine's pattern at once, and the song: the sections in order, each played a number of times (docs/sections-plan.md); published to QML as studio&lt;@op&gt;.&lt;/@op&gt;sections.">
+  <meta name="keywords" content="class">
+  <title>Sections Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>Sections</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">Sections Class</h1>
+<!-- $$$Sections-brief -->
+<p>SECTIONS: the parts of a song (an intro, a verse, a bridge), each holding every machine's pattern at once, and the song: the sections in order, each played a number of times (docs/sections-plan.md); published to QML as <code translate="no">studio.sections</code>. <a href="#details">More...</a></p>
+<!-- @@@Sections -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;sections.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="historyparticipant.html" translate="no">HistoryParticipant</a> and </td></tr>
+</table></div>
+<ul>
+<li><a href="sections-members.html">List of all members, including inherited members</a></li>
+<li>Sections is part of <a href="ravving-studio.html">Studio and projects</a>.</li>
+</ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> class </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html" translate="no">Host</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="sections.html#Mode-enum" translate="no">Mode</a></b> { Loop, Song }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="sections.html#SwitchAt-enum" translate="no">SwitchAt</a></b> { SwitchBar, SwitchSection }</td></tr>
+</table></div>
+<h2 id="properties">Properties</h2>
+<div class="table"><table class="propsummary" translate="no">
+<tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="sections.html#current-prop" translate="no">current</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="sections.html#currentIndex-prop" translate="no">currentIndex</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="sections.html#entryBar-prop" translate="no">entryBar</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="sections.html#maxQueue-prop" translate="no">maxQueue</a></b> : const int</li>
+<li class="fn" translate="no"><b><a href="sections.html#maxRepeats-prop" translate="no">maxRepeats</a></b> : const int</li>
+<li class="fn" translate="no"><b><a href="sections.html#maxSections-prop" translate="no">maxSections</a></b> : const int</li>
+<li class="fn" translate="no"><b><a href="sections.html#mode-prop" translate="no">mode</a></b> : Mode</li>
+<li class="fn" translate="no"><b><a href="sections.html#passBar-prop" translate="no">passBar</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="sections.html#pending-prop" translate="no">pending</a></b> : QString</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="sections.html#playing-prop" translate="no">playing</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="sections.html#playingEntry-prop" translate="no">playingEntry</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="sections.html#queue-prop" translate="no">queue</a></b> : QStringList</li>
+<li class="fn" translate="no"><b><a href="sections.html#sections-prop" translate="no">sections</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="sections.html#song-prop" translate="no">song</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="sections.html#songBar-prop" translate="no">songBar</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="sections.html#songBars-prop" translate="no">songBars</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="sections.html#switchAt-prop" translate="no">switchAt</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="sections.html#switching-prop" translate="no">switching</a></b> : bool</li>
+</ul>
+</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="sections.html#Sections" translate="no">Sections</a></b>(Sections::Host *<i>host</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="sections.html#add" translate="no">add</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#appendToSong" translate="no">appendToSong</a></b>(const QString &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#barStarted" translate="no">barStarted</a></b>(int <i>bar</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#clearSong" translate="no">clearSong</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="sections.html#current-prop" translate="no">current</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#currentEdited" translate="no">currentEdited</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#currentIndex-prop" translate="no">currentIndex</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="sections.html#duplicate" translate="no">duplicate</a></b>(const QString &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#entryBar-prop" translate="no">entryBar</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#insertIntoSong" translate="no">insertIntoSong</a></b>(int <i>index</i>, const QString &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#maxQueue-prop" translate="no">maxQueue</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#maxRepeats-prop" translate="no">maxRepeats</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#maxSections-prop" translate="no">maxSections</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Sections::Mode </td><td class="memItemRight bottomAlign"><b><a href="sections.html#mode-prop" translate="no">mode</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#move" translate="no">move</a></b>(int <i>from</i>, int <i>to</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#moveInSong" translate="no">moveInSong</a></b>(int <i>from</i>, int <i>to</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#passBar-prop" translate="no">passBar</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="sections.html#pending-prop" translate="no">pending</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#pick" translate="no">pick</a></b>(const QString &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#playFrom" translate="no">playFrom</a></b>(int <i>index</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="sections.html#playing-prop" translate="no">playing</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#playingEntry-prop" translate="no">playingEntry</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="sections.html#queue-prop" translate="no">queue</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#remove" translate="no">remove</a></b>(const QString &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#removeFromSong" translate="no">removeFromSong</a></b>(int <i>index</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#rename" translate="no">rename</a></b>(const QString &amp;<i>id</i>, const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#reset" translate="no">reset</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#restore" translate="no">restore</a></b>(const QVariantMap &amp;<i>state</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="sections.html#sections-prop" translate="no">sections</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#setBars" translate="no">setBars</a></b>(const QString &amp;<i>id</i>, int <i>bars</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#setColour" translate="no">setColour</a></b>(const QString &amp;<i>id</i>, int <i>colour</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#mode-prop" translate="no">setMode</a></b>(Sections::Mode <i>mode</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#setRepeats" translate="no">setRepeats</a></b>(int <i>index</i>, int <i>repeats</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#switchAt-prop" translate="no">setSwitchAt</a></b>(int <i>switchAt</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="sections.html#song-prop" translate="no">song</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#songBar-prop" translate="no">songBar</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#songBars-prop" translate="no">songBars</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#songStarting" translate="no">songStarting</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="sections.html#state" translate="no">state</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#switchAt-prop" translate="no">switchAt</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#switchLanded" translate="no">switchLanded</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="sections.html#switching-prop" translate="no">switching</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#transportStarted" translate="no">transportStarted</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#transportStopped" translate="no">transportStopped</a></b>()</td></tr>
+</table></div>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#applyHistoryState" translate="no">applyHistoryState</a></b>(const QVariantMap &amp;<i>state</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="sections.html#historyKey" translate="no">historyKey</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="sections.html#historyLabel" translate="no">historyLabel</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="sections.html#historyState" translate="no">historyState</a></b>() const override</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#barChanged" translate="no">barChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#changed" translate="no">changed</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#current-prop" translate="no">currentChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#mode-prop" translate="no">modeChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#pending-prop" translate="no">pendingChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#playing-prop" translate="no">playingChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#sections-prop" translate="no">sectionsChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#song-prop" translate="no">songChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#songPositionChanged" translate="no">songPositionChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#switchAt-prop" translate="no">switchAtChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#switching-prop" translate="no">switchingChanged</a></b>()</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#Colours-var" translate="no">Colours</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#MaxBars-var" translate="no">MaxBars</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#MaxQueue-var" translate="no">MaxQueue</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#MaxRepeats-var" translate="no">MaxRepeats</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#MaxSections-var" translate="no">MaxSections</a></b></td></tr>
+</table></div>
+<!-- $$$Sections-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Sections are live: the section on screen is the one the machines play and edit. Picking another keeps what was edited in the one left (captured from the machines) and hands the machines the one picked. What a section holds of a machine is <a href="machine.html#sectionContent" translate="no">Machine::sectionContent</a>(): the pattern and whether the machine rests, never its sound.</p>
+<p>Sections knows no machine: it goes through a Host (the studio) that captures, applies and measures the machines' content, so it is tested on its own (<code translate="no">tests/tst_sections.cpp</code>).</p>
+<p>The song is a list of entries, each a section and how many times it repeats; a section may appear in it any number of times, and a new section joins its end. A section's length is its longest sounding pattern unless it is given one (1 to 8 bars). The project keeps it all (<a href="sections.html#state" translate="no">state</a>(), <a href="sections.html#restore" translate="no">restore</a>()).</p>
+<p>In SONG mode the transport plays the song: before it starts, the first entry's section is put in place (<a href="sections.html#songStarting" translate="no">songStarting</a>()); then bar by bar (<a href="sections.html#barStarted" translate="no">barStarted</a>(), the transport's absolute bar), as an entry's last bar begins the next entry's section is cued for the bar after (the studio's bar-line switch, a whole bar ahead), and as the song's last bar begins the studio is told to stop at its end. A section picked by hand while the song plays jumps there (to its first entry; with none, back to LOOP). <a href="sections.html#playFrom" translate="no">playFrom</a>() starts the song at any entry.</p>
+<p>When a pick lands while playing (<a href="sections.html#switchAt-prop" translate="no">switchAt</a>, kept with the project): on the next bar (<a href="sections.html#SwitchAt-enum" translate="no">SwitchBar</a>, the default), or when the section playing finishes its pass (<a href="sections.html#SwitchAt-enum" translate="no">SwitchSection</a>: the pick waits in queue and is cued as that pass's last bar begins, as the song cues its entries). In LOOP the picks queue up, up to <a href="sections.html#MaxQueue-var" translate="no">MaxQueue</a> in the order picked, each played for one pass; in SONG one waits, a new pick taking its place. Stopped, a pick is immediate.</p>
+<pre class="cpp plain" translate="no"><code class="text">
+ studio.sections.add()                 // a new, empty section after the one on screen
+ studio.sections.duplicate(id)         // a copy of a section, made current
+ studio.sections.pick(id)              // play and edit another section
+ studio.sections.setRepeats(entry, 2)  // a song entry played twice
+</code></pre>
+<p>As a <a href="historyparticipant.html" translate="no">HistoryParticipant</a> (&quot;SECTIONS&quot; in <code translate="no">studio.history</code>) it undoes the arrangement, not what plays: the sections (id, name, colour, length) and the song, but not the section on screen (a pick is no step: undo never switches what plays) nor the machines' content (their own history has it). A removed section keeps its content, so undoing the removal brings it back whole. It is not a QML type (the backend is outside the QML module); QML reads the mode as <code translate="no">Rave.sectionsLoop</code> and <code translate="no">Rave.sectionsSong</code>. GUI thread only.</p>
+</div>
+<!-- @@@Sections -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<div class="fnitem">
+<!-- $$$Mode$$$Loop$$$Song -->
+<h3 class="fn" translate="no" id="Mode-enum">enum Sections::<span class="name">Mode</span></h3>
+<p>How the transport plays the sections.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">Sections::Loop</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">The section on screen loops.</td></tr>
+<tr><td class="topAlign"><code translate="no">Sections::Song</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">The song plays through.</td></tr>
+</table></div>
+<!-- @@@Mode -->
+</div>
+<div class="fnitem">
+<!-- $$$SwitchAt$$$SwitchBar$$$SwitchSection -->
+<h3 class="fn" translate="no" id="SwitchAt-enum">enum Sections::<span class="name">SwitchAt</span></h3>
+<p>When a section picked while playing takes over; QML reads them as <code translate="no">Rave.switchBar</code> and <code translate="no">Rave.switchSection</code>.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">Sections::SwitchBar</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">On the next bar.</td></tr>
+<tr><td class="topAlign"><code translate="no">Sections::SwitchSection</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">When the section playing ends its pass.</td></tr>
+</table></div>
+<!-- @@@SwitchAt -->
+</div>
+</div>
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$current-prop$$$current$$$currentChanged -->
+<h3 class="fn" translate="no" id="current-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">current</span> : <span class="type">QString</span></h3>
+<p>This property holds the id of the section on screen, playing and edited.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>current</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>currentChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@current -->
+</div>
+<div class="fnitem">
+<!-- $$$currentIndex-prop$$$currentIndex$$$currentChanged -->
+<h3 class="fn" translate="no" id="currentIndex-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">currentIndex</span> : <span class="type">int</span></h3>
+<p>This property holds the place of the section on screen in sections.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>currentIndex</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="sections.html#current-prop" translate="no">currentChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@currentIndex -->
+</div>
+<div class="fnitem">
+<!-- $$$entryBar-prop$$$entryBar$$$songPositionChanged -->
+<h3 class="fn" translate="no" id="entryBar-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">entryBar</span> : <span class="type">int</span></h3>
+<p>This property holds the bar within the entry playing, 0 to its bars × repeats - 1.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>entryBar</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="sections.html#songPositionChanged" translate="no">songPositionChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@entryBar -->
+</div>
+<div class="fnitem">
+<!-- $$$maxQueue-prop$$$maxQueue -->
+<h3 class="fn" translate="no" id="maxQueue-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">maxQueue</span> : const <span class="type">int</span></h3>
+<p><a href="sections.html#MaxQueue-var" translate="no">MaxQueue</a>, for QML.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>maxQueue</b></span>() const</td></tr>
+</table></div>
+<!-- @@@maxQueue -->
+</div>
+<div class="fnitem">
+<!-- $$$maxRepeats-prop$$$maxRepeats -->
+<h3 class="fn" translate="no" id="maxRepeats-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">maxRepeats</span> : const <span class="type">int</span></h3>
+<p><a href="sections.html#MaxRepeats-var" translate="no">MaxRepeats</a>, for QML.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>maxRepeats</b></span>() const</td></tr>
+</table></div>
+<!-- @@@maxRepeats -->
+</div>
+<div class="fnitem">
+<!-- $$$maxSections-prop$$$maxSections -->
+<h3 class="fn" translate="no" id="maxSections-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">maxSections</span> : const <span class="type">int</span></h3>
+<p><a href="sections.html#MaxSections-var" translate="no">MaxSections</a>, for QML.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>maxSections</b></span>() const</td></tr>
+</table></div>
+<!-- @@@maxSections -->
+</div>
+<div class="fnitem">
+<!-- $$$mode-prop$$$mode$$$setModeSections::Mode$$$modeChanged -->
+<h3 class="fn" translate="no" id="mode-prop"><span class="name">mode</span> : <span class="type"><a href="sections.html#Mode-enum" translate="no">Mode</a></span></h3>
+<p><a href="sections.html#Mode-enum" translate="no">Loop</a>: the section on screen loops; <a href="sections.html#Mode-enum" translate="no">Song</a>: the song plays through.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> Sections::Mode </td><td class="memItemRight bottomAlign"><span class="name"><b>mode</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setMode</b></span>(Sections::Mode <i>mode</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>modeChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@mode -->
+</div>
+<div class="fnitem">
+<!-- $$$passBar-prop$$$passBar$$$barChanged -->
+<h3 class="fn" translate="no" id="passBar-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">passBar</span> : <span class="type">int</span></h3>
+<p>This property holds the bar of the pass of the section playing, 0 to its bars - 1, for the keys' progress.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>passBar</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="sections.html#barChanged" translate="no">barChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@passBar -->
+</div>
+<div class="fnitem">
+<!-- $$$pending-prop$$$pending$$$pendingChanged -->
+<h3 class="fn" translate="no" id="pending-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">pending</span> : <span class="type">QString</span></h3>
+<p>This property holds the first section waiting in queue; empty for none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>pending</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>pendingChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@pending -->
+</div>
+<div class="fnitem">
+<!-- $$$playing-prop$$$playing$$$playingChanged -->
+<h3 class="fn" translate="no" id="playing-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">playing</span> : <span class="type">QString</span></h3>
+<p>This property holds the id of the section heard while the transport plays; empty when stopped. current moves at a pick, this as its switch lands on the bar line.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>playing</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>playingChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@playing -->
+</div>
+<div class="fnitem">
+<!-- $$$playingEntry-prop$$$playingEntry$$$songPositionChanged -->
+<h3 class="fn" translate="no" id="playingEntry-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">playingEntry</span> : <span class="type">int</span></h3>
+<p>This property holds the song entry playing in SONG mode while the transport runs; -1 for none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>playingEntry</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="sections.html#songPositionChanged" translate="no">songPositionChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@playingEntry -->
+</div>
+<div class="fnitem">
+<!-- $$$queue-prop$$$queue$$$pendingChanged -->
+<h3 class="fn" translate="no" id="queue-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">queue</span> : <span class="type">QStringList</span></h3>
+<p>with <a href="sections.html#SwitchAt-enum" translate="no">SwitchSection</a>, the ids of the sections picked and waiting, in the order they will play (each for one pass, the last looping on); at most <a href="sections.html#MaxQueue-var" translate="no">MaxQueue</a>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>queue</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="sections.html#pending-prop" translate="no">pendingChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@queue -->
+</div>
+<div class="fnitem">
+<!-- $$$sections-prop$$$sections$$$sectionsChanged -->
+<h3 class="fn" translate="no" id="sections-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">sections</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the sections, in order, as maps with <code translate="no">id</code>, <code translate="no">name</code>, <code translate="no">colour</code> (an index into the UI's palette), <code translate="no">bars</code> (the length in use: the longest sounding pattern's when <code translate="no">autoBars</code>), <code translate="no">autoBars</code> and <code translate="no">sounding</code> (the keys of the machines that play something in it).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>sections</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>sectionsChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@sections -->
+</div>
+<div class="fnitem">
+<!-- $$$song-prop$$$song$$$songChanged -->
+<h3 class="fn" translate="no" id="song-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">song</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the song, as maps with <code translate="no">key</code> (naming the entry across edits, for the list models), <code translate="no">section</code>, <code translate="no">name</code>, <code translate="no">colour</code>, <code translate="no">repeats</code>, <code translate="no">bars</code> (one pass of its section) and <code translate="no">startBar</code>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>song</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>songChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@song -->
+</div>
+<div class="fnitem">
+<!-- $$$songBar-prop$$$songBar$$$songPositionChanged -->
+<h3 class="fn" translate="no" id="songBar-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">songBar</span> : <span class="type">int</span></h3>
+<p>This property holds the bar of the song playing, 0 to <a href="sections.html#songBars-prop" translate="no">songBars</a> - 1.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>songBar</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="sections.html#songPositionChanged" translate="no">songPositionChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@songBar -->
+</div>
+<div class="fnitem">
+<!-- $$$songBars-prop$$$songBars$$$songChanged -->
+<h3 class="fn" translate="no" id="songBars-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">songBars</span> : <span class="type">int</span></h3>
+<p>This property holds the song's length in bars: every entry's bars × repeats.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>songBars</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="sections.html#song-prop" translate="no">songChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@songBars -->
+</div>
+<div class="fnitem">
+<!-- $$$switchAt-prop$$$switchAt$$$setSwitchAtint$$$switchAtChanged -->
+<h3 class="fn" translate="no" id="switchAt-prop"><span class="name">switchAt</span> : <span class="type">int</span></h3>
+<p>when a section picked while playing takes over: <a href="sections.html#SwitchAt-enum" translate="no">SwitchBar</a> or <a href="sections.html#SwitchAt-enum" translate="no">SwitchSection</a>, as a number. Kept with the project.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>switchAt</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setSwitchAt</b></span>(int <i>switchAt</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>switchAtChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@switchAt -->
+</div>
+<div class="fnitem">
+<!-- $$$switching-prop$$$switching$$$switchingChanged -->
+<h3 class="fn" translate="no" id="switching-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">switching</span> : <span class="type">bool</span></h3>
+<p>This property holds whether a switch is coming: a section cued for the next bar (the section on screen is not heard yet), or picks waiting in queue. The plate blinks.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>switching</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>switchingChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@switching -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$Sections[overload1]$$$SectionsSections::Host*QObject* -->
+<h3 class="fn" translate="no" id="Sections"><code class="details extra" translate="no">[explicit]</code> Sections::<span class="name">Sections</span>(<span class="type"><a href="sections-host.html" translate="no">Sections::Host</a></span> *<i>host</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the sections over <i translate="no">host</i>, which must outlive them, with the given <i translate="no">parent</i>. Starts empty; <a href="sections.html#restore" translate="no">restore</a>() or <a href="sections.html#reset" translate="no">reset</a>() makes the first section.</p>
+<!-- @@@Sections -->
+</div>
+<div class="fnitem">
+<!-- $$$add[overload1]$$$add -->
+<h3 class="fn" translate="no" id="add"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Sections::<span class="name">add</span>()</h3>
+<p>Adds a new, empty section after the one on screen, which it becomes; it joins the song's end. Returns its id, or an empty string when there are <a href="sections.html#MaxSections-var" translate="no">MaxSections</a> already.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@add -->
+</div>
+<div class="fnitem">
+<!-- $$$appendToSong[overload1]$$$appendToSongconstQString& -->
+<h3 class="fn" translate="no" id="appendToSong"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">appendToSong</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
+<p>Adds section <i translate="no">id</i> at the song's end.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@appendToSong -->
+</div>
+<div class="fnitem">
+<!-- $$$applyHistoryState[overload1]$$$applyHistoryStateconstQVariantMap& -->
+<h3 class="fn" translate="no" id="applyHistoryState"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> Sections::<span class="name">applyHistoryState</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>)</h3>
+<p>Reimplements: <a href="historyparticipant.html#applyHistoryState" translate="no">HistoryParticipant::applyHistoryState</a>(const QVariantMap &amp;state).</p>
+<p>Puts the arrangement <i translate="no">state</i> back; removed sections come back with their content.</p>
+<!-- @@@applyHistoryState -->
+</div>
+<div class="fnitem">
+<!-- $$$barChanged -->
+<h3 class="fn" translate="no" id="barChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Sections::<span class="name">barChanged</span>()</h3>
+<p>Emitted when a bar began while playing (<a href="sections.html#passBar-prop" translate="no">passBar</a> moved).</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for property <a href="sections.html#passBar-prop" translate="no">passBar</a>. </p>
+</div><!-- @@@barChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$barStarted[overload1]$$$barStartedint -->
+<h3 class="fn" translate="no" id="barStarted"><span class="type">void</span> Sections::<span class="name">barStarted</span>(<span class="type">int</span> <i>bar</i>)</h3>
+<p>A <i translate="no">bar</i> began, counted from the transport's start; a bar missed is caught up, not miscounted. Runs the bar's decisions (a pick whose time came, the song's next entry).</p>
+<!-- @@@barStarted -->
+</div>
+<div class="fnitem">
+<!-- $$$changed[overload1]$$$changed -->
+<h3 class="fn" translate="no" id="changed"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Sections::<span class="name">changed</span>()</h3>
+<p>Emitted when anything the project keeps changed.</p>
+<!-- @@@changed -->
+</div>
+<div class="fnitem">
+<!-- $$$clearSong[overload1]$$$clearSong -->
+<h3 class="fn" translate="no" id="clearSong"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">clearSong</span>()</h3>
+<p>Empties the song (its arrangement; the sections stay); a song playing goes on as LOOP.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@clearSong -->
+</div>
+<div class="fnitem">
+<!-- $$$currentEdited[overload1]$$$currentEdited -->
+<h3 class="fn" translate="no" id="currentEdited"><span class="type">void</span> Sections::<span class="name">currentEdited</span>()</h3>
+<p>The section on screen was edited: its length and sounding machines are measured again shortly after (edits come in bursts).</p>
+<!-- @@@currentEdited -->
+</div>
+<div class="fnitem">
+<!-- $$$duplicate[overload1]$$$duplicateconstQString& -->
+<h3 class="fn" translate="no" id="duplicate"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Sections::<span class="name">duplicate</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
+<p>Copies section <i translate="no">id</i> (named A′ after A, in the next free colour) after the section on screen and makes the copy current; it joins the song's end. Returns its id, or an empty string.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@duplicate -->
+</div>
+<div class="fnitem">
+<!-- $$$historyKey[overload1]$$$historyKey -->
+<h3 class="fn" translate="no" id="historyKey"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QString</span> Sections::<span class="name">historyKey</span>() const</h3>
+<p>Reimplements: <a href="historyparticipant.html#historyKey" translate="no">HistoryParticipant::historyKey</a>() const.</p>
+<!-- @@@historyKey -->
+</div>
+<div class="fnitem">
+<!-- $$$historyLabel[overload1]$$$historyLabel -->
+<h3 class="fn" translate="no" id="historyLabel"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QString</span> Sections::<span class="name">historyLabel</span>() const</h3>
+<p>Reimplements: <a href="historyparticipant.html#historyLabel" translate="no">HistoryParticipant::historyLabel</a>() const.</p>
+<!-- @@@historyLabel -->
+</div>
+<div class="fnitem">
+<!-- $$$historyState[overload1]$$$historyState -->
+<h3 class="fn" translate="no" id="historyState"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QVariantMap</span> Sections::<span class="name">historyState</span>() const</h3>
+<p>Reimplements: <a href="historyparticipant.html#historyState" translate="no">HistoryParticipant::historyState</a>() const.</p>
+<p>Returns the arrangement: the sections without their content, and the song.</p>
+<!-- @@@historyState -->
+</div>
+<div class="fnitem">
+<!-- $$$insertIntoSong[overload1]$$$insertIntoSongintconstQString& -->
+<h3 class="fn" translate="no" id="insertIntoSong"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">insertIntoSong</span>(<span class="type">int</span> <i>index</i>, const <span class="type">QString</span> &amp;<i>id</i>)</h3>
+<p>Adds section <i translate="no">id</i> to the song at <i translate="no">index</i>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@insertIntoSong -->
+</div>
+<div class="fnitem">
+<!-- $$$move[overload1]$$$moveintint -->
+<h3 class="fn" translate="no" id="move"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">move</span>(<span class="type">int</span> <i>from</i>, <span class="type">int</span> <i>to</i>)</h3>
+<p>Moves the section at index <i translate="no">from</i> to index <i translate="no">to</i>; the step key that picks it moves with it.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@move -->
+</div>
+<div class="fnitem">
+<!-- $$$moveInSong[overload1]$$$moveInSongintint -->
+<h3 class="fn" translate="no" id="moveInSong"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">moveInSong</span>(<span class="type">int</span> <i>from</i>, <span class="type">int</span> <i>to</i>)</h3>
+<p>Moves the song entry at index <i translate="no">from</i> to index <i translate="no">to</i>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@moveInSong -->
+</div>
+<div class="fnitem">
+<!-- $$$pick[overload1]$$$pickconstQString& -->
+<h3 class="fn" translate="no" id="pick"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">pick</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
+<p>Makes section <i translate="no">id</i> the one played and edited; what was edited stays in the one left. While playing it lands as <a href="sections.html#switchAt-prop" translate="no">switchAt</a> says.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@pick -->
+</div>
+<div class="fnitem">
+<!-- $$$playFrom[overload1]$$$playFromint -->
+<h3 class="fn" translate="no" id="playFrom"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">playFrom</span>(<span class="type">int</span> <i>index</i>)</h3>
+<p>Plays the song from the entry at <i translate="no">index</i>, SONG mode on: from now when stopped, from the next bar while playing.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@playFrom -->
+</div>
+<div class="fnitem">
+<!-- $$$remove[overload1]$$$removeconstQString& -->
+<h3 class="fn" translate="no" id="remove"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">remove</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
+<p>Deletes section <i translate="no">id</i> and its song entries; the last section stays. When it is the one on screen, its neighbour takes over.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@remove -->
+</div>
+<div class="fnitem">
+<!-- $$$removeFromSong[overload1]$$$removeFromSongint -->
+<h3 class="fn" translate="no" id="removeFromSong"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">removeFromSong</span>(<span class="type">int</span> <i>index</i>)</h3>
+<p>Takes the song entry at <i translate="no">index</i> out.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@removeFromSong -->
+</div>
+<div class="fnitem">
+<!-- $$$rename[overload1]$$$renameconstQString&constQString& -->
+<h3 class="fn" translate="no" id="rename"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">rename</span>(const <span class="type">QString</span> &amp;<i>id</i>, const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Renames section <i translate="no">id</i> to <i translate="no">name</i>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@rename -->
+</div>
+<div class="fnitem">
+<!-- $$$reset[overload1]$$$reset -->
+<h3 class="fn" translate="no" id="reset"><span class="type">void</span> Sections::<span class="name">reset</span>()</h3>
+<p>Makes one section, &quot;A&quot;, holding what the machines hold, alone in the song.</p>
+<!-- @@@reset -->
+</div>
+<div class="fnitem">
+<!-- $$$restore[overload1]$$$restoreconstQVariantMap& -->
+<h3 class="fn" translate="no" id="restore"><span class="type">void</span> Sections::<span class="name">restore</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>)</h3>
+<p>Takes a project's sections from <i translate="no">state</i>; the machines already hold its section on screen, so nothing is applied. Without sections in <i translate="no">state</i>, <a href="sections.html#reset" translate="no">reset</a>().</p>
+<!-- @@@restore -->
+</div>
+<div class="fnitem">
+<!-- $$$setBars[overload1]$$$setBarsconstQString&int -->
+<h3 class="fn" translate="no" id="setBars"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">setBars</span>(const <span class="type">QString</span> &amp;<i>id</i>, <span class="type">int</span> <i>bars</i>)</h3>
+<p>Sets the length of section <i translate="no">id</i> to <i translate="no">bars</i>, 1 to 8, or 0 for its longest sounding pattern.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setBars -->
+</div>
+<div class="fnitem">
+<!-- $$$setColour[overload1]$$$setColourconstQString&int -->
+<h3 class="fn" translate="no" id="setColour"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">setColour</span>(const <span class="type">QString</span> &amp;<i>id</i>, <span class="type">int</span> <i>colour</i>)</h3>
+<p>Sets the colour of section <i translate="no">id</i> to <i translate="no">colour</i>, an index into the UI's palette (0 to Colours - 1).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setColour -->
+</div>
+<div class="fnitem">
+<!-- $$$setRepeats[overload1]$$$setRepeatsintint -->
+<h3 class="fn" translate="no" id="setRepeats"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">setRepeats</span>(<span class="type">int</span> <i>index</i>, <span class="type">int</span> <i>repeats</i>)</h3>
+<p>Sets how many times the song entry at <i translate="no">index</i> plays, <i translate="no">repeats</i> 1 to <a href="sections.html#MaxRepeats-var" translate="no">MaxRepeats</a>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setRepeats -->
+</div>
+<div class="fnitem">
+<!-- $$$songPositionChanged -->
+<h3 class="fn" translate="no" id="songPositionChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Sections::<span class="name">songPositionChanged</span>()</h3>
+<p>Emitted when <a href="sections.html#playingEntry-prop" translate="no">playingEntry</a>, <a href="sections.html#songBar-prop" translate="no">songBar</a> or <a href="sections.html#entryBar-prop" translate="no">entryBar</a> changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="sections.html#entryBar-prop" translate="no">entryBar</a>, <a href="sections.html#playingEntry-prop" translate="no">playingEntry</a>, and <a href="sections.html#songBar-prop" translate="no">songBar</a>. </p>
+</div><!-- @@@songPositionChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$songStarting[overload1]$$$songStarting -->
+<h3 class="fn" translate="no" id="songStarting"><span class="type">void</span> Sections::<span class="name">songStarting</span>()</h3>
+<p>The transport is about to start: in SONG mode the first entry's section goes in place now, before a note.</p>
+<!-- @@@songStarting -->
+</div>
+<div class="fnitem">
+<!-- $$$state[overload1]$$$state -->
+<h3 class="fn" translate="no" id="state"><span class="type">QVariantMap</span> Sections::<span class="name">state</span>() const</h3>
+<p>Returns everything the project keeps, with the section on screen as the machines hold it now.</p>
+<!-- @@@state -->
+</div>
+<div class="fnitem">
+<!-- $$$switchLanded[overload1]$$$switchLanded -->
+<h3 class="fn" translate="no" id="switchLanded"><span class="type">void</span> Sections::<span class="name">switchLanded</span>()</h3>
+<p>The bar came: the section on screen is the one playing (the studio calls it, see Host).</p>
+<!-- @@@switchLanded -->
+</div>
+<div class="fnitem">
+<!-- $$$transportStarted[overload1]$$$transportStarted -->
+<h3 class="fn" translate="no" id="transportStarted"><span class="type">void</span> Sections::<span class="name">transportStarted</span>()</h3>
+<p>The transport started.</p>
+<!-- @@@transportStarted -->
+</div>
+<div class="fnitem">
+<!-- $$$transportStopped[overload1]$$$transportStopped -->
+<h3 class="fn" translate="no" id="transportStopped"><span class="type">void</span> Sections::<span class="name">transportStopped</span>()</h3>
+<p>The transport stopped: what waited for a bar is dropped.</p>
+<!-- @@@transportStopped -->
+</div>
+</div>
+<div class="vars">
+<h2>Member Variable Documentation</h2>
+<div class="fnitem">
+<!-- $$$Colours -->
+<h3 class="fn" translate="no" id="Colours-var">const <span class="type">int</span> Sections::<span class="name">Colours</span></h3>
+<p>How many colours the UI's palette has (8); a section's colour cycles through them.</p>
+<!-- @@@Colours -->
+</div>
+<div class="fnitem">
+<!-- $$$MaxBars -->
+<h3 class="fn" translate="no" id="MaxBars-var">const <span class="type">int</span> Sections::<span class="name">MaxBars</span></h3>
+<p>This variable holds a section's longest length: a pattern's, <a href="machine.html#MaxBars-var" translate="no">Machine::MaxBars</a> (8).</p>
+<!-- @@@MaxBars -->
+</div>
+<div class="fnitem">
+<!-- $$$MaxQueue -->
+<h3 class="fn" translate="no" id="MaxQueue-var">const <span class="type">int</span> Sections::<span class="name">MaxQueue</span></h3>
+<p>How many picks may wait at once with <a href="sections.html#SwitchAt-enum" translate="no">SwitchSection</a>: 3.</p>
+<!-- @@@MaxQueue -->
+</div>
+<div class="fnitem">
+<!-- $$$MaxRepeats -->
+<h3 class="fn" translate="no" id="MaxRepeats-var">const <span class="type">int</span> Sections::<span class="name">MaxRepeats</span></h3>
+<p>This variable holds the most repeats of a song entry: 16.</p>
+<!-- @@@MaxRepeats -->
+</div>
+<div class="fnitem">
+<!-- $$$MaxSections -->
+<h3 class="fn" translate="no" id="MaxSections-var">const <span class="type">int</span> Sections::<span class="name">MaxSections</span></h3>
+<p>This variable holds the most sections: 16, one per step key with ALT held.</p>
+<!-- @@@MaxSections -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

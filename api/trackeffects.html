@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- trackeffects.cpp -->
+  <meta name="description" content="One machine's SOUND EFFECTS (the EffectChain), on its track's JackPassthrough, the processing every libzynthbox track has; published to QML as machine&lt;@op&gt;.&lt;/@op&gt;effects.">
+  <meta name="keywords" content="class">
+  <title>TrackEffects Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>TrackEffects</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">TrackEffects Class</h1>
+<!-- $$$TrackEffects-brief -->
+<p>One machine's SOUND EFFECTS (the <a href="effectchain.html" translate="no">EffectChain</a>), on its track's JackPassthrough, the processing every libzynthbox track has; published to QML as <code translate="no">machine.effects</code>. <a href="#details">More...</a></p>
+<!-- @@@TrackEffects -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;trackeffects.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="trackeffects-members.html">List of all members, including inherited members</a></li>
+<li>TrackEffects is part of <a href="ravving-engines.html">Engines and effects</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="trackeffects.html#chain-prop" translate="no">chain</a></b> : const QVariantList</li>
+<li class="fn" translate="no"><b><a href="trackeffects.html#enabled-prop" translate="no">enabled</a></b> : QStringList</li>
+<li class="fn" translate="no"><b><a href="trackeffects.html#values-prop" translate="no">values</a></b> : QVariantMap</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#TrackEffects" translate="no">TrackEffects</a></b>(GlobalEffects *<i>global</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#attach" translate="no">attach</a></b>(QObject *<i>lane</i>, const QString &amp;<i>sidechainSource</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#attachDrive" translate="no">attachDrive</a></b>(JalvPlugin *<i>drive</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#chain-prop" translate="no">chain</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#enabled-prop" translate="no">enabled</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> double </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#pan" translate="no">pan</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#restore" translate="no">restore</a></b>(const QVariantMap &amp;<i>state</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#setEchoThrow" translate="no">setEchoThrow</a></b>(double <i>level</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#setEnabled" translate="no">setEnabled</a></b>(const QString &amp;<i>effect</i>, bool <i>on</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#setPan" translate="no">setPan</a></b>(double <i>pan</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#setSendLevel" translate="no">setSendLevel</a></b>(double <i>gain</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#setValue" translate="no">setValue</a></b>(const QString &amp;<i>effect</i>, const QString &amp;<i>knob</i>, double <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#state" translate="no">state</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> double </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#value" translate="no">value</a></b>(const QString &amp;<i>effect</i>, const QString &amp;<i>knob</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#values-prop" translate="no">values</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#enabled-prop" translate="no">changed</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#driveSwitched" translate="no">driveSwitched</a></b>(bool <i>on</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#valueSet" translate="no">valueSet</a></b>(const QString &amp;<i>effect</i>, const QString &amp;<i>knob</i>, double <i>value</i>)</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const QString </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#DriveUri-var" translate="no">DriveUri</a></b></td></tr>
+</table></div>
+<!-- $$$TrackEffects-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<ul>
+<li>EQ: the passthrough's equaliser; LOW, MID and HIGH are its low shelf (250 Hz), mid peak (1 kHz) and high shelf (5 kHz), ±12 dB with the centre flat;</li>
+<li>COMPRESSOR: the passthrough's compressor; THRESH -40 to 0 dB, RATIO 1:1 to 20:1, MAKEUP 0 to 24 dB;</li>
+<li>SIDECHAIN: the same compressor keyed from the sidechain source (DRUMS 1, the kick machine), for the pumping duck; DEPTH sets how deep (threshold and ratio together), RELEASE how fast it comes back (40 to 500 ms). With COMPRESSOR on as well, MAKEUP still applies;</li>
+<li>PAN: the passthrough's pan (the strip's PAN knob is the same value);</li>
+<li>REVERB and DELAY: sends into the studio's <a href="globaleffects.html" translate="no">GlobalEffects</a>; MIX is the send level (the reverb reaching +6 dB at 100 %, the delay unity), and the shared knobs are <a href="globaleffects.html" translate="no">GlobalEffects</a>'. The header's ECHO raises every delay send to its level (<a href="trackeffects.html#setEchoThrow" translate="no">setEchoThrow</a>());</li>
+<li>DRIVE: a saturator first in the chain, as easyrave's (the dirt feeds the rest): the machine's own Calf Saturator (<a href="trackeffects.html#DriveUri-var" translate="no">DriveUri</a>, <a href="trackeffects.html#attachDrive" translate="no">attachDrive</a>()), between its engine and its track only while DRIVE is on (<a href="trackeffects.html#driveSwitched" translate="no">driveSwitched</a>(); <a href="jackwiring.html" translate="no">JackWiring</a> moves it in and out) and started the first time it is. AMOUNT is how hard it saturates (input gain up to +36 dB and the saturation itself), with the output turned down to match, so DRIVE changes the tone rather than the level; TONE darkens it (a low-pass after it, 1.2 kHz at 0 to wide open at 100 %).</li>
+</ul>
+<p>The sends follow the machine's fader (<a href="trackeffects.html#setSendLevel" translate="no">setSendLevel</a>()). Without a passthrough (a desktop run) everything is kept and nothing sounds. GUI thread only.</p>
+</div>
+<!-- @@@TrackEffects -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$chain-prop$$$chain -->
+<h3 class="fn" translate="no" id="chain-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">chain</span> : const <span class="type">QVariantList</span></h3>
+<p>This property holds the chain (<a href="effectchain.html#toVariant" translate="no">EffectChain::toVariant</a>()): maps with <code translate="no">name</code> and <code translate="no">knobs</code> (maps with <code translate="no">name</code>, <code translate="no">defaultValue</code> and <code translate="no">shared</code>).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>chain</b></span>() const</td></tr>
+</table></div>
+<!-- @@@chain -->
+</div>
+<div class="fnitem">
+<!-- $$$enabled-prop$$$enabled$$$changed -->
+<h3 class="fn" translate="no" id="enabled-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">enabled</span> : <span class="type">QStringList</span></h3>
+<p>This property holds the names of the effects switched on.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>enabled</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>changed</b></span>()</td></tr>
+</table></div>
+<!-- @@@enabled -->
+</div>
+<div class="fnitem">
+<!-- $$$values-prop$$$values$$$changed -->
+<h3 class="fn" translate="no" id="values-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">values</span> : <span class="type">QVariantMap</span></h3>
+<p>every knob's value, 0..1, as a map of effect to a map of knob to value, the shared knobs included.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>values</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="trackeffects.html#enabled-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@values -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$TrackEffects[overload1]$$$TrackEffectsGlobalEffects*QObject* -->
+<h3 class="fn" translate="no" id="TrackEffects"><code class="details extra" translate="no">[explicit]</code> TrackEffects::<span class="name">TrackEffects</span>(<span class="type"><a href="globaleffects.html" translate="no">GlobalEffects</a></span> *<i>global</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the effects of a machine whose sends go to <i translate="no">global</i>, the studio's send effects (where the shared knobs live), with the given <i translate="no">parent</i>.</p>
+<!-- @@@TrackEffects -->
+</div>
+<div class="fnitem">
+<!-- $$$attach[overload1]$$$attachQObject*constQString& -->
+<h3 class="fn" translate="no" id="attach"><span class="type">void</span> TrackEffects::<span class="name">attach</span>(<span class="type">QObject</span> *<i>lane</i>, const <span class="type">QString</span> &amp;<i>sidechainSource</i>)</h3>
+<p>Works on the track: <i translate="no">lane</i> is its JackPassthrough, and <i translate="no">sidechainSource</i> what SIDECHAIN keys from, in libzynthbox's audio-source terms (<code translate="no">synthSlot:0:dry0</code> is DRUMS 1's sound). Everything is written to the passthrough.</p>
+<!-- @@@attach -->
+</div>
+<div class="fnitem">
+<!-- $$$attachDrive[overload1]$$$attachDriveJalvPlugin* -->
+<h3 class="fn" translate="no" id="attachDrive"><span class="type">void</span> TrackEffects::<span class="name">attachDrive</span>(<span class="type"><a href="jalvplugin.html" translate="no">JalvPlugin</a></span> *<i>drive</i>)</h3>
+<p>Gives DRIVE its plugin, <i translate="no">drive</i> (a <a href="jalvplugin.html" translate="no">JalvPlugin</a> of <a href="trackeffects.html#DriveUri-var" translate="no">DriveUri</a>, not started yet). The plugin starts out of the path; <a href="trackeffects.html#driveSwitched" translate="no">driveSwitched</a>(true) follows at once when DRIVE is already on.</p>
+<!-- @@@attachDrive -->
+</div>
+<div class="fnitem">
+<!-- $$$driveSwitched[overload1]$$$driveSwitchedbool -->
+<h3 class="fn" translate="no" id="driveSwitched"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> TrackEffects::<span class="name">driveSwitched</span>(<span class="type">bool</span> <i>on</i>)</h3>
+<p>Emitted when DRIVE went on (<i translate="no">on</i>) or off: its plugin goes into the machine's signal path, or out.</p>
+<!-- @@@driveSwitched -->
+</div>
+<div class="fnitem">
+<!-- $$$pan[overload1]$$$pan -->
+<h3 class="fn" translate="no" id="pan"><span class="type">double</span> TrackEffects::<span class="name">pan</span>() const</h3>
+<p>Returns the stereo position, -1 to +1; centre while PAN is off.</p>
+<p><b>See also </b><a href="trackeffects.html#setPan" translate="no">setPan</a>().</p>
+<!-- @@@pan -->
+</div>
+<div class="fnitem">
+<!-- $$$restore[overload1]$$$restoreconstQVariantMap& -->
+<h3 class="fn" translate="no" id="restore"><span class="type">void</span> TrackEffects::<span class="name">restore</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>)</h3>
+<p>Takes the saved <i translate="no">state</i>, replacing the current one; what it lacks goes back to the defaults (EQ on, every knob at its default).</p>
+<!-- @@@restore -->
+</div>
+<div class="fnitem">
+<!-- $$$setEchoThrow[overload1]$$$setEchoThrowdouble -->
+<h3 class="fn" translate="no" id="setEchoThrow"><span class="type">void</span> TrackEffects::<span class="name">setEchoThrow</span>(<span class="type">double</span> <i>level</i>)</h3>
+<p>LIVE FX ECHO: the delay send is at least <i translate="no">level</i> (0..1), DELAY on or not. Not saved.</p>
+<!-- @@@setEchoThrow -->
+</div>
+<div class="fnitem">
+<!-- $$$setEnabled[overload1]$$$setEnabledconstQString&bool -->
+<h3 class="fn" translate="no" id="setEnabled"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> TrackEffects::<span class="name">setEnabled</span>(const <span class="type">QString</span> &amp;<i>effect</i>, <span class="type">bool</span> <i>on</i>)</h3>
+<p>Switches <i translate="no">effect</i> on when <i translate="no">on</i> is true, or off.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><p><b>See also </b><a href="trackeffects.html#enabled-prop" translate="no">enabled</a>().</p>
+<!-- @@@setEnabled -->
+</div>
+<div class="fnitem">
+<!-- $$$setPan[overload1]$$$setPandouble -->
+<h3 class="fn" translate="no" id="setPan"><span class="type">void</span> TrackEffects::<span class="name">setPan</span>(<span class="type">double</span> <i>pan</i>)</h3>
+<p>Sets the stereo position to <i translate="no">pan</i>, -1 to +1, switching PAN on when off centre.</p>
+<p><b>See also </b><a href="trackeffects.html#pan" translate="no">pan</a>().</p>
+<!-- @@@setPan -->
+</div>
+<div class="fnitem">
+<!-- $$$setSendLevel[overload1]$$$setSendLeveldouble -->
+<h3 class="fn" translate="no" id="setSendLevel"><span class="type">void</span> TrackEffects::<span class="name">setSendLevel</span>(<span class="type">double</span> <i>gain</i>)</h3>
+<p>Sets the machine's fader as a raw <i translate="no">gain</i>: the sends are scaled by it too, so the reverb and the delay follow VOL as the dry sound does (post-fader), and VOL 0 silences them.</p>
+<!-- @@@setSendLevel -->
+</div>
+<div class="fnitem">
+<!-- $$$setValue[overload1]$$$setValueconstQString&constQString&double -->
+<h3 class="fn" translate="no" id="setValue"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> TrackEffects::<span class="name">setValue</span>(const <span class="type">QString</span> &amp;<i>effect</i>, const <span class="type">QString</span> &amp;<i>knob</i>, <span class="type">double</span> <i>value</i>)</h3>
+<p>Sets <i translate="no">knob</i> of <i translate="no">effect</i> to <i translate="no">value</i> (0..1); a shared knob is set on <a href="globaleffects.html" translate="no">GlobalEffects</a>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><p><b>See also </b><a href="trackeffects.html#value" translate="no">value</a>().</p>
+<!-- @@@setValue -->
+</div>
+<div class="fnitem">
+<!-- $$$state[overload1]$$$state -->
+<h3 class="fn" translate="no" id="state"><span class="type">QVariantMap</span> TrackEffects::<span class="name">state</span>() const</h3>
+<p>Returns what the project keeps: <code translate="no">enabled</code> and <code translate="no">values</code>.</p>
+<!-- @@@state -->
+</div>
+<div class="fnitem">
+<!-- $$$value[overload1]$$$valueconstQString&constQString& -->
+<h3 class="fn" translate="no" id="value"><code class="details extra" translate="no">[invokable]</code> <span class="type">double</span> TrackEffects::<span class="name">value</span>(const <span class="type">QString</span> &amp;<i>effect</i>, const <span class="type">QString</span> &amp;<i>knob</i>) const</h3>
+<p>Returns the value (0..1) of <i translate="no">knob</i> of <i translate="no">effect</i>; a shared knob's comes from <a href="globaleffects.html" translate="no">GlobalEffects</a>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><p><b>See also </b><a href="trackeffects.html#setValue" translate="no">setValue</a>().</p>
+<!-- @@@value -->
+</div>
+<div class="fnitem">
+<!-- $$$valueSet[overload1]$$$valueSetconstQString&constQString&double -->
+<h3 class="fn" translate="no" id="valueSet"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> TrackEffects::<span class="name">valueSet</span>(const <span class="type">QString</span> &amp;<i>effect</i>, const <span class="type">QString</span> &amp;<i>knob</i>, <span class="type">double</span> <i>value</i>)</h3>
+<p>Emitted when the machine's own <i translate="no">knob</i> of <i translate="no">effect</i> was set to <i translate="no">value</i> (0..1), by the user or by automation.</p>
+<!-- @@@valueSet -->
+</div>
+</div>
+<div class="vars">
+<h2>Member Variable Documentation</h2>
+<div class="fnitem">
+<!-- $$$DriveUri -->
+<h3 class="fn" translate="no" id="DriveUri-var">const <span class="type">QString</span> TrackEffects::<span class="name">DriveUri</span></h3>
+<p>This variable holds the LV2 plugin DRIVE runs on, one per machine: Calf Saturator.</p>
+<!-- @@@DriveUri -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- drumkit.cpp -->
+  <meta name="description" content="A drum kit read from a soundfont (SF2 or SF3): which key plays which drum.">
+  <meta name="keywords" content="class">
+  <title>DrumKit Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>DrumKit</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">DrumKit Class</h1>
+<!-- $$$DrumKit-brief -->
+<p>A drum kit read from a soundfont (SF2 or SF3): which key plays which drum. <a href="#details">More...</a></p>
+<!-- @@@DrumKit -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;drumkit.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="drumkit-members.html">List of all members, including inherited members</a></li>
+<li>DrumKit is part of <a href="ravving-machines.html">Machines</a>.</li>
+</ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="drumkit-row.html" translate="no">Row</a></b></td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#bank" translate="no">bank</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#file" translate="no">file</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#isValid" translate="no">isValid</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#name" translate="no">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#path" translate="no">path</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#program" translate="no">program</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const QList&lt;DrumKit::Row&gt; &amp;</td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#rows" translate="no">rows</a></b>() const</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#fileOf" translate="no">fileOf</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> DrumKit </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#fromSoundfont" translate="no">fromSoundfont</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#listKits" translate="no">listKits</a></b>(const QString &amp;<i>folder</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#nameFor" translate="no">nameFor</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#roleForGmNote" translate="no">roleForGmNote</a></b>(int <i>note</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="drumkit.html#roles" translate="no">roles</a></b>()</td></tr>
+</table></div>
+<!-- $$$DrumKit-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Every kit maps its sounds to different keys (the TR909 soundfont has its clap on 50, the LINN9000 on 39), so ravving keeps no note maps by hand: it reads the sample name of every key of the kit's preset and gives each of eight fixed roles (KICK, SNARE, CLAP, TOM, HAT, OPEN, CYMBAL, PERC) the key whose sample name says so. A role the kit does not have (the TR727 has no kick) is left out: its row has no note and plays nothing, rather than another sound under a wrong name. A pattern's hits follow their role, so a kit switch only moves each hit to the new kit's key for the same role.</p>
+<p>A kit is named by its soundfont's path, or by a path and one of its presets, <code translate="no">&lt;file&gt;#&lt;bank&gt;:&lt;program&gt;</code>: a General MIDI font's kits sit among its instruments at bank 128 (<code translate="no">FluidR3Mono_GM.sf3#128:32</code> is its Jazz kit) and keep the GM map, so a key whose name says nothing plays its GM role. After the preset, a path may choose a row's key itself: <code translate="no">#128:32?CYMBAL=51&amp;HAT=44</code> is that kit with its ride and hi-hat foot. A plain value type; reading a kit reads the file (<a href="soundfontfile.html" translate="no">SoundFontFile</a>).</p>
+</div>
+<!-- @@@DrumKit -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$bank[overload1]$$$bank -->
+<h3 class="fn" translate="no" id="bank"><span class="type">int</span> DrumKit::<span class="name">bank</span>() const</h3>
+<p>Returns the bank of the kit's preset (what FluidSynth selects): the one its path names, else the first preset's.</p>
+<!-- @@@bank -->
+</div>
+<div class="fnitem">
+<!-- $$$file[overload1]$$$file -->
+<h3 class="fn" translate="no" id="file"><span class="type">QString</span> DrumKit::<span class="name">file</span>() const</h3>
+<p>Returns the kit's soundfont file.</p>
+<!-- @@@file -->
+</div>
+<div class="fnitem">
+<!-- $$$fileOf[overload1]$$$fileOfconstQString& -->
+<h3 class="fn" translate="no" id="fileOf"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> DrumKit::<span class="name">fileOf</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Returns the soundfont file of a kit's <i translate="no">path</i>: the path without its <code translate="no">#bank:program</code> and key choices.</p>
+<!-- @@@fileOf -->
+</div>
+<div class="fnitem">
+<!-- $$$fromSoundfont[overload1]$$$fromSoundfontconstQString& -->
+<h3 class="fn" translate="no" id="fromSoundfont"><code class="details extra" translate="no">[static]</code> <span class="type"><a href="drumkit.html" translate="no">DrumKit</a></span> DrumKit::<span class="name">fromSoundfont</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Reads the kit at <i translate="no">path</i>: a soundfont file, or <code translate="no">&lt;file&gt;#&lt;bank&gt;:&lt;program&gt;[?ROLE=key&amp;...]</code> for one of its presets with chosen keys. <a href="drumkit.html#isValid" translate="no">isValid</a>() is <code translate="no">false</code> when the file could not be read or has no such preset.</p>
+<!-- @@@fromSoundfont -->
+</div>
+<div class="fnitem">
+<!-- $$$isValid[overload1]$$$isValid -->
+<h3 class="fn" translate="no" id="isValid"><span class="type">bool</span> DrumKit::<span class="name">isValid</span>() const</h3>
+<p>Returns whether the kit was read.</p>
+<!-- @@@isValid -->
+</div>
+<div class="fnitem">
+<!-- $$$listKits[overload1]$$$listKitsconstQString& -->
+<h3 class="fn" translate="no" id="listKits"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantList</span> DrumKit::<span class="name">listKits</span>(const <span class="type">QString</span> &amp;<i>folder</i>)</h3>
+<p>Returns every kit (SF2 or SF3) in <i translate="no">folder</i>, as maps with <code translate="no">name</code> and <code translate="no">path</code>, sorted by name.</p>
+<!-- @@@listKits -->
+</div>
+<div class="fnitem">
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn" translate="no" id="name"><span class="type">QString</span> DrumKit::<span class="name">name</span>() const</h3>
+<p>Returns the kit's display name: the preset's name for a kit picked inside a font, else the file's.</p>
+<!-- @@@name -->
+</div>
+<div class="fnitem">
+<!-- $$$nameFor[overload1]$$$nameForconstQString& -->
+<h3 class="fn" translate="no" id="nameFor"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> DrumKit::<span class="name">nameFor</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Returns a kit's display name for <i translate="no">path</i>: its file name without extension (a FluidPlug LV2's soundfont: its bundle's name, such as &quot;Black Pearl 5&quot;).</p>
+<!-- @@@nameFor -->
+</div>
+<div class="fnitem">
+<!-- $$$path[overload1]$$$path -->
+<h3 class="fn" translate="no" id="path"><span class="type">QString</span> DrumKit::<span class="name">path</span>() const</h3>
+<p>Returns the kit's path as given, with its <code translate="no">#bank:program</code> if it had one.</p>
+<!-- @@@path -->
+</div>
+<div class="fnitem">
+<!-- $$$program[overload1]$$$program -->
+<h3 class="fn" translate="no" id="program"><span class="type">int</span> DrumKit::<span class="name">program</span>() const</h3>
+<p>Returns the program of the kit's preset, as <a href="drumkit.html#bank" translate="no">bank</a>().</p>
+<!-- @@@program -->
+</div>
+<div class="fnitem">
+<!-- $$$roleForGmNote[overload1]$$$roleForGmNoteint -->
+<h3 class="fn" translate="no" id="roleForGmNote"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> DrumKit::<span class="name">roleForGmNote</span>(<span class="type">int</span> <i>note</i>)</h3>
+<p>Returns the role a General MIDI drum-kit <i translate="no">note</i> (35 to 59) plays (36 KICK, 38 SNARE, 42 HAT...); empty for any other note.</p>
+<!-- @@@roleForGmNote -->
+</div>
+<div class="fnitem">
+<!-- $$$roles[overload1]$$$roles -->
+<h3 class="fn" translate="no" id="roles"><code class="details extra" translate="no">[static]</code> <span class="type">QStringList</span> DrumKit::<span class="name">roles</span>()</h3>
+<p>Returns the fixed roles in grid order: KICK, SNARE, CLAP, TOM, HAT, OPEN, CYMBAL, PERC.</p>
+<!-- @@@roles -->
+</div>
+<div class="fnitem">
+<!-- $$$rows[overload1]$$$rows -->
+<h3 class="fn" translate="no" id="rows">const <span class="type">QList</span>&lt;<span class="type"><a href="drumkit-row.html" translate="no">DrumKit::Row</a></span>&gt; &amp;DrumKit::<span class="name">rows</span>() const</h3>
+<p>Returns the eight rows, in grid order.</p>
+<!-- @@@rows -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -24,6 +24,7 @@
       <a href="../index.html#features">Features</a>
       <a href="../index.html#shortcuts">Shortcuts</a>
       <a href="index.html" aria-current="true">Docs</a>
+      <a href="../api/index.html">API reference</a>
     </nav>
   </div>
 </header>
@@ -60,12 +61,16 @@
 <li><a href="translations.html">Translations</a></li>
 <li><a href="ui-rules.html">UI rules</a></li>
 <li><a href="extending.html">Extending</a></li>
+<li><a href="writing-code-docs.html">Writing code documentation</a></li>
 <li><a href="building.html">Building</a></li>
 <li><a href="packaging.html">Packaging</a></li>
 <li><a href="testing.html">Testing on the device</a></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
 <li><a href="todo.html">What is pending</a></li>
+</ul>
+<p class="mono">The code</p><ul>
+<li><a href="../api/index.html">API reference</a></li>
 </ul>
     </nav>
   </details>
@@ -855,6 +860,14 @@ grouped item of a feature), then <code>python3 tools/build-site-docs.py</code> (
 <code>site/docs/</code> is committed; <code>--check</code>, run by <code>ctest -R site-docs-current</code>, fails when it is
 stale). Push, then <code>sh tools/publish-site.sh</code> puts it at https://ravving.github.io/; the
 device's copy follows the next deploy.</p>
+<p><strong>The code rule: every new or changed C++ API comes with its QDoc in the same commit.</strong> The
+C++ of <code>src/</code>, <code>src/backend/</code> and <code>setup/</code> is documented in <code>/*! ... */</code> blocks in the <code>.cpp</code>
+files (every public class, property, method, signal and enum: concise and technical, what the
+code does now, never its history), and <code>python3 tools/build-api-docs.py</code> regenerates the API
+reference in <code>site/api/</code> (committed, linked from the page as API reference). <code>ctest -R cpp-docs</code>
+fails on an undocumented public API or a comment that tells history; <code>ctest -R api-docs-current</code>
+on a QDoc warning or a stale <code>site/api/</code>. <code>docs/writing-code-docs.md</code> has the rules and how to
+write the blocks.</p>
 <ul>
 <li><code>docs/TODO.md</code>: what is pending, queued features, cosmetic fixes seen, housekeeping (read first when picking the work up)</li>
 <li><code>docs/routing.md</code>: the JACK / PipeWire / MIDI graph ravving makes, the tools to look at it and measure it, what was measured</li>
@@ -879,6 +892,8 @@ device's copy follows the next deploy.</p>
 <li><code>docs/design-reference.md</code>: the design reference, machine by machine.</li>
 <li><code>docs/translations.md</code>: KI18n, keys against display text, the glossary, the webpage's
   catalogs, adding a language and the review every release.</li>
+<li><code>docs/writing-code-docs.md</code>: the QDoc rules for the C++, the checks and building the API
+  reference (<code>site/api/</code>).</li>
 </ul>
 <h2 id="license">License</h2>
 <p>GPL-3.0-or-later. Copyright (C) 2026 Camilo Higuita.</p>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- index.qdoc -->
+  <meta name="description" content="The machines (one per page's instrument), their kits and their sound controls.">
+  <title>Machines | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li>Machines</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Machines</h1>
+<!-- $$$ravving-machines-description -->
+<div class="descr" id="details">
+<div class="table"><table class="annotated">
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="chordmachine.html">ChordMachine</a></p></td><td class="tblDescr"><p>CHORDS machine (easyrave's POLY-6): a Machine playing chords on a polyphonic engine (TAL NoiseMaker, six voices, Juno chorus)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="drumkit.html">DrumKit</a></p></td><td class="tblDescr"><p>A drum kit read from a soundfont (SF2 or SF3): which key plays which drum</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="drumkit-row.html">DrumKit::Row</a></p></td><td class="tblDescr"><p>One grid row of a kit</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="drummachine.html">DrumMachine</a></p></td><td class="tblDescr"><p>One drum machine of the drums page (HOUSE 909, DEEP 808, LinnBeats): a Machine whose steps are drum hits</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="engineprofiles.html">EngineProfiles</a></p></td><td class="tblDescr"><p>What each engine lets a page tweak: the profiles of data/engines.json, one per engine (docs/engines.md)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="machine.html">Machine</a></p></td><td class="tblDescr"><p>Base of every machine of the studio (a drum machine, the bass, the chords, the samplers): an instrument on one libzynthbox sketchpad track, playing a pattern of steps from its PatternModel through its sound engine</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="monomachine.html">MonoMachine</a></p></td><td class="tblDescr"><p>A monophonic line: the BASS (easyrave's AC 303, on DISTRHO Nekobi) and the LEAD (on Calf Monosynth) are both this machine, configured in kits.json</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="padkitcontrols.html">PadKitControls</a></p></td><td class="tblDescr"><p>PAD SAMPLER's SOUND MODIFIERS: the knobs that belong to the kit rather than to one pad</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="padsamplermachine.html">PadSamplerMachine</a></p></td><td class="tblDescr"><p>PAD SAMPLER: an MPC-style sampler (docs/mpc-sampler-plan.md), a Machine playing 16 pads on libzynthbox's SamplerSynth, in four banks (A to D) of 16 pads and steps each</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="samplerbanks.html">SamplerBanks</a></p></td><td class="tblDescr"><p>Samplers' banks as a section sees them</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="samplermachine.html">SamplerMachine</a></p></td><td class="tblDescr"><p>SAMPLER (easyrave's SAMPLE KING): a Machine playing samples on libzynthbox's SamplerSynth, with four banks (A to D) of eight sample slots and steps each</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols.html">SoundControls</a></p></td><td class="tblDescr"><p>A machine's SOUND MODIFIERS: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's cc: and gen: controls, by symbol)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-card.html">SoundControls::Card</a></p></td><td class="tblDescr"><p>One card: its title and its knobs, in order</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-choice.html">SoundControls::Choice</a></p></td><td class="tblDescr"><p>One position of a switch knob: its label and the engine controls it sets (symbol to value)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-knob.html">SoundControls::Knob</a></p></td><td class="tblDescr"><p>One knob: its name, the engine control it drives (symbol), its range there (minimum, maximum), its defaultValue (0..1), its choices when it is a switch (empty for a continuous knob) and whether it maps exponentially (logarithmic)</p></td></tr>
+</table></div>
+</div>
+<!-- @@@ravving-machines -->
+<div class="table"><table class="annotated">
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="chordmachine.html">ChordMachine</a></p></td><td class="tblDescr"><p>CHORDS machine (easyrave's POLY-6): a Machine playing chords on a polyphonic engine (TAL NoiseMaker, six voices, Juno chorus)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="drumkit.html">DrumKit</a></p></td><td class="tblDescr"><p>A drum kit read from a soundfont (SF2 or SF3): which key plays which drum</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="drumkit-row.html">DrumKit::Row</a></p></td><td class="tblDescr"><p>One grid row of a kit</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="drummachine.html">DrumMachine</a></p></td><td class="tblDescr"><p>One drum machine of the drums page (HOUSE 909, DEEP 808, LinnBeats): a Machine whose steps are drum hits</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="engineprofiles.html">EngineProfiles</a></p></td><td class="tblDescr"><p>What each engine lets a page tweak: the profiles of data/engines.json, one per engine (docs/engines.md)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="machine.html">Machine</a></p></td><td class="tblDescr"><p>Base of every machine of the studio (a drum machine, the bass, the chords, the samplers): an instrument on one libzynthbox sketchpad track, playing a pattern of steps from its PatternModel through its sound engine</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="monomachine.html">MonoMachine</a></p></td><td class="tblDescr"><p>A monophonic line: the BASS (easyrave's AC 303, on DISTRHO Nekobi) and the LEAD (on Calf Monosynth) are both this machine, configured in kits.json</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="padkitcontrols.html">PadKitControls</a></p></td><td class="tblDescr"><p>PAD SAMPLER's SOUND MODIFIERS: the knobs that belong to the kit rather than to one pad</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="padsamplermachine.html">PadSamplerMachine</a></p></td><td class="tblDescr"><p>PAD SAMPLER: an MPC-style sampler (docs/mpc-sampler-plan.md), a Machine playing 16 pads on libzynthbox's SamplerSynth, in four banks (A to D) of 16 pads and steps each</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="samplerbanks.html">SamplerBanks</a></p></td><td class="tblDescr"><p>Samplers' banks as a section sees them</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="samplermachine.html">SamplerMachine</a></p></td><td class="tblDescr"><p>SAMPLER (easyrave's SAMPLE KING): a Machine playing samples on libzynthbox's SamplerSynth, with four banks (A to D) of eight sample slots and steps each</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols.html">SoundControls</a></p></td><td class="tblDescr"><p>A machine's SOUND MODIFIERS: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's cc: and gen: controls, by symbol)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-card.html">SoundControls::Card</a></p></td><td class="tblDescr"><p>One card: its title and its knobs, in order</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-choice.html">SoundControls::Choice</a></p></td><td class="tblDescr"><p>One position of a switch knob: its label and the engine controls it sets (symbol to value)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-knob.html">SoundControls::Knob</a></p></td><td class="tblDescr"><p>One knob: its name, the engine control it drives (symbol), its range there (minimum, maximum), its defaultValue (0..1), its choices when it is a switch (empty for a continuous knob) and whether it maps exponentially (logarithmic)</p></td></tr>
+</table></div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

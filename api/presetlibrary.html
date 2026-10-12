@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- presetlibrary.cpp -->
+  <meta name="description" content="A machine's pattern presets: the factory ones from its data file and the user's own, kept in a file of their own (NamedStore) so they survive across projects.">
+  <meta name="keywords" content="class">
+  <title>PresetLibrary Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>PresetLibrary</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">PresetLibrary Class</h1>
+<!-- $$$PresetLibrary-brief -->
+<p>A machine's pattern presets: the factory ones from its data file and the user's own, kept in a file of their own (<a href="namedstore.html" translate="no">NamedStore</a>) so they survive across projects. <a href="#details">More...</a></p>
+<!-- @@@PresetLibrary -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;presetlibrary.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="presetlibrary-members.html">List of all members, including inherited members</a></li>
+<li>PresetLibrary is part of <a href="ravving-studio.html">Studio and projects</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="presetlibrary.html#presets-prop" translate="no">presets</a></b> : QVariantList</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#PresetLibrary" translate="no">PresetLibrary</a></b>(const QString &amp;<i>factoryFile</i>, const QString &amp;<i>userFile</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#addUserPreset" translate="no">addUserPreset</a></b>(const QVariantMap &amp;<i>chart</i>, const QString &amp;<i>name</i> = QString(), const QVariantMap &amp;<i>sound</i> = {})</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#chart" translate="no">chart</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#contains" translate="no">contains</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#fileName" translate="no">fileName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#importUserPreset" translate="no">importUserPreset</a></b>(const QVariantMap &amp;<i>preset</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#nextUserName" translate="no">nextUserName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#presets-prop" translate="no">presets</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#removeUserPreset" translate="no">removeUserPreset</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#sound" translate="no">sound</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#userPresets" translate="no">userPresets</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#presets-prop" translate="no">presetsChanged</a></b>()</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#barsOf" translate="no">barsOf</a></b>(const QVariantMap &amp;<i>chart</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#fitChart" translate="no">fitChart</a></b>(const QVariantMap &amp;<i>chart</i>, int <i>bars</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#hasMods" translate="no">hasMods</a></b>(const QVariantMap &amp;<i>sound</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#setParts" translate="no">setParts</a></b>(const QVariantMap &amp;<i>sound</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#soundFields" translate="no">soundFields</a></b>(const QVariantMap &amp;<i>preset</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#soundNameOf" translate="no">soundNameOf</a></b>(const QVariantMap &amp;<i>preset</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#soundOf" translate="no">soundOf</a></b>(const QVariantMap &amp;<i>preset</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="presetlibrary.html#soundParts" translate="no">soundParts</a></b>(const QVariantMap &amp;<i>sound</i>, bool <i>withSound</i>, bool <i>withMods</i>)</td></tr>
+</table></div>
+<!-- $$$PresetLibrary-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Each machine kind has one (<code translate="no">drum-presets.json</code>, <code translate="no">bass-presets.json...</code>); the three drum machines share theirs, published to QML as <code translate="no">studio.drumPresets</code>. The machines read charts from it and save into it.</p>
+<p>A preset is a chart: one string per row, one character per step, 16 characters per bar, so a 32-character row is a two-bar preset. For the drums a row is a role (KICK to PERC; &quot;x&quot; a hit, &quot;X&quot; an accented hit), so every preset plays on every kit; the other machines chart their own rows (Machine subclasses).</p>
+<p>A preset may also keep the sound it was made with, under <code translate="no">sound</code> beside its <code translate="no">chart</code>: a subset of <a href="machine.html#soundState" translate="no">Machine::soundState</a>() (<code translate="no">soundSource</code>, <code translate="no">soundPreset</code>, <code translate="no">sound</code>, <code translate="no">sourceSound</code>; a drum machine's <code translate="no">kit</code>). A user preset saved on the device keeps what is set of the machine's sound (<a href="presetlibrary.html#setParts" translate="no">setParts</a>()); a curated one may name only its source or kit. Loading a preset WITH ITS SOUND puts the parts it names back (<a href="machine.html#applySoundParts" translate="no">Machine::applySoundParts</a>()); a preset without one is a pattern only. GUI thread only.</p>
+</div>
+<!-- @@@PresetLibrary -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$presets-prop$$$presets$$$presetsChanged -->
+<h3 class="fn" translate="no" id="presets-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">presets</span> : <span class="type">QVariantList</span></h3>
+<p>every preset, factory first then the user's, as maps with <code translate="no">name</code>, <code translate="no">genre</code>, <code translate="no">bars</code>, <code translate="no">user</code>, <code translate="no">sound</code> and <code translate="no">soundKit</code> (<a href="presetlibrary.html#soundFields" translate="no">soundFields</a>()).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>presets</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>presetsChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@presets -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$PresetLibrary[overload1]$$$PresetLibraryconstQString&constQString&QObject* -->
+<h3 class="fn" translate="no" id="PresetLibrary">PresetLibrary::<span class="name">PresetLibrary</span>(const <span class="type">QString</span> &amp;<i>factoryFile</i>, const <span class="type">QString</span> &amp;<i>userFile</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Reads the factory presets from <i translate="no">factoryFile</i> (such as <code translate="no">data/drum-presets.json</code>) and the user's from <i translate="no">userFile</i>, with the given <i translate="no">parent</i>.</p>
+<!-- @@@PresetLibrary -->
+</div>
+<div class="fnitem">
+<!-- $$$addUserPreset[overload1]$$$addUserPresetconstQVariantMap&constQString&constQVariantMap& -->
+<h3 class="fn" translate="no" id="addUserPreset"><span class="type">QString</span> PresetLibrary::<span class="name">addUserPreset</span>(const <span class="type">QVariantMap</span> &amp;<i>chart</i>, const <span class="type">QString</span> &amp;<i>name</i> = QString(), const <span class="type">QVariantMap</span> &amp;<i>sound</i> = {})</h3>
+<p>Saves <i translate="no">chart</i> as a new user preset called <i translate="no">name</i> (made unique against the factory's and the user's) or, without one, <a href="presetlibrary.html#nextUserName" translate="no">nextUserName</a>(), keeping <i translate="no">sound</i> with it (none when empty). Returns the name it got.</p>
+<!-- @@@addUserPreset -->
+</div>
+<div class="fnitem">
+<!-- $$$barsOf[overload1]$$$barsOfconstQVariantMap& -->
+<h3 class="fn" translate="no" id="barsOf"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> PresetLibrary::<span class="name">barsOf</span>(const <span class="type">QVariantMap</span> &amp;<i>chart</i>)</h3>
+<p>Returns the length in bars of <i translate="no">chart</i>: its longest row, rounded up to whole bars, at least 1.</p>
+<!-- @@@barsOf -->
+</div>
+<div class="fnitem">
+<!-- $$$chart[overload1]$$$chartconstQString& -->
+<h3 class="fn" translate="no" id="chart"><span class="type">QVariantMap</span> PresetLibrary::<span class="name">chart</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
+<p>Returns the chart of the preset called <i translate="no">name</i> (row to steps); an empty map when there is none.</p>
+<!-- @@@chart -->
+</div>
+<div class="fnitem">
+<!-- $$$contains[overload1]$$$containsconstQString& -->
+<h3 class="fn" translate="no" id="contains"><span class="type">bool</span> PresetLibrary::<span class="name">contains</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
+<p>Returns whether a preset called <i translate="no">name</i> exists, factory or user.</p>
+<!-- @@@contains -->
+</div>
+<div class="fnitem">
+<!-- $$$fileName[overload1]$$$fileName -->
+<h3 class="fn" translate="no" id="fileName"><span class="type">QString</span> PresetLibrary::<span class="name">fileName</span>() const</h3>
+<p>Returns the library's file name (<code translate="no">bass-presets.json</code>): what a shared preset says it belongs to.</p>
+<!-- @@@fileName -->
+</div>
+<div class="fnitem">
+<!-- $$$fitChart[overload1]$$$fitChartconstQVariantMap&int -->
+<h3 class="fn" translate="no" id="fitChart"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantMap</span> PresetLibrary::<span class="name">fitChart</span>(const <span class="type">QVariantMap</span> &amp;<i>chart</i>, <span class="type">int</span> <i>bars</i>)</h3>
+<p>Returns <i translate="no">chart</i> laid over <i translate="no">bars</i> bars instead of its own length (a preset loaded without its bars): every row repeats from its start to fill them (a shorter pattern loops) or is cut at their end; a row of steps by position (the chords' <code translate="no">VOICINGS</code>) follows its steps the same way.</p>
+<!-- @@@fitChart -->
+</div>
+<div class="fnitem">
+<!-- $$$hasMods[overload1]$$$hasModsconstQVariantMap& -->
+<h3 class="fn" translate="no" id="hasMods"><code class="details extra" translate="no">[static]</code> <span class="type">bool</span> PresetLibrary::<span class="name">hasMods</span>(const <span class="type">QVariantMap</span> &amp;<i>sound</i>)</h3>
+<p>Returns whether <i translate="no">sound</i> keeps MODS: the own engine's (<code translate="no">sound</code>), the soundfonts' (<code translate="no">sourceSound</code>) or a synth source's (<code translate="no">sourceSounds</code>).</p>
+<!-- @@@hasMods -->
+</div>
+<div class="fnitem">
+<!-- $$$importUserPreset[overload1]$$$importUserPresetconstQVariantMap& -->
+<h3 class="fn" translate="no" id="importUserPreset"><span class="type">QString</span> PresetLibrary::<span class="name">importUserPreset</span>(const <span class="type">QVariantMap</span> &amp;<i>preset</i>)</h3>
+<p>Takes in <i translate="no">preset</i>, made elsewhere (a stick), under its own name made unique against the factory's and the user's. Returns that name, or an empty string for an entry without a chart.</p>
+<!-- @@@importUserPreset -->
+</div>
+<div class="fnitem">
+<!-- $$$nextUserName[overload1]$$$nextUserName -->
+<h3 class="fn" translate="no" id="nextUserName"><span class="type">QString</span> PresetLibrary::<span class="name">nextUserName</span>() const</h3>
+<p>Returns the name a new user preset gets unless the user types one: the factory file's <code translate="no">userName</code> and the next free number (&quot;My Beat 3&quot;, &quot;My Progression 4&quot;...).</p>
+<!-- @@@nextUserName -->
+</div>
+<div class="fnitem">
+<!-- $$$removeUserPreset[overload1]$$$removeUserPresetconstQString& -->
+<h3 class="fn" translate="no" id="removeUserPreset"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PresetLibrary::<span class="name">removeUserPreset</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Deletes the user preset <i translate="no">name</i>; factory presets cannot be deleted.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@removeUserPreset -->
+</div>
+<div class="fnitem">
+<!-- $$$setParts[overload1]$$$setPartsconstQVariantMap& -->
+<h3 class="fn" translate="no" id="setParts"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantMap</span> PresetLibrary::<span class="name">setParts</span>(const <span class="type">QVariantMap</span> &amp;<i>sound</i>)</h3>
+<p>Returns <i translate="no">sound</i> (<a href="machine.html#soundState" translate="no">Machine::soundState</a>()) with only the parts that are set: no factory sound when none is loaded, no MODS set nobody turned. A preset keeps this, so loading it leaves alone what it does not say.</p>
+<!-- @@@setParts -->
+</div>
+<div class="fnitem">
+<!-- $$$sound[overload1]$$$soundconstQString& -->
+<h3 class="fn" translate="no" id="sound"><span class="type">QVariantMap</span> PresetLibrary::<span class="name">sound</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
+<p>Returns the sound the preset called <i translate="no">name</i> keeps (a subset of <a href="machine.html#soundState" translate="no">Machine::soundState</a>()); an empty map when it keeps none.</p>
+<!-- @@@sound -->
+</div>
+<div class="fnitem">
+<!-- $$$soundFields[overload1]$$$soundFieldsconstQVariantMap& -->
+<h3 class="fn" translate="no" id="soundFields"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantMap</span> PresetLibrary::<span class="name">soundFields</span>(const <span class="type">QVariantMap</span> &amp;<i>preset</i>)</h3>
+<p>Returns what a presets list says of <i translate="no">preset</i>'s sound: a map with <code translate="no">sound</code> (<a href="presetlibrary.html#soundNameOf" translate="no">soundNameOf</a>()), <code translate="no">soundKit</code> (its kit's path, empty for none) and <code translate="no">soundMods</code> (whether it keeps MODS: <a href="presetlibrary.html#hasMods" translate="no">hasMods</a>()).</p>
+<!-- @@@soundFields -->
+</div>
+<div class="fnitem">
+<!-- $$$soundNameOf[overload1]$$$soundNameOfconstQVariantMap& -->
+<h3 class="fn" translate="no" id="soundNameOf"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> PresetLibrary::<span class="name">soundNameOf</span>(const <span class="type">QVariantMap</span> &amp;<i>preset</i>)</h3>
+<p>Returns what the sound of <i translate="no">preset</i> is called, for the presets dialog: its kit's name, its factory sound, else its source (&quot;SOUND&quot; when it names none of them); empty without a sound.</p>
+<!-- @@@soundNameOf -->
+</div>
+<div class="fnitem">
+<!-- $$$soundOf[overload1]$$$soundOfconstQVariantMap& -->
+<h3 class="fn" translate="no" id="soundOf"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantMap</span> PresetLibrary::<span class="name">soundOf</span>(const <span class="type">QVariantMap</span> &amp;<i>preset</i>)</h3>
+<p>Returns the sound the preset entry <i translate="no">preset</i> (a map with <code translate="no">name</code>, <code translate="no">chart</code>, <code translate="no">sound...</code>) keeps; an empty map when none.</p>
+<!-- @@@soundOf -->
+</div>
+<div class="fnitem">
+<!-- $$$soundParts[overload1]$$$soundPartsconstQVariantMap&boolbool -->
+<h3 class="fn" translate="no" id="soundParts"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantMap</span> PresetLibrary::<span class="name">soundParts</span>(const <span class="type">QVariantMap</span> &amp;<i>sound</i>, <span class="type">bool</span> <i>withSound</i>, <span class="type">bool</span> <i>withMods</i>)</h3>
+<p>Returns the parts of <i translate="no">sound</i> the presets dialog asks for: the source or kit and the factory sound with <i translate="no">withSound</i> (WITH ITS SOUND), the MODS with <i translate="no">withMods</i> (WITH ITS MODS); an empty map with neither.</p>
+<!-- @@@soundParts -->
+</div>
+<div class="fnitem">
+<!-- $$$userPresets[overload1]$$$userPresets -->
+<h3 class="fn" translate="no" id="userPresets"><span class="type">QVariantList</span> PresetLibrary::<span class="name">userPresets</span>() const</h3>
+<p>Returns the user's own presets as stored (maps with <code translate="no">name</code>, <code translate="no">chart...</code>), for sharing.</p>
+<!-- @@@userPresets -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

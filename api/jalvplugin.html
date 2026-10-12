@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- jalvplugin.cpp -->
+  <meta name="description" content="One LV2 plugin running in its own jalv process on the JACK graph: an effect (a reverb, a delay..., audio in and out) or an instrument (MIDI in, audio out; JalvEngine).">
+  <meta name="keywords" content="class">
+  <title>JalvPlugin Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>JalvPlugin</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">JalvPlugin Class</h1>
+<!-- $$$JalvPlugin-brief -->
+<p>One LV2 plugin running in its own jalv process on the JACK graph: an effect (a reverb, a delay..., audio in and out) or an instrument (MIDI in, audio out; <a href="jalvengine.html" translate="no">JalvEngine</a>). <a href="#details">More...</a></p>
+<!-- @@@JalvPlugin -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;jalvplugin.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="audioinsert.html" translate="no">AudioInsert</a></td></tr>
+</table></div>
+<ul>
+<li><a href="jalvplugin-members.html">List of all members, including inherited members</a></li>
+<li>JalvPlugin is part of <a href="ravving-engines.html">Engines and effects</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#JalvPlugin" translate="no">JalvPlugin</a></b>(const QString &amp;<i>name</i>, const QString &amp;<i>uri</i>, ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#hasControl" translate="no">hasControl</a></b>(const QString &amp;<i>symbol</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#isStarted" translate="no">isStarted</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#midiInputPort" translate="no">midiInputPort</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#setControl" translate="no">setControl</a></b>(const QString &amp;<i>symbol</i>, double <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#start" translate="no">start</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#stop" translate="no">stop</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#title" translate="no">title</a></b>() const</td></tr>
+</table></div>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#inputPorts" translate="no">inputPorts</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#outputPorts" translate="no">outputPorts</a></b>() const override</td></tr>
+</table></div>
+<!-- $$$JalvPlugin-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>It runs as zynthbox-qml runs its engines and effects (<code translate="no">zyngine/zynthian_engine_jalv.py</code>: <code translate="no">jalv -n NAME URI</code>, controls set on jalv's console). The process is a <a href="consoleprocess.html" translate="no">ConsoleProcess</a> (libzynthbox's ProcessWrapper). Controls are named by their LV2 port symbol; jalv's console wants port indexes, which are read from <code translate="no">lv2info</code> together with the audio and MIDI ports' symbols (jalv names its JACK ports after them). lv2info loads every installed bundle's data (70 to 560 ms a plugin on the Pi), so what it says is cached on disk (<code translate="no">Paths::cache()/lv2-ports.json</code>, asked again only when the plugin's bundle or binary changed) and in memory once per URI. Values set before the start go on jalv's command line, later ones through its console, and all are sent again after a crash restart. GUI thread only.</p>
+</div>
+<!-- @@@JalvPlugin -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$JalvPlugin[overload1]$$$JalvPluginconstQString&constQString&ZynthboxBridge*QObject* -->
+<h3 class="fn" translate="no" id="JalvPlugin">JalvPlugin::<span class="name">JalvPlugin</span>(const <span class="type">QString</span> &amp;<i>name</i>, const <span class="type">QString</span> &amp;<i>uri</i>, <span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the plugin <i translate="no">uri</i>, to run as the JACK client <i translate="no">name</i> through <i translate="no">bridge</i>, with the given <i translate="no">parent</i>. Not started.</p>
+<!-- @@@JalvPlugin -->
+</div>
+<div class="fnitem">
+<!-- $$$hasControl[overload1]$$$hasControlconstQString& -->
+<h3 class="fn" translate="no" id="hasControl"><span class="type">bool</span> JalvPlugin::<span class="name">hasControl</span>(const <span class="type">QString</span> &amp;<i>symbol</i>) const</h3>
+<p>Returns whether the plugin has a control port <i translate="no">symbol</i>; <code translate="no">true</code> when its ports are unknown.</p>
+<!-- @@@hasControl -->
+</div>
+<div class="fnitem">
+<!-- $$$inputPorts[overload1]$$$inputPorts -->
+<h3 class="fn" translate="no" id="inputPorts"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QStringList</span> JalvPlugin::<span class="name">inputPorts</span>() const</h3>
+<p>Reimplements: <a href="audioinsert.html#inputPorts" translate="no">AudioInsert::inputPorts</a>() const.</p>
+<p>The JACK names of the plugin's audio inputs, left then right (a mono plugin has one).</p>
+<!-- @@@inputPorts -->
+</div>
+<div class="fnitem">
+<!-- $$$isStarted[overload1]$$$isStarted -->
+<h3 class="fn" translate="no" id="isStarted"><span class="type">bool</span> JalvPlugin::<span class="name">isStarted</span>() const</h3>
+<p>Returns whether <a href="jalvplugin.html#start" translate="no">start</a>() has been called.</p>
+<!-- @@@isStarted -->
+</div>
+<div class="fnitem">
+<!-- $$$midiInputPort[overload1]$$$midiInputPort -->
+<h3 class="fn" translate="no" id="midiInputPort"><span class="type">QString</span> JalvPlugin::<span class="name">midiInputPort</span>() const</h3>
+<p>Returns the JACK name of the plugin's MIDI input; empty for an effect without one.</p>
+<!-- @@@midiInputPort -->
+</div>
+<div class="fnitem">
+<!-- $$$outputPorts[overload1]$$$outputPorts -->
+<h3 class="fn" translate="no" id="outputPorts"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QStringList</span> JalvPlugin::<span class="name">outputPorts</span>() const</h3>
+<p>Reimplements: <a href="audioinsert.html#outputPorts" translate="no">AudioInsert::outputPorts</a>() const.</p>
+<p>The JACK names of the plugin's audio outputs, left then right (a mono plugin has one).</p>
+<!-- @@@outputPorts -->
+</div>
+<div class="fnitem">
+<!-- $$$setControl[overload1]$$$setControlconstQString&double -->
+<h3 class="fn" translate="no" id="setControl"><span class="type">void</span> JalvPlugin::<span class="name">setControl</span>(const <span class="type">QString</span> &amp;<i>symbol</i>, <span class="type">double</span> <i>value</i>)</h3>
+<p>Sets the control port <i translate="no">symbol</i> to <i translate="no">value</i>, in the plugin's own units: on the command line before the start, through the console after.</p>
+<p><b>See also </b><a href="jalvplugin.html#hasControl" translate="no">hasControl</a>().</p>
+<!-- @@@setControl -->
+</div>
+<div class="fnitem">
+<!-- $$$start[overload1]$$$start -->
+<h3 class="fn" translate="no" id="start"><span class="type">void</span> JalvPlugin::<span class="name">start</span>()</h3>
+<p>Starts jalv with every control set so far. Later calls do nothing, so a plugin needed only sometimes (a machine's DRIVE) is started on first use. <a href="audioinsert.html#started" translate="no">started</a>() follows each start and restart.</p>
+<!-- @@@start -->
+</div>
+<div class="fnitem">
+<!-- $$$stop[overload1]$$$stop -->
+<h3 class="fn" translate="no" id="stop"><span class="type">void</span> JalvPlugin::<span class="name">stop</span>()</h3>
+<p>Stops the process for good (the plugin is being replaced).</p>
+<!-- @@@stop -->
+</div>
+<div class="fnitem">
+<!-- $$$title[overload1]$$$title -->
+<h3 class="fn" translate="no" id="title"><span class="type">QString</span> JalvPlugin::<span class="name">title</span>() const</h3>
+<p>Returns the plugin's own name (its LV2 <code translate="no">doap:name</code>, such as &quot;Calf Monosynth&quot;); empty when unknown.</p>
+<!-- @@@title -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

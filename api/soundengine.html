@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- soundengine.cpp -->
+  <meta name="description" content="A sound engine a machine plays through: a process with a MIDI input and a stereo output on the JACK graph.">
+  <meta name="keywords" content="class">
+  <title>SoundEngine Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>SoundEngine</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">SoundEngine Class</h1>
+<!-- $$$SoundEngine-brief -->
+<p>A sound engine a machine plays through: a process with a MIDI input and a stereo output on the JACK graph. <a href="#details">More...</a></p>
+<!-- @@@SoundEngine -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;soundengine.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="fluidsynthengine.html" translate="no">FluidSynthEngine</a> and <a href="jalvengine.html" translate="no">JalvEngine</a></p>
+</td></tr>
+</table></div>
+<ul>
+<li><a href="soundengine-members.html">List of all members, including inherited members</a></li>
+<li>SoundEngine is part of <a href="ravving-engines.html">Engines and effects</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="soundengine.html#audioOutputPorts" translate="no">audioOutputPorts</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="soundengine.html#hasControl" translate="no">hasControl</a></b>(const QString &amp;<i>symbol</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="soundengine.html#midiInputPort" translate="no">midiInputPort</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="soundengine.html#reconfigure" translate="no">reconfigure</a></b>(const QVariantMap &amp;<i>config</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="soundengine.html#setControl" translate="no">setControl</a></b>(const QString &amp;<i>symbol</i>, double <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="soundengine.html#start" translate="no">start</a></b>() = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="soundengine.html#stop" translate="no">stop</a></b>() = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="soundengine.html#title" translate="no">title</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="soundengine.html#started" translate="no">started</a></b>()</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> SoundEngine *</td><td class="memItemRight bottomAlign"><b><a href="soundengine.html#createEngine" translate="no">createEngine</a></b>(const QVariantMap &amp;<i>config</i>, const QString &amp;<i>name</i>, ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i>)</td></tr>
+</table></div>
+<!-- $$$SoundEngine-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Machines only see this interface, so swapping a machine's engine is a change in <code translate="no">data/kits.json</code>, and a new kind of engine is one more subclass made by <a href="soundengine.html#createEngine" translate="no">createEngine</a>(). <a href="fluidsynthengine.html" translate="no">FluidSynthEngine</a> and <a href="jalvengine.html" translate="no">JalvEngine</a> are the two kinds. Ported in spirit from zynthbox-qml's <code translate="no">zyngine/zynthian_engine.py</code>. GUI thread only.</p>
+</div>
+<!-- @@@SoundEngine -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$audioOutputPorts[overload1]$$$audioOutputPorts -->
+<h3 class="fn" translate="no" id="audioOutputPorts"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">QStringList</span> SoundEngine::<span class="name">audioOutputPorts</span>() const</h3>
+<p>Returns the full JACK names of the engine's audio outputs, left then right.</p>
+<!-- @@@audioOutputPorts -->
+</div>
+<div class="fnitem">
+<!-- $$$createEngine[overload1]$$$createEngineconstQVariantMap&constQString&ZynthboxBridge*QObject* -->
+<h3 class="fn" translate="no" id="createEngine"><code class="details extra" translate="no">[static]</code> <span class="type"><a href="soundengine.html" translate="no">SoundEngine</a></span> *SoundEngine::<span class="name">createEngine</span>(const <span class="type">QVariantMap</span> &amp;<i>config</i>, const <span class="type">QString</span> &amp;<i>name</i>, <span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i>)</h3>
+<p>Builds the engine <i translate="no">config</i> describes (an <code translate="no">engine</code> object of kits.json: <code translate="no">type</code> is <code translate="no">fluidsynth</code> or <code translate="no">jalv</code>), named <i translate="no">name</i> on the JACK graph, run through libzynthbox's <i translate="no">bridge</i> and parented to <i translate="no">parent</i>. Returns <code translate="no">nullptr</code> for a config without a type (the samplers play through SamplerSynth) and, after reporting an issue, for an unknown type.</p>
+<!-- @@@createEngine -->
+</div>
+<div class="fnitem">
+<!-- $$$hasControl[overload1]$$$hasControlconstQString& -->
+<h3 class="fn" translate="no" id="hasControl"><code class="details extra" translate="no">[virtual]</code> <span class="type">bool</span> SoundEngine::<span class="name">hasControl</span>(const <span class="type">QString</span> &amp;<i>symbol</i>) const</h3>
+<p>Returns whether <i translate="no">symbol</i> reaches one of the engine's controls (a MODS knob on a port the engine lacks does nothing). The default returns <code translate="no">true</code>: the engine cannot tell.</p>
+<!-- @@@hasControl -->
+</div>
+<div class="fnitem">
+<!-- $$$midiInputPort[overload1]$$$midiInputPort -->
+<h3 class="fn" translate="no" id="midiInputPort"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">QString</span> SoundEngine::<span class="name">midiInputPort</span>() const</h3>
+<p>Returns the full JACK name of the engine's MIDI input, such as <code translate="no">ravving-drums1-midi:midi_00</code>.</p>
+<!-- @@@midiInputPort -->
+</div>
+<div class="fnitem">
+<!-- $$$reconfigure[overload1]$$$reconfigureconstQVariantMap& -->
+<h3 class="fn" translate="no" id="reconfigure"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">void</span> SoundEngine::<span class="name">reconfigure</span>(const <span class="type">QVariantMap</span> &amp;<i>config</i>)</h3>
+<p>Loads another sound described by <i translate="no">config</i> (the keys of the kits.json engine object, such as a new soundfont); <a href="soundengine.html#started" translate="no">started</a>() follows again once the engine is back.</p>
+<!-- @@@reconfigure -->
+</div>
+<div class="fnitem">
+<!-- $$$setControl[overload1]$$$setControlconstQString&double -->
+<h3 class="fn" translate="no" id="setControl"><code class="details extra" translate="no">[virtual]</code> <span class="type">void</span> SoundEngine::<span class="name">setControl</span>(const <span class="type">QString</span> &amp;<i>symbol</i>, <span class="type">double</span> <i>value</i>)</h3>
+<p>Sets the engine's own control <i translate="no">symbol</i> (a SOUND MODIFIERS knob, in the engine's terms such as an LV2 port symbol) to <i translate="no">value</i>. The default ignores it.</p>
+<p><b>See also </b><a href="soundengine.html#hasControl" translate="no">hasControl</a>().</p>
+<!-- @@@setControl -->
+</div>
+<div class="fnitem">
+<!-- $$$start[overload1]$$$start -->
+<h3 class="fn" translate="no" id="start"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">void</span> SoundEngine::<span class="name">start</span>()</h3>
+<p>Starts the engine and loads its sound; <a href="soundengine.html#started" translate="no">started</a>() follows once it takes commands.</p>
+<!-- @@@start -->
+</div>
+<div class="fnitem">
+<!-- $$$started[overload1]$$$started -->
+<h3 class="fn" translate="no" id="started"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> SoundEngine::<span class="name">started</span>()</h3>
+<p>Emitted when the engine is up; its ports may still take a moment to appear on the graph.</p>
+<!-- @@@started -->
+</div>
+<div class="fnitem">
+<!-- $$$stop[overload1]$$$stop -->
+<h3 class="fn" translate="no" id="stop"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">void</span> SoundEngine::<span class="name">stop</span>()</h3>
+<p>Stops the engine's process for good (the machine switches to another sound source); the object is deleted after.</p>
+<!-- @@@stop -->
+</div>
+<div class="fnitem">
+<!-- $$$title[overload1]$$$title -->
+<h3 class="fn" translate="no" id="title"><code class="details extra" translate="no">[virtual]</code> <span class="type">QString</span> SoundEngine::<span class="name">title</span>() const</h3>
+<p>Returns what the engine plays, for the machine's nameplate (an LV2 synth's own name); the default returns an empty string.</p>
+<!-- @@@title -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

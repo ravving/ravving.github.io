@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- fileshare.cpp -->
+  <meta name="description" content="A small HTTP server inside ravving, published to QML as share: one file offered to a phone (the SEND... dialog's PHONE, QR CODE destination), the ravving page, and the library for a phone to browse.">
+  <meta name="keywords" content="class">
+  <title>FileShare Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>FileShare</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">FileShare Class</h1>
+<!-- $$$FileShare-brief -->
+<p>A small HTTP server inside ravving, published to QML as <code translate="no">share</code>: one file offered to a phone (the SEND... dialog's PHONE, QR CODE destination), the ravving page, and the library for a phone to browse. <a href="#details">More...</a></p>
+<!-- @@@FileShare -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;fileshare.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="fileshare-members.html">List of all members, including inherited members</a></li>
+<li>FileShare is part of <a href="ravving-system.html">Device, network and files</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<div class="table"><table class="propsummary" translate="no">
+<tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="fileshare.html#active-prop" translate="no">active</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#address-prop" translate="no">address</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#browseUrl-prop" translate="no">browseUrl</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#browsing-prop" translate="no">browsing</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#bytes-prop" translate="no">bytes</a></b> : qint64</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#downloads-prop" translate="no">downloads</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#error-prop" translate="no">error</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#fileName-prop" translate="no">fileName</a></b> : QString</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="fileshare.html#helpUrl-prop" translate="no">helpUrl</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#path-prop" translate="no">path</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#port-prop" translate="no">port</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#progress-prop" translate="no">progress</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#sent-prop" translate="no">sent</a></b> : qint64</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#status-prop" translate="no">status</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="fileshare.html#url-prop" translate="no">url</a></b> : QString</li>
+</ul>
+</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#FileShare" translate="no">FileShare</a></b>(QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#active-prop" translate="no">active</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#address-prop" translate="no">address</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#browseUrl-prop" translate="no">browseUrl</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#browsing-prop" translate="no">browsing</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#bytes-prop" translate="no">bytes</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#closeBrowse" translate="no">closeBrowse</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#downloads-prop" translate="no">downloads</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#error-prop" translate="no">error</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#fileName-prop" translate="no">fileName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#helpFolder" translate="no">helpFolder</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#helpUrl-prop" translate="no">helpUrl</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#offer" translate="no">offer</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#openBrowse" translate="no">openBrowse</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#path-prop" translate="no">path</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#port-prop" translate="no">port</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#progress-prop" translate="no">progress</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#refresh" translate="no">refresh</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#sent-prop" translate="no">sent</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#setBrowser" translate="no">setBrowser</a></b>(FileBrowser *<i>browser</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#setHelpFolder" translate="no">setHelpFolder</a></b>(const QString &amp;<i>dir</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#status-prop" translate="no">status</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#stop" translate="no">stop</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#url-prop" translate="no">url</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#active-prop" translate="no">changed</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#downloaded" translate="no">downloaded</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#notify" translate="no">notify</a></b>(const QString &amp;<i>text</i>, const QString &amp;<i>color</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fileshare.html#progress-prop" translate="no">progressChanged</a></b>()</td></tr>
+</table></div>
+<!-- $$$FileShare-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>An offered file is served at a random path (128 bits) for as long as the QR dialog is up, 15 minutes at most. The phone's camera reads the QR code of the URL, its browser opens it and saves the file: no pairing, no app, no account. Any phone on the same Wi-Fi can reach it; nothing else can guess the path. The server listens on port 8098, or the next free one up to 8107, on every interface; the URL is built on the Wi-Fi address (else any other network's).</p>
+<p>It is written on QTcpServer, since the Qt HttpServer module is not on the Zynthbox image. <code translate="no">GET</code> and <code translate="no">HEAD</code> are answered, anything else gets a 404; the response has Content-Type, Content-Length and Content-Disposition (an attachment, with the UTF-8 name) and honours <code translate="no">Range: bytes=...</code> with a 206 (iOS Safari asks for ranges on media, and a browser resumes a download with one). A file is streamed in 64 kB chunks as the socket drains, never read whole. Each connection is closed after its response.</p>
+<p>The same server carries the ravving page (SETTINGS, HELP): after <a href="fileshare.html#setHelpFolder" translate="no">setHelpFolder</a>() it listens for good and serves <code translate="no">GET /help/&lt;file&gt;</code> from the installed <code translate="no">site/</code> folder (<code translate="no">/help/</code> is its <code translate="no">index.html</code>; nothing above the folder is reachable). The device has no browser, so the page is read on a phone or a laptop.</p>
+<p>And the library (FILES, PHONE, BROWSE): <a href="fileshare.html#openBrowse" translate="no">openBrowse</a>() makes a random path <code translate="no">/b/&lt;32 hex&gt;/</code> under which <a href="filebrowser.html" translate="no">FileBrowser</a>'s kinds and entries are served as small pages in the site's look, with a DOWNLOAD link per file. Files are served from the paths the browser lists, looked up by kind and name, never taken from the URL. The browse link ends 15 minutes after the phone's last request, or at <a href="fileshare.html#closeBrowse" translate="no">closeBrowse</a>(). GUI thread only.</p>
+</div>
+<!-- @@@FileShare -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$active-prop$$$active$$$changed -->
+<h3 class="fn" translate="no" id="active-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">active</span> : <span class="type">bool</span></h3>
+<p>This property holds whether a file is being offered.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>active</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>changed</b></span>()</td></tr>
+</table></div>
+<!-- @@@active -->
+</div>
+<div class="fnitem">
+<!-- $$$address-prop$$$address$$$changed -->
+<h3 class="fn" translate="no" id="address-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">address</span> : <span class="type">QString</span></h3>
+<p>This property holds the device's IPv4 address on the network (Wi-Fi first); empty with none. <a href="fileshare.html#refresh" translate="no">refresh</a>() reads it again.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>address</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#active-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@address -->
+</div>
+<div class="fnitem">
+<!-- $$$browseUrl-prop$$$browseUrl$$$changed -->
+<h3 class="fn" translate="no" id="browseUrl-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">browseUrl</span> : <span class="type">QString</span></h3>
+<p>This property holds the library pages' address, <code translate="no">http://&lt;address&gt;:&lt;port&gt;/b/&lt;token&gt;/</code>, while browsing; empty otherwise.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>browseUrl</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#active-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@browseUrl -->
+</div>
+<div class="fnitem">
+<!-- $$$browsing-prop$$$browsing$$$changed -->
+<h3 class="fn" translate="no" id="browsing-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">browsing</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the library pages are served.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>browsing</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#active-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@browsing -->
+</div>
+<div class="fnitem">
+<!-- $$$bytes-prop$$$bytes$$$changed -->
+<h3 class="fn" translate="no" id="bytes-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">bytes</span> : <span class="type">qint64</span></h3>
+<p>This property holds the offered file's size in bytes.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qint64 </td><td class="memItemRight bottomAlign"><span class="name"><b>bytes</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#active-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@bytes -->
+</div>
+<div class="fnitem">
+<!-- $$$downloads-prop$$$downloads$$$progressChanged -->
+<h3 class="fn" translate="no" id="downloads-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">downloads</span> : <span class="type">int</span></h3>
+<p>This property holds the whole deliveries since <a href="fileshare.html#offer" translate="no">offer</a>().</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>downloads</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#progress-prop" translate="no">progressChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@downloads -->
+</div>
+<div class="fnitem">
+<!-- $$$error-prop$$$error$$$changed -->
+<h3 class="fn" translate="no" id="error-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">error</span> : <span class="type">QString</span></h3>
+<p>why the last <a href="fileshare.html#offer" translate="no">offer</a>() gave nothing, or why the offer ended early; empty when all is well.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>error</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#active-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@error -->
+</div>
+<div class="fnitem">
+<!-- $$$fileName-prop$$$fileName$$$changed -->
+<h3 class="fn" translate="no" id="fileName-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">fileName</span> : <span class="type">QString</span></h3>
+<p>This property holds the offered file's name.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>fileName</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#active-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@fileName -->
+</div>
+<div class="fnitem">
+<!-- $$$helpUrl-prop$$$helpUrl$$$changed -->
+<h3 class="fn" translate="no" id="helpUrl-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">helpUrl</span> : <span class="type">QString</span></h3>
+<p>This property holds the ravving page's address, <code translate="no">http://&lt;address&gt;:&lt;port&gt;/help/</code>; empty without a help folder or a network.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>helpUrl</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#active-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@helpUrl -->
+</div>
+<div class="fnitem">
+<!-- $$$path-prop$$$path$$$changed -->
+<h3 class="fn" translate="no" id="path-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">path</span> : <span class="type">QString</span></h3>
+<p>This property holds the offered file's path.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>path</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#active-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@path -->
+</div>
+<div class="fnitem">
+<!-- $$$port-prop$$$port$$$changed -->
+<h3 class="fn" translate="no" id="port-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">port</span> : <span class="type">int</span></h3>
+<p>This property holds the port the server listens on; 0 while it does not.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>port</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#active-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@port -->
+</div>
+<div class="fnitem">
+<!-- $$$progress-prop$$$progress$$$progressChanged -->
+<h3 class="fn" translate="no" id="progress-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">progress</span> : <span class="type">qreal</span></h3>
+<p>This property holds the download under way (or the last one), 0..1 of the file.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>progress</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>progressChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@progress -->
+</div>
+<div class="fnitem">
+<!-- $$$sent-prop$$$sent$$$progressChanged -->
+<h3 class="fn" translate="no" id="sent-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">sent</span> : <span class="type">qint64</span></h3>
+<p>This property holds the bytes of the offered file delivered by the download under way (or the last one).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qint64 </td><td class="memItemRight bottomAlign"><span class="name"><b>sent</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#progress-prop" translate="no">progressChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@sent -->
+</div>
+<div class="fnitem">
+<!-- $$$status-prop$$$status$$$progressChanged -->
+<h3 class="fn" translate="no" id="status-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">status</span> : <span class="type">QString</span></h3>
+<p><code translate="no">idle</code> (nothing offered), <code translate="no">waiting</code> (offered, no phone yet), <code translate="no">sending</code> (a body is going out) or <code translate="no">done</code> (the whole file was delivered at least once; a phone can scan again).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>status</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#progress-prop" translate="no">progressChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@status -->
+</div>
+<div class="fnitem">
+<!-- $$$url-prop$$$url$$$changed -->
+<h3 class="fn" translate="no" id="url-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">url</span> : <span class="type">QString</span></h3>
+<p>what the phone opens: <code translate="no">http://&lt;address&gt;:&lt;port&gt;/d/&lt;token&gt;/&lt;file name&gt;</code>; empty while idle.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>url</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="fileshare.html#active-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@url -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$FileShare[overload1]$$$FileShareQObject* -->
+<h3 class="fn" translate="no" id="FileShare"><code class="details extra" translate="no">[explicit]</code> FileShare::<span class="name">FileShare</span>(<span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the server, not listening, with the given <i translate="no">parent</i>.</p>
+<!-- @@@FileShare -->
+</div>
+<div class="fnitem">
+<!-- $$$closeBrowse[overload1]$$$closeBrowse -->
+<h3 class="fn" translate="no" id="closeBrowse"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> FileShare::<span class="name">closeBrowse</span>()</h3>
+<p>Takes the library's pages down.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@closeBrowse -->
+</div>
+<div class="fnitem">
+<!-- $$$downloaded[overload1]$$$downloadedconstQString& -->
+<h3 class="fn" translate="no" id="downloaded"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> FileShare::<span class="name">downloaded</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Emitted when the whole file <i translate="no">name</i> reached a phone.</p>
+<!-- @@@downloaded -->
+</div>
+<div class="fnitem">
+<!-- $$$helpFolder[overload1]$$$helpFolder -->
+<h3 class="fn" translate="no" id="helpFolder"><span class="type">QString</span> FileShare::<span class="name">helpFolder</span>() const</h3>
+<p>Returns the folder served at <code translate="no">/help/</code>; empty when none is.</p>
+<p><b>See also </b><a href="fileshare.html#setHelpFolder" translate="no">setHelpFolder</a>().</p>
+<!-- @@@helpFolder -->
+</div>
+<div class="fnitem">
+<!-- $$$notify[overload1]$$$notifyconstQString&constQString& -->
+<h3 class="fn" translate="no" id="notify"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> FileShare::<span class="name">notify</span>(const <span class="type">QString</span> &amp;<i>text</i>, const <span class="type">QString</span> &amp;<i>color</i>)</h3>
+<p>Emitted with a short status <i translate="no">text</i> to show as a toast in <i translate="no">color</i> (a CSS colour).</p>
+<!-- @@@notify -->
+</div>
+<div class="fnitem">
+<!-- $$$offer[overload1]$$$offerconstQString& -->
+<h3 class="fn" translate="no" id="offer"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> FileShare::<span class="name">offer</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Serves the one file at <i translate="no">path</i> until <a href="fileshare.html#stop" translate="no">stop</a>() or 15 minutes, replacing any file offered, and returns its URL. Returns an empty string, with error set, when the file cannot be read, no port is free or the device is on no network.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@offer -->
+</div>
+<div class="fnitem">
+<!-- $$$openBrowse[overload1]$$$openBrowse -->
+<h3 class="fn" translate="no" id="openBrowse"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> FileShare::<span class="name">openBrowse</span>()</h3>
+<p>Serves the library's pages under a new random path until 15 minutes pass with no request from the phone, or <a href="fileshare.html#closeBrowse" translate="no">closeBrowse</a>(), and returns the URL (the one already up, when it is). Returns an empty string with no network or no free port.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@openBrowse -->
+</div>
+<div class="fnitem">
+<!-- $$$refresh[overload1]$$$refresh -->
+<h3 class="fn" translate="no" id="refresh"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> FileShare::<span class="name">refresh</span>()</h3>
+<p>Reads the device's address again (the dialog about to open).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@refresh -->
+</div>
+<div class="fnitem">
+<!-- $$$setBrowser[overload1]$$$setBrowserFileBrowser* -->
+<h3 class="fn" translate="no" id="setBrowser"><span class="type">void</span> FileShare::<span class="name">setBrowser</span>(<span class="type"><a href="filebrowser.html" translate="no">FileBrowser</a></span> *<i>browser</i>)</h3>
+<p>Sets the library the browse pages list, <i translate="no">browser</i> (<a href="filebrowser.html" translate="no">FileBrowser</a>).</p>
+<!-- @@@setBrowser -->
+</div>
+<div class="fnitem">
+<!-- $$$setHelpFolder[overload1]$$$setHelpFolderconstQString& -->
+<h3 class="fn" translate="no" id="setHelpFolder"><span class="type">void</span> FileShare::<span class="name">setHelpFolder</span>(const <span class="type">QString</span> &amp;<i>dir</i>)</h3>
+<p>Serves the folder <i translate="no">dir</i> (the installed <code translate="no">site/</code>) at <code translate="no">/help/</code> from now on, listening for good; an empty <i translate="no">dir</i> takes it down.</p>
+<p><b>See also </b><a href="fileshare.html#helpFolder" translate="no">helpFolder</a>().</p>
+<!-- @@@setHelpFolder -->
+</div>
+<div class="fnitem">
+<!-- $$$stop[overload1]$$$stop -->
+<h3 class="fn" translate="no" id="stop"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> FileShare::<span class="name">stop</span>()</h3>
+<p>Stops offering the file; connections still streaming it are closed. The help and browse pages stay up.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@stop -->
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>
+</div>

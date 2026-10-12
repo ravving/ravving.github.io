@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- beatrepeat.cpp -->
+  <meta name="description" content="The LIVE FX STUTTER and LOOP: a beat repeat on the master, as ravving's own JACK client (ravving&lt;@op&gt;-&lt;/@op&gt;repeat, stereo in and out), the first of the master inserts.">
+  <meta name="keywords" content="class">
+  <title>BeatRepeat Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>BeatRepeat</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">BeatRepeat Class</h1>
+<!-- $$$BeatRepeat-brief -->
+<p>The LIVE FX STUTTER and LOOP: a beat repeat on the master, as ravving's own JACK client (<code translate="no">ravving-repeat</code>, stereo in and out), the first of the master inserts. <a href="#details">More...</a></p>
+<!-- @@@BeatRepeat -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;beatrepeat.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="audioinsert.html" translate="no">AudioInsert</a></td></tr>
+</table></div>
+<ul>
+<li><a href="beatrepeat-members.html">List of all members, including inherited members</a></li>
+<li>BeatRepeat is part of <a href="ravving-engines.html">Engines and effects</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#BeatRepeat" translate="no">BeatRepeat</a></b>(ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint64 </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#frameNow" translate="no">frameNow</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#isRepeating" translate="no">isRepeating</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#isValid" translate="no">isValid</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#repeat" translate="no">repeat</a></b>(double <i>steps</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#sampleRate" translate="no">sampleRate</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#stop" translate="no">stop</a></b>()</td></tr>
+</table></div>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#inputPorts" translate="no">inputPorts</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#outputPorts" translate="no">outputPorts</a></b>() const override</td></tr>
+</table></div>
+<!-- $$$BeatRepeat-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p><a href="beatrepeat.html#repeat" translate="no">repeat</a>() anchors at the start of the 16th under way (SyncTimer's grid, sample accurate through <a href="zynthboxbridge.html#timerTickAtFrame" translate="no">ZynthboxBridge::timerTickAtFrame</a>()); that step plays out live, then the audio from the anchor repeats every <i>steps</i> 16ths until <a href="beatrepeat.html#stop" translate="no">stop</a>(). Calling <a href="beatrepeat.html#repeat" translate="no">repeat</a>() again while repeating changes only the length; the anchor stays, as easyrave's LOOP does when dragged. With the transport stopped it repeats the last <i>steps</i> of audio at once. Without a bridge the tempo is taken as 120 BPM.</p>
+<p>Each repetition's head is crossfaded (10 ms, equal power) with what followed the slice when it first played, so the seam never dips to silence, and the switch into the repeat eases over 10 ms. The release is slower (300 ms, an S-curve): the repeat gives way to the live sound rather than being cut, so letting go lands softly on the beat. The input is always kept (2^17 frames, 2.7 s at 48 kHz); an engagement copies what it needs into the slice it repeats (at most 2^18 frames, 5.4 s). The audio thread reads only atomics and preallocated buffers.</p>
+<p>The client also watches the graph's dropouts: JACK's xrun callback counts them, except within 3 s of a client or link change and in the first 20 s after the start (the graph is rebuilding then), and every minute five or more raise an &quot;Audio dropouts&quot; issue.</p>
+</div>
+<!-- @@@BeatRepeat -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$BeatRepeat[overload1]$$$BeatRepeatZynthboxBridge*QObject* -->
+<h3 class="fn" translate="no" id="BeatRepeat"><code class="details extra" translate="no">[explicit]</code> BeatRepeat::<span class="name">BeatRepeat</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Opens and activates the JACK client with its buffers, with the given <i translate="no">parent</i>; <i translate="no">bridge</i> gives the tempo and the step grid (null leaves the repeat unsynced). Without JACK, <a href="beatrepeat.html#isValid" translate="no">isValid</a>() returns <code translate="no">false</code>.</p>
+<!-- @@@BeatRepeat -->
+</div>
+<div class="fnitem">
+<!-- $$$frameNow[overload1]$$$frameNow -->
+<h3 class="fn" translate="no" id="frameNow"><span class="type">quint64</span> BeatRepeat::<span class="name">frameNow</span>() const</h3>
+<p>Returns the JACK frame now (<code translate="no">jack_frame_time()</code>, the clock AudioLevels' recording frames and SyncTimer's playback start are counted in); 0 without a client. The exporter places its recording with it.</p>
+<!-- @@@frameNow -->
+</div>
+<div class="fnitem">
+<!-- $$$inputPorts[overload1]$$$inputPorts -->
+<h3 class="fn" translate="no" id="inputPorts"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QStringList</span> BeatRepeat::<span class="name">inputPorts</span>() const</h3>
+<p>Reimplements: <a href="audioinsert.html#inputPorts" translate="no">AudioInsert::inputPorts</a>() const.</p>
+<!-- @@@inputPorts -->
+</div>
+<div class="fnitem">
+<!-- $$$isRepeating[overload1]$$$isRepeating -->
+<h3 class="fn" translate="no" id="isRepeating"><span class="type">bool</span> BeatRepeat::<span class="name">isRepeating</span>() const</h3>
+<p>Returns whether a repeat is engaged.</p>
+<!-- @@@isRepeating -->
+</div>
+<div class="fnitem">
+<!-- $$$isValid[overload1]$$$isValid -->
+<h3 class="fn" translate="no" id="isValid"><span class="type">bool</span> BeatRepeat::<span class="name">isValid</span>() const</h3>
+<p>Returns whether the JACK client is up; <code translate="no">false</code> on a desktop without JACK.</p>
+<!-- @@@isValid -->
+</div>
+<div class="fnitem">
+<!-- $$$outputPorts[overload1]$$$outputPorts -->
+<h3 class="fn" translate="no" id="outputPorts"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QStringList</span> BeatRepeat::<span class="name">outputPorts</span>() const</h3>
+<p>Reimplements: <a href="audioinsert.html#outputPorts" translate="no">AudioInsert::outputPorts</a>() const.</p>
+<!-- @@@outputPorts -->
+</div>
+<div class="fnitem">
+<!-- $$$repeat[overload1]$$$repeatdouble -->
+<h3 class="fn" translate="no" id="repeat"><span class="type">void</span> BeatRepeat::<span class="name">repeat</span>(<span class="type">double</span> <i>steps</i>)</h3>
+<p>Repeats every <i translate="no">steps</i> 16ths (1 for a repeated 16th, 0.5 and 0.25 for 1/32 and 1/64 ratchets, 4 for a beat) from the step under way, or changes the length of the repeat running. The length is clamped to 16 frames .. 5.4 s. Does nothing without a client.</p>
+<!-- @@@repeat -->
+</div>
+<div class="fnitem">
+<!-- $$$sampleRate[overload1]$$$sampleRate -->
+<h3 class="fn" translate="no" id="sampleRate"><span class="type">int</span> BeatRepeat::<span class="name">sampleRate</span>() const</h3>
+<p>Returns the sample rate of the JACK server this client runs on; 0 without a client.</p>
+<!-- @@@sampleRate -->
+</div>
+<div class="fnitem">
+<!-- $$$stop[overload1]$$$stop -->
+<h3 class="fn" translate="no" id="stop"><span class="type">void</span> BeatRepeat::<span class="name">stop</span>()</h3>
+<p>Returns to the live input, over the 300 ms release.</p>
+<!-- @@@stop -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

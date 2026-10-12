@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- audiotap.cpp -->
+  <meta name="description" content="A tap on the master for the video recorder: a JACK client that copies what the speakers get into a ring buffer and feeds it to ffmpeg through a named pipe.">
+  <meta name="keywords" content="class">
+  <title>AudioTap Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>AudioTap</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">AudioTap Class</h1>
+<!-- $$$AudioTap-brief -->
+<p>A tap on the master for the video recorder: a JACK client that copies what the speakers get into a ring buffer and feeds it to ffmpeg through a named pipe. <a href="#details">More...</a></p>
+<!-- @@@AudioTap -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;audiotap.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="audiotap-members.html">List of all members, including inherited members</a></li>
+<li>AudioTap is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#AudioTap" translate="no">AudioTap</a></b>(QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#capturedFrames" translate="no">capturedFrames</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#capturing" translate="no">capturing</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#connectFrom" translate="no">connectFrom</a></b>(const QStringList &amp;<i>ports</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#disconnectAll" translate="no">disconnectAll</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#disconnectMaster" translate="no">disconnectMaster</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#droppedFrames" translate="no">droppedFrames</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#inputPorts" translate="no">inputPorts</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#isValid" translate="no">isValid</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#micPorts" translate="no">micPorts</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#sampleRate" translate="no">sampleRate</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#setMic" translate="no">setMic</a></b>(bool <i>on</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#setVoiceOver" translate="no">setVoiceOver</a></b>(float <i>duckDb</i>, float <i>liftDb</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#startCapture" translate="no">startCapture</a></b>(const QString &amp;<i>fifoPath</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#startRealtimeUs" translate="no">startRealtimeUs</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#stopCapture" translate="no">stopCapture</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> float </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#takeMicPeak" translate="no">takeMicPeak</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#voiceActive" translate="no">voiceActive</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#captureEnded" translate="no">captureEnded</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="audiotap.html#captureStarted" translate="no">captureStarted</a></b>(qint64 <i>realtimeUs</i>)</td></tr>
+</table></div>
+<!-- $$$AudioTap-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The client (<code translate="no">ravving-video</code>, stereo inputs, no outputs) copies its inputs into a ring of 2^20 frames (about 21 s at 48 kHz) on the audio thread; a plain thread of its own drains the ring into a named pipe that ffmpeg reads as raw audio (32-bit float, interleaved stereo, the graph's rate). What the ring cannot hold is counted (<a href="audiotap.html#droppedFrames" translate="no">droppedFrames</a>()) and reported, never lost silently.</p>
+<p>It does not use AudioLevels (the WAV recorder's path) because libzynthbox runs one recording at a time, and a video session must leave the header's RECORD and the samplers' record-to-pad free; nor ffmpeg's own JACK input, whose ring holds only 16 periods (85 ms at 256 frames), less than a stall of the encoder or the SD card.</p>
+<p>The audio thread touches atomics and the preallocated ring only. The drain thread wakes every few milliseconds, writes what is there, and polls the pipe before each write, so an ffmpeg that stopped reading cannot hang <a href="audiotap.html#stopCapture" translate="no">stopCapture</a>().</p>
+<p>A microphone can be mixed in: two more inputs (<code translate="no">mic_l</code>, <code translate="no">mic_r</code>, <a href="audiotap.html#micPorts" translate="no">micPorts</a>()) that the RECORDER's input chain feeds (<a href="inputrecorder.html#setListener" translate="no">InputRecorder::setListener</a>()) while <a href="audiotap.html#setMic" translate="no">setMic</a>(true). The audio thread adds them to the master's sound as the video hears it; the speakers get no mic unless the RECORDER's MONITOR is on. While the mic is in, the audio thread also meters it (<a href="audiotap.html#takeMicPeak" translate="no">takeMicPeak</a>()) and reports whether the voice over is ducking the music (<a href="audiotap.html#voiceActive" translate="no">voiceActive</a>()).</p>
+<p>Time: the first captured sample's wall-clock moment (<a href="audiotap.html#startRealtimeUs" translate="no">startRealtimeUs</a>(), CLOCK_REALTIME in microseconds) is taken on the audio thread from the cycle's start time (<code translate="no">jack_get_cycle_times()</code>), so the recorder can tell ffmpeg where the audio sits against the video frames, which x11grab and v4l2 stamp with the same clock.</p>
+<p>Members are called on the GUI thread unless they say otherwise.</p>
+</div>
+<!-- @@@AudioTap -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$AudioTap[overload1]$$$AudioTapQObject* -->
+<h3 class="fn" translate="no" id="AudioTap"><code class="details extra" translate="no">[explicit]</code> AudioTap::<span class="name">AudioTap</span>(<span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Opens and activates the JACK client and allocates the ring, with the given <i translate="no">parent</i>. Without JACK, <a href="audiotap.html#isValid" translate="no">isValid</a>() returns <code translate="no">false</code> and nothing is captured.</p>
+<!-- @@@AudioTap -->
+</div>
+<div class="fnitem">
+<!-- $$$captureEnded[overload1]$$$captureEnded -->
+<h3 class="fn" translate="no" id="captureEnded"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> AudioTap::<span class="name">captureEnded</span>()</h3>
+<p>Emitted when the pipe is closed and the drain thread is done.</p>
+<!-- @@@captureEnded -->
+</div>
+<div class="fnitem">
+<!-- $$$captureStarted[overload1]$$$captureStartedqint64 -->
+<h3 class="fn" translate="no" id="captureStarted"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> AudioTap::<span class="name">captureStarted</span>(<span class="type">qint64</span> <i>realtimeUs</i>)</h3>
+<p>Emitted when the first sample went into the ring, at <i translate="no">realtimeUs</i> (CLOCK_REALTIME, microseconds).</p>
+<!-- @@@captureStarted -->
+</div>
+<div class="fnitem">
+<!-- $$$capturedFrames[overload1]$$$capturedFrames -->
+<h3 class="fn" translate="no" id="capturedFrames"><span class="type">qint64</span> AudioTap::<span class="name">capturedFrames</span>() const</h3>
+<p>Returns the frames captured so far in this capture.</p>
+<!-- @@@capturedFrames -->
+</div>
+<div class="fnitem">
+<!-- $$$capturing[overload1]$$$capturing -->
+<h3 class="fn" translate="no" id="capturing"><span class="type">bool</span> AudioTap::<span class="name">capturing</span>() const</h3>
+<p>Returns whether a capture is running.</p>
+<!-- @@@capturing -->
+</div>
+<div class="fnitem">
+<!-- $$$connectFrom[overload1]$$$connectFromconstQStringList& -->
+<h3 class="fn" translate="no" id="connectFrom"><span class="type">bool</span> AudioTap::<span class="name">connectFrom</span>(const <span class="type">QStringList</span> &amp;<i>ports</i>)</h3>
+<p>Connects <i translate="no">ports</i> (left, right: the master's last outputs) to the tap's master inputs. Returns <code translate="no">false</code> when a link could not be made (the ports are not there yet).</p>
+<!-- @@@connectFrom -->
+</div>
+<div class="fnitem">
+<!-- $$$disconnectAll[overload1]$$$disconnectAll -->
+<h3 class="fn" translate="no" id="disconnectAll"><span class="type">void</span> AudioTap::<span class="name">disconnectAll</span>()</h3>
+<p>Drops every link into the tap, the mic inputs' included.</p>
+<!-- @@@disconnectAll -->
+</div>
+<div class="fnitem">
+<!-- $$$disconnectMaster[overload1]$$$disconnectMaster -->
+<h3 class="fn" translate="no" id="disconnectMaster"><span class="type">void</span> AudioTap::<span class="name">disconnectMaster</span>()</h3>
+<p>Drops the links into the master inputs only; the mic inputs' links are the RECORDER's to keep or drop.</p>
+<!-- @@@disconnectMaster -->
+</div>
+<div class="fnitem">
+<!-- $$$droppedFrames[overload1]$$$droppedFrames -->
+<h3 class="fn" translate="no" id="droppedFrames"><span class="type">qint64</span> AudioTap::<span class="name">droppedFrames</span>() const</h3>
+<p>Returns the frames the ring could not hold during this capture (the reader stalled for more than about 21 s).</p>
+<!-- @@@droppedFrames -->
+</div>
+<div class="fnitem">
+<!-- $$$inputPorts[overload1]$$$inputPorts -->
+<h3 class="fn" translate="no" id="inputPorts"><span class="type">QStringList</span> AudioTap::<span class="name">inputPorts</span>() const</h3>
+<p>Returns the full names of the tap's master inputs (left, right), to connect the master's outputs to.</p>
+<!-- @@@inputPorts -->
+</div>
+<div class="fnitem">
+<!-- $$$isValid[overload1]$$$isValid -->
+<h3 class="fn" translate="no" id="isValid"><span class="type">bool</span> AudioTap::<span class="name">isValid</span>() const</h3>
+<p>Returns whether the JACK client is up; <code translate="no">false</code> on a desktop without JACK.</p>
+<!-- @@@isValid -->
+</div>
+<div class="fnitem">
+<!-- $$$micPorts[overload1]$$$micPorts -->
+<h3 class="fn" translate="no" id="micPorts"><span class="type">QStringList</span> AudioTap::<span class="name">micPorts</span>() const</h3>
+<p>Returns the full names of the mic inputs (left, right), for whoever feeds them.</p>
+<!-- @@@micPorts -->
+</div>
+<div class="fnitem">
+<!-- $$$sampleRate[overload1]$$$sampleRate -->
+<h3 class="fn" translate="no" id="sampleRate"><span class="type">int</span> AudioTap::<span class="name">sampleRate</span>() const</h3>
+<p>Returns the graph's sample rate in Hz, which the captured audio has.</p>
+<!-- @@@sampleRate -->
+</div>
+<div class="fnitem">
+<!-- $$$setMic[overload1]$$$setMicbool -->
+<h3 class="fn" translate="no" id="setMic"><span class="type">void</span> AudioTap::<span class="name">setMic</span>(<span class="type">bool</span> <i>on</i>)</h3>
+<p>Mixes the mic inputs into the captured sound when <i translate="no">on</i> is true, or not. Turning it on resets the look-ahead limiter.</p>
+<!-- @@@setMic -->
+</div>
+<div class="fnitem">
+<!-- $$$setVoiceOver[overload1]$$$setVoiceOverfloatfloat -->
+<h3 class="fn" translate="no" id="setVoiceOver"><span class="type">void</span> AudioTap::<span class="name">setVoiceOver</span>(<span class="type">float</span> <i>duckDb</i>, <span class="type">float</span> <i>liftDb</i>)</h3>
+<p>Sets the voice-over mix of the mic (docs/video.md): while the mic carries a voice the master is turned down by <i translate="no">duckDb</i> dB (0: not at all) and the mic is lifted by <i translate="no">liftDb</i> dB and made crisp (a 120 Hz high-pass, a +4 dB shelf above 3 kHz). A voice is the mic above a threshold that follows the music: at least -34 dBFS, and 12 dB over what the speakers are heard to leak into the mic (learned as the mic's level over the master's: down fast, up slowly, capped at -26 dB of the master), so a beat the mic hears does not duck itself. Both 0 give the plain sum. Either way, with the mic in, the sum goes through a look-ahead peak limiter (1 ms ahead, ceiling -1 dBFS, 150 ms release), so a hot mic over a loud beat is turned down before the peak arrives instead of clipping.</p>
+<!-- @@@setVoiceOver -->
+</div>
+<div class="fnitem">
+<!-- $$$startCapture[overload1]$$$startCaptureconstQString& -->
+<h3 class="fn" translate="no" id="startCapture"><span class="type">bool</span> AudioTap::<span class="name">startCapture</span>(const <span class="type">QString</span> &amp;<i>fifoPath</i>)</h3>
+<p>Starts capturing into the named pipe <i translate="no">fifoPath</i>, made when missing: from the next audio cycle on, samples go to the ring, and the drain thread feeds the pipe once its reader opens it. <a href="audiotap.html#captureStarted" translate="no">captureStarted</a>() follows with the first sample's wall-clock time. Returns <code translate="no">false</code> when the client is not valid, a capture is already running, or the pipe cannot be made.</p>
+<!-- @@@startCapture -->
+</div>
+<div class="fnitem">
+<!-- $$$startRealtimeUs[overload1]$$$startRealtimeUs -->
+<h3 class="fn" translate="no" id="startRealtimeUs"><span class="type">qint64</span> AudioTap::<span class="name">startRealtimeUs</span>() const</h3>
+<p>Returns the first captured sample's CLOCK_REALTIME time in microseconds; 0 before it is known.</p>
+<!-- @@@startRealtimeUs -->
+</div>
+<div class="fnitem">
+<!-- $$$stopCapture[overload1]$$$stopCapture -->
+<h3 class="fn" translate="no" id="stopCapture"><span class="type">void</span> AudioTap::<span class="name">stopCapture</span>()</h3>
+<p>Stops capturing: the drain thread writes what is left (giving a reader that stopped reading at most a second) and closes the pipe, which ends ffmpeg's audio input. <a href="audiotap.html#captureEnded" translate="no">captureEnded</a>() follows.</p>
+<!-- @@@stopCapture -->
+</div>
+<div class="fnitem">
+<!-- $$$takeMicPeak[overload1]$$$takeMicPeak -->
+<h3 class="fn" translate="no" id="takeMicPeak"><span class="type">float</span> AudioTap::<span class="name">takeMicPeak</span>()</h3>
+<p>Returns the mic's own peak (absolute sample value, before the lift) since the last call, and starts the next one at 0.</p>
+<!-- @@@takeMicPeak -->
+</div>
+<div class="fnitem">
+<!-- $$$voiceActive[overload1]$$$voiceActive -->
+<h3 class="fn" translate="no" id="voiceActive"><span class="type">bool</span> AudioTap::<span class="name">voiceActive</span>() const</h3>
+<p>Returns whether the voice over is ducking the music at this moment.</p>
+<!-- @@@voiceActive -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

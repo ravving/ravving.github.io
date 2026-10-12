@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- history.cpp -->
+  <meta name="description" content="The project's undo history, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;history.">
+  <meta name="keywords" content="class">
+  <title>History Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>History</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">History Class</h1>
+<!-- $$$History-brief -->
+<p>The project's undo history, published to QML as <code translate="no">studio.history</code>. <a href="#details">More...</a></p>
+<!-- @@@History -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;history.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="history-members.html">List of all members, including inherited members</a></li>
+<li>History is part of <a href="ravving-studio.html">Studio and projects</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="history.html#canRedo-prop" translate="no">canRedo</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="history.html#canUndo-prop" translate="no">canUndo</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="history.html#redoText-prop" translate="no">redoText</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="history.html#undoText-prop" translate="no">undoText</a></b> : QString</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="history.html#History" translate="no">History</a></b>(QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#add" translate="no">add</a></b>(HistoryParticipant *<i>participant</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#begin" translate="no">begin</a></b>(const QString &amp;<i>label</i> = QString())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="history.html#canRedo-prop" translate="no">canRedo</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="history.html#canRedoIn" translate="no">canRedoIn</a></b>(const QString &amp;<i>key</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="history.html#canUndo-prop" translate="no">canUndo</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="history.html#canUndoIn" translate="no">canUndoIn</a></b>(const QString &amp;<i>key</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#clear" translate="no">clear</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#end" translate="no">end</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#forget" translate="no">forget</a></b>(HistoryParticipant *<i>participant</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#record" translate="no">record</a></b>(HistoryParticipant *<i>participant</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#redo" translate="no">redo</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#redoIn" translate="no">redoIn</a></b>(const QString &amp;<i>key</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="history.html#redoText-prop" translate="no">redoText</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#remove" translate="no">remove</a></b>(HistoryParticipant *<i>participant</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#undo" translate="no">undo</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#undoIn" translate="no">undoIn</a></b>(const QString &amp;<i>key</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="history.html#undoText-prop" translate="no">undoText</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#changed" translate="no">changed</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#redone" translate="no">redone</a></b>(const QString &amp;<i>what</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="history.html#undone" translate="no">undone</a></b>(const QString &amp;<i>what</i>)</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="history.html#Depth-var" translate="no">Depth</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="history.html#MergeMs-var" translate="no">MergeMs</a></b></td></tr>
+</table></div>
+<!-- $$$History-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Participants (<a href="historyparticipant.html" translate="no">HistoryParticipant</a>) register once with <a href="history.html#add" translate="no">add</a>() and report each change with <a href="history.html#record" translate="no">record</a>(). A step holds, for each participant it touched, the state before and after, so a step stores only what changed and undoing it restores only what it touched. At most <a href="history.html#Depth-var" translate="no">Depth</a> steps are kept.</p>
+<p>What becomes one step:</p>
+<ul>
+<li>everything recorded within one turn of the event loop: an action that touches several participants (CLEAR on every machine, a key change that moves the bass and the lead) is undone in one go;</li>
+<li>a participant's changes that follow each other within <a href="history.html#MergeMs-var" translate="no">MergeMs</a> milliseconds (a knob turning, a handle dragged);</li>
+<li>everything between <a href="history.html#begin" translate="no">begin</a>() and <a href="history.html#end" translate="no">end</a>().</li>
+</ul>
+<p>There are two ways back:</p>
+<ul>
+<li>the timeline: <a href="history.html#undo" translate="no">undo</a>() and <a href="history.html#redo" translate="no">redo</a>() walk the whole project's steps (the header's undo and redo, ALT + LEFT / RIGHT);</li>
+<li>one participant: <a href="history.html#undoIn" translate="no">undoIn</a>() and <a href="history.html#redoIn" translate="no">redoIn</a>() step through that participant's changes only (a machine's toolbar), leaving the others as they are. The participants' states are independent of each other, which makes this safe.</li>
+</ul>
+<p><a href="history.html#forget" translate="no">forget</a>() drops a participant's steps when its state is replaced wholesale (a project opened, a section picked); <a href="history.html#clear" translate="no">clear</a>() empties the whole history.</p>
+<p>All members run on the GUI thread.</p>
+</div>
+<!-- @@@History -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$canRedo-prop$$$canRedo$$$changed -->
+<h3 class="fn" translate="no" id="canRedo-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">canRedo</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the timeline has a step to redo.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>canRedo</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="history.html#changed" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@canRedo -->
+</div>
+<div class="fnitem">
+<!-- $$$canUndo-prop$$$canUndo$$$changed -->
+<h3 class="fn" translate="no" id="canUndo-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">canUndo</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the timeline has a step to undo.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>canUndo</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="history.html#changed" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@canUndo -->
+</div>
+<div class="fnitem">
+<!-- $$$redoText-prop$$$redoText$$$changed -->
+<h3 class="fn" translate="no" id="redoText-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">redoText</span> : <span class="type">QString</span></h3>
+<p>This property holds the name of the step <a href="history.html#redo" translate="no">redo</a>() would redo, as <a href="history.html#undoText-prop" translate="no">undoText</a>; empty when there is none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>redoText</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="history.html#changed" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@redoText -->
+</div>
+<div class="fnitem">
+<!-- $$$undoText-prop$$$undoText$$$changed -->
+<h3 class="fn" translate="no" id="undoText-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">undoText</span> : <span class="type">QString</span></h3>
+<p>This property holds the name of the step <a href="history.html#undo" translate="no">undo</a>() would undo: its <a href="history.html#begin" translate="no">begin</a>() label, else the labels of the participants it touched joined by &quot; + &quot; (<code translate="no">&quot;CHORDS + BASS&quot;</code>); empty when there is none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>undoText</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="history.html#changed" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@undoText -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$History[overload1]$$$HistoryQObject* -->
+<h3 class="fn" translate="no" id="History"><code class="details extra" translate="no">[explicit]</code> History::<span class="name">History</span>(<span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs an empty history with the given <i translate="no">parent</i>.</p>
+<!-- @@@History -->
+</div>
+<div class="fnitem">
+<!-- $$$add[overload1]$$$addHistoryParticipant* -->
+<h3 class="fn" translate="no" id="add"><span class="type">void</span> History::<span class="name">add</span>(<span class="type"><a href="historyparticipant.html" translate="no">HistoryParticipant</a></span> *<i>participant</i>)</h3>
+<p>Registers <i translate="no">participant</i>. Its state now is where its history starts. The participant must outlive the history or be removed with <a href="history.html#remove" translate="no">remove</a>() first.</p>
+<!-- @@@add -->
+</div>
+<div class="fnitem">
+<!-- $$$begin[overload1]$$$beginconstQString& -->
+<h3 class="fn" translate="no" id="begin"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> History::<span class="name">begin</span>(const <span class="type">QString</span> &amp;<i>label</i> = QString())</h3>
+<p>Opens a group: everything recorded until the matching <a href="history.html#end" translate="no">end</a>() becomes one step, named <i translate="no">label</i> (else after the participants it touched). Groups nest; the outermost label is used.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@begin -->
+</div>
+<div class="fnitem">
+<!-- $$$canRedoIn[overload1]$$$canRedoInconstQString& -->
+<h3 class="fn" translate="no" id="canRedoIn"><span class="type">bool</span> History::<span class="name">canRedoIn</span>(const <span class="type">QString</span> &amp;<i>key</i>) const</h3>
+<p>Returns whether the participant named <i translate="no">key</i> has a change to redo: one undone with <a href="history.html#undoIn" translate="no">undoIn</a>(), or one in the timeline's last undone step.</p>
+<!-- @@@canRedoIn -->
+</div>
+<div class="fnitem">
+<!-- $$$canUndoIn[overload1]$$$canUndoInconstQString& -->
+<h3 class="fn" translate="no" id="canUndoIn"><span class="type">bool</span> History::<span class="name">canUndoIn</span>(const <span class="type">QString</span> &amp;<i>key</i>) const</h3>
+<p>Returns whether the participant named <i translate="no">key</i> has a change in the timeline to undo.</p>
+<!-- @@@canUndoIn -->
+</div>
+<div class="fnitem">
+<!-- $$$changed -->
+<h3 class="fn" translate="no" id="changed"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> History::<span class="name">changed</span>()</h3>
+<p>Emitted when anything about the history changes: the can* and *Text properties, or a participant's own <a href="history.html#canUndoIn" translate="no">canUndoIn</a>() / <a href="history.html#canRedoIn" translate="no">canRedoIn</a>().</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="history.html#canRedo-prop" translate="no">canRedo</a>, <a href="history.html#canUndo-prop" translate="no">canUndo</a>, <a href="history.html#redoText-prop" translate="no">redoText</a>, and <a href="history.html#undoText-prop" translate="no">undoText</a>. </p>
+</div><!-- @@@changed -->
+</div>
+<div class="fnitem">
+<!-- $$$clear[overload1]$$$clear -->
+<h3 class="fn" translate="no" id="clear"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> History::<span class="name">clear</span>()</h3>
+<p>Empties the history; every registered participant starts again from its current state.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@clear -->
+</div>
+<div class="fnitem">
+<!-- $$$end[overload1]$$$end -->
+<h3 class="fn" translate="no" id="end"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> History::<span class="name">end</span>()</h3>
+<p>Closes the group <a href="history.html#begin" translate="no">begin</a>() opened; the step is complete when the outermost group closes.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@end -->
+</div>
+<div class="fnitem">
+<!-- $$$forget[overload1]$$$forgetHistoryParticipant* -->
+<h3 class="fn" translate="no" id="forget"><span class="type">void</span> History::<span class="name">forget</span>(<span class="type"><a href="historyparticipant.html" translate="no">HistoryParticipant</a></span> *<i>participant</i>)</h3>
+<p>Drops every step entry of <i translate="no">participant</i>, and the steps left empty by that, and takes its current state as its new starting point. Call it when the participant's state is replaced wholesale.</p>
+<!-- @@@forget -->
+</div>
+<div class="fnitem">
+<!-- $$$record[overload1]$$$recordHistoryParticipant* -->
+<h3 class="fn" translate="no" id="record"><span class="type">void</span> History::<span class="name">record</span>(<span class="type"><a href="historyparticipant.html" translate="no">HistoryParticipant</a></span> *<i>participant</i>)</h3>
+<p>Records a change of <i translate="no">participant</i>: its state is compared with the last one known and, when it differs, becomes part of a step (the open one, a merge with the participant's last step, or a new step on top). A new change clears the redo steps. Ignored while the history itself applies a state, and for a participant that is not registered.</p>
+<!-- @@@record -->
+</div>
+<div class="fnitem">
+<!-- $$$redo[overload1]$$$redo -->
+<h3 class="fn" translate="no" id="redo"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> History::<span class="name">redo</span>()</h3>
+<p>Redoes the last undone step of the timeline. Emits <a href="history.html#changed" translate="no">changed</a>() and <a href="history.html#redone" translate="no">redone</a>().</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@redo -->
+</div>
+<div class="fnitem">
+<!-- $$$redoIn[overload1]$$$redoInconstQString& -->
+<h3 class="fn" translate="no" id="redoIn"><span class="type">void</span> History::<span class="name">redoIn</span>(const <span class="type">QString</span> &amp;<i>key</i>)</h3>
+<p>Redoes the change of the participant named <i translate="no">key</i> that <a href="history.html#undoIn" translate="no">undoIn</a>() undid last, as a new step on top of the timeline. When it has none but the timeline's last undone step touched it, that step is redone (<a href="history.html#redo" translate="no">redo</a>()).</p>
+<!-- @@@redoIn -->
+</div>
+<div class="fnitem">
+<!-- $$$redone[overload1]$$$redoneconstQString& -->
+<h3 class="fn" translate="no" id="redone"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> History::<span class="name">redone</span>(const <span class="type">QString</span> &amp;<i>what</i>)</h3>
+<p>Emitted after <a href="history.html#redo" translate="no">redo</a>() went forward over a step; <i translate="no">what</i> is its name (<a href="history.html#redoText-prop" translate="no">redoText</a> before the call).</p>
+<!-- @@@redone -->
+</div>
+<div class="fnitem">
+<!-- $$$remove[overload1]$$$removeHistoryParticipant* -->
+<h3 class="fn" translate="no" id="remove"><span class="type">void</span> History::<span class="name">remove</span>(<span class="type"><a href="historyparticipant.html" translate="no">HistoryParticipant</a></span> *<i>participant</i>)</h3>
+<p>Forgets <i translate="no">participant</i>'s steps (<a href="history.html#forget" translate="no">forget</a>()) and unregisters it.</p>
+<!-- @@@remove -->
+</div>
+<div class="fnitem">
+<!-- $$$undo[overload1]$$$undo -->
+<h3 class="fn" translate="no" id="undo"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> History::<span class="name">undo</span>()</h3>
+<p>Undoes the timeline's last step: each participant it touched gets its state from before the step, the last touched first. Closes any open <a href="history.html#begin" translate="no">begin</a>() group. Emits <a href="history.html#changed" translate="no">changed</a>() and <a href="history.html#undone" translate="no">undone</a>().</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@undo -->
+</div>
+<div class="fnitem">
+<!-- $$$undoIn[overload1]$$$undoInconstQString& -->
+<h3 class="fn" translate="no" id="undoIn"><span class="type">void</span> History::<span class="name">undoIn</span>(const <span class="type">QString</span> &amp;<i>key</i>)</h3>
+<p>Undoes the latest change of the participant named <i translate="no">key</i>, wherever it is in the timeline, and keeps it for <a href="history.html#redoIn" translate="no">redoIn</a>(). The other participants keep their state; the timeline's redo steps are cleared.</p>
+<!-- @@@undoIn -->
+</div>
+<div class="fnitem">
+<!-- $$$undone[overload1]$$$undoneconstQString& -->
+<h3 class="fn" translate="no" id="undone"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> History::<span class="name">undone</span>(const <span class="type">QString</span> &amp;<i>what</i>)</h3>
+<p>Emitted after <a href="history.html#undo" translate="no">undo</a>() went back over a step; <i translate="no">what</i> is its name (<a href="history.html#undoText-prop" translate="no">undoText</a> before the call).</p>
+<!-- @@@undone -->
+</div>
+</div>
+<div class="vars">
+<h2>Member Variable Documentation</h2>
+<div class="fnitem">
+<!-- $$$Depth -->
+<h3 class="fn" translate="no" id="Depth-var">const <span class="type">int</span> History::<span class="name">Depth</span></h3>
+<p>This variable holds the number of steps the timeline keeps (100); the oldest step is dropped past it.</p>
+<!-- @@@Depth -->
+</div>
+<div class="fnitem">
+<!-- $$$MergeMs -->
+<h3 class="fn" translate="no" id="MergeMs-var">const <span class="type">int</span> History::<span class="name">MergeMs</span></h3>
+<p>This variable holds the time in milliseconds (500) within which a participant's next change joins its last step.</p>
+<!-- @@@MergeMs -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

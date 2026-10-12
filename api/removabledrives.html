@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- removabledrives.cpp -->
+  <meta name="description" content="USB sticks, published to QML as drives: what is plugged in, mounted when ravving needs it, and ejected cleanly.">
+  <meta name="keywords" content="class">
+  <title>RemovableDrives Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>RemovableDrives</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">RemovableDrives Class</h1>
+<!-- $$$RemovableDrives-brief -->
+<p>USB sticks, published to QML as <code translate="no">drives</code>: what is plugged in, mounted when ravving needs it, and ejected cleanly. <a href="#details">More...</a></p>
+<!-- @@@RemovableDrives -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;removabledrives.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="removabledrives-members.html">List of all members, including inherited members</a></li>
+<li>RemovableDrives is part of <a href="ravving-system.html">Device, network and files</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="removabledrives.html#any-prop" translate="no">any</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="removabledrives.html#busy-prop" translate="no">busy</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="removabledrives.html#drives-prop" translate="no">drives</a></b> : QVariantList</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#RemovableDrives" translate="no">RemovableDrives</a></b>(QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#any-prop" translate="no">any</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#busy-prop" translate="no">busy</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#copyFiles" translate="no">copyFiles</a></b>(const QStringList &amp;<i>files</i>, const QString &amp;<i>device</i>, const QString &amp;<i>kind</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#drive" translate="no">drive</a></b>(const QString &amp;<i>device</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#drives-prop" translate="no">drives</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#eject" translate="no">eject</a></b>(const QString &amp;<i>device</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#folder" translate="no">folder</a></b>(const QString &amp;<i>device</i>, const QString &amp;<i>kind</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#format" translate="no">format</a></b>(const QString &amp;<i>device</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#mount" translate="no">mount</a></b>(const QString &amp;<i>device</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#refresh" translate="no">refresh</a></b>()</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#busy-prop" translate="no">busyChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#driveAdded" translate="no">driveAdded</a></b>(const QString &amp;<i>label</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#driveRemoved" translate="no">driveRemoved</a></b>(const QString &amp;<i>label</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#drives-prop" translate="no">drivesChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#ejected" translate="no">ejected</a></b>(const QString &amp;<i>label</i>, bool <i>ok</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#filesCopied" translate="no">filesCopied</a></b>(const QString &amp;<i>label</i>, const QString &amp;<i>kind</i>, int <i>count</i>, bool <i>ok</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#formatted" translate="no">formatted</a></b>(const QString &amp;<i>label</i>, const QString &amp;<i>device</i>, bool <i>ok</i>, const QString &amp;<i>message</i>)</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="removabledrives.html#stickPath" translate="no">stickPath</a></b>(const QString &amp;<i>mountPoint</i>, const QString &amp;<i>kind</i>)</td></tr>
+</table></div>
+<!-- $$$RemovableDrives-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>A Zynthbox runs udisks2 but mounts nothing by itself, so this lists the USB partitions it finds (<code translate="no">lsblk</code>, every two seconds), mounts one on request (<code translate="no">udisksctl mount</code>: it lands under <code translate="no">/media/root/&lt;label&gt;</code>) and ejects it (sync, <code translate="no">udisksctl unmount</code>, then <code translate="no">power-off</code> so the stick can be pulled).</p>
+<p>On a stick ravving keeps one layout: <code translate="no">ravving/&lt;kind&gt;</code> folders, such as <code translate="no">ravving/exports</code> for the tracks (with cover and sidecar) and <code translate="no">ravving/projects</code> for the <code translate="no">.ravv</code> bundles (<a href="removabledrives.html#stickPath" translate="no">stickPath</a>(), <a href="removabledrives.html#folder" translate="no">folder</a>()). Every ravving writes and reads it the same way, so a stick carries a production from one device to another. The external commands run asynchronously except <a href="removabledrives.html#mount" translate="no">mount</a>(); copies run in a worker thread.</p>
+</div>
+<!-- @@@RemovableDrives -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$any-prop$$$any$$$drivesChanged -->
+<h3 class="fn" translate="no" id="any-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">any</span> : <span class="type">bool</span></h3>
+<p>This property holds whether any partition is plugged in.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>any</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="removabledrives.html#drives-prop" translate="no">drivesChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@any -->
+</div>
+<div class="fnitem">
+<!-- $$$busy-prop$$$busy$$$busyChanged -->
+<h3 class="fn" translate="no" id="busy-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">busy</span> : <span class="type">bool</span></h3>
+<p>This property holds whether a mount, an eject or a format is under way.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>busy</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>busyChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@busy -->
+</div>
+<div class="fnitem">
+<!-- $$$drives-prop$$$drives$$$drivesChanged -->
+<h3 class="fn" translate="no" id="drives-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">drives</span> : <span class="type">QVariantList</span></h3>
+<p>each plugged partition, as maps with <code translate="no">device</code> (<code translate="no">/dev/sda1</code>), <code translate="no">disk</code> (<code translate="no">/dev/sda</code>), <code translate="no">label</code> (the volume label, else &quot;vendor model&quot;), <code translate="no">size</code> (<code translate="no">980M</code>), <code translate="no">fsType</code>, <code translate="no">mountPoint</code> (empty until mounted), <code translate="no">mounted</code> and <code translate="no">readOnly</code> (an installer's ISO image, a locked stick, a read-only mount).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>drives</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>drivesChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@drives -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$RemovableDrives[overload1]$$$RemovableDrivesQObject* -->
+<h3 class="fn" translate="no" id="RemovableDrives"><code class="details extra" translate="no">[explicit]</code> RemovableDrives::<span class="name">RemovableDrives</span>(<span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Lists the plugged partitions and starts the two-second poll, with the given <i translate="no">parent</i>.</p>
+<!-- @@@RemovableDrives -->
+</div>
+<div class="fnitem">
+<!-- $$$copyFiles[overload1]$$$copyFilesconstQStringList&constQString&constQString& -->
+<h3 class="fn" translate="no" id="copyFiles"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> RemovableDrives::<span class="name">copyFiles</span>(const <span class="type">QStringList</span> &amp;<i>files</i>, const <span class="type">QString</span> &amp;<i>device</i>, const <span class="type">QString</span> &amp;<i>kind</i>)</h3>
+<p>Copies <i translate="no">files</i> into the <code translate="no">ravving/&lt;kind&gt;</code> folder of the stick of the partition <i translate="no">device</i> (<i translate="no">kind</i> such as <code translate="no">videos</code>, <code translate="no">exports</code>, <code translate="no">projects</code>, <code translate="no">presets</code>), in a worker thread, synced at the end; <a href="removabledrives.html#filesCopied" translate="no">filesCopied</a>() tells how it went.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@copyFiles -->
+</div>
+<div class="fnitem">
+<!-- $$$drive[overload1]$$$driveconstQString& -->
+<h3 class="fn" translate="no" id="drive"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantMap</span> RemovableDrives::<span class="name">drive</span>(const <span class="type">QString</span> &amp;<i>device</i>) const</h3>
+<p>Returns the drive of the partition <i translate="no">device</i>; a map with empty fields when unknown.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@drive -->
+</div>
+<div class="fnitem">
+<!-- $$$driveAdded[overload1]$$$driveAddedconstQString& -->
+<h3 class="fn" translate="no" id="driveAdded"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> RemovableDrives::<span class="name">driveAdded</span>(const <span class="type">QString</span> &amp;<i>label</i>)</h3>
+<p>Emitted when a stick labelled <i translate="no">label</i> appeared.</p>
+<!-- @@@driveAdded -->
+</div>
+<div class="fnitem">
+<!-- $$$driveRemoved[overload1]$$$driveRemovedconstQString& -->
+<h3 class="fn" translate="no" id="driveRemoved"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> RemovableDrives::<span class="name">driveRemoved</span>(const <span class="type">QString</span> &amp;<i>label</i>)</h3>
+<p>Emitted when the stick labelled <i translate="no">label</i> went.</p>
+<!-- @@@driveRemoved -->
+</div>
+<div class="fnitem">
+<!-- $$$eject[overload1]$$$ejectconstQString& -->
+<h3 class="fn" translate="no" id="eject"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> RemovableDrives::<span class="name">eject</span>(const <span class="type">QString</span> &amp;<i>device</i>)</h3>
+<p>Flushes, unmounts and powers off the stick of the partition <i translate="no">device</i>, so it can be pulled; <a href="removabledrives.html#ejected" translate="no">ejected</a>() follows.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@eject -->
+</div>
+<div class="fnitem">
+<!-- $$$ejected[overload1]$$$ejectedconstQString&bool -->
+<h3 class="fn" translate="no" id="ejected"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> RemovableDrives::<span class="name">ejected</span>(const <span class="type">QString</span> &amp;<i>label</i>, <span class="type">bool</span> <i>ok</i>)</h3>
+<p>Emitted when the stick labelled <i translate="no">label</i> was ejected and can be pulled (<i translate="no">ok</i>), or could not be.</p>
+<!-- @@@ejected -->
+</div>
+<div class="fnitem">
+<!-- $$$filesCopied[overload1]$$$filesCopiedconstQString&constQString&intbool -->
+<h3 class="fn" translate="no" id="filesCopied"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> RemovableDrives::<span class="name">filesCopied</span>(const <span class="type">QString</span> &amp;<i>label</i>, const <span class="type">QString</span> &amp;<i>kind</i>, <span class="type">int</span> <i>count</i>, <span class="type">bool</span> <i>ok</i>)</h3>
+<p>Emitted when <a href="removabledrives.html#copyFiles" translate="no">copyFiles</a>() ended: <i translate="no">count</i> files reached the stick labelled <i translate="no">label</i> under <i translate="no">kind</i>; <i translate="no">ok</i> when all of them did.</p>
+<!-- @@@filesCopied -->
+</div>
+<div class="fnitem">
+<!-- $$$folder[overload1]$$$folderconstQString&constQString& -->
+<h3 class="fn" translate="no" id="folder"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> RemovableDrives::<span class="name">folder</span>(const <span class="type">QString</span> &amp;<i>device</i>, const <span class="type">QString</span> &amp;<i>kind</i>)</h3>
+<p>Returns the stick's ravving folder of <i translate="no">kind</i> (<code translate="no">exports</code>, <code translate="no">projects</code>, <code translate="no">samples...</code>) on the partition <i translate="no">device</i>, mounting it first and making the folder; empty when that failed.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@folder -->
+</div>
+<div class="fnitem">
+<!-- $$$format[overload1]$$$formatconstQString& -->
+<h3 class="fn" translate="no" id="format"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> RemovableDrives::<span class="name">format</span>(const <span class="type">QString</span> &amp;<i>device</i>)</h3>
+<p>Erases the whole stick the partition <i translate="no">device</i> is on and makes it one writable FAT32 partition labelled RAVVING, mounted: a read-only stick or an installer's image becomes usable. Everything on the stick is lost. Only a USB disk of the list is touched, never the system's; <a href="removabledrives.html#formatted" translate="no">formatted</a>() follows.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@format -->
+</div>
+<div class="fnitem">
+<!-- $$$formatted[overload1]$$$formattedconstQString&constQString&boolconstQString& -->
+<h3 class="fn" translate="no" id="formatted"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> RemovableDrives::<span class="name">formatted</span>(const <span class="type">QString</span> &amp;<i>label</i>, const <span class="type">QString</span> &amp;<i>device</i>, <span class="type">bool</span> <i>ok</i>, const <span class="type">QString</span> &amp;<i>message</i>)</h3>
+<p>Emitted when the stick that was labelled <i translate="no">label</i> was formatted (<i translate="no">ok</i>), with its new partition <i translate="no">device</i>; on failure <i translate="no">device</i> is empty and <i translate="no">message</i> says why.</p>
+<!-- @@@formatted -->
+</div>
+<div class="fnitem">
+<!-- $$$mount[overload1]$$$mountconstQString& -->
+<h3 class="fn" translate="no" id="mount"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> RemovableDrives::<span class="name">mount</span>(const <span class="type">QString</span> &amp;<i>device</i>)</h3>
+<p>Mounts the partition <i translate="no">device</i>, blocking for well under a second. Returns its mount point, or an empty string when it failed.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@mount -->
+</div>
+<div class="fnitem">
+<!-- $$$refresh[overload1]$$$refresh -->
+<h3 class="fn" translate="no" id="refresh"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> RemovableDrives::<span class="name">refresh</span>()</h3>
+<p>Looks again now; the poll does it every two seconds anyway.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@refresh -->
+</div>
+<div class="fnitem">
+<!-- $$$stickPath[overload1]$$$stickPathconstQString&constQString& -->
+<h3 class="fn" translate="no" id="stickPath"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> RemovableDrives::<span class="name">stickPath</span>(const <span class="type">QString</span> &amp;<i>mountPoint</i>, const <span class="type">QString</span> &amp;<i>kind</i>)</h3>
+<p>Returns where ravving keeps <i translate="no">kind</i> on a stick mounted at <i translate="no">mountPoint</i>: <code translate="no">&lt;mountPoint&gt;/ravving/&lt;kind&gt;</code>. Nothing is made.</p>
+<!-- @@@stickPath -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

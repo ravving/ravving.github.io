@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- namedstore.cpp -->
+  <meta name="description" content="The user's own named entries of one kind, kept in a JSON file of their own ({&lt;@string&gt;&amp;quot;presets&amp;quot;&lt;/@string&gt;: &lt;@op&gt;[&lt;/@op&gt;{&lt;@string&gt;&amp;quot;name&amp;quot;&lt;/@string&gt;: &lt;@op&gt;.&lt;/@op&gt;&lt;@op&gt;.&lt;/@op&gt;&lt;@op&gt;.&lt;/@op&gt;&lt;@op&gt;,&lt;/@op&gt; &lt;@op&gt;.&lt;/@op&gt;&lt;@op&gt;.&lt;/@op&gt;&lt;@op&gt;.&lt;/@op&gt;}&lt;@op&gt;,&lt;/@op&gt; &lt;@op&gt;.&lt;/@op&gt;&lt;@op&gt;.&lt;/@op&gt;&lt;@op&gt;.&lt;/@op&gt;&lt;@op&gt;]&lt;/@op&gt;}).">
+  <meta name="keywords" content="class">
+  <title>NamedStore Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>NamedStore</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">NamedStore Class</h1>
+<!-- $$$NamedStore-brief -->
+<p>The user's own named entries of one kind, kept in a JSON file of their own (<code translate="no">{&quot;presets&quot;: [{&quot;name&quot;: ..., ...}, ...]}</code>). <a href="#details">More...</a></p>
+<!-- @@@NamedStore -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;namedstore.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="namedstore-members.html">List of all members, including inherited members</a></li>
+<li>NamedStore is part of <a href="ravving-studio.html">Studio and projects</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="namedstore.html#NamedStore" translate="no">NamedStore</a></b>(const QString &amp;<i>file</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="namedstore.html#add" translate="no">add</a></b>(QVariantMap <i>entry</i>, const std::function&lt;bool (const QString &amp;)&gt; &amp;<i>taken</i> = {})</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="namedstore.html#contains" translate="no">contains</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const QVariantList &amp;</td><td class="memItemRight bottomAlign"><b><a href="namedstore.html#entries" translate="no">entries</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="namedstore.html#entry" translate="no">entry</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="namedstore.html#file" translate="no">file</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="namedstore.html#names" translate="no">names</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="namedstore.html#put" translate="no">put</a></b>(const QVariantMap &amp;<i>entry</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="namedstore.html#remove" translate="no">remove</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="namedstore.html#uniqueName" translate="no">uniqueName</a></b>(const QString &amp;<i>wanted</i>, const std::function&lt;bool (const QString &amp;)&gt; &amp;<i>taken</i> = {}) const</td></tr>
+</table></div>
+<!-- $$$NamedStore-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Used for the pattern presets a <a href="presetlibrary.html" translate="no">PresetLibrary</a> adds to its factory ones and the sounds a machine saves. Every entry is a map with a unique <code translate="no">name</code>; the rest is the owner's. Each change is written at once (the entries are few and small). A file that cannot be read is moved aside (<code translate="no">&lt;file&gt;.unreadable-&lt;date&gt;</code>) and reported as an issue, never written over. A plain value type; not thread-safe.</p>
+</div>
+<!-- @@@NamedStore -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$NamedStore[overload1]$$$NamedStoreconstQString& -->
+<h3 class="fn" translate="no" id="NamedStore"><code class="details extra" translate="no">[explicit]</code> NamedStore::<span class="name">NamedStore</span>(const <span class="type">QString</span> &amp;<i>file</i>)</h3>
+<p>Reads <i translate="no">file</i>; an absent file is an empty store.</p>
+<!-- @@@NamedStore -->
+</div>
+<div class="fnitem">
+<!-- $$$add[overload1]$$$addQVariantMapconststd::function<bool(constQString&)>& -->
+<h3 class="fn" translate="no" id="add"><span class="type">QString</span> NamedStore::<span class="name">add</span>(<span class="type">QVariantMap</span> <i>entry</i>, const <span class="type">std::function</span>&lt;<span class="type">bool</span> (const <span class="type">QString</span> &amp;)&gt; &amp;<i>taken</i> = {})</h3>
+<p>Adds <i translate="no">entry</i> under its own <code translate="no">name</code> made unique (against <i translate="no">taken</i> too), writes the file and returns the name used.</p>
+<!-- @@@add -->
+</div>
+<div class="fnitem">
+<!-- $$$contains[overload1]$$$containsconstQString& -->
+<h3 class="fn" translate="no" id="contains"><span class="type">bool</span> NamedStore::<span class="name">contains</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
+<p>Returns whether an entry is called <i translate="no">name</i>.</p>
+<!-- @@@contains -->
+</div>
+<div class="fnitem">
+<!-- $$$entries[overload1]$$$entries -->
+<h3 class="fn" translate="no" id="entries">const <span class="type">QVariantList</span> &amp;NamedStore::<span class="name">entries</span>() const</h3>
+<p>Returns the entries, in the file's order.</p>
+<!-- @@@entries -->
+</div>
+<div class="fnitem">
+<!-- $$$entry[overload1]$$$entryconstQString& -->
+<h3 class="fn" translate="no" id="entry"><span class="type">QVariantMap</span> NamedStore::<span class="name">entry</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
+<p>Returns the entry called <i translate="no">name</i>; an empty map when there is none.</p>
+<!-- @@@entry -->
+</div>
+<div class="fnitem">
+<!-- $$$file[overload1]$$$file -->
+<h3 class="fn" translate="no" id="file"><span class="type">QString</span> NamedStore::<span class="name">file</span>() const</h3>
+<p>Returns the store's file.</p>
+<!-- @@@file -->
+</div>
+<div class="fnitem">
+<!-- $$$names[overload1]$$$names -->
+<h3 class="fn" translate="no" id="names"><span class="type">QStringList</span> NamedStore::<span class="name">names</span>() const</h3>
+<p>Returns the entries' names, in order.</p>
+<!-- @@@names -->
+</div>
+<div class="fnitem">
+<!-- $$$put[overload1]$$$putconstQVariantMap& -->
+<h3 class="fn" translate="no" id="put"><span class="type">QString</span> NamedStore::<span class="name">put</span>(const <span class="type">QVariantMap</span> &amp;<i>entry</i>)</h3>
+<p>Replaces the entry called <i translate="no">entry</i>'s <code translate="no">name</code>, or adds it, writes the file and returns the name.</p>
+<!-- @@@put -->
+</div>
+<div class="fnitem">
+<!-- $$$remove[overload1]$$$removeconstQString& -->
+<h3 class="fn" translate="no" id="remove"><span class="type">bool</span> NamedStore::<span class="name">remove</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Removes the entry called <i translate="no">name</i> and writes the file. Returns <code translate="no">false</code> when there was none.</p>
+<!-- @@@remove -->
+</div>
+<div class="fnitem">
+<!-- $$$uniqueName[overload1]$$$uniqueNameconstQString&conststd::function<bool(constQString&)>& -->
+<h3 class="fn" translate="no" id="uniqueName"><span class="type">QString</span> NamedStore::<span class="name">uniqueName</span>(const <span class="type">QString</span> &amp;<i>wanted</i>, const <span class="type">std::function</span>&lt;<span class="type">bool</span> (const <span class="type">QString</span> &amp;)&gt; &amp;<i>taken</i> = {}) const</h3>
+<p>Returns <i translate="no">wanted</i> when no entry here, and none <i translate="no">taken</i> reports, has that name; else &quot;wanted 2&quot;, &quot;wanted 3&quot;... the first that is free.</p>
+<!-- @@@uniqueName -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

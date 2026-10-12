@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- pitchdetector.cpp -->
+  <meta name="description" content="The pitch of a plucked string in a block of mono audio: the TUNER's ear (Tuner).">
+  <meta name="keywords" content="class">
+  <title>PitchDetector Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>PitchDetector</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">PitchDetector Class</h1>
+<!-- $$$PitchDetector-brief -->
+<p>The pitch of a plucked string in a block of mono audio: the TUNER's ear (Tuner). <a href="#details">More...</a></p>
+<!-- @@@PitchDetector -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;pitchdetector.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="pitchdetector-members.html">List of all members, including inherited members</a></li>
+<li>PitchDetector is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> float </td><td class="memItemRight bottomAlign"><b><a href="pitchdetector.html#detect" translate="no">detect</a></b>(const float *<i>samples</i>, int <i>count</i>, float *<i>clarity</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="pitchdetector.html#reset" translate="no">reset</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="pitchdetector.html#setOnLevel" translate="no">setOnLevel</a></b>(float <i>level</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="pitchdetector.html#setRange" translate="no">setRange</a></b>(float <i>lowestHz</i>, float <i>highestHz</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="pitchdetector.html#setSampleRate" translate="no">setSampleRate</a></b>(int <i>rate</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="pitchdetector.html#wantedSamples" translate="no">wantedSamples</a></b>() const</td></tr>
+</table></div>
+<!-- $$$PitchDetector-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The method is guitarix's tuner (<code translate="no">src/LV2/gxtuner.lv2/gx_pitch_tracker.cpp</code>, GPL-2.0-or-later, by Hermann Meyer, James Warden, Andreas Degert and Pete Shorthose), itself Philip McLeod's from Tartini: the block is brought down to about 24 kHz, its normalised square difference function (NSDF: the autocorrelation scaled to -1..1 by the energy of both halves) is taken over the lags of the range asked for, and the period is the first key maximum (the highest peak between two zero crossings) that reaches near the highest one, which keeps a string's strong second harmonic from reading an octave up. A parabola through the peak gives the fraction of a sample. At these sizes (a 2048-sample window, lags up to the lowest note asked for) the direct sum is cheap enough, so no FFT is needed.</p>
+<p>A level gate with hysteresis (on above the on level's mean absolute value, off under 90 % of it) says when there is a note at all, as guitarix's does.</p>
+<pre class="cpp plain" translate="no"><code class="text">
+ PitchDetector ear;
+ ear.setSampleRate(48000);
+ ear.setRange(30, 1400);
+ const float hz = ear.detect(block.data(), int(block.size())); // 0: no note
+</code></pre>
+<p>Not thread-safe: one caller at a time (it keeps its buffers and the gate's state). <a href="pitchdetector.html#detect" translate="no">detect</a>() allocates only when the window grows.</p>
+</div>
+<!-- @@@PitchDetector -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$detect[overload1]$$$detectconstfloat*intfloat* -->
+<h3 class="fn" translate="no" id="detect"><span class="type">float</span> PitchDetector::<span class="name">detect</span>(const <span class="type">float</span> *<i>samples</i>, <span class="type">int</span> <i>count</i>, <span class="type">float</span> *<i>clarity</i> = nullptr)</h3>
+<p>Returns the frequency in Hz of the note in the <i translate="no">count</i> <i translate="no">samples</i> (the newest at the end), or 0 when the block is too quiet or has no clear period. When <i translate="no">clarity</i> is not null it receives the NSDF peak's height, 0..1: how periodic the block is.</p>
+<!-- @@@detect -->
+</div>
+<div class="fnitem">
+<!-- $$$reset[overload1]$$$reset -->
+<h3 class="fn" translate="no" id="reset"><span class="type">void</span> PitchDetector::<span class="name">reset</span>()</h3>
+<p>Forgets the gate's state (a new source).</p>
+<!-- @@@reset -->
+</div>
+<div class="fnitem">
+<!-- $$$setOnLevel[overload1]$$$setOnLevelfloat -->
+<h3 class="fn" translate="no" id="setOnLevel"><span class="type">void</span> PitchDetector::<span class="name">setOnLevel</span>(<span class="type">float</span> <i>level</i>)</h3>
+<p>Sets the gate: the mean absolute value, <i translate="no">level</i>, a block must reach to hold a note (0.001 is about -60 dBFS, the default).</p>
+<!-- @@@setOnLevel -->
+</div>
+<div class="fnitem">
+<!-- $$$setRange[overload1]$$$setRangefloatfloat -->
+<h3 class="fn" translate="no" id="setRange"><span class="type">void</span> PitchDetector::<span class="name">setRange</span>(<span class="type">float</span> <i>lowestHz</i>, <span class="type">float</span> <i>highestHz</i>)</h3>
+<p>Sets the notes to find, from <i translate="no">lowestHz</i> to <i translate="no">highestHz</i>; the lowest sets the longest lag looked at. 30 to 1400 Hz by default.</p>
+<!-- @@@setRange -->
+</div>
+<div class="fnitem">
+<!-- $$$setSampleRate[overload1]$$$setSampleRateint -->
+<h3 class="fn" translate="no" id="setSampleRate"><span class="type">void</span> PitchDetector::<span class="name">setSampleRate</span>(<span class="type">int</span> <i>rate</i>)</h3>
+<p>Sets the <i translate="no">rate</i> in Hz of the blocks given to <a href="pitchdetector.html#detect" translate="no">detect</a>(); 48000 by default.</p>
+<!-- @@@setSampleRate -->
+</div>
+<div class="fnitem">
+<!-- $$$wantedSamples[overload1]$$$wantedSamples -->
+<h3 class="fn" translate="no" id="wantedSamples"><span class="type">int</span> PitchDetector::<span class="name">wantedSamples</span>() const</h3>
+<p>Returns how many samples, at the sample rate, <a href="pitchdetector.html#detect" translate="no">detect</a>() wants: the window, decimated, plus the longest lag. Fewer is allowed, giving a shorter, less precise window.</p>
+<!-- @@@wantedSamples -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

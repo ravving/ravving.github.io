@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- index.qdoc -->
+  <meta name="description" content="The sound engines, the LV2 inserts and the effect chains.">
+  <title>Engines and effects | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li>Engines and effects</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Engines and effects</h1>
+<!-- $$$ravving-engines-description -->
+<div class="descr" id="details">
+<div class="table"><table class="annotated">
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audioinsert.html">AudioInsert</a></p></td><td class="tblDescr"><p>Something audio goes through on the JACK graph, with stereo or mono inputs and outputs</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="beatrepeat.html">BeatRepeat</a></p></td><td class="tblDescr"><p>LIVE FX STUTTER and LOOP: a beat repeat on the master, as ravving's own JACK client (ravving-repeat, stereo in and out), the first of the master inserts</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="consoleprocess.html">ConsoleProcess</a></p></td><td class="tblDescr"><p>A helper process ravving drives through its text console (FluidSynth's shell, jalv's command line), run by libzynthbox's ProcessWrapper</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="effectchain.html">EffectChain</a></p></td><td class="tblDescr"><p>SOUND EFFECTS chain every machine has, in signal order (easyrave's insert chain): DRIVE, COMPRESSOR, REVERB, EQ, PAN, SIDECHAIN, DELAY, each with its knobs</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="effectchain-effect.html">EffectChain::Effect</a></p></td><td class="tblDescr"><p>An effect of the chain: its name and its knobs, in card order</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="effectchain-knob.html">EffectChain::Knob</a></p></td><td class="tblDescr"><p>A knob of an effect: its name, its defaultValue (0..1) and whether it is shared by every machine</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="fluidsynthengine.html">FluidSynthEngine</a></p></td><td class="tblDescr"><p>A FluidSynth process playing one soundfont preset (SF2 or SF3), such as a drum machine's kit or a soundfont sound source</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="globaleffects.html">GlobalEffects</a></p></td><td class="tblDescr"><p>Studio's two send effects, as zynthbox-qml's global FX 1 and 2: one reverb and one delay that every machine sends into, their returns mixed into the master</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="jalvengine.html">JalvEngine</a></p></td><td class="tblDescr"><p>An LV2 instrument as a machine's sound engine, run by jalv (a JalvPlugin), as zynthbox-qml runs its jalv engines</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="jalvplugin.html">JalvPlugin</a></p></td><td class="tblDescr"><p>One LV2 plugin running in its own jalv process on the JACK graph: an effect (a reverb, a delay..., audio in and out) or an instrument (MIDI in, audio out; JalvEngine)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="livefx.html">LiveFx</a></p></td><td class="tblDescr"><p>Header's LIVE FX: performance effects on the whole mix, as easyrave's top bar has them; published to QML as studio.liveFx</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundengine.html">SoundEngine</a></p></td><td class="tblDescr"><p>A sound engine a machine plays through: a process with a MIDI input and a stereo output on the JACK graph</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundfontfile.html">SoundFontFile</a></p></td><td class="tblDescr"><p>What an SF2 or SF3 soundfont says about its presets, read without loading its samples</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundfontfile-preset.html">SoundFontFile::Preset</a></p></td><td class="tblDescr"><p>One preset of a soundfont, as FluidSynth selects it: its name, bank and program</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundpresets.html">SoundPresets</a></p></td><td class="tblDescr"><p>An LV2 plugin's factory presets, read from its bundle's presets file</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundpresets-preset.html">SoundPresets::Preset</a></p></td><td class="tblDescr"><p>One factory preset: its name (without its kind's prefix), title (without its author either), category (what the prefix names: PADS, KEYS...) and controls (the port values, symbol to value)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="trackeffects.html">TrackEffects</a></p></td><td class="tblDescr"><p>One machine's SOUND EFFECTS (the EffectChain), on its track's JackPassthrough, the processing every libzynthbox track has; published to QML as machine.effects</p></td></tr>
+</table></div>
+</div>
+<!-- @@@ravving-engines -->
+<div class="table"><table class="annotated">
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audioinsert.html">AudioInsert</a></p></td><td class="tblDescr"><p>Something audio goes through on the JACK graph, with stereo or mono inputs and outputs</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="beatrepeat.html">BeatRepeat</a></p></td><td class="tblDescr"><p>LIVE FX STUTTER and LOOP: a beat repeat on the master, as ravving's own JACK client (ravving-repeat, stereo in and out), the first of the master inserts</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="consoleprocess.html">ConsoleProcess</a></p></td><td class="tblDescr"><p>A helper process ravving drives through its text console (FluidSynth's shell, jalv's command line), run by libzynthbox's ProcessWrapper</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="effectchain.html">EffectChain</a></p></td><td class="tblDescr"><p>SOUND EFFECTS chain every machine has, in signal order (easyrave's insert chain): DRIVE, COMPRESSOR, REVERB, EQ, PAN, SIDECHAIN, DELAY, each with its knobs</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="effectchain-effect.html">EffectChain::Effect</a></p></td><td class="tblDescr"><p>An effect of the chain: its name and its knobs, in card order</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="effectchain-knob.html">EffectChain::Knob</a></p></td><td class="tblDescr"><p>A knob of an effect: its name, its defaultValue (0..1) and whether it is shared by every machine</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="fluidsynthengine.html">FluidSynthEngine</a></p></td><td class="tblDescr"><p>A FluidSynth process playing one soundfont preset (SF2 or SF3), such as a drum machine's kit or a soundfont sound source</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="globaleffects.html">GlobalEffects</a></p></td><td class="tblDescr"><p>Studio's two send effects, as zynthbox-qml's global FX 1 and 2: one reverb and one delay that every machine sends into, their returns mixed into the master</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="jalvengine.html">JalvEngine</a></p></td><td class="tblDescr"><p>An LV2 instrument as a machine's sound engine, run by jalv (a JalvPlugin), as zynthbox-qml runs its jalv engines</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="jalvplugin.html">JalvPlugin</a></p></td><td class="tblDescr"><p>One LV2 plugin running in its own jalv process on the JACK graph: an effect (a reverb, a delay..., audio in and out) or an instrument (MIDI in, audio out; JalvEngine)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="livefx.html">LiveFx</a></p></td><td class="tblDescr"><p>Header's LIVE FX: performance effects on the whole mix, as easyrave's top bar has them; published to QML as studio.liveFx</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundengine.html">SoundEngine</a></p></td><td class="tblDescr"><p>A sound engine a machine plays through: a process with a MIDI input and a stereo output on the JACK graph</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundfontfile.html">SoundFontFile</a></p></td><td class="tblDescr"><p>What an SF2 or SF3 soundfont says about its presets, read without loading its samples</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundfontfile-preset.html">SoundFontFile::Preset</a></p></td><td class="tblDescr"><p>One preset of a soundfont, as FluidSynth selects it: its name, bank and program</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundpresets.html">SoundPresets</a></p></td><td class="tblDescr"><p>An LV2 plugin's factory presets, read from its bundle's presets file</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundpresets-preset.html">SoundPresets::Preset</a></p></td><td class="tblDescr"><p>One factory preset: its name (without its kind's prefix), title (without its author either), category (what the prefix names: PADS, KEYS...) and controls (the port values, symbol to value)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="trackeffects.html">TrackEffects</a></p></td><td class="tblDescr"><p>One machine's SOUND EFFECTS (the EffectChain), on its track's JackPassthrough, the processing every libzynthbox track has; published to QML as machine.effects</p></td></tr>
+</table></div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

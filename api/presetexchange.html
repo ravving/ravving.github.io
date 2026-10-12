@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- presetexchange.cpp -->
+  <meta name="description" content="The user's presets as files to share on a USB stick: the pattern presets they saved (a machine's PresetLibrary: the toolbar's PRESET), the sounds they saved (a machine's MY SOUNDS) and their project templates.">
+  <meta name="keywords" content="class">
+  <title>PresetExchange Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>PresetExchange</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">PresetExchange Class</h1>
+<!-- $$$PresetExchange-brief -->
+<p>The user's presets as files to share on a USB stick: the pattern presets they saved (a machine's <a href="presetlibrary.html" translate="no">PresetLibrary</a>: the toolbar's PRESET), the sounds they saved (a machine's MY SOUNDS) and their project templates. <a href="#details">More...</a></p>
+<!-- @@@PresetExchange -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;presetexchange.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="presetexchange-members.html">List of all members, including inherited members</a></li>
+<li>PresetExchange is part of <a href="ravving-studio.html">Studio and projects</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="presetexchange.html#PresetExchange" translate="no">PresetExchange</a></b>(Studio *<i>studio</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="presetexchange.html#describe" translate="no">describe</a></b>(const QString &amp;<i>path</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="presetexchange.html#devicePresets" translate="no">devicePresets</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="presetexchange.html#loadStickPattern" translate="no">loadStickPattern</a></b>(const QString &amp;<i>path</i>, const QString &amp;<i>machineKey</i>, bool <i>withSound</i> = false, bool <i>withMods</i> = false, bool <i>withBars</i> = true) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="presetexchange.html#remove" translate="no">remove</a></b>(const QString &amp;<i>id</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="presetexchange.html#stickPatterns" translate="no">stickPatterns</a></b>(const QString &amp;<i>folder</i>, const QString &amp;<i>machineKey</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="presetexchange.html#take" translate="no">take</a></b>(const QString &amp;<i>path</i>, QString *<i>error</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="presetexchange.html#write" translate="no">write</a></b>(const QString &amp;<i>id</i>, const QString &amp;<i>folder</i>) const</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="presetexchange.html#stickTemplates" translate="no">stickTemplates</a></b>(const QString &amp;<i>folder</i>)</td></tr>
+</table></div>
+<!-- $$$PresetExchange-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The USB page and the FILES browser list, write and read presets through it. Each preset travels as one JSON file under a stick's <code translate="no">ravving/presets</code> folder:</p>
+<pre class="cpp plain" translate="no"><code class="text">
+ &lt;group&gt;/patterns/&lt;name&gt;.json   {&quot;ravving&quot;: &quot;preset&quot;, &quot;type&quot;: &quot;pattern&quot;,
+                                 &quot;library&quot;: &quot;bass-presets.json&quot;,
+                                 &quot;preset&quot;: {name, chart, sound (optional)...}}
+ &lt;machine&gt;/sounds/&lt;name&gt;.json   {&quot;ravving&quot;: &quot;preset&quot;, &quot;type&quot;: &quot;sound&quot;,
+                                 &quot;machine&quot;: &quot;chords&quot;, &quot;sound&quot;: {name, state}}
+ templates/&lt;name&gt;.json          {&quot;ravving&quot;: &quot;preset&quot;, &quot;type&quot;: &quot;template&quot;,
+                                 &quot;template&quot;: {name, bpm, swing, root, scale...}}
+</code></pre>
+<p>where <code translate="no">&lt;group&gt;</code> is the library's name (<code translate="no">drum</code> for the three drum machines' shared one, <code translate="no">bass...</code>). A preset taken in keeps its name, made unique against what the device has. A preset is known by an id: <code translate="no">pattern::&lt;library file&gt;::&lt;name&gt;</code>, <code translate="no">sound::&lt;machine&gt;::&lt;name&gt;</code> or <code translate="no">template::templates::&lt;name&gt;</code>. A plain object over the studio; GUI thread only.</p>
+</div>
+<!-- @@@PresetExchange -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$PresetExchange[overload1]$$$PresetExchangeStudio* -->
+<h3 class="fn" translate="no" id="PresetExchange"><code class="details extra" translate="no">[explicit]</code> PresetExchange::<span class="name">PresetExchange</span>(<span class="type"><a href="studio.html" translate="no">Studio</a></span> *<i>studio</i>)</h3>
+<p>Constructs the exchange over the presets of <i translate="no">studio</i>'s machines and templates.</p>
+<!-- @@@PresetExchange -->
+</div>
+<div class="fnitem">
+<!-- $$$describe[overload1]$$$describeconstQString& -->
+<h3 class="fn" translate="no" id="describe"><span class="type">QVariantMap</span> PresetExchange::<span class="name">describe</span>(const <span class="type">QString</span> &amp;<i>path</i>) const</h3>
+<p>Returns what the preset file at <i translate="no">path</i> is: a map with <code translate="no">name</code>, <code translate="no">label</code> and <code translate="no">onDevice</code> (a preset of its name is on the device); an empty map for a file that is no ravving preset.</p>
+<!-- @@@describe -->
+</div>
+<div class="fnitem">
+<!-- $$$devicePresets[overload1]$$$devicePresets -->
+<h3 class="fn" translate="no" id="devicePresets"><span class="type">QVariantList</span> PresetExchange::<span class="name">devicePresets</span>() const</h3>
+<p>Returns the user's presets of every machine, and the templates, as maps with <code translate="no">id</code>, <code translate="no">name</code>, <code translate="no">label</code> (such as &quot;BASS · PATTERN&quot;) and <code translate="no">file</code> (where it goes under <code translate="no">ravving/presets</code>).</p>
+<!-- @@@devicePresets -->
+</div>
+<div class="fnitem">
+<!-- $$$loadStickPattern[overload1]$$$loadStickPatternconstQString&constQString&boolboolbool -->
+<h3 class="fn" translate="no" id="loadStickPattern"><span class="type">bool</span> PresetExchange::<span class="name">loadStickPattern</span>(const <span class="type">QString</span> &amp;<i>path</i>, const <span class="type">QString</span> &amp;<i>machineKey</i>, <span class="type">bool</span> <i>withSound</i> = false, <span class="type">bool</span> <i>withMods</i> = false, <span class="type">bool</span> <i>withBars</i> = true) const</h3>
+<p>Plays the stick's pattern preset at <i translate="no">path</i> on the machine <i translate="no">machineKey</i> (<a href="machine.html#applyPreset" translate="no">Machine::applyPreset</a>()), with the source or kit it keeps when <i translate="no">withSound</i> is true, its MODS when <i translate="no">withMods</i> is true and its length when <i translate="no">withBars</i> is true. Returns <code translate="no">false</code> when the file is no pattern of that machine's library.</p>
+<!-- @@@loadStickPattern -->
+</div>
+<div class="fnitem">
+<!-- $$$remove[overload1]$$$removeconstQString& -->
+<h3 class="fn" translate="no" id="remove"><span class="type">bool</span> PresetExchange::<span class="name">remove</span>(const <span class="type">QString</span> &amp;<i>id</i>) const</h3>
+<p>Deletes the preset <i translate="no">id</i> from where it lives (the library, the machine's sounds, the templates). Returns <code translate="no">false</code> when there is no such preset.</p>
+<!-- @@@remove -->
+</div>
+<div class="fnitem">
+<!-- $$$stickPatterns[overload1]$$$stickPatternsconstQString&constQString& -->
+<h3 class="fn" translate="no" id="stickPatterns"><span class="type">QVariantList</span> PresetExchange::<span class="name">stickPatterns</span>(const <span class="type">QString</span> &amp;<i>folder</i>, const <span class="type">QString</span> &amp;<i>machineKey</i>) const</h3>
+<p>Returns the pattern presets on a stick's <i translate="no">folder</i> (its <code translate="no">ravving/presets</code>) for the machine <i translate="no">machineKey</i>, to play from there without taking them in: maps with <code translate="no">name</code>, <code translate="no">genre</code>, <code translate="no">sound</code>, <code translate="no">soundKit</code> (<a href="presetlibrary.html#soundFields" translate="no">PresetLibrary::soundFields</a>()) and <code translate="no">path</code>, sorted A to Z.</p>
+<!-- @@@stickPatterns -->
+</div>
+<div class="fnitem">
+<!-- $$$stickTemplates[overload1]$$$stickTemplatesconstQString& -->
+<h3 class="fn" translate="no" id="stickTemplates"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantList</span> PresetExchange::<span class="name">stickTemplates</span>(const <span class="type">QString</span> &amp;<i>folder</i>)</h3>
+<p>Returns the project templates on a stick's <i translate="no">folder</i> (its <code translate="no">ravving/presets</code>), to start a project from there without taking them in, as <a href="templates.html#list-prop" translate="no">Templates::list</a>() lists them.</p>
+<!-- @@@stickTemplates -->
+</div>
+<div class="fnitem">
+<!-- $$$take[overload1]$$$takeconstQString&QString* -->
+<h3 class="fn" translate="no" id="take"><span class="type">QString</span> PresetExchange::<span class="name">take</span>(const <span class="type">QString</span> &amp;<i>path</i>, <span class="type">QString</span> *<i>error</i>) const</h3>
+<p>Takes the preset file at <i translate="no">path</i> in. Returns the name it got, or an empty string with <i translate="no">error</i> (when not null) saying why.</p>
+<!-- @@@take -->
+</div>
+<div class="fnitem">
+<!-- $$$write[overload1]$$$writeconstQString&constQString& -->
+<h3 class="fn" translate="no" id="write"><span class="type">QString</span> PresetExchange::<span class="name">write</span>(const <span class="type">QString</span> &amp;<i>id</i>, const <span class="type">QString</span> &amp;<i>folder</i>) const</h3>
+<p>Writes the preset <i translate="no">id</i> under <i translate="no">folder</i> (a stick's <code translate="no">ravving/presets</code>). Returns the path written, or an empty string on failure.</p>
+<!-- @@@write -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

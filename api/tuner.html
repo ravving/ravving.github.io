@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- tuner.cpp -->
+  <meta name="description" content="The TUNER (the RECORDER's GUITAR tab): the pitch of the string played into the device input, against a tuning's open strings; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;input&lt;@op&gt;.&lt;/@op&gt;tuner.">
+  <meta name="keywords" content="class">
+  <title>Tuner Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>Tuner</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">Tuner Class</h1>
+<!-- $$$Tuner-brief -->
+<p>The TUNER (the RECORDER's GUITAR tab): the pitch of the string played into the device input, against a tuning's open strings; published to QML as <code translate="no">studio.input.tuner</code>. <a href="#details">More...</a></p>
+<!-- @@@Tuner -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;tuner.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="tuner-members.html">List of all members, including inherited members</a></li>
+<li>Tuner is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<div class="table"><table class="propsummary" translate="no">
+<tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="tuner.html#active-prop" translate="no">active</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="tuner.html#allTuned-prop" translate="no">allTuned</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="tuner.html#allTunedSound-prop" translate="no">allTunedSound</a></b> : const QString</li>
+<li class="fn" translate="no"><b><a href="tuner.html#automatic-prop" translate="no">automatic</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="tuner.html#available-prop" translate="no">available</a></b> : const bool</li>
+<li class="fn" translate="no"><b><a href="tuner.html#cents-prop" translate="no">cents</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="tuner.html#frequencies-prop" translate="no">frequencies</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="tuner.html#frequency-prop" translate="no">frequency</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="tuner.html#heardString-prop" translate="no">heardString</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="tuner.html#hearing-prop" translate="no">hearing</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="tuner.html#holdProgress-prop" translate="no">holdProgress</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="tuner.html#inTune-prop" translate="no">inTune</a></b> : bool</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="tuner.html#maxReference-prop" translate="no">maxReference</a></b> : const qreal</li>
+<li class="fn" translate="no"><b><a href="tuner.html#minReference-prop" translate="no">minReference</a></b> : const qreal</li>
+<li class="fn" translate="no"><b><a href="tuner.html#note-prop" translate="no">note</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="tuner.html#noteCents-prop" translate="no">noteCents</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="tuner.html#reference-prop" translate="no">reference</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="tuner.html#string-prop" translate="no">string</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="tuner.html#strings-prop" translate="no">strings</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="tuner.html#tolerance-prop" translate="no">tolerance</a></b> : const qreal</li>
+<li class="fn" translate="no"><b><a href="tuner.html#tuned-prop" translate="no">tuned</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="tuner.html#tunedSound-prop" translate="no">tunedSound</a></b> : const QString</li>
+<li class="fn" translate="no"><b><a href="tuner.html#tuning-prop" translate="no">tuning</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="tuner.html#tunings-prop" translate="no">tunings</a></b> : const QVariantList</li>
+</ul>
+</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#Tuner" translate="no">Tuner</a></b>(const QString &amp;<i>tuningsFile</i>, bool <i>live</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#active-prop" translate="no">active</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#allTuned-prop" translate="no">allTuned</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#allTunedSound-prop" translate="no">allTunedSound</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#automatic-prop" translate="no">automatic</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#available-prop" translate="no">available</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#cents-prop" translate="no">cents</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#frequencies-prop" translate="no">frequencies</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#frequency-prop" translate="no">frequency</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#heardString-prop" translate="no">heardString</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#hearing-prop" translate="no">hearing</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#holdProgress-prop" translate="no">holdProgress</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#inTune-prop" translate="no">inTune</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#maxReference-prop" translate="no">maxReference</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#minReference-prop" translate="no">minReference</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#note-prop" translate="no">note</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#noteCents-prop" translate="no">noteCents</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#noteHz" translate="no">noteHz</a></b>(int <i>note</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#reference-prop" translate="no">reference</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#restart" translate="no">restart</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#active-prop" translate="no">setActive</a></b>(bool <i>active</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#automatic-prop" translate="no">setAutomatic</a></b>(bool <i>automatic</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#reference-prop" translate="no">setReference</a></b>(qreal <i>hz</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#setSourcePort" translate="no">setSourcePort</a></b>(const QString &amp;<i>port</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#string-prop" translate="no">setString</a></b>(int <i>index</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#tuning-prop" translate="no">setTuning</a></b>(int <i>index</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#string-prop" translate="no">string</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#strings-prop" translate="no">strings</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#tolerance-prop" translate="no">tolerance</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#tuned-prop" translate="no">tuned</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#tunedSound-prop" translate="no">tunedSound</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#tuning-prop" translate="no">tuning</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#tunings-prop" translate="no">tunings</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#active-prop" translate="no">activeChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#automatic-prop" translate="no">modeChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#readingChanged" translate="no">readingChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#string-prop" translate="no">stringChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#stringTuned" translate="no">stringTuned</a></b>(int <i>index</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#tunedChanged" translate="no">tunedChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="tuner.html#tuning-prop" translate="no">tuningChanged</a></b>()</td></tr>
+</table></div>
+<!-- $$$Tuner-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<ul>
+<li>Hearing: ravving's own JACK client (<code translate="no">ravving-tuner</code>, one input) on the dry input jack in use (<a href="tuner.html#setSourcePort" translate="no">setSourcePort</a>(): <a href="inputrecorder.html" translate="no">InputRecorder</a>'s, before the live effects, which would hide the pitch). It runs only while active (the tuner on screen): activated then and deactivated after, so it costs the audio graph nothing otherwise. The audio thread only copies into a lock-free ring; a <a href="pitchdetector.html" translate="no">PitchDetector</a> reads it on the GUI thread 20 times a second (under 1.5 ms a read on the device).</li>
+<li>Tunings are data (<code translate="no">data/tunings.json</code>): an instrument, a name and the open strings as MIDI notes from the lowest. reference is A4 in Hz. The tuning, the mode and the reference are the device's, kept in the settings.</li>
+<li>AUTO (automatic): the strings in order; a string held within tolerance cents for 0.8 s is tuned (<a href="tuner.html#stringTuned" translate="no">stringTuned</a>()), and a moment later the next untuned string is the target; after the last, <a href="tuner.html#allTuned-prop" translate="no">allTuned</a>. MANUAL: the string picked (<a href="tuner.html#string-prop" translate="no">setString</a>(), a tap) is the target and stays; it is still marked once held in tune.</li>
+<li>The reading is smoothed as Tom Schimansky's GuitarTuner does (a short average for the needle, the note name changed only once several readings agree): the frequency, the nearest note and its cents, the cents off the target string, whether that is in tune and how far the hold has gone, and the string the note is nearest to (<a href="tuner.html#heardString-prop" translate="no">heardString</a>: another string than the target means the wrong one is being played).</li>
+</ul>
+</div>
+<!-- @@@Tuner -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$active-prop$$$active$$$setActivebool$$$activeChanged -->
+<h3 class="fn" translate="no" id="active-prop"><span class="name">active</span> : <span class="type">bool</span></h3>
+<p>This property holds whether it listens (the tuner on screen).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>active</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setActive</b></span>(bool <i>active</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>activeChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@active -->
+</div>
+<div class="fnitem">
+<!-- $$$allTuned-prop$$$allTuned$$$tunedChanged -->
+<h3 class="fn" translate="no" id="allTuned-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">allTuned</span> : <span class="type">bool</span></h3>
+<p>This property holds whether every string is marked tuned.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>allTuned</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#tunedChanged" translate="no">tunedChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@allTuned -->
+</div>
+<div class="fnitem">
+<!-- $$$allTunedSound-prop$$$allTunedSound -->
+<h3 class="fn" translate="no" id="allTunedSound-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">allTunedSound</span> : const <span class="type">QString</span></h3>
+<p>This property holds the cue the tuner panel plays when the last string is marked in tune.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>allTunedSound</b></span>() const</td></tr>
+</table></div>
+<!-- @@@allTunedSound -->
+</div>
+<div class="fnitem">
+<!-- $$$automatic-prop$$$automatic$$$setAutomaticbool$$$modeChanged -->
+<h3 class="fn" translate="no" id="automatic-prop"><span class="name">automatic</span> : <span class="type">bool</span></h3>
+<p>AUTO (string after string) when <code translate="no">true</code>, MANUAL (the string picked) when <code translate="no">false</code>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>automatic</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setAutomatic</b></span>(bool <i>automatic</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>modeChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@automatic -->
+</div>
+<div class="fnitem">
+<!-- $$$available-prop$$$available -->
+<h3 class="fn" translate="no" id="available-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">available</span> : const <span class="type">bool</span></h3>
+<p>This property holds whether the tuner can hear anything here; <code translate="no">false</code> on a desktop.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>available</b></span>() const</td></tr>
+</table></div>
+<!-- @@@available -->
+</div>
+<div class="fnitem">
+<!-- $$$cents-prop$$$cents$$$readingChanged -->
+<h3 class="fn" translate="no" id="cents-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">cents</span> : <span class="type">qreal</span></h3>
+<p>This property holds the cents off the target string.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>cents</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#readingChanged" translate="no">readingChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@cents -->
+</div>
+<div class="fnitem">
+<!-- $$$frequencies-prop$$$frequencies$$$tuningChanged -->
+<h3 class="fn" translate="no" id="frequencies-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">frequencies</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the strings' frequencies in Hz at the reference.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>frequencies</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#tuning-prop" translate="no">tuningChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@frequencies -->
+</div>
+<div class="fnitem">
+<!-- $$$frequency-prop$$$frequency$$$readingChanged -->
+<h3 class="fn" translate="no" id="frequency-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">frequency</span> : <span class="type">qreal</span></h3>
+<p>This property holds the frequency heard, in Hz.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>frequency</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#readingChanged" translate="no">readingChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@frequency -->
+</div>
+<div class="fnitem">
+<!-- $$$heardString-prop$$$heardString$$$readingChanged -->
+<h3 class="fn" translate="no" id="heardString-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">heardString</span> : <span class="type">int</span></h3>
+<p>This property holds the string the note heard is nearest to; -1 for none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>heardString</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#readingChanged" translate="no">readingChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@heardString -->
+</div>
+<div class="fnitem">
+<!-- $$$hearing-prop$$$hearing$$$readingChanged -->
+<h3 class="fn" translate="no" id="hearing-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">hearing</span> : <span class="type">bool</span></h3>
+<p>This property holds whether a note is heard.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>hearing</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#readingChanged" translate="no">readingChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@hearing -->
+</div>
+<div class="fnitem">
+<!-- $$$holdProgress-prop$$$holdProgress$$$readingChanged -->
+<h3 class="fn" translate="no" id="holdProgress-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">holdProgress</span> : <span class="type">qreal</span></h3>
+<p>how far the hold has gone, 0..1; 1 marks the string tuned.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>holdProgress</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#readingChanged" translate="no">readingChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@holdProgress -->
+</div>
+<div class="fnitem">
+<!-- $$$inTune-prop$$$inTune$$$readingChanged -->
+<h3 class="fn" translate="no" id="inTune-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">inTune</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the target string is within tolerance.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>inTune</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#readingChanged" translate="no">readingChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@inTune -->
+</div>
+<div class="fnitem">
+<!-- $$$maxReference-prop$$$maxReference -->
+<h3 class="fn" translate="no" id="maxReference-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">maxReference</span> : const <span class="type">qreal</span></h3>
+<p>This property holds the highest reference: 450 Hz.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>maxReference</b></span>() const</td></tr>
+</table></div>
+<!-- @@@maxReference -->
+</div>
+<div class="fnitem">
+<!-- $$$minReference-prop$$$minReference -->
+<h3 class="fn" translate="no" id="minReference-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">minReference</span> : const <span class="type">qreal</span></h3>
+<p>This property holds the lowest reference: 430 Hz.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>minReference</b></span>() const</td></tr>
+</table></div>
+<!-- @@@minReference -->
+</div>
+<div class="fnitem">
+<!-- $$$note-prop$$$note$$$readingChanged -->
+<h3 class="fn" translate="no" id="note-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">note</span> : <span class="type">int</span></h3>
+<p>This property holds the nearest note to what is heard, as a MIDI note; -1 for none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>note</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#readingChanged" translate="no">readingChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@note -->
+</div>
+<div class="fnitem">
+<!-- $$$noteCents-prop$$$noteCents$$$readingChanged -->
+<h3 class="fn" translate="no" id="noteCents-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">noteCents</span> : <span class="type">qreal</span></h3>
+<p>This property holds the cents off the nearest note.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>noteCents</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#readingChanged" translate="no">readingChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@noteCents -->
+</div>
+<div class="fnitem">
+<!-- $$$reference-prop$$$reference$$$setReferenceqreal$$$tuningChanged -->
+<h3 class="fn" translate="no" id="reference-prop"><span class="name">reference</span> : <span class="type">qreal</span></h3>
+<p>A4 in whole Hz, <a href="tuner.html#minReference-prop" translate="no">minReference</a> to <a href="tuner.html#maxReference-prop" translate="no">maxReference</a>; 440 by default.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>reference</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setReference</b></span>(qreal <i>hz</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#tuning-prop" translate="no">tuningChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@reference -->
+</div>
+<div class="fnitem">
+<!-- $$$string-prop$$$string$$$setStringint$$$stringChanged -->
+<h3 class="fn" translate="no" id="string-prop"><span class="name">string</span> : <span class="type">int</span></h3>
+<p>This property holds the index of the target string.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>string</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setString</b></span>(int <i>index</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>stringChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@string -->
+</div>
+<div class="fnitem">
+<!-- $$$strings-prop$$$strings$$$tuningChanged -->
+<h3 class="fn" translate="no" id="strings-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">strings</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the tuning's strings, as MIDI notes, lowest first.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>strings</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#tuning-prop" translate="no">tuningChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@strings -->
+</div>
+<div class="fnitem">
+<!-- $$$tolerance-prop$$$tolerance -->
+<h3 class="fn" translate="no" id="tolerance-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">tolerance</span> : const <span class="type">qreal</span></h3>
+<p>how close counts as in tune: 3 cents.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>tolerance</b></span>() const</td></tr>
+</table></div>
+<!-- @@@tolerance -->
+</div>
+<div class="fnitem">
+<!-- $$$tuned-prop$$$tuned$$$tunedChanged -->
+<h3 class="fn" translate="no" id="tuned-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">tuned</span> : <span class="type">QVariantList</span></h3>
+<p>each string's tuned mark.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>tuned</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="tuner.html#tunedChanged" translate="no">tunedChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@tuned -->
+</div>
+<div class="fnitem">
+<!-- $$$tunedSound-prop$$$tunedSound -->
+<h3 class="fn" translate="no" id="tunedSound-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">tunedSound</span> : const <span class="type">QString</span></h3>
+<p>This property holds the cue the tuner panel plays when a string is marked in tune (<code translate="no">data/sounds</code>, through <a href="studio.html#previewSample" translate="no">Studio::previewSample</a>()).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>tunedSound</b></span>() const</td></tr>
+</table></div>
+<!-- @@@tunedSound -->
+</div>
+<div class="fnitem">
+<!-- $$$tuning-prop$$$tuning$$$setTuningint$$$tuningChanged -->
+<h3 class="fn" translate="no" id="tuning-prop"><span class="name">tuning</span> : <span class="type">int</span></h3>
+<p>This property holds the index of the tuning in use.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>tuning</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setTuning</b></span>(int <i>index</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>tuningChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@tuning -->
+</div>
+<div class="fnitem">
+<!-- $$$tunings-prop$$$tunings -->
+<h3 class="fn" translate="no" id="tunings-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">tunings</span> : const <span class="type">QVariantList</span></h3>
+<p>This property holds the tunings, as maps with <code translate="no">instrument</code>, <code translate="no">name</code> and <code translate="no">strings</code> (MIDI notes, lowest first).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>tunings</b></span>() const</td></tr>
+</table></div>
+<!-- @@@tunings -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$Tuner[overload1]$$$TunerconstQString&boolQObject* -->
+<h3 class="fn" translate="no" id="Tuner">Tuner::<span class="name">Tuner</span>(const <span class="type">QString</span> &amp;<i>tuningsFile</i>, <span class="type">bool</span> <i>live</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Reads the tunings from <i translate="no">tuningsFile</i> (<code translate="no">data/tunings.json</code>) and the saved settings, with the given <i translate="no">parent</i>. With <i translate="no">live</i> true (on the device) a JACK client is made when the tuner is first active; with <i translate="no">live</i> false nothing is heard.</p>
+<!-- @@@Tuner -->
+</div>
+<div class="fnitem">
+<!-- $$$noteHz[overload1]$$$noteHzint -->
+<h3 class="fn" translate="no" id="noteHz"><code class="details extra" translate="no">[invokable]</code> <span class="type">qreal</span> Tuner::<span class="name">noteHz</span>(<span class="type">int</span> <i>note</i>) const</h3>
+<p>Returns the frequency in Hz of the MIDI <i translate="no">note</i> at the reference.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@noteHz -->
+</div>
+<div class="fnitem">
+<!-- $$$readingChanged -->
+<h3 class="fn" translate="no" id="readingChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Tuner::<span class="name">readingChanged</span>()</h3>
+<p>Emitted when the reading changed: hearing, frequency, note, <a href="tuner.html#noteCents-prop" translate="no">noteCents</a>, cents, <a href="tuner.html#inTune-prop" translate="no">inTune</a>, <a href="tuner.html#holdProgress-prop" translate="no">holdProgress</a> or <a href="tuner.html#heardString-prop" translate="no">heardString</a>.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="tuner.html#cents-prop" translate="no">cents</a>, <a href="tuner.html#frequency-prop" translate="no">frequency</a>, <a href="tuner.html#heardString-prop" translate="no">heardString</a>, <a href="tuner.html#hearing-prop" translate="no">hearing</a>, <a href="tuner.html#holdProgress-prop" translate="no">holdProgress</a>, <a href="tuner.html#inTune-prop" translate="no">inTune</a>, <a href="tuner.html#note-prop" translate="no">note</a>, and <a href="tuner.html#noteCents-prop" translate="no">noteCents</a>. </p>
+</div><!-- @@@readingChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$restart[overload1]$$$restart -->
+<h3 class="fn" translate="no" id="restart"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Tuner::<span class="name">restart</span>()</h3>
+<p>Clears the tuned marks and starts again from the lowest string.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@restart -->
+</div>
+<div class="fnitem">
+<!-- $$$setSourcePort[overload1]$$$setSourcePortconstQString& -->
+<h3 class="fn" translate="no" id="setSourcePort"><span class="type">void</span> Tuner::<span class="name">setSourcePort</span>(const <span class="type">QString</span> &amp;<i>port</i>)</h3>
+<p>Sets the capture <i translate="no">port</i> to hear (<a href="inputrecorder.html" translate="no">InputRecorder</a>'s jack in use), connected while active.</p>
+<!-- @@@setSourcePort -->
+</div>
+<div class="fnitem">
+<!-- $$$stringTuned[overload1]$$$stringTunedint -->
+<h3 class="fn" translate="no" id="stringTuned"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Tuner::<span class="name">stringTuned</span>(<span class="type">int</span> <i>index</i>)</h3>
+<p>Emitted when string <i translate="no">index</i> was held in tune and marked tuned: a cue for the screen.</p>
+<!-- @@@stringTuned -->
+</div>
+<div class="fnitem">
+<!-- $$$tunedChanged -->
+<h3 class="fn" translate="no" id="tunedChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Tuner::<span class="name">tunedChanged</span>()</h3>
+<p>Emitted when tuned or <a href="tuner.html#allTuned-prop" translate="no">allTuned</a> changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="tuner.html#allTuned-prop" translate="no">allTuned</a> and <a href="tuner.html#tuned-prop" translate="no">tuned</a>. </p>
+</div><!-- @@@tunedChanged -->
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>
+</div>

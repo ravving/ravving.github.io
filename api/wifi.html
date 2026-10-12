@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- wifi.cpp -->
+  <meta name="description" content="Wi-Fi for the control center, published to QML as device&lt;@op&gt;.&lt;/@op&gt;wifi: switch it, list the networks in range, join one with its passphrase, leave it, forget it.">
+  <meta name="keywords" content="class">
+  <title>Wifi Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>Wifi</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">Wifi Class</h1>
+<!-- $$$Wifi-brief -->
+<p>Wi-Fi for the control center, published to QML as <code translate="no">device.wifi</code>: switch it, list the networks in range, join one with its passphrase, leave it, forget it. <a href="#details">More...</a></p>
+<!-- @@@Wifi -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;wifi.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="wifi-members.html">List of all members, including inherited members</a></li>
+<li>Wifi is part of <a href="ravving-system.html">Device, network and files</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<div class="table"><table class="propsummary" translate="no">
+<tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="wifi.html#active-prop" translate="no">active</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="wifi.html#address-prop" translate="no">address</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="wifi.html#error-prop" translate="no">error</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="wifi.html#network-prop" translate="no">network</a></b> : QString</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="wifi.html#networks-prop" translate="no">networks</a></b> : WifiNetworks* const</li>
+<li class="fn" translate="no"><b><a href="wifi.html#scanning-prop" translate="no">scanning</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="wifi.html#state-prop" translate="no">state</a></b> : QString</li>
+</ul>
+</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#Wifi" translate="no">Wifi</a></b>(QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#active-prop" translate="no">active</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#address-prop" translate="no">address</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#connectTo" translate="no">connectTo</a></b>(const QString &amp;<i>ssid</i>, const QString &amp;<i>passphrase</i> = QString())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#disconnectNetwork" translate="no">disconnectNetwork</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#error-prop" translate="no">error</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#forget" translate="no">forget</a></b>(const QString &amp;<i>ssid</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#network-prop" translate="no">network</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> WifiNetworks *</td><td class="memItemRight bottomAlign"><b><a href="wifi.html#networks-prop" translate="no">networks</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#scan" translate="no">scan</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#scanning-prop" translate="no">scanning</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#active-prop" translate="no">setActive</a></b>(bool <i>active</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#setEnabled" translate="no">setEnabled</a></b>(bool <i>on</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#scanning-prop" translate="no">setScanning</a></b>(bool <i>scanning</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#state-prop" translate="no">state</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#validPassphrase" translate="no">validPassphrase</a></b>(const QString &amp;<i>passphrase</i>) const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#active-prop" translate="no">activeChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#error-prop" translate="no">errorChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#joined" translate="no">joined</a></b>(const QString &amp;<i>ssid</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#scanning-prop" translate="no">scanningChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wifi.html#state-prop" translate="no">stateChanged</a></b>()</td></tr>
+</table></div>
+<!-- $$$Wifi-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Shaped after Plasma's network applet (plasma-nm: a handler for the actions, a model for the list, a password field on the row), on what Zynthbox runs instead of NetworkManager:</p>
+<ul>
+<li>on and off: Zynthbox's own user services (<code translate="no">zynthbox-wifi-manager-start</code> and <code translate="no">-stop</code>, <code translate="no">set_wifi.sh</code>, as zynthbox-qml's <code translate="no">start_wifi</code> and <code translate="no">stop_wifi</code>); the choice is saved as <code translate="no">ZYNTHIAN_WIFI_MODE</code> and put back when ravving starts, as zynthbox-qml does (Zynthbox's <code translate="no">wifi-setup.service</code>, a oneshot unit, starts wpa_supplicant at boot but has it killed with its cgroup as soon as it finishes);</li>
+<li>saved networks: Zynthbox's <code translate="no">wpa_supplicant.conf</code> (<a href="wpaconfig.html" translate="no">WpaConfig</a>), which <code translate="no">set_wifi.sh</code> copies into place on every start; a join saves the network there first, so it is joined again at the next boot and zynthbox-qml and webconf see it;</li>
+<li>state, scans and joins: wpa_supplicant itself, through wpa_cli on <code translate="no">wlan0</code>.</li>
+</ul>
+<p>The state is polled while active (every 2 s, faster while switching or joining), and the networks are rescanned every 15 s while the list is open (scanning). A join that has not taken in time has failed (a wrong passphrase, out of range). Commands run asynchronously. Without a <code translate="no">wlan0</code> (a desktop) the state is <code translate="no">unavailable</code>. GUI thread only.</p>
+</div>
+<!-- @@@Wifi -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$active-prop$$$active$$$setActivebool$$$activeChanged -->
+<h3 class="fn" translate="no" id="active-prop"><span class="name">active</span> : <span class="type">bool</span></h3>
+<p>This property holds whether something on screen shows Wi-Fi; the state is kept fresh while it does.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>active</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setActive</b></span>(bool <i>active</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>activeChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@active -->
+</div>
+<div class="fnitem">
+<!-- $$$address-prop$$$address$$$stateChanged -->
+<h3 class="fn" translate="no" id="address-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">address</span> : <span class="type">QString</span></h3>
+<p>This property holds the device's address on the network.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>address</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="wifi.html#state-prop" translate="no">stateChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@address -->
+</div>
+<div class="fnitem">
+<!-- $$$error-prop$$$error$$$errorChanged -->
+<h3 class="fn" translate="no" id="error-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">error</span> : <span class="type">QString</span></h3>
+<p>what went wrong last (a join that did not take, a switch that failed); empty when nothing did.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>error</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>errorChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@error -->
+</div>
+<div class="fnitem">
+<!-- $$$network-prop$$$network$$$stateChanged -->
+<h3 class="fn" translate="no" id="network-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">network</span> : <span class="type">QString</span></h3>
+<p>This property holds the network joined or being joined; empty for none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>network</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="wifi.html#state-prop" translate="no">stateChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@network -->
+</div>
+<div class="fnitem">
+<!-- $$$networks-prop$$$networks -->
+<h3 class="fn" translate="no" id="networks-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">networks</span> : <span class="type"><a href="wifinetworks.html" translate="no">WifiNetworks</a></span>* const</h3>
+<p>This property holds the networks in range, a <a href="wifinetworks.html" translate="no">WifiNetworks</a> model owned by this object; empty while off.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> WifiNetworks *</td><td class="memItemRight bottomAlign"><span class="name"><b>networks</b></span>() const</td></tr>
+</table></div>
+<!-- @@@networks -->
+</div>
+<div class="fnitem">
+<!-- $$$scanning-prop$$$scanning$$$setScanningbool$$$scanningChanged -->
+<h3 class="fn" translate="no" id="scanning-prop"><span class="name">scanning</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the network list is open; networks are rescanned every 15 s while it is.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>scanning</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setScanning</b></span>(bool <i>scanning</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>scanningChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@scanning -->
+</div>
+<div class="fnitem">
+<!-- $$$state-prop$$$state$$$stateChanged -->
+<h3 class="fn" translate="no" id="state-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">state</span> : <span class="type">QString</span></h3>
+<p><code translate="no">unavailable</code> (no Wi-Fi here), <code translate="no">off</code>, <code translate="no">switching</code> (on or off, asked), <code translate="no">disconnected</code> (on, in no network), <code translate="no">connecting</code> or <code translate="no">connected</code>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>state</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>stateChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@state -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$Wifi[overload1]$$$WifiQObject* -->
+<h3 class="fn" translate="no" id="Wifi"><code class="details extra" translate="no">[explicit]</code> Wifi::<span class="name">Wifi</span>(<span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the Wi-Fi control with the given <i translate="no">parent</i>, switching Wi-Fi on when it was left on and the first look finds it off.</p>
+<!-- @@@Wifi -->
+</div>
+<div class="fnitem">
+<!-- $$$connectTo[overload1]$$$connectToconstQString&constQString& -->
+<h3 class="fn" translate="no" id="connectTo"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Wifi::<span class="name">connectTo</span>(const <span class="type">QString</span> &amp;<i>ssid</i>, const <span class="type">QString</span> &amp;<i>passphrase</i> = QString())</h3>
+<p>Joins the network <i translate="no">ssid</i> (plasma-nm's <code translate="no">activateConnection</code>): with <i translate="no">passphrase</i> when given (saved for next time), else with what is saved, or as an open network. Switches Wi-Fi on first when it is off.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@connectTo -->
+</div>
+<div class="fnitem">
+<!-- $$$disconnectNetwork[overload1]$$$disconnectNetwork -->
+<h3 class="fn" translate="no" id="disconnectNetwork"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Wifi::<span class="name">disconnectNetwork</span>()</h3>
+<p>Leaves the network in use; it stays saved.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@disconnectNetwork -->
+</div>
+<div class="fnitem">
+<!-- $$$forget[overload1]$$$forgetconstQString& -->
+<h3 class="fn" translate="no" id="forget"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Wifi::<span class="name">forget</span>(const <span class="type">QString</span> &amp;<i>ssid</i>)</h3>
+<p>Forgets the saved network <i translate="no">ssid</i>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@forget -->
+</div>
+<div class="fnitem">
+<!-- $$$joined[overload1]$$$joinedconstQString& -->
+<h3 class="fn" translate="no" id="joined"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Wifi::<span class="name">joined</span>(const <span class="type">QString</span> &amp;<i>ssid</i>)</h3>
+<p>Emitted when the network <i translate="no">ssid</i> was joined, for a toast.</p>
+<!-- @@@joined -->
+</div>
+<div class="fnitem">
+<!-- $$$scan[overload1]$$$scan -->
+<h3 class="fn" translate="no" id="scan"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Wifi::<span class="name">scan</span>()</h3>
+<p>Looks for networks now.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@scan -->
+</div>
+<div class="fnitem">
+<!-- $$$setEnabled[overload1]$$$setEnabledbool -->
+<h3 class="fn" translate="no" id="setEnabled"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Wifi::<span class="name">setEnabled</span>(<span class="type">bool</span> <i>on</i>)</h3>
+<p>Switches Wi-Fi on when <i translate="no">on</i> is true, or off, and saves the choice (plasma-nm's <code translate="no">enableWireless</code>).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setEnabled -->
+</div>
+<div class="fnitem">
+<!-- $$$validPassphrase[overload1]$$$validPassphraseconstQString& -->
+<h3 class="fn" translate="no" id="validPassphrase"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Wifi::<span class="name">validPassphrase</span>(const <span class="type">QString</span> &amp;<i>passphrase</i>) const</h3>
+<p>Returns whether <i translate="no">passphrase</i> can join a WPA network: 8 to 63 characters, or 64 hex digits.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@validPassphrase -->
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>
+</div>

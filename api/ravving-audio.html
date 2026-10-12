@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- index.qdoc -->
+  <meta name="description" content="The JACK graph, the outputs, taps, recorders, the tuner, exports and playback.">
+  <title>Audio, recording and export | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li>Audio, recording and export</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Audio, recording and export</h1>
+<!-- $$$ravving-audio-description -->
+<div class="descr" id="details">
+<div class="table"><table class="annotated">
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="albumart.html">AlbumArt</a></p></td><td class="tblDescr"><p>Cover art drawn for a track, so every export has artwork of its own</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="albumartprovider.html">AlbumArtProvider</a></p></td><td class="tblDescr"><p>Serves AlbumArt to QML as image://albumart/&lt;title&gt;%09&lt;artist&gt;%09&lt;album&gt;</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audiofile.html">AudioFile</a></p></td><td class="tblDescr"><p>Audio-file operations on libsndfile (WAV, FLAC, Ogg, AIFF...) for the samplers and the exporter</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="audiofile-cut.html">AudioFile::Cut</a></p></td><td class="tblDescr"><p>Result of writeCut(): an export cut from a raw recording</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audiofile-info.html">AudioFile::Info</a></p></td><td class="tblDescr"><p>A file's length in frames, sample rate and channel count, as info() reads them</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="audiofile-take.html">AudioFile::Take</a></p></td><td class="tblDescr"><p>Result of processTake(): whether it worked, and the take's last burst of sound as a slot trim</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audiograph.html">AudioGraph</a></p></td><td class="tblDescr"><p>Audio graph's clock: the sample rate and period PipeWire's JACK graph runs at</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="audiooutputs.html">AudioOutputs</a></p></td><td class="tblDescr"><p>Where the sound goes: the device's jacks, an HDMI screen, or a connected Bluetooth speaker or headphones; published to QML as outputs (the control center's AUDIO OUTPUT)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audiotap.html">AudioTap</a></p></td><td class="tblDescr"><p>A tap on the master for the video recorder: a JACK client that copies what the speakers get into a ring buffer and feeds it to ffmpeg through a named pipe</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="exporter.html">Exporter</a></p></td><td class="tblDescr"><p>Project's exports, published to QML as studio.exporter: a track (an audio file) or a bundle (a .ravv zip), both into the library's exports folder (Paths::exports()), where the music player finds them</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareports.html">HardwarePorts</a></p></td><td class="tblDescr"><p>A sound card's ports on the JACK graph, found by the card, never by a fixed JACK name (docs/routing.md, &quot;Hardware port names&quot;)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="inputeffects.html">InputEffects</a></p></td><td class="tblDescr"><p>Live effects on the device input, published to QML as studio.input.effects: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="inputrecorder.html">InputRecorder</a></p></td><td class="tblDescr"><p>Device's audio input (the input jack), recorded into the samplers and the RECORDER; published to QML as studio.input</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="jackwiring.html">JackWiring</a></p></td><td class="tblDescr"><p>Keeps the JACK graph wired for ravving's tracks, as zynthbox-qml's autoconnect (zynautoconnect/zynthian_autoconnect.py) wires a synth on a sketchpad track</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="liverecordings.html">LiveRecordings</a></p></td><td class="tblDescr"><p>RECORDER's recordings: the takes kept as played (InputRecorder::record(true)), published to QML as studio.input.recordings</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="midiinput.html">MidiInput</a></p></td><td class="tblDescr"><p>External MIDI controllers (keyboards, pads) as an input for LIVE and REC, published to QML as studio.midiIn</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="mixrecorder.html">MixRecorder</a></p></td><td class="tblDescr"><p>Global recording: everything that reaches the speakers (libzynthbox's GlobalPlayback, the master) written to a WAV file, as easyrave's top-bar RECORD exports the song; published to QML as studio.mix</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="musiclibrary.html">MusicLibrary</a></p></td><td class="tblDescr"><p>Tracks on the device the music player lists, published to QML as studio.music.library</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="musicplayer.html">MusicPlayer</a></p></td><td class="tblDescr"><p>Music player, published to QML as studio.music: a queue of the library's tracks (MusicLibrary) played one after the other through Qt Multimedia</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="outputwatch.html">OutputWatch</a></p></td><td class="tblDescr"><p>Checks that the sound sent to another output (AudioOutputs' loopback into a Bluetooth or HDMI sink) comes out of it</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="pitchdetector.html">PitchDetector</a></p></td><td class="tblDescr"><p>Pitch of a plucked string in a block of mono audio: the TUNER's ear (Tuner)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="tuner.html">Tuner</a></p></td><td class="tblDescr"><p>TUNER (the RECORDER's GUITAR tab): the pitch of the string played into the device input, against a tuning's open strings; published to QML as studio.input.tuner</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="videorecorder.html">VideoRecorder</a></p></td><td class="tblDescr"><p>Video recordings of a session (LIVE REC), published to QML as video: the screen or a USB camera with the master's sound, as one MP4 in the library's videos folder (Paths::videos()), or the sound alone</p></td></tr>
+</table></div>
+</div>
+<!-- @@@ravving-audio -->
+<div class="table"><table class="annotated">
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="albumart.html">AlbumArt</a></p></td><td class="tblDescr"><p>Cover art drawn for a track, so every export has artwork of its own</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="albumartprovider.html">AlbumArtProvider</a></p></td><td class="tblDescr"><p>Serves AlbumArt to QML as image://albumart/&lt;title&gt;%09&lt;artist&gt;%09&lt;album&gt;</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audiofile.html">AudioFile</a></p></td><td class="tblDescr"><p>Audio-file operations on libsndfile (WAV, FLAC, Ogg, AIFF...) for the samplers and the exporter</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="audiofile-cut.html">AudioFile::Cut</a></p></td><td class="tblDescr"><p>Result of writeCut(): an export cut from a raw recording</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audiofile-info.html">AudioFile::Info</a></p></td><td class="tblDescr"><p>A file's length in frames, sample rate and channel count, as info() reads them</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="audiofile-take.html">AudioFile::Take</a></p></td><td class="tblDescr"><p>Result of processTake(): whether it worked, and the take's last burst of sound as a slot trim</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audiograph.html">AudioGraph</a></p></td><td class="tblDescr"><p>Audio graph's clock: the sample rate and period PipeWire's JACK graph runs at</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="audiooutputs.html">AudioOutputs</a></p></td><td class="tblDescr"><p>Where the sound goes: the device's jacks, an HDMI screen, or a connected Bluetooth speaker or headphones; published to QML as outputs (the control center's AUDIO OUTPUT)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audiotap.html">AudioTap</a></p></td><td class="tblDescr"><p>A tap on the master for the video recorder: a JACK client that copies what the speakers get into a ring buffer and feeds it to ffmpeg through a named pipe</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="exporter.html">Exporter</a></p></td><td class="tblDescr"><p>Project's exports, published to QML as studio.exporter: a track (an audio file) or a bundle (a .ravv zip), both into the library's exports folder (Paths::exports()), where the music player finds them</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareports.html">HardwarePorts</a></p></td><td class="tblDescr"><p>A sound card's ports on the JACK graph, found by the card, never by a fixed JACK name (docs/routing.md, &quot;Hardware port names&quot;)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="inputeffects.html">InputEffects</a></p></td><td class="tblDescr"><p>Live effects on the device input, published to QML as studio.input.effects: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="inputrecorder.html">InputRecorder</a></p></td><td class="tblDescr"><p>Device's audio input (the input jack), recorded into the samplers and the RECORDER; published to QML as studio.input</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="jackwiring.html">JackWiring</a></p></td><td class="tblDescr"><p>Keeps the JACK graph wired for ravving's tracks, as zynthbox-qml's autoconnect (zynautoconnect/zynthian_autoconnect.py) wires a synth on a sketchpad track</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="liverecordings.html">LiveRecordings</a></p></td><td class="tblDescr"><p>RECORDER's recordings: the takes kept as played (InputRecorder::record(true)), published to QML as studio.input.recordings</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="midiinput.html">MidiInput</a></p></td><td class="tblDescr"><p>External MIDI controllers (keyboards, pads) as an input for LIVE and REC, published to QML as studio.midiIn</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="mixrecorder.html">MixRecorder</a></p></td><td class="tblDescr"><p>Global recording: everything that reaches the speakers (libzynthbox's GlobalPlayback, the master) written to a WAV file, as easyrave's top-bar RECORD exports the song; published to QML as studio.mix</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="musiclibrary.html">MusicLibrary</a></p></td><td class="tblDescr"><p>Tracks on the device the music player lists, published to QML as studio.music.library</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="musicplayer.html">MusicPlayer</a></p></td><td class="tblDescr"><p>Music player, published to QML as studio.music: a queue of the library's tracks (MusicLibrary) played one after the other through Qt Multimedia</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="outputwatch.html">OutputWatch</a></p></td><td class="tblDescr"><p>Checks that the sound sent to another output (AudioOutputs' loopback into a Bluetooth or HDMI sink) comes out of it</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="pitchdetector.html">PitchDetector</a></p></td><td class="tblDescr"><p>Pitch of a plucked string in a block of mono audio: the TUNER's ear (Tuner)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="tuner.html">Tuner</a></p></td><td class="tblDescr"><p>TUNER (the RECORDER's GUITAR tab): the pitch of the string played into the device input, against a tuning's open strings; published to QML as studio.input.tuner</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="videorecorder.html">VideoRecorder</a></p></td><td class="tblDescr"><p>Video recordings of a session (LIVE REC), published to QML as video: the screen or a USB camera with the master's sound, as one MP4 in the library's videos folder (Paths::videos()), or the sound alone</p></td></tr>
+</table></div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>
