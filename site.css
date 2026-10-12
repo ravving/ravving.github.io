@@ -630,11 +630,15 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .bp .icon.fill { fill: var(--c); stroke: none; }
 .bp .step { fill: var(--c); opacity: 0; filter: drop-shadow(0 0 5px var(--c)); animation: bp-step 0.35s ease-out calc(4s + var(--i) * 0.06s) forwards; }
 @keyframes bp-draw { to { stroke-dashoffset: 0; } }
+/* the drums page on the screen: thinner lines, the beat's hits, a playhead walking the 16 steps */
+.bp .ln.ui { stroke: rgba(236, 240, 248, 0.42); stroke-width: calc(var(--bp-w) * 0.6); animation-duration: 0.6s; }
+.bp .hit { fill: #ff5a4a; opacity: 0; filter: drop-shadow(0 0 2px #ff5a4a); animation: bp-lit 0.3s ease-out var(--d) forwards; }
+.bp .playhead { fill: rgba(255, 255, 255, 0.10); opacity: 0; animation: bp-lit 0.3s ease-out 5.2s forwards, bp-play 3.2s steps(16, jump-none) 5.2s infinite; }
+@keyframes bp-play { from { transform: translateX(0); } to { transform: translateX(calc(var(--step) * 15)); } }
 @keyframes bp-lit { to { opacity: 1; } }
 @keyframes bp-step { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0.85; } }
 /* the screen: it powers on to the splash once drawn, then shows the app */
 .bp-screen { background: transparent; animation: none; }
-.bp-app { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: bp-lit 0.01s linear 2.3s forwards; }
 .bp-boot { position: absolute; inset: 0; display: grid; place-items: center; background: #06050a; opacity: 0;
   animation: bp-power-on 0.3s ease-out 1.9s forwards, landing-power 0.5s ease-in-out 3.45s forwards; }
 .bp-boot .landing-splash { animation-delay: 3.1s; }
@@ -644,6 +648,7 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .landing-device:has(.bp) .landing-glow { background: radial-gradient(closest-side, rgba(74, 155, 255, 0.16), transparent); }
 @media (prefers-reduced-motion: reduce) {
   .bp .ln { stroke-dashoffset: 0; animation: none; }
-  .bp text, .bp line.lamp, .bp .icon, .bp .step, .bp-app { opacity: 1; animation: none; }
+  .bp text, .bp line.lamp, .bp .icon, .bp .step, .bp .hit { opacity: 1; animation: none; }
+  .bp .playhead { display: none; }
   .bp-boot { display: none; }
 }
