@@ -35,7 +35,7 @@
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
-<li class="on"><a href="video.html" aria-current="page">Video recordings and the computer link</a><ul><li><a href="#the-rule-it-is-built-on">The rule it is built on</a></li><li><a href="#how-a-recording-is-made">How a recording is made</a></li><li><a href="#measured-on-milo-pi-5-2026-10-11">Measured on milo (Pi 5, 2026-10-11)</a></li><li><a href="#a-microphone-in-the-sound">A microphone in the sound</a></li><li><a href="#the-voice-over">The voice over</a></li><li><a href="#the-hardware-keys-and-the-ui">The hardware keys and the UI</a></li><li><a href="#the-computer-link">The computer link</a></li><li><a href="#tests-and-tools">Tests and tools</a></li><li><a href="#traps-and-limits">Traps and limits</a></li></ul></li>
+<li class="on"><a href="video.html" aria-current="page">Video recordings and the computer link</a><ul><li><a href="#the-rule-it-is-built-on">The rule it is built on</a></li><li><a href="#how-a-recording-is-made">How a recording is made</a></li><li><a href="#measured-on-milo-pi-5-2026-10-11">Measured on milo (Pi 5, 2026-10-11)</a></li><li><a href="#a-microphone-in-the-sound">A microphone in the sound</a></li><li><a href="#the-voice-over">The voice over</a></li><li><a href="#the-hardware-keys-and-the-ui">The hardware keys and the UI</a></li><li><a href="#audio-only">Audio only</a></li><li><a href="#the-computer-link">The computer link</a></li><li><a href="#tests-and-tools">Tests and tools</a></li><li><a href="#traps-and-limits">Traps and limits</a></li></ul></li>
 <li><a href="history.html">Undo and redo</a></li>
 <li><a href="bluetooth.html">Bluetooth</a></li>
 <li><a href="scripting-projects.html">Building a project by script</a></li>
@@ -73,7 +73,8 @@
 
 <p>A video of a session: the screen (or a USB camera) with the master's sound, as one MP4 in
 the library's <code>videos/</code> folder (<code>Paths::videos()</code>, <code>/zynthian/zynthian-my-data/ravving/videos</code>
-on the device). The control center's VIDEO card starts one; while VIDEO is on, the device's
+on the device), or the sound alone as a WAV among the TRACKS ("Audio only" below). The control
+center's LIVE REC card starts one; while LIVE REC is on, the device's
 RECORD key starts a recording and STOP ends it, from any page, as the header's ● and ■ do on
 the screen. SETTINGS · VIDEO has the QUALITY, the TIMER (a countdown before it starts) and
 the SOURCE; VIDEO SAVED, when a recording ends, sends it to the COMPUTER set up in SETTINGS
@@ -256,11 +257,18 @@ samples stuck at the ceiling), and the meter must read the tone (<code>video.mic
 −20 dBFS while a burst plays, <code>micHot</code> false; a −3 dBFS burst sets <code>micHot</code>).</p>
 <h2 id="the-hardware-keys-and-the-ui">The hardware keys and the UI</h2>
 <ul>
-<li>The VIDEO card (control center): tap twice to start, the second within three seconds (the
-  card reads TAP AGAIN · VIDEO and its bar runs out, as REBOOT asks: a stray tap never starts
-  one; the drawer closes first, so it is not in the picture; the TIMER counts down on an
-  overlay that is not recorded either, since ffmpeg starts after it). The card reads READY / STARTS IN n / RECORDING mm:ss / SAVING and
-  is lit while VIDEO is on; a tap while on ends the recording and switches VIDEO off.</li>
+<li>The LIVE REC card (control center): a tap opens the LIVE REC dialog (<code>LiveRecPopup.qml</code>):
+  WHAT, a VIDEO (the screen or a USB camera with the master's sound, an MP4 among the
+  VIDEOS) or AUDIO ONLY (the sound alone, a 24-bit WAV among the TRACKS, see below); MIC, the
+  RECORDER's input in the sound; and START, which switches LIVE REC on and begins after the
+  TIMER (the dialog is the confirmation the card asked for with a second tap until
+  2026-10-12: a stray tap never starts one; the drawer closes first, so it is not in the
+  picture; the TIMER counts down on an overlay that is not recorded either, since ffmpeg
+  starts after it). ◀ ▶ pick WHAT, ▲ ▼ toggle the MIC, SELECT starts. The card reads LIVE
+  REC · READY / REC IN n / REC mm:ss / LIVE REC · SAVING and is lit while LIVE REC is on; a
+  tap while on ends the recording and switches LIVE REC off. A new project (NEW in the
+  project menu) switches LIVE REC off too, a recording under way saved first
+  (<code>Projects::created</code>).</li>
 <li>While VIDEO is on, RECORD and STOP are the video's before any page sees them
   (<code>Ravving::handleCuia</code> → <code>VideoRecorder::takesKey</code>): RECORD starts when idle (a toast says
   ■ stops when it is already recording), STOP ends the recording (and stops the music with
@@ -270,18 +278,44 @@ samples stuck at the ceiling), and the meter must read the tone (<code>video.mic
 <li>The project plate shows the video's state while VIDEO is on (VIDEO READY · ● RECORDS,
   VIDEO IN 3, ● REC 01:23, VIDEO · SAVING); the RECORD LED glows dim red when ready, orange
   during the countdown, red while recording; STOP lights while there is something to end.</li>
-<li>While recording, every device key pressed (ALT combos as "ALT + MODE", knob turns as "KNOB 1
-  ▲", "BIG KNOB ▼") is named in a short red notice at the screen's bottom (<code>Ravving::keyShown</code> →
-  Main.qml's second Toast), so the video shows what was played; SETTINGS · VIDEO · KEYS turns
-  it off (<code>video.showKeys</code>, on by default).</li>
-<li>VIDEO SAVED (when a recording ends): the file, its length, size and picture size; DELETE at
-  the left (a ConfirmButton: the second tap within three seconds removes the file,
-  <code>VideoRecorder::remove</code>), RENAME and SEND… at the right (SendPopup: a USB stick's
-  <code>ravving/videos</code>, a computer, the phone).</li>
+<li>While a video records, every device key pressed (ALT combos as "ALT + MODE", knob turns as
+  "KNOB 1 ▲", "BIG KNOB ▼") is named in a short red notice at the screen's bottom
+  (<code>Ravving::keyShown</code> → Main.qml's second Toast), so the video shows what was played;
+  SETTINGS · VIDEO · KEYS turns it off (<code>video.showKeys</code>, on by default). An audio recording
+  shows none: there is no picture to explain.</li>
+<li>VIDEO SAVED / LIVE REC SAVED (when a recording ends): the file, its length, size and
+  picture size; DELETE at the left (a ConfirmButton: the second tap within three seconds
+  removes the file, <code>VideoRecorder::remove</code>), RENAME and SEND… at the right (SendPopup: a USB
+  stick's <code>ravving/videos</code> or <code>ravving/exports</code>, a computer, the phone); an audio recording
+  also has METADATA… (below).</li>
 <li>A failure (ffmpeg missing, no space, the encoder giving no frames in 12 s, ffmpeg dying)
   is a toast, an issues-center entry and <code>video.error</code>; what ffmpeg wrote before dying is still
   saved when it has frames.</li>
 </ul>
+<h2 id="audio-only">Audio only</h2>
+<p>LIVE REC's AUDIO ONLY (<code>video.mode</code> "audio", <code>VideoRecorder::audioOnly</code>) is the same
+recorder without the picture: the tap feeds ffmpeg as before, but the command has no video
+input and no encoder, only <code>-c:a pcm_s24le -f wav</code> into <code>.recording-&lt;name&gt;.wav</code> in the exports
+folder (<code>Paths::exports()</code>, the TRACKS the music player and FILES list), so nothing is
+encoded and nothing has to be lined up (no <code>-copyts</code>, no <code>-itsoffset</code>). The first bytes out
+(ffmpeg's <code>out_time_us</code> in the progress report) stand for the first frame; stopping
+renames the WAV to <code>&lt;project&gt; - &lt;date&gt;.wav</code> (no remux, nothing to cut: the sound begins
+where it began). The MIC, the voice over and the limiter apply as to a video. The key
+notices are not shown.</p>
+<p>When it ends, LIVE REC SAVED offers, besides DELETE, RENAME and SEND…, METADATA…: the
+export dialog over the file (<code>ExportPopup.openForFile</code>, the same form without WHAT and the
+lengths; SAVE WITH TAGS), which calls <code>Exporter::finishRecording(rawFile, metadata)</code>: the
+WAV is written whole in the FORMAT chosen (WAV 24-bit, FLAC, OGG, MP3) under the NAME given
+in the exports folder, tagged with the TITLE, ARTIST, ALBUM, GENRE, COMPOSER and COMMENT, its
+cover drawn and saved beside it, its sidecar JSON written, the raw WAV removed, and the
+files copied to the stick or sent to the computer picked. That is the track export's own
+finishing (<code>Exporter::writeAndTag</code>, shared since 2026-10-12: one path for both), so a live
+recording and an exported track are the same kind of file afterwards. The tagged track then
+stands for the recording in LIVE REC SAVED (<code>VideoRecorder::adopt</code>), so RENAME and SEND…
+act on it. Without METADATA… the plain WAV stays, playable and listed as any track.</p>
+<p><code>tools/video-test.sh</code> has the audio checks: a recording in AUDIO ONLY mode lands as a WAV
+among the TRACKS, ffprobe sees one audio stream of the right length, <code>finishRecording</code> over
+the fifo writes the FLAC with its cover and sidecar and takes the WAV away.</p>
 <h2 id="the-computer-link">The computer link</h2>
 <p>SETTINGS · COMPUTERS holds the laptops or PCs exports and videos can be sent to over SSH:
 any number (<code>Computers</code>, <code>computers</code>, a list of <code>ComputerLink</code>s, each its own group

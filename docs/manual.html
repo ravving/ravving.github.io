@@ -473,8 +473,9 @@ one on screen is the one you edit, and what you edit stays in it when you pick a
   lights orange while ALT is held; MODE alone still cycles the entry mode), puts the section keys where the LIVE FX pads are (the same again brings the pads back): the SONG page's keys, at
   the pads' size, without their dots. A tap picks one (on the next bar while it plays), ▶ marks
   the one sounding and its progress fills it, a swipe up removes one (it follows the finger and
-  fades; past half its height it flies off; never the last), more than fit swipe sideways, ＋
-  right after the last one, as on the SONG page.</li>
+  fades; past half its height it flies off; never the last), more than fit swipe sideways (the strip slides to the section that becomes current or that
+  the song reaches), the keys grouped on a slab in the song's colour with ＋ pinned at its end,
+  always in reach.</li>
 <li><strong>Seeing the change.</strong> As the section sounding changes (a SONG part, or a LOOP pick landing on
   the bar line) the plate sweeps in its colour and the instrument page glows round its frame in
   it, once; the section keys (here and on the SONG page) fill with the section's progress.</li>
@@ -544,12 +545,13 @@ outside the key (a MIDI keyboard's) on the lead, the bass or the chords' NOTES s
 records in a row of its own on the roll; off, it is muted there and never recorded. The
 drums, the samplers and the chords played on a degree ignore it.</p>
 <h2 id="video-recordings-and-the-computer-link">Video recordings and the computer link</h2>
-<p>The control center's VIDEO card records the session: the screen (or a USB camera) with the
-master's sound, as an MP4 in the library's <code>videos/</code> folder. A second tap on the card within
-three seconds confirms the start (the bar along it runs out, as REBOOT asks), so a stray tap
-never starts a recording; ending one is a single tap. While VIDEO is on, the device's
-RECORD key starts a recording and STOP ends it (the music goes on), from any page; SETTINGS ·
-VIDEO has the QUALITY (three tiers measured at 0 xruns), the TIMER counted down before a
+<p>The control center's LIVE REC card records the session: a tap opens a dialog that asks
+WHAT, a VIDEO (the screen or a USB camera with the master's sound, an MP4 in the library's
+<code>videos/</code> folder) or AUDIO ONLY (the sound alone, a 24-bit WAV among the TRACKS in the
+exports folder), whether the MIC is in, and START (the dialog is the confirmation, so a
+stray tap never starts a recording; ending one is a single tap; a new project switches
+LIVE REC off). While LIVE REC is on, the device's RECORD key starts a recording and STOP
+ends it (the music goes on), from any page; SETTINGS · VIDEO has the QUALITY (three tiers measured at 0 xruns), the TIMER counted down before a
 recording, the SOURCE, MIC (the RECORDER's input in the video's sound) and VOICE, the
 voice-over mix: while the mic carries a voice the music ducks under it (DUCK −6 / −12 / −18
 dB, −12 by default) and the voice is lifted (+6 / +12 dB) and made crisp (a low cut and a
@@ -558,9 +560,12 @@ the mic 12 dB over what the speakers are heard to leak into it (the beat does no
 the mix goes through a look-ahead limiter rather than clipping, and the mic's LEVEL is metered
 from the moment VIDEO is on (in SETTINGS and standing on the project plate; MIC TOO HOT when
 its peaks pass −6 dBFS: turn the RECORDER's GAIN down); with the RECORDER on GUITAR or LINE
-the input is summed as it is. Both apply to a recording under way. VIDEO SAVED, when one ends, offers DELETE at its left (a second tap
-within three seconds confirms), RENAME (the file keeps its extension) and SEND… through one dialog that lists every USB stick, every computer and the
-phone; the same SEND… is on the music player's tracks, in FILES and in the presets dialogs,
+the input is summed as it is. Both apply to a recording under way. VIDEO SAVED or LIVE REC SAVED, when one ends, offers
+DELETE at its left (a second tap within three seconds confirms), RENAME (the file keeps its
+extension) and SEND… through one dialog that lists every USB stick, every computer and the
+phone; an audio recording also has METADATA…, the export dialog over the file, which tags it
+(title, artist, album, genre, composer, comment), draws its cover, writes it in the format
+chosen (WAV, FLAC, OGG, MP3) and sends it on, through the track export's own finishing; the same SEND… is on the music player's tracks, in FILES and in the presets dialogs,
 and the export dialog can send a new track or bundle to a computer as it is written.</p>
 <p>SETTINGS · COMPUTERS holds any number of computers (laptops or PCs on the network, over
 SSH): ADD A COMPUTER asks for its host, user and password, the password is used once to
@@ -655,9 +660,11 @@ BACK leaves. Opening the player stops the transport and leaving it stops the pla
 <p>MENU → AUDIO OUTPUT picks where the studio's sound goes: the device's jacks (the default),
 HDMI, or any Bluetooth speaker or headphones connected in the BLUETOOTH dialog. The jacks
 stay the JACK graph's clock whatever is chosen; another output is fed through a loopback
-of ravving's own with a 2048-frame buffer, the master's output linked to it and the jack
-links dropped, so the sound is glitch-free and comes out of one place only (making the
-Bluetooth sink PipeWire's default sink did neither, as measured on milo). The choice is
+of ravving's own with a 2048-frame buffer, the master's output linked to it and the jacks
+muted (not unlinked: an unlinked jacks sink is suspended and the Bluetooth transport becomes
+the graph's clock, which stalled everything silently once, 2026-10-12), so the sound is
+glitch-free and comes out of one place only (making the Bluetooth sink PipeWire's default
+sink did neither, as measured on milo). The choice is
 kept: when the output goes away (headphones turned off) the sound falls back to the jacks,
 and it goes back to the output once it is there again (a restart, a reconnection; a
 Bluetooth output's address is kept with it, so that Bluetooth can connect it when it comes

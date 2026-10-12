@@ -75,6 +75,24 @@
 came up along the way. Read this first when picking the work up again; move an item out
 once it is done (the docs and README then say what was built). Last updated 2026-10-08 (evening).</p>
 <h2 id="needs-the-device-and-the-user">Needs the device and the user</h2>
+<ul>
+<li><strong>Sound stalled on Bluetooth headphones after a new drum sound</strong> (user, 2026-10-12 05:07,
+  Sony WH-CH720N, SBC-XQ): the DRUMS 2 engine restarted twice in 13 s (a GM soundfont drum),
+  then silence, no issue reported, no PipeWire / bluez line in either journal; picking the
+  output again (speakers, then the headphones) brought it back. Found: with Bluetooth as the
+  output the jacks' ALSA sink was <code>suspended</code> (the master was unlinked from it), so the bluez
+  sink (priority.driver 1010) was the graph's driver, against AudioOutputs' own design (the
+  HiFiBerry, 10000, is meant to keep the clock). A Bluetooth transport that stalls as the
+  driver stalls the whole graph silently. Fix applied the same day: the jacks stay linked and
+  are MUTED (wpctl set-mute) while another output plays, so they keep the clock
+  (<code>AudioOutputs::setJacksMuted</code>). VERIFIED live the same hour by hand (wpctl set-mute 59 1 +
+  pw-link of the master to the jacks while the headphones played): the jacks sink took the
+  clock back (pw-top: alsa_output the driver, the input and bluez following), the input's
+  xrun counter stopped, and the user heard the samplers' mic clean again (it had been
+  "awful": the mic's ALSA input was the graph's driver, 248 xruns). If it stalls again: <code>tools/device.sh graph links</code>, <code>pw-top -b -n 2</code> and the bluez node's state
+  from pw-dump BEFORE re-routing, then consider an OUTPUT STALLED watchdog (the bluez node
+  leaving <code>running</code> while the transport plays → a notice and a re-route).</li>
+</ul>
 <ol>
 <li><strong>Bluetooth, the rest.</strong> With the LG SJ1 paired: PLAY THROUGH on it and the glitch check
    (<code>tools/device.sh graph xruns -s 60</code> while it plays). A phone: VISIBLE, pair with the
@@ -288,8 +306,15 @@ STEP keeps bringing LIVE with it).</li>
     tried): per note, the probability it plays on a pass, and repeats within its length (count,
     slope, chance), libzynthbox's "probability" and "ratchet-*" subnote metadata; on ALT + the
     knobs, or a knob press switching the set.</p>
-<ol start="33">
-<li><strong>SWITCH · BEAT: a picked section lands on the next beat</strong> (user, 2026-10-10; 9c's third
+<ol start="35">
+<li>
+<p><strong>STUTTER and LOOP let go more smoothly</strong> (user, 2026-10-12): the two LIVE FX pads end
+    abruptly on release; fade the stutter/loop out (a few periods of crossfade back to the
+    live stream, or the loop's last slice decaying) so the release does not click or jump.
+    The other pads (DROP, the filters) already ramp.</p>
+</li>
+<li>
+<p><strong>SWITCH · BEAT: a picked section lands on the next beat</strong> (user, 2026-10-10; 9c's third
     choice). The new section would come in mid-bar at the same place in its own bar (picked
     during beat 2, it joins on beat 3), as fast as a live switch gets. libzynthbox's
     PlayfieldManager swaps clips only at CurrentPosition or NextBarPosition, so either (a) add a
@@ -297,7 +322,8 @@ STEP keeps bringing LIVE with it).</li>
     milo's libzynthbox and a request upstream, ~/Coding/libzynthbox-bug-reports.md), or (b)
     switch at CurrentPosition with the clip's offset from ravving's own timer on the beat (not
     sample-accurate: a note on the beat may drop or double). Then a third chip on the SONG
-    page's SWITCH (Sections::SwitchBeat).</li>
+    page's SWITCH (Sections::SwitchBeat).</p>
+</li>
 </ol>
 <h2 id="cosmetic-and-small-fixes-seen-not-done">Cosmetic and small fixes seen, not done</h2>
 <ul>
