@@ -76,216 +76,320 @@
 <p class="doc-blurb">Video and audio recording, the microphone and voice over, the computer link.</p>
 
 <p>How LIVE REC records the screen or the sound: the JACK tap, FFmpeg, the microphone and voice over, the keys shown on a video, and the computer link. The classes are in the API reference.</p>
-<p>LIVE REC records the session: the screen (or a USB camera) with the master's sound, as one MP4
-in the library's <code>videos/</code> folder (<code>Paths::videos()</code>), or the sound alone as a WAV among the
-TRACKS ("Audio only" below). Code: <code>src/backend/videorecorder.*</code> (<code>video</code>),
-<code>src/backend/audiotap.*</code>, <code>src/backend/computerlink.*</code> (<code>computer</code>),
-<code>qml/components/ComputerPopup.qml</code>, <code>LiveRecPopup.qml</code>, <code>VideoSavedPopup.qml</code>, the LIVE REC card
-in <code>ControlCenter.qml</code>.</p>
-<p>The rule it is built on: the sound comes first. A video may cost the audio nothing it can
-hear, and the audio in the video must never drop.</p>
+<p>LIVE REC records the session. It makes either:</p>
+<ul>
+<li><strong>a video:</strong> the screen or a USB camera, with the master's sound, as one MP4 in the library's
+  <code>videos/</code> folder (<code>Paths::videos()</code>);</li>
+<li><strong>the sound alone:</strong> a WAV among the TRACKS ("Audio only", below).</li>
+</ul>
+<p>The code: <code>src/backend/videorecorder.*</code> (<code>video</code>), <code>src/backend/audiotap.*</code>,
+<code>src/backend/computerlink.*</code> (<code>computer</code>), <code>qml/components/ComputerPopup.qml</code>,
+<code>LiveRecPopup.qml</code>, <code>VideoSavedPopup.qml</code>, and the LIVE REC card in <code>ControlCenter.qml</code>.</p>
+<p>The rule it's built on: the sound comes first. A video may cost the audio nothing it can hear,
+and the audio in the video must never drop.</p>
 <h2 id="how-a-recording-is-made">How a recording is made</h2>
+<h3 id="1-the-sound-is-tapped-not-recorded-through-audiolevels">1. The sound is tapped, not recorded through AudioLevels</h3>
+<p><code>AudioTap</code> is ravving's own JACK client (<code>ravving-video</code>, stereo in), connected to the master's
+last outputs. That's what the speakers get, LIVE FX inserts included, which the header's ● WAV
+recording misses.</p>
+<ul>
+<li><strong>Its process callback</strong> copies each cycle into a ring of 2^20 frames (21.8 s at 48 kHz), and
+  touches nothing else.</li>
+<li><strong>A plain thread</strong> drains the ring into a named pipe
+  (<code>$XDG_RUNTIME_DIR/ravving-video-&lt;stamp&gt;.pipe</code>, with 1 MB of kernel buffering), as raw 32-bit
+  float stereo. ffmpeg reads the pipe as <code>-f f32le</code>.</li>
+</ul>
+<p>Why not the other paths:</p>
+<ul>
+<li><strong>libzynthbox's AudioLevels</strong> (the WAV recorder's and the exporter's path) runs one recording
+  at a time. A video session must leave the header's ● and the samplers' record-to-pad free.</li>
+<li><strong>ffmpeg's own <code>-f jack</code> input</strong> has a ring of 16 periods: 85 ms at 256 frames. An encoder or
+  SD-card stall longer than that drops sound. This ring holds 21 seconds, and anything it can't
+  hold is counted (<code>audioDroppedMs</code>, a warning in the issues center), not lost quietly.</li>
+</ul>
+<h3 id="2-the-picture-is-ffmpegs">2. The picture is ffmpeg's</h3>
+<p><code>x11grab</code> of the display (<code>-draw_mouse 0</code>), or <code>v4l2</code> of the camera, encoded with libx264 on two
+threads at <code>nice -n 10</code>. The Pi 5 has no hardware H.264 encoder: ffmpeg lists <code>h264_v4l2m2m</code>,
+but the Pi 5's V4L2 nodes are its ISP and HEVC decoder. The tiers ("Limits", below) all run with
+0 xruns.</p>
+<h3 id="3-sync-without-a-shared-clock">3. Sync without a shared clock</h3>
+<ul>
+<li>ffmpeg stamps every grabbed frame with the wall clock (<code>-use_wallclock_as_timestamps 1</code>; on
+  this ffmpeg, x11grab's default stamps are the wall clock too).</li>
+<li>The tap takes the wall-clock moment of its first sample on the audio thread, from the cycle's
+  own start. <code>jack_get_cycle_times</code> says the cycle began <code>now − (jack_get_time() − cycle_usecs)</code>
+  ago.</li>
+<li>ffmpeg is told that moment with <code>-itsoffset</code> on the audio input. With <code>-copyts</code>, both streams
+  sit on the same absolute clock in the file, to the millisecond.</li>
+</ul>
+<h3 id="4-matroska-first-then-one-remux">4. Matroska first, then one remux</h3>
+<p>The recording goes to <code>.recording-&lt;stamp&gt;.mkv</code>. A Matroska is readable even if ravving or ffmpeg
+dies; an MP4 without its index isn't. On STOP:</p>
 <ol>
-<li id="the-sound-is-tapped-not-recorded-through-audiolevels"><strong>The sound is tapped, not recorded through AudioLevels.</strong> <code>AudioTap</code> is ravving's own
-   JACK client (<code>ravving-video</code>, stereo in) connected to the master's last outputs (what the
-   speakers get: the LIVE FX inserts included, which the header's ● WAV recording misses). Its
-   process callback copies each cycle into a ring of 2^20 frames (21.8 s at 48 kHz) and
-   touches nothing else; a plain thread drains the ring into a named pipe (<code>$XDG_RUNTIME_DIR/
-   ravving-video-&lt;stamp&gt;.pipe</code>, 1 MB of kernel buffering) as raw 32-bit float stereo. ffmpeg
-   reads the pipe as <code>-f f32le</code>. Why not libzynthbox's AudioLevels (the WAV recorder's and the
-   exporter's path): it runs one recording at a time, and a video session must leave the
-   header's ● and the samplers' record-to-pad free. Why not ffmpeg's own <code>-f jack</code> input: its
-   ring is 16 periods (85 ms at 256 frames), so an encoder or SD-card stall longer than that
-   drops sound; this ring holds 21 seconds, and what it could not hold is counted
-   (<code>audioDroppedMs</code>, a warning in the issues center) rather than lost quietly.</li>
-<li id="the-picture-is-ffmpegs"><strong>The picture is ffmpeg's.</strong> <code>x11grab</code> of the display (<code>-draw_mouse 0</code>), or <code>v4l2</code> of the
-   camera, encoded with libx264 on two threads at <code>nice -n 10</code>: the Pi 5 has no hardware H.264
-   encoder (ffmpeg lists <code>h264_v4l2m2m</code>, but the Pi 5's V4L2 nodes are its ISP and HEVC
-   decoder). The tiers ("Limits", below) all run with 0 xruns.</li>
-<li id="sync-without-a-shared-clock"><strong>Sync without a shared clock.</strong> ffmpeg stamps every grabbed frame with the wall clock
-   (<code>-use_wallclock_as_timestamps 1</code>; on this ffmpeg x11grab's default stamps are the wall clock
-   too). The tap takes the wall-clock moment of its first sample on the audio thread, from the
-   cycle's own start (<code>jack_get_cycle_times</code>: the cycle began <code>now − (jack_get_time() −
-   cycle_usecs)</code> ago), and ffmpeg is told it with <code>-itsoffset</code> on the audio input. With
-   <code>-copyts</code> both streams sit on the same absolute clock in the file, to the millisecond.</li>
-<li id="matroska-first-then-one-remux"><strong>Matroska first, then one remux.</strong> The recording goes to <code>.recording-&lt;stamp&gt;.mkv</code>: a
-   Matroska is readable even if ravving or ffmpeg dies (an MP4 without its index is not). On
-   STOP the tap closes the pipe (ffmpeg's audio input ends), ffmpeg gets SIGINT and finishes
-   its file, and ffprobe reads the two streams' start times: the audio began while ffmpeg was
-   starting (~0.45 s before the first frame), so <code>ffmpeg -ss &lt;video start − audio start&gt;
-   -i rec.mkv -c copy -movflags +faststart</code> cuts the head to the first video frame, writes
-   the MP4 with its index up front and its title / date tags, and the Matroska is removed.
-   The remux copies packets: a few seconds for a long recording ("SAVING" on the card and the
-   plate). If the remux fails the Matroska is kept under the final name.</li>
+<li>The tap closes the pipe, so ffmpeg's audio input ends.</li>
+<li>ffmpeg gets SIGINT, and finishes its file.</li>
+<li>ffprobe reads the two streams' start times. The audio began while ffmpeg was starting, about
+   0.45 s before the first frame.</li>
+<li><code>ffmpeg -ss &lt;video start − audio start&gt; -i rec.mkv -c copy -movflags +faststart</code> cuts the
+   head to the first video frame. It writes the MP4 with its index up front and its title and
+   date tags, and the Matroska is removed.</li>
 </ol>
+<p>The remux copies packets, so it takes a few seconds for a long recording ("SAVING" on the card
+and the plate). If the remux fails, the Matroska is kept under the final name.</p>
 <h2 id="a-microphone-in-the-sound">A microphone in the sound</h2>
-<p>SETTINGS · VIDEO · MIC: the RECORDER's input, as it is set up there (MIC / GUITAR / LINE,
-the jack in use, its GAIN, its effects), mixed into the video's sound. Nothing of the input
-is repeated for the video: <code>InputRecorder::setListener(ports)</code> adds the tap's two mic ports
-(<code>ravving-video:mic_l</code> / <code>mic_r</code>) as one more destination at the end of the input chain
-(<code>JackWiring::setInputChain</code>'s <code>listeners</code>, beside the monitor lane and the take recorder; a
-mono input feeds both), the input counts as in use while a listener is set (its effects run),
-and the audio thread adds the ports to the master's sound as the video hears it. The master
-itself is untouched: the speakers get the mic only with the RECORDER's MONITOR on, in which
-case the video hears it twice (louder), so one or the other. <code>tools/video-test.sh</code> records
-once with MIC on and checks the link; <code>tools/video-mic-check.sh</code> is the listening test: a
-recording with the music stopped while someone speaks, then the file's audio measured.</p>
+<p>SETTINGS · VIDEO · MIC mixes the RECORDER's input into the video's sound, as it's set up there:
+MIC, GUITAR or LINE, the jack in use, its GAIN and its effects.</p>
+<ul>
+<li id="nothing-of-the-input-is-repeated-for-the-video"><strong>Nothing of the input is repeated for the video.</strong> <code>InputRecorder::setListener(ports)</code> adds the
+  tap's two mic ports (<code>ravving-video:mic_l</code> / <code>mic_r</code>) as one more destination at the end of the
+  input chain. That's <code>JackWiring::setInputChain</code>'s <code>listeners</code>, beside the monitor lane and the
+  take recorder; a mono input feeds both.</li>
+<li><strong>The input counts as in use</strong> while a listener is set, so its effects run.</li>
+<li><strong>The audio thread</strong> adds the ports to the master's sound, as the video hears it.</li>
+<li id="the-master-itself-is-untouched"><strong>The master itself is untouched.</strong> The speakers get the mic only with the RECORDER's MONITOR
+  on. Then the video hears it twice, louder, so use one or the other.</li>
+</ul>
+<p><code>tools/video-test.sh</code> records once with MIC on and checks the link. <code>tools/video-mic-check.sh</code> is
+the listening test: a recording with the music stopped while someone speaks, then the file's
+audio measured.</p>
 <h2 id="the-voice-over">The voice over</h2>
 <p>With MIC on, the tap mixes the master and the mic as a voice over (<code>AudioTap::setVoiceOver</code>,
-SETTINGS · VIDEO · VOICE), since a plain sum leaves a voice at a normal distance some 25 dB
-under the master:</p>
+SETTINGS · VIDEO · VOICE). A plain sum leaves a voice at a normal distance some 25 dB under the
+master.</p>
+<h3 id="the-voice">The voice</h3>
+<p>The mic is made crisp: a 120 Hz high-pass, and a +4 dB high shelf from 3 kHz (RBJ biquads on the
+audio thread). Then VOICE LIFT lifts it: +6 dB by default, +12, or flat.</p>
+<h3 id="the-duck">The duck</h3>
+<p>The mic's envelope is followed, with an instant attack and a 250 ms release. While it's above the
+voice threshold, the master turns down to VOICE DUCK: −12 dB by default, −6 or −18, and 0 is off.</p>
+<p>It ducks in 20 ms, and comes back over 600 ms once the voice stops. So the music sits in the
+background exactly while someone speaks.</p>
+<p>With DUCK and LIFT both 0, the mix is the plain sum, still through the limiter.</p>
+<h3 id="the-threshold-follows-the-music">The threshold follows the music</h3>
+<p>The threshold is at least −34 dBFS, and 12 dB over what the speakers are expected to leak into
+the mic right now. That expected leak is the master's envelope, as ducked, times a leak ratio
+the tap learns as the mic's level over the master's.</p>
 <ul>
-<li>the mic is made crisp: a 120 Hz high-pass and a +4 dB high shelf from 3 kHz (RBJ biquads
-  on the audio thread), then lifted by VOICE LIFT (+6 dB by default, +12 or flat);</li>
-<li>its envelope is followed (instant attack, 250 ms release); while it is above the voice
-  threshold the master is turned down to VOICE DUCK (−12 dB by default, −6 or −18; 0 is off)
-  in 20 ms and comes back over 600 ms once the voice stops, so the music sits in the
-  background exactly while someone speaks;</li>
-<li>the threshold follows the music: it is −34 dBFS at least, and 12 dB over what the speakers
-  are expected to leak into the mic right now, i.e. the master's envelope (as ducked) times a
-  leak ratio the tap learns as the mic's level over the master's: down within a second, up over
-  8 s, never past −26 dB of the master (0.02, −34 dB, to start; from the moment VIDEO is on,
-  since the mic is wired then). Against the expected leak only a voice counts, so the beat does
-  not duck itself through a mic near the speakers. The learning is slow upwards so that a
-  steady tone under the threshold does not become "leak". A mic that hears the speakers louder
-  than −26 dB of the master (the mic in front of the speaker) still ducks itself, and a leak
-  between the start value and the cap ducks the beat for a second or two at its start, until
-  the ratio has climbed. The RECORDER's GAIN scales the voice and the leak alike, so the ratio
-  holds when it is turned;</li>
-<li>the sum goes through a look-ahead peak limiter (1 ms ahead, ceiling −1 dBFS, 150 ms
-  release): the mix runs through a 1 ms delay line, the loudest sample in the line sets the
-  gain, which gets down over a quarter of the line, so a hot mic over a loud beat is turned
-  down before the peak comes out, never clipped, and never with the click of a gain step.
-  The 1 ms sits inside the 3 ms of audio offset; the master without the mic is not delayed.</li>
+<li><strong>The ratio</strong> moves down within a second and up over 8 s, never past −26 dB of the master. It
+  starts at 0.02 (−34 dB), from the moment VIDEO is on, since the mic is wired then.</li>
+<li><strong>Against the expected leak, only a voice counts,</strong> so the beat doesn't duck itself through a
+  mic near the speakers. The learning is slow upwards, so a steady tone under the threshold
+  doesn't become "leak".</li>
+<li><strong>The limits:</strong> a mic that hears the speakers louder than −26 dB of the master (in front of the
+  speaker) still ducks itself. A leak between the start value and the cap ducks the beat for a
+  second or two at its start, until the ratio has climbed.</li>
+<li><strong>The RECORDER's GAIN</strong> scales the voice and the leak alike, so the ratio holds when it's
+  turned.</li>
 </ul>
-<p>The RECORDER's GAIN still sets how hot the voice comes in, and the recorder watches it: while
-VIDEO is on with MIC the input is wired into the tap at once (not only while recording) and
-its peak is metered ten times a second (<code>micLevel</code>, before the lift). SETTINGS · VIDEO shows
-it on a LEVEL bar with the −6 dB mark, and the project plate carries it standing in its right
-corner while VIDEO is on (red while hot, a blue dot at its foot while the music ducks). A peak
-over −6 dBFS within the last two seconds is <code>micHot</code>: the bar turns red and the settings say
-MIC TOO HOT, turn the GAIN down; a mic peaking around −12 dBFS leaves the mix room and the
-limiter idle.</p>
-<p>The voice over is for a voice: with the RECORDER on GUITAR or LINE the input is summed as it
-is (through the limiter), nothing ducks under a guitar, and the VOICE rows say so. The
-settings apply at once, on a recording under way too. With DUCK and LIFT both 0 the mix is
-<code>tools/video-voice-check.sh</code> measures it: a steady 300 Hz tone at −12 dBFS into the tap's
-master ports as the music (so the measure does not depend on the project open; <code>MUSIC=project</code>
-plays the project instead), a 1 kHz tone in bursts (tools/tone.py, −20 dBFS, <code>TONE_DB</code> for
-another level) into the tap's mic ports as the voice; second by second, the music must be DUCK
-dB quieter while the tone is on, the tone must come out LIFT dB louder, the file must show no
-clipping (its peak under −0.5 dBFS, no run of samples stuck at the ceiling), and the meter must
-read the tone (<code>video.micLevel</code> near −20 dBFS while a burst plays, <code>micHot</code> false; a −3 dBFS
-burst sets <code>micHot</code>).</p>
+<h3 id="the-limiter">The limiter</h3>
+<p>The sum goes through a look-ahead peak limiter: 1 ms ahead, a ceiling of −1 dBFS, and a 150 ms
+release.</p>
+<ul>
+<li>The mix runs through a 1 ms delay line. The loudest sample in the line sets the gain, which
+  comes down over a quarter of the line.</li>
+<li>So a hot mic over a loud beat is turned down before the peak comes out: never clipped, and
+  never with the click of a gain step.</li>
+<li>The 1 ms sits inside the 3 ms of audio offset. The master without the mic isn't delayed.</li>
+</ul>
+<h3 id="the-mics-level">The mic's level</h3>
+<p>The RECORDER's GAIN still sets how hot the voice comes in, and the recorder watches it.</p>
+<ul>
+<li><strong>While VIDEO is on with MIC,</strong> the input is wired into the tap at once, not only while
+  recording. Its peak is metered ten times a second (<code>micLevel</code>, before the lift).</li>
+<li><strong>SETTINGS · VIDEO</strong> shows it on a LEVEL bar with a −6 dB mark.</li>
+<li><strong>The project plate</strong> carries it standing in its right corner while VIDEO is on: red while
+  hot, with a blue dot at its foot while the music ducks.</li>
+<li><strong><code>micHot</code>:</strong> a peak over −6 dBFS within the last two seconds. The bar turns red, and the
+  settings say MIC TOO HOT: turn the GAIN down. A mic peaking around −12 dBFS leaves the mix room
+  and the limiter idle.</li>
+</ul>
+<h3 id="guitar-and-line">Guitar and line</h3>
+<p>The voice over is for a voice. With the RECORDER on GUITAR or LINE, the input is summed as it is,
+through the limiter, and nothing ducks under a guitar; the VOICE rows say so. The settings apply
+at once, on a recording under way too.</p>
+<h3 id="checking-it">Checking it</h3>
+<p><code>tools/video-voice-check.sh</code> measures the voice over:</p>
+<ul>
+<li><strong>The music:</strong> a steady 300 Hz tone at −12 dBFS into the tap's master ports, so the measure
+  doesn't depend on the project open. <code>MUSIC=project</code> plays the project instead.</li>
+<li><strong>The voice:</strong> a 1 kHz tone in bursts (tools/tone.py, −20 dBFS; <code>TONE_DB</code> for another level)
+  into the tap's mic ports.</li>
+<li><strong>Second by second,</strong> the music must be DUCK dB quieter while the tone is on, and the tone
+  must come out LIFT dB louder.</li>
+<li><strong>No clipping:</strong> the file's peak under −0.5 dBFS, and no run of samples stuck at the ceiling.</li>
+<li><strong>The meter</strong> must read the tone: <code>video.micLevel</code> near −20 dBFS while a burst plays, with
+  <code>micHot</code> false. A −3 dBFS burst sets <code>micHot</code>.</li>
+</ul>
 <h2 id="the-hardware-keys-and-the-ui">The hardware keys and the UI</h2>
+<h3 id="the-live-rec-dialog">The LIVE REC dialog</h3>
+<p>A tap on the control center's LIVE REC card opens the LIVE REC dialog (<code>LiveRecPopup.qml</code>):</p>
 <ul>
-<li>
-<p>The LIVE REC card (control center): a tap opens the LIVE REC dialog (<code>LiveRecPopup.qml</code>):
-  WHAT, a VIDEO (the screen or a USB camera with the master's sound, an MP4 among the
-  VIDEOS) or AUDIO ONLY (the sound alone, a 24-bit WAV among the TRACKS, see below); MIC, the
-  RECORDER's input in the sound; and START, which switches LIVE REC on and begins after the
-  TIMER (the dialog is the confirmation, so a stray tap never starts one; the drawer closes
-  first, so it is not in the picture; the TIMER counts down on an overlay that is not recorded
-  either, since ffmpeg starts after it). ◀ ▶ pick WHAT, ▲ ▼ toggle the MIC, SELECT starts. The
-  card reads LIVE REC · READY / REC IN n / REC mm:ss / LIVE REC · SAVING and is lit while LIVE
-  REC is on; a tap while on ends the recording and switches LIVE REC off. A new project (NEW in
-  the project menu) switches LIVE REC off too, a recording under way saved first
-  (<code>Projects::created</code>).</p>
-</li>
-<li>
-<p>While VIDEO is on, RECORD and STOP are the video's before any page sees them
-  (<code>Ravving::handleCuia</code> → <code>VideoRecorder::takesKey</code>): RECORD starts when idle (a toast says
-  ■ stops when it is already recording), STOP ends the recording (and stops the music with
-  it: the session is over) or cancels the countdown; STOP with nothing recording is the
-  transport's again. The header's
-  ● and ■ do the same (<code>Session.toggleRecording</code> / <code>Session.stop</code>).</p>
-</li>
-<li>The project plate shows the video's state while VIDEO is on (VIDEO READY · ● RECORDS,
-  VIDEO IN 3, ● REC 01:23, VIDEO · SAVING); the RECORD LED glows dim red when ready, orange
-  during the countdown, red while recording; STOP lights while there is something to end.</li>
-<li>While a video records, every device key pressed (ALT combos as "ALT + MODE", knob turns as
-  "KNOB 1 ▲", "BIG KNOB ▼") is named in a short red notice at the screen's bottom
-  (<code>Ravving::keyShown</code> → Main.qml's second Toast), so the video shows what was played;
-  SETTINGS · VIDEO · KEYS turns it off (<code>video.showKeys</code>, on by default). An audio recording
-  shows none: there is no picture to explain.</li>
-<li>VIDEO SAVED / LIVE REC SAVED (when a recording ends): the file, its length, size and
-  picture size; DELETE at the left (a ConfirmButton: the second tap within three seconds
-  removes the file, <code>VideoRecorder::remove</code>), RENAME and SEND… at the right (SendPopup: a USB
-  stick's <code>ravving/videos</code> or <code>ravving/exports</code>, a computer, the phone); an audio recording
-  also has METADATA… (below).</li>
-<li>A failure (ffmpeg missing, no space, the encoder giving no frames in 12 s, ffmpeg dying)
-  is a toast, an issues-center entry and <code>video.error</code>; what ffmpeg wrote before dying is still
-  saved when it has frames.</li>
+<li><strong>WHAT:</strong> a VIDEO (the screen or a USB camera with the master's sound, an MP4 among the
+  VIDEOS), or AUDIO ONLY (the sound alone, a 24-bit WAV among the TRACKS, below);</li>
+<li><strong>MIC:</strong> the RECORDER's input in the sound;</li>
+<li><strong>START:</strong> switches LIVE REC on, and begins after the TIMER.</li>
 </ul>
+<p>The dialog is the confirmation, so a stray tap never starts a recording. The drawer closes first,
+so it isn't in the picture, and the TIMER counts down on an overlay that isn't recorded either,
+since ffmpeg starts after it. ◀ ▶ pick WHAT, ▲ ▼ toggle the MIC, and SELECT starts.</p>
+<h3 id="the-card">The card</h3>
+<p>It reads LIVE REC · READY, REC IN n, REC mm:ss or LIVE REC · SAVING, and is lit while LIVE REC
+is on. A tap while it's on ends the recording and switches LIVE REC off. A new project (NEW in
+the project menu) switches LIVE REC off too, saving a recording under way first
+(<code>Projects::created</code>).</p>
+<h3 id="record-and-stop">RECORD and STOP</h3>
+<p>While VIDEO is on, RECORD and STOP are the video's, before any page sees them
+(<code>Ravving::handleCuia</code> → <code>VideoRecorder::takesKey</code>):</p>
+<ul>
+<li>RECORD starts when idle. When already recording, a toast says ■ stops it.</li>
+<li>STOP ends the recording, and stops the music with it: the session is over. During the
+  countdown, it cancels.</li>
+<li>STOP with nothing recording is the transport's again.</li>
+<li>The header's ● and ■ do the same (<code>Session.toggleRecording</code> / <code>Session.stop</code>).</li>
+</ul>
+<h3 id="what-shows-while-recording">What shows while recording</h3>
+<ul>
+<li><strong>The project plate</strong> shows the video's state while VIDEO is on: VIDEO READY · ● RECORDS,
+  VIDEO IN 3, ● REC 01:23, VIDEO · SAVING.</li>
+<li><strong>The RECORD LED</strong> glows dim red when ready, orange during the countdown, and red while
+  recording. STOP lights while there's something to end.</li>
+<li><strong>The keys pressed:</strong> while a video records, every device key pressed is named in a short red
+  notice at the screen's bottom (<code>Ravving::keyShown</code> → Main.qml's second Toast), so the video
+  shows what was played. ALT combos read "ALT + MODE", and knob turns "KNOB 1 ▲" or "BIG KNOB ▼".</li>
+<li><strong>Turning it off:</strong> SETTINGS · VIDEO · KEYS (<code>video.showKeys</code>, on by default). An audio
+  recording shows none: there's no picture to explain.</li>
+</ul>
+<h3 id="when-it-ends">When it ends</h3>
+<p>VIDEO SAVED or LIVE REC SAVED shows the file, its length, size and picture size.</p>
+<ul>
+<li><strong>DELETE</strong>, at the left, is a ConfirmButton: a second tap within three seconds removes the
+  file (<code>VideoRecorder::remove</code>).</li>
+<li><strong>RENAME and SEND…</strong>, at the right. SEND… opens the SendPopup: a USB stick's <code>ravving/videos</code>
+  or <code>ravving/exports</code>, a computer, or the phone.</li>
+<li><strong>METADATA…</strong>, for an audio recording (below).</li>
+</ul>
+<p>A failure is a toast, an issues-center entry and <code>video.error</code>: ffmpeg missing, no space, the
+encoder giving no frames in 12 s, or ffmpeg dying. What ffmpeg wrote before dying is still saved
+when it has frames.</p>
 <h2 id="audio-only">Audio only</h2>
-<p>LIVE REC's AUDIO ONLY (<code>video.mode</code> "audio", <code>VideoRecorder::audioOnly</code>) is the same
-recorder without the picture: the tap feeds ffmpeg as before, but the command has no video
-input and no encoder, only <code>-c:a pcm_s24le -f wav</code> into <code>.recording-&lt;name&gt;.wav</code> in the exports
-folder (<code>Paths::exports()</code>, the TRACKS the music player and FILES list), so nothing is
-encoded and nothing has to be lined up (no <code>-copyts</code>, no <code>-itsoffset</code>). The first bytes out
-(ffmpeg's <code>out_time_us</code> in the progress report) stand for the first frame; stopping
-renames the WAV to <code>&lt;project&gt; - &lt;date&gt;.wav</code> (no remux, nothing to cut: the sound begins
-where it began). The MIC, the voice over and the limiter apply as to a video. The key
-notices are not shown.</p>
-<p>When it ends, LIVE REC SAVED offers, besides DELETE, RENAME and SEND…, METADATA…: the
-export dialog over the file (<code>ExportPopup.openForFile</code>, the same form without WHAT and the
-lengths; SAVE WITH TAGS), which calls <code>Exporter::finishRecording(rawFile, metadata)</code>: the
-WAV is written whole in the FORMAT chosen (WAV 24-bit, FLAC, OGG, MP3) under the NAME given
-in the exports folder, tagged with the TITLE, ARTIST, ALBUM, GENRE, COMPOSER and COMMENT, its
-cover drawn and saved beside it, its sidecar JSON written, the raw WAV removed, and the
-files copied to the stick or sent to the computer picked. That is the track export's own
-finishing (<code>Exporter::writeAndTag</code>, one path for both), so a live recording and an exported
-track are the same kind of file afterwards. The tagged track then stands for the recording in
-LIVE REC SAVED (<code>VideoRecorder::adopt</code>), so RENAME and SEND… act on it. Without METADATA… the
-plain WAV stays, playable and listed as any track.</p>
+<p>LIVE REC's AUDIO ONLY (<code>video.mode</code> "audio", <code>VideoRecorder::audioOnly</code>) is the same recorder
+without the picture.</p>
+<ul>
+<li><strong>The command</strong> has no video input and no encoder. The tap feeds ffmpeg as for a video, and
+  ffmpeg writes <code>-c:a pcm_s24le -f wav</code> into <code>.recording-&lt;name&gt;.wav</code> in the exports folder
+  (<code>Paths::exports()</code>, the TRACKS the music player and FILES list).</li>
+<li><strong>Nothing is encoded, and nothing has to be lined up:</strong> no <code>-copyts</code>, no <code>-itsoffset</code>. The
+  first bytes out (ffmpeg's <code>out_time_us</code> in the progress report) stand for the first frame.</li>
+<li><strong>Stopping</strong> renames the WAV to <code>&lt;project&gt; - &lt;date&gt;.wav</code>. There's no remux and nothing to cut:
+  the sound begins where it began.</li>
+<li><strong>The MIC, the voice over and the limiter</strong> apply as for a video. The key notices aren't shown.</li>
+</ul>
+<h3 id="metadata">METADATA…</h3>
+<p>When it ends, LIVE REC SAVED offers METADATA… beside DELETE, RENAME and SEND…. It's the export
+dialog over the file (<code>ExportPopup.openForFile</code>), the same form without WHAT and the lengths,
+with SAVE WITH TAGS. It calls <code>Exporter::finishRecording(rawFile, metadata)</code>:</p>
+<ol>
+<li>The WAV is written whole in the FORMAT chosen (WAV 24-bit, FLAC, OGG, MP3), under the NAME
+   given, in the exports folder.</li>
+<li>It's tagged with the TITLE, ARTIST, ALBUM, GENRE, COMPOSER and COMMENT. Its cover is drawn and
+   saved beside it, and its sidecar JSON written.</li>
+<li>The raw WAV is removed, and the files are copied to the stick or sent to the computer picked.</li>
+</ol>
+<p>That's the track export's own finishing (<code>Exporter::writeAndTag</code>, one path for both), so a live
+recording and an exported track are the same kind of file afterwards. The tagged track then
+stands for the recording in LIVE REC SAVED (<code>VideoRecorder::adopt</code>), so RENAME and SEND… act on
+it. Without METADATA…, the plain WAV stays, playable and listed like any track.</p>
 <h2 id="the-computer-link">The computer link</h2>
-<p>SETTINGS · COMPUTERS holds the laptops or PCs exports and videos can be sent to over SSH:
-any number (<code>Computers</code>, <code>computers</code>, a list of <code>ComputerLink</code>s, each its own group
-<code>computers/&lt;id&gt;</code> of the settings file; a single-computer set-up of an older version is moved into <code>c1</code>).
-ADD A COMPUTER asks for the host name or address, the user there, and that user's
-password; a computer already in the list as the same user@host is set up again rather than
-added twice. The password is used once: it opens the first connection so the device's own key
-(<code>~/.config/ravving/ssh/id_ed25519</code>, made on the first CONNECT) can be installed with
-<code>ssh-copy-id</code>; it is never written to the settings. The password reaches ssh through
-<code>SSH_ASKPASS</code> (a helper script of ravving's printing a file readable by root alone, made for
-the set-up's seconds and removed after, <code>SSH_ASKPASS_REQUIRE=force</code> so no terminal is
-involved). The computer's host key is kept in ravving's own <code>known_hosts</code> (accepted on the
-first connection, refused if it changes; FORGET removes that computer's entry with
-<code>ssh-keygen -R</code>, the others stay). The Downloads folder is asked of
-the computer (<code>xdg-user-dir DOWNLOAD</code>, else <code>~/Downloads</code>); files go there with <code>scp</code>, one at
-a time (<code>busy</code> / <code>phase</code> / <code>progress</code>), and <code>sent(ok, count, label)</code> ends it with a toast.
-Statuses: unset, setting-up, ready, unreachable, refused (the key refused by the computer: CONNECT
-AGAIN with the password), failed (<code>error</code> says why: a wrong password, a name that does not
-resolve, SSH refused or no answer, a changed host key). Where it is used: one standard SEND…
-button (<code>SendPopup</code>, the destinations there are: every writable USB stick's ravving/<kind>
-folder through <code>RemovableDrives::copyFiles</code>, each computer, and a phone by QR code: see
-"Sending to a phone" in the manual) in the FILES browser (every
-kind: a project is bundled for the destination by <code>Exporter::exportProjectFile</code>, a preset
-written out as one JSON file by <code>FileBrowser::presetFile</code>), on VIDEO SAVED, on each track in
-the music player, in the pattern presets dialog and the sound picker; and the export dialog's
-COMPUTER row (a chip per computer, one lit), which sends a new track or bundle as soon as it
-is written (<code>Exporter::sendToComputer</code>, the metadata's <code>computer</code> = the computer's id).</p>
-<p>The computer needs an SSH server: Linux <code>openssh-server</code> (Arch: <code>systemctl enable --now
-sshd</code>), macOS "Remote Login"; Windows' OpenSSH server has no <code>$HOME/Downloads</code> in its default
-shell and is not supported.</p>
+<p>SETTINGS · COMPUTERS holds the laptops or PCs that exports and videos can be sent to, over SSH.
+There can be any number: <code>Computers</code> (<code>computers</code>) is a list of <code>ComputerLink</code>s, each its own
+group <code>computers/&lt;id&gt;</code> of the settings file. An older version's single-computer set-up moves into
+<code>c1</code>.</p>
+<h3 id="adding-a-computer">Adding a computer</h3>
+<p>ADD A COMPUTER asks for the host name or address, the user there, and that user's password. A
+computer already in the list as the same user@host is set up again rather than added twice.</p>
+<ul>
+<li id="the-password-is-used-once"><strong>The password is used once.</strong> It opens the first connection, so the device's own key
+  (<code>~/.config/ravving/ssh/id_ed25519</code>, made on the first CONNECT) can be installed with
+  <code>ssh-copy-id</code>. It's never written to the settings.</li>
+<li><strong>It reaches ssh through <code>SSH_ASKPASS</code>:</strong> a helper script of ravving's that prints a file
+  readable by root alone, made for the set-up's seconds and removed after.
+  <code>SSH_ASKPASS_REQUIRE=force</code> means no terminal is involved.</li>
+<li><strong>The computer's host key</strong> is kept in ravving's own <code>known_hosts</code>: accepted on the first
+  connection, and refused if it changes. FORGET removes that computer's entry with
+  <code>ssh-keygen -R</code>; the others stay.</li>
+</ul>
+<h3 id="sending">Sending</h3>
+<ul>
+<li><strong>The destination</strong> is the computer's Downloads folder: <code>xdg-user-dir DOWNLOAD</code>, else
+  <code>~/Downloads</code>.</li>
+<li><strong>Files go there with <code>scp</code>,</strong> one at a time (<code>busy</code> / <code>phase</code> / <code>progress</code>), and
+  <code>sent(ok, count, label)</code> ends it with a toast.</li>
+<li><strong>The statuses:</strong> unset, setting-up, ready, unreachable, refused (the computer refused the key:
+  CONNECT AGAIN with the password), and failed. <code>error</code> says why it failed: a wrong password, a
+  name that doesn't resolve, SSH refused or no answer, or a changed host key.</li>
+</ul>
+<h3 id="where-its-used">Where it's used</h3>
+<p>One standard SEND… button (<code>SendPopup</code>) offers every writable USB stick's ravving/<kind> folder
+(through <code>RemovableDrives::copyFiles</code>), each computer, and a phone by QR code ("Sending to a
+phone" in the manual). It's in:</p>
+<ul>
+<li>the FILES browser, for every kind: a project is bundled for the destination by
+  <code>Exporter::exportProjectFile</code>, and a preset written out as one JSON file by
+  <code>FileBrowser::presetFile</code>;</li>
+<li>VIDEO SAVED, each track in the music player, the pattern presets dialog and the sound picker.</li>
+</ul>
+<p>The export dialog also has a COMPUTER row, a chip per computer with one lit. It sends a new track
+or bundle as soon as it's written (<code>Exporter::sendToComputer</code>, with the metadata's <code>computer</code> set
+to the computer's id).</p>
+<h3 id="the-computers-side">The computer's side</h3>
+<p>It needs an SSH server: Linux <code>openssh-server</code> (Arch: <code>systemctl enable --now sshd</code>), or macOS
+"Remote Login". Windows' OpenSSH server has no <code>$HOME/Downloads</code> in its default shell, and isn't
+supported.</p>
 <h2 id="limits">Limits</h2>
 <ul>
-<li>Recordings end with SIGINT, once (a second signal makes ffmpeg quit without its trailer);
-  <code>-t</code> is never used, since it compares against the absolute timestamps <code>-copyts</code> keeps.</li>
-<li>The pipe input is not probed (<code>-probesize 32 -analyzeduration 0</code>), or ffmpeg would read 5 s
-  of raw audio before opening the output; the video input's queue is 64 frames.</li>
-<li>A step of the system clock during a recording (the Pi has no RTC; timesyncd steps it on the
-  first network sync after boot) puts a jump in the video's timestamps: start recording once
-  the device has been online for a moment.</li>
-<li>The screen recording shows exactly what is on the display: a dialog opened during the
-  recording is in the picture; the countdown overlay and the drawer are not.</li>
-<li>USB cameras are found in <code>/sys/class/video4linux</code> (the node with <code>index</code> 0 on a USB device);
-  the capture size follows the tier (640 × 480 for LOW, 1280 × 720 otherwise).</li>
-<li>The quality tiers (SETTINGS · VIDEO · QUALITY): HIGH full screen 30 fps (veryfast, crf 21),
-  MEDIUM full screen 15 fps (veryfast, crf 23, the default), LOW 640 × 400 30 fps (veryfast,
-  crf 26); AAC audio at 192 kb/s. All three run with 0 xruns on a Pi 5; <code>tools/video-encode-impact.sh</code>
-  measures them (mirror any change to the encoder arguments there).</li>
+<li><strong>Stopping:</strong> recordings end with SIGINT, once; a second signal makes ffmpeg quit without its
+  trailer. <code>-t</code> is never used, since it compares against the absolute timestamps <code>-copyts</code>
+  keeps.</li>
+<li><strong>Probing:</strong> the pipe input isn't probed (<code>-probesize 32 -analyzeduration 0</code>), or ffmpeg would
+  read 5 s of raw audio before opening the output. The video input's queue is 64 frames.</li>
+<li><strong>The system clock:</strong> a step during a recording puts a jump in the video's timestamps. The Pi
+  has no RTC, and timesyncd steps the clock on the first network sync after boot, so start
+  recording once the device has been online for a moment.</li>
+<li><strong>What's in the picture:</strong> exactly what's on the display. A dialog opened during the recording
+  is in it; the countdown overlay and the drawer aren't.</li>
+<li><strong>USB cameras</strong> are found in <code>/sys/class/video4linux</code>: the node with <code>index</code> 0 on a USB device.
+  The capture size follows the tier: 640 × 480 for LOW, 1280 × 720 otherwise.</li>
 </ul>
+<h3 id="the-quality-tiers">The quality tiers</h3>
+<p>SETTINGS · VIDEO · QUALITY, with AAC audio at 192 kb/s:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Picture</th>
+<th>Encoder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HIGH</td>
+<td>full screen, 30 fps</td>
+<td>veryfast, crf 21</td>
+</tr>
+<tr>
+<td>MEDIUM (the default)</td>
+<td>full screen, 15 fps</td>
+<td>veryfast, crf 23</td>
+</tr>
+<tr>
+<td>LOW</td>
+<td>640 × 400, 30 fps</td>
+<td>veryfast, crf 26</td>
+</tr>
+</tbody>
+</table>
+<p>All three run with 0 xruns on a Pi 5. <code>tools/video-encode-impact.sh</code> measures them; mirror any
+change to the encoder arguments there.</p>
   </article>
 </main>
 <footer>
