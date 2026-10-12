@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+
+<!--
+  ravving on MIKO: the hardware shortcuts and the features.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+
+  Plain HTML and CSS, no build step. The shortcut list follows docs/architecture.md
+  ("Input flow: the Hardware attached property") and docs/manual-interim.md; the features
+  follow docs/ and data/secret/README.md, and link into docs/ (rendered pages of
+  the same markdown, tools/build-site-docs.py). See README.md in this folder to keep them in
+  sync and to retake a screenshot.
+-->
+<html class="no-js" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>ravving en MIKO · Atajos y funciones</title>
+<meta content="Qué hace cada tecla y cada perilla del MIKO M01 en ravving, el mod groovebox para Zynthbox, y qué puede hacer la app: sus páginas, presets, secciones, samplers, grabadora, video y formas de compartir." name="description"/>
+<link href="../site.css" rel="stylesheet"/>
+<link href="../features.html" hreflang="en" rel="alternate"/>
+<link href="../es/features.html" hreflang="es" rel="alternate"/>
+<link href="../ja/features.html" hreflang="ja" rel="alternate"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E" rel="icon"/>
+</head>
+<body>
+<a class="skip" href="#shortcuts">Ir a los atajos</a>
+<header class="nav">
+<div class="wrap">
+<a aria-label="ravving" class="brand" href="../index.html">
+<img alt="ravving" class="ravving" height="104" src="../assets/ravving-wordmark.svg" width="822"/>
+</a>
+<nav aria-label="Secciones"><a href="#shortcuts">Atajos</a>
+<a href="#features">Funciones</a>
+<a href="../docs/index.html">Docs</a>
+<a href="../api/index.html">Referencia de la API</a></nav>
+<nav aria-label="Language" class="langs" translate="no">
+<a href="../features.html" hreflang="en" lang="en">EN</a>
+<a href="../es/features.html" hreflang="es" lang="es">ES</a>
+<a href="../ja/features.html" hreflang="ja" lang="ja">日本語</a>
+</nav>
+</div>
+</header>
+<main id="top">
+<section class="hero">
+<div class="wrap">
+<div class="kicker mono"><b>MIKO M01</b> <span>/</span> <span>ravving · el mod groovebox</span></div>
+<h1>Every key.<br/>Every knob.<br/><span>En ravving.</span></h1>
+<p class="lede"><b>MIKO</b> es el hardware: un instrumento musical abierto de Zynthbox con dieciséis teclas de paso, cinco teclas de página, tres encoders y una rueda. <b>ravving</b> es la app alternativa, un mod, que corre en él: una groovebox de cinco páginas (batería, acordes, bajo, lead, sampler) con secciones, mezclador y grabadora. Esta página es el mapa de lo que hace el panel mientras ravving está en pantalla, y de lo que puede hacer la app.</p>
+<div class="meta">
+<div><span class="mono">Teclas de paso</span><strong>16</strong></div>
+<div><span class="mono">Teclas de página</span><strong>5 + ✱</strong></div>
+<div><span class="mono">Encoders</span><strong>3 + perilla grande</strong></div>
+<div><span class="mono">Modificador</span><strong>ALT</strong></div>
+<div><span class="mono">App</span><strong>ravving</strong></div>
+</div>
+</div>
+</section>
+<section class="wrap">
+<div class="stage">
+<div class="device">
+<img alt="El panel frontal del MIKO M01 con ravving en pantalla: las teclas de página a la izquierda, la pantalla, dieciséis teclas de paso debajo, las teclas de transporte y navegación abajo, tres encoders, la tecla GLOBAL y la perilla grande a la derecha" height="1086" src="../assets/miko-m01.webp" width="1448"/>
+</div>
+<!-- the numbered regions, placed over the artwork in percent of its size -->
+<a class="region" data-region="1" href="#knobs" style="--c: var(--r1); left: 77.6%; top: 14.6%; width: 15%; height: 74.4%"><span class="n">1</span><span class="lbl">Perillas</span></a>
+<a class="region" data-region="2" href="#pagekeys" style="--c: var(--r2); left: 8.9%; top: 18.9%; width: 9%; height: 43.2%"><span class="n">2</span><span class="lbl">Teclas de página</span></a>
+<a class="region" data-region="3" href="#stepkeys" style="--c: var(--r3); left: 21.1%; top: 65.1%; width: 50.8%; height: 6.3%"><span class="n">3</span><span class="lbl">Teclas de paso</span></a>
+<a class="region" data-region="4" href="#transport" style="--c: var(--r4); left: 21.2%; top: 74.6%; width: 18.8%; height: 11.8%"><span class="n">4</span><span class="lbl">Transporte</span></a>
+<a class="region" data-region="5" href="#navigation" style="--c: var(--r5); left: 43.8%; top: 74.6%; width: 28.2%; height: 11.8%"><span class="n">5</span><span class="lbl">Navegación</span></a>
+<a class="region" data-region="6" href="#alt" style="--c: var(--r6); left: 10.3%; top: 75.1%; width: 6.8%; height: 5.7%"><span class="n">6</span><span class="lbl">ALT</span></a>
+</div>
+<div class="legend"><a href="#knobs" style="--c: var(--r1)"><i></i>1 Perillas</a>
+<a href="#pagekeys" style="--c: var(--r2)"><i></i>2 Teclas de página</a>
+<a href="#stepkeys" style="--c: var(--r3)"><i></i>3 Teclas de paso</a>
+<a href="#transport" style="--c: var(--r4)"><i></i>4 Transporte</a>
+<a href="#navigation" style="--c: var(--r5)"><i></i>5 Navegación</a>
+<a href="#alt" style="--c: var(--r6)"><i></i>6 ALT</a></div>
+</section>
+<section class="section" id="shortcuts">
+<div class="wrap">
+<div class="section-head">
+<h2>Atajos</h2>
+<p>Una tarjeta por zona del panel. Pasa el ratón o toca una fila para verla en la pantalla; el marco de la imagen señala lo que hay que mirar.</p>
+</div>
+<div class="cards">
+<!-- 1 KNOBS -->
+<article class="card" data-region="1" id="knobs" style="--c: var(--r1)">
+<div class="card-head"><span class="n">1</span><h3>Perillas</h3><small>3 encoders · perilla grande</small></div>
+<ul class="rows">
+<li class="row" data-marks="bigknob-fader" data-shot="page3">
+<span class="keys"><kbd class="knob big"><span>BIG</span></kbd></span>
+<span class="what"><b>Volumen de la máquina en pantalla</b><small>Dentro de una página, la perilla grande es siempre el fader del instrumento mostrado; el fader lleva la insignia de la perilla grande.</small></span>
+</li>
+<li class="row" data-marks="master" data-shot="page1">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob big"><span>BIG</span></kbd></span>
+<span class="what"><b>Volumen master, desde cualquier lugar</b><small>Con la insignia en el dial MASTER de la cabecera; nunca llega a la página, tenga el foco quien lo tenga.</small></span>
+</li>
+<li class="row" data-marks="header-group" data-shot="header-focus">
+<span class="keys"><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+<span class="what"><b>Las perillas del grupo con el foco</b><small>Un grupo de diales pasa sus destinos a las perillas 1–3; cada destino muestra una pequeña insignia de perilla con su número. La perilla grande recorre la lista del grupo (INSTRUMENTOS: perilla 1) y SELECT activa.</small></span>
+</li>
+<li class="row" data-marks="fx-sends" data-shot="alt-held">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+<span class="what"><b>ENVÍOS FX: PHASER, ECO, PESADO</b><small>Los envíos de la cabecera, prestados mientras se mantiene ALT: las insignias, el marco y la recogida pasan allí.</small></span>
+</li>
+<li class="row" data-marks="note-readout" data-shot="bass-select">
+<span class="keys"><kbd class="ui">SELECT</kbd><i class="then">luego</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+<span class="what"><b>DURACIÓN, VELOCIDAD y DESPLAZAR de una nota</b><small>Bajo y lead: con SELECCIONAR de la barra activado y notas elegidas, la perilla 1 es la duración (un paso por muesca, de 1 paso a 4 compases), la 2 la velocidad (4 por muesca, 1–127) y la 3 el desplazamiento (1/16 de paso, de medio paso antes a medio paso después). La lectura arriba a la derecha de la rejilla muestra la de la primera nota; cada muesca es un DESHACER.</small></span>
+</li>
+<li class="row" data-marks="strip" data-shot="strip-knobs">
+<span class="keys"><kbd class="ui">strip</kbd><i class="then">luego</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd></span>
+<span class="what"><b>PANEO y VOL de la máquina</b><small>Toca la tira de una máquina: la perilla 1 panea, la 2 ajusta el nivel. BACK, o un toque en la rejilla, devuelve las perillas a las filas.</small></span>
+</li>
+<li class="row" data-marks="mixer-strip" data-shot="mixer-strip">
+<span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd><i class="then">luego</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob big"><span>BIG</span></kbd></span>
+<span class="what"><b>En el MEZCLADOR: nivel, paneo, nivel fino</b><small>De la tira elegida (◀ ▶ o una tecla de paso): la perilla 1 su nivel, la 2 su paneo, la perilla grande un nivel fino.</small></span>
+</li>
+<li class="row" data-marks="menu-sliders" data-shot="menu">
+<span class="keys"><kbd class="cap c-menu">MENU</kbd><i class="then">luego</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd></span>
+<span class="what"><b>En el centro de control: BRILLO, SALIDA</b><small>La perilla 1 el brillo de la pantalla, la 2 el nivel de salida. Un potenciómetro fijo recoge primero el valor: no cambia nada hasta alcanzarlo o cruzarlo, y el brillo nunca baja del 30 %, así la pantalla nunca parece apagada.</small></span>
+</li>
+<li class="row" data-marks="recorder-gain" data-shot="recorder">
+<span class="keys"><kbd class="ui">RECORDER</kbd><i class="then">luego</i><kbd class="knob big"><span>BIG</span></kbd></span>
+<span class="what"><b>En la GRABADORA: la GANANCIA de entrada</b><small>Las teclas numéricas mueven las perillas 1–3 entre ENTRADA (1), AFINADOR (2) y EFECTOS (3).</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- 2 PAGE KEYS -->
+<article class="card" data-region="2" id="pagekeys" style="--c: var(--r2)">
+<div class="card-head"><span class="n">2</span><h3>Teclas de página</h3><small>MENU · 1–5 · ✱ · MODE</small></div>
+<ul class="rows">
+<li class="row" data-marks="menu-drawer" data-shot="menu">
+<span class="keys"><kbd class="cap c-menu">MENU</kbd></span>
+<span class="what"><b>El centro de control</b><small>MEZCLADOR, Wi‑Fi, Bluetooth, MIDI, SISTEMA, VIDEO, GRABADORA, el reproductor, AJUSTES y la fila de energía (REINICIAR y APAGAR piden una segunda pulsación en 3 s). ◀ ▶ recorren las acciones, SELECT ejecuta una.</small></span>
+</li>
+<li class="row" data-marks="nameplate" data-shot="page1-drums2">
+<span class="keys"><kbd class="cap c-n1">1</kbd></span>
+<span class="what"><b>BATERÍA</b><small>Pulsada otra vez recorre las tres cajas de ritmos: BATERÍA 1 → 2 → 3 (la placa dice cuál).</small></span>
+</li>
+<li class="row" data-marks="nameplate" data-shot="page2">
+<span class="keys"><kbd class="cap c-n2">2</kbd></span>
+<span class="what"><b>ACORDES</b><small>La página POLY‑6: vistas ACORDES, NOTAS y SLOTS.</small></span>
+</li>
+<li class="row" data-marks="nameplate" data-shot="page3">
+<span class="keys"><kbd class="cap c-n3">3</kbd></span>
+<span class="what"><b>BAJO</b><small>La página del BAJO: Nekobi, una 303, una línea mono con ACENTO y SLIDE.</small></span>
+</li>
+<li class="row" data-marks="nameplate" data-shot="page4">
+<span class="keys"><kbd class="cap c-n4">4</kbd></span>
+<span class="what"><b>LEAD</b><small>Calf Monosynth, legato y portamento.</small></span>
+</li>
+<li class="row" data-marks="nameplate" data-shot="page5">
+<span class="keys"><kbd class="cap c-n5">5</kbd></span>
+<span class="what"><b>SAMPLER</b><small>Pulsada otra vez cambia SAMPLE KING ⇄ PAD SAMPLER; la elección se conserva al reiniciar.</small></span>
+</li>
+<li class="row" data-marks="mixer" data-shot="mixer">
+<span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd></span>
+<span class="what"><b>El MEZCLADOR, abrir y cerrar</b><small>Todas las tiras a la vez; una tecla numérica lo deja por esa página, BACK o ✱ vuelven.</small></span>
+</li>
+<li class="row" data-marks="mode-lamp" data-shot="mode-live">
+<span class="keys"><kbd class="cap c-mode">MODE</kbd></span>
+<span class="what"><b>El modo de entrada del instrumento en pantalla</b><small>OFF → LIVE → PASO + LIVE → OFF, desde cualquier lugar; el LED de MODE lo muestra. LIVE convierte las teclas de paso en pads para esa máquina.</small></span>
+</li>
+<li class="row" data-marks="header-deck" data-shot="alt-mode">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-mode">MODE</kbd></span>
+<span class="what"><b>Voltear la cubierta de la cabecera</b><small>Las teclas de sección ocupan el lugar de los pads LIVE FX (lo mismo otra vez devuelve los pads); MODE se ilumina en naranja mientras se mantiene ALT. Una pulsación larga en la placa del proyecto hace lo mismo.</small></span>
+</li>
+<li class="row" data-marks="recorder-tabs" data-shot="recorder">
+<span class="keys"><kbd class="ui">RECORDER</kbd><i class="then">luego</i><kbd class="cap c-n1">1</kbd><kbd class="cap c-n2">2</kbd><kbd class="cap c-n3">3</kbd></span>
+<span class="what"><b>En la GRABADORA: ENTRADA, AFINADOR, EFECTOS</b><small>Mueven las perillas entre los tres paneles.</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- 3 STEP KEYS -->
+<article class="card" data-region="3" id="stepkeys" style="--c: var(--r3)">
+<div class="card-head"><span class="n">3</span><h3>Teclas de paso</h3><small>1–16</small></div>
+<ul class="rows">
+<li class="row" data-marks="grid" data-shot="page1">
+<span class="keys"><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>Escribir un paso</b><small>LIVE apagado: la tecla activa o desactiva el paso de la fila elegida al soltarla, una tecla por paso del compás en pantalla. Los LED siguen al cursor de reproducción.</small></span>
+</li>
+<li class="row" data-marks="grid" data-shot="mode-live">
+<span class="keys"><kbd class="cap c-mode">MODE</kbd><i class="then">luego</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>Tocar, con LIVE encendido</b><small>Batería: las teclas 1–8 tocan las filas, la 9 mantenida hace acentos. Bajo, lead y las NOTAS de los acordes: la escala en las 16 teclas, ▲ ▼ cambian la octava. ACORDES y SLOTS: las siete teclas de acorde. Con REC encendido tocando, un golpe se escribe en el paso más cercano; parado, en entrada PASO, en el cursor.</small></span>
+</li>
+<li class="row" data-marks="livefx" data-shot="alt-held">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s3">8</kbd></span>
+<span class="what"><b>Los pads LIVE FX</b><small>DROP, SIN BOMBO, SOLO BOMBO, CRUSH, PASA BAJOS, PASA ALTOS, STUTTER, LOOP, en ese orden. Las teclas se iluminan en naranja mientras se mantiene ALT y los pads muestran sus números de tecla.</small></span>
+</li>
+<li class="row" data-marks="sections" data-shot="alt-mode">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s4">9</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>Secciones 1–8, desde cualquier página</b><small>Iluminadas en sus colores mientras se mantiene ALT. Con las teclas de sección en la cabecera (ALT + MODE), ALT + 1–16 eligen las secciones 1–16, y mientras ese grupo tiene el foco las teclas de paso solas las eligen.</small></span>
+</li>
+<li class="row" data-marks="mixer-strip" data-shot="mixer-strip">
+<span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd><i class="then">luego</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s4">9</kbd></span>
+<span class="what"><b>En el MEZCLADOR: elegir una tira</b><small>Los LED de paso muestran las tiras, las silenciadas tenues, la elegida en blanco.</small></span>
+</li>
+<li class="row" data-marks="pads" data-shot="page5-pads">
+<span class="keys"><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>PAD SAMPLER: los dieciséis pads</b><small>Con LIVE encendido las teclas tocan los pads; una tecla mantenida más de medio segundo deja su pad en bucle, una tecla sobre un pad enganchado lo termina. STOP termina todos los bucles enganchados.</small></span>
+</li>
+<li class="row" data-marks="cursor" data-shot="page3">
+<span class="keys"><kbd class="cap c-s1">1</kbd><i class="plus">+</i><kbd class="cap c-s2">5</kbd></span>
+<span class="what"><b>Teclas pulsadas juntas van a un paso</b><small>Entrada PASO: un acorde en una columna.</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- 4 TRANSPORT -->
+<article class="card" data-region="4" id="transport" style="--c: var(--r4)">
+<div class="card-head"><span class="n">4</span><h3>Transporte</h3><small>● ▶ metrónomo ■</small></div>
+<ul class="rows">
+<li class="row" data-marks="playing" data-shot="playing">
+<span class="keys"><kbd class="cap c-play"><span class="ico">▶</span></kbd></span>
+<span class="what"><b>Reproducir</b><small>El loop, o la canción entera en modo CANCIÓN. Reproducir bloquea las rejillas de notas (BLOQUEO) para que un toque perdido no cambie lo que suena; el LED de PLAY brilla mientras suena.</small></span>
+</li>
+<li class="row" data-marks="transport" data-shot="playing">
+<span class="keys"><kbd class="cap c-stop"><span class="ico">■</span></kbd></span>
+<span class="what"><b>Parar</b><small>Desbloquea las rejillas. Con VIDEO activo termina la grabación (o cancela la cuenta atrás) y deja la música sonando; también termina los bucles enganchados del PAD SAMPLER y una grabación elegida en la GRABADORA.</small></span>
+</li>
+<li class="row" data-marks="transport" data-shot="page1">
+<span class="keys"><kbd class="cap c-stop"><span class="ico">■</span></kbd><i class="then">con el transporte parado</i></span>
+<span class="what"><b>Pánico: todas las notas apagadas</b><small>Terminan las notas sostenidas de todos los instrumentos (una nota que se quedó sonando).</small></span>
+</li>
+<li class="row" data-marks="strip-rec" data-shot="page1">
+<span class="keys"><kbd class="cap c-rec"><span class="ico">●</span></kbd></span>
+<span class="what"><b>Grabar una toma de la máquina en pantalla</b><small>En una página de instrumento: el ● de la tira cuenta un compás de entrada (parado) o entra al reinicio del loop (sonando), superponiendo vuelta tras vuelta; el LED de RECORD toma el color de la máquina.</small></span>
+</li>
+<li class="row" data-marks="header-rec" data-shot="header-focus">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-rec"><span class="ico">●</span></kbd></span>
+<span class="what"><b>Grabar la mezcla completa</b><small>La grabación global (el ● de la cabecera, LED de RECORD en rojo), desde cualquier lugar; RECORD con la cabecera enfocada hace lo mismo.</small></span>
+</li>
+<li class="row" data-marks="video-card" data-shot="menu">
+<span class="keys"><kbd class="ui">VIDEO</kbd><i class="then">luego</i><kbd class="cap c-rec"><span class="ico">●</span></kbd><span class="plus">/</span><kbd class="cap c-stop"><span class="ico">■</span></kbd></span>
+<span class="what"><b>Empezar y terminar un video</b><small>Con el VIDEO del centro de control activo, RECORD empieza a grabar la pantalla (o una cámara USB) con el sonido del master, desde cualquier página, y STOP la termina; la placa dice REC EN VIVO LISTO · ● GRABA, luego ● REC 01:23.</small></span>
+</li>
+<li class="row" data-marks="metronome" data-shot="page1">
+<span class="keys"><kbd class="cap c-metro"><span class="ico">♩</span></kbd></span>
+<span class="what"><b>Metrónomo</b><small>El tic y tac de libzynthbox en el master; una toma lo mantiene encendido.</small></span>
+</li>
+<li class="row" data-marks="recorder-rec" data-shot="recorder">
+<span class="keys"><kbd class="ui">RECORDER</kbd><i class="then">luego</i><kbd class="cap c-rec"><span class="ico">●</span></kbd><kbd class="cap c-play"><span class="ico">▶</span></kbd><kbd class="cap c-stop"><span class="ico">■</span></kbd></span>
+<span class="what"><b>En la GRABADORA: una toma, escuchar, parar</b><small>RECORD graba una toma libre de la entrada; SELECT o PLAY escuchan la grabación elegida; STOP la para. ◀ ▶ la entrada, ▲ ▼ las grabaciones.</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- 5 NAVIGATION -->
+<article class="card" data-region="5" id="navigation" style="--c: var(--r5)">
+<div class="card-head"><span class="n">5</span><h3>Navegación</h3><small>BACK · ▲ ▼ ◀ ▶ · SELECT</small></div>
+<ul class="rows">
+<li class="row" data-marks="walk" data-shot="page3">
+<span class="keys"><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+<span class="what"><b>Recorrer la página</b><small>Un orden vertical por máquina: cabecera → tira → tarjetas de MODIFICADORES DE SONIDO (si están abiertas) → el editor → tarjetas de EFECTOS DE SONIDO (si están abiertas). El editor mueve primero sus filas (una fila de batería, una fila de notas).</small></span>
+</li>
+<li class="row" data-marks="header-group" data-shot="header-focus">
+<span class="keys"><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><i class="then">arriba del todo</i></span>
+<span class="what"><b>Entrar en la cabecera</b><small>▲ pasada la tira llega al primer grupo de la cabecera. Allí ◀ ▶ se mueven entre los grupos (tonalidad, transporte, tempo, LIVE FX, INSTRUMENTOS, MASTER) y ▼ o BACK vuelven a la página.</small></span>
+</li>
+<li class="row" data-marks="header-group" data-shot="header-focus">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd></span>
+<span class="what"><b>La cabecera directamente, desde cualquier lugar</b><small>Desde las filas de una página, las tarjetas de una sección o la tira.</small></span>
+</li>
+<li class="row" data-marks="side-keys" data-shot="page2">
+<span class="keys"><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><kbd class="cap c-arrow"><span class="ico">▶</span></kbd></span>
+<span class="what"><b>Lo que cambia la página</b><small>Las vistas de ACORDES con el editor enfocado, la caja de ritmos, el banco del sampler; las teclas se iluminan cuando cambian algo. En entrada PASO mueven el cursor de entrada un paso. En la barra de EFECTOS DE SONIDO recorren los chips.</small></span>
+</li>
+<li class="row" data-marks="undo" data-shot="page3">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><span class="plus">/</span><kbd class="cap c-arrow"><span class="ico">▶</span></kbd></span>
+<span class="what"><b>Deshacer / rehacer</b><small>La línea de tiempo del proyecto, como los ↶ ↷ de la cabecera: patrones, slots y el arreglo; un cambio que tocó varias máquinas es un solo paso. Los sonidos, la mezcla y los ajustes no se deshacen.</small></span>
+</li>
+<li class="row" data-marks="plate" data-shot="page3">
+<span class="keys"><kbd class="cap c-xy"><span>X</span></kbd><kbd class="cap c-xy"><span>Y</span></kbd></span>
+<span class="what"><b>La sección anterior / siguiente</b><small>Desde cualquier página o diálogo, dando la vuelta: se elige como lo haría una tecla de sección (desde el próximo compás si suena, al instante si está parado; la placa parpadea mientras espera). Pulsada otra vez antes del cambio, la tecla adelanta la elección en lugar de poner otra en cola.</small></span>
+</li>
+<li class="row" data-marks="cursor" data-shot="page3">
+<span class="keys"><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+<span class="what"><b>Escribir en el cursor · activar · ejecutar</b><small>Entrada PASO, parado: escribe la fila elegida del editor (una nota, o el acorde en ACORDES) en el cursor. En una tarjeta de EFECTOS DE SONIDO o su barra: activa o desactiva el efecto. En el centro de control: ejecuta la acción marcada.</small></span>
+</li>
+<li class="row" data-marks="picked" data-shot="bass-select">
+<span class="keys"><kbd class="ui">SELECT</kbd><i class="then">luego</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+<span class="what"><b>Mover las notas elegidas</b><small>Con SELECCIONAR de la barra activado, ▲ ▼ mueven cada nota elegida una nota de la tonalidad arriba o abajo (un semitono con ♭♯ activado), conservando duración, acento y slide; ◀ ▶ las mueven un paso. Un acorde sostenido se mueve entero.</small></span>
+</li>
+<li class="row" data-marks="grid" data-shot="mode-live">
+<span class="keys"><kbd class="cap c-mode">MODE</kbd><i class="then">en vivo</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+<span class="what"><b>Octava, o las filas de oído</b><small>LIVE en una página melódica: ▲ ▼ cambian la octava de las teclas de paso. Con LIVE y PASO: recorren las filas, cada una sonando al llegar.</small></span>
+</li>
+<li class="row" data-marks="mixer-strip" data-shot="mixer-strip">
+<span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd><i class="then">luego</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><kbd class="cap c-arrow"><span class="ico">▶</span></kbd><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+<span class="what"><b>En el MEZCLADOR: elegir, silenciar, solo</b><small>◀ ▶ eligen una tira, SELECT la silencia, ALT + SELECT la pone en solo; BACK o ✱ vuelven.</small></span>
+</li>
+<li class="row" data-marks="fx-bar" data-shot="page2">
+<span class="keys"><kbd class="cap c-back two"><span>BACK</span><span>NO</span></kbd></span>
+<span class="what"><b>Volver, cerrar, devolver</b><small>Cierra una sección abierta y devuelve el foco al editor; devuelve las perillas de la tira a las filas; sale de la cabecera, el MEZCLADOR, la página CANCIÓN, la GRABADORA; cierra un diálogo.</small></span>
+</li>
+<li class="row" data-marks="song" data-shot="song">
+<span class="keys"><kbd class="ui">SONG</kbd><i class="then">luego</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><kbd class="cap c-arrow"><span class="ico">▶</span></kbd><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+<span class="what"><b>En la página CANCIÓN</b><small>◀ ▶ recorren, ▲ ▼ entre las teclas de sección y los bloques de la canción, SELECT o una tecla de paso elige, ALT + ◀ ▶ mueve un bloque, la perilla 1 su duración, la 2 sus repeticiones, BACK sale.</small></span>
+</li>
+<li class="row" data-marks="picker" data-shot="page2">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+<span class="what"><b>En un selector de sonidos: ★ favorito</b><small>Marca el sonido señalado como favorito (el grupo ★).</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- 6 ALT -->
+<article class="card" data-region="6" id="alt" style="--c: var(--r6)">
+<div class="card-head"><span class="n">6</span><h3>ALT</h3><small>mantenida, un modificador</small></div>
+<ul class="rows">
+<li class="row" data-marks="livefx" data-shot="alt-held">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s3">8</kbd></span>
+<span class="what"><b>Pads LIVE FX</b><small>DROP · SIN BOMBO · SOLO BOMBO · CRUSH · PASA BAJOS · PASA ALTOS · STUTTER · LOOP.</small></span>
+</li>
+<li class="row" data-marks="sections" data-shot="alt-mode">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s4">9</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>Secciones 1–8</b><small>1–16 con las teclas de sección en la cabecera.</small></span>
+</li>
+<li class="row" data-marks="header-deck" data-shot="alt-mode">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-mode">MODE</kbd></span>
+<span class="what"><b>Teclas de sección ⇄ pads LIVE FX en la cabecera</b></span>
+</li>
+<li class="row" data-marks="master" data-shot="page1">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob big"><span>BIG</span></kbd></span>
+<span class="what"><b>Volumen master</b></span>
+</li>
+<li class="row" data-marks="fx-sends" data-shot="alt-held">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+<span class="what"><b>Envíos PHASER · ECO · PESADO</b></span>
+</li>
+<li class="row" data-marks="header-group" data-shot="header-focus">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd></span>
+<span class="what"><b>La cabecera, desde cualquier lugar</b></span>
+</li>
+<li class="row" data-marks="" data-shot="song">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-n1">1</kbd></span>
+<span class="what"><b>La página CANCIÓN, desde cualquier lugar</b></span>
+</li>
+<li class="row" data-marks="undo" data-shot="page3">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><span class="plus">/</span><kbd class="cap c-arrow"><span class="ico">▶</span></kbd></span>
+<span class="what"><b>Deshacer / rehacer</b></span>
+</li>
+<li class="row" data-marks="header-rec" data-shot="header-focus">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-rec"><span class="ico">●</span></kbd></span>
+<span class="what"><b>Grabar la mezcla completa</b></span>
+</li>
+<li class="row" data-marks="mixer-strip" data-shot="mixer-strip">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+<span class="what"><b>Solo de la tira del MEZCLADOR · ★ un sonido</b></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- HOLD -->
+<article class="card" id="hold" style="--c: var(--amber)">
+<div class="card-head"><span aria-hidden="true" class="n ico"><svg fill="none" height="16" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16" width="16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><h3>Mantener</h3><small>pulsaciones largas · las teclas de paso y los botones de la pantalla</small></div>
+<ul class="rows">
+<li class="row" data-marks="pads" data-shot="page5-pads">
+<span class="keys"><span aria-label="mantener" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>Enganchar un pad en bucle</b><small>PAD SAMPLER con LIVE encendido: una tecla de paso mantenida más de medio segundo; una tecla sobre un pad enganchado lo termina.</small></span>
+</li>
+<li class="row" data-marks="strip-solo" data-shot="page1">
+<span class="keys"><span aria-label="mantener" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="ui">S</kbd></span>
+<span class="what"><b>Solo exclusivo</b><small>Una pulsación larga en la S de una máquina (la de la tira o la de la cabecera) la deja sola en solo.</small></span>
+</li>
+<li class="row" data-marks="select-btn" data-shot="bass-select">
+<span class="keys"><span aria-label="mantener" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="ui">SELECT</kbd></span>
+<span class="what"><b>Elegir el patrón entero</b><small>SELECCIONAR de la barra mantenido lo activa con todas las notas (o acordes) elegidas, en todos sus compases, para mover el patrón de una vez.</small></span>
+</li>
+<li class="row" data-marks="plate" data-shot="alt-mode">
+<span class="keys"><span aria-label="mantener" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="ui">project plate</kbd></span>
+<span class="what"><b>Teclas de sección en la cabecera</b><small>Igual que ALT + MODE; lo mismo otra vez devuelve los pads LIVE FX.</small></span>
+</li>
+<li class="row" data-marks="auto" data-shot="page3">
+<span class="keys"><span aria-label="mantener" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="ui">AUTO</kbd></span>
+<span class="what"><b>Borrar la automatización</b><small>AUTO de la barra mantenido borra los carriles de automatización de la máquina.</small></span>
+</li>
+<li class="row" data-marks="grid" data-shot="page3">
+<span class="keys"><span aria-label="mantener" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="ui">a cell</kbd></span>
+<span class="what"><b>Fijar la duración de una nota</b><small>Una pulsación larga en una celda del piano roll del bajo o del lead fija ahí la duración de la nota.</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+</div>
+</div>
+</section>
+<section class="section" id="features">
+<div class="wrap">
+<div class="section-head">
+<h2>Funciones</h2>
+<p>Lo más destacado, cada uno con su página en el equipo; cada función está en los grupos de abajo, y <a href="../docs/index.html">la documentación</a> explica cómo funciona todo.</p>
+</div>
+<div class="features">
+<!-- the instrument pages -->
+<article class="hl reveal" style="--c: #ffa236">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>Páginas 1–5</b> <span>/</span> <span>ocho máquinas</span></div>
+<h3>Five keys. <span>Ocho máquinas.</span></h3>
+<p>La tecla <b>1</b> recorre tres cajas de ritmos, cada una un kit de FluidSynth: una Roland TR909, una TR808 y una LINN9000 para empezar, y cualquier kit de la carpeta del equipo desde la placa. <b>2</b> son los ACORDES con Noize Mak3r (el port abierto de TAL NoiseMaker), <b>3</b> el BAJO con una 303 (DISTRHO Nekobi), <b>4</b> el LEAD con Calf Monosynth, <b>5</b> los samplers. Cada máquina tiene su tira, sus MODIFICADORES DE SONIDO, un editor de patrones y una cadena de EFECTOS DE SONIDO; la cabecera tiene la tonalidad y la escala, el transporte, el tempo y el swing, los LIVE FX y el master.</p>
+<div aria-label="Las máquinas" class="plates">
+<span class="plate" style="--pc: #ffa236; --i: 0"><b>Batería 1</b><span>Roland TR909</span></span>
+<span class="plate" style="--pc: #ff6a58; --i: 1"><b>Batería 2</b><span>Roland TR808</span></span>
+<span class="plate" style="--pc: #e0b84a; --i: 2"><b>Batería 3</b><span>LINN9000</span></span>
+<span class="plate" style="--pc: #7ab8ff; --i: 3"><b>Acordes</b><span>Noize Mak3r</span></span>
+<span class="plate" style="--pc: #c9ee6e; --i: 4"><b>Bajo</b><span>Nekobi</span></span>
+<span class="plate" style="--pc: #e4a8ff; --i: 5"><b>Lead</b><span>Calf Monosynth</span></span>
+<span class="plate" style="--pc: #6ef0d8; --i: 6"><b>Sampler</b><span>Sample King</span></span>
+<span class="plate" style="--pc: #ff5a36; --i: 7"><b>Pads</b><span>Pad Sampler</span></span>
+</div>
+<a class="more" href="../docs/manual.html">El manual</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="La página ACORDES: el rollo de acordes en números romanos, las siete teclas de acorde de Re dórico, la tira con su placa" height="800" loading="lazy" src="../shots/page2.png" width="1280"/></figure>
+<div class="screen-cap"><span>ACORDES: el rollo en grados, las siete teclas de acorde de la tonalidad</span><small>página 2</small></div>
+</div>
+</article>
+<!-- the samplers -->
+<article class="hl flip reveal" style="--c: #ff5a36">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>Página 5</b> <span>/</span> <span>Sample King · Pad Sampler</span></div>
+<h3>Two samplers <span>en una tecla.</span></h3>
+<p><b>SAMPLE KING</b>: cuatro bancos de ocho slots con su propio patrón, cada slot recortado, afinado o al revés, una toma grabada directamente en él, CHOP y AUTO CHOP sobre el banco. Pulsa 5 otra vez para el <b>PAD SAMPLER</b>: dieciséis pads estilo MPC en las teclas de paso, grabar a un pad con parada INTELIGENTE, bucles y pads enganchados, 16 NIVELES, FX DE PAD mantenidos mientras suena un pad (ECO, REVERSA, SALTO, STUTTER, SCRATCH, TAPE STOP) y un editor de onda que comparten los dos.</p>
+<a class="more" href="../docs/manual.html#the-pad-sampler">Cómo funciona el PAD SAMPLER</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="El PAD SAMPLER: dieciséis pads, la pantalla de muestra, las perillas de RECORTE, la fila FX DE PAD y el carril de pasos del pad" height="800" loading="lazy" src="../shots/page5-pads.png" width="1280"/></figure>
+<div class="screen-cap"><span>El PAD SAMPLER, pad 1 elegido, RECORTE en las perillas 1–3</span><small>5 otra vez</small></div>
+</div>
+</article>
+<!-- presets and the packs -->
+<article class="hl reveal" style="--c: #c9ee6e">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>Presets</b> <span>/</span> <span>los packs de géneros</span></div>
+<h3>Presets that <span>traen su sonido.</span></h3>
+<p>Diecinueve packs de presets de patrones para una memoria USB, cinco patrones para cada una de la batería, el bajo, el lead y los acordes, escritos en grados de la escala para que sigan la tonalidad del proyecto. Un preset muestra <b>♪</b> y el sonido para el que se escribió, y <b>+ MODS</b> cuando guarda sus ajustes; CON SU SONIDO, CON SUS MODS y CON SUS COMPASES arriba deciden qué se carga. Cada pack trae una <b>plantilla</b>: un proyecto nuevo con su tempo, swing, tonalidad y LIVE FX.</p>
+<div aria-label="Los packs, con su tempo y tonalidad" class="packs">
+<span><b>Clásica</b>100 · Do mayor</span><span><b>Hip-Hop</b>90 · Do menor</span><span><b>Pop</b>116 · Do mayor</span><span><b>Rock</b>122 · Mi mayor</span>
+<span><b>Trap</b>140 · Fa menor</span><span><b>Reggaetón</b>93 · La menor</span><span><b>Punk</b>170 · La mayor</span><span><b>Tropical</b>130 · Do mayor</span>
+<span><b>Cumbia</b>95 · Sol mayor</span><span><b>Piig</b>79 · Re menor</span><span><b>Folk</b>110 · Sol mayor</span><span><b>Metal</b>150 · Mi menor</span>
+<span><b>Black Metal</b>170 · Mi menor</span><span><b>Post-Punk</b>142 · La menor</span><span><b>Gregoriano</b>70 · Re dórico</span><span><b>Jazz</b>120 · Do menor</span><span><b>Vuelo</b>120 · La menor</span><span><b>Solos</b>64 · Mi♭ mayor</span><span><b>Bebop</b>160 · Si♭ mayor</span>
+</div>
+<a class="more" href="../docs/packs.html">Cada preset, pack por pack</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="El diálogo PRESETS en BAJO, ORIGEN USB: una cuadrícula de presets por género, cada uno con ♪ su sonido y + MODS, con CON SU SONIDO, CON SUS MODS y CON SUS COMPASES arriba" height="800" loading="lazy" src="../shots/presets.webp" width="1280"/></figure>
+<div class="screen-cap"><span>Los presets de una memoria: ♪ el sonido, + MODS, un grupo por género</span><small>PRESET</small></div>
+</div>
+</article>
+<!-- sections and the song -->
+<article class="hl flip reveal" style="--c: #ffc134">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>Secciones</b> <span>/</span> <span>loop o canción</span></div>
+<h3>Sections, <span>y una canción.</span></h3>
+<p>Una sección guarda a la vez el patrón de cada máquina: hasta dieciséis, elegidas desde cualquier página con ALT y una tecla de paso, cambiadas con precisión de muestra en el próximo compás (<b>COMPÁS</b>) o cuando la sección que suena termina su pasada (<b>SECCIÓN</b>), con hasta tres en cola. <b>LOOP</b> repite la sección en pantalla; <b>CANCIÓN</b> toca los bloques de principio a fin, cada uno con sus repeticiones, y EXPORTAR graba la canción entera en una toma.</p>
+<a class="more" href="../docs/manual.html#sections-and-the-song">Las secciones y la canción</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="La página CANCIÓN: seis teclas de sección con los puntos de sus máquinas, la fila RENOMBRAR NUEVA COLOR DURACIÓN, los bloques de la canción y REPRODUCIR DESDE AQUÍ" height="800" loading="lazy" src="../shots/song.png" width="1280"/></figure>
+<div class="screen-cap"><span>La página CANCIÓN: las teclas de sección, los bloques de la canción</span><small>la placa del proyecto</small></div>
+</div>
+</article>
+<!-- the recorder and the tuner -->
+<article class="hl reveal" style="--c: #ff7a3c">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>Grabadora</b> <span>/</span> <span>el afinador</span></div>
+<h3>Record anything. <span>Afina la guitarra.</span></h3>
+<p>La GRABADORA toma la entrada (MICRO · GUITARRA · LÍNEA) tal como se toca mientras sigue el ritmo, con efectos hechos para ella (en GUITARRA los amplis y pedales: AMPLI, OVERDRIVE, FUZZ, VÁLVULA, WAH, AMPLI CALIENTE), y guarda las tomas junto a los samplers o las pistas: REPRODUCIR, RECORTAR, NORMALIZAR, CHOP, A SAMPLE KING, A LOS PADS. El <b>AFINADOR</b> lee la entrada sin efectos: la nota y sus cents en una escala de ±50, AUTO recorriendo las cuerdas desde la más grave, quince afinaciones para guitarra, bajo y ukelele, La4 de 430 a 450 Hz.</p>
+<a class="more" href="../docs/manual.html#the-recorder">La GRABADORA</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="La GRABADORA en GUITARRA con el AFINADOR abierto: la escala de cents, TOCA LA CUERDA 6 · Mi2, los seis botones de cuerda, AUTO, AFINACIÓN y La4" height="800" loading="lazy" src="../shots/tuner.webp" width="1280"/></figure>
+<div class="screen-cap"><span>GUITARRA con el AFINADOR: cuerda 6, la escala de ±50 cents</span><small>MENU → GRABADORA</small></div>
+</div>
+</article>
+<!-- live recording -->
+<article class="hl flip reveal" style="--c: #ff3b2f">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>Grabación en vivo</b> <span>/</span> <span>la sesión, con tu voz</span></div>
+<h3>Record the session <span>tal como sucede.</span></h3>
+<p>Una tarjeta en el menú, REC EN VIVO, y toda la sesión va a un archivo: un <b>video</b> de la pantalla o de una cámara USB con el sonido del master, sincronizado, en tres niveles de calidad medidos para no costarle nada a la música, o <b>solo el sonido</b> como WAV de 24 bits entre tus pistas, etiquetado después con título, artista y portada en el formato que elijas, con el mismo diálogo que usa una exportación. Conecta un micro a la GRABADORA y se convierte en <b>voz en off</b>: la música baja bajo tu voz y vuelve cuando paras, la voz se realza y se hace nítida, un limitador con anticipación mantiene limpia la mezcla, y el nivel del micro aparece en la placa del proyecto mientras grabas (MICRO DEMASIADO FUERTE cuando la ganancia es muy alta). Cada tecla que pulsas se nombra en pantalla. Al terminar: BORRAR, RENOMBRAR o ENVIAR… a una memoria, un ordenador o el teléfono.</p>
+<a class="more" href="../docs/manual.html#video-recordings-and-the-computer-link">El video y la voz en off</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="La página de batería durante una grabación: la placa del proyecto dice ● REC 00:06 con el nivel del micro al lado, la tecla de grabar encendida" height="800" loading="lazy" src="../shots/liverec.webp" width="1280"/></figure>
+<div class="screen-cap"><span>Seis segundos de grabación: ● REC en la placa, el medidor del micro a su derecha</span><small>MENU → REC EN VIVO → INICIO</small></div>
+</div>
+</article>
+<!-- out of the device -->
+<article class="hl reveal" style="--c: #4a9bff">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>Compartir</b> <span>/</span> <span>USB · ordenador · teléfono · video</span></div>
+<h3>Out of the device, <span>de tres maneras.</span></h3>
+<p>Un botón <b>ENVIAR…</b> allí donde hay un archivo: la carpeta ravving de una memoria USB, uno de tus ordenadores (portátiles o PC por SSH, cada uno configurado una vez con su contraseña) o el teléfono, con un código QR de un enlace que sirve el propio ravving: sin app ni emparejamiento, así que también funciona con un iPhone. La tarjeta <b>VIDEO</b> (se toca dos veces, para que un toque perdido nunca empiece una) graba la pantalla o una cámara USB con el sonido del master, y RECORD y STOP la empiezan y terminan desde cualquier página. ARCHIVOS explora la biblioteca por tipo, también desde un teléfono: TELÉFONO · EXPLORAR es un código QR de la biblioteca como páginas, cada archivo una descarga. Las muestras, soundfonts, presets y proyectos de una memoria entran desde la página USB. Esta página también: AJUSTES → AYUDA muestra su dirección como código QR.</p>
+<a class="more" href="../docs/manual.html#video-recordings-and-the-computer-link">El video y la conexión con el ordenador</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="AYUDA · LA PÁGINA DE RAVVING: un código QR con la dirección del propio equipo para esta página, con el enlace escrito al lado" height="800" loading="lazy" src="../shots/qr.webp" width="1280"/></figure>
+<div class="screen-cap"><span>Un código QR que abre la cámara del teléfono: aquí, esta página desde el equipo</span><small>AJUSTES → AYUDA</small></div>
+</div>
+</article>
+<!-- exports and the player -->
+<article class="hl flip reveal" style="--c: #b07cff">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>Exportar</b> <span>/</span> <span>el reproductor</span></div>
+<h3>Export the track. <span>Escúchalo.</span></h3>
+<p>PROYECTO ▾ → EXPORTAR escribe la producción tal como la oyen los altavoces, en WAV 24 bits, FLAC, OGG o MP3, con sus etiquetas y una portada dibujada para ella, o un paquete <b>.ravv</b> con todas las muestras para que otro ravving lo toque igual. El <b>REPRODUCTOR</b> toca las pistas exportadas y las grabaciones a pantalla completa, por título, álbum o artista, con cola, por los jacks, HDMI o un altavoz Bluetooth.</p>
+<a class="more" href="../docs/manual.html#exports-and-the-music-player">Exportaciones y el reproductor</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="El diálogo EXPORTAR: nombre de archivo, título, artista, álbum, género, la portada dibujada, el formato, las filas USB y ordenador, CANCIÓN o LOOP" height="800" loading="lazy" src="../shots/export.webp" width="1280"/></figure>
+<div class="screen-cap"><span>EXPORTAR: las etiquetas, la portada, el formato, a dónde va</span><small>PROYECTO ▾</small></div>
+</div>
+</article>
+<!-- open source -->
+<article class="hl reveal" style="--c: #3ddc84">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>Motores</b> <span>/</span> <span>código abierto, de arriba abajo</span></div>
+<h3>Nothing bundled. <span>Todo abierto.</span></h3>
+<p>ravving es una app C++ Qt 6 sobre <b>libzynthbox</b>, GPL‑3.0‑or‑later, y toca lo que trae la imagen de Zynthbox: <b>jalv</b> alojando los sintes y efectos LV2, <b>FluidSynth 2</b> para los kits de batería y los instrumentos soundfont, el JACK de PipeWire a 48 kHz y 256 muestras. Los arranca y conecta en tiempo de ejecución; la AppImage no incluye nada de ello.</p>
+<div aria-label="Los motores y los soundfonts" class="rack">
+<span>TAL NoiseMaker<small>acordes</small></span><span>DISTRHO Nekobi<small>bajo</small></span><span>Calf Monosynth<small>lead · 808</small></span>
+<span>Calf Saturator · Crusher · Phaser<small>saturación · crush · phaser</small></span><span>Dragonfly Room · Plate<small>reverb</small></span><span>TAP Echo<small>delay</small></span>
+<span>guitarix<small>los pedales y amplis</small></span><span>SwankyAmp<small>ampli</small></span><span>Calf Compressor · Gate · Filter · Chorus · Delay<small>la entrada</small></span>
+<span class="fs">Roland TR909 · TR808 · LINN9000<small>kits sf3</small></span><span class="fs">FluidR3Mono GM<small>la fuente de MuseScore</small></span><span class="fs">the SF2 Instruments<small>guitarras · órganos · pads</small></span><span class="fs">Black Pearl 5 · Red Zeppelin 5<small>kits AVL</small></span>
+</div>
+<a class="more" href="../docs/engines.html">Los motores, puerto por puerto</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="El selector de SONIDO del BAJO: Nekobi en jalv, luego los bajos soundfont tocados por FluidSynth, agrupados y ordenables" height="800" loading="lazy" src="../shots/sounds.webp" width="1280"/></figure>
+<div class="screen-cap"><span>Los sonidos de una máquina: su propio motor, luego los soundfonts</span><small>la placa</small></div>
+</div>
+</article>
+</div>
+<!-- every feature, grouped -->
+<div class="groups" id="every-feature">
+<div class="groups-head">
+<h3>Todas las funciones, agrupadas</h3>
+<p>Abre un grupo; cada línea enlaza con la página que la explica.</p>
+</div>
+<div class="group" id="f-instruments" style="--c: #ffa236">
+<h3><button aria-controls="p-instruments" aria-expanded="false" class="group-btn" type="button"><span class="n">01</span><span class="t">Instruments<small>las cinco páginas y lo que hace cada máquina</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-instruments"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>BATERÍA 1 · 2 · 3</b><span>Ocho filas del kit (BOMBO, CAJA, PALMAS, TOM, HI-HAT, ABIERTO, PLATILLO, PERC) y una fila de acentos; silencio, solo y nivel por fila en las perillas 1–3; kits ACÚSTICOS elegidos dentro de una fuente General MIDI (Jazz, Brush, Standard, Room, Power, Orchestra, los kits latinos y de cumbia). <a href="../docs/engines.html#fluidsynth-drums-13-tracks-02">motores</a></span></li>
+<li><b>ACORDES</b><span>Vistas ACORDES, NOTAS y SLOTS; siete teclas de acorde para la tonalidad y la escala, juegos de acordes; SLOTS compone con acordes enteros (1, 2, 4 u 8 compases cada uno) y escribe el patrón; los sonidos de fábrica de TAL NoiseMaker o un soundfont. <a href="../docs/manual.html#sound-sources">manual</a></span></li>
+<li><b>BAJO</b><span>Una línea mono en un piano roll con carriles de ACENTO y SLIDE, OCT − / +, ♭♯, AL AZAR; ONDA, CORTE, RESO, MOD ENV, ACENTO y AFINAR de la 303 como sus MODS. <a href="../docs/engines.html#nekobi-bass-track-3">motores</a></span></li>
+<li><b>LEAD</b><span>Legato y portamento en Calf Monosynth, una cinta que toca y añade vibrato al arrastrarla hacia arriba, instrumentos soundfont desde Rhodes y vibráfono hasta saxo, flauta, violín y gaita. <a href="../docs/engines.html#calf-monosynth-lead-track-5">motores</a></span></li>
+<li><b>SAMPLE KING</b><span>Cuatro bancos × ocho slots, cada banco con su patrón; recorte, AFINACIÓN ±12, REVERSA, grabar en un slot, los efectos de la entrada, CHOP y AUTO CHOP. <a href="../docs/manual.html#sample-king">manual</a></span></li>
+<li><b>PAD SAMPLER</b><span>Dieciséis pads en las teclas de paso, grabar a un pad con parada INTELIGENTE, NOTE ON / LOOP / REVERSA / SILENCIO, enganchar un bucle con una pulsación larga, BORRAR GOLPES, COPIAR, 16 NIVELES, FX DE PAD, el editor de onda con cortes por REGIONES, UMBRAL y MANUAL. <a href="../docs/manual.html#the-pad-sampler">manual</a></span></li>
+<li><b>Fuentes de sonido</b><span>El bajo, el lead y los acordes pueden sonar como un instrumento soundfont en lugar de su sinte, agrupados en el selector con ★ favoritos y un ORDEN; los presets de un soundfont importado se suman al instante. <a href="../docs/manual.html#sound-sources">manual</a></span></li>
+<li><b>MODIFICADORES DE SONIDO</b><span>Un perfil por motor (FILTRO, ENVOLVENTE, MOVIMIENTO… para un soundfont; las perillas propias de los sintes), manejado con las perillas del equipo, guardado con el proyecto y con los MODS de un preset. <a href="../docs/engines.html#the-mods-one-profile-per-engine-dataenginesjson">motores</a></span></li>
+<li><b>EFECTOS DE SONIDO</b><span>La cadena de cada máquina: SATURACIÓN, COMPRESOR, REVERB, EQ, PANEO, SIDECHAIN, DELAY, cada uno una tarjeta con sus perillas, activados desde la barra o con la tecla SELECT. <a href="../docs/architecture.html">arquitectura</a></span></li>
+<li><b>LIVE FX</b><span>DROP, SIN BOMBO, SOLO BOMBO, CRUSH, PASA BAJOS, PASA ALTOS, STUTTER y LOOP como pads (ALT + teclas de paso 1–8), PHASER, ECO y PESADO como envíos con ALT + las perillas. <a href="../docs/manual.html">manual</a></span></li>
+<li><b>Tonalidad, escala, tempo, swing</b><span>Cada máquina melódica sigue la tónica y la escala (un cambio de tonalidad ajusta las líneas); SWING 8 o SWING 16; el tempo en la cabecera, que fijan las plantillas y demos. <a href="../docs/manual.html">manual</a></span></li>
+<li><b>LIVE y tomas</b><span>MODE convierte las teclas de paso en pads para la máquina en pantalla (la escala, las teclas de acorde, las filas de la batería); ● graba una toma, con cuenta de entrada o entrando en el loop, superponiendo vuelta tras vuelta; un teclado MIDI también toca la máquina LIVE. <a href="../docs/manual.html">manual</a></span></li>
+<li><b>El MEZCLADOR</b><span>Todas las tiras a la vez (✱): nivel, paneo, silencio, solo, las teclas de paso eligiendo una tira, la perilla grande un nivel fino. <a href="../docs/manual.html">manual</a></span></li>
+</ul>
+<figure class="screen"><img alt="La vista SLOTS de la página ACORDES: cuatro slots vacíos de 1 COMPÁS cada uno, un + para más, las teclas de acorde debajo" height="800" loading="lazy" src="../shots/chords-slots.webp" width="1280"/></figure>
+</div></div></div>
+</div>
+<div class="group" id="f-patterns" style="--c: #c9ee6e">
+<h3><button aria-controls="p-patterns" aria-expanded="false" class="group-btn" type="button"><span class="n">02</span><span class="t">Patterns, presets and projects<small>escribir, elegir, guardar y empezar de nuevo</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-patterns"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>Los editores de patrones</b><span>Una rejilla de pasos para la batería y los samplers, un piano roll para bajo y lead, un rollo de acordes en grados; hasta ocho compases paginados con ‹ ›; un dedo arrastra, dos pellizcan para hacer zoom; BLOQUEO evita que un toque perdido escriba mientras suena. <a href="../docs/manual.html">manual</a></span></li>
+<li><b>SELECCIONAR y las perillas de nota</b><span>Elige notas en lugar de escribirlas, muévelas una nota de la tonalidad o un paso, una pulsación larga elige el patrón entero; las perillas 1–3 fijan DURACIÓN, VELOCIDAD y DESPLAZAR de las notas elegidas. <a href="../docs/manual.html">manual</a></span></li>
+<li><b>Presets</b><span>GUARDAR ACTUAL COMO NUEVO guarda el patrón con el sonido de la máquina y los MODS activos; un GRUPO por género, ORDEN, ★ favoritos; ORIGEN elige el equipo o una memoria, tocada directamente desde ella. <a href="../docs/manual.html#sound-sources">manual</a></span></li>
+<li><b>CON SU SONIDO · MODS · COMPASES</b><span>Lo que trae un preset: su fuente de sonido o kit, sus MODS (solo las partes que nombra), su número de compases (o superpuesto sobre los compases del patrón). <a href="../docs/manual.html#sound-sources">manual</a></span></li>
+<li><b>Los packs de géneros</b><span>Diecinueve packs, cinco presets por máquina, con el tempo, el sonido y el swing de cada uno en las tablas; una escala por pack para que sus cuatro instrumentos suenen juntos; los packs de vals y jiga en 3/4 y 6/8. <a href="../docs/packs.html">los packs</a></span></li>
+<li><b>Plantillas</b><span>PROYECTO ▾ → PLANTILLAS: un proyecto nuevo con un tempo, swing, tonalidad y LIVE FX; GUARDAR PLANTILLA guarda los de la sesión; cada pack trae una. <a href="../docs/manual.html#sound-sources">manual</a></span></li>
+<li><b>Demos</b><span>Autumn Leaves (un trío de jazz y saxo), 5AM (pop electrónico oscuro sobre los cambios de 4ÆM) y B3rlin (techno oscuro), con los soundfonts de la imagen, nunca cambiadas por un GUARDAR. <a href="../docs/manual.html#sound-sources">manual</a></span></li>
+<li><b>Proyectos</b><span>GUARDAR (el nombre se pide una vez, ¿OTRA VEZ? para sobrescribir), GUARDAR COMO NUEVO, ★ favoritos, grupos DEMOS y MIS PROYECTOS; un proyecto nuevo empieza limpio. <a href="../docs/manual.html">manual</a></span></li>
+<li><b>Deshacer y rehacer</b><span>Un historial para el proyecto (los ↶ ↷ de la cabecera, ALT + ◀ ▶): patrones, slots y el arreglo, un cambio sobre varias máquinas como un paso; los ↶ ↷ de una máquina deshacen solo sus cambios. <a href="../docs/manual.html#undo-and-redo">deshacer</a></span></li>
+<li><b>Automatización</b><span>AUTO graba los movimientos de perillas en carriles por máquina; una pulsación larga en AUTO los borra. <a href="../docs/architecture.html">arquitectura</a></span></li>
+<li><b>Por script</b><span>Un proyecto entero construido por el fifo de control remoto: muestras, patrones, sonidos y todo. <a href="../docs/testing.html#building-a-project-by-script">scripts</a></span></li>
+</ul>
+<figure class="screen"><img alt="El diálogo PLANTILLAS: ORIGEN EQUIPO o USB, una ficha por pack con su tempo, tonalidad y swing" height="800" loading="lazy" src="../shots/templates.webp" width="1280"/></figure>
+</div></div></div>
+</div>
+<div class="group" id="f-song" style="--c: #ffc134">
+<h3><button aria-controls="p-song" aria-expanded="false" class="group-btn" type="button"><span class="n">03</span><span class="t">Sections and the song<small>más de un loop</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-song"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>Secciones</b><span>Hasta dieciséis, cada una con el patrón de cada máquina y qué máquinas descansan, y un patrón más corto que se repite a lo largo de ella (LOOP) o suena una vez y descansa (UNA VEZ); los sonidos, efectos, niveles, tempo y tonalidad son del proyecto, así que un cambio nunca reinicia un motor; la que está en pantalla es la que editas. <a href="../docs/manual.html#sections-and-the-song">manual</a></span></li>
+<li><b>CAMBIO · COMPÁS | SECCIÓN</b><span>Una elección entra en el próximo compás, o espera a que la sección que suena termine su pasada; en LOOP se encolan hasta tres, cada una sonando una pasada. <a href="../docs/manual.html#sections-and-the-song">manual</a></span></li>
+<li><b>Justo en la línea de compás</b><span>Cada máquina escribe el nuevo patrón en el otro clip de su pista y libzynthbox intercambia los dos en el primer tick del compás: ninguna nota se pierde ni se duplica (medido). <a href="../docs/architecture.html">diseño</a></span></li>
+<li><b>Desde cualquier lugar</b><span>ALT + teclas de paso 9–16 eligen las secciones 1–8 en cualquier página; ALT + MODE o una pulsación larga en la placa ponen las teclas de sección en la cabecera, donde ALT + 1–16 eligen dieciséis. <a href="../docs/manual.html#sections-and-the-song">manual</a></span></li>
+<li><b>La página CANCIÓN</b><span>Teclas cuadradas con un punto por máquina que suena: toca, doble toque para renombrar, mantén y arrastra para mover; RENOMBRAR, NUEVA, COLOR, DURACIÓN, MOVER, AÑADIR A LA CANCIÓN; la canción, una tira de bloques con sus repeticiones y REPRODUCIR DESDE AQUÍ. <a href="../docs/manual.html#sections-and-the-song">manual</a></span></li>
+<li><b>LOOP | CANCIÓN</b><span>Lo que toca PLAY: la sección en pantalla en bucle, o la canción entera, con las páginas siguiéndola, parando en la línea de compás tras su final. <a href="../docs/manual.html#sections-and-the-song">manual</a></span></li>
+<li><b>Ver el cambio</b><span>La placa se barre en el color de la sección y la página brilla alrededor de su marco cuando entra un cambio; las teclas se llenan con el progreso de la sección. <a href="../docs/manual.html#sections-and-the-song">manual</a></span></li>
+</ul>
+<figure class="screen"><img alt="ALT + MODE: las teclas de sección en la cabecera, donde estaban los pads LIVE FX" height="800" loading="lazy" src="../shots/alt-mode.png" width="1280"/></figure>
+</div></div></div>
+</div>
+<div class="group" id="f-record" style="--c: #4a9bff">
+<h3><button aria-controls="p-record" aria-expanded="false" class="group-btn" type="button"><span class="n">04</span><span class="t">Record, video and share<small>la entrada, la pantalla, memorias USB, el ordenador, el teléfono</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-record"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>La GRABADORA</b><span>MICRO · GUITARRA · LÍNEA en los jacks 4 y 5, MONITOR, GANANCIA con su medidor, efectos hechos para la entrada (LIMPIO, SUAVE, VOZ FUZZ, ROBOT, TELÉFONO, OCTAVA; los amplis y pedales de la guitarra), tomas guardadas tal como entraron. <a href="../docs/manual.html#the-recorder">manual</a></span></li>
+<li><b>El afinador</b><span>En GUITARRA: el método de tono de McLeod como lo usa el afinador de guitarix, cuerdas AUTO o MANUAL, quince afinaciones, La4 430–450 Hz; solo funciona mientras está en pantalla. <a href="../docs/manual.html#the-recorder">manual</a></span></li>
+<li><b>La mezcla completa</b><span>ALT + ● graba el master como WAV; el ● de una máquina graba su toma; el metrónomo se mantiene durante una toma. <a href="../docs/manual.html">manual</a></span></li>
+<li><b>Grabación en vivo</b><span>MENU → REC EN VIVO: un VIDEO, la pantalla (o una cámara USB) con el sonido del master como MP4, o SOLO AUDIO, el sonido como WAV de 24 bits entre las PISTAS (REC EN VIVO GUARDADO → METADATOS… lo etiqueta, dibuja su portada y lo escribe como WAV, FLAC, OGG o MP3 con el diálogo de exportación); tres niveles de calidad medidos a 0 xruns, un TEMPORIZADOR, la entrada de la GRABADORA mezclada (una voz en off: la música baja bajo la voz, 12 dB por encima de lo que los altavoces filtran al micro, la voz realzada y nítida, un limitador con anticipación en la mezcla, el nivel del micro en la placa del proyecto con un aviso MICRO DEMASIADO FUERTE; una guitarra o una línea sumadas tal cual), cada tecla pulsada nombrada en un video; el INICIO del diálogo es la confirmación; un proyecto nuevo lo desactiva; VIDEO GUARDADO / REC EN VIVO GUARDADO lo borra (dos toques), lo renombra y lo envía. <a href="../docs/manual.html#video-recordings-and-the-computer-link">video</a></span></li>
+<li><b>La conexión con el ordenador</b><span>Cualquier número de portátiles o PC por SSH (AJUSTES → ORDENADORES → AÑADIR UN ORDENADOR): una contraseña usada una vez para instalar la única clave del equipo, los archivos llegando a la carpeta Descargas de ese ordenador; cada uno con CAMBIAR, PROBAR y OLVIDAR; el diálogo de exportación puede enviar una pista a uno mientras se escribe. <a href="../docs/manual.html#video-recordings-and-the-computer-link">video</a></span></li>
+<li><b>El teléfono</b><span>TELÉFONO · CÓDIGO QR: un enlace servido por ravving en el Wi‑Fi, 15 minutos como máximo, ESPERANDO AL TELÉFONO / ENVIANDO / DESCARGADO ✓; la forma de llegar a un iPhone. <a href="../docs/manual.html#sending-to-a-phone">manual</a></span></li>
+<li><b>Memorias USB</b><span>Montadas cuando hace falta y EXPULSADAS con seguridad; la página USB lista las muestras, soundfonts, presets, paquetes y proyectos de una memoria con IMPORTAR (IMPORTAR TODO para un pack de muestras); los archivos van en sentido contrario desde ARCHIVOS → ENVIAR…; una memoria de solo lectura se puede formatear. <a href="../docs/manual.html#usb-sticks">manual</a></span></li>
+<li><b>ARCHIVOS</b><span>Todo lo de la biblioteca por tipo, lo más nuevo primero, cada entrada con ENVIAR… y BORRAR: el único lugar por donde sale del equipo cualquier tipo de archivo; TELÉFONO · EXPLORAR muestra un código QR de la misma biblioteca como páginas en un teléfono, una DESCARGA por archivo. <a href="../docs/manual.html#files">manual</a></span></li>
+<li><b>Bluetooth</b><span>Altavoces y auriculares (REPRODUCIR AQUÍ), archivos enviados a un teléfono y recibidos de él, emparejamiento con clave, la configuración que necesita un Zynthbox aplicada por ravving. <a href="../docs/manual.html#bluetooth">bluetooth</a></span></li>
+<li><b>Salida de audio</b><span>Los jacks, HDMI o una salida Bluetooth, alimentadas sin cortes por un loopback mientras los jacks mantienen el reloj del grafo, recordada y restaurada cuando la salida vuelve. <a href="../docs/manual.html#audio-output">manual</a></span></li>
+</ul>
+<figure class="screen"><img alt="La página USB de la memoria EVS: MUESTRAS, PRESETS, SOUNDFONTS, PAQUETES, PISTAS, VIDEOS, ARCHIVOS MIDI, una carpeta de pack de muestras y un archivo con IMPORTAR" height="800" loading="lazy" src="../shots/usb.webp" width="1280"/></figure>
+</div></div></div>
+</div>
+<div class="group" id="f-export" style="--c: #b07cff">
+<h3><button aria-controls="p-export" aria-expanded="false" class="group-btn" type="button"><span class="n">05</span><span class="t">Export and listen<small>pistas, paquetes, el reproductor</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-export"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>Una pista</b><span>Grabada mientras el proyecto suena desde su primer tiempo, COMPASES × VUELTAS más una COLA, o la CANCIÓN entera; WAV 24 bits, FLAC, OGG Vorbis o MP3 con título, artista, álbum, género, compositor, comentario, fecha y BPM, una portada y un JSON adjunto. <a href="../docs/manual.html#exports-and-the-music-player">manual</a></span></li>
+<li><b>Un paquete</b><span>Un zip .ravv del proyecto con todas las muestras que usa; IMPORTAR crea un proyecto a partir de uno, desde la biblioteca o una memoria. <a href="../docs/manual.html#exports-and-the-music-player">manual</a></span></li>
+<li><b>El REPRODUCTOR</b><span>Pantalla completa: PISTAS, ÁLBUMES y ARTISTAS, ORDEN, REPETIR, una cola, la portada y el transporte; las teclas lo manejan (1 2 3 las vistas, la perilla grande el volumen, la perilla 1 la posición). <a href="../docs/manual.html#the-music-player">manual</a></span></li>
+<li><b>El perfil</b><span>AJUSTES: USUARIO y AUTOR, acreditados en cada pista exportada. <a href="../docs/manual.html#exports-and-the-music-player">manual</a></span></li>
+</ul>
+<figure class="screen"><img alt="El REPRODUCTOR: las pistas ordenadas de más nueva a más antigua con ENVIAR… en cada una, la portada y el transporte a la derecha, la cola" height="800" loading="lazy" src="../shots/player.webp" width="1280"/></figure>
+</div></div></div>
+</div>
+<div class="group" id="f-hood" style="--c: #3ddc84">
+<h3><button aria-controls="p-hood" aria-expanded="false" class="group-btn" type="button"><span class="n">06</span><span class="t">Under the hood<small>motores, soundfonts, el aspecto, la pantalla de inicio, el centro de avisos</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-hood"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>Los motores</b><span>jalv aloja los LV2 (TAL NoiseMaker, DISTRHO Nekobi, Calf Monosynth, Calf Crusher y Phaser, Dragonfly Room Reverb, TAP Echo; Calf Saturator como SATURACIÓN); FluidSynth 2 toca los kits y las fuentes soundfont; los datos de puertos de cada uno, revisados contra la investigación de los mods de motores. <a href="../docs/engines.html">motores</a></span></li>
+<li><b>Los soundfonts</b><span>Los kits SFZ Drum Machines (Roland TR909, TR808, LINN9000 y el resto de la carpeta), FluidR3Mono GM (el de MuseScore), los SF2 Instruments (guitarras, órgano de tubos, bajos, los pads Ambients &amp; Drones), los kits AVL dentro de sus paquetes FluidPlug; un soundfont traído por USB se usa al instante. <a href="../docs/packs.html#sounds">los packs</a></span></li>
+<li><b>El grafo de audio</b><span>El JACK de PipeWire a 48 kHz y 256 muestras: los passthroughs de libzynthbox, los inserts de jalv conectados solo mientras están activos, FluidSynth informado del reloj del grafo; relojes, enlaces y xruns revisados de una vez. <a href="../docs/routing.html">enrutamiento</a></span></li>
+<li><b>El aspecto</b><span>Un tema, el aspecto Miko, fijado en el código; cada máquina con su propio acabado (el crema de la 909, la madera oscura de la 808, LinnBeats, el lima de la 303, el azul de la POLY‑6, el morado del lead, el gris y negro de los samplers) a partir de las máquinas de easyrave; un único conjunto de tipos base y reglas de UI comprobadas por un test. <a href="../docs/ui-rules.html">reglas de UI</a></span></li>
+<li><b>La pantalla de inicio</b><span>El logo mientras arranca ravving, luego una breve animación hacia la página: ANIME, BRILLO, FIJO, ZOOM u OFF en AJUSTES → INICIO; una imagen fija mientras carga, porque animar costaba 2–3 s al arranque. <a href="../docs/manual.html#startup-splash">manual</a></span></li>
+<li><b>El centro de avisos</b><span>Lo que va mal en el equipo ahora mismo, en palabras sencillas, lo más grave primero, con qué hacer: un motor que no pudo arrancar, cortes de audio, las teclas que dejan de responder, una memoria que no se montó, el almacenamiento casi lleno. <a href="../docs/manual.html#the-issues-center">manual</a></span></li>
+<li><b>Ajustes</b><span>NOTAS FUERA DE LA ESCALA, el aspecto de inicio, SBC‑XQ para Bluetooth, el IDIOMA, la calidad, temporizador, fuente, micro, voz en off y teclas del video, la lista de ORDENADORES, AYUDA; cada sección en su propio marco. <a href="../docs/manual.html#exports-and-the-music-player">manual</a></span></li>
+<li><b>Idiomas</b><span>Inglés, español y japonés, con los términos musicales que usan los músicos en cada uno; AJUSTES · IDIOMA sigue el idioma del equipo o elige uno, y la pantalla cambia al instante. Un idioma nuevo es un catálogo que traducir, esta página incluida. <a href="../docs/translations.html">traducciones</a></span></li>
+<li><b>La AppImage de la Store</b><span>Construida en el equipo, una página de instalación sobre Zynthbox: pruébala, hazla la predeterminada, vuelve a Zynthbox al arrancar, quítala; no incluye nada más que ravving. <a href="../docs/packaging.html">empaquetado</a></span></li>
+<li><b>Control remoto</b><span>Comandos CUIA y llamadas al backend por el fifo de webconf, las baterías de pruebas y el recorrido de capturas que lo mantienen honesto. <a href="../docs/testing.html">pruebas</a></span></li>
+</ul>
+<figure class="screen"><img alt="AJUSTES: PERFIL, NOTAS FUERA DE LA ESCALA, INICIO con ANIME BRILLO FIJO ZOOM OFF, BLUETOOTH SBC-XQ, la calidad del VIDEO, temporizador, fuente, micro y teclas" height="800" loading="lazy" src="../shots/settings.webp" width="1280"/></figure>
+</div></div></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div class="wrap">
+<p>MIKO es el hardware, de Zynthbox. ravving es un mod que corre en él, de Camilo Higuita, GPL‑3.0‑or‑later. La lista de atajos sigue el docs/architecture.md de ravving y las funciones su documentación, publicada como <a href="../docs/index.html">la documentación</a>; la ilustración del equipo es el render «Miko Button Fonts» del fabricante (sus teclas en Audiowide, de Astigmatic, SIL Open Font License 1.1) con una captura de ravving en su pantalla; las teclas usan la misma fuente, y el grano viene del sistema de marca MIKO.</p>
+<p class="mono">Capturas tomadas en el equipo a 1280 × 800 con tools/device.sh shot.</p>
+</div>
+<img alt="" aria-hidden="true" class="miko-peek" src="../assets/miko-character.png"/>
+</footer>
+<script src="../site.js"></script>
+</body>
+</html>

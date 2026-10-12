@@ -21,8 +21,8 @@
       <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
     </a>
     <nav aria-label="Sections">
-      <a href="../index.html#features">Features</a>
-      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
       <a href="index.html" aria-current="true">Docs</a>
       <a href="../api/index.html">API reference</a>
     </nav>
@@ -266,7 +266,7 @@ python3 tools/site-i18n.py render     # po-site → site/es/ and site/ja/
 (<code>msgfmt --check</code>), a text is untranslated or fuzzy, a translation drops a placeholder (<code>%1</code>)
 or a markup tag (<code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>), or the rendered pages are older than their catalogs.</p>
 <h2 id="the-webpage">The webpage</h2>
-<p><code>tools/site-i18n.py extract</code> collects every block of text in site/index.html (a heading, a
+<p><code>tools/site-i18n.py extract</code> collects every block of text in site/index.html and site/features.html (a heading, a
 paragraph, a row's words, with their inline <code>&lt;b&gt;</code>, <code>&lt;a&gt;</code> and <code>&lt;br&gt;</code>), the <code>alt</code>, <code>title</code> and
 <code>aria-label</code> attributes, and site.js's captions and marks, into po-site/ravving-site.pot.
 <code>render</code> writes site/<lang>/index.html and site.js with the links pointing one folder up; the
@@ -279,7 +279,7 @@ language switcher in the page's top bar links the three. <code>&lt;kbd&gt;</code
    the same from po-site/ravving-site.pot into po-site/<lang>/ravving-site.po.</li>
 <li>Translate both, following the glossary above (add a column for the new language).</li>
 <li>Add the language to the <code>Languages</code> table in src/backend/localization.cpp, by its own name.</li>
-<li>Add its link to the switcher in site/index.html and its <code>hreflang</code> alternate.</li>
+<li>Add its link to the switchers in site/index.html and site/features.html, and their <code>hreflang</code> alternates.</li>
 <li>Run the workflow, then look at every page in the new language on the device.</li>
 </ol>
 <h2 id="every-release-review-the-translations">Every release: review the translations</h2>

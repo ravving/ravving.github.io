@@ -1,0 +1,702 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the hardware shortcuts and the features.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+
+  Plain HTML and CSS, no build step. The shortcut list follows docs/architecture.md
+  ("Input flow: the Hardware attached property") and docs/manual-interim.md; the features
+  follow docs/ and data/secret/README.md, and link into docs/ (rendered pages of
+  the same markdown, tools/build-site-docs.py). See README.md in this folder to keep them in
+  sync and to retake a screenshot.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ravving on MIKO · Shortcuts and features</title>
+<meta name="description" content="What every key and knob of the MIKO M01 does in ravving, the groovebox mod for the Zynthbox, and what the app can do: its pages, presets, sections, samplers, recorder, video and sharing.">
+<link rel="stylesheet" href="site.css">
+<link rel="alternate" hreflang="en" href="features.html">
+<link rel="alternate" hreflang="es" href="es/features.html">
+<link rel="alternate" hreflang="ja" href="ja/features.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#shortcuts">Skip to the shortcuts</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="ravving">
+      <img class="ravving" src="assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="#shortcuts">Shortcuts</a>
+      <a href="#features">Features</a>
+      <a href="docs/index.html">Docs</a>
+      <a href="api/index.html">API reference</a>
+    </nav>
+    <nav class="langs" aria-label="Language" translate="no">
+      <a href="features.html" hreflang="en" lang="en">EN</a>
+      <a href="es/features.html" hreflang="es" lang="es">ES</a>
+      <a href="ja/features.html" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="kicker mono"><b>MIKO M01</b> <span>/</span> <span>ravving · the groovebox mod</span></div>
+      <h1>Every key.<br>Every knob.<br><span>In ravving.</span></h1>
+      <p class="lede">
+        <b>MIKO</b> is the hardware: an open music instrument by Zynthbox with sixteen step keys, five
+        page keys, three encoders and a jog wheel. <b>ravving</b> is the alternative app, a mod, that runs on it:
+        a groovebox of five pages (drums, chords, bass, lead, sampler) with sections, a mixer and a recorder.
+        This page is the map of what the panel does while ravving is the app on screen, and of what the app can do.
+      </p>
+      <div class="meta">
+        <div><span class="mono">Step keys</span><strong>16</strong></div>
+        <div><span class="mono">Page keys</span><strong>5 + ✱</strong></div>
+        <div><span class="mono">Encoders</span><strong>3 + big knob</strong></div>
+        <div><span class="mono">Modifier</span><strong>ALT</strong></div>
+        <div><span class="mono">App</span><strong>ravving</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="stage">
+      <div class="device">
+        <img src="assets/miko-m01.webp" alt="The MIKO M01 front panel with ravving on its screen: page keys down the left, the screen, sixteen step keys under it, the transport and navigation keys at the bottom, three encoders, the GLOBAL key and the big knob on the right" width="1448" height="1086">
+      </div>
+      <!-- the numbered regions, placed over the artwork in percent of its size -->
+      <a class="region" href="#knobs" data-region="1" style="--c: var(--r1); left: 77.6%; top: 14.6%; width: 15%; height: 74.4%"><span class="n">1</span><span class="lbl">Knobs</span></a>
+      <a class="region" href="#pagekeys" data-region="2" style="--c: var(--r2); left: 8.9%; top: 18.9%; width: 9%; height: 43.2%"><span class="n">2</span><span class="lbl">Page keys</span></a>
+      <a class="region" href="#stepkeys" data-region="3" style="--c: var(--r3); left: 21.1%; top: 65.1%; width: 50.8%; height: 6.3%"><span class="n">3</span><span class="lbl">Step keys</span></a>
+      <a class="region" href="#transport" data-region="4" style="--c: var(--r4); left: 21.2%; top: 74.6%; width: 18.8%; height: 11.8%"><span class="n">4</span><span class="lbl">Transport</span></a>
+      <a class="region" href="#navigation" data-region="5" style="--c: var(--r5); left: 43.8%; top: 74.6%; width: 28.2%; height: 11.8%"><span class="n">5</span><span class="lbl">Navigation</span></a>
+      <a class="region" href="#alt" data-region="6" style="--c: var(--r6); left: 10.3%; top: 75.1%; width: 6.8%; height: 5.7%"><span class="n">6</span><span class="lbl">ALT</span></a>
+    </div>
+    <div class="legend">
+      <a href="#knobs" style="--c: var(--r1)"><i></i>1 Knobs</a>
+      <a href="#pagekeys" style="--c: var(--r2)"><i></i>2 Page keys</a>
+      <a href="#stepkeys" style="--c: var(--r3)"><i></i>3 Step keys</a>
+      <a href="#transport" style="--c: var(--r4)"><i></i>4 Transport</a>
+      <a href="#navigation" style="--c: var(--r5)"><i></i>5 Navigation</a>
+      <a href="#alt" style="--c: var(--r6)"><i></i>6 ALT</a>
+    </div>
+  </section>
+
+  <section class="section" id="shortcuts">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Shortcuts</h2>
+        <p>One card per region of the panel. Hover or tap a row to see it on the screen; the picture's frame points at what to look at.</p>
+      </div>
+
+      <div class="cards">
+
+        <!-- 1 KNOBS -->
+        <article class="card" id="knobs" data-region="1" style="--c: var(--r1)">
+          <div class="card-head"><span class="n">1</span><h3>Knobs</h3><small>3 encoders · big knob</small></div>
+          <ul class="rows">
+            <li class="row" data-shot="page3" data-marks="bigknob-fader">
+              <span class="keys"><kbd class="knob big"><span>BIG</span></kbd></span>
+              <span class="what"><b>Volume of the machine on screen</b><small>Inside a page the big knob is always the fader of the instrument shown; the fader wears the big-knob badge.</small></span>
+            </li>
+            <li class="row" data-shot="page1" data-marks="master">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob big"><span>BIG</span></kbd></span>
+              <span class="what"><b>Master volume, from anywhere</b><small>Badged on the header's MASTER dial; it never reaches the page, whatever has the focus.</small></span>
+            </li>
+            <li class="row" data-shot="header-focus" data-marks="header-group">
+              <span class="keys"><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+              <span class="what"><b>The focused group's knobs</b><small>A group of dials hands its targets to knobs 1–3; each target shows a tiny knob badge with its number. The big knob steps the group's list (INSTRUMENTS: knob 1) and SELECT activates.</small></span>
+            </li>
+            <li class="row" data-shot="alt-held" data-marks="fx-sends">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+              <span class="what"><b>FX SENDS: PHASER, ECHO, HEAVY</b><small>The header's sends, borrowed while ALT is held: badges, frame and pick-up move there.</small></span>
+            </li>
+            <li class="row" data-shot="bass-select" data-marks="note-readout">
+              <span class="keys"><kbd class="ui">SELECT</kbd><i class="then">then</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+              <span class="what"><b>A note's LENGTH, VELOCITY, NUDGE</b><small>Bass and lead: with the toolbar's SELECT on and notes picked, knob 1 is the length (a step a detent, 1 step to 4 bars), knob 2 the velocity (4 a detent, 1–127), knob 3 the nudge (a 16th of a step, half a step early to late). The readout at the grid's top right shows the first note's; each detent is one UNDO.</small></span>
+            </li>
+            <li class="row" data-shot="strip-knobs" data-marks="strip">
+              <span class="keys"><kbd class="ui">strip</kbd><i class="then">then</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd></span>
+              <span class="what"><b>PAN and VOL of the machine</b><small>Tap a machine's strip: knob 1 pans, knob 2 sets the level. BACK, or a tap in the grid, gives the knobs back to the rows.</small></span>
+            </li>
+            <li class="row" data-shot="mixer-strip" data-marks="mixer-strip">
+              <span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd><i class="then">then</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob big"><span>BIG</span></kbd></span>
+              <span class="what"><b>In the MIXER: level, pan, fine level</b><small>Of the strip picked (◀ ▶ or a step key): knob 1 its level, knob 2 its pan, the big knob a fine level.</small></span>
+            </li>
+            <li class="row" data-shot="menu" data-marks="menu-sliders">
+              <span class="keys"><kbd class="cap c-menu">MENU</kbd><i class="then">then</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd></span>
+              <span class="what"><b>In the control center: BRIGHTNESS, OUTPUT</b><small>Knob 1 the screen's brightness, knob 2 the output level. A fixed pot picks the value up first: it changes nothing until it reaches or crosses it, and the brightness never goes under 30 %, so the screen never looks switched off.</small></span>
+            </li>
+            <li class="row" data-shot="recorder" data-marks="recorder-gain">
+              <span class="keys"><kbd class="ui">RECORDER</kbd><i class="then">then</i><kbd class="knob big"><span>BIG</span></kbd></span>
+              <span class="what"><b>In the RECORDER: the input GAIN</b><small>The number keys move knobs 1–3 between INPUT (1), TUNER (2) and EFFECTS (3).</small></span>
+            </li>
+          </ul>
+          <div class="media"><div class="media-in"><figure class="shot" data-figure></figure></div></div>
+        </article>
+
+        <!-- 2 PAGE KEYS -->
+        <article class="card" id="pagekeys" data-region="2" style="--c: var(--r2)">
+          <div class="card-head"><span class="n">2</span><h3>Page keys</h3><small>MENU · 1–5 · ✱ · MODE</small></div>
+          <ul class="rows">
+            <li class="row" data-shot="menu" data-marks="menu-drawer">
+              <span class="keys"><kbd class="cap c-menu">MENU</kbd></span>
+              <span class="what"><b>The control center</b><small>MIXER, Wi‑Fi, Bluetooth, MIDI, SYSTEM, VIDEO, RECORDER, the music player, SETTINGS and the power row (REBOOT and POWER OFF want a second press within 3 s). ◀ ▶ walk the actions, SELECT runs one.</small></span>
+            </li>
+            <li class="row" data-shot="page1-drums2" data-marks="nameplate">
+              <span class="keys"><kbd class="cap c-n1">1</kbd></span>
+              <span class="what"><b>DRUMS</b><small>Pressed again it cycles the three drum machines: DRUMS 1 → 2 → 3 (the nameplate says which).</small></span>
+            </li>
+            <li class="row" data-shot="page2" data-marks="nameplate">
+              <span class="keys"><kbd class="cap c-n2">2</kbd></span>
+              <span class="what"><b>CHORDS</b><small>The POLY‑6 page: CHORDS, NOTES and SLOTS views.</small></span>
+            </li>
+            <li class="row" data-shot="page3" data-marks="nameplate">
+              <span class="keys"><kbd class="cap c-n3">3</kbd></span>
+              <span class="what"><b>BASS</b><small>The BASS page: Nekobi, a 303, a mono line with ACCENT and SLIDE.</small></span>
+            </li>
+            <li class="row" data-shot="page4" data-marks="nameplate">
+              <span class="keys"><kbd class="cap c-n4">4</kbd></span>
+              <span class="what"><b>LEAD</b><small>Calf Monosynth, legato and portamento.</small></span>
+            </li>
+            <li class="row" data-shot="page5" data-marks="nameplate">
+              <span class="keys"><kbd class="cap c-n5">5</kbd></span>
+              <span class="what"><b>SAMPLER</b><small>Pressed again it switches SAMPLE KING ⇄ PAD SAMPLER; the choice survives a restart.</small></span>
+            </li>
+            <li class="row" data-shot="mixer" data-marks="mixer">
+              <span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd></span>
+              <span class="what"><b>The MIXER, open and close</b><small>Every strip at once; a number key leaves it for that page, BACK or ✱ go back.</small></span>
+            </li>
+            <li class="row" data-shot="mode-live" data-marks="mode-lamp">
+              <span class="keys"><kbd class="cap c-mode">MODE</kbd></span>
+              <span class="what"><b>The entry mode of the instrument on screen</b><small>OFF → LIVE → STEP + LIVE → OFF, from anywhere; the MODE LED shows it. LIVE turns the step keys into pads for that one machine.</small></span>
+            </li>
+            <li class="row" data-shot="alt-mode" data-marks="header-deck">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-mode">MODE</kbd></span>
+              <span class="what"><b>Flip the header deck</b><small>The section keys take the place of the LIVE FX pads (the same again brings the pads back); MODE lights orange while ALT is held. A long press on the project plate does the same.</small></span>
+            </li>
+            <li class="row" data-shot="recorder" data-marks="recorder-tabs">
+              <span class="keys"><kbd class="ui">RECORDER</kbd><i class="then">then</i><kbd class="cap c-n1">1</kbd><kbd class="cap c-n2">2</kbd><kbd class="cap c-n3">3</kbd></span>
+              <span class="what"><b>In the RECORDER: INPUT, TUNER, EFFECTS</b><small>Move the knobs between the three panels.</small></span>
+            </li>
+          </ul>
+          <div class="media"><div class="media-in"><figure class="shot" data-figure></figure></div></div>
+        </article>
+
+        <!-- 3 STEP KEYS -->
+        <article class="card" id="stepkeys" data-region="3" style="--c: var(--r3)">
+          <div class="card-head"><span class="n">3</span><h3>Step keys</h3><small>1–16</small></div>
+          <ul class="rows">
+            <li class="row" data-shot="page1" data-marks="grid">
+              <span class="keys"><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+              <span class="what"><b>Write a step</b><small>LIVE off: the key toggles the selected row's step on release, one key a step of the bar on screen. The LEDs follow the playhead.</small></span>
+            </li>
+            <li class="row" data-shot="mode-live" data-marks="grid">
+              <span class="keys"><kbd class="cap c-mode">MODE</kbd><i class="then">then</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+              <span class="what"><b>Play, with LIVE on</b><small>Drums: keys 1–8 play the rows, key 9 held makes accents. Bass, lead and the chords' NOTES: the scale on all 16 keys, ▲ ▼ shifting the octave. CHORDS and SLOTS: the seven chord keys. With REC on while playing a hit is written at the nearest step; stopped, in STEP entry, at the cursor.</small></span>
+            </li>
+            <li class="row" data-shot="alt-held" data-marks="livefx">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s3">8</kbd></span>
+              <span class="what"><b>The LIVE FX pads</b><small>DROP, NO KICK, ONLY KICK, CRUSH, LO PASS, HI PASS, STUTTER, LOOP, in that order. The keys light orange while ALT is held and the pads show their key numbers.</small></span>
+            </li>
+            <li class="row" data-shot="alt-mode" data-marks="sections">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s4">9</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+              <span class="what"><b>Sections 1–8, from any page</b><small>Lit in their colours while ALT is held. With the section keys in the header (ALT + MODE), ALT + 1–16 pick sections 1–16, and while that group has the focus the step keys alone pick them.</small></span>
+            </li>
+            <li class="row" data-shot="mixer-strip" data-marks="mixer-strip">
+              <span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd><i class="then">then</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s4">9</kbd></span>
+              <span class="what"><b>In the MIXER: pick a strip</b><small>The step LEDs show the strips, muted ones dim, the picked one white.</small></span>
+            </li>
+            <li class="row" data-shot="page5-pads" data-marks="pads">
+              <span class="keys"><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+              <span class="what"><b>PAD SAMPLER: the sixteen pads</b><small>With LIVE on the keys play the pads; a key held past half a second latches its pad looping, a key on a latched pad ends it. STOP ends every latched loop.</small></span>
+            </li>
+            <li class="row" data-shot="page3" data-marks="cursor">
+              <span class="keys"><kbd class="cap c-s1">1</kbd><i class="plus">+</i><kbd class="cap c-s2">5</kbd></span>
+              <span class="what"><b>Keys held together go into one step</b><small>STEP entry: a chord in one column.</small></span>
+            </li>
+          </ul>
+          <div class="media"><div class="media-in"><figure class="shot" data-figure></figure></div></div>
+        </article>
+
+        <!-- 4 TRANSPORT -->
+        <article class="card" id="transport" data-region="4" style="--c: var(--r4)">
+          <div class="card-head"><span class="n">4</span><h3>Transport</h3><small>● ▶ metronome ■</small></div>
+          <ul class="rows">
+            <li class="row" data-shot="playing" data-marks="playing">
+              <span class="keys"><kbd class="cap c-play"><span class="ico">▶</span></kbd></span>
+              <span class="what"><b>Play</b><small>The loop, or the song through in SONG mode. Playing locks the note grids (LOCK) so a stray touch cannot change what plays; the PLAY LED is bright while it plays.</small></span>
+            </li>
+            <li class="row" data-shot="playing" data-marks="transport">
+              <span class="keys"><kbd class="cap c-stop"><span class="ico">■</span></kbd></span>
+              <span class="what"><b>Stop</b><small>Unlocks the grids again. While VIDEO is on it ends the recording (or cancels the countdown) and leaves the music playing; it also ends the PAD SAMPLER's latched loops and a recording picked in the RECORDER.</small></span>
+            </li>
+            <li class="row" data-shot="page1" data-marks="transport">
+              <span class="keys"><kbd class="cap c-stop"><span class="ico">■</span></kbd><i class="then">while stopped</i></span>
+              <span class="what"><b>Panic: all notes off</b><small>Every instrument's held notes end (a note left sounding).</small></span>
+            </li>
+            <li class="row" data-shot="page1" data-marks="strip-rec">
+              <span class="keys"><kbd class="cap c-rec"><span class="ico">●</span></kbd></span>
+              <span class="what"><b>Record a take of the machine on screen</b><small>On an instrument page: the strip's ● counts in on the first bar (stopped) or punches in at the loop's restart (playing), overdubbing loop after loop; the RECORD LED wears the machine's colour.</small></span>
+            </li>
+            <li class="row" data-shot="header-focus" data-marks="header-rec">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-rec"><span class="ico">●</span></kbd></span>
+              <span class="what"><b>Record the whole mix</b><small>The global recording (the header's ●, red RECORD LED), from anywhere; RECORD with the header focused does the same.</small></span>
+            </li>
+            <li class="row" data-shot="menu" data-marks="video-card">
+              <span class="keys"><kbd class="ui">VIDEO</kbd><i class="then">then</i><kbd class="cap c-rec"><span class="ico">●</span></kbd><span class="plus">/</span><kbd class="cap c-stop"><span class="ico">■</span></kbd></span>
+              <span class="what"><b>Start and end a video</b><small>While the control center's VIDEO is on, RECORD starts a recording of the screen (or a USB camera) with the master's sound, from any page, and STOP ends it; the plate reads VIDEO READY · ● RECORDS, then ● REC 01:23.</small></span>
+            </li>
+            <li class="row" data-shot="page1" data-marks="metronome">
+              <span class="keys"><kbd class="cap c-metro"><span class="ico">♩</span></kbd></span>
+              <span class="what"><b>Metronome</b><small>libzynthbox's tick and tock on the master; a take holds it on.</small></span>
+            </li>
+            <li class="row" data-shot="recorder" data-marks="recorder-rec">
+              <span class="keys"><kbd class="ui">RECORDER</kbd><i class="then">then</i><kbd class="cap c-rec"><span class="ico">●</span></kbd><kbd class="cap c-play"><span class="ico">▶</span></kbd><kbd class="cap c-stop"><span class="ico">■</span></kbd></span>
+              <span class="what"><b>In the RECORDER: a take, hear, stop</b><small>RECORD a free take of the input; SELECT or PLAY hears the recording picked; STOP stops it. ◀ ▶ the input, ▲ ▼ the recordings.</small></span>
+            </li>
+          </ul>
+          <div class="media"><div class="media-in"><figure class="shot" data-figure></figure></div></div>
+        </article>
+
+        <!-- 5 NAVIGATION -->
+        <article class="card" id="navigation" data-region="5" style="--c: var(--r5)">
+          <div class="card-head"><span class="n">5</span><h3>Navigation</h3><small>BACK · ▲ ▼ ◀ ▶ · SELECT</small></div>
+          <ul class="rows">
+            <li class="row" data-shot="page3" data-marks="walk">
+              <span class="keys"><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+              <span class="what"><b>Walk the page</b><small>One vertical order per machine: header → strip → SOUND MODIFIERS cards (while open) → the editor → SOUND EFFECTS cards (while open). The editor moves its rows first (a drum row, a note row).</small></span>
+            </li>
+            <li class="row" data-shot="header-focus" data-marks="header-group">
+              <span class="keys"><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><i class="then">at the top</i></span>
+              <span class="what"><b>Enter the header</b><small>▲ past the strip lands on the header's first group. There ◀ ▶ move between the groups (key, transport, tempo, LIVE FX, INSTRUMENTS, MASTER) and ▼ or BACK return to the page.</small></span>
+            </li>
+            <li class="row" data-shot="header-focus" data-marks="header-group">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd></span>
+              <span class="what"><b>The header at once, from anywhere</b><small>From a page's rows, a section's cards or the strip.</small></span>
+            </li>
+            <li class="row" data-shot="page2" data-marks="side-keys">
+              <span class="keys"><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><kbd class="cap c-arrow"><span class="ico">▶</span></kbd></span>
+              <span class="what"><b>What the page switches</b><small>The CHORDS views with the editor focused, the drum machine, the sampler's bank; the keys light while they switch something. In STEP entry they move the entry cursor a step. In the SOUND EFFECTS bar they ring the chips.</small></span>
+            </li>
+            <li class="row" data-shot="page3" data-marks="undo">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><span class="plus">/</span><kbd class="cap c-arrow"><span class="ico">▶</span></kbd></span>
+              <span class="what"><b>Undo / redo</b><small>The project's timeline, as the header's ↶ ↷: patterns, slots and the arrangement; a change that touched several machines is one step. Sounds, the mix and the settings are not undone.</small></span>
+            </li>
+            <li class="row" data-shot="page3" data-marks="plate">
+              <span class="keys"><kbd class="cap c-xy"><span>X</span></kbd><kbd class="cap c-xy"><span>Y</span></kbd></span>
+              <span class="what"><b>The previous / next section</b><small>From any page or dialog, wrapping round: picked as a section key would (from the next bar while playing, at once when stopped; the plate blinks while it waits). Pressed again before the switch lands, the key moves the pick on instead of queueing another.</small></span>
+            </li>
+            <li class="row" data-shot="page3" data-marks="cursor">
+              <span class="keys"><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+              <span class="what"><b>Write at the cursor · switch · run</b><small>STEP entry, stopped: writes the editor's selected row (a note, or the chord on CHORDS) at the cursor. In a SOUND EFFECTS card or its bar: switches the effect on or off. In the control center: runs the action ringed.</small></span>
+            </li>
+            <li class="row" data-shot="bass-select" data-marks="picked">
+              <span class="keys"><kbd class="ui">SELECT</kbd><i class="then">then</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+              <span class="what"><b>Move the picked notes</b><small>With the toolbar's SELECT on, ▲ ▼ move every picked note one note of the key up or down (a semitone with ♭♯ on), keeping length, accent and slide; ◀ ▶ move them a step. A held chord moves as one.</small></span>
+            </li>
+            <li class="row" data-shot="mode-live" data-marks="grid">
+              <span class="keys"><kbd class="cap c-mode">MODE</kbd><i class="then">live</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+              <span class="what"><b>Octave, or the rows by ear</b><small>LIVE on a melodic page: ▲ ▼ shift the octave of the step keys. LIVE and STEP on: they walk the rows instead, each sounding as it is reached.</small></span>
+            </li>
+            <li class="row" data-shot="mixer-strip" data-marks="mixer-strip">
+              <span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd><i class="then">then</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><kbd class="cap c-arrow"><span class="ico">▶</span></kbd><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+              <span class="what"><b>In the MIXER: pick, mute, solo</b><small>◀ ▶ pick a strip, SELECT mutes it, ALT + SELECT solos it; BACK or ✱ go back.</small></span>
+            </li>
+            <li class="row" data-shot="page2" data-marks="fx-bar">
+              <span class="keys"><kbd class="cap c-back two"><span>BACK</span><span>NO</span></kbd></span>
+              <span class="what"><b>Back, close, give back</b><small>Closes an open section and returns the focus to the editor; gives the strip's knobs back to the rows; leaves the header, the MIXER, the SONG page, the RECORDER; dismisses a dialog.</small></span>
+            </li>
+            <li class="row" data-shot="song" data-marks="song">
+              <span class="keys"><kbd class="ui">SONG</kbd><i class="then">then</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><kbd class="cap c-arrow"><span class="ico">▶</span></kbd><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+              <span class="what"><b>On the SONG page</b><small>◀ ▶ walk, ▲ ▼ between the section keys and the song's blocks, SELECT or a step key picks, ALT + ◀ ▶ moves a block, knob 1 its length, knob 2 its repeats, BACK leaves.</small></span>
+            </li>
+            <li class="row" data-shot="page2" data-marks="picker">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+              <span class="what"><b>In a sound picker: ★ favourite</b><small>Marks the sound ringed as a favourite (the ★ group).</small></span>
+            </li>
+          </ul>
+          <div class="media"><div class="media-in"><figure class="shot" data-figure></figure></div></div>
+        </article>
+
+        <!-- 6 ALT -->
+        <article class="card" id="alt" data-region="6" style="--c: var(--r6)">
+          <div class="card-head"><span class="n">6</span><h3>ALT</h3><small>held, a modifier</small></div>
+          <ul class="rows">
+            <li class="row" data-shot="alt-held" data-marks="livefx">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s3">8</kbd></span>
+              <span class="what"><b>LIVE FX pads</b><small>DROP · NO KICK · ONLY KICK · CRUSH · LO PASS · HI PASS · STUTTER · LOOP.</small></span>
+            </li>
+            <li class="row" data-shot="alt-mode" data-marks="sections">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s4">9</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+              <span class="what"><b>Sections 1–8</b><small>1–16 with the section keys in the header.</small></span>
+            </li>
+            <li class="row" data-shot="alt-mode" data-marks="header-deck">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-mode">MODE</kbd></span>
+              <span class="what"><b>Section keys ⇄ LIVE FX pads in the header</b></span>
+            </li>
+            <li class="row" data-shot="page1" data-marks="master">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob big"><span>BIG</span></kbd></span>
+              <span class="what"><b>Master volume</b></span>
+            </li>
+            <li class="row" data-shot="alt-held" data-marks="fx-sends">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+              <span class="what"><b>PHASER · ECHO · HEAVY sends</b></span>
+            </li>
+            <li class="row" data-shot="header-focus" data-marks="header-group">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd></span>
+              <span class="what"><b>The header, from anywhere</b></span>
+            </li>
+            <li class="row" data-shot="song" data-marks="">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-n1">1</kbd></span>
+              <span class="what"><b>The SONG page, from anywhere</b></span>
+            </li>
+            <li class="row" data-shot="page3" data-marks="undo">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><span class="plus">/</span><kbd class="cap c-arrow"><span class="ico">▶</span></kbd></span>
+              <span class="what"><b>Undo / redo</b></span>
+            </li>
+            <li class="row" data-shot="header-focus" data-marks="header-rec">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-rec"><span class="ico">●</span></kbd></span>
+              <span class="what"><b>Record the whole mix</b></span>
+            </li>
+            <li class="row" data-shot="mixer-strip" data-marks="mixer-strip">
+              <span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+              <span class="what"><b>Solo the MIXER's strip · ★ a sound</b></span>
+            </li>
+          </ul>
+          <div class="media"><div class="media-in"><figure class="shot" data-figure></figure></div></div>
+        </article>
+
+        <!-- HOLD -->
+        <article class="card" id="hold" style="--c: var(--amber)">
+          <div class="card-head"><span class="n ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.5V8l2.4 1.6"/></svg></span><h3>Hold</h3><small>long presses · the step keys and the screen's own buttons</small></div>
+          <ul class="rows">
+            <li class="row" data-shot="page5-pads" data-marks="pads">
+              <span class="keys"><span class="hold" aria-label="hold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.5V8l2.4 1.6"/></svg></span><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+              <span class="what"><b>Latch a pad looping</b><small>PAD SAMPLER with LIVE on: a step key held past half a second; a key on a latched pad ends it.</small></span>
+            </li>
+            <li class="row" data-shot="page1" data-marks="strip-solo">
+              <span class="keys"><span class="hold" aria-label="hold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.5V8l2.4 1.6"/></svg></span><kbd class="ui">S</kbd></span>
+              <span class="what"><b>Solo only</b><small>A long press on a machine's S (the strip's or the header's) solos it alone.</small></span>
+            </li>
+            <li class="row" data-shot="bass-select" data-marks="select-btn">
+              <span class="keys"><span class="hold" aria-label="hold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.5V8l2.4 1.6"/></svg></span><kbd class="ui">SELECT</kbd></span>
+              <span class="what"><b>Pick the whole pattern</b><small>The toolbar's SELECT held turns it on with every note (or chord) picked, in all its bars, to move the pattern at once.</small></span>
+            </li>
+            <li class="row" data-shot="alt-mode" data-marks="plate">
+              <span class="keys"><span class="hold" aria-label="hold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.5V8l2.4 1.6"/></svg></span><kbd class="ui">project plate</kbd></span>
+              <span class="what"><b>Section keys in the header</b><small>The same as ALT + MODE; the same again brings the LIVE FX pads back.</small></span>
+            </li>
+            <li class="row" data-shot="page3" data-marks="auto">
+              <span class="keys"><span class="hold" aria-label="hold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.5V8l2.4 1.6"/></svg></span><kbd class="ui">AUTO</kbd></span>
+              <span class="what"><b>Clear the automation</b><small>The toolbar's AUTO held clears the machine's automation lanes.</small></span>
+            </li>
+            <li class="row" data-shot="page3" data-marks="grid">
+              <span class="keys"><span class="hold" aria-label="hold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.5V8l2.4 1.6"/></svg></span><kbd class="ui">a cell</kbd></span>
+              <span class="what"><b>Set a note's length</b><small>A long press on a cell of the bass or lead roll sets the note's length to it.</small></span>
+            </li>
+          </ul>
+          <div class="media"><div class="media-in"><figure class="shot" data-figure></figure></div></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Features</h2>
+        <p>The highlights, each with its page on the device; every feature is in the groups under them, and <a href="docs/index.html">the docs</a> explain how everything works.</p>
+      </div>
+
+      <div class="features">
+
+        <!-- the instrument pages -->
+        <article class="hl reveal" style="--c: #ffa236">
+          <div class="hl-text">
+            <div class="kicker mono"><i></i><b>Pages 1–5</b> <span>/</span> <span>eight machines</span></div>
+            <h3>Five keys. <span>Eight machines.</span></h3>
+            <p>Key <b>1</b> cycles three drum machines, each a FluidSynth kit: a Roland TR909, a TR808 and a LINN9000 to start, any kit from the device's folder from the nameplate. <b>2</b> is CHORDS on Noize Mak3r (TAL NoiseMaker's open port), <b>3</b> BASS on a 303 (DISTRHO Nekobi), <b>4</b> LEAD on Calf Monosynth, <b>5</b> the samplers. Every machine has its strip, its SOUND MODIFIERS, a pattern editor and a SOUND EFFECTS chain; the header holds the key and scale, the transport, tempo and swing, the LIVE FX and the master.</p>
+            <div class="plates" aria-label="The machines">
+              <span class="plate" style="--pc: #ffa236; --i: 0"><b>Drums 1</b><span>Roland TR909</span></span>
+              <span class="plate" style="--pc: #ff6a58; --i: 1"><b>Drums 2</b><span>Roland TR808</span></span>
+              <span class="plate" style="--pc: #e0b84a; --i: 2"><b>Drums 3</b><span>LINN9000</span></span>
+              <span class="plate" style="--pc: #7ab8ff; --i: 3"><b>Chords</b><span>Noize Mak3r</span></span>
+              <span class="plate" style="--pc: #c9ee6e; --i: 4"><b>Bass</b><span>Nekobi</span></span>
+              <span class="plate" style="--pc: #e4a8ff; --i: 5"><b>Lead</b><span>Calf Monosynth</span></span>
+              <span class="plate" style="--pc: #6ef0d8; --i: 6"><b>Sampler</b><span>Sample King</span></span>
+              <span class="plate" style="--pc: #ff5a36; --i: 7"><b>Pads</b><span>Pad Sampler</span></span>
+            </div>
+            <a class="more" href="docs/manual.html">The manual</a>
+          </div>
+          <div class="screen-wrap reveal">
+            <figure class="screen"><img src="shots/page2.png" alt="The CHORDS page: the chord roll in roman numerals, the seven chord keys for D Dorian, the strip with its nameplate" width="1280" height="800" loading="lazy"></figure>
+            <div class="screen-cap"><span>CHORDS: the roll in degrees, the seven chord keys of the key</span><small>page 2</small></div>
+          </div>
+        </article>
+
+        <!-- the samplers -->
+        <article class="hl flip reveal" style="--c: #ff5a36">
+          <div class="hl-text">
+            <div class="kicker mono"><i></i><b>Page 5</b> <span>/</span> <span>Sample King · Pad Sampler</span></div>
+            <h3>Two samplers <span>on one key.</span></h3>
+            <p><b>SAMPLE KING</b>: four banks of eight slots with their own pattern, each slot trimmed, pitched or reversed, a take recorded straight into it, CHOP and AUTO CHOP over the bank. Press 5 again for the <b>PAD SAMPLER</b>: sixteen MPC-style pads on the step keys, record to a pad with SMART stop, loops and latched pads, 16 LEVELS, PAD FX held while a pad plays (ECHO, REVERSE, SKIP, STUTTER, SCRATCH, TAPE STOP) and a wave editor the two share.</p>
+            <a class="more" href="docs/manual.html#the-pad-sampler">How the PAD SAMPLER works</a>
+          </div>
+          <div class="screen-wrap reveal">
+            <figure class="screen"><img src="shots/page5-pads.png" alt="The PAD SAMPLER: sixteen pads, the sample screen, TRIM knobs, the PAD FX row and the pad's own step lane" width="1280" height="800" loading="lazy"></figure>
+            <div class="screen-cap"><span>The PAD SAMPLER, pad 1 picked, TRIM on knobs 1–3</span><small>5 again</small></div>
+          </div>
+        </article>
+
+        <!-- presets and the packs -->
+        <article class="hl reveal" style="--c: #c9ee6e">
+          <div class="hl-text">
+            <div class="kicker mono"><i></i><b>Presets</b> <span>/</span> <span>the genre packs</span></div>
+            <h3>Presets that <span>bring their sound.</span></h3>
+            <p>Nineteen packs of pattern presets for a USB stick, five patterns for each of the drums, the bass, the lead and the chords, written in scale degrees so they follow the project's key. A preset says <b>♪</b> and the sound it was written for, and <b>+ MODS</b> when it keeps its tweaks; WITH ITS SOUND, WITH ITS MODS and WITH ITS BARS at the top decide what loads. Each pack ships a <b>template</b>: a new project at its tempo, swing, key and LIVE FX.</p>
+            <div class="packs" aria-label="The packs, with their tempo and key">
+              <span><b>Classical</b>100 · C major</span><span><b>Hip-Hop</b>90 · C minor</span><span><b>Pop</b>116 · C major</span><span><b>Rock</b>122 · E major</span>
+              <span><b>Trap</b>140 · F minor</span><span><b>Reggaeton</b>93 · A minor</span><span><b>Punk</b>170 · A major</span><span><b>Tropical</b>130 · C major</span>
+              <span><b>Cumbia</b>95 · G major</span><span><b>Piig</b>79 · D minor</span><span><b>Folk</b>110 · G major</span><span><b>Metal</b>150 · E minor</span>
+              <span><b>Black Metal</b>170 · E minor</span><span><b>Post-Punk</b>142 · A minor</span><span><b>Gregorian</b>70 · D Dorian</span><span><b>Jazz</b>120 · C minor</span><span><b>Vuelo</b>120 · A minor</span><span><b>Solos</b>64 · Eb major</span><span><b>Bebop</b>160 · Bb major</span>
+            </div>
+            <a class="more" href="docs/packs.html">Every preset, pack by pack</a>
+          </div>
+          <div class="screen-wrap reveal">
+            <figure class="screen"><img src="shots/presets.webp" alt="The PRESETS dialog on BASS, SOURCE USB: a grid of presets by genre, each with ♪ its sound and + MODS, with WITH ITS SOUND, WITH ITS MODS and WITH ITS BARS at the top" width="1280" height="800" loading="lazy"></figure>
+            <div class="screen-cap"><span>The presets from a stick: ♪ the sound, + MODS, a group per genre</span><small>PRESET</small></div>
+          </div>
+        </article>
+
+        <!-- sections and the song -->
+        <article class="hl flip reveal" style="--c: #ffc134">
+          <div class="hl-text">
+            <div class="kicker mono"><i></i><b>Sections</b> <span>/</span> <span>loop or song</span></div>
+            <h3>Sections, <span>and a song.</span></h3>
+            <p>A section holds every machine's pattern at once: up to sixteen, picked from any page with ALT and a step key, switched sample-accurately on the next bar (<b>BAR</b>) or when the section playing has finished its pass (<b>SECTION</b>), with up to three queued. <b>LOOP</b> plays the section on screen; <b>SONG</b> plays the blocks through, each with its repeats, and EXPORT records the whole song in one take.</p>
+            <a class="more" href="docs/manual.html#sections-and-the-song">Sections and the song</a>
+          </div>
+          <div class="screen-wrap reveal">
+            <figure class="screen"><img src="shots/song.png" alt="The SONG page: six section keys with their machine dots, the row of RENAME NEW COLOUR LENGTH, the song's blocks and PLAY FROM HERE" width="1280" height="800" loading="lazy"></figure>
+            <div class="screen-cap"><span>The SONG page: the section keys, the song's blocks</span><small>the project plate</small></div>
+          </div>
+        </article>
+
+        <!-- the recorder and the tuner -->
+        <article class="hl reveal" style="--c: #ff7a3c">
+          <div class="hl-text">
+            <div class="kicker mono"><i></i><b>Recorder</b> <span>/</span> <span>the tuner</span></div>
+            <h3>Record anything. <span>Tune the guitar.</span></h3>
+            <p>The RECORDER takes the input (MIC · GUITAR · LINE) as played while the beat goes on, through effects made for it (on GUITAR the amps and pedals: AMP, OVERDRIVE, FUZZ, TUBE, WAH, HOT AMP), and keeps the takes beside the samplers or the tracks: PLAY, TRIM, NORMALISE, CHOP, TO SAMPLE KING, TO PADS. The <b>TUNER</b> reads the dry input: the note and its cents on a ±50 scale, AUTO walking the strings from the lowest, fifteen tunings for guitar, bass and ukulele, A4 from 430 to 450 Hz.</p>
+            <a class="more" href="docs/manual.html#the-recorder">The RECORDER</a>
+          </div>
+          <div class="screen-wrap reveal">
+            <figure class="screen"><img src="shots/tuner.webp" alt="The RECORDER on GUITAR with the TUNER open: the cents scale, PLAY STRING 6 · E2, the six string buttons, AUTO, TUNING and A4" width="1280" height="800" loading="lazy"></figure>
+            <div class="screen-cap"><span>GUITAR with the TUNER on: string 6, the ±50 cents scale</span><small>MENU → RECORDER</small></div>
+          </div>
+        </article>
+
+        <!-- live recording -->
+        <article class="hl flip reveal" style="--c: #ff3b2f">
+          <div class="hl-text">
+            <div class="kicker mono"><i></i><b>Live recording</b> <span>/</span> <span>the session, with your voice</span></div>
+            <h3>Record the session <span>as it happens.</span></h3>
+            <p>One card in the menu, LIVE REC, and the whole session goes to a file: a <b>video</b> of the screen or a USB camera with the master's sound, in sync, at three quality tiers measured to cost the music nothing, or the <b>sound alone</b> as a 24-bit WAV among your tracks, tagged afterwards with a title, artist and cover in the format you pick, through the same dialog an export uses. Plug a mic into the RECORDER and it becomes a <b>voice over</b>: the music ducks under your voice and comes back when you stop, the voice is lifted and made crisp, a look-ahead limiter keeps the mix clean, and the mic's level stands on the project plate while you record (MIC TOO HOT when the gain is too high). Every key you press is named on screen. When it ends: DELETE, RENAME or SEND… to a stick, a computer or the phone.</p>
+            <a class="more" href="docs/manual.html#video-recordings-and-the-computer-link">Video and the voice over</a>
+          </div>
+          <div class="screen-wrap reveal">
+            <figure class="screen"><img src="shots/liverec.webp" alt="The drums page while a recording runs: the project plate reads ● REC 00:06 with the mic's level beside it, the record key lit" width="1280" height="800" loading="lazy"></figure>
+            <div class="screen-cap"><span>Six seconds into a recording: ● REC on the plate, the mic's meter at its right</span><small>MENU → LIVE REC → START</small></div>
+          </div>
+        </article>
+
+        <!-- out of the device -->
+        <article class="hl reveal" style="--c: #4a9bff">
+          <div class="hl-text">
+            <div class="kicker mono"><i></i><b>Share</b> <span>/</span> <span>USB · computer · phone · video</span></div>
+            <h3>Out of the device, <span>three ways.</span></h3>
+            <p>One <b>SEND…</b> button wherever a file is: a USB stick's ravving folder, one of your computers (laptops or PCs over SSH, each set up once with its password) or the phone, by a QR code of a link served by ravving itself: no app, no pairing, so an iPhone works too. The <b>VIDEO</b> card (tapped twice, so a stray tap never starts one) records the screen or a USB camera with the master's sound, RECORD and STOP starting and ending it from any page. FILES browses the library by kind, and from a phone too: PHONE · BROWSE is a QR code of the library as pages, every file a download. A stick's samples, soundfonts, presets and projects come in from the USB page. This page too: SETTINGS → HELP shows its address as a QR code.</p>
+            <a class="more" href="docs/manual.html#video-recordings-and-the-computer-link">Video and the computer link</a>
+          </div>
+          <div class="screen-wrap reveal">
+            <figure class="screen"><img src="shots/qr.webp" alt="HELP · THE RAVVING PAGE: a QR code of the device's own address for this page, with the link in words beside it" width="1280" height="800" loading="lazy"></figure>
+            <div class="screen-cap"><span>A QR code the phone's camera opens: here, this page from the device</span><small>SETTINGS → HELP</small></div>
+          </div>
+        </article>
+
+        <!-- exports and the player -->
+        <article class="hl flip reveal" style="--c: #b07cff">
+          <div class="hl-text">
+            <div class="kicker mono"><i></i><b>Export</b> <span>/</span> <span>the music player</span></div>
+            <h3>Export the track. <span>Play it back.</span></h3>
+            <p>PROJECT ▾ → EXPORT writes the production as the speakers hear it, in WAV 24‑bit, FLAC, OGG or MP3, with its tags and a cover drawn for it, or a <b>.ravv</b> bundle with every sample for another ravving to play the same. The <b>MUSIC PLAYER</b> plays the exported tracks and the recordings full screen, by title, album or artist, with a queue, through the jacks, HDMI or a Bluetooth speaker.</p>
+            <a class="more" href="docs/manual.html#exports-and-the-music-player">Exports and the player</a>
+          </div>
+          <div class="screen-wrap reveal">
+            <figure class="screen"><img src="shots/export.webp" alt="The EXPORT dialog: file name, title, artist, album, genre, the cover drawn for it, the format, USB and computer rows, SONG or LOOP" width="1280" height="800" loading="lazy"></figure>
+            <div class="screen-cap"><span>EXPORT: the tags, the cover, the format, where it goes</span><small>PROJECT ▾</small></div>
+          </div>
+        </article>
+
+        <!-- open source -->
+        <article class="hl reveal" style="--c: #3ddc84">
+          <div class="hl-text">
+            <div class="kicker mono"><i></i><b>Engines</b> <span>/</span> <span>open source, top to bottom</span></div>
+            <h3>Nothing bundled. <span>Everything open.</span></h3>
+            <p>ravving is a C++ Qt 6 app on <b>libzynthbox</b>, GPL‑3.0‑or‑later, and plays what the Zynthbox image ships: <b>jalv</b> hosting the LV2 synths and effects, <b>FluidSynth 2</b> for the drum kits and the soundfont instruments, PipeWire's JACK at 48 kHz and 256 frames. It starts and wires them at run time; the AppImage bundles none of it.</p>
+            <div class="rack" aria-label="The engines and the soundfonts">
+              <span>TAL NoiseMaker<small>chords</small></span><span>DISTRHO Nekobi<small>bass</small></span><span>Calf Monosynth<small>lead · 808</small></span>
+              <span>Calf Saturator · Crusher · Phaser<small>drive · crush · phaser</small></span><span>Dragonfly Room · Plate<small>reverb</small></span><span>TAP Echo<small>delay</small></span>
+              <span>guitarix<small>the pedals and amps</small></span><span>SwankyAmp<small>amp</small></span><span>Calf Compressor · Gate · Filter · Chorus · Delay<small>the input</small></span>
+              <span class="fs">Roland TR909 · TR808 · LINN9000<small>sf3 kits</small></span><span class="fs">FluidR3Mono GM<small>MuseScore's font</small></span><span class="fs">the SF2 Instruments<small>guitars · organs · pads</small></span><span class="fs">Black Pearl 5 · Red Zeppelin 5<small>AVL kits</small></span>
+            </div>
+            <a class="more" href="docs/engines.html">The engines, port by port</a>
+          </div>
+          <div class="screen-wrap reveal">
+            <figure class="screen"><img src="shots/sounds.webp" alt="The BASS SOUND picker: Nekobi on jalv, then the soundfont basses played by FluidSynth, grouped and sortable" width="1280" height="800" loading="lazy"></figure>
+            <div class="screen-cap"><span>A machine's sounds: its own engine, then the soundfonts</span><small>the nameplate</small></div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- every feature, grouped -->
+      <div class="groups" id="every-feature">
+        <div class="groups-head">
+          <h3>Every feature, grouped</h3>
+          <p>Open a group; each line links to the page that explains it.</p>
+        </div>
+
+        <div class="group" id="f-instruments" style="--c: #ffa236">
+          <h3><button type="button" class="group-btn" aria-expanded="false" aria-controls="p-instruments"><span class="n">01</span><span class="t">Instruments<small>the five pages and what every machine does</small></span><span class="chev" aria-hidden="true"></span></button></h3>
+          <div class="group-panel" id="p-instruments"><div class="group-in"><div class="group-body">
+            <ul class="feats">
+              <li><b>DRUMS 1 · 2 · 3</b><span>Eight rows from the kit (KICK, SNARE, CLAP, TOM, HAT, OPEN, CYMBAL, PERC) and an accent row; mute, solo and level per row on knobs 1–3; ACOUSTIC kits picked inside a General MIDI font (Jazz, Brush, Standard, Room, Power, Orchestra, the Latin and cumbia kits). <a href="docs/engines.html#fluidsynth-drums-13-tracks-02">engines</a></span></li>
+              <li><b>CHORDS</b><span>CHORDS, NOTES and SLOTS views; seven chord keys for the key and scale, chord sets; SLOTS compose with whole chords (1, 2, 4 or 8 bars each) and write the pattern; TAL NoiseMaker's factory sounds or a soundfont. <a href="docs/manual.html#sound-sources">manual</a></span></li>
+              <li><b>BASS</b><span>A mono line on a piano roll with ACCENT and SLIDE lanes, OCT − / +, ♭♯, RANDOM; the 303's WAVE, CUTOFF, RESO, ENV MOD, ACCENT, TUNE as its MODS. <a href="docs/engines.html#nekobi-bass-track-3">engines</a></span></li>
+              <li><b>LEAD</b><span>Legato and portamento on Calf Monosynth, a ribbon that plays and adds vibrato as it is dragged up, soundfont instruments from Rhodes and vibes to sax, flute, fiddle and bagpipe. <a href="docs/engines.html#calf-monosynth-lead-track-5">engines</a></span></li>
+              <li><b>SAMPLE KING</b><span>Four banks × eight slots, each bank with its pattern; trim, PITCH ±12, REVERSE, record into a slot, the input's effects, CHOP and AUTO CHOP. <a href="docs/manual.html#sample-king">manual</a></span></li>
+              <li><b>PAD SAMPLER</b><span>Sixteen pads on the step keys, record to a pad with SMART stop, NOTE ON / LOOP / REVERSE / MUTE, latch a loop with a long press, ERASE, COPY, 16 LEVELS, PAD FX, the wave editor with REGIONS, THRESHOLD and MANUAL cuts. <a href="docs/manual.html#the-pad-sampler">manual</a></span></li>
+              <li><b>Sound sources</b><span>Bass, lead and chords can sound like a soundfont instrument instead of their synth, grouped in the picker with ★ favourites and a SORT; an imported soundfont's presets join at once. <a href="docs/manual.html#sound-sources">manual</a></span></li>
+              <li><b>SOUND MODIFIERS</b><span>One profile per engine (FILTER, ENVELOPE, MOTION… for a soundfont; the synths' own knobs), driven by the device knobs, kept with the project and with a preset's MODS. <a href="docs/engines.html#the-mods-one-profile-per-engine-dataenginesjson">engines</a></span></li>
+              <li><b>SOUND EFFECTS</b><span>Every machine's chain: DRIVE, COMPRESSOR, REVERB, EQ, PAN, SIDECHAIN, DELAY, each a card with its knobs, switched from the bar or the SELECT key. <a href="docs/architecture.html">architecture</a></span></li>
+              <li><b>LIVE FX</b><span>DROP, NO KICK, ONLY KICK, CRUSH, LO PASS, HI PASS, STUTTER and LOOP as pads (ALT + step keys 1–8), PHASER, ECHO and HEAVY as sends on ALT + the knobs. <a href="docs/manual.html">manual</a></span></li>
+              <li><b>Key, scale, tempo, swing</b><span>Every melodic machine follows the root and scale (a key change snaps the lines); SWING 8 or SWING 16; the tempo on the header, templates and demos setting it. <a href="docs/manual.html">manual</a></span></li>
+              <li><b>LIVE and takes</b><span>MODE turns the step keys into pads for the machine on screen (the scale, the chord keys, the drums' rows); ● records a take, counting in or punching in on the loop, overdubbing loop after loop; a MIDI keyboard plays the LIVE machine too. <a href="docs/manual.html">manual</a></span></li>
+              <li><b>The MIXER</b><span>Every strip at once (✱): level, pan, mute, solo, the step keys picking a strip, the big knob a fine level. <a href="docs/manual.html">manual</a></span></li>
+            </ul>
+            <figure class="screen"><img src="shots/chords-slots.webp" alt="The CHORDS page's SLOTS view: four empty slots of 1 BAR each, a + for more, the chord keys under them" width="1280" height="800" loading="lazy"></figure>
+          </div></div></div>
+        </div>
+
+        <div class="group" id="f-patterns" style="--c: #c9ee6e">
+          <h3><button type="button" class="group-btn" aria-expanded="false" aria-controls="p-patterns"><span class="n">02</span><span class="t">Patterns, presets and projects<small>writing, picking, saving and starting over</small></span><span class="chev" aria-hidden="true"></span></button></h3>
+          <div class="group-panel" id="p-patterns"><div class="group-in"><div class="group-body">
+            <ul class="feats">
+              <li><b>The pattern editors</b><span>A step grid for the drums and the samplers, a piano roll for bass and lead, a chord roll in degrees; up to eight bars paged with ‹ ›; one finger drags, two pinch to zoom; LOCK keeps a stray touch from writing while it plays. <a href="docs/manual.html">manual</a></span></li>
+              <li><b>SELECT and the note knobs</b><span>Pick notes instead of writing them, move them by a note of the key or a step, a long press picks the whole pattern; knobs 1–3 set the picked notes' LENGTH, VELOCITY and NUDGE. <a href="docs/manual.html">manual</a></span></li>
+              <li><b>Presets</b><span>SAVE CURRENT AS NEW keeps the pattern with the machine's sound and the MODS that are set; a GROUP per genre, SORT, ★ favourites; SOURCE picks the device or a stick, played straight from it. <a href="docs/manual.html#sound-sources">manual</a></span></li>
+              <li><b>WITH ITS SOUND · MODS · BARS</b><span>What a preset brings with it: its sound source or kit, its MODS (only the parts it names), its bar count (or laid over the pattern's bars). <a href="docs/manual.html#sound-sources">manual</a></span></li>
+              <li><b>The genre packs</b><span>Nineteen packs, five presets per machine, each one's tempo, sound and swing in the tables; one scale per pack so its four instruments play together; the waltz and jig packs in 3/4 and 6/8. <a href="docs/packs.html">the packs</a></span></li>
+              <li><b>Templates</b><span>PROJECT ▾ → TEMPLATES: a new project at a tempo, swing, key and LIVE FX; SAVE TEMPLATE keeps the session's own; every pack ships one. <a href="docs/manual.html#sound-sources">manual</a></span></li>
+              <li><b>Demos</b><span>Autumn Leaves (a jazz trio and sax), 5AM (dark electronic pop over the changes of 4ÆM) and B3rlin (dark techno), on the image's own soundfonts, never changed by a SAVE. <a href="docs/manual.html#sound-sources">manual</a></span></li>
+              <li><b>Projects</b><span>SAVE (the name asked once, AGAIN? to write over), SAVE AS NEW, ★ favourites, DEMOS and MY PROJECTS groups; a new project starts clean. <a href="docs/manual.html">manual</a></span></li>
+              <li><b>Undo and redo</b><span>One history for the project (the header's ↶ ↷, ALT + ◀ ▶): patterns, slots and the arrangement, a change over several machines as one step; a machine's own ↶ ↷ undo its changes alone. <a href="docs/manual.html#undo-and-redo">undo</a></span></li>
+              <li><b>Automation</b><span>AUTO records knob moves into lanes per machine; a long press on AUTO clears them. <a href="docs/architecture.html">architecture</a></span></li>
+              <li><b>By script</b><span>A whole project built over the remote-control fifo: samples, patterns, sounds and all. <a href="docs/testing.html#building-a-project-by-script">scripting</a></span></li>
+            </ul>
+            <figure class="screen"><img src="shots/templates.webp" alt="The TEMPLATES dialog: SOURCE DEVICE or USB, a tile per pack with its tempo, key and swing" width="1280" height="800" loading="lazy"></figure>
+          </div></div></div>
+        </div>
+
+        <div class="group" id="f-song" style="--c: #ffc134">
+          <h3><button type="button" class="group-btn" aria-expanded="false" aria-controls="p-song"><span class="n">03</span><span class="t">Sections and the song<small>more than one loop</small></span><span class="chev" aria-hidden="true"></span></button></h3>
+          <div class="group-panel" id="p-song"><div class="group-in"><div class="group-body">
+            <ul class="feats">
+              <li><b>Sections</b><span>Up to sixteen, each every machine's pattern and which machines rest, a shorter pattern looping through it (LOOP) or playing once and resting (ONCE); the sounds, effects, levels, tempo and key stay the project's, so a switch never restarts an engine; the one on screen is the one you edit. <a href="docs/manual.html#sections-and-the-song">manual</a></span></li>
+              <li><b>SWITCH · BAR | SECTION</b><span>A pick lands on the next bar, or waits for the section playing to end its pass; in LOOP up to three picks queue, each playing one pass. <a href="docs/manual.html#sections-and-the-song">manual</a></span></li>
+              <li><b>On the bar line, exactly</b><span>Each machine writes the new pattern into its track's other clip and libzynthbox swaps the two on the bar's first tick: no note drops or doubles (measured). <a href="docs/architecture.html">design</a></span></li>
+              <li><b>From anywhere</b><span>ALT + step keys 9–16 pick sections 1–8 on any page; ALT + MODE or a long press on the plate puts the section keys in the header, where ALT + 1–16 pick sixteen. <a href="docs/manual.html#sections-and-the-song">manual</a></span></li>
+              <li><b>The SONG page</b><span>Square keys with a dot per sounding machine: tap, double tap to rename, hold and drag to move; RENAME, NEW, COLOUR, LENGTH, MOVE, ADD TO SONG; the song a strip of blocks with their repeats and PLAY FROM HERE. <a href="docs/manual.html#sections-and-the-song">manual</a></span></li>
+              <li><b>LOOP | SONG</b><span>What PLAY plays: the section on screen looped, or the song through, the pages following it, stopping on the bar line after its end. <a href="docs/manual.html#sections-and-the-song">manual</a></span></li>
+              <li><b>Seeing the change</b><span>The plate sweeps in the section's colour and the page glows round its frame as a change lands; the keys fill with the section's progress. <a href="docs/manual.html#sections-and-the-song">manual</a></span></li>
+            </ul>
+            <figure class="screen"><img src="shots/alt-mode.png" alt="ALT + MODE: the section keys sit in the header where the LIVE FX pads were" width="1280" height="800" loading="lazy"></figure>
+          </div></div></div>
+        </div>
+
+        <div class="group" id="f-record" style="--c: #4a9bff">
+          <h3><button type="button" class="group-btn" aria-expanded="false" aria-controls="p-record"><span class="n">04</span><span class="t">Record, video and share<small>the input, the screen, USB sticks, the computer, the phone</small></span><span class="chev" aria-hidden="true"></span></button></h3>
+          <div class="group-panel" id="p-record"><div class="group-in"><div class="group-body">
+            <ul class="feats">
+              <li><b>The RECORDER</b><span>MIC · GUITAR · LINE on jacks 4 and 5, MONITOR, GAIN with its meter, effects made for the input (CLEAN, TAME, FUZZ VOICE, ROBOT, TELEPHONE, OCTAVE; the guitar's amps and pedals), takes kept as they came in. <a href="docs/manual.html#the-recorder">manual</a></span></li>
+              <li><b>The tuner</b><span>On GUITAR: McLeod's pitch method as guitarix's tuner has it, AUTO or MANUAL strings, fifteen tunings, A4 430–450 Hz; it runs only while on screen. <a href="docs/manual.html#the-recorder">manual</a></span></li>
+              <li><b>The whole mix</b><span>ALT + ● records the master as a WAV; a machine's ● records its take; the metronome holds on during a take. <a href="docs/manual.html">manual</a></span></li>
+              <li><b>Live recording</b><span>MENU → LIVE REC: a VIDEO, the screen (or a USB camera) with the master's sound as an MP4, or AUDIO ONLY, the sound as a 24-bit WAV among the TRACKS (LIVE REC SAVED → METADATA… tags it, draws its cover and writes it as WAV, FLAC, OGG or MP3 through the export dialog); three quality tiers measured at 0 xruns, a TIMER, the RECORDER's input mixed in (a voice over: the music ducks under the voice, 12 dB over what the speakers leak into the mic, the voice lifted and crisp, a look-ahead limiter on the mix, the mic's level standing on the project plate with a MIC TOO HOT warning; a guitar or a line summed as it is), every key pressed named on a video; the dialog's START is the confirmation; a new project switches it off; VIDEO SAVED / LIVE REC SAVED deletes it (two taps), renames it and sends it on. <a href="docs/manual.html#video-recordings-and-the-computer-link">video</a></span></li>
+              <li><b>The computer link</b><span>Any number of laptops or PCs over SSH (SETTINGS → COMPUTERS → ADD A COMPUTER): a password used once to install the device's one key, files landing in that computer's Downloads; each with CHANGE, TEST and FORGET; the export dialog can send a track to one as it is written. <a href="docs/manual.html#video-recordings-and-the-computer-link">video</a></span></li>
+              <li><b>The phone</b><span>PHONE · QR CODE: a link served by ravving on the Wi‑Fi, 15 minutes at most, WAITING FOR THE PHONE / SENDING / DOWNLOADED ✓; the way to an iPhone. <a href="docs/manual.html#sending-to-a-phone">manual</a></span></li>
+              <li><b>USB sticks</b><span>Mounted when needed and EJECTed safely; the USB page lists a stick's samples, soundfonts, presets, bundles and projects with IMPORT (IMPORT ALL for a sample pack); files go the other way from FILES → SEND…; a read-only stick can be formatted. <a href="docs/manual.html#usb-sticks">manual</a></span></li>
+              <li><b>FILES</b><span>Everything in the library by kind, newest first, each entry with SEND… and DELETE: the one place every kind of file leaves the device; PHONE · BROWSE shows a QR code of the same library as pages on a phone, a DOWNLOAD per file. <a href="docs/manual.html#files">manual</a></span></li>
+              <li><b>Bluetooth</b><span>Speakers and headphones (PLAY THROUGH), files sent to a phone and received from one, pairing with a passkey, the setup a Zynthbox needs applied by ravving. <a href="docs/manual.html#bluetooth">bluetooth</a></span></li>
+              <li><b>Audio output</b><span>The jacks, HDMI or a Bluetooth output, fed glitch-free through a loopback while the jacks keep the graph's clock, remembered and put back when the output returns. <a href="docs/manual.html#audio-output">manual</a></span></li>
+            </ul>
+            <figure class="screen"><img src="shots/usb.webp" alt="The USB page for the stick EVS: SAMPLES, PRESETS, SOUNDFONTS, BUNDLES, TRACKS, VIDEOS, MIDI FILES, a sample pack folder and a file with IMPORT" width="1280" height="800" loading="lazy"></figure>
+          </div></div></div>
+        </div>
+
+        <div class="group" id="f-export" style="--c: #b07cff">
+          <h3><button type="button" class="group-btn" aria-expanded="false" aria-controls="p-export"><span class="n">05</span><span class="t">Export and listen<small>tracks, bundles, the music player</small></span><span class="chev" aria-hidden="true"></span></button></h3>
+          <div class="group-panel" id="p-export"><div class="group-in"><div class="group-body">
+            <ul class="feats">
+              <li><b>A track</b><span>Recorded while the project plays from its first beat, BARS × LOOPS plus a TAIL, or the whole SONG; WAV 24-bit, FLAC, OGG Vorbis or MP3 with title, artist, album, genre, composer, comment, date and BPM, a cover and a JSON sidecar. <a href="docs/manual.html#exports-and-the-music-player">manual</a></span></li>
+              <li><b>A bundle</b><span>A .ravv zip of the project with every sample it uses; IMPORT makes a project of one, from the library or a stick. <a href="docs/manual.html#exports-and-the-music-player">manual</a></span></li>
+              <li><b>The MUSIC PLAYER</b><span>Full screen: TRACKS, ALBUMS and ARTISTS, SORT, REPEAT, a queue, the cover and the transport; the keys drive it (1 2 3 the views, the big knob the volume, knob 1 the position). <a href="docs/manual.html#the-music-player">manual</a></span></li>
+              <li><b>The profile</b><span>SETTINGS: USER and AUTHOR, credited on every exported track. <a href="docs/manual.html#exports-and-the-music-player">manual</a></span></li>
+            </ul>
+            <figure class="screen"><img src="shots/player.webp" alt="The MUSIC PLAYER: the tracks sorted newest first with SEND… on each, the cover and transport on the right, the queue" width="1280" height="800" loading="lazy"></figure>
+          </div></div></div>
+        </div>
+
+        <div class="group" id="f-hood" style="--c: #3ddc84">
+          <h3><button type="button" class="group-btn" aria-expanded="false" aria-controls="p-hood"><span class="n">06</span><span class="t">Under the hood<small>engines, soundfonts, the look, the splash, the issues center</small></span><span class="chev" aria-hidden="true"></span></button></h3>
+          <div class="group-panel" id="p-hood"><div class="group-in"><div class="group-body">
+            <ul class="feats">
+              <li><b>The engines</b><span>jalv hosts the LV2s (TAL NoiseMaker, DISTRHO Nekobi, Calf Monosynth, Calf Crusher and Phaser, Dragonfly Room Reverb, TAP Echo; Calf Saturator as DRIVE); FluidSynth 2 plays the kits and soundfont sources; the port facts of each, audited against the engine mods' research. <a href="docs/engines.html">engines</a></span></li>
+              <li><b>The soundfonts</b><span>The SFZ Drum Machines kits (Roland TR909, TR808, LINN9000 and the rest of the folder), FluidR3Mono GM (MuseScore's), the SF2 Instruments (guitars, pipe organ, basses, the Ambients &amp; Drones pads), the AVL kits inside their FluidPlug bundles; a soundfont brought in by USB is used at once. <a href="docs/packs.html#sounds">the packs</a></span></li>
+              <li><b>The audio graph</b><span>PipeWire's JACK at 48 kHz and 256 frames: libzynthbox's passthroughs, the jalv inserts wired only while on, FluidSynth told the graph's clock; the clocks, links and xruns checked in one go. <a href="docs/routing.html">routing</a></span></li>
+              <li><b>The look</b><span>One theme, the Miko look, pinned in code; each machine in its own finish (the 909's cream, the 808's dark wood, LinnBeats, the 303's lime, POLY‑6's blue, the lead's purple, the samplers' grey and black) after easyrave's machines; one set of base types and UI rules checked by a test. <a href="docs/ui-rules.html">UI rules</a></span></li>
+              <li><b>The splash</b><span>The logo while ravving starts, then a short show into the page: ANIME, GLOW, STILL, ZOOM or OFF in SETTINGS → STARTUP; a still picture while loading, since animating cost the start 2–3 s. <a href="docs/manual.html#startup-splash">manual</a></span></li>
+              <li><b>The issues center</b><span>What is wrong on the device right now, in plain words, worst first, with what to do: an engine that could not start, dropouts, the keys dying, a stick that would not mount, storage nearly full. <a href="docs/manual.html#the-issues-center">manual</a></span></li>
+              <li><b>Settings</b><span>NOTES OUTSIDE THE SCALE, the startup look, SBC‑XQ for Bluetooth, the LANGUAGE, the video's quality, timer, source, mic, voice over and keys, the COMPUTERS list, HELP; each section on its own frame. <a href="docs/manual.html#exports-and-the-music-player">manual</a></span></li>
+              <li><b>Languages</b><span>English, Spanish and Japanese, with the music terms musicians use in each; SETTINGS · LANGUAGE follows the device's own language or picks one, and the screen changes at once. A new language is one catalog to translate, this page included. <a href="docs/translations.html">translations</a></span></li>
+              <li><b>The Store AppImage</b><span>Built on the device, a setup page over Zynthbox: try it, make it the default, Zynthbox at boot again, remove; nothing bundled but ravving. <a href="docs/packaging.html">packaging</a></span></li>
+              <li><b>Remote control</b><span>CUIA commands and backend calls over the webconf fifo, the test suites and the screenshot tour that keep it honest. <a href="docs/testing.html">testing</a></span></li>
+            </ul>
+            <figure class="screen"><img src="shots/settings.webp" alt="SETTINGS: PROFILE, NOTES OUTSIDE THE SCALE, STARTUP with ANIME GLOW STILL ZOOM OFF, BLUETOOTH SBC-XQ, the VIDEO quality, timer, source, mic and keys" width="1280" height="800" loading="lazy"></figure>
+          </div></div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>MIKO is the hardware, by Zynthbox. ravving is a mod that runs on it, by Camilo Higuita, GPL‑3.0‑or‑later. The shortcut list follows ravving's docs/architecture.md and the features its docs, rendered as <a href="docs/index.html">the docs</a>; the device artwork is the maker's "Miko Button Fonts" render (its keys set in Audiowide, by Astigmatic, SIL Open Font License 1.1) with a ravving screenshot on its screen; the key caps are set in the same font, and the grain comes from the MIKO brand system.</p>
+    <p class="mono">Screenshots taken on the device at 1280 × 800 with tools/device.sh shot.</p>
+  </div>
+  <img class="miko-peek" src="assets/miko-character.png" alt="" aria-hidden="true">
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
