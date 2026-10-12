@@ -572,9 +572,10 @@ place files leave the device or are deleted; the PROJECT dialog opens, saves and
 and the USB page brings a stick's files in. <strong>PHONE · BROWSE</strong> in its header shows a QR code
 of the same library as pages for a phone (or a laptop) on the Wi-Fi: every kind with its
 count, each kind's files with their detail, size and date, and a DOWNLOAD per file, served
-by ravving itself (<code>FileShare.openBrowse</code>, a random path that lives 15 minutes or while the
-dialog is open; <code>get share browseUrl</code> over the fifo); a project or anything that is a folder
-is listed as "on the device".</p>
+by ravving itself (<code>FileShare.openBrowse</code>, a random path that lives until 15 minutes pass
+with no request from the phone, the dialog closed or not; <code>get share browseUrl</code> over the
+fifo); a project or anything that is a folder is listed as "on the device"; a link that ran
+out says so on the phone.</p>
 <h2 id="usb-sticks">USB sticks</h2>
 <p>A stick plugged in shows up as a USB row in the export dialog (a Zynthbox
 runs udisks but mounts nothing by itself; ravving mounts the stick when it needs it): the
