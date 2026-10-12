@@ -210,7 +210,7 @@
 <div class="fnitem">
 <!-- $$$retireClip[overload1]$$$retireClipQObject* -->
 <h3 class="fn" translate="no" id="retireClip"><span class="type">void</span> ZynthboxBridge::<span class="name">retireClip</span>(<span class="type">QObject</span> *<i>clip</i>) const</h3>
-<p>Unloads <i translate="no">clip</i>, made by <a href="zynthboxbridge.html#createClip" translate="no">createClip</a>(), safely for the audio thread: its voices are told to stop, and the object is deleted once it has reported itself silent for 500 ms (after at least 1 s), or after 60 s regardless, since deleting a ClipAudioSource while SamplerSynth still plays it crashes the audio thread. Does nothing for a null <i translate="no">clip</i>.</p>
+<p>Unloads <i translate="no">clip</i>, made by <a href="zynthboxbridge.html#createClip" translate="no">createClip</a>(), safely for the audio thread: its voices are told to stop, and the object is deleted once it has reported itself silent for 500 ms and a voice started just before could have ended (twice the clip's length, for a slice pitched an octave down, plus 5 s for the longest release); 60 s later it is deleted regardless. A ClipAudioSource deleted while a SamplerSynth voice still plays it crashes the audio thread: the voice writes its position into the freed clip when it stops. Callers release the notes that hold the clip's voices first. Does nothing for a null <i translate="no">clip</i>.</p>
 <!-- @@@retireClip -->
 </div>
 <div class="fnitem">
