@@ -32,6 +32,10 @@
 <main class="wrap docs-wrap">
   <details class="docs-side" open>
     <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
@@ -88,7 +92,7 @@ data/secret/validate.py                                  checks every pack again
 "preset": {"name", "genre", "chart", "sound"}}</code>. The chart is the shipped libraries' format.
 <code>sound</code> is the sound the pattern was written for: <code>{"soundSource": …}</code> for the bass, lead and
 chords, <code>{"kit": …}</code> for the drums (a subset of <code>Machine::soundState()</code>).</p>
-<p><strong>The notes are scale degrees.</strong> They follow the session's root and scale. Each genre is
+<p id="the-notes-are-scale-degrees"><strong>The notes are scale degrees.</strong> They follow the session's root and scale. Each genre is
 written for one scale, so its four instruments play together:</p>
 <ul>
 <li>Natural Minor: hip-hop, trap, reggaeton, piig, heavy metal, black metal, post-punk, vuelo.</li>
@@ -302,7 +306,7 @@ beat, a chant's swell. A note's LENGTH is its <code>_</code> steps (HOLD), as be
 <p><strong>6/8 and 3/4 in the new packs</strong> work as the waltz trio does (below): three 16-step bars hold
 four 12-step bars, and the tempo counts a quarter of four steps (a jig at a dotted quarter of
 110 is "165").</p>
-<p><strong>The waltz trio is in 3/4.</strong> Classical · Waltz, Waltz Oom and Waltz Pah-Pah are three
+<p id="the-waltz-trio-is-in-34"><strong>The waltz trio is in 3/4.</strong> Classical · Waltz, Waltz Oom and Waltz Pah-Pah are three
 16-step bars long, which hold four 12-step waltz bars, so the three loop together.</p>
 <h2 id="sounds">Sounds</h2>
 <p>Every sound named is a source in <code>data/kits.json</code> (or a kit path), and <code>validate.py</code> checks
@@ -330,9 +334,9 @@ the device (<code>/zynthian/zynthian-data/soundfonts/SF2 Instruments/</code>):</
     (a SLIDE) glide.</li>
 <li>Off: LFO-to-pitch, LFO-to-filter, the mod wheel; <code>master</code> 0.5.</li>
 <li>What it cannot do:<ul>
-<li><strong>No pitch drop.</strong> The Monosynth's modulation matrix is LV2 state, not ports (the mod's
+<li id="no-pitch-drop"><strong>No pitch drop.</strong> The Monosynth's modulation matrix is LV2 state, not ports (the mod's
   RESEARCH.md), so kits.json can't set a pitch envelope.</li>
-<li><strong>No drive port.</strong> Turn on the bass machine's DRIVE for the saturation.</li>
+<li id="no-drive-port"><strong>No drive port.</strong> Turn on the bass machine's DRIVE for the saturation.</li>
 <li>The bass page's knobs (Nekobi's) don't apply to it.</li>
 </ul>
 </li>
@@ -396,7 +400,7 @@ tambora's low stroke), HAT maracas, CYMBAL cowbell, PERC cabasa (the metal güir
   - All the Latin keys were named from the font and rendered; every one sounds.</p>
 </li>
 </ul>
-<p><strong>Nothing needs installing on the device.</strong> The device's font is MuseScore 2.3.2's
+<p id="nothing-needs-installing-on-the-device"><strong>Nothing needs installing on the device.</strong> The device's font is MuseScore 2.3.2's
 FluidR3Mono_GM.sf3. It matches by sha256
 <code>cfcd66d89e8386823400eca64934b14fbea7bf48ba1f00d21189af1262794ec2</code>, the hash in zynthbox-qml's
 <code>config/soundfonts.json</code>, entry SF_00022. A byte-identical copy is in
@@ -404,7 +408,7 @@ FluidR3Mono_GM.sf3. It matches by sha256
 <a href="https://github.com/musescore/MuseScore/raw/v2.3.2/share/sound/FluidR3Mono_GM.sf3" rel="noopener" target="_blank">https://github.com/musescore/MuseScore/raw/v2.3.2/share/sound/FluidR3Mono_GM.sf3</a>. Its
 licence is MIT (Frank Wen 2000–2002, mono version Michael Cowgill 2014–16; see
 <code>LICENSE-FluidR3Mono.md</code> there).</p>
-<p><strong>How the new sounds were checked.</strong> Every new preset was rendered offline from that copy
+<p id="how-the-new-sounds-were-checked"><strong>How the new sounds were checked.</strong> Every new preset was rendered offline from that copy
 with <code>tools/soundfont.py render</code>. All of them sound, with peak levels from 0.02 to 0.20 and
 none silent. The kit rows were also worked out with a port of <code>DrumKit::fromSoundfont</code>.
 <code>validate.py</code> checks that every FluidR3Mono bank:program in kits.json exists, whenever the
@@ -3640,6 +3644,56 @@ rhythms, slinky basslines: Boss Hunting and Mixmag interviews, 2017–2024).</p>
   </div>
 </footer>
 <script>document.documentElement.classList.remove("no-js");
-if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  function load(done) {
+    if (index) return done();
+    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
 </body>
 </html>

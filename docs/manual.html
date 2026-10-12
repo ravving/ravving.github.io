@@ -32,6 +32,10 @@
 <main class="wrap docs-wrap">
   <details class="docs-side" open>
     <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li class="on"><a href="manual.html" aria-current="page">The manual</a><ul><li><a href="#build-and-run-on-the-device">Build and run on the device</a></li><li><a href="#sending-to-a-phone">Sending to a phone</a></li><li><a href="#distribution-the-store-appimage">Distribution: the Store AppImage</a></li><li><a href="#run-on-a-desktop">Run on a desktop</a></li><li><a href="#theme">Theme</a></li><li><a href="#sound-sources">Sound sources</a></li><li><a href="#sections-and-the-song">Sections and the song</a></li><li><a href="#ui-rules">UI rules</a></li><li><a href="#startup-splash">Startup splash</a></li><li><a href="#exports-and-the-music-player">Exports and the music player</a></li><li><a href="#video-recordings-and-the-computer-link">Video recordings and the computer link</a></li><li><a href="#files">Files</a></li><li><a href="#usb-sticks">USB sticks</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#audio-output">Audio output</a></li><li><a href="#the-recorder">The RECORDER</a></li><li><a href="#the-issues-center">The issues center</a></li><li><a href="#the-audio-graph">The audio graph</a></li><li><a href="#where-ravving-keeps-its-files">Where ravving keeps its files</a></li><li><a href="#environment-variables">Environment variables</a></li><li><a href="#remote-control">Remote control</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#license">License</a></li></ul></li>
@@ -379,7 +383,7 @@ with the crash; <strong>Standard</strong>, <strong>Room</strong>; <code>presetKi
 docs/engines.md). Bass and lead notes can last longer than a step (a long press on a cell
 stretches the row's note up to it; <code>setNoteLength</code> by script), and the header's swing,
 tapped on its caption, swings the 8ths as jazz does (SWING 8) or the 16ths (SWING 16).</p>
-<p><strong>Pattern presets with their sound and MODS.</strong> SAVE CURRENT AS NEW in the presets dialog
+<p id="pattern-presets-with-their-sound-and-mods"><strong>Pattern presets with their sound and MODS.</strong> SAVE CURRENT AS NEW in the presets dialog
 (PRESET on a pattern toolbar) keeps the machine's sound with the pattern, under the preset's
 optional <code>"sound"</code> next to its <code>"chart"</code>: a subset of the machine's sound state (<code>soundSource</code>,
 <code>soundPreset</code>, the MODS <code>sound</code>, <code>sourceSound</code> and <code>sourceSounds</code>; the drums' <code>kit</code> and the
@@ -409,19 +413,19 @@ the preset on screen.</p>
 <p>A whole project can be built by script over the remote-control fifo, samples, patterns,
 sounds and all: <code>tools/examples/lofi-say-it.sh</code> is one, <code>docs/scripting-projects.md</code> the
 recipe.</p>
-<p><strong>Templates.</strong> PROJECT ▾ → TEMPLATES (beside NEW) lists project templates: a template is how a
+<p id="templates"><strong>Templates.</strong> PROJECT ▾ → TEMPLATES (beside NEW) lists project templates: a template is how a
 project starts, its tempo, swing, key (root and scale) and LIVE FX knobs (PHASER, ECHO, HEAVY).
 SOURCE picks the device's or a USB stick's (read straight from its <code>ravving/presets/templates/</code>),
 as the pattern presets' dialog does. Choosing one is NEW with those set (asking first over
 unsaved changes, as NEW does). SAVE TEMPLATE keeps the session's own as one of the device's
 (DELETE removes it); the USB dialog's PRESETS copies templates either way. Every genre pack in
 <code>data/secret</code> ships one beside its patterns (or more: the Vuelo pack has one per key).</p>
-<p><strong>A new project starts clean.</strong> NEW, and NEW from a template, put every page back to its
+<p id="a-new-project-starts-clean"><strong>A new project starts clean.</strong> NEW, and NEW from a template, put every page back to its
 defaults: an empty pattern on each machine (no preset loaded), its own engine and the default
 sound, mix, MODS and SOUND EFFECTS, one section "A", the LIVE FX at rest; a template sets only
 its tempo, swing, key and LIVE FX knobs on top (<code>Studio::cleanProjectState</code>). The shipped demo
 patterns come back only through a project or a preset.</p>
-<p><strong>Demos.</strong> Ravving ships three projects to open from PROJECT ▾ → DEMOS: <strong>Autumn Leaves</strong>
+<p id="demos"><strong>Demos.</strong> Ravving ships three projects to open from PROJECT ▾ → DEMOS: <strong>Autumn Leaves</strong>
 (a jazz trio and alto sax at 146 BPM, swung 8ths, sections A1 A2 B C and a solo chorus) and
 <strong>5AM</strong> (dark electronic pop at 188 BPM in D harmonic minor over Dm – Gm – A – Dm, the changes
 of Grimes' "4ÆM", everything else written for ravving: a 909 two-step on a breakbeat, an
@@ -454,12 +458,12 @@ one on screen is the one you edit, and what you edit stays in it when you pick a
   stopping puts the first in place and drops the rest. In SONG one pick waits, a new one
   taking its place.
   There is no BEAT: libzynthbox's playfield swaps clips on a bar line only.</li>
-<li><strong>Switching on the bar line.</strong> A section picked while the transport plays takes over on the
+<li id="switching-on-the-bar-line"><strong>Switching on the bar line.</strong> A section picked while the transport plays takes over on the
   next bar, sample-accurately: each machine writes it into its track's other clip and
   libzynthbox swaps the two on the bar's first tick, so no note drops or doubles (a machine
   whose part does not change keeps playing). Stopped, a pick is immediate. Measured with
   <code>tools/sections-test.sh</code>: every change on a bar line, every 8th on the grid.</li>
-<li><strong>The plate.</strong> The header's project plate wears the section on screen as a square key with
+<li id="the-plate"><strong>The plate.</strong> The header's project plate wears the section on screen as a square key with
   its number, in its colour, blinking while it waits for the bar; a tap opens the SONG page.</li>
 <li><strong>X and Y</strong> (the two keys beside the big knob) go to the previous and the next section from
   any page or dialog, wrapping round, as a section key would pick it (from the next bar while
@@ -469,14 +473,14 @@ one on screen is the one you edit, and what you edit stays in it when you pick a
   held; ALT + 1–8 stay the LIVE FX pads). With the section keys in the header, ALT + 1–16 pick
   sections 1–16, and while their group has the focus (the header's ◀ ▶ onto it) the step keys
   alone pick them, lit in the sections' colours.</li>
-<li><strong>The section keys in the header.</strong> A long press on the project plate, or <strong>ALT + MODE</strong> (MODE
+<li id="the-section-keys-in-the-header"><strong>The section keys in the header.</strong> A long press on the project plate, or <strong>ALT + MODE</strong> (MODE
   lights orange while ALT is held; MODE alone still cycles the entry mode), puts the section keys where the LIVE FX pads are (the same again brings the pads back): the SONG page's keys, at
   the pads' size, without their dots. A tap picks one (on the next bar while it plays), ▶ marks
   the one sounding and its progress fills it, a swipe up removes one (it follows the finger and
   fades; past half its height it flies off; never the last), more than fit swipe sideways (the strip slides to the section that becomes current or that
   the song reaches), the keys grouped on a slab in the song's colour with ＋ pinned at its end,
   always in reach.</li>
-<li><strong>Seeing the change.</strong> As the section sounding changes (a SONG part, or a LOOP pick landing on
+<li id="seeing-the-change"><strong>Seeing the change.</strong> As the section sounding changes (a SONG part, or a LOOP pick landing on
   the bar line) the plate sweeps in its colour and the instrument page glows round its frame in
   it, once; the section keys (here and on the SONG page) fill with the section's progress.</li>
 <li><strong>The SONG page</strong>, under the header like the MIXER, follows easyrave's SECTIONS shelf at a
@@ -488,7 +492,7 @@ one on screen is the one you edit, and what you edit stays in it when you pick a
   moves, repeats (×1–×16) or goes. Keys: ◀ ▶ walk, ▲ ▼ between keys and blocks, SELECT or a
   step key picks, ALT + ◀ ▶ moves, knob 1 the length, knob 2 the repeats, BACK leaves.</li>
 </ul>
-<p><strong>SONG mode.</strong> LOOP | SONG on the SONG page says what PLAY plays: the section on screen,
+<p id="song-mode"><strong>SONG mode.</strong> LOOP | SONG on the SONG page says what PLAY plays: the section on screen,
 looped, or the song through. In SONG the first part's section is in place before the first
 note, each next part is cued as the last bar of the one before begins, and the song stops on
 the bar line after its end; the block playing shows its progress and the plate the part
@@ -812,7 +816,7 @@ with <code>unset-environment</code>.</p>
 <pre><code class="language-sh">echo cuia/SWITCH_PLAY_RELEASED &gt; /tmp/webconf-writes-to-this-fifo
 </code></pre>
 <h2 id="documentation">Documentation</h2>
-<p><strong>The rule: the docs and the page follow every change.</strong> A feature added, changed or removed
+<p id="the-rule-the-docs-and-the-page-follow-every-change"><strong>The rule: the docs and the page follow every change.</strong> A feature added, changed or removed
 is not done until the same commit updates what says it: this README or the <code>docs/*.md</code> it
 belongs in, and the page in <code>site/</code> (the SHORTCUTS row of a key, the FEATURES highlight or
 grouped item of a feature), then <code>python3 tools/build-site-docs.py</code> (the rendered
@@ -855,6 +859,56 @@ MIT License (Copyright (c) Project Nayuki); its licence text is kept in the file
   </div>
 </footer>
 <script>document.documentElement.classList.remove("no-js");
-if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  function load(done) {
+    if (index) return done();
+    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
 </body>
 </html>

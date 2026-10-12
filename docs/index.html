@@ -31,6 +31,10 @@
 <main class="wrap docs-wrap">
   <details class="docs-side" open>
     <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
@@ -68,7 +72,7 @@
   <article class="doc" id="doc">
 <p class="mono doc-kicker">ravving <span>/</span> the documentation</p>
 <h1>How everything works</h1>
-<p class="doc-blurb">The features page shows the highlights; these pages are the full explanations, rendered from the repository's README and docs. Start with the manual.</p>
+<p class="doc-blurb">The features page shows the highlights; these pages are the full explanations, rendered from the repository's README and docs. Start with the manual, or search them all from the box at the side.</p>
 <h2 id="using-ravving">Using ravving</h2>
 <div class="doc-cards">
 <a class="doc-card" href="manual.html"><b>The manual</b><span>The five pages and what plays on them, the shortcuts, sound sources, presets, templates, sections and the song, exports, files, USB sticks, Bluetooth, the RECORDER, the issues center.</span></a>
@@ -112,6 +116,56 @@
   </div>
 </footer>
 <script>document.documentElement.classList.remove("no-js");
-if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  function load(done) {
+    if (index) return done();
+    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
 </body>
 </html>

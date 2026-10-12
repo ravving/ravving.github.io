@@ -32,6 +32,10 @@
 <main class="wrap docs-wrap">
   <details class="docs-side" open>
     <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
@@ -75,11 +79,11 @@
 <code>~/Downloads/theme_refs/rave/site/index.html</code>, 1.2 MB, everything inlined).</p>
 <h2 id="what-easyrave-is">What easyrave is</h2>
 <ul>
-<li><strong>A commercial product.</strong> It has accounts and licences ("free = 3 songs, license =
+<li id="a-commercial-product"><strong>A commercial product.</strong> It has accounts and licences ("free = 3 songs, license =
   unlimited") and online saves through <code>easyrave-api.ezamboni96.workers.dev</code>.</li>
 <li><strong>No licence is published</strong> for the code or the assets. No MIT/GPL header, no copyright
   line. That means all rights reserved by default.</li>
-<li><strong>All sound comes from its own Web Audio code.</strong> There are no third-party audio libraries
+<li id="all-sound-comes-from-its-own-web-audio-code"><strong>All sound comes from its own Web Audio code.</strong> There are no third-party audio libraries
   (no Tone.js, no WASM synths). The only third-party code is MediaPipe, loaded from a CDN for
   the CAM feature.</li>
 </ul>
@@ -127,15 +131,15 @@
 </tbody>
 </table>
 <h2 id="can-we-borrow-it">Can we borrow it?</h2>
-<p><strong>Code: no.</strong> It's unlicensed, commercial JavaScript. Copying it, translated or not, would
+<p id="code-no"><strong>Code: no.</strong> It's unlicensed, commercial JavaScript. Copying it, translated or not, would
 copy its expression. Ravving reimplements behaviour. Reading what a feature does to design
 ours is fine; porting their functions line by line is not.</p>
-<p><strong>Samples: no.</strong> The Linn WAVs come with no licence or provenance (they're probably LinnDrum
+<p id="samples-no"><strong>Samples: no.</strong> The Linn WAVs come with no licence or provenance (they're probably LinnDrum
 ROM material), so we can't ship them. Drum kits need licence-clean sources: our own
 recordings or renders, or CC0/permissive packs.</p>
-<p><strong>Artwork: no.</strong> Nameplates and finishes are reference only (this rule was already set for
+<p id="artwork-no"><strong>Artwork: no.</strong> Nameplates and finishes are reference only (this rule was already set for
 the Rave themes). Ravving draws its own in QML.</p>
-<p><strong>Ideas, techniques and musical facts: yes.</strong> These aren't copyrightable, and we implement
+<p id="ideas-techniques-and-musical-facts-yes"><strong>Ideas, techniques and musical facts: yes.</strong> These aren't copyrightable, and we implement
 them ourselves:
 - Analog-drum synthesis recipes: a sine kick with a fast pitch drop and a long tail, noise
   snares and hats. These are standard techniques. DrumSynth (ZBP_SYNTH_00015) already does
@@ -149,9 +153,9 @@ them ourselves:
   an implementation, because the device has no crusher among its 56 FX (see the mapping).
 - Pitch tracking for SING (YIN) and pitch correction (PSOLA): published algorithms with open
   implementations (e.g. aubio, GPL) that we could use instead.</p>
-<p><strong>Fonts: yes.</strong> Oswald, IBM Plex Mono and Baloo 2 are OFL. We can bundle them if we want
+<p id="fonts-yes"><strong>Fonts: yes.</strong> Oswald, IBM Plex Mono and Baloo 2 are OFL. We can bundle them if we want
 the exact type.</p>
-<p><strong>Colours: yes, as reference.</strong> Per-machine colour values are facts. <code>Rave.machines</code> uses
+<p id="colours-yes-as-reference"><strong>Colours: yes, as reference.</strong> Per-machine colour values are facts. <code>Rave.machines</code> uses
 them, as the Rave themes already do.</p>
 <h2 id="what-it-means-for-the-engines">What it means for the engines</h2>
 <p>easyrave's sounds can't come with us, so ravving uses the device's engines (proposal in the
@@ -171,6 +175,56 @@ permission is the way to get them.</p>
   </div>
 </footer>
 <script>document.documentElement.classList.remove("no-js");
-if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  function load(done) {
+    if (index) return done();
+    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
 </body>
 </html>

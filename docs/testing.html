@@ -32,6 +32,10 @@
 <main class="wrap docs-wrap">
   <details class="docs-side" open>
     <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
@@ -295,26 +299,26 @@ project pointing at nothing, and it then opens on another sound, silently. Three
   missing"), cleared by the next project that resolves.</li>
 </ul>
 <h2 id="recipes">Recipes</h2>
-<p><strong>A sampler pad from a script.</strong> Load, play, loop, latch, stop:</p>
+<p id="a-sampler-pad-from-a-script"><strong>A sampler pad from a script.</strong> Load, play, loop, latch, stop:</p>
 <pre><code class="language-sh">sh tools/device.sh call pads loadSample 0 /zynthian/zynthian-my-data/ravving/samples/refs/movie-intro-16s.wav
 sh tools/device.sh call pads audition 0            # one pass
 sh tools/device.sh call pads setFlag 0 looping true
 sh tools/device.sh call pads setLatched 0 true     # held looping, as a long press does
 sh tools/device.sh call pads stopAll               # what STOP does
 </code></pre>
-<p><strong>A pattern on the pads.</strong> Fill pads 1–4 with a kick, snare, hat and clap from the device's
+<p id="a-pattern-on-the-pads"><strong>A pattern on the pads.</strong> Fill pads 1–4 with a kick, snare, hat and clap from the device's
 library (<code>find /zynthian/zynthian-my-data/samples -iname "*kick*.wav" | head -1</code>), then
 <code>call pads loadPreset "Boom Bap"</code>, <code>cuia SWITCH_PLAY_RELEASED</code>, meter the lane, <code>cuia
 SWITCH_STOP_RELEASED</code>. The step keys write the selected pad's row with LIVE off and play
 the pads with LIVE on (<code>SWITCH_MODE_RELEASED</code> toggles it; a step key held past half a second
 latches its pad).</p>
-<p><strong>A take into a pad.</strong> With something on the input jack (<code>INPUT</code> sets MIC / GUITAR / LINE):
+<p id="a-take-into-a-pad"><strong>A take into a pad.</strong> With something on the input jack (<code>INPUT</code> sets MIC / GUITAR / LINE):
 <code>call pads setSelectedPad 2</code>, then <code>call input record</code>; with SMART on
 (<code>studio.input.autoStop</code>, default on) the take ends by itself half a second after the sound
 stops, else <code>call input stop</code>. The processed take lands on the pad trimmed to its last
 burst; the journal shows <code>takeReady</code>. Without a signal the take never auto-stops: that is
 the guard against stopping before anything was played.</p>
-<p><strong>The hardware walk.</strong> Switch the trace on, then <code>cuia SWITCH_ARROW_UP_RELEASED</code> step by
+<p id="the-hardware-walk"><strong>The hardware walk.</strong> Switch the trace on, then <code>cuia SWITCH_ARROW_UP_RELEASED</code> step by
 step and read which item accepted each key; <code>ALT + ▲</code> must land on the header from
 anywhere. Key 5 opens page 5 and, pressed again, toggles between SAMPLE KING and the PAD
 SAMPLER; the choice survives restarts, so check the nameplate in a screenshot before
@@ -323,7 +327,7 @@ sending taps at a panel (a hold on the wrong one writes a step).</p>
 <code>/zynthian/zynthian-my-data/ravving/samples/refs/</code> (<code>movie.wav</code> and <code>movie-intro-16s.wav</code>
 from the user's "04 - Movie", <code>nina-free*.wav</code>); the originals are in
 <code>~/Coding/refs/audio/</code> on the laptop.</p>
-<p><strong>Live jam test (to run).</strong> After the snippet works alone, build a lo-fi hip hop jam around
+<p id="live-jam-test-to-run"><strong>Live jam test (to run).</strong> After the snippet works alone, build a lo-fi hip hop jam around
 it: drums, bass, chords and lead with the sampled audio on the pads, recorded with the
 header's ● into <code>recordings/</code>, as the thEx jam was made.</p>
 <h2 id="the-audio-graph">The audio graph</h2>
@@ -340,6 +344,56 @@ ravving wires, the tools (pw-top, pw-dump, pw-dot, jack_iodelay…) and the meas
   </div>
 </footer>
 <script>document.documentElement.classList.remove("no-js");
-if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  function load(done) {
+    if (index) return done();
+    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
 </body>
 </html>

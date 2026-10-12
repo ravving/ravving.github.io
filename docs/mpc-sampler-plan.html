@@ -32,6 +32,10 @@
 <main class="wrap docs-wrap">
   <details class="docs-side" open>
     <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
@@ -105,7 +109,7 @@ and the plugins on the device. Section 7 is the plan; sections 1–6 are what it
 knob count, and its whole feature set fits one screen. The OS guide tells where each feature
 grows when scaled up.</p>
 <h2 id="2-the-mpc-model-distilled">2. The MPC model, distilled</h2>
-<p><strong>Pads.</strong> 4 × 4, numbered from the bottom left: row 4 = 13 14 15 16, row 3 = 9 10 11 12,
+<p id="pads"><strong>Pads.</strong> 4 × 4, numbered from the bottom left: row 4 = 13 14 15 16, row 3 = 9 10 11 12,
 row 2 = 5 6 7 8, row 1 = 1 2 3 4. Banks A–H, one on screen; PAD BANK cycles them. A pad
 holds one sample (MPC Sample) or up to four layers (OS). Pads light: loaded, playing,
 selected, muted (red), 16 Levels (velocity ramp).</p>
@@ -169,10 +173,10 @@ each slice on a pad; extract, split, merge), <strong>Note On</strong> (plays whi
 <strong>Loop</strong> (loop point → end; Loop Lock ties it to Start), <strong>Reverse</strong>, <strong>Mute</strong> (pads mute
 instead of trigger; unmute all), <strong>16 Levels</strong> (the selected pad on all 16 with velocity,
 filter or tune ramping; original tune on pad 4).</p>
-<p><strong>Sample Record.</strong> Source (mic, line L/R, resample, USB), monitor off/auto/on, threshold,
+<p id="sample-record"><strong>Sample Record.</strong> Source (mic, line L/R, resample, USB), monitor off/auto/on, threshold,
 length free or the sequence; tap a pad to arm it, record, tap again to stop; the take lands
 on that pad trimmed; RECALL grabs the last 25 s of input.</p>
-<p><strong>Sequence Mode.</strong> Sequences on pads (light green when holding events), 1–128 bars, Q
+<p id="sequence-mode"><strong>Sequence Mode.</strong> Sequences on pads (light green when holding events), 1–128 bars, Q
 (record quantize), RT Swing, count-in, metronome off/on/record, BPM per sequence or global,
 record then overdub, SHIFT + undo, erase a pad's events, RECALL the last loop's playing;
 Step Edit lists events per step with velocity and timing nudge; half/double length and speed;
@@ -353,14 +357,14 @@ with its own JACK ports), and <code>SketchpadTrack.samples</code> is a list of 1
 model. SAMPLE KING's banks are 8 slots for that reason. 16 pads exceed it.</p>
 <p>Two ways, decided by a spike at the start of phase 2:</p>
 <ul>
-<li><strong>A. One track, 16 clips (preferred).</strong> <code>PatternModel::setClipIds</code> accepts any list length,
+<li id="a-one-track-16-clips-preferred"><strong>A. One track, 16 clips (preferred).</strong> <code>PatternModel::setClipIds</code> accepts any list length,
   and SamplerSynth plays every registered clip whose key zone holds the note; a clip's
   slot/row only chooses which sub-channel's ports it renders to. Pads 11–16 would share
   sub-channels with pads 1–6, which only means they share output ports, and all of them go to
   the same track lane anyway. To verify: 16 clips on track 7 with slots <code>i % 5</code>, rows
   <code>(i / 5) % 2</code>, every pad audible on its own note, no voice stealing between pads sharing a
   sub-channel, and <code>JackWiring::setSampleOutputs</code> wiring the 10 ports.</li>
-<li><strong>B. Two tracks (fallback).</strong> Pads 1–8 on track 7, 9–16 on track 8, each with its own
+<li id="b-two-tracks-fallback"><strong>B. Two tracks (fallback).</strong> Pads 1–8 on track 7, 9–16 on track 8, each with its own
   PatternModel; the machine mirrors bars, Q and the playhead onto the second pattern and
   routes a pad's hits to its track. More code in <code>Machine</code> (which is one-track by design).</li>
 </ul>
@@ -475,14 +479,14 @@ local build loop (<code>tools/device.sh deploy</code>), never the AppImage, unti
 <p>Seven points, in the user's words, that set the order of the phases:</p>
 <ol>
 <li><strong>Record onto each pad quickly</strong> from whatever is on the jack: guitar, a turntable, a mic.</li>
-<li><strong>Loop the recorded sound on its pad, or not.</strong></li>
+<li id="loop-the-recorded-sound-on-its-pad-or-not"><strong>Loop the recorded sound on its pad, or not.</strong></li>
 <li><strong>The pads in a sequence</strong>, looping like the other instruments' views.</li>
 <li><strong>Live effects on the playing pad</strong>: a scratch, an echo, reverse, skip forward, other
    common ones (the MPC's Pad FX / Flex Beat, which this plan had left out: back in).</li>
 <li><strong>Loop all of them, or live mode</strong>: while the other views play, a <strong>long press</strong> on a
    pad leaves it looping, a <strong>single tap</strong> plays it once.</li>
 <li><strong>A wave editor shared by both samplers</strong> to chop audio.</li>
-<li><strong>Per-pad sound parameters, effects and filters.</strong></li>
+<li id="per-pad-sound-parameters-effects-and-filters"><strong>Per-pad sound parameters, effects and filters.</strong></li>
 <li><strong>Smart recording</strong>: a take that <strong>stops by itself when the sound stops</strong> (strum a
    chord on the guitar, the pad has it), so a pad is recorded with one press.</li>
 <li><strong>Auto-chop a music snippet across the 16 pads</strong>, each pad then playing like a note.</li>
@@ -494,7 +498,7 @@ original did them), <strong>giada</strong> (a C++ loop machine: sample channels 
 modes and an action recorder, close to point 5), <strong>MPC-Sample-Toolkit</strong> (Python, the MPC
 Sample's file formats and kits; anything used from it is ported to C++).</p>
 <h2 id="8-plan">8. Plan</h2>
-<p><strong>Phase 0 — this document.</strong> Decisions to take (defaults in bold if not answered):
+<p id="phase-0-this-document"><strong>Phase 0 — this document.</strong> Decisions to take (defaults in bold if not answered):
 1. Clips: <strong>option A, one track</strong> after the spike; B if it fails.
 2. Name on the plate: <strong>PAD\nSAMPLER</strong> (role PADS; "MPC" stays in the docs, not on screen).
 3. Default on key 5: <strong>SAMPLE KING</strong> stays first (0), the PAD SAMPLER is 1.
@@ -511,7 +515,7 @@ Sample's file formats and kits; anything used from it is ported to C++).</p>
 3. The hardware walk (pads, tabs, knobs with pick-up, ▲ ▼ chain, LEDs) verified with the
    trace and screenshots on the device; the screenshot tour step.
 4. Docs: <code>architecture.md</code> components table, this plan's status.</p>
-<p><strong>Phase 2 — the backend: the user's points 1, 2, 3 and 5.</strong>
+<p id="phase-2-the-backend-the-users-points-1-2-3-and-5"><strong>Phase 2 — the backend: the user's points 1, 2, 3 and 5.</strong>
 1. The spike (§5), then <code>PadSamplerMachine</code> with bank A: load / clear / copy a pad, and
    <strong>record to a pad</strong> from the input: select a pad, ● REC (or hold RECORD and tap a pad),
    ● again to stop; MIC / GUITAR / LINE come from <code>InputRecorder</code>'s set-up (INPUT button),
@@ -702,6 +706,56 @@ keep it in a fork that tracks upstream. Until a patch lands, ravving works aroun
   </div>
 </footer>
 <script>document.documentElement.classList.remove("no-js");
-if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  function load(done) {
+    if (index) return done();
+    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
 </body>
 </html>

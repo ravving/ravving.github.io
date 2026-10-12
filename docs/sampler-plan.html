@@ -32,6 +32,10 @@
 <main class="wrap docs-wrap">
   <details class="docs-side" open>
     <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
@@ -99,7 +103,7 @@ found is in <code>engines.md</code> (SamplerSynth, the audio input) and <code>ar
 <li><strong>KEYS</strong> (keys 1–8 play the slots live) and <strong>REC</strong> (a take of the pattern, count-in first).</li>
 </ul>
 <h2 id="what-the-device-gives-us">What the device gives us</h2>
-<p><strong>libzynthbox's sampler is the engine.</strong> SamplerSynth plays ClipAudioSources in real time
+<p id="libzynthboxs-sampler-is-the-engine"><strong>libzynthbox's sampler is the engine.</strong> SamplerSynth plays ClipAudioSources in real time
 (JUCE, in the audio thread). Each slot is one ClipAudioSource; its root slice has what every
 slot feature needs:</p>
 <table>
@@ -151,7 +155,7 @@ slot feature needs:</p>
 <p>A ClipAudioSource is built through its exported constructor, the way ravving already makes
 the metronome clips (<code>ClipAudioSource(path, track, slot, row, registerForPolyphonicPlayback,
 muted, parent)</code>).</p>
-<p><strong>Routing is already in place.</strong> <code>SketchpadTrack</code> (ravving's <code>zlChannel</code>) with <code>trackType</code>
+<p id="routing-is-already-in-place"><strong>Routing is already in place.</strong> <code>SketchpadTrack</code> (ravving's <code>zlChannel</code>) with <code>trackType</code>
 "sample-trig" makes the track's PatternModel send its notes to SamplerSynth
 (<code>SampleTriggerDestination</code>), and its <code>samples</code> list (10 entries, each an object with
 <code>cppObjId</code> = the clip's id) is how PatternModel registers the clips (<code>updateSamples()</code> →
@@ -178,7 +182,7 @@ reversing, the take processing and the loudness measurement run in C++ in a work
   (The exact gains are to be set with the user's guitar and mic.)</li>
 </ul>
 <h2 id="live-voice-guitar-effects-yes">Live voice / guitar effects: yes</h2>
-<p><strong>Feasible and cheap.</strong> The device has every block, and a whole chain costs little: eight
+<p id="feasible-and-cheap"><strong>Feasible and cheap.</strong> The device has every block, and a whole chain costs little: eight
 effects running on the input (compressor, saturator, multi chorus, phaser, vintage delay,
 plate reverb, SwankyAmp, pitch shifter) measured <strong>under 1 % CPU each</strong> on the Pi 5 (4 cores).
 <strong>Latency</strong>: JACK runs 256 frames at 48 kHz (5.3 ms a period), so input → effects → speakers
@@ -229,6 +233,56 @@ for the device knobs: AMOUNT, WOBBLE, ECHO, SPACE…).</p>
   </div>
 </footer>
 <script>document.documentElement.classList.remove("no-js");
-if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  function load(done) {
+    if (index) return done();
+    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
 </body>
 </html>

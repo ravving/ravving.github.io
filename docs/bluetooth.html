@@ -32,6 +32,10 @@
 <main class="wrap docs-wrap">
   <details class="docs-side" open>
     <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
@@ -126,7 +130,7 @@ setup <code>bluetoothctl show</code> lists Audio Source, Audio Sink, Handsfree a
   answered with <code>answerPairing</code>), pair → trust → connect, forget, OBEX Object Push sending
   (<code>sendFile</code>, progress in <code>transfer</code>), an <code>ObexAgent</code> accepting pushes into the library's
   <code>incoming/</code> folder, and the audio switch (<code>useAsOutput</code>).</li>
-<li><strong>Audio.</strong> When an audio device connects, WirePlumber makes a sink node
+<li id="audio"><strong>Audio.</strong> When an audio device connects, WirePlumber makes a sink node
   <code>bluez_output.&lt;address&gt;.1</code> (and an input / capture node for HFP). <code>useAsOutput</code> hands it
   to <code>AudioOutputs</code> (<code>outputs</code>, also the control center's AUDIO OUTPUT card), which does not
   make it the default sink: that would clock the whole JACK graph by the Bluetooth
@@ -139,11 +143,11 @@ setup <code>bluetoothctl show</code> lists Audio Source, Audio Sink, Handsfree a
   Bluetooth node runs at 48 kHz SBC, the HiFiBerry node goes idle, the sound is clean and
   the jacks silent. Off, on disconnect, forget or exit, the loopback stops and the jack
   links come back.</li>
-<li><strong>Files.</strong> Sending opens an OBEX session (<code>Target: opp</code>) and pushes the file; receiving
+<li id="files"><strong>Files.</strong> Sending opens an OBEX session (<code>Target: opp</code>) and pushes the file; receiving
   needs milo VISIBLE (discoverable + pairable, three minutes) and lands under
   <code>library/incoming/</code>, which <code>PROJECT ▾ → IMPORT</code> lists as "received" and the music library as
   the album "Received".</li>
-<li><strong>UI.</strong> <code>BluetoothPopup</code> from the control center's BLUETOOTH card.</li>
+<li id="ui"><strong>UI.</strong> <code>BluetoothPopup</code> from the control center's BLUETOOTH card.</li>
 </ul>
 <h2 id="testing-it">Testing it</h2>
 <p>The basic checks: <code>sh tools/bluetooth-setup.sh --check</code>. With a device at hand, over the
@@ -300,7 +304,7 @@ microphone at the headphones: play a click through the route and record it).</p>
 "flaky", and after a night idle it reconnects at once from a phone but not from milo. Read
 with <code>tools/device.sh bt</code> (journals of 2026-10-08 to 10-10; milo: BlueZ 5.82, PipeWire 1.4.2,
 WirePlumber 0.5.8).</p>
-<p><strong>The two devices.</strong></p>
+<p id="the-two-devices"><strong>The two devices.</strong></p>
 <table>
 <thead>
 <tr>
@@ -337,7 +341,7 @@ WirePlumber 0.5.8).</p>
 </tr>
 </tbody>
 </table>
-<p><strong>What happened.</strong> Every one of the LG's 11 tries failed; none opened an A2DP transport.
+<p id="what-happened"><strong>What happened.</strong> Every one of the LG's 11 tries failed; none opened an A2DP transport.
 Nine went like this, with the Sony connected and playing (since 01:39) the whole time:</p>
 <pre><code>03:48:03 ravving: bluetooth: BLUETOOTH CONNECTED · LG SJ1(D8)
 03:48:03 bluetoothd: profiles/audio/a2dp.c:a2dp_select_capabilities() Unable to select SEP
@@ -355,7 +359,7 @@ page timeouts, where the speaker never answered (off, in standby, or held by the
 </code></pre>
 <p>ravving tried once each time and gave up. WirePlumber logged nothing for the LG: it never
 got a transport to make a sink from.</p>
-<p><strong>Why.</strong> BlueZ keeps its local A2DP stream endpoints (SEPs) per adapter, shared by every
+<p id="why"><strong>Why.</strong> BlueZ keeps its local A2DP stream endpoints (SEPs) per adapter, shared by every
 device (<code>a2dp.c</code>: <code>server-&gt;seps</code>), and a local SEP carries one stream at a time
 (<code>avdtp.c</code>: <code>lsep-&gt;info.inuse</code> is set by <code>avdtp_set_configuration</code> and cleared only in
 <code>stream_free</code>; <code>avdtp_find_remote_sep</code> skips an in-use SEP). PipeWire registers one endpoint
@@ -372,20 +376,20 @@ plugin would let the Sony use AAC and free SBC, but Debian ships none (<code>lib
 non-free).</p>
 <p><strong>What ravving does now</strong> (<code>src/backend/bluetooth.cpp</code>):</p>
 <ul>
-<li><strong>Hand-over.</strong> When a device answered but could not connect while another audio device
+<li id="hand-over"><strong>Hand-over.</strong> When a device answered but could not connect while another audio device
   is connected, ravving lets the other device go. It shows SWITCHING FROM · <em>the other</em>,
   disconnects it, waits 1 s for BlueZ to free the endpoint and connects again. The sound
   falls back to the jacks in between, and PLAY THROUGH then routes to the new device. Only
   a connection the user asked for does this; ravving's own reconnect never takes the link
   from a playing device.</li>
-<li><strong>Pages retried.</strong> A page timeout (<code>Host is down</code>) is retried after 2, 5 and 10 s. That
+<li id="pages-retried"><strong>Pages retried.</strong> A page timeout (<code>Host is down</code>) is retried after 2, 5 and 10 s. That
   is about 37 s with BlueZ's 5.12 s page, and the row reads "waking…". Disconnecting or
   forgetting the device stops it. Only then does COULD NOT CONNECT appear, with a hint:
   NOT ANSWERING: OFF, ASLEEP OR WITH A PHONE?</li>
-<li><strong>PLAY THROUGH waits for the connection.</strong> It used to start its 15 s sink poll at the
+<li id="play-through-waits-for-the-connection"><strong>PLAY THROUGH waits for the connection.</strong> It used to start its 15 s sink poll at the
   same moment as the connect, so a slow connection ended in NO AUDIO FROM. Now the poll
   starts once the connection is made.</li>
-<li><strong>The kept output comes back.</strong> AudioOutputs keeps the Bluetooth address of the output
+<li id="the-kept-output-comes-back"><strong>The kept output comes back.</strong> AudioOutputs keeps the Bluetooth address of the output
   picked. When Bluetooth comes on (a start, the switch), that device is connected once,
   3 s later, if it is paired and nothing else plays. ravving never repeats this in a loop:
   paging a speaker in standby wakes it up (LG's Bluetooth standby), so a loop would keep
@@ -418,7 +422,7 @@ line is a device setting (BlueZ reads no drop-in folder): set it by hand on a ne
    8, 16, 32, 64 s). They act on a link lost by timeout only, not on a speaker that went
    to standby and disconnected cleanly. <code>JustWorksRepairing</code> does not matter for a bonded
    device.</p>
-<p><strong>To confirm on milo.</strong> With the Sony connected and playing, open BLUETOOTH, tap the LG and
+<p id="to-confirm-on-milo"><strong>To confirm on milo.</strong> With the Sony connected and playing, open BLUETOOTH, tap the LG and
 press PLAY THROUGH (or <code>device.sh call bluetooth useAsOutput 6C:5A:B5:49:35:D8 true</code>).
 Expected: SWITCHING FROM · WH-CH720N, the Sony disconnects, then BLUETOOTH CONNECTED · LG,
 PLAYING THROUGH · LG SJ1(D8), and the journal shows a <code>sep…/fd… ready</code> for
@@ -502,6 +506,56 @@ own about 3 s after the start.</p>
   </div>
 </footer>
 <script>document.documentElement.classList.remove("no-js");
-if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  function load(done) {
+    if (index) return done();
+    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
 </body>
 </html>

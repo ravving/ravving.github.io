@@ -32,6 +32,10 @@
 <main class="wrap docs-wrap">
   <details class="docs-side" open>
     <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
 <li><a href="manual.html">The manual</a></li>
@@ -86,7 +90,7 @@ or copies it TO USB. Code: <code>src/backend/videorecorder.*</code> (<code>video
 video must never drop. Everything below follows from that.</p>
 <h2 id="how-a-recording-is-made">How a recording is made</h2>
 <ol>
-<li><strong>The sound is tapped, not recorded through AudioLevels.</strong> <code>AudioTap</code> is ravving's own
+<li id="the-sound-is-tapped-not-recorded-through-audiolevels"><strong>The sound is tapped, not recorded through AudioLevels.</strong> <code>AudioTap</code> is ravving's own
    JACK client (<code>ravving-video</code>, stereo in) connected to the master's last outputs (what the
    speakers get: the LIVE FX inserts included, which the header's ● WAV recording misses). Its
    process callback copies each cycle into a ring of 2^20 frames (21.8 s at 48 kHz) and
@@ -98,17 +102,17 @@ video must never drop. Everything below follows from that.</p>
    ring is 16 periods (85 ms at 256 frames), so an encoder or SD-card stall longer than that
    drops sound; this ring holds 21 seconds, and what it could not hold is counted
    (<code>audioDroppedMs</code>, a warning in the issues center) rather than lost quietly.</li>
-<li><strong>The picture is ffmpeg's.</strong> <code>x11grab</code> of the display (<code>-draw_mouse 0</code>), or <code>v4l2</code> of the
+<li id="the-picture-is-ffmpegs"><strong>The picture is ffmpeg's.</strong> <code>x11grab</code> of the display (<code>-draw_mouse 0</code>), or <code>v4l2</code> of the
    camera, encoded with libx264 on two threads at <code>nice -n 10</code>: the Pi 5 has no hardware H.264
    encoder (ffmpeg lists <code>h264_v4l2m2m</code>, but the Pi 5's V4L2 nodes are its ISP and HEVC
    decoder). The tiers, measured below, all run with 0 xruns.</li>
-<li><strong>Sync without a shared clock.</strong> ffmpeg stamps every grabbed frame with the wall clock
+<li id="sync-without-a-shared-clock"><strong>Sync without a shared clock.</strong> ffmpeg stamps every grabbed frame with the wall clock
    (<code>-use_wallclock_as_timestamps 1</code>; on this ffmpeg x11grab's default stamps are the wall clock
    too). The tap takes the wall-clock moment of its first sample on the audio thread, from the
    cycle's own start (<code>jack_get_cycle_times</code>: the cycle began <code>now − (jack_get_time() −
    cycle_usecs)</code> ago), and ffmpeg is told it with <code>-itsoffset</code> on the audio input. With
    <code>-copyts</code> both streams sit on the same absolute clock in the file, to the millisecond.</li>
-<li><strong>Matroska first, then one remux.</strong> The recording goes to <code>.recording-&lt;stamp&gt;.mkv</code>: a
+<li id="matroska-first-then-one-remux"><strong>Matroska first, then one remux.</strong> The recording goes to <code>.recording-&lt;stamp&gt;.mkv</code>: a
    Matroska is readable even if ravving or ffmpeg dies (an MP4 without its index is not). On
    STOP the tap closes the pipe (ffmpeg's audio input ends), ffmpeg gets SIGINT and finishes
    its file, and ffprobe reads the two streams' start times: the audio began while ffmpeg was
@@ -427,6 +431,56 @@ shell and is not supported.</p>
   </div>
 </footer>
 <script>document.documentElement.classList.remove("no-js");
-if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;</script>
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  function load(done) {
+    if (index) return done();
+    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
 </body>
 </html>
