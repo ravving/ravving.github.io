@@ -502,24 +502,6 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .landing-glow { position: absolute; inset: 20% 10% 0; border-radius: 50%;
   background: radial-gradient(closest-side, rgba(242, 93, 10, 0.32), transparent);
   filter: blur(40px); animation: landing-glow 2s ease-out 0.4s both; }
-/* the screen's area on the artwork, in percent (as the features page's regions); it plays the
-   app's ZOOM startup (SETTINGS · STARTUP, qml/SplashLook.qml): the fluid logo on the splash colour,
-   rushing at the viewer and fading as it grows, the colour going a moment later */
-.landing-screen { position: absolute; left: 22.96%; top: 17.28%; width: 53.9%; height: 43.95%; background: #06050a;
-  border-radius: 1.2%; overflow: hidden; display: grid; place-items: center; pointer-events: none;
-  animation: landing-power 0.5s ease-in-out 2.75s both; }
-.landing-splash { position: relative; width: 84%; animation: landing-zoom 0.85s cubic-bezier(0.55, 0.085, 0.68, 0.53) 2.4s both; }
-.landing-fade { position: relative; animation: landing-logo 1.65s 1.4s both; }
-.landing-fade img { display: block; width: 100%; height: auto; }
-.landing-halo { position: absolute; inset: 0; animation: landing-halo 1s ease-in-out 1.5s both; }
-@keyframes landing-rise { from { opacity: 0; transform: translateY(60px) rotateX(18deg) scale(0.94); } to { opacity: 1; transform: none; } }
-@keyframes landing-glow { from { opacity: 0; } to { opacity: 1; } }
-@keyframes landing-power { from { opacity: 1; } to { opacity: 0; } }
-@keyframes landing-zoom { from { transform: scale(1); } to { transform: scale(5); } }
-@keyframes landing-logo { 0% { opacity: 0; animation-timing-function: ease-out; } 21% { opacity: 1; }
-  60.6% { opacity: 1; animation-timing-function: ease-in-out; } 100% { opacity: 0; } }
-@keyframes landing-halo { 0% { opacity: 0; } 50% { opacity: 0.8; } 100% { opacity: 0.3; } }
-
 .landing-get { margin: clamp(28px, 4vw, 44px) auto 0; }
 /* the download is one of the device's keys: a charcoal cap, its legend lit, pressed on hover */
 .landing-button { display: inline-flex; align-items: center; gap: 12px; padding: 15px 26px 14px; border-radius: 4px;
@@ -580,7 +562,7 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .nav nav.langs a { white-space: nowrap; }
 @media (max-width: 480px) { .landing .nav nav[aria-label="Sections"] a[href$="#shortcuts"] { display: none; } }
 @media (prefers-reduced-motion: reduce) {
-  .landing-stage, .landing-glow, .landing-screen { animation: none; }
+  .landing-stage, .landing-glow { animation: none; }
   .landing-button { transition: none; }
 }
 
@@ -626,33 +608,24 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
   animation: bp-lit 0.5s ease-out calc(var(--d) + 0.6s) forwards; filter: drop-shadow(0 0 4px var(--c)); }
 .bp line.lamp { display: inline; stroke: var(--c); stroke-width: 2; opacity: 0; animation: bp-lit 0.5s ease-out calc(var(--d) + 0.6s) forwards; }
 .bp .icon { fill: none; stroke: var(--c); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; opacity: 0;
-  filter: drop-shadow(0 0 4px var(--c)); animation: bp-lit 0.5s ease-out 2.1s forwards; }
+  filter: drop-shadow(0 0 4px var(--c)); animation: bp-lit 0.5s ease-out 1.6s forwards; }
 .bp .icon.fill { fill: var(--c); stroke: none; }
 /* the step keys: lit in a run, then a sequence playing: each flashes as the playhead passes it
-   (in step with the screen's, 0.2 s a step from 5.2 s) and rests dim in its colour */
+   (in step with the screen's, 0.2 s a step from 2.6 s) and rests dim in its colour */
 .bp .step { fill: var(--c); opacity: 0; filter: drop-shadow(0 0 5px var(--c));
-  animation: bp-step 0.35s ease-out calc(4s + var(--i) * 0.06s) forwards, bp-seq 3.2s steps(1, end) calc(5.2s + var(--i) * 0.2s) infinite; }
+  animation: bp-step 0.35s ease-out calc(1.9s + var(--i) * 0.03s) forwards, bp-seq 3.2s steps(1, end) calc(2.6s + var(--i) * 0.2s) infinite; }
 @keyframes bp-seq { 0% { opacity: 1; } 6.25% { opacity: 0.28; } 100% { opacity: 0.28; } }
 @keyframes bp-draw { to { stroke-dashoffset: 0; } }
 /* the drums page on the screen: thinner lines, the beat's hits, a playhead walking the 16 steps */
 .bp .ln.ui { stroke: rgba(236, 240, 248, 0.72); stroke-width: calc(var(--bp-w) * 0.75); animation-duration: 0.6s; }
 .bp .hit { fill: #ff5a4a; opacity: 0; filter: drop-shadow(0 0 2px #ff5a4a); animation: bp-lit 0.3s ease-out var(--d) forwards; }
-.bp .playhead { fill: rgba(255, 255, 255, 0.10); opacity: 0; animation: bp-lit 0.3s ease-out 5.2s forwards, bp-play 3.2s steps(16, jump-none) 5.2s infinite; }
+.bp .playhead { fill: rgba(255, 255, 255, 0.10); opacity: 0; animation: bp-lit 0.3s ease-out 2.6s forwards, bp-play 3.2s steps(16, jump-none) 2.6s infinite; }
 @keyframes bp-play { from { transform: translateX(0); } to { transform: translateX(calc(var(--step) * 15)); } }
 @keyframes bp-lit { to { opacity: 1; } }
 @keyframes bp-step { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0.28; } }
-/* the screen: it powers on to the splash once drawn, then shows the app */
-.bp-screen { background: transparent; animation: none; }
-.bp-boot { position: absolute; inset: 0; display: grid; place-items: center; background: #06050a; opacity: 0;
-  animation: bp-power-on 0.3s ease-out 1.9s forwards, landing-power 0.5s ease-in-out 3.45s forwards; }
-.bp-boot .landing-splash { animation-delay: 3.1s; }
-.bp-boot .landing-fade { animation-delay: 2.1s; }
-.bp-boot .landing-halo { animation-delay: 2.2s; }
-@keyframes bp-power-on { from { opacity: 0; } to { opacity: 1; } }
 .landing-device:has(.bp) .landing-glow { background: radial-gradient(closest-side, rgba(74, 155, 255, 0.16), transparent); }
 @media (prefers-reduced-motion: reduce) {
   .bp .ln { stroke-dashoffset: 0; animation: none; }
   .bp text, .bp line.lamp, .bp .icon, .bp .step, .bp .hit { opacity: 1; animation: none; }
   .bp .playhead { display: none; }
-  .bp-boot { display: none; }
 }
