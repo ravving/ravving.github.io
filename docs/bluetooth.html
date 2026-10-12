@@ -299,7 +299,16 @@ microphone at the headphones: play a click through the route and record it).</p>
   sets the output in use to SBC-XQ when it offers it, or back to plain SBC when off, once per
   connection (<code>wpctl set-profile &lt;device id&gt; &lt;index&gt;</code>; WirePlumber kept no profile for it). The
   switch replaces the sink node under the same name; ravving routes to it again (AudioOutputs
-  notices the node id changing). Measured: the WH-CH720N plays SBC-XQ cleanly (2026-10-11).</p>
+  notices the node id changing). Measured: the WH-CH720N plays SBC-XQ cleanly (2026-10-11).
+- <strong>Offered is not sustained.</strong> A device advertises the SBC bitpools it decodes (A2DP's
+  capability exchange) and PipeWire offers <code>a2dp-sink-sbc_xq</code> only within them: that is the one
+  standard check, and it passes for any device that claims the bitpool. Whether its radio and
+  firmware keep up at ~550 kb/s (a shared 2.4 GHz link, Wi-Fi beside it) is not reported by
+  anything: the LG SJ1 claims it, then crunched, dropped its link twice (<code>spa.bluez5: Failed to
+  release transport … Input/output error</code>) and disconnected when its codec was switched while
+  connected (2026-10-12). Each device therefore has its own SBC-XQ chip in the BLUETOOTH dialog
+  (<code>AudioOutputs.sbcXqByDevice</code>, <code>setSbcXqFor()</code>), off for such a device: it then connects on
+  plain SBC and is never renegotiated; one without its own choice follows SETTINGS.</p>
 <h2 id="one-audio-device-at-a-time-the-lg-speaker-against-the-sony-2026-10-10">One audio device at a time (the LG speaker against the Sony, 2026-10-10)</h2>
 <p>The user's report: the Sony WH-CH720N headphones connect every time; the LG speaker is
 "flaky", and after a night idle it reconnects at once from a phone but not from milo. Read
