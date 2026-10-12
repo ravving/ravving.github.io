@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- tuner.cpp -->
-  <meta name="description" content="The TUNER (the RECORDER's GUITAR tab): the pitch of the string played into the device input, against a tuning's open strings; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;input&lt;@op&gt;.&lt;/@op&gt;tuner.">
+  <meta name="description" content="Measures the pitch of a string played into the device input against a tuning's open strings; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;input&lt;@op&gt;.&lt;/@op&gt;tuner.">
   <meta name="keywords" content="class">
   <title>Tuner Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">Tuner Class</h1>
 <!-- $$$Tuner-brief -->
-<p>The TUNER (the RECORDER's GUITAR tab): the pitch of the string played into the device input, against a tuning's open strings; published to QML as <code translate="no">studio.input.tuner</code>. <a href="#details">More...</a></p>
+<p>Measures the pitch of a string played into the device input against a tuning's open strings; published to QML as <code translate="no">studio.input.tuner</code>. <a href="#details">More...</a></p>
 <!-- @@@Tuner -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;tuner.h&gt;</code></td></tr>
@@ -164,10 +164,10 @@
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <ul>
-<li>Hearing: ravving's own JACK client (<code translate="no">ravving-tuner</code>, one input) on the dry input jack in use (<a href="tuner.html#setSourcePort" translate="no">setSourcePort</a>(): <a href="inputrecorder.html" translate="no">InputRecorder</a>'s, before the live effects, which would hide the pitch). It runs only while active (the tuner on screen): activated then and deactivated after, so it costs the audio graph nothing otherwise. The audio thread only copies into a lock-free ring; a <a href="pitchdetector.html" translate="no">PitchDetector</a> reads it on the GUI thread 20 times a second (under 1.5 ms a read on the device).</li>
-<li>Tunings are data (<code translate="no">data/tunings.json</code>): an instrument, a name and the open strings as MIDI notes from the lowest. reference is A4 in Hz. The tuning, the mode and the reference are the device's, kept in the settings.</li>
-<li>AUTO (automatic): the strings in order; a string held within tolerance cents for 0.8 s is tuned (<a href="tuner.html#stringTuned" translate="no">stringTuned</a>()), and a moment later the next untuned string is the target; after the last, <a href="tuner.html#allTuned-prop" translate="no">allTuned</a>. MANUAL: the string picked (<a href="tuner.html#string-prop" translate="no">setString</a>(), a tap) is the target and stays; it is still marked once held in tune.</li>
-<li>The reading is smoothed as Tom Schimansky's GuitarTuner does (a short average for the needle, the note name changed only once several readings agree): the frequency, the nearest note and its cents, the cents off the target string, whether that is in tune and how far the hold has gone, and the string the note is nearest to (<a href="tuner.html#heardString-prop" translate="no">heardString</a>: another string than the target means the wrong one is being played).</li>
+<li>Input: ravving's own JACK client (<code translate="no">ravving-tuner</code>, one input) on the dry input jack in use (<a href="tuner.html#setSourcePort" translate="no">setSourcePort</a>(): <a href="inputrecorder.html" translate="no">InputRecorder</a>'s, before the input effects). The client is activated only while active is set, so it costs the audio graph nothing otherwise. The audio thread only copies into a lock-free ring; a <a href="pitchdetector.html" translate="no">PitchDetector</a> reads it on the GUI thread every 50 ms.</li>
+<li>Tunings come from <code translate="no">data/tunings.json</code>: an instrument, a name and the open strings as MIDI notes from the lowest. reference is A4 in Hz. The tuning, the mode and the reference are device settings, stored in QSettings.</li>
+<li>Automatic mode: the strings in order; a string held within tolerance for 0.8 s is marked tuned (<a href="tuner.html#stringTuned" translate="no">stringTuned</a>()), and 0.7 s later the next untuned string becomes the target; after the last, <a href="tuner.html#allTuned-prop" translate="no">allTuned</a> is set. Manual mode: the string set with <a href="tuner.html#string-prop" translate="no">setString</a>() is the target and stays; it is still marked once held in tune.</li>
+<li>The reading is smoothed (the frequency is the median of the last five readings, and the note changes only after three consecutive readings agree on a new one): the frequency, the nearest note and its cents, the cents off the target string, whether that is in tune and how far the hold has gone, and the string the note is nearest to (<a href="tuner.html#heardString-prop" translate="no">heardString</a>).</li>
 </ul>
 </div>
 <!-- @@@Tuner -->
@@ -176,7 +176,7 @@
 <div class="fnitem">
 <!-- $$$active-prop$$$active$$$setActivebool$$$activeChanged -->
 <h3 class="fn" translate="no" id="active-prop"><span class="name">active</span> : <span class="type">bool</span></h3>
-<p>This property holds whether it listens (the tuner on screen).</p>
+<p>This property holds whether the tuner listens; its JACK client is active only while this is set.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>active</b></span>() const</td></tr>
@@ -205,7 +205,7 @@
 <div class="fnitem">
 <!-- $$$allTunedSound-prop$$$allTunedSound -->
 <h3 class="fn" translate="no" id="allTunedSound-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">allTunedSound</span> : const <span class="type">QString</span></h3>
-<p>This property holds the cue the tuner panel plays when the last string is marked in tune.</p>
+<p>This property holds the path of the cue sound for the last string marked in tune.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>allTunedSound</b></span>() const</td></tr>
@@ -215,7 +215,7 @@
 <div class="fnitem">
 <!-- $$$automatic-prop$$$automatic$$$setAutomaticbool$$$modeChanged -->
 <h3 class="fn" translate="no" id="automatic-prop"><span class="name">automatic</span> : <span class="type">bool</span></h3>
-<p>AUTO (string after string) when <code translate="no">true</code>, MANUAL (the string picked) when <code translate="no">false</code>.</p>
+<p>automatic mode (string after string) when <code translate="no">true</code>, manual mode (the string set) when <code translate="no">false</code>.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>automatic</b></span>() const</td></tr>
@@ -230,7 +230,7 @@
 <div class="fnitem">
 <!-- $$$available-prop$$$available -->
 <h3 class="fn" translate="no" id="available-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">available</span> : const <span class="type">bool</span></h3>
-<p>This property holds whether the tuner can hear anything here; <code translate="no">false</code> on a desktop.</p>
+<p>This property holds whether the tuner can hear an input: <code translate="no">false</code> on a desktop run (no JACK).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>available</b></span>() const</td></tr>
@@ -454,7 +454,7 @@
 <div class="fnitem">
 <!-- $$$tunedSound-prop$$$tunedSound -->
 <h3 class="fn" translate="no" id="tunedSound-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">tunedSound</span> : const <span class="type">QString</span></h3>
-<p>This property holds the cue the tuner panel plays when a string is marked in tune (<code translate="no">data/sounds</code>, through <a href="studio.html#previewSample" translate="no">Studio::previewSample</a>()).</p>
+<p>This property holds the path of the cue sound for a string marked in tune (in <code translate="no">data/sounds</code>).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>tunedSound</b></span>() const</td></tr>
@@ -492,7 +492,7 @@
 <div class="fnitem">
 <!-- $$$Tuner[overload1]$$$TunerconstQString&boolQObject* -->
 <h3 class="fn" translate="no" id="Tuner">Tuner::<span class="name">Tuner</span>(const <span class="type">QString</span> &amp;<i>tuningsFile</i>, <span class="type">bool</span> <i>live</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Reads the tunings from <i translate="no">tuningsFile</i> (<code translate="no">data/tunings.json</code>) and the saved settings, with the given <i translate="no">parent</i>. With <i translate="no">live</i> true (on the device) a JACK client is made when the tuner is first active; with <i translate="no">live</i> false nothing is heard.</p>
+<p>Reads the tunings from <i translate="no">tuningsFile</i> (<code translate="no">data/tunings.json</code>) and the saved settings, with the given <i translate="no">parent</i>. With <i translate="no">live</i> true a JACK client is created when the tuner is first active; with <i translate="no">live</i> false nothing is heard.</p>
 <!-- @@@Tuner -->
 </div>
 <div class="fnitem">
@@ -525,7 +525,7 @@
 <div class="fnitem">
 <!-- $$$stringTuned[overload1]$$$stringTunedint -->
 <h3 class="fn" translate="no" id="stringTuned"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Tuner::<span class="name">stringTuned</span>(<span class="type">int</span> <i>index</i>)</h3>
-<p>Emitted when string <i translate="no">index</i> was held in tune and marked tuned: a cue for the screen.</p>
+<p>Emitted when string <i translate="no">index</i> was held in tune and marked tuned.</p>
 <!-- @@@stringTuned -->
 </div>
 <div class="fnitem">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- trackeffects.cpp -->
-  <meta name="description" content="One machine's SOUND EFFECTS (the EffectChain), on its track's JackPassthrough, the processing every libzynthbox track has; published to QML as machine&lt;@op&gt;.&lt;/@op&gt;effects.">
+  <meta name="description" content="One machine's effects (the EffectChain), on its track's JackPassthrough, the processing every libzynthbox track has; published to QML as machine&lt;@op&gt;.&lt;/@op&gt;effects.">
   <meta name="keywords" content="class">
   <title>TrackEffects Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">TrackEffects Class</h1>
 <!-- $$$TrackEffects-brief -->
-<p>One machine's SOUND EFFECTS (the <a href="effectchain.html" translate="no">EffectChain</a>), on its track's JackPassthrough, the processing every libzynthbox track has; published to QML as <code translate="no">machine.effects</code>. <a href="#details">More...</a></p>
+<p>One machine's effects (the <a href="effectchain.html" translate="no">EffectChain</a>), on its track's JackPassthrough, the processing every libzynthbox track has; published to QML as <code translate="no">machine.effects</code>. <a href="#details">More...</a></p>
 <!-- @@@TrackEffects -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;trackeffects.h&gt;</code></td></tr>
@@ -124,12 +124,12 @@
 <ul>
 <li>EQ: the passthrough's equaliser; LOW, MID and HIGH are its low shelf (250 Hz), mid peak (1 kHz) and high shelf (5 kHz), ±12 dB with the centre flat;</li>
 <li>COMPRESSOR: the passthrough's compressor; THRESH -40 to 0 dB, RATIO 1:1 to 20:1, MAKEUP 0 to 24 dB;</li>
-<li>SIDECHAIN: the same compressor keyed from the sidechain source (DRUMS 1, the kick machine), for the pumping duck; DEPTH sets how deep (threshold and ratio together), RELEASE how fast it comes back (40 to 500 ms). With COMPRESSOR on as well, MAKEUP still applies;</li>
-<li>PAN: the passthrough's pan (the strip's PAN knob is the same value);</li>
-<li>REVERB and DELAY: sends into the studio's <a href="globaleffects.html" translate="no">GlobalEffects</a>; MIX is the send level (the reverb reaching +6 dB at 100 %, the delay unity), and the shared knobs are <a href="globaleffects.html" translate="no">GlobalEffects</a>'. The header's ECHO raises every delay send to its level (<a href="trackeffects.html#setEchoThrow" translate="no">setEchoThrow</a>());</li>
-<li>DRIVE: a saturator first in the chain (its distortion feeds the rest): the machine's own Calf Saturator (<a href="trackeffects.html#DriveUri-var" translate="no">DriveUri</a>, <a href="trackeffects.html#attachDrive" translate="no">attachDrive</a>()), between its engine and its track only while DRIVE is on (<a href="trackeffects.html#driveSwitched" translate="no">driveSwitched</a>(); <a href="jackwiring.html" translate="no">JackWiring</a> moves it in and out) and started the first time it is. AMOUNT is how hard it saturates (input gain up to +36 dB and the saturation itself), with the output turned down to match, so DRIVE changes the tone rather than the level; TONE darkens it (a low-pass after it, 1.2 kHz at 0 to wide open at 100 %).</li>
+<li>SIDECHAIN: the same compressor keyed from the sidechain source (<a href="trackeffects.html#attach" translate="no">attach</a>()); DEPTH sets how deep (threshold and ratio together), RELEASE how fast it recovers (40 to 500 ms). With COMPRESSOR on as well, MAKEUP still applies;</li>
+<li>PAN: the passthrough's pan (<a href="trackeffects.html#pan" translate="no">pan</a>());</li>
+<li>REVERB and DELAY: sends into the studio's <a href="globaleffects.html" translate="no">GlobalEffects</a>; MIX is the send level (the reverb reaching +6 dB at 100 %, the delay unity), and the shared knobs are <a href="globaleffects.html" translate="no">GlobalEffects</a>'. <a href="trackeffects.html#setEchoThrow" translate="no">setEchoThrow</a>() raises the delay send to at least a given level;</li>
+<li>DRIVE: a saturator first in the chain (its distortion feeds the rest): the machine's own Calf Saturator (<a href="trackeffects.html#DriveUri-var" translate="no">DriveUri</a>, <a href="trackeffects.html#attachDrive" translate="no">attachDrive</a>()), between its engine and its track only while DRIVE is on (<a href="trackeffects.html#driveSwitched" translate="no">driveSwitched</a>(); <a href="jackwiring.html" translate="no">JackWiring</a> moves it in and out), started the first time it is switched on. AMOUNT is how hard it saturates (input gain up to +36 dB and the saturation itself), with the output turned down to match, so DRIVE changes the tone rather than the level; TONE darkens it (a low-pass after it, from 1.2 kHz at 0 to wide open at 100 %).</li>
 </ul>
-<p>The sends follow the machine's fader (<a href="trackeffects.html#setSendLevel" translate="no">setSendLevel</a>()). Without a passthrough (a desktop run) everything is kept and nothing sounds. GUI thread only.</p>
+<p>The sends follow the machine's level (<a href="trackeffects.html#setSendLevel" translate="no">setSendLevel</a>()). Without a passthrough (a desktop run) everything is kept and nothing sounds. GUI thread only.</p>
 </div>
 <!-- @@@TrackEffects -->
 <div class="prop">
@@ -184,7 +184,7 @@
 <div class="fnitem">
 <!-- $$$attach[overload1]$$$attachQObject*constQString& -->
 <h3 class="fn" translate="no" id="attach"><span class="type">void</span> TrackEffects::<span class="name">attach</span>(<span class="type">QObject</span> *<i>lane</i>, const <span class="type">QString</span> &amp;<i>sidechainSource</i>)</h3>
-<p>Works on the track: <i translate="no">lane</i> is its JackPassthrough, and <i translate="no">sidechainSource</i> what SIDECHAIN keys from, in libzynthbox's audio-source terms (<code translate="no">synthSlot:0:dry0</code> is DRUMS 1's sound). Everything is written to the passthrough.</p>
+<p>Attaches the effects to the track: <i translate="no">lane</i> is its JackPassthrough, and <i translate="no">sidechainSource</i> what SIDECHAIN keys from, in libzynthbox's audio-source terms (such as <code translate="no">synthSlot:0:dry0</code>, the first track's synth). Everything is written to the passthrough.</p>
 <!-- @@@attach -->
 </div>
 <div class="fnitem">
@@ -215,7 +215,7 @@
 <div class="fnitem">
 <!-- $$$setEchoThrow[overload1]$$$setEchoThrowdouble -->
 <h3 class="fn" translate="no" id="setEchoThrow"><span class="type">void</span> TrackEffects::<span class="name">setEchoThrow</span>(<span class="type">double</span> <i>level</i>)</h3>
-<p>LIVE FX ECHO: the delay send is at least <i translate="no">level</i> (0..1), DELAY on or not. Not saved.</p>
+<p>Raises the delay send to at least <i translate="no">level</i> (0..1), whether DELAY is on or not; <a href="livefx.html" translate="no">LiveFx</a>'s echo uses it. Not saved.</p>
 <!-- @@@setEchoThrow -->
 </div>
 <div class="fnitem">
@@ -236,7 +236,7 @@
 <div class="fnitem">
 <!-- $$$setSendLevel[overload1]$$$setSendLeveldouble -->
 <h3 class="fn" translate="no" id="setSendLevel"><span class="type">void</span> TrackEffects::<span class="name">setSendLevel</span>(<span class="type">double</span> <i>gain</i>)</h3>
-<p>Sets the machine's fader as a raw <i translate="no">gain</i>: the sends are scaled by it too, so the reverb and the delay follow VOL as the dry sound does (post-fader), and VOL 0 silences them.</p>
+<p>Sets the machine's level as a raw <i translate="no">gain</i>: the sends are scaled by it too, so the reverb and the delay follow the level as the dry sound does (post-fader), and a gain of 0 silences them.</p>
 <!-- @@@setSendLevel -->
 </div>
 <div class="fnitem">

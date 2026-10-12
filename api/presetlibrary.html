@@ -120,9 +120,9 @@
 <!-- $$$PresetLibrary-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Each machine kind has one (<code translate="no">drum-presets.json</code>, <code translate="no">bass-presets.json...</code>); the three drum machines share theirs, published to QML as <code translate="no">studio.drumPresets</code>. The machines read charts from it and save into it.</p>
-<p>A preset is a chart: one string per row, one character per step, 16 characters per bar, so a 32-character row is a two-bar preset. For the drums a row is a role (KICK to PERC; &quot;x&quot; a hit, &quot;X&quot; an accented hit), so every preset plays on every kit; the other machines chart their own rows (Machine subclasses).</p>
-<p>A preset may also keep the sound it was made with, under <code translate="no">sound</code> beside its <code translate="no">chart</code>: a subset of <a href="machine.html#soundState" translate="no">Machine::soundState</a>() (<code translate="no">soundSource</code>, <code translate="no">soundPreset</code>, <code translate="no">sound</code>, <code translate="no">sourceSound</code>; a drum machine's <code translate="no">kit</code>). A user preset saved on the device keeps what is set of the machine's sound (<a href="presetlibrary.html#setParts" translate="no">setParts</a>()); a curated one may name only its source or kit. Loading a preset WITH ITS SOUND puts the parts it names back (<a href="machine.html#applySoundParts" translate="no">Machine::applySoundParts</a>()); a preset without one is a pattern only. GUI thread only.</p>
+<p>Each machine kind has one (<code translate="no">drum-presets.json</code>, <code translate="no">bass-presets.json...</code>); the drum machines share theirs, published to QML as <code translate="no">studio.drumPresets</code>. The machines read charts from it and save into it.</p>
+<p>A preset is a chart: one string per row, one character per step, 16 characters per bar, so a 32-character row is a two-bar preset. For the drums a row is a role (KICK to PERC; &quot;x&quot; a hit, &quot;X&quot; an accented hit), so every preset plays on every kit; the other machines define their own rows (Machine subclasses).</p>
+<p>A preset may also keep the sound it was made with, under <code translate="no">sound</code> beside its <code translate="no">chart</code>: a subset of <a href="machine.html#soundState" translate="no">Machine::soundState</a>() (<code translate="no">soundSource</code>, <code translate="no">soundPreset</code>, <code translate="no">sound</code>, <code translate="no">sourceSound</code>; a drum machine's <code translate="no">kit</code>). A user preset keeps the parts of the machine's sound that are set (<a href="presetlibrary.html#setParts" translate="no">setParts</a>()); a factory one may name only its source or kit. Loading a preset with its sound restores the parts it names (<a href="machine.html#applySoundParts" translate="no">Machine::applySoundParts</a>()); a preset without one is a pattern only. GUI thread only.</p>
 </div>
 <!-- @@@PresetLibrary -->
 <div class="prop">
@@ -189,19 +189,19 @@
 <div class="fnitem">
 <!-- $$$hasMods[overload1]$$$hasModsconstQVariantMap& -->
 <h3 class="fn" translate="no" id="hasMods"><code class="details extra" translate="no">[static]</code> <span class="type">bool</span> PresetLibrary::<span class="name">hasMods</span>(const <span class="type">QVariantMap</span> &amp;<i>sound</i>)</h3>
-<p>Returns whether <i translate="no">sound</i> keeps MODS: the own engine's (<code translate="no">sound</code>), the soundfonts' (<code translate="no">sourceSound</code>) or a synth source's (<code translate="no">sourceSounds</code>).</p>
+<p>Returns whether <i translate="no">sound</i> keeps sound-control values: the own engine's (<code translate="no">sound</code>), the soundfonts' (<code translate="no">sourceSound</code>) or a synth source's (<code translate="no">sourceSounds</code>).</p>
 <!-- @@@hasMods -->
 </div>
 <div class="fnitem">
 <!-- $$$importUserPreset[overload1]$$$importUserPresetconstQVariantMap& -->
 <h3 class="fn" translate="no" id="importUserPreset"><span class="type">QString</span> PresetLibrary::<span class="name">importUserPreset</span>(const <span class="type">QVariantMap</span> &amp;<i>preset</i>)</h3>
-<p>Takes in <i translate="no">preset</i>, made elsewhere (a stick), under its own name made unique against the factory's and the user's. Returns that name, or an empty string for an entry without a chart.</p>
+<p>Imports <i translate="no">preset</i>, made elsewhere (such as on a USB stick), under its own name made unique against the factory's and the user's. Returns that name, or an empty string for an entry without a chart.</p>
 <!-- @@@importUserPreset -->
 </div>
 <div class="fnitem">
 <!-- $$$nextUserName[overload1]$$$nextUserName -->
 <h3 class="fn" translate="no" id="nextUserName"><span class="type">QString</span> PresetLibrary::<span class="name">nextUserName</span>() const</h3>
-<p>Returns the name a new user preset gets unless the user types one: the factory file's <code translate="no">userName</code> and the next free number (&quot;My Beat 3&quot;, &quot;My Progression 4&quot;...).</p>
+<p>Returns the default name of a new user preset: the factory file's <code translate="no">userName</code> and the next free number (&quot;My Beat 3&quot;, &quot;My Progression 4&quot;...).</p>
 <!-- @@@nextUserName -->
 </div>
 <div class="fnitem">
@@ -214,7 +214,7 @@
 <div class="fnitem">
 <!-- $$$setParts[overload1]$$$setPartsconstQVariantMap& -->
 <h3 class="fn" translate="no" id="setParts"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantMap</span> PresetLibrary::<span class="name">setParts</span>(const <span class="type">QVariantMap</span> &amp;<i>sound</i>)</h3>
-<p>Returns <i translate="no">sound</i> (<a href="machine.html#soundState" translate="no">Machine::soundState</a>()) with only the parts that are set: no factory sound when none is loaded, no MODS set nobody turned. A preset keeps this, so loading it leaves alone what it does not say.</p>
+<p>Returns <i translate="no">sound</i> (<a href="machine.html#soundState" translate="no">Machine::soundState</a>()) with only the parts that are set: no factory sound when none is loaded, no sound-control set left at its defaults. A preset keeps this, so loading it leaves alone what it does not name.</p>
 <!-- @@@setParts -->
 </div>
 <div class="fnitem">
@@ -226,13 +226,13 @@
 <div class="fnitem">
 <!-- $$$soundFields[overload1]$$$soundFieldsconstQVariantMap& -->
 <h3 class="fn" translate="no" id="soundFields"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantMap</span> PresetLibrary::<span class="name">soundFields</span>(const <span class="type">QVariantMap</span> &amp;<i>preset</i>)</h3>
-<p>Returns what a presets list says of <i translate="no">preset</i>'s sound: a map with <code translate="no">sound</code> (<a href="presetlibrary.html#soundNameOf" translate="no">soundNameOf</a>()), <code translate="no">soundKit</code> (its kit's path, empty for none) and <code translate="no">soundMods</code> (whether it keeps MODS: <a href="presetlibrary.html#hasMods" translate="no">hasMods</a>()).</p>
+<p>Returns a summary of <i translate="no">preset</i>'s sound: a map with <code translate="no">sound</code> (<a href="presetlibrary.html#soundNameOf" translate="no">soundNameOf</a>()), <code translate="no">soundKit</code> (its kit's path, empty for none) and <code translate="no">soundMods</code> (whether it keeps sound-control values: <a href="presetlibrary.html#hasMods" translate="no">hasMods</a>()).</p>
 <!-- @@@soundFields -->
 </div>
 <div class="fnitem">
 <!-- $$$soundNameOf[overload1]$$$soundNameOfconstQVariantMap& -->
 <h3 class="fn" translate="no" id="soundNameOf"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> PresetLibrary::<span class="name">soundNameOf</span>(const <span class="type">QVariantMap</span> &amp;<i>preset</i>)</h3>
-<p>Returns what the sound of <i translate="no">preset</i> is called, for the presets dialog: its kit's name, its factory sound, else its source (&quot;SOUND&quot; when it names none of them); empty without a sound.</p>
+<p>Returns the display name of <i translate="no">preset</i>'s sound: its kit's name, its factory sound, else its source (&quot;SOUND&quot; when it names none of them); empty without a sound.</p>
 <!-- @@@soundNameOf -->
 </div>
 <div class="fnitem">
@@ -244,13 +244,13 @@
 <div class="fnitem">
 <!-- $$$soundParts[overload1]$$$soundPartsconstQVariantMap&boolbool -->
 <h3 class="fn" translate="no" id="soundParts"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantMap</span> PresetLibrary::<span class="name">soundParts</span>(const <span class="type">QVariantMap</span> &amp;<i>sound</i>, <span class="type">bool</span> <i>withSound</i>, <span class="type">bool</span> <i>withMods</i>)</h3>
-<p>Returns the parts of <i translate="no">sound</i> the presets dialog asks for: the source or kit and the factory sound with <i translate="no">withSound</i> (WITH ITS SOUND), the MODS with <i translate="no">withMods</i> (WITH ITS MODS); an empty map with neither.</p>
+<p>Returns the parts of <i translate="no">sound</i> to restore: the source or kit and the factory sound with <i translate="no">withSound</i>, the sound-control values with <i translate="no">withMods</i>; an empty map with neither.</p>
 <!-- @@@soundParts -->
 </div>
 <div class="fnitem">
 <!-- $$$userPresets[overload1]$$$userPresets -->
 <h3 class="fn" translate="no" id="userPresets"><span class="type">QVariantList</span> PresetLibrary::<span class="name">userPresets</span>() const</h3>
-<p>Returns the user's own presets as stored (maps with <code translate="no">name</code>, <code translate="no">chart...</code>), for sharing.</p>
+<p>Returns the user's own presets as stored (maps with <code translate="no">name</code>, <code translate="no">chart...</code>), for export.</p>
 <!-- @@@userPresets -->
 </div>
 </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- audiooutputs.cpp -->
-  <meta name="description" content="Where the sound goes: the device's jacks, an HDMI screen, or a connected Bluetooth speaker or headphones; published to QML as outputs (the control center's AUDIO OUTPUT).">
+  <meta name="description" content="Where the sound goes: the device's jacks, an HDMI screen, or a connected Bluetooth speaker or headphones; published to QML as outputs.">
   <meta name="keywords" content="class">
   <title>AudioOutputs Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">AudioOutputs Class</h1>
 <!-- $$$AudioOutputs-brief -->
-<p>Where the sound goes: the device's jacks, an HDMI screen, or a connected Bluetooth speaker or headphones; published to QML as <code translate="no">outputs</code> (the control center's AUDIO OUTPUT). <a href="#details">More...</a></p>
+<p>Where the sound goes: the device's jacks, an HDMI screen, or a connected Bluetooth speaker or headphones; published to QML as <code translate="no">outputs</code>. <a href="#details">More...</a></p>
 <!-- @@@AudioOutputs -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;audiooutputs.h&gt;</code></td></tr>
@@ -134,9 +134,9 @@
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p>The list (outputs) is PipeWire's audio sinks, read with <code translate="no">pw-dump</code>: the jacks (the HiFiBerry, the default) first, then Bluetooth, HDMI and the rest. current is the one in use.</p>
-<p>The jacks are the graph's clock: the master is wired straight to their ports (<a href="jackwiring.html" translate="no">JackWiring</a>). Any other sink is fed through ravving's own loopback: <code translate="no">pw-loopback</code> makes a virtual sink <code translate="no">ravving-out</code> whose playback stream targets the chosen sink with 2048 frames of buffering, and the master is linked to it with <code translate="no">pw-link</code>. The studio keeps its 256-frame clock on the HiFiBerry and the Bluetooth link gets its own buffering. Meanwhile the jacks are muted (<code translate="no">wpctl set-mute</code> on their sink), not unlinked: an unlinked ALSA sink is suspended by PipeWire, the Bluetooth sink (driver priority 1010 against the jacks' 10000) would then clock the whole graph from the Bluetooth transport, and a stall of that transport would silence everything. Making the Bluetooth sink the default sink would have the same effect.</p>
-<p>The output picked with <a href="audiooutputs.html#select" translate="no">select</a>() is kept in the settings (<code translate="no">ravving/outputs</code>): when it goes away (headphones turned off) the sound falls back to the jacks (<a href="audiooutputs.html#fallBack" translate="no">fallBack</a>()), and when it comes back (a start, a reconnection: <a href="audiooutputs.html#refreshSoon" translate="no">refreshSoon</a>()) the sound goes to it again, after its Bluetooth codec matches <a href="audiooutputs.html#preferSbcXq-prop" translate="no">preferSbcXq</a>. Picking the jacks forgets it. An <a href="outputwatch.html" translate="no">OutputWatch</a> checks that the loopback plays what the master sends: when it plays silence the route is made again once, then a &quot;plays no sound&quot; issue is reported. A Bluetooth device connected on its headset profile only is reported too.</p>
-<p>The music player follows <a href="audiooutputs.html#currentSink-prop" translate="no">currentSink</a>, since it plays beside the graph rather than through the master. The external commands run asynchronously (<a href="commandresult.html#runCommand" translate="no">runCommand</a>()); everything runs on the GUI thread. Output names are translated again on a language change.</p>
+<p>The jacks are the graph's clock: the master is wired straight to their ports (<a href="jackwiring.html" translate="no">JackWiring</a>). Any other sink is fed through ravving's own loopback: <code translate="no">pw-loopback</code> creates a virtual sink <code translate="no">ravving-out</code> whose playback stream targets the chosen sink with 2048 frames of buffering, and the master is linked to it with <code translate="no">pw-link</code>, so the studio keeps its clock on the jacks and the Bluetooth link gets its own buffering. Meanwhile the jacks are muted (<code translate="no">wpctl set-mute</code> on their sink), not unlinked: PipeWire suspends an unlinked ALSA sink, the Bluetooth sink would then drive the whole graph, and a stall of the Bluetooth transport would silence everything. Making the Bluetooth sink the default sink would have the same effect.</p>
+<p>The output chosen with <a href="audiooutputs.html#select" translate="no">select</a>() is saved in the settings (<code translate="no">ravving/outputs</code>): when it goes away the sound falls back to the jacks (<a href="audiooutputs.html#fallBack" translate="no">fallBack</a>()), and when it returns (at start, on a reconnection: <a href="audiooutputs.html#refreshSoon" translate="no">refreshSoon</a>()) the sound goes to it again, once its Bluetooth codec matches <a href="audiooutputs.html#preferSbcXq-prop" translate="no">preferSbcXq</a>. Selecting the jacks clears the choice. An <a href="outputwatch.html" translate="no">OutputWatch</a> checks that the loopback plays what the master sends: when it plays silence the route is rebuilt once, then a &quot;plays no sound&quot; issue is reported. A Bluetooth device connected with its headset profile only is reported too.</p>
+<p>The music player follows <a href="audiooutputs.html#currentSink-prop" translate="no">currentSink</a>, since it plays beside the graph rather than through the master. External commands run asynchronously (<a href="commandresult.html#runCommand" translate="no">runCommand</a>()); GUI thread only. Output names are translated again on a language change.</p>
 </div>
 <!-- @@@AudioOutputs -->
 <div class="prop">
@@ -273,7 +273,7 @@
 <div class="fnitem">
 <!-- $$$notify[overload1]$$$notifyconstQString&constQString& -->
 <h3 class="fn" translate="no" id="notify"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> AudioOutputs::<span class="name">notify</span>(const <span class="type">QString</span> &amp;<i>text</i>, const <span class="type">QString</span> &amp;<i>color</i>)</h3>
-<p>Emitted with a short status <i translate="no">text</i> to show as a toast in <i translate="no">color</i> (a CSS colour), such as &quot;PLAYING THROUGH THE JACKS&quot; or &quot;COULD NOT ROUTE THE OUTPUT&quot;.</p>
+<p>Emitted with a short translated status <i translate="no">text</i>, such as &quot;PLAYING THROUGH THE JACKS&quot; or &quot;COULD NOT ROUTE THE OUTPUT&quot;, and its <i translate="no">color</i> (a CSS colour).</p>
 <!-- @@@notify -->
 </div>
 <div class="fnitem">
@@ -286,7 +286,7 @@
 <div class="fnitem">
 <!-- $$$preferredAddress[overload1]$$$preferredAddress -->
 <h3 class="fn" translate="no" id="preferredAddress"><span class="type">QString</span> AudioOutputs::<span class="name">preferredAddress</span>() const</h3>
-<p>Returns the Bluetooth address of the output picked; empty for the jacks or any other output. Bluetooth connects that device again when it comes on, since its sink exists only once connected.</p>
+<p>Returns the Bluetooth address of the selected output; empty for the jacks or any other output. Bluetooth reconnects that device when the adapter comes on, since its sink exists only while connected.</p>
 <!-- @@@preferredAddress -->
 </div>
 <div class="fnitem">
@@ -319,7 +319,7 @@
 <div class="fnitem">
 <!-- $$$select[overload1]$$$selectconstQString& -->
 <h3 class="fn" translate="no" id="select"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> AudioOutputs::<span class="name">select</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
-<p>Sends the sound to the output <i translate="no">name</i> (<code translate="no">jacks</code> for the device's own) and keeps it as the user's choice. A Bluetooth output is routed once its codec is settled (by <a href="audiooutputs.html#refresh" translate="no">refresh</a>()).</p>
+<p>Sends the sound to the output <i translate="no">name</i> (<code translate="no">jacks</code> for the device's own) and saves it as the chosen output. A Bluetooth output is routed once its codec is settled (by <a href="audiooutputs.html#refresh" translate="no">refresh</a>()).</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@select -->
 </div>

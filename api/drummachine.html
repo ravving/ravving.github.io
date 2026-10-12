@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- drummachine.cpp -->
-  <meta name="description" content="One drum machine of the drums page (HOUSE 909, DEEP 808, LinnBeats): a Machine whose steps are drum hits.">
+  <meta name="description" content="A Machine whose steps are drum hits; the studio has three, configured in kits.json.">
   <meta name="keywords" content="class">
   <title>DrumMachine Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">DrumMachine Class</h1>
 <!-- $$$DrumMachine-brief -->
-<p>One drum machine of the drums page (HOUSE 909, DEEP 808, LinnBeats): a Machine whose steps are drum hits. <a href="#details">More...</a></p>
+<p>A Machine whose steps are drum hits; the studio has three, configured in kits.json. <a href="#details">More...</a></p>
 <!-- @@@DrumMachine -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;drummachine.h&gt;</code></td></tr>
@@ -139,9 +139,9 @@
 <!-- $$$DrumMachine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p><code translate="no">data/kits.json</code> gives it its track, Zynthian channel, engine and default preset; its presets are the drum <a href="presetlibrary.html" translate="no">PresetLibrary</a> the three drum machines share, written per role so any preset plays on any kit. Its rows come from its kit, a soundfont read by <a href="drumkit.html" translate="no">DrumKit</a>: eight roles (KICK to PERC), each with the kit's note for it. <a href="drummachine.html#loadKit" translate="no">loadKit</a>() switches kits and moves every hit to the new kit's note for the same role, so a beat survives any kit change. A hit is a subnote with the row's note on that step; without libzynthbox (a desktop run) the steps are kept in memory.</p>
-<p>Each row has a level, a mute and a solo, kept per role so they survive kit changes. They live in the hits' velocities: a row's level and a step's accent give the velocity every hit of that row is written with, and -1 (PatternModel's &quot;do not play&quot;) marks a muted row, an unsoloed one while any row is soloed, or one the LIVE FX cut. Accents are kept by the machine, not read back from velocities. A LIVE key is a row.</p>
-<p>It provides the pattern interface StepGrid and PatternToolbar work with: rows, steps, accents, the per-row mix, <a href="drummachine.html#toggleStep" translate="no">toggleStep</a>(), <a href="drummachine.html#toggleAccent" translate="no">toggleAccent</a>(), <a href="drummachine.html#setRowLevel" translate="no">setRowLevel</a>(), <a href="drummachine.html#setRowMuted" translate="no">setRowMuted</a>(), <a href="drummachine.html#setRowSoloed" translate="no">setRowSoloed</a>() and <a href="drummachine.html#audition" translate="no">audition</a>(), with Machine's playhead, bars, presets and <a href="machine.html#clear" translate="no">clear</a>().</p>
+<p><code translate="no">data/kits.json</code> gives it its track, Zynthian channel, engine and default preset; its presets are the drum <a href="presetlibrary.html" translate="no">PresetLibrary</a> the drum machines share, written per role so any preset plays on any kit. Its rows come from its kit, a soundfont read by <a href="drumkit.html" translate="no">DrumKit</a>: eight roles (KICK to PERC), each with the kit's note for it. <a href="drummachine.html#loadKit" translate="no">loadKit</a>() switches kits and moves every hit to the new kit's note for the same role, so a pattern survives any kit change. A hit is a subnote with the row's note on that step; without libzynthbox (a desktop run) the steps are kept in memory.</p>
+<p>Each row has a level, a mute and a solo, kept per role so they survive kit changes. They are applied through the hits' velocities: a row's level and a step's accent give the velocity every hit of that row is written with, and -1 (PatternModel's &quot;do not play&quot;) marks a muted row, an unsoloed one while any row is soloed, or one the kick cut silences (<a href="machine.html#setKickMode" translate="no">Machine::setKickMode</a>()). Accents are kept by the machine, not read back from velocities. A live key is a row.</p>
+<p>The QML step grid uses rows, steps, accents, the per-row mix, <a href="drummachine.html#toggleStep" translate="no">toggleStep</a>(), <a href="drummachine.html#toggleAccent" translate="no">toggleAccent</a>(), <a href="drummachine.html#setRowLevel" translate="no">setRowLevel</a>(), <a href="drummachine.html#setRowMuted" translate="no">setRowMuted</a>(), <a href="drummachine.html#setRowSoloed" translate="no">setRowSoloed</a>() and <a href="drummachine.html#audition" translate="no">audition</a>(), with Machine's playhead, bars, presets and <a href="machine.html#clear" translate="no">clear</a>().</p>
 </div>
 <!-- @@@DrumMachine -->
 <div class="prop">
@@ -149,7 +149,7 @@
 <div class="fnitem">
 <!-- $$$accents-prop$$$accents$$$stepsChanged -->
 <h3 class="fn" translate="no" id="accents-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">accents</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen's accents, 16 booleans.</p>
+<p>This property holds the accents of the viewed bar, 16 booleans.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>accents</b></span>() const</td></tr>
@@ -191,7 +191,7 @@
 <div class="fnitem">
 <!-- $$$rowLevels-prop$$$rowLevels$$$rowMixChanged -->
 <h3 class="fn" translate="no" id="rowLevels-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">rowLevels</span> : <span class="type">QVariantList</span></h3>
-<p>each grid row's level, 0..1.</p>
+<p>each row's level, 0..1.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>rowLevels</b></span>() const</td></tr>
@@ -205,7 +205,7 @@
 <div class="fnitem">
 <!-- $$$rowMuted-prop$$$rowMuted$$$rowMixChanged -->
 <h3 class="fn" translate="no" id="rowMuted-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">rowMuted</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds whether each grid row is muted.</p>
+<p>This property holds whether each row is muted.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>rowMuted</b></span>() const</td></tr>
@@ -219,7 +219,7 @@
 <div class="fnitem">
 <!-- $$$rowSoloed-prop$$$rowSoloed$$$rowMixChanged -->
 <h3 class="fn" translate="no" id="rowSoloed-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">rowSoloed</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds whether each grid row is soloed.</p>
+<p>This property holds whether each row is soloed.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>rowSoloed</b></span>() const</td></tr>
@@ -233,7 +233,7 @@
 <div class="fnitem">
 <!-- $$$rows-prop$$$rows$$$kitChanged -->
 <h3 class="fn" translate="no" id="rows-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">rows</span> : <span class="type">QStringList</span></h3>
-<p>This property holds the sound name of each grid row, top to bottom; &quot;&mdash;&quot; where the kit has none.</p>
+<p>This property holds the sound name of each row, top to bottom; &quot;&mdash;&quot; where the kit has none.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>rows</b></span>() const</td></tr>
@@ -247,7 +247,7 @@
 <div class="fnitem">
 <!-- $$$steps-prop$$$steps$$$stepsChanged -->
 <h3 class="fn" translate="no" id="steps-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">steps</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen's hits, as a list per row of 16 booleans.</p>
+<p>This property holds the hits of the viewed bar, a list per row of 16 booleans.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>steps</b></span>() const</td></tr>
@@ -271,13 +271,13 @@
 <!-- $$$applySoundParts[overload1]$$$applySoundPartsconstQVariantMap& -->
 <h3 class="fn" translate="no" id="applySoundParts"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> DrumMachine::<span class="name">applySoundParts</span>(const <span class="type">QVariantMap</span> &amp;<i>parts</i>)</h3>
 <p>Reimplements: <a href="machine.html#applySoundParts" translate="no">Machine::applySoundParts</a>(const QVariantMap &amp;parts).</p>
-<p>Also takes the kit <i translate="no">parts</i> names; a kit not on this device leaves the kit as it is.</p>
+<p>Also restores the kit <i translate="no">parts</i> names; a kit not on this device leaves the kit unchanged.</p>
 <!-- @@@applySoundParts -->
 </div>
 <div class="fnitem">
 <!-- $$$audition[overload1]$$$auditionint -->
 <h3 class="fn" translate="no" id="audition"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> DrumMachine::<span class="name">audition</span>(<span class="type">int</span> <i>row</i>)</h3>
-<p>Plays <i translate="no">row</i>'s sound now at its level, to hear it, even while it is muted.</p>
+<p>Plays <i translate="no">row</i>'s sound now at its level, even while the row is muted.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@audition -->
 </div>
@@ -326,7 +326,7 @@
 <div class="fnitem">
 <!-- $$$rowForNote[overload1]$$$rowForNoteint -->
 <h3 class="fn" translate="no" id="rowForNote"><code class="details extra" translate="no">[invokable]</code> <span class="type">int</span> DrumMachine::<span class="name">rowForNote</span>(<span class="type">int</span> <i>note</i>) const</h3>
-<p>Returns the row an external keyboard's <i translate="no">note</i> plays: a General MIDI drum note (35 to 59) by its role (<a href="drumkit.html#roleForGmNote" translate="no">DrumKit::roleForGmNote</a>(): 36 the kick row...), any other note cycling through the eight rows from C2 (36).</p>
+<p>Returns the row a MIDI <i translate="no">note</i> plays: a General MIDI drum note (35 to 59) by its role (<a href="drumkit.html#roleForGmNote" translate="no">DrumKit::roleForGmNote</a>(): 36 the kick row...), any other note cycling through the eight rows from 36.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@rowForNote -->
 </div>
@@ -384,14 +384,14 @@
 <div class="fnitem">
 <!-- $$$toggleAccent[overload1]$$$toggleAccentint -->
 <h3 class="fn" translate="no" id="toggleAccent"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> DrumMachine::<span class="name">toggleAccent</span>(<span class="type">int</span> <i>step</i>)</h3>
-<p>Flips the accent of <i translate="no">step</i> of the bar on screen; its hits play harder.</p>
+<p>Toggles the accent of <i translate="no">step</i> of the viewed bar; its hits play harder.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggleAccent -->
 </div>
 <div class="fnitem">
 <!-- $$$toggleStep[overload1]$$$toggleStepintint -->
 <h3 class="fn" translate="no" id="toggleStep"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> DrumMachine::<span class="name">toggleStep</span>(<span class="type">int</span> <i>row</i>, <span class="type">int</span> <i>step</i>)</h3>
-<p>Flips the hit of <i translate="no">row</i> on <i translate="no">step</i> of the bar on screen; setting one also plays it.</p>
+<p>Toggles the hit of <i translate="no">row</i> on <i translate="no">step</i> of the viewed bar; setting a hit also plays it.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggleStep -->
 </div>

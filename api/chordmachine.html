@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- chordmachine.cpp -->
-  <meta name="description" content="The CHORDS machine: a Machine playing chords on a polyphonic engine (TAL NoiseMaker, six voices, Juno chorus).">
+  <meta name="description" content="A Machine playing chords on a polyphonic engine.">
   <meta name="keywords" content="class">
   <title>ChordMachine Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">ChordMachine Class</h1>
 <!-- $$$ChordMachine-brief -->
-<p>The CHORDS machine: a Machine playing chords on a polyphonic engine (TAL NoiseMaker, six voices, Juno chorus). <a href="#details">More...</a></p>
+<p>A Machine playing chords on a polyphonic engine. <a href="#details">More...</a></p>
 <!-- @@@ChordMachine -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;chordmachine.h&gt;</code></td></tr>
@@ -162,15 +162,15 @@
 <!-- $$$ChordMachine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Each step holds at most one voicing; a run of steps holding the same voicing is one chord held for the whole run, so a bar of &quot;I&quot; is one long pad and &quot;I . I .&quot; two stabs.</p>
-<p>A voicing is either a diatonic chord, a scale degree (I to VII) stacked in thirds from the scale itself with three or four notes as the chord set says per degree (Classic, Triads, Sevenths), or a custom set of notes built note by note in the NOTES view (scale degrees, or semitones from the chord base when a note is outside the key). Voicings are kept as scale degrees from kits.json's <code translate="no">baseNote</code> (C3 by default) plus the key's root, shifted by octave, so a change of key (root, scale: set by the page from the header), chord set or octave revoices every chord at once.</p>
-<p>Three views edit the same steps:</p>
+<p>Each step holds at most one voicing; a run of steps holding the same voicing is one chord held for the whole run, so a bar of &quot;I&quot; is one long chord and &quot;I . I .&quot; two short ones.</p>
+<p>A voicing is either a diatonic chord, a scale degree (I to VII) stacked in thirds from the scale with three or four notes as the chord set defines per degree (Classic, Triads, Sevenths), or a custom set of notes (scale degrees, or semitones from the chord base for a note outside the key). Voicings are stored as scale degrees from kits.json's <code translate="no">baseNote</code> (48, C3, by default) plus the key's root, shifted by octave, so a change of key (root, scale), chord set or octave revoices every chord at once.</p>
+<p>Three interfaces edit the same steps:</p>
 <ul>
-<li>CHORDS: rows of whole chords (<a href="chordmachine.html#setChord" translate="no">setChord</a>());</li>
-<li>NOTES: rows of single notes (<a href="chordmachine.html#noteSets-prop" translate="no">noteSets</a>, <a href="chordmachine.html#toggleNote" translate="no">toggleNote</a>()); changing a step's notes makes its voicing custom;</li>
-<li>SLOTS: four chord slots (up to eight) played in order, each lasting 1, 2, 4 or 8 bars; editing a slot rebuilds the steps from all of them. A slot is filled by arming it (<a href="chordmachine.html#armedSlot-prop" translate="no">armedSlot</a>) and playing a chord key; the next slot then arms itself.</li>
+<li>chords: whole chords per step (<a href="chordmachine.html#setChord" translate="no">setChord</a>());</li>
+<li>notes: single notes per step (<a href="chordmachine.html#noteSets-prop" translate="no">noteSets</a>, <a href="chordmachine.html#toggleNote" translate="no">toggleNote</a>()); changing a step's notes makes its voicing custom;</li>
+<li>slots: four chord slots (up to eight) played in order, each lasting 1, 2, 4 or 8 bars; editing a slot rebuilds the steps from all of them. A slot is filled by arming it (<a href="chordmachine.html#armedSlot-prop" translate="no">armedSlot</a>) and playing a chord key; the next slot is then armed.</li>
 </ul>
-<p>Presets (<code translate="no">chord-presets.json</code>) are charts: <code translate="no">CHORDS</code>, one character per step, &quot;1&quot; to &quot;7&quot; a degree, &quot;x&quot; a custom voicing (its degrees in <code translate="no">VOICINGS</code>, by step) and &quot;.&quot; nothing. A LIVE key below 1000 is a chord degree (0 to 6) and plays the whole chord; from 1000 on it is a single scale degree (<a href="chordmachine.html#noteKey" translate="no">noteKey</a>()); far above that, a chromatic note played as is (SETTINGS, NOTES OUTSIDE THE SCALE). An external keyboard's note plays the chord on its scale degree (<a href="chordmachine.html#degreeForNote" translate="no">degreeForNote</a>()). The LIVE FX ONLY KICK silences the machine.</p>
+<p>Presets (<code translate="no">chord-presets.json</code>) are charts: <code translate="no">CHORDS</code>, one character per step, &quot;1&quot; to &quot;7&quot; a degree, &quot;x&quot; a custom voicing (its degrees in <code translate="no">VOICINGS</code>, by step) and &quot;.&quot; nothing. A live key below 1000 is a chord degree (0 to 6) and plays the whole chord; from 1000 it is a single scale degree (<a href="chordmachine.html#noteKey" translate="no">noteKey</a>()); from 100000 it is a chromatic MIDI note (100000 + note), played as is. A MIDI keyboard note plays the chord on its scale degree (<a href="chordmachine.html#degreeForNote" translate="no">degreeForNote</a>()). <a href="machine.html#KickMode-enum" translate="no">Machine::OnlyKick</a> silences the machine.</p>
 </div>
 <!-- @@@ChordMachine -->
 <div class="prop">
@@ -193,7 +193,7 @@
 <div class="fnitem">
 <!-- $$$chordBase-prop$$$chordBase$$$voicingChanged -->
 <h3 class="fn" translate="no" id="chordBase-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">chordBase</span> : <span class="type">int</span></h3>
-<p>This property holds the MIDI note degree I sits on with the key and octave: where the NOTES view starts.</p>
+<p>This property holds the MIDI note degree I sits on with the key and octave.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>chordBase</b></span>() const</td></tr>
@@ -246,7 +246,7 @@
 <div class="fnitem">
 <!-- $$$chordSlots-prop$$$chordSlots$$$slotsChanged -->
 <h3 class="fn" translate="no" id="chordSlots-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">chordSlots</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the SLOTS view's slots, as maps with <code translate="no">name</code>, <code translate="no">label</code> (the degree's numeral, or CUSTOM), <code translate="no">bars</code>, <code translate="no">filled</code> and <code translate="no">plays</code> (<code translate="no">false</code> when it starts past the pattern's last possible bar, <a href="machine.html#MaxBars-var" translate="no">Machine::MaxBars</a>).</p>
+<p>This property holds the chord slots, as maps with <code translate="no">name</code>, <code translate="no">label</code> (the degree's numeral, or CUSTOM), <code translate="no">bars</code>, <code translate="no">filled</code> and <code translate="no">plays</code> (<code translate="no">false</code> when it starts past the pattern's last possible bar, <a href="machine.html#MaxBars-var" translate="no">Machine::MaxBars</a>).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>chordSlots</b></span>() const</td></tr>
@@ -260,7 +260,7 @@
 <div class="fnitem">
 <!-- $$$chords-prop$$$chords$$$stepsChanged -->
 <h3 class="fn" translate="no" id="chords-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">chords</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen, per step: the chord roll's row (a diatonic chord's degree, or a custom voicing's lowest degree within the octave), or -1 for an empty step.</p>
+<p>per step of the viewed bar: the chord's row (a diatonic chord's degree, or a custom voicing's lowest degree within the octave), or -1 for an empty step.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>chords</b></span>() const</td></tr>
@@ -274,7 +274,7 @@
 <div class="fnitem">
 <!-- $$$custom-prop$$$custom$$$stepsChanged -->
 <h3 class="fn" translate="no" id="custom-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">custom</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen, per step: whether the step holds a custom voicing.</p>
+<p>per step of the viewed bar: whether the step holds a custom voicing.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>custom</b></span>() const</td></tr>
@@ -288,7 +288,7 @@
 <div class="fnitem">
 <!-- $$$noteSets-prop$$$noteSets$$$stepsChanged -->
 <h3 class="fn" translate="no" id="noteSets-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">noteSets</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen, per step: the MIDI notes the step plays (the NOTES view).</p>
+<p>per step of the viewed bar: the MIDI notes the step plays.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>noteSets</b></span>() const</td></tr>
@@ -361,7 +361,7 @@
 <div class="fnitem">
 <!-- $$$slotsInSync-prop$$$slotsInSync$$$syncChanged -->
 <h3 class="fn" translate="no" id="slotsInSync-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">slotsInSync</span> : <span class="type">bool</span></h3>
-<p>This property holds whether the chord pattern is still what the slots write: <code translate="no">false</code> once the CHORDS or NOTES view changed it, after which editing a slot rebuilds the pattern from the slots.</p>
+<p>This property holds whether the pattern is still what the slots write: <code translate="no">false</code> once <a href="chordmachine.html#setChord" translate="no">setChord</a>(), <a href="chordmachine.html#toggleNote" translate="no">toggleNote</a>() or another step edit changed it; editing a slot then rebuilds the pattern from the slots.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>slotsInSync</b></span>() const</td></tr>
@@ -384,14 +384,14 @@
 <div class="fnitem">
 <!-- $$$allPicks[overload1]$$$allPicksbool -->
 <h3 class="fn" translate="no" id="allPicks"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> ChordMachine::<span class="name">allPicks</span>(<span class="type">bool</span> <i>notes</i>) const</h3>
-<p>Returns every chord of the pattern, in all its bars, as SELECT picks: the CHORDS view's (the position each held chord starts at), or with <i translate="no">notes</i> the NOTES view's ([position, note] pairs, each note of a held chord once, where it starts). A long press on SELECT picks them all.</p>
+<p>Returns every chord of the pattern, in all its bars, as picks for <a href="chordmachine.html#moveChords" translate="no">moveChords</a>() and <a href="chordmachine.html#shiftChords" translate="no">shiftChords</a>(): the position each held chord starts at; or, with <i translate="no">notes</i>, picks for <a href="chordmachine.html#moveNotes" translate="no">moveNotes</a>() and <a href="chordmachine.html#shiftNotes" translate="no">shiftNotes</a>(): [position, note] pairs, each note of a held chord once, where it starts.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@allPicks -->
 </div>
 <div class="fnitem">
 <!-- $$$assignSlot[overload1]$$$assignSlotintint -->
 <h3 class="fn" translate="no" id="assignSlot"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ChordMachine::<span class="name">assignSlot</span>(<span class="type">int</span> <i>slot</i>, <span class="type">int</span> <i>degree</i>)</h3>
-<p>SLOTS: puts <i translate="no">degree</i>'s chord in <i translate="no">slot</i>, arms the next slot and rebuilds the steps from the slots.</p>
+<p>Puts <i translate="no">degree</i>'s chord in <i translate="no">slot</i>, arms the next slot and rebuilds the steps from the slots.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@assignSlot -->
 </div>
@@ -412,21 +412,21 @@
 <div class="fnitem">
 <!-- $$$clearSlot[overload1]$$$clearSlotint -->
 <h3 class="fn" translate="no" id="clearSlot"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ChordMachine::<span class="name">clearSlot</span>(<span class="type">int</span> <i>slot</i>)</h3>
-<p>SLOTS: empties <i translate="no">slot</i> and rebuilds the steps from the others.</p>
+<p>Empties <i translate="no">slot</i> and rebuilds the steps from the others.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@clearSlot -->
 </div>
 <div class="fnitem">
 <!-- $$$cycleSlotBars[overload1]$$$cycleSlotBarsint -->
 <h3 class="fn" translate="no" id="cycleSlotBars"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ChordMachine::<span class="name">cycleSlotBars</span>(<span class="type">int</span> <i>slot</i>)</h3>
-<p>SLOTS: changes the length of <i translate="no">slot</i>, 1 to 2 to 4 to 8 to 1 bars, skipping lengths that would take the filled slots past <a href="machine.html#MaxBars-var" translate="no">Machine::MaxBars</a>, and rebuilds the steps.</p>
+<p>Cycles the length of <i translate="no">slot</i> through 1, 2, 4 and 8 bars, skipping lengths that would take the filled slots past <a href="machine.html#MaxBars-var" translate="no">Machine::MaxBars</a>, and rebuilds the steps.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@cycleSlotBars -->
 </div>
 <div class="fnitem">
 <!-- $$$degreeForNote[overload1]$$$degreeForNoteint -->
 <h3 class="fn" translate="no" id="degreeForNote"><code class="details extra" translate="no">[invokable]</code> <span class="type">int</span> ChordMachine::<span class="name">degreeForNote</span>(<span class="type">int</span> <i>note</i>) const</h3>
-<p>Returns the scale degree (0 to 6) the MIDI <i translate="no">note</i> falls on, for keyboard play; a note outside the scale gives the degree below it.</p>
+<p>Returns the scale degree (0 to 6) the MIDI <i translate="no">note</i> falls on; a note outside the scale gives the degree below it.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@degreeForNote -->
 </div>
@@ -440,28 +440,28 @@
 <div class="fnitem">
 <!-- $$$moveChords[overload1]$$$moveChordsconstQVariantList&int -->
 <h3 class="fn" translate="no" id="moveChords"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> ChordMachine::<span class="name">moveChords</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>, <span class="type">int</span> <i>steps</i>)</h3>
-<p>SELECT in the CHORDS view: moves the <i translate="no">picked</i> chords (a list of positions, a held chord as one) <i translate="no">steps</i> degrees up or down. Returns the picks.</p>
+<p>Moves the <i translate="no">picked</i> chords (a list of positions, a held chord as one) <i translate="no">steps</i> degrees up or down. Returns the picks.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@moveChords -->
 </div>
 <div class="fnitem">
 <!-- $$$moveNotes[overload1]$$$moveNotesconstQVariantList&intbool -->
 <h3 class="fn" translate="no" id="moveNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> ChordMachine::<span class="name">moveNotes</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>, <span class="type">int</span> <i>steps</i>, <span class="type">bool</span> <i>chromatic</i>)</h3>
-<p>SELECT in the NOTES view: moves the <i translate="no">picked</i> notes (a list of [position, note] pairs) <i translate="no">steps</i> notes of the key up or down (semitones when <i translate="no">chromatic</i> is true), through the whole held chord each is in (a run of the same voicing moves together). Returns the picks as they are after the move.</p>
+<p>Moves the <i translate="no">picked</i> notes (a list of [position, note] pairs) <i translate="no">steps</i> notes of the key up or down (semitones when <i translate="no">chromatic</i> is true), across the whole held chord each is in (a run of the same voicing moves together). Returns the picks as they are after the move.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@moveNotes -->
 </div>
 <div class="fnitem">
 <!-- $$$noteKey[overload1]$$$noteKeyint -->
 <h3 class="fn" translate="no" id="noteKey"><code class="details extra" translate="no">[invokable]</code> <span class="type">int</span> ChordMachine::<span class="name">noteKey</span>(<span class="type">int</span> <i>scaleDegree</i>) const</h3>
-<p>Returns the live key that plays the single note of <i translate="no">scaleDegree</i>, counted from degree I (16 keys cover two octaves and more): 1000 plus the degree. A take or STEP entry writes it into the step's voicing.</p>
+<p>Returns the live key that plays the single note of <i translate="no">scaleDegree</i>, counted from degree I: 1000 plus the degree. Recording or step entry writes the note into the step's voicing.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@noteKey -->
 </div>
 <div class="fnitem">
 <!-- $$$noteKeyForNote[overload1]$$$noteKeyForNoteint -->
 <h3 class="fn" translate="no" id="noteKeyForNote"><code class="details extra" translate="no">[invokable]</code> <span class="type">int</span> ChordMachine::<span class="name">noteKeyForNote</span>(<span class="type">int</span> <i>note</i>) const</h3>
-<p>Returns the live note key for the MIDI <i translate="no">note</i>, snapped down into the scale.</p>
+<p>Returns the live key for the MIDI <i translate="no">note</i>: the note key (1000 and up) of its scale degree, or the chromatic key (100000 + <i translate="no">note</i>) when the note is outside the key or below <a href="chordmachine.html#chordBase-prop" translate="no">chordBase</a>.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@noteKeyForNote -->
 </div>
@@ -475,28 +475,28 @@
 <div class="fnitem">
 <!-- $$$setChord[overload1]$$$setChordintint -->
 <h3 class="fn" translate="no" id="setChord"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ChordMachine::<span class="name">setChord</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>degree</i>)</h3>
-<p>Puts <i translate="no">degree</i>'s chord (0 to 6) on <i translate="no">step</i> of the bar on screen and sounds it, or clears the step when it already holds that chord.</p>
+<p>Puts <i translate="no">degree</i>'s chord (0 to 6) on <i translate="no">step</i> of the viewed bar and sounds it, or clears the step when it already holds that chord.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setChord -->
 </div>
 <div class="fnitem">
 <!-- $$$setStepNotes[overload1]$$$setStepNotesintconstQString& -->
 <h3 class="fn" translate="no" id="setStepNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ChordMachine::<span class="name">setStepNotes</span>(<span class="type">int</span> <i>step</i>, const <span class="type">QString</span> &amp;<i>notes</i>)</h3>
-<p>Puts exactly the MIDI notes listed in <i translate="no">notes</i> (<code translate="no">&quot;48,52,55,58&quot;</code>) on <i translate="no">step</i> of the bar on screen, as a custom voicing (chromatic when a note is outside the key); an empty string clears the step. For charts and scripts.</p>
+<p>Puts exactly the MIDI notes listed in <i translate="no">notes</i> (<code translate="no">&quot;48,52,55,58&quot;</code>) on <i translate="no">step</i> of the viewed bar, as a custom voicing (chromatic when a note is outside the key); an empty string clears the step.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setStepNotes -->
 </div>
 <div class="fnitem">
 <!-- $$$shiftChords[overload1]$$$shiftChordsconstQVariantList&int -->
 <h3 class="fn" translate="no" id="shiftChords"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> ChordMachine::<span class="name">shiftChords</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>, <span class="type">int</span> <i>steps</i>)</h3>
-<p>SELECT, step by step: moves the <i translate="no">picked</i> chords (a list of positions, a held chord as one) <i translate="no">steps</i> steps later (positive) or earlier. A step holds one chord, so a chord landing on another replaces it there; what would leave the pattern stays. Returns the picks as they are after the move.</p>
+<p>Moves the <i translate="no">picked</i> chords (a list of positions, a held chord as one) <i translate="no">steps</i> steps later (positive) or earlier. A step holds one chord, so a chord landing on another replaces it; a chord that would leave the pattern stays. Returns the picks as they are after the move.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@shiftChords -->
 </div>
 <div class="fnitem">
 <!-- $$$shiftNotes[overload1]$$$shiftNotesconstQVariantList&int -->
 <h3 class="fn" translate="no" id="shiftNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> ChordMachine::<span class="name">shiftNotes</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>, <span class="type">int</span> <i>steps</i>)</h3>
-<p>SELECT, step by step: moves the <i translate="no">picked</i> notes (a list of [position, note] pairs, through the held chord each is in) <i translate="no">steps</i> steps later or earlier; a note joins the notes already on the step it lands on, and what would leave the pattern stays. Returns the picks.</p>
+<p>Moves the <i translate="no">picked</i> notes (a list of [position, note] pairs, across the held chord each is in) <i translate="no">steps</i> steps later or earlier; a note joins the notes already on the step it lands on, and a note that would leave the pattern stays. Returns the picks.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@shiftNotes -->
 </div>
@@ -517,7 +517,7 @@
 <div class="fnitem">
 <!-- $$$stepsChanged -->
 <h3 class="fn" translate="no" id="stepsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ChordMachine::<span class="name">stepsChanged</span>()</h3>
-<p>Emitted when the bar on screen's chords, custom or <a href="chordmachine.html#noteSets-prop" translate="no">noteSets</a> changed.</p>
+<p>Emitted when chords, custom or <a href="chordmachine.html#noteSets-prop" translate="no">noteSets</a> change.</p>
 <div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="chordmachine.html#chords-prop" translate="no">chords</a>, <a href="chordmachine.html#custom-prop" translate="no">custom</a>, and <a href="chordmachine.html#noteSets-prop" translate="no">noteSets</a>. </p>
 </div><!-- @@@stepsChanged -->
 </div>
@@ -531,14 +531,14 @@
 <div class="fnitem">
 <!-- $$$toggleMoreSlots[overload1]$$$toggleMoreSlots -->
 <h3 class="fn" translate="no" id="toggleMoreSlots"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ChordMachine::<span class="name">toggleMoreSlots</span>()</h3>
-<p>SLOTS: adds four more slots (up to eight), or goes back to four, dropping the last four and rebuilding the pattern without them.</p>
+<p>Switches between four and eight slots; going back to four drops the last four and rebuilds the pattern without them.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggleMoreSlots -->
 </div>
 <div class="fnitem">
 <!-- $$$toggleNote[overload1]$$$toggleNoteintint -->
 <h3 class="fn" translate="no" id="toggleNote"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ChordMachine::<span class="name">toggleNote</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>note</i>)</h3>
-<p>NOTES: adds or removes the MIDI <i translate="no">note</i> (in the scale) in the voicing of <i translate="no">step</i> of the bar on screen, which becomes custom; removing its last note empties the step.</p>
+<p>Adds or removes the MIDI <i translate="no">note</i> (in the scale) in the voicing of <i translate="no">step</i> of the viewed bar, which becomes custom; removing its last note empties the step.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggleNote -->
 </div>

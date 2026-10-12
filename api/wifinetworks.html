@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- wifinetworks.cpp -->
-  <meta name="description" content="The Wi-Fi networks in range, as a list model for the network list.">
+  <meta name="description" content="The Wi-Fi networks in range, as a list model.">
   <meta name="keywords" content="class">
   <title>WifiNetworks Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,7 +76,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">WifiNetworks Class</h1>
 <!-- $$$WifiNetworks-brief -->
-<p>The Wi-Fi networks in range, as a list model for the network list. <a href="#details">More...</a></p>
+<p>The Wi-Fi networks in range, as a list model. <a href="#details">More...</a></p>
 <!-- @@@WifiNetworks -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;wifinetworks.h&gt;</code></td></tr>
@@ -118,8 +118,8 @@
 <!-- $$$WifiNetworks-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>After Plasma's network applet (plasma-nm's NetworkModel and its AppletProxyModel's order): the network in use first, then the saved ones, then by signal, then by name. One row per network name, with the strongest of its access points.</p>
-<p>Wifi fills it from wpa_supplicant's scan results and keeps it in step with what is saved and joined. A refresh that keeps the order updates the rows in place, so a list view keeps its position and an open row. While frozen (a row is open, a password being typed: what plasma-nm's DelayModelUpdatesRole is for) rows never move or go: they are updated in place and newcomers are added at the end; the order catches up when it thaws.</p>
+<p>The order: the network in use first, then the saved ones, then by signal, then by name. One row per network name, with the strongest of its access points.</p>
+<p>Wifi fills it from wpa_supplicant's scan results and keeps it in step with what is saved and joined. A refresh that keeps the order updates the rows in place, so a view keeps its position and state. While frozen, rows never move or disappear: they are updated in place and new ones are appended; the order catches up when frozen is cleared.</p>
 </div>
 <!-- @@@WifiNetworks -->
 <div class="types">
@@ -131,10 +131,10 @@
 <div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
 <tr><td class="topAlign"><code translate="no">WifiNetworks::SsidRole</code></td><td class="topAlign tblval"><code translate="no">Qt::UserRole + 1</code></td><td class="topAlign">The network's name.</td></tr>
 <tr><td class="topAlign"><code translate="no">WifiNetworks::SignalRole</code></td><td class="topAlign tblval"><code translate="no">258</code></td><td class="topAlign">The signal, 0..100, from the access point's dBm.</td></tr>
-<tr><td class="topAlign"><code translate="no">WifiNetworks::SecurityRole</code></td><td class="topAlign tblval"><code translate="no">259</code></td><td class="topAlign"><code translate="no">open</code>, <code translate="no">wpa</code> (a passphrase), <code translate="no">sae</code> (WPA3 only), or one joined elsewhere (webconf): <code translate="no">wep</code>, <code translate="no">enterprise</code>.</td></tr>
-<tr><td class="topAlign"><code translate="no">WifiNetworks::SupportedRole</code></td><td class="topAlign tblval"><code translate="no">260</code></td><td class="topAlign">Whether ravving can join it: <code translate="no">open</code>, <code translate="no">wpa</code> and <code translate="no">sae</code> need a passphrase or nothing.</td></tr>
+<tr><td class="topAlign"><code translate="no">WifiNetworks::SecurityRole</code></td><td class="topAlign tblval"><code translate="no">259</code></td><td class="topAlign"><code translate="no">open</code>, <code translate="no">wpa</code> (a passphrase), <code translate="no">sae</code> (WPA3 only), or one that can only be joined elsewhere (webconf): <code translate="no">wep</code>, <code translate="no">enterprise</code>.</td></tr>
+<tr><td class="topAlign"><code translate="no">WifiNetworks::SupportedRole</code></td><td class="topAlign tblval"><code translate="no">260</code></td><td class="topAlign">Whether ravving can join it: <code translate="no">open</code>, <code translate="no">wpa</code> and <code translate="no">sae</code>, which need a passphrase or nothing.</td></tr>
 <tr><td class="topAlign"><code translate="no">WifiNetworks::SavedRole</code></td><td class="topAlign tblval"><code translate="no">261</code></td><td class="topAlign">Whether it is saved in Zynthbox's <code translate="no">wpa_supplicant.conf</code>, so joining needs no passphrase.</td></tr>
-<tr><td class="topAlign"><code translate="no">WifiNetworks::StatusRole</code></td><td class="topAlign tblval"><code translate="no">262</code></td><td class="topAlign"><code translate="no">connected</code>, <code translate="no">connecting</code>, <code translate="no">failed</code> (the last join did not take), or empty.</td></tr>
+<tr><td class="topAlign"><code translate="no">WifiNetworks::StatusRole</code></td><td class="topAlign tblval"><code translate="no">262</code></td><td class="topAlign"><code translate="no">connected</code>, <code translate="no">connecting</code>, <code translate="no">failed</code> (the last join did not succeed), or empty.</td></tr>
 </table></div>
 <!-- @@@Role -->
 </div>
@@ -158,7 +158,7 @@
 <div class="fnitem">
 <!-- $$$frozen-prop$$$frozen$$$setFrozenbool$$$frozenChanged -->
 <h3 class="fn" translate="no" id="frozen-prop"><span class="name">frozen</span> : <span class="type">bool</span></h3>
-<p>This property holds whether the rows keep their places (a row is open); see the class description.</p>
+<p>This property holds whether the rows keep their places; see the class description.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>frozen</b></span>() const</td></tr>

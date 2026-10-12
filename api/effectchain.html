@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- effectchain.cpp -->
-  <meta name="description" content="The SOUND EFFECTS chain every machine has, in signal order: DRIVE, COMPRESSOR, REVERB, EQ, PAN, SIDECHAIN, DELAY, each with its knobs.">
+  <meta name="description" content="The effects chain every machine has, in signal order: DRIVE, COMPRESSOR, REVERB, EQ, PAN, SIDECHAIN, DELAY, each with its knobs.">
   <meta name="keywords" content="namespace">
   <title>EffectChain Namespace | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -73,7 +73,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">EffectChain Namespace</h1>
 <!-- $$$EffectChain-brief -->
-<p>The SOUND EFFECTS chain every machine has, in signal order: DRIVE, COMPRESSOR, REVERB, EQ, PAN, SIDECHAIN, DELAY, each with its knobs. <a href="#details">More...</a></p>
+<p>The effects chain every machine has, in signal order: DRIVE, COMPRESSOR, REVERB, EQ, PAN, SIDECHAIN, DELAY, each with its knobs. <a href="#details">More...</a></p>
 <!-- @@@EffectChain -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;effectchain.h&gt;</code></td></tr>
@@ -96,13 +96,13 @@
 <!-- $$$EffectChain-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>This is the one definition of the chain: <a href="trackeffects.html" translate="no">TrackEffects</a> applies it, and QML builds the effect cards from <code translate="no">studio.effectChain</code> (<a href="effectchain.html#toVariant" translate="no">toVariant</a>()). Knob values are 0..1 everywhere; what they mean is <a href="trackeffects.html" translate="no">TrackEffects</a>' and <a href="globaleffects.html" translate="no">GlobalEffects</a>' business. A shared knob (REVERB SIZE, DELAY TIME and FDBK) belongs to the studio's one reverb or delay, which every machine sends into, so it shows the same value on every machine. Read-only data; thread-safe.</p>
+<p>This is the one definition of the chain: <a href="trackeffects.html" translate="no">TrackEffects</a> applies it, and QML reads it as <code translate="no">studio.effectChain</code> (<a href="effectchain.html#toVariant" translate="no">toVariant</a>()). Knob values are 0..1 everywhere; what they mean is <a href="trackeffects.html" translate="no">TrackEffects</a>' and <a href="globaleffects.html" translate="no">GlobalEffects</a>' business. A shared knob (REVERB SIZE, DELAY TIME and FDBK) belongs to the studio's one reverb or delay, which every machine sends into, so it has the same value on every machine. Read-only data; thread-safe.</p>
 </div>
 <!-- @@@EffectChain -->
 <div class="classes">
 <h2>Classes</h2>
 <h3> class <a href="effectchain-effect.html">Effect</a></h3><!-- $$$Effect-brief -->
-<p>An effect of the chain: its <code translate="no">name</code> and its <code translate="no">knobs</code>, in card order. <a href="effectchain-effect.html#details">More...</a></p>
+<p>An effect of the chain: its <code translate="no">name</code> and its <code translate="no">knobs</code>, in order. <a href="effectchain-effect.html#details">More...</a></p>
 <!-- @@@Effect -->
 <h3> class <a href="effectchain-knob.html">Knob</a></h3><!-- $$$Knob-brief -->
 <p>A knob of an effect: its <code translate="no">name</code>, its <code translate="no">defaultValue</code> (0..1) and whether it is <code translate="no">shared</code> by every machine. <a href="effectchain-knob.html#details">More...</a></p>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- hardwareports.cpp -->
-  <meta name="description" content="A sound card's ports on the JACK graph, found by the card, never by a fixed JACK name (docs/routing.md, &quot;Hardware port names&quot;).">
+  <meta name="description" content="A sound card's ports on the JACK graph, found by the card, never by a fixed JACK name.">
   <meta name="keywords" content="namespace">
   <title>HardwarePorts Namespace | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">HardwarePorts Namespace</h1>
 <!-- $$$HardwarePorts-brief -->
-<p>A sound card's ports on the JACK graph, found by the card, never by a fixed JACK name (docs/routing.md, &quot;Hardware port names&quot;). <a href="#details">More...</a></p>
+<p>A sound card's ports on the JACK graph, found by the card, never by a fixed JACK name. <a href="#details">More...</a></p>
 <!-- @@@HardwarePorts -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;hardwareports.h&gt;</code></td></tr>
@@ -88,12 +88,12 @@
 <!-- $$$HardwarePorts-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>pipewire-jack names a device's JACK ports after its node's description (<code translate="no">Built-in Audio Stereo:capture_FL</code>), or <code translate="no">system</code>: for the default device, and two cards sharing a description take turns at the plain name and a <code translate="no">-&lt;serial&gt;</code> one from one start of PipeWire to the next (the HiFiBerry and the Dummy card on a Zynthbox; <code translate="no">data/wireplumber/50-ravving-hardware.conf</code> hides the Dummy). So a card's port is found in PipeWire itself (<code translate="no">pw-dump</code>: each port's <code translate="no">port.alias</code> is <code translate="no">&lt;card&gt;:&lt;port&gt;</code>, the card's ALSA name), and its JACK name is the one whose UUID carries that port's object serial: pipewire-jack makes a port's UUID as (1 &lt;&lt; 32) | (serial + 1), whatever name the port was given.</p>
+<p>pipewire-jack names a device's JACK ports after its node's description (<code translate="no">Built-in Audio Stereo:capture_FL</code>), or <code translate="no">system</code>: for the default device, and two cards sharing a description alternate between the plain name and a <code translate="no">-&lt;serial&gt;</code> one from one start of PipeWire to the next (the HiFiBerry and the Dummy card on a Zynthbox; <code translate="no">data/wireplumber/50-ravving-hardware.conf</code> hides the Dummy). So a card's port is found in PipeWire itself (<code translate="no">pw-dump</code>: each port's <code translate="no">port.alias</code> is <code translate="no">&lt;card&gt;:&lt;port&gt;</code>, the card's ALSA name), and its JACK name is the one whose UUID carries that port's object serial: pipewire-jack makes a port's UUID as (1 &lt;&lt; 32) | (serial + 1), whatever name the port was given.</p>
 <pre class="cpp plain" translate="no"><code class="text">
  HardwarePorts::captureOf(&quot;HiFiBerry DAC+ADC Pro HiFi multicodec-0&quot;)
      // {&quot;system:capture_1&quot;, &quot;system:capture_2&quot;}, or wherever they are this time
 </code></pre>
-<p>Each call runs pw-dump and blocks for it (some 100 ms on the Pi): ask at the start and when about to use the ports again (arming the input), not per frame.</p>
+<p>Each call runs pw-dump and blocks until it ends: call it at start and before using the ports again (arming the input), not per frame.</p>
 </div>
 <!-- @@@HardwarePorts -->
 <div class="func">

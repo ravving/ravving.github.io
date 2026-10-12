@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- pitchdetector.cpp -->
-  <meta name="description" content="The pitch of a plucked string in a block of mono audio: the TUNER's ear (Tuner).">
+  <meta name="description" content="Finds the pitch of a plucked string in a block of mono audio; Tuner's detector.">
   <meta name="keywords" content="class">
   <title>PitchDetector Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">PitchDetector Class</h1>
 <!-- $$$PitchDetector-brief -->
-<p>The pitch of a plucked string in a block of mono audio: the TUNER's ear (Tuner). <a href="#details">More...</a></p>
+<p>Finds the pitch of a plucked string in a block of mono audio; Tuner's detector. <a href="#details">More...</a></p>
 <!-- @@@PitchDetector -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;pitchdetector.h&gt;</code></td></tr>
@@ -93,8 +93,8 @@
 <!-- $$$PitchDetector-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The method is guitarix's tuner (<code translate="no">src/LV2/gxtuner.lv2/gx_pitch_tracker.cpp</code>, GPL-2.0-or-later, by Hermann Meyer, James Warden, Andreas Degert and Pete Shorthose), itself Philip McLeod's from Tartini: the block is brought down to about 24 kHz, its normalised square difference function (NSDF: the autocorrelation scaled to -1..1 by the energy of both halves) is taken over the lags of the range asked for, and the period is the first key maximum (the highest peak between two zero crossings) that reaches near the highest one, which keeps a string's strong second harmonic from reading an octave up. A parabola through the peak gives the fraction of a sample. At these sizes (a 2048-sample window, lags up to the lowest note asked for) the direct sum is cheap enough, so no FFT is needed.</p>
-<p>A level gate with hysteresis (on above the on level's mean absolute value, off under 90 % of it) says when there is a note at all, as guitarix's does.</p>
+<p>The method is guitarix's tuner (<code translate="no">src/LV2/gxtuner.lv2/gx_pitch_tracker.cpp</code>, GPL-2.0-or-later, by Hermann Meyer, James Warden, Andreas Degert and Pete Shorthose), itself Philip McLeod's from Tartini: the block is decimated to about 24 kHz, its normalised square difference function (NSDF: the autocorrelation scaled to -1..1 by the energy of both halves) is taken over the lags of the range set, and the period is the first key maximum (the highest peak between two zero crossings) that comes near the highest one, which keeps a string's strong second harmonic from reading an octave up. A parabola through the peak gives the fraction of a sample. At these sizes (a 2048-sample window, lags up to the lowest note set) the direct sum is cheap enough, so no FFT is needed.</p>
+<p>A level gate with hysteresis (on above the set level's mean absolute value, off under 90 % of it) decides when there is a note at all.</p>
 <pre class="cpp plain" translate="no"><code class="text">
  PitchDetector ear;
  ear.setSampleRate(48000);

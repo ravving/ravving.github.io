@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- fileshare.cpp -->
-  <meta name="description" content="A small HTTP server inside ravving, published to QML as share: one file offered to a phone (the SEND... dialog's PHONE, QR CODE destination), the ravving page, and the library for a phone to browse.">
+  <meta name="description" content="A small HTTP server inside ravving, published to QML as share: it serves one offered file, the ravving help pages, and browse pages of the library.">
   <meta name="keywords" content="class">
   <title>FileShare Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">FileShare Class</h1>
 <!-- $$$FileShare-brief -->
-<p>A small HTTP server inside ravving, published to QML as <code translate="no">share</code>: one file offered to a phone (the SEND... dialog's PHONE, QR CODE destination), the ravving page, and the library for a phone to browse. <a href="#details">More...</a></p>
+<p>A small HTTP server inside ravving, published to QML as <code translate="no">share</code>: it serves one offered file, the ravving help pages, and browse pages of the library. <a href="#details">More...</a></p>
 <!-- @@@FileShare -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;fileshare.h&gt;</code></td></tr>
@@ -142,10 +142,10 @@
 <!-- $$$FileShare-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>An offered file is served at a random path (128 bits) for as long as the QR dialog is up, 15 minutes at most. The phone's camera reads the QR code of the URL, its browser opens it and saves the file: no pairing, no app, no account. Any phone on the same Wi-Fi can reach it; nothing else can guess the path. The server listens on port 8098, or the next free one up to 8107, on every interface; the URL is built on the Wi-Fi address (else any other network's).</p>
-<p>It is written on QTcpServer, since the Qt HttpServer module is not on the Zynthbox image. <code translate="no">GET</code> and <code translate="no">HEAD</code> are answered, anything else gets a 404; the response has Content-Type, Content-Length and Content-Disposition (an attachment, with the UTF-8 name) and honours <code translate="no">Range: bytes=...</code> with a 206 (iOS Safari asks for ranges on media, and a browser resumes a download with one). A file is streamed in 64 kB chunks as the socket drains, never read whole. Each connection is closed after its response.</p>
-<p>The same server carries the ravving page (SETTINGS, HELP): after <a href="fileshare.html#setHelpFolder" translate="no">setHelpFolder</a>() it listens for good and serves <code translate="no">GET /help/&lt;file&gt;</code> from the installed <code translate="no">site/</code> folder (<code translate="no">/help/</code> is its <code translate="no">index.html</code>; nothing above the folder is reachable). The device has no browser, so the page is read on a phone or a laptop.</p>
-<p>And the library (FILES, PHONE, BROWSE): <a href="fileshare.html#openBrowse" translate="no">openBrowse</a>() makes a random path <code translate="no">/b/&lt;32 hex&gt;/</code> under which <a href="filebrowser.html" translate="no">FileBrowser</a>'s kinds and entries are served as small pages in the site's look, with a DOWNLOAD link per file. Files are served from the paths the browser lists, looked up by kind and name, never taken from the URL. The browse link ends 15 minutes after the phone's last request, or at <a href="fileshare.html#closeBrowse" translate="no">closeBrowse</a>(). GUI thread only.</p>
+<p>An offered file (<a href="fileshare.html#offer" translate="no">offer</a>()) is served at a random path (128 bits) until <a href="fileshare.html#stop" translate="no">stop</a>() or for 15 minutes at most, so a phone on the same network can download it from a URL shown as a QR code; nothing else can guess the path. The server listens on port 8098, or the next free one up to 8107, on every interface; the URL is built on the Wi-Fi address (else any other network's).</p>
+<p>It is built on QTcpServer, since the Qt HttpServer module is not on the Zynthbox image. <code translate="no">GET</code> and <code translate="no">HEAD</code> are answered, anything else gets a 404; the response has Content-Type, Content-Length and Content-Disposition (an attachment, with the UTF-8 name) and honours <code translate="no">Range: bytes=...</code> with a 206 (iOS Safari requests ranges for media, and browsers resume downloads with one). A file is streamed in 64 kB chunks as the socket drains, never read whole. Each connection is closed after its response.</p>
+<p>After <a href="fileshare.html#setHelpFolder" translate="no">setHelpFolder</a>() the server listens permanently and serves <code translate="no">GET /help/&lt;file&gt;</code> from the installed <code translate="no">site/</code> folder (<code translate="no">/help/</code> is its <code translate="no">index.html</code>; nothing above the folder is reachable).</p>
+<p><a href="fileshare.html#openBrowse" translate="no">openBrowse</a>() creates a random path <code translate="no">/b/&lt;32 hex&gt;/</code> under which <a href="filebrowser.html" translate="no">FileBrowser</a>'s kinds and entries are served as small HTML pages, with a download link per file. Files are served from the paths <a href="filebrowser.html" translate="no">FileBrowser</a> lists, looked up by kind and name, never taken from the URL. The browse path expires 15 minutes after the last request, or at <a href="fileshare.html#closeBrowse" translate="no">closeBrowse</a>(). GUI thread only.</p>
 </div>
 <!-- @@@FileShare -->
 <div class="prop">
@@ -181,7 +181,7 @@
 <div class="fnitem">
 <!-- $$$browseUrl-prop$$$browseUrl$$$changed -->
 <h3 class="fn" translate="no" id="browseUrl-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">browseUrl</span> : <span class="type">QString</span></h3>
-<p>This property holds the library pages' address, <code translate="no">http://&lt;address&gt;:&lt;port&gt;/b/&lt;token&gt;/</code>, while browsing; empty otherwise.</p>
+<p>This property holds the browse pages' address, <code translate="no">http://&lt;address&gt;:&lt;port&gt;/b/&lt;token&gt;/</code>, while browsing; empty otherwise.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>browseUrl</b></span>() const</td></tr>
@@ -195,7 +195,7 @@
 <div class="fnitem">
 <!-- $$$browsing-prop$$$browsing$$$changed -->
 <h3 class="fn" translate="no" id="browsing-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">browsing</span> : <span class="type">bool</span></h3>
-<p>This property holds whether the library pages are served.</p>
+<p>This property holds whether the browse pages are served.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>browsing</b></span>() const</td></tr>
@@ -223,7 +223,7 @@
 <div class="fnitem">
 <!-- $$$downloads-prop$$$downloads$$$progressChanged -->
 <h3 class="fn" translate="no" id="downloads-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">downloads</span> : <span class="type">int</span></h3>
-<p>This property holds the whole deliveries since <a href="fileshare.html#offer" translate="no">offer</a>().</p>
+<p>This property holds the number of complete downloads since <a href="fileshare.html#offer" translate="no">offer</a>().</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>downloads</b></span>() const</td></tr>
@@ -237,7 +237,7 @@
 <div class="fnitem">
 <!-- $$$error-prop$$$error$$$changed -->
 <h3 class="fn" translate="no" id="error-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">error</span> : <span class="type">QString</span></h3>
-<p>why the last <a href="fileshare.html#offer" translate="no">offer</a>() gave nothing, or why the offer ended early; empty when all is well.</p>
+<p>why the last <a href="fileshare.html#offer" translate="no">offer</a>() failed, or why the offer ended early; empty otherwise.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>error</b></span>() const</td></tr>
@@ -265,7 +265,7 @@
 <div class="fnitem">
 <!-- $$$helpUrl-prop$$$helpUrl$$$changed -->
 <h3 class="fn" translate="no" id="helpUrl-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">helpUrl</span> : <span class="type">QString</span></h3>
-<p>This property holds the ravving page's address, <code translate="no">http://&lt;address&gt;:&lt;port&gt;/help/</code>; empty without a help folder or a network.</p>
+<p>This property holds the help pages' address, <code translate="no">http://&lt;address&gt;:&lt;port&gt;/help/</code>; empty without a help folder or a network.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>helpUrl</b></span>() const</td></tr>
@@ -335,7 +335,7 @@
 <div class="fnitem">
 <!-- $$$status-prop$$$status$$$progressChanged -->
 <h3 class="fn" translate="no" id="status-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">status</span> : <span class="type">QString</span></h3>
-<p><code translate="no">idle</code> (nothing offered), <code translate="no">waiting</code> (offered, no phone yet), <code translate="no">sending</code> (a body is going out) or <code translate="no">done</code> (the whole file was delivered at least once; a phone can scan again).</p>
+<p><code translate="no">idle</code> (nothing offered), <code translate="no">waiting</code> (offered, no request yet), <code translate="no">sending</code> (a body is being sent) or <code translate="no">done</code> (the whole file was delivered at least once; it stays available).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>status</b></span>() const</td></tr>
@@ -349,7 +349,7 @@
 <div class="fnitem">
 <!-- $$$url-prop$$$url$$$changed -->
 <h3 class="fn" translate="no" id="url-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">url</span> : <span class="type">QString</span></h3>
-<p>what the phone opens: <code translate="no">http://&lt;address&gt;:&lt;port&gt;/d/&lt;token&gt;/&lt;file name&gt;</code>; empty while idle.</p>
+<p>This property holds the offered file's URL: <code translate="no">http://&lt;address&gt;:&lt;port&gt;/d/&lt;token&gt;/&lt;file name&gt;</code>; empty while idle.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>url</b></span>() const</td></tr>
@@ -372,14 +372,14 @@
 <div class="fnitem">
 <!-- $$$closeBrowse[overload1]$$$closeBrowse -->
 <h3 class="fn" translate="no" id="closeBrowse"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> FileShare::<span class="name">closeBrowse</span>()</h3>
-<p>Takes the library's pages down.</p>
+<p>Stops serving the browse pages.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@closeBrowse -->
 </div>
 <div class="fnitem">
 <!-- $$$downloaded[overload1]$$$downloadedconstQString& -->
 <h3 class="fn" translate="no" id="downloaded"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> FileShare::<span class="name">downloaded</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
-<p>Emitted when the whole file <i translate="no">name</i> reached a phone.</p>
+<p>Emitted when the whole file <i translate="no">name</i> was delivered.</p>
 <!-- @@@downloaded -->
 </div>
 <div class="fnitem">
@@ -392,27 +392,27 @@
 <div class="fnitem">
 <!-- $$$notify[overload1]$$$notifyconstQString&constQString& -->
 <h3 class="fn" translate="no" id="notify"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> FileShare::<span class="name">notify</span>(const <span class="type">QString</span> &amp;<i>text</i>, const <span class="type">QString</span> &amp;<i>color</i>)</h3>
-<p>Emitted with a short status <i translate="no">text</i> to show as a toast in <i translate="no">color</i> (a CSS colour).</p>
+<p>Emitted with a short translated status <i translate="no">text</i> and its <i translate="no">color</i> (a CSS colour).</p>
 <!-- @@@notify -->
 </div>
 <div class="fnitem">
 <!-- $$$offer[overload1]$$$offerconstQString& -->
 <h3 class="fn" translate="no" id="offer"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> FileShare::<span class="name">offer</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
-<p>Serves the one file at <i translate="no">path</i> until <a href="fileshare.html#stop" translate="no">stop</a>() or 15 minutes, replacing any file offered, and returns its URL. Returns an empty string, with error set, when the file cannot be read, no port is free or the device is on no network.</p>
+<p>Serves the one file at <i translate="no">path</i> until <a href="fileshare.html#stop" translate="no">stop</a>() or for 15 minutes, replacing any file offered, and returns its URL. Returns an empty string, with error set, when the file cannot be read, no port is free or there is no network.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@offer -->
 </div>
 <div class="fnitem">
 <!-- $$$openBrowse[overload1]$$$openBrowse -->
 <h3 class="fn" translate="no" id="openBrowse"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> FileShare::<span class="name">openBrowse</span>()</h3>
-<p>Serves the library's pages under a new random path until 15 minutes pass with no request from the phone, or <a href="fileshare.html#closeBrowse" translate="no">closeBrowse</a>(), and returns the URL (the one already up, when it is). Returns an empty string with no network or no free port.</p>
+<p>Serves the browse pages under a new random path until 15 minutes pass with no request, or <a href="fileshare.html#closeBrowse" translate="no">closeBrowse</a>(), and returns the URL (the existing one, when already browsing). Returns an empty string with no network or no free port.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@openBrowse -->
 </div>
 <div class="fnitem">
 <!-- $$$refresh[overload1]$$$refresh -->
 <h3 class="fn" translate="no" id="refresh"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> FileShare::<span class="name">refresh</span>()</h3>
-<p>Reads the device's address again (the dialog about to open).</p>
+<p>Reads the device's network address again.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@refresh -->
 </div>
@@ -425,7 +425,7 @@
 <div class="fnitem">
 <!-- $$$setHelpFolder[overload1]$$$setHelpFolderconstQString& -->
 <h3 class="fn" translate="no" id="setHelpFolder"><span class="type">void</span> FileShare::<span class="name">setHelpFolder</span>(const <span class="type">QString</span> &amp;<i>dir</i>)</h3>
-<p>Serves the folder <i translate="no">dir</i> (the installed <code translate="no">site/</code>) at <code translate="no">/help/</code> from now on, listening for good; an empty <i translate="no">dir</i> takes it down.</p>
+<p>Serves the folder <i translate="no">dir</i> (the installed <code translate="no">site/</code>) at <code translate="no">/help/</code> from now on, listening permanently; an empty <i translate="no">dir</i> stops serving it.</p>
 <p><b>See also </b><a href="fileshare.html#helpFolder" translate="no">helpFolder</a>().</p>
 <!-- @@@setHelpFolder -->
 </div>

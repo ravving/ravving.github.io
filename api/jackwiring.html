@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- jackwiring.cpp -->
-  <meta name="description" content="Keeps the JACK graph wired for ravving's tracks, as zynthbox-qml's autoconnect (zynautoconnect&lt;@op&gt;/&lt;/@op&gt;zynthian_autoconnect&lt;@op&gt;.&lt;/@op&gt;py) wires a synth on a sketchpad track.">
+  <meta name="description" content="Keeps the JACK graph wired for ravving's tracks, with the topology libzynthbox's tracks expect (the one zynthbox-qml's autoconnect produces for a synth on a sketchpad track).">
   <meta name="keywords" content="class">
   <title>JackWiring Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">JackWiring Class</h1>
 <!-- $$$JackWiring-brief -->
-<p>Keeps the JACK graph wired for ravving's tracks, as zynthbox-qml's autoconnect (<code translate="no">zynautoconnect/zynthian_autoconnect.py</code>) wires a synth on a sketchpad track. <a href="#details">More...</a></p>
+<p>Keeps the JACK graph wired for ravving's tracks, with the topology libzynthbox's tracks expect (the one zynthbox-qml's autoconnect produces for a synth on a sketchpad track). <a href="#details">More...</a></p>
 <!-- @@@JackWiring -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;jackwiring.h&gt;</code></td></tr>
@@ -108,9 +108,9 @@
  engine out  -&gt;  SynthPassthrough:Synth{z+1}  -&gt;  TrackPassthrough:Channel{t+1}-lane1
              -&gt;  AudioLevels:Channel{t+1}  -&gt;  GlobalPlayback  -&gt;  system:playback
 </code></pre>
-<p>Here <i>z</i> is the Zynthian channel and <i>t</i> the sketchpad track, as checked against zynthbox-qml's live graph. PipeWire also links every new engine straight to the speakers; those links are removed, as autoconnect does, so all sound goes through the track (level, mute, effects).</p>
-<p>A synth can have an insert (a machine's DRIVE): while active it sits between the engine and its SynthPassthrough, otherwise the engine connects straight to it. The master can run through inserts before the speakers (the LIVE FX), and the device input through its own chain (<a href="jackwiring.html#setInputChain" translate="no">setInputChain</a>()).</p>
-<p>The wiring is declarative: every wanted and unwanted port pair is kept, and each change requests them all through libzynthbox's JackConnectionHandler, retried until every port exists, since engines and passthrough ports appear a moment after they are asked for (the startup mark <code translate="no">wired</code> is set once everything connected). GUI thread only.</p>
+<p>Here <i>z</i> is the Zynthian channel and <i>t</i> the sketchpad track. PipeWire also links every new engine straight to the speakers; those links are removed, so all sound goes through the track (level, mute, effects).</p>
+<p>A synth can have an insert (<a href="trackeffects.html" translate="no">TrackEffects</a>' DRIVE): while active it sits between the engine and its SynthPassthrough, otherwise the engine connects straight to it. The master can run through inserts before the speakers (<a href="jackwiring.html#setMasterInserts" translate="no">setMasterInserts</a>(), <a href="livefx.html#masterInserts" translate="no">LiveFx::masterInserts</a>()), and the device input through its own chain (<a href="jackwiring.html#setInputChain" translate="no">setInputChain</a>()).</p>
+<p>The wiring is declarative: every wanted and unwanted port pair is kept, and each change requests them all through libzynthbox's JackConnectionHandler, retried until every port exists, since engines and passthrough ports appear a moment after they are requested (the startup mark <code translate="no">wired</code> is set once everything is connected). GUI thread only.</p>
 </div>
 <!-- @@@JackWiring -->
 <div class="func">
@@ -172,7 +172,7 @@
 <div class="fnitem">
 <!-- $$$setInputChain[overload1]$$$setInputChainintconstQList<QStringList>&constQList<AudioInsert*>&boolboolconstQStringList& -->
 <h3 class="fn" translate="no" id="setInputChain"><span class="type">void</span> JackWiring::<span class="name">setInputChain</span>(<span class="type">int</span> <i>track</i>, const <span class="type">QList</span>&lt;<span class="type">QStringList</span>&gt; &amp;<i>sources</i>, const <span class="type">QList</span>&lt;<span class="type"><a href="audioinsert.html" translate="no">AudioInsert</a></span> *&gt; &amp;<i>inserts</i>, <span class="type">bool</span> <i>monitor</i>, <span class="type">bool</span> <i>record</i>, const <span class="type">QStringList</span> &amp;<i>listeners</i> = {})</h3>
-<p>Wires the device input's path, replacing the one wired before: <i translate="no">sources</i> (the capture ports feeding the left side, then the right; several on a side are summed by JACK) through <i translate="no">inserts</i> in order (the live effects), and from there, with <i translate="no">monitor</i>, into sketchpad <i translate="no">track</i>'s lane (its level is the monitor's; <a href="jackwiring.html#addTrackLane" translate="no">addTrackLane</a>() wires it to the master) and, with <i translate="no">record</i>, into AudioLevels' port recorder (its meter and takes). A mono plugin takes both sides summed and feeds both sides of what follows. <i translate="no">listeners</i> (left, right) are fed by the chain's end too (the video recorder's tap). Empty <i translate="no">sources</i> wire nothing.</p>
+<p>Wires the device input's path, replacing the one wired before: <i translate="no">sources</i> (the capture ports feeding the left side, then the right; several on a side are summed by JACK) through <i translate="no">inserts</i> in order (the input effects), and from there, with <i translate="no">monitor</i>, into sketchpad <i translate="no">track</i>'s lane (its level is the monitor's; <a href="jackwiring.html#addTrackLane" translate="no">addTrackLane</a>() wires it to the master) and, with <i translate="no">record</i>, into AudioLevels' port recorder (its meter and takes). A mono plugin takes both sides summed and feeds both sides of what follows. <i translate="no">listeners</i> (left, right) are fed by the chain's end too (<a href="audiotap.html" translate="no">AudioTap</a>'s mic inputs). Empty <i translate="no">sources</i> wire nothing.</p>
 <!-- @@@setInputChain -->
 </div>
 <div class="fnitem">
@@ -190,7 +190,7 @@
 <div class="fnitem">
 <!-- $$$setSampleOutputs[overload1]$$$setSampleOutputsintconstQList<int>&int -->
 <h3 class="fn" translate="no" id="setSampleOutputs"><span class="type">void</span> JackWiring::<span class="name">setSampleOutputs</span>(<span class="type">int</span> <i>track</i>, const <span class="type">QList</span>&lt;<span class="type">int</span>&gt; &amp;<i>samples</i>, <span class="type">int</span> <i>laneTrack</i> = -1)</h3>
-<p>Wires the sampler's loaded slots on <i translate="no">track</i>, SamplerSynth's sample ports <i translate="no">samples</i> (1 to 10), into a lane, replacing the ones wired before: the track's own lane, or with <i translate="no">laneTrack</i> 0 or more that track's (the PAD SAMPLER's second track plays through the first's lane, so one level and one set of effects cover all its pads). SamplerSynth makes a slot's ports only while a sample is in it.</p>
+<p>Wires the sampler's loaded slots on <i translate="no">track</i>, SamplerSynth's sample ports <i translate="no">samples</i> (1 to 10), into a lane, replacing the ones wired before: the track's own lane, or with <i translate="no">laneTrack</i> 0 or more that track's (<a href="padsamplermachine.html" translate="no">PadSamplerMachine</a>'s second track plays through the first's lane, so one level and one set of effects cover all its pads). SamplerSynth creates a slot's ports only while a sample is in it.</p>
 <!-- @@@setSampleOutputs -->
 </div>
 <div class="fnitem">

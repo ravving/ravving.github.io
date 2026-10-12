@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- filebrowser.cpp -->
-  <meta name="description" content="The FILES browser, published to QML as files (the control center's FILES card): everything in ravving's library (Paths), by kind, each entry with SEND... and DELETE.">
+  <meta name="description" content="Lists everything in ravving's library (Paths) by kind, and deletes entries; published to QML as files.">
   <meta name="keywords" content="class">
   <title>FileBrowser Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">FileBrowser Class</h1>
 <!-- $$$FileBrowser-brief -->
-<p>The FILES browser, published to QML as <code translate="no">files</code> (the control center's FILES card): everything in ravving's library (Paths), by kind, each entry with SEND... and DELETE. <a href="#details">More...</a></p>
+<p>Lists everything in ravving's library (Paths) by kind, and deletes entries; published to QML as <code translate="no">files</code>. <a href="#details">More...</a></p>
 <!-- @@@FileBrowser -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;filebrowser.h&gt;</code></td></tr>
@@ -103,7 +103,7 @@
 <!-- $$$FileBrowser-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>It is the one place a file is sent (SendPopup: a USB stick's <code translate="no">ravving/&lt;kind&gt;</code> folder, the computer, the phone) or deleted from; the PROJECT dialog only opens, saves and exports. The kinds, in the browser's order: projects, templates, presets (the user's pattern presets and saved sounds, through <a href="presetexchange.html" translate="no">PresetExchange</a>, each one a JSON file when sent), samples, takes, the RECORDER's takes, recordings (the header's RECORD), tracks and bundles (exports), soundfonts, MIDI files, videos, and what Bluetooth received. Labels are translated again on a language change. GUI thread only.</p>
+<p>The kinds, in order (key in parentheses): projects (<code translate="no">projects</code>), templates (<code translate="no">templates</code>), presets (<code translate="no">presets</code>: the user's pattern presets and saved sounds, through <a href="presetexchange.html" translate="no">PresetExchange</a>, each written as one JSON file for sending), samples (<code translate="no">samples</code>), sampler takes (<code translate="no">takes</code>), input takes kept as played (<code translate="no">liveTakes</code>), master recordings (<code translate="no">recordings</code>), exported tracks (<code translate="no">tracks</code>) and bundles (<code translate="no">bundles</code>), soundfonts (<code translate="no">soundfonts</code>), MIDI files (<code translate="no">midi</code>), videos (<code translate="no">videos</code>), and files received over Bluetooth (<code translate="no">received</code>). Labels are translated again on a language change. GUI thread only.</p>
 </div>
 <!-- @@@FileBrowser -->
 <div class="prop">
@@ -111,7 +111,7 @@
 <div class="fnitem">
 <!-- $$$kinds-prop$$$kinds$$$changed -->
 <h3 class="fn" translate="no" id="kinds-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">kinds</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the kinds, as maps with <code translate="no">key</code>, <code translate="no">label</code>, <code translate="no">about</code>, <code translate="no">usbKind</code> (the stick folder SendPopup uses) and <code translate="no">count</code>.</p>
+<p>This property holds the kinds, as maps with <code translate="no">key</code>, <code translate="no">label</code>, <code translate="no">about</code>, <code translate="no">usbKind</code> (the stick folder a file of this kind is copied to, <a href="removabledrives.html#copyFiles" translate="no">RemovableDrives::copyFiles</a>()) and <code translate="no">count</code>.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>kinds</b></span>() const</td></tr>

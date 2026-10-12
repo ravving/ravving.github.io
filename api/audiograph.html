@@ -88,7 +88,7 @@
 <!-- $$$AudioGraph-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Read once through a throwaway JACK client (<code translate="no">ravving-probe</code>) and kept, since the graph's clock does not change while it runs. Anything ravving starts that renders audio on its own clock (FluidSynth's PipeWire driver) is given these, so its node runs at the graph's rate and period instead of its defaults (44.1 kHz with 1024 frames of buffering: resampling and 23 ms of latency on every engine). Without a graph (a desktop without PipeWire) the Zynthbox defaults, 48000 Hz and 256 frames, are used and a &quot;No audio graph answered&quot; issue is reported. Thread-safe (the first call initialises a function-local static).</p>
+<p>Read once through a throwaway JACK client (<code translate="no">ravving-probe</code>) and kept, since the graph's clock does not change while it runs. Anything ravving starts that renders audio on its own clock (FluidSynth's PipeWire driver) is given these, so its node runs at the graph's rate and period instead of its own defaults, which would mean resampling and extra latency on every engine. Without a graph (a desktop without PipeWire) the Zynthbox defaults, 48000 Hz and 256 frames, are used and a &quot;No audio graph answered&quot; issue is reported. Thread-safe (the first call initialises a function-local static).</p>
 </div>
 <!-- @@@AudioGraph -->
 <div class="func">

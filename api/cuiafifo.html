@@ -99,7 +99,7 @@
 <!-- $$$CuiaFifo-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The fifo is the one zynthbox-qml listens on, so webconf and scripts drive ravving the same way. It is created when missing and opened read-write and non-blocking, so it never reports end-of-file between writers; a QSocketNotifier reads it on the GUI thread and each complete line becomes one signal. Ported from zynthbox-qml's <code translate="no">zynqtgui/utils/webconf_fifo_handler.py</code> (its CUIA commands; the json and &quot;sounds&quot; commands are zynthbox-qml's own and not handled).</p>
+<p>The path is the one webconf writes to, so webconf and scripts drive ravving through it. The fifo is created when missing and opened read-write and non-blocking, so it never reports end-of-file between writers; a QSocketNotifier reads it on the GUI thread and each complete line becomes one signal. Of webconf's commands only the CUIA ones are handled (not its json and &quot;sounds&quot; commands).</p>
 <div class="table"><table class="generic">
  <thead><tr class="qt-style"><th >Line</th><th >Signal</th></tr></thead>
 <tr valign="top" class="odd"><td ><code translate="no">cuia/NAME</code>, or <code translate="no">cuia/NAME/track/slot/value</code></td><td ><a href="cuiafifo.html#cuiaReceived" translate="no">cuiaReceived</a>() with NAME in upper case, as if the device had sent it.</td></tr>

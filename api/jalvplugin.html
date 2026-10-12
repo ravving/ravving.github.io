@@ -102,7 +102,7 @@
 <!-- $$$JalvPlugin-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>It runs as zynthbox-qml runs its engines and effects (<code translate="no">zyngine/zynthian_engine_jalv.py</code>: <code translate="no">jalv -n NAME URI</code>, controls set on jalv's console). The process is a <a href="consoleprocess.html" translate="no">ConsoleProcess</a> (libzynthbox's ProcessWrapper). Controls are named by their LV2 port symbol; jalv's console wants port indexes, which are read from <code translate="no">lv2info</code> together with the audio and MIDI ports' symbols (jalv names its JACK ports after them). lv2info loads every installed bundle's data (70 to 560 ms a plugin on the Pi), so what it says is cached on disk (<code translate="no">Paths::cache()/lv2-ports.json</code>, asked again only when the plugin's bundle or binary changed) and in memory once per URI. Values set before the start go on jalv's command line, later ones through its console, and all are sent again after a crash restart. GUI thread only.</p>
+<p>It runs as <code translate="no">jalv -n NAME URI</code>, with controls set on jalv's console. The process is a <a href="consoleprocess.html" translate="no">ConsoleProcess</a> (libzynthbox's ProcessWrapper). Controls are named by their LV2 port symbol; jalv's console wants port indexes, which are read from <code translate="no">lv2info</code> together with the audio and MIDI ports' symbols (jalv names its JACK ports after them). lv2info loads every installed bundle's data, which is slow, so its answer is cached on disk (<code translate="no">Paths::cache()/lv2-ports.json</code>, queried again only when the plugin's bundle or binary changed) and in memory once per URI. Values set before the start go on jalv's command line, later ones through its console, and all are sent again after a crash restart. GUI thread only.</p>
 </div>
 <!-- @@@JalvPlugin -->
 <div class="func">
@@ -155,7 +155,7 @@
 <div class="fnitem">
 <!-- $$$start[overload1]$$$start -->
 <h3 class="fn" translate="no" id="start"><span class="type">void</span> JalvPlugin::<span class="name">start</span>()</h3>
-<p>Starts jalv with every control set so far. Later calls do nothing, so a plugin needed only sometimes (a machine's DRIVE) is started on first use. <a href="audioinsert.html#started" translate="no">started</a>() follows each start and restart.</p>
+<p>Starts jalv with every control set so far. Later calls do nothing, so a plugin needed only sometimes (<a href="trackeffects.html" translate="no">TrackEffects</a>' DRIVE) is started on first use. <a href="audioinsert.html#started" translate="no">started</a>() follows each start and restart.</p>
 <!-- @@@start -->
 </div>
 <div class="fnitem">

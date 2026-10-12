@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- musiclibrary.cpp -->
-  <meta name="description" content="The tracks on the device the music player lists, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;music&lt;@op&gt;.&lt;/@op&gt;library.">
+  <meta name="description" content="The tracks on the device the music player plays from, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;music&lt;@op&gt;.&lt;/@op&gt;library.">
   <meta name="keywords" content="class">
   <title>MusicLibrary Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">MusicLibrary Class</h1>
 <!-- $$$MusicLibrary-brief -->
-<p>The tracks on the device the music player lists, published to QML as <code translate="no">studio.music.library</code>. <a href="#details">More...</a></p>
+<p>The tracks on the device the music player plays from, published to QML as <code translate="no">studio.music.library</code>. <a href="#details">More...</a></p>
 <!-- @@@MusicLibrary -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;musiclibrary.h&gt;</code></td></tr>
@@ -115,7 +115,7 @@
 <!-- $$$MusicLibrary-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>They are every exported track in the exports folder (<a href="paths.html#exports" translate="no">Paths::exports</a>(): WAV, FLAC, Ogg, MP3) and the master's recordings (<a href="paths.html#recordings" translate="no">Paths::recordings</a>(), the header's RECORD; they carry no tags and are listed under the album &quot;Recordings&quot;). Each track is read once for its tags (TagLib: title, artist, album, genre, composer, year, BPM, length) and its cover (the PNG the export saved beside it, else the picture in its tags, copied once into the cache), with the export's sidecar JSON adding the project it came from. Scans run in a worker thread. The folders are watched, so a new export, or a file dropped in over the web configurator, shows up on its own.</p>
+<p>They are every exported track in the exports folder (<a href="paths.html#exports" translate="no">Paths::exports</a>(): WAV, FLAC, Ogg, MP3) and the master's recordings (<a href="paths.html#recordings" translate="no">Paths::recordings</a>(); they carry no tags and are listed under the album &quot;Recordings&quot;). Each track is read once for its tags (TagLib: title, artist, album, genre, composer, year, BPM, length) and its cover (the PNG the export saved beside it, else the picture in its tags, copied once into the cache), with the export's sidecar JSON adding the project it came from. Scans run on a worker thread. The folders are watched, so a new export, or a file copied in from elsewhere, appears without a rescan call.</p>
 </div>
 <!-- @@@MusicLibrary -->
 <div class="prop">
@@ -123,7 +123,7 @@
 <div class="fnitem">
 <!-- $$$albums-prop$$$albums$$$changed -->
 <h3 class="fn" translate="no" id="albums-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">albums</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the tracks grouped by album for the grid view: maps with the name, how many tracks and the cover of one of them.</p>
+<p>This property holds the tracks grouped by album: maps with the name, the number of tracks and the cover of one of them.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>albums</b></span>() const</td></tr>

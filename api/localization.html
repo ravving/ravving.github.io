@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- localization.cpp -->
-  <meta name="description" content="The interface's language (KI18n), published to QML as localization (docs/translations.md).">
+  <meta name="description" content="The interface's language (KI18n), published to QML as localization.">
   <meta name="keywords" content="class">
   <title>Localization Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">Localization Class</h1>
 <!-- $$$Localization-brief -->
-<p>The interface's language (KI18n), published to QML as <code translate="no">localization</code> (docs/translations.md). <a href="#details">More...</a></p>
+<p>The interface's language (KI18n), published to QML as <code translate="no">localization</code>. <a href="#details">More...</a></p>
 <!-- @@@Localization -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;localization.h&gt;</code></td></tr>
@@ -112,9 +112,8 @@
 <!-- $$$Localization-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Every text on screen goes through KI18n: i18nc() and friends in C++, and in QML the same functions on the root context (KLocalization::setupLocalizedContext(), KF 6.8 and later; the bare names, not the <code translate="no">org.kde.ki18n</code> module, which the device's KF6 does not have). The catalogs are <code translate="no">po/&lt;lang&gt;/ravving.po</code>, compiled by <code translate="no">ki18n_install</code> into <code translate="no">share/locale/&lt;lang&gt;/LC_MESSAGES/ravving.mo</code> (<code translate="no">build/locale/...</code> in a build tree).</p>
-<p>language is the choice in SETTINGS, LANGUAGE, kept in the profile (<code translate="no">ravving/profile</code>, <code translate="no">ui/language</code>) and applied before the first i18n call at the start. Changing it switches at once: KI18n's language list is set, a LanguageChange goes to the application, and the QML bindings that call i18n are evaluated again (QQmlEngine::retranslate()); backend objects with translated properties catch the LanguageChange with an event filter on the application and emit their change signals. Texts made earlier and kept as they were (a notice already shown, an issue reported) keep their words until the next start, which <a href="localization.html#restartAdvised-prop" translate="no">restartAdvised</a> says.</p>
-<p>Japanese is drawn by the system's fallback font where the theme's font has no glyph (Droid Sans Fallback on the Zynthbox image, Noto Sans CJK on a desktop).</p>
+<p>Every text goes through KI18n: i18nc() and friends in C++, and in QML the same functions on the root context (KLocalization::setupLocalizedContext(), KF 6.8 and later; the bare names, not the <code translate="no">org.kde.ki18n</code> module, which the device's KF6 does not have). The catalogs are <code translate="no">po/&lt;lang&gt;/ravving.po</code>, compiled by <code translate="no">ki18n_install</code> into <code translate="no">share/locale/&lt;lang&gt;/LC_MESSAGES/ravving.mo</code> (<code translate="no">build/locale/...</code> in a build tree).</p>
+<p>language is stored in the profile (<code translate="no">ravving/profile</code>, <code translate="no">ui/language</code>) and applied before the first i18n call at start. Changing it switches at once: KI18n's language list is set, a LanguageChange goes to the application, and the QML bindings that call i18n are evaluated again (QQmlEngine::retranslate()); backend objects with translated properties catch the LanguageChange with an event filter on the application and emit their change signals. Texts created earlier and stored (a notice already emitted, an issue reported) keep their language until the next start, which <a href="localization.html#restartAdvised-prop" translate="no">restartAdvised</a> signals.</p>
 </div>
 <!-- @@@Localization -->
 <div class="prop">

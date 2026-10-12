@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- startupsplash.cpp -->
-  <meta name="description" content="The startup splash and its life, published to QML as startup (null when none is shown).">
+  <meta name="description" content="The startup splash and its lifetime, published to QML as startup (null when none is shown).">
   <meta name="keywords" content="class">
   <title>StartupSplash Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,7 +76,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">StartupSplash Class</h1>
 <!-- $$$StartupSplash-brief -->
-<p>The startup splash and its life, published to QML as <code translate="no">startup</code> (null when none is shown). <a href="#details">More...</a></p>
+<p>The startup splash and its lifetime, published to QML as <code translate="no">startup</code> (null when none is shown). <a href="#details">More...</a></p>
 <!-- @@@StartupSplash -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;startupsplash.h&gt;</code></td></tr>
@@ -113,9 +113,9 @@
 <!-- $$$StartupSplash-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p><a href="startupsplash.html#show" translate="no">show</a>() opens the splash window (<code translate="no">qml/Splash.qml</code>: ravving's logo, still) once libzynthbox is up, in a QML engine of its own, so the studio's root objects stay the studio's. Nothing moves on it while the studio loads: an animation would make the screen redraw every frame and slow the start (by 2 to 3 s on the device). The page's window shows the same picture over its first frames (<code translate="no">Main.qml</code>'s SplashLook overlay), so the splash window closes as soon as the startup mark <code translate="no">first-frame</code> is reached (<a href="startupsplash.html#startupMark" translate="no">startupMark</a>()). Once the audio is wired too (the <code translate="no">wired</code> mark), <a href="startupsplash.html#play" translate="no">play</a>() tells the overlay to play the look into the page; where nothing is wired (a desktop) that happens 3 s after the first frame.</p>
-<p>The look plays in the page's window rather than the splash's because KWin keeps a full-screen window above any &quot;stay on top&quot; one: in the splash window it would run behind the page.</p>
-<p>The look is the user's (SETTINGS, STARTUP: the profile's <code translate="no">startup/splash</code>): one of <a href="startupsplash.html#styles" translate="no">styles</a>(). None is shown on the <code translate="no">offscreen</code> and <code translate="no">minimal</code> platforms or while <code translate="no">RAVVING_SCREENSHOT_DIR</code> is set (the screenshot tour).</p>
+<p><a href="startupsplash.html#show" translate="no">show</a>() opens the splash window (<code translate="no">qml/Splash.qml</code>: ravving's logo, still) once libzynthbox is up, in a QML engine of its own, so the studio's root objects stay separate. Nothing animates on it while the studio loads, because an animation would redraw every frame and slow the start. The main window shows the same picture over its first frames (<code translate="no">Main.qml</code>'s SplashLook overlay), so the splash window closes as soon as the startup mark <code translate="no">first-frame</code> is reached (<a href="startupsplash.html#startupMark" translate="no">startupMark</a>()). Once the audio is wired too (the <code translate="no">wired</code> mark), <a href="startupsplash.html#play" translate="no">play</a>() is emitted for the overlay to play its style; where nothing is wired (a desktop run) that happens 3 s after the first frame.</p>
+<p>The style plays in the main window rather than the splash window because KWin keeps a full-screen window above any &quot;stay on top&quot; one, so the splash window would be hidden behind it.</p>
+<p>The style is <a href="userprofile.html#splash-prop" translate="no">UserProfile::splash</a>, one of <a href="startupsplash.html#styles" translate="no">styles</a>(). No splash is shown on the <code translate="no">offscreen</code> and <code translate="no">minimal</code> platforms or while <code translate="no">RAVVING_SCREENSHOT_DIR</code> is set.</p>
 </div>
 <!-- @@@StartupSplash -->
 <div class="prop">
@@ -133,7 +133,7 @@
 <div class="fnitem">
 <!-- $$$style-prop$$$style -->
 <h3 class="fn" translate="no" id="style-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">style</span> : const <span class="type">QString</span></h3>
-<p>This property holds the look: <code translate="no">anime</code>, <code translate="no">glow</code>, <code translate="no">still</code> or <code translate="no">zoom</code>.</p>
+<p>This property holds the style: <code translate="no">anime</code>, <code translate="no">glow</code>, <code translate="no">still</code> or <code translate="no">zoom</code>.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>style</b></span>() const</td></tr>
@@ -146,25 +146,25 @@
 <div class="fnitem">
 <!-- $$$defaultStyle[overload1]$$$defaultStyle -->
 <h3 class="fn" translate="no" id="defaultStyle"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> StartupSplash::<span class="name">defaultStyle</span>()</h3>
-<p>Returns the look used when none was picked or the saved one is unknown: <code translate="no">anime</code>.</p>
+<p>Returns the style used when none was chosen or the saved one is unknown: <code translate="no">anime</code>.</p>
 <!-- @@@defaultStyle -->
 </div>
 <div class="fnitem">
 <!-- $$$play[overload1]$$$play -->
 <h3 class="fn" translate="no" id="play"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> StartupSplash::<span class="name">play</span>()</h3>
-<p>Emitted once when the studio is up (first frame shown and audio wired, or the grace time passed): the page's overlay plays the look.</p>
+<p>Emitted once when the studio is up (first frame shown and audio wired, or the grace time passed), for the main window's overlay to play the style.</p>
 <!-- @@@play -->
 </div>
 <div class="fnitem">
 <!-- $$$show[overload1]$$$showQObject* -->
 <h3 class="fn" translate="no" id="show"><code class="details extra" translate="no">[static]</code> <span class="type"><a href="startupsplash.html" translate="no">StartupSplash</a></span> *StartupSplash::<span class="name">show</span>(<span class="type">QObject</span> *<i>parent</i>)</h3>
-<p>Shows the splash with the saved look and returns it, parented to <i translate="no">parent</i>; returns <code translate="no">nullptr</code> when the look is <code translate="no">off</code>, there is no screen to show it on, or the window could not be created. Blocks for up to 300 ms in a local event loop until the window's first frame is on screen at the screen's size, then marks <code translate="no">splash</code> (<a href="startupsplash.html#startupMark" translate="no">startupMark</a>()). The splash listens to every later startup mark through <a href="startupsplash.html#startupListener" translate="no">startupListener</a>().</p>
+<p>Shows the splash with the saved style and returns it, parented to <i translate="no">parent</i>; returns <code translate="no">nullptr</code> when the style is <code translate="no">off</code>, there is no screen, or the window could not be created. Blocks for up to 300 ms in a local event loop until the window's first frame is on screen at the screen's size, then marks <code translate="no">splash</code> (<a href="startupsplash.html#startupMark" translate="no">startupMark</a>()). The splash receives every later startup mark through <a href="startupsplash.html#startupListener" translate="no">startupListener</a>().</p>
 <!-- @@@show -->
 </div>
 <div class="fnitem">
 <!-- $$$styles[overload1]$$$styles -->
 <h3 class="fn" translate="no" id="styles"><code class="details extra" translate="no">[static]</code> <span class="type">QStringList</span> StartupSplash::<span class="name">styles</span>()</h3>
-<p>Returns the looks SETTINGS offers: <code translate="no">anime</code>, <code translate="no">glow</code>, <code translate="no">still</code>, <code translate="no">zoom</code> and <code translate="no">off</code>.</p>
+<p>Returns the styles: <code translate="no">anime</code>, <code translate="no">glow</code>, <code translate="no">still</code>, <code translate="no">zoom</code> and <code translate="no">off</code>.</p>
 <!-- @@@styles -->
 </div>
 </div>
@@ -179,7 +179,7 @@
 <div class="fnitem">
 <!-- $$$startupMark[overload1]$$$startupMarkconstchar* -->
 <h3 class="fn" translate="no" id="startupMark"><span class="type">void</span> <span class="name">startupMark</span>(const <span class="type">char</span> *<i>phase</i>)</h3>
-<p>Logs the startup <i translate="no">phase</i> to the journal as <code translate="no">ravving: startup &lt;phase&gt; &lt;ms&gt; ms</code>, milliseconds since the first call (main() makes it before anything else), and passes it to <a href="startupsplash.html#startupListener" translate="no">startupListener</a>(). Each phase is logged and passed on once; later calls with the same phase do nothing. <code translate="no">journalctl --user -u ravving | grep &quot;startup &quot;</code> reads a boot's timeline, and <code translate="no">tools/boot-timing.sh</code> measures with it. Defined inline in <code translate="no">startuptimer.h</code>; GUI thread only.</p>
+<p>Logs the startup <i translate="no">phase</i> to the journal as <code translate="no">ravving: startup &lt;phase&gt; &lt;ms&gt; ms</code>, milliseconds since the first call (main() makes it before anything else), and passes it to <a href="startupsplash.html#startupListener" translate="no">startupListener</a>(). Each phase is logged and passed on once; later calls with the same phase do nothing. Defined inline in <code translate="no">startuptimer.h</code>; GUI thread only.</p>
 <!-- @@@startupMark -->
 </div>
 </div>

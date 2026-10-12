@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- usblibrary.cpp -->
-  <meta name="description" content="What a USB stick holds for ravving, and moving it either way: the USB page's backend, published to QML as usb.">
+  <meta name="description" content="Lists what a USB stick holds for ravving and copies it either way; published to QML as usb.">
   <meta name="keywords" content="class">
   <title>UsbLibrary Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">UsbLibrary Class</h1>
 <!-- $$$UsbLibrary-brief -->
-<p>What a USB stick holds for ravving, and moving it either way: the USB page's backend, published to QML as <code translate="no">usb</code>. <a href="#details">More...</a></p>
+<p>Lists what a USB stick holds for ravving and copies it either way; published to QML as <code translate="no">usb</code>. <a href="#details">More...</a></p>
 <!-- @@@UsbLibrary -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;usblibrary.h&gt;</code></td></tr>
@@ -150,7 +150,7 @@
 <p>The kinds are one table in the <code translate="no">.cpp</code> (suffixes on each side, the stick folder, the library folders listed and imported into, how it moves): adding a kind is one row there.</p>
 <p>Files are found wherever they are, the stick's standard layout (<code translate="no">ravving/samples</code>, <code translate="no">ravving/soundfonts</code>, <code translate="no">ravving/projects</code>, <code translate="no">ravving/exports</code>, <code translate="no">ravving/midi</code>) first; hidden and system folders (System Volume Information, FOUND.000, $RECYCLE.BIN) are skipped, and the walk stops after 20000 files so a full disk cannot stall it.</p>
 <p><a href="usblibrary.html#importEntry" translate="no">importEntry</a>() brings one in: samples to <code translate="no">library/samples/imported/&lt;stick label&gt;/</code> (keeping the stick's folders), soundfonts to <code translate="no">library/soundfonts</code>, MIDI files to <code translate="no">library/midi</code>, tracks to <code translate="no">library/exports</code> (the music player lists them), projects through the exporter's bundle import. <a href="usblibrary.html#exportEntry" translate="no">exportEntry</a>() goes the other way, into the stick's standard folders (a project as a <code translate="no">.ravv</code> bundle, through the exporter). Copies run in a worker thread, one at a time, with progress; a copy onto the stick is synced before it counts as done.</p>
-<p><a href="usblibrary.html#importAll" translate="no">importAll</a>() queues every file of a kind in a folder of the stick (and its subfolders) that the device does not have yet: one copy after another, <a href="usblibrary.html#batchDone-prop" translate="no">batchDone</a> of <a href="usblibrary.html#batchTotal-prop" translate="no">batchTotal</a>, then one look through the stick and one <a href="usblibrary.html#finished" translate="no">finished</a>() at the end; <a href="usblibrary.html#cancelBatch" translate="no">cancelBatch</a>() stops after the copy under way. Kind labels are translated again on a language change.</p>
+<p><a href="usblibrary.html#importAll" translate="no">importAll</a>() queues every file of a kind in a folder of the stick (and its subfolders) that the device does not have yet: one copy after another, counted by <a href="usblibrary.html#batchDone-prop" translate="no">batchDone</a> of <a href="usblibrary.html#batchTotal-prop" translate="no">batchTotal</a>, then one rescan and one <a href="usblibrary.html#finished" translate="no">finished</a>() at the end; <a href="usblibrary.html#cancelBatch" translate="no">cancelBatch</a>() stops after the copy under way. Kind labels are translated again on a language change. GUI thread only; the walk and the copies run on worker threads.</p>
 </div>
 <!-- @@@UsbLibrary -->
 <div class="prop">
@@ -158,7 +158,7 @@
 <div class="fnitem">
 <!-- $$$batchDone-prop$$$batchDone$$$batchChanged -->
 <h3 class="fn" translate="no" id="batchDone-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">batchDone</span> : <span class="type">int</span></h3>
-<p>how many files the IMPORT ALL under way has copied.</p>
+<p>how many files the <a href="usblibrary.html#importAll" translate="no">importAll</a>() under way has copied.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>batchDone</b></span>() const</td></tr>
@@ -172,7 +172,7 @@
 <div class="fnitem">
 <!-- $$$batchTotal-prop$$$batchTotal$$$batchChanged -->
 <h3 class="fn" translate="no" id="batchTotal-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">batchTotal</span> : <span class="type">int</span></h3>
-<p>how many files the IMPORT ALL under way copies; 0 without one.</p>
+<p>how many files the <a href="usblibrary.html#importAll" translate="no">importAll</a>() under way copies; 0 without one.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>batchTotal</b></span>() const</td></tr>
@@ -214,7 +214,7 @@
 <div class="fnitem">
 <!-- $$$kinds-prop$$$kinds$$$scanned -->
 <h3 class="fn" translate="no" id="kinds-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">kinds</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the kinds, in the page's order, each with what the stick holds of it: maps with <code translate="no">key</code>, <code translate="no">label</code> and <code translate="no">count</code>.</p>
+<p>This property holds the kinds, in a fixed order, each with what the stick holds of it: maps with <code translate="no">key</code>, <code translate="no">label</code> and <code translate="no">count</code>.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>kinds</b></span>() const</td></tr>
@@ -270,7 +270,7 @@
 <div class="fnitem">
 <!-- $$$status-prop$$$status$$$busyChanged -->
 <h3 class="fn" translate="no" id="status-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">status</span> : <span class="type">QString</span></h3>
-<p>what the copy is, such as &quot;IMPORTING kick.wav&quot;.</p>
+<p>This property holds a translated description of the copy, such as &quot;IMPORTING kick.wav&quot;.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>status</b></span>() const</td></tr>
@@ -287,13 +287,13 @@
 <div class="fnitem">
 <!-- $$$UsbLibrary[overload1]$$$UsbLibraryRemovableDrives*Exporter*QObject* -->
 <h3 class="fn" translate="no" id="UsbLibrary">UsbLibrary::<span class="name">UsbLibrary</span>(<span class="type"><a href="removabledrives.html" translate="no">RemovableDrives</a></span> *<i>drives</i>, <span class="type"><a href="exporter.html" translate="no">Exporter</a></span> *<i>exporter</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Constructs the USB page's backend over the sticks of <i translate="no">drives</i>, importing and exporting projects through <i translate="no">exporter</i>, with the given <i translate="no">parent</i>.</p>
+<p>Constructs the library over the sticks of <i translate="no">drives</i>, importing and exporting projects through <i translate="no">exporter</i>, with the given <i translate="no">parent</i>.</p>
 <!-- @@@UsbLibrary -->
 </div>
 <div class="fnitem">
 <!-- $$$cancelBatch[overload1]$$$cancelBatch -->
 <h3 class="fn" translate="no" id="cancelBatch"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> UsbLibrary::<span class="name">cancelBatch</span>()</h3>
-<p>Stops an IMPORT ALL after the copy under way; what was copied stays.</p>
+<p>Stops an <a href="usblibrary.html#importAll" translate="no">importAll</a>() after the copy under way; what was copied stays.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@cancelBatch -->
 </div>
@@ -321,7 +321,7 @@
 <div class="fnitem">
 <!-- $$$finished[overload1]$$$finishedconstQString&constQString&boolconstQString& -->
 <h3 class="fn" translate="no" id="finished"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> UsbLibrary::<span class="name">finished</span>(const <span class="type">QString</span> &amp;<i>kind</i>, const <span class="type">QString</span> &amp;<i>name</i>, <span class="type">bool</span> <i>ok</i>, const <span class="type">QString</span> &amp;<i>message</i>)</h3>
-<p>Emitted when a copy of <i translate="no">kind</i> ended: the file <i translate="no">name</i>, whether it worked (<i translate="no">ok</i>), and the <i translate="no">message</i> to tell the user. An IMPORT ALL emits it once for the lot.</p>
+<p>Emitted when a copy of <i translate="no">kind</i> ended: the file <i translate="no">name</i>, whether it worked (<i translate="no">ok</i>), and a translated <i translate="no">message</i>. An <a href="usblibrary.html#importAll" translate="no">importAll</a>() emits it once for the whole batch.</p>
 <!-- @@@finished -->
 </div>
 <div class="fnitem">
@@ -341,27 +341,27 @@
 <div class="fnitem">
 <!-- $$$importTarget[overload1]$$$importTargetconstQString&constQString& -->
 <h3 class="fn" translate="no" id="importTarget"><span class="type">QString</span> UsbLibrary::<span class="name">importTarget</span>(const <span class="type">QString</span> &amp;<i>kind</i>, const <span class="type">QString</span> &amp;<i>path</i>) const</h3>
-<p>Returns where the stick file <i translate="no">path</i> of <i translate="no">kind</i> lands in the library; for tests and the onDevice marks.</p>
+<p>Returns where the stick file <i translate="no">path</i> of <i translate="no">kind</i> lands in the library; used for the <code translate="no">onDevice</code> flags and by tests.</p>
 <!-- @@@importTarget -->
 </div>
 <div class="fnitem">
 <!-- $$$loadPattern[overload1]$$$loadPatternconstQString&constQString&boolboolbool -->
 <h3 class="fn" translate="no" id="loadPattern"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> UsbLibrary::<span class="name">loadPattern</span>(const <span class="type">QString</span> &amp;<i>machineKey</i>, const <span class="type">QString</span> &amp;<i>path</i>, <span class="type">bool</span> <i>withSound</i> = false, <span class="type">bool</span> <i>withMods</i> = false, <span class="type">bool</span> <i>withBars</i> = true)</h3>
-<p>Plays the stick's pattern preset at <i translate="no">path</i> on the machine <i translate="no">machineKey</i> without taking it in, with the source or kit it keeps when <i translate="no">withSound</i> is true, its MODS when <i translate="no">withMods</i> is true and its length when <i translate="no">withBars</i> is true (<a href="machine.html#loadPreset" translate="no">Machine::loadPreset</a>()). Returns <code translate="no">false</code> when it is not one of that machine's.</p>
+<p>Loads the stick's pattern preset at <i translate="no">path</i> into the machine <i translate="no">machineKey</i> without importing it, with the source or kit it keeps when <i translate="no">withSound</i> is true, its sound-control values when <i translate="no">withMods</i> is true and its length when <i translate="no">withBars</i> is true (<a href="machine.html#loadPreset" translate="no">Machine::loadPreset</a>()). Returns <code translate="no">false</code> when it is not one of that machine's presets.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@loadPattern -->
 </div>
 <div class="fnitem">
 <!-- $$$patternPresets[overload1]$$$patternPresetsconstQString&constQString& -->
 <h3 class="fn" translate="no" id="patternPresets"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> UsbLibrary::<span class="name">patternPresets</span>(const <span class="type">QString</span> &amp;<i>machineKey</i>, const <span class="type">QString</span> &amp;<i>device</i>)</h3>
-<p>Returns, for the presets dialog's USB source, the pattern presets of the machine <i translate="no">machineKey</i> on the stick of the partition <i translate="no">device</i> (mounted first; its <code translate="no">ravving/presets/&lt;group&gt;/patterns</code>): maps with <code translate="no">name</code>, <code translate="no">genre</code>, <code translate="no">sound</code>, <code translate="no">soundKit</code> and <code translate="no">path</code>.</p>
+<p>Returns the pattern presets of the machine <i translate="no">machineKey</i> on the stick of the partition <i translate="no">device</i> (mounted first; its <code translate="no">ravving/presets/&lt;group&gt;/patterns</code>): maps with <code translate="no">name</code>, <code translate="no">genre</code>, <code translate="no">sound</code>, <code translate="no">soundKit</code> and <code translate="no">path</code>.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@patternPresets -->
 </div>
 <div class="fnitem">
 <!-- $$$presetFile[overload1]$$$presetFileconstQString&constQString&constQString& -->
 <h3 class="fn" translate="no" id="presetFile"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> UsbLibrary::<span class="name">presetFile</span>(const <span class="type">QString</span> &amp;<i>type</i>, const <span class="type">QString</span> &amp;<i>machineKey</i>, const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
-<p>Writes a user preset as one file to send elsewhere (the computer link), under the cache's <code translate="no">share/&lt;group&gt;/</code> by <a href="presetexchange.html" translate="no">PresetExchange</a>: <i translate="no">type</i> <code translate="no">pattern</code> or <code translate="no">sound</code>, the machine's key <i translate="no">machineKey</i> and the preset's <i translate="no">name</i>. Returns the path, or an empty string when there is no such preset.</p>
+<p>Writes a user preset as one file under the cache's <code translate="no">share/&lt;group&gt;/</code> (<a href="presetexchange.html" translate="no">PresetExchange</a>), for sending elsewhere: <i translate="no">type</i> <code translate="no">pattern</code> or <code translate="no">sound</code>, the machine's key <i translate="no">machineKey</i> and the preset's <i translate="no">name</i>. Returns the path, or an empty string when there is no such preset.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@presetFile -->
 </div>
@@ -388,7 +388,7 @@
 <div class="fnitem">
 <!-- $$$templates[overload1]$$$templatesconstQString& -->
 <h3 class="fn" translate="no" id="templates"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> UsbLibrary::<span class="name">templates</span>(const <span class="type">QString</span> &amp;<i>device</i>)</h3>
-<p>Returns the project templates on the stick of the partition <i translate="no">device</i> (mounted first; its <code translate="no">ravving/presets/templates</code>), for the projects dialog (<a href="presetexchange.html#stickTemplates" translate="no">PresetExchange::stickTemplates</a>()).</p>
+<p>Returns the project templates on the stick of the partition <i translate="no">device</i> (mounted first; its <code translate="no">ravving/presets/templates</code>), as <a href="presetexchange.html#stickTemplates" translate="no">PresetExchange::stickTemplates</a>() lists them.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@templates -->
 </div>

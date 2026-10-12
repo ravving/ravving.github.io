@@ -145,9 +145,9 @@
 <h2 id="details">Detailed Description</h2>
 <p>Built on BluezQt (BlueZ over D-Bus): a Manager for the adapter and the devices, a pairing agent with the DisplayYesNo capability, an ObexManager with Object Push sessions for sending, and an OBEX agent for receiving. Received files are saved in the library's <code translate="no">incoming</code> folder, renamed with a number when the name is taken, and announced with <a href="bluetooth.html#fileReceived" translate="no">fileReceived</a>().</p>
 <p>Audio devices are played through over A2DP. When one connects, WirePlumber creates its sink (<code translate="no">bluez_output.&lt;address&gt;.1</code>); <a href="bluetooth.html#useAsOutput" translate="no">useAsOutput</a>() hands that sink to <a href="audiooutputs.html" translate="no">AudioOutputs</a>, which routes the master to it. Disconnecting, forgetting or quitting sends the sound back to the jacks.</p>
-<p>Connecting a device that does not answer the page is retried after 2, 5 and 10 s. BlueZ registers one local A2DP endpoint per codec, shared by every device, so only one audio device streams a given codec at a time: a device refused while another audio device is connected is handed the link (the other is disconnected and the connection retried). When the adapter comes on, the output kept by <a href="audiooutputs.html" translate="no">AudioOutputs</a> is connected once if no other audio device is connected.</p>
-<p>Scans are 12 s long and classic (BR/EDR) only, see <a href="bluetooth.html#startDiscovery" translate="no">startDiscovery</a>().</p>
-<p>devices is rebuilt 150 ms after any BlueZ change; pairing and transfer are set by the agents. state is <code translate="no">unavailable</code>, with reason, until BlueZ answers. Everything runs on the GUI thread with asynchronous D-Bus calls; outcomes shown to the user come as <a href="bluetooth.html#notify" translate="no">notify</a>().</p>
+<p>Connecting a device that does not answer the page is retried after 2, 5 and 10 s. BlueZ registers one local A2DP endpoint per codec, shared by every device, so only one audio device streams a given codec at a time: a device refused while another audio device is connected is handed the link (the other is disconnected and the connection retried). When the adapter comes on, the output <a href="audiooutputs.html" translate="no">AudioOutputs</a> kept is connected once if no other audio device is connected.</p>
+<p>Scans last 12 s and find classic (BR/EDR) devices only; see <a href="bluetooth.html#startDiscovery" translate="no">startDiscovery</a>().</p>
+<p>devices is rebuilt 150 ms after any BlueZ change; pairing and transfer are set by the agents. state is <code translate="no">unavailable</code>, with reason, until BlueZ answers. GUI thread only, with asynchronous D-Bus calls; outcomes are reported with <a href="bluetooth.html#notify" translate="no">notify</a>().</p>
 </div>
 <!-- @@@Bluetooth -->
 <div class="prop">
@@ -169,7 +169,7 @@
 <div class="fnitem">
 <!-- $$$busy-prop$$$busy$$$busyChanged -->
 <h3 class="fn" translate="no" id="busy-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">busy</span> : <span class="type">QVariantMap</span></h3>
-<p>what is under way per device, as a map of address to <code translate="no">pairing</code>, <code translate="no">connecting</code>, <code translate="no">waking</code> (paged again: it did not answer), <code translate="no">switching</code> (another audio device is let go for it), <code translate="no">disconnecting</code> or <code translate="no">routing</code>, until it succeeds or fails. Clearing an entry (<a href="bluetooth.html#disconnectDevice" translate="no">disconnectDevice</a>(), <a href="bluetooth.html#forget" translate="no">forget</a>()) also stops the pages still to come.</p>
+<p>This property holds the operation under way per device, as a map of address to <code translate="no">pairing</code>, <code translate="no">connecting</code>, <code translate="no">waking</code> (paged again: it did not answer), <code translate="no">switching</code> (another audio device is disconnected for it), <code translate="no">disconnecting</code> or <code translate="no">routing</code>, until it succeeds or fails. Clearing an entry (<a href="bluetooth.html#disconnectDevice" translate="no">disconnectDevice</a>(), <a href="bluetooth.html#forget" translate="no">forget</a>()) also cancels the pending retries.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>busy</b></span>() const</td></tr>
@@ -239,7 +239,7 @@
 <div class="fnitem">
 <!-- $$$pairing-prop$$$pairing$$$pairingChanged -->
 <h3 class="fn" translate="no" id="pairing-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">pairing</span> : <span class="type">QVariantMap</span></h3>
-<p>This property holds the pairing waiting on the user: an empty map, or one with <code translate="no">address</code>, <code translate="no">name</code>, <code translate="no">kind</code> and <code translate="no">passkey</code>. <code translate="no">kind</code> is <code translate="no">confirm</code> (the passkey is shown on both sides, answer YES or NO), <code translate="no">pin</code> (a PIN to type), <code translate="no">passkey</code> (a number to type) or <code translate="no">display</code> (the passkey to type on the other device). <a href="bluetooth.html#answerPairing" translate="no">answerPairing</a>() replies.</p>
+<p>This property holds the pairing request waiting for an answer: an empty map, or one with <code translate="no">address</code>, <code translate="no">name</code>, <code translate="no">kind</code> and <code translate="no">passkey</code>. <code translate="no">kind</code> is <code translate="no">confirm</code> (the passkey shown on both sides, to accept or reject), <code translate="no">pin</code> (a PIN to enter), <code translate="no">passkey</code> (a number to enter) or <code translate="no">display</code> (the passkey to enter on the other device). <a href="bluetooth.html#answerPairing" translate="no">answerPairing</a>() replies.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>pairing</b></span>() const</td></tr>
@@ -298,20 +298,20 @@
 <div class="fnitem">
 <!-- $$$Bluetooth[overload1]$$$BluetoothQObject* -->
 <h3 class="fn" translate="no" id="Bluetooth"><code class="details extra" translate="no">[explicit]</code> Bluetooth::<span class="name">Bluetooth</span>(<span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Starts BluezQt's managers asynchronously and registers the pairing and receiving agents, with the given <i translate="no">parent</i>. Without OBEX, a notice issue says files cannot be sent or received.</p>
+<p>Starts BluezQt's managers asynchronously and registers the pairing and receiving agents, with the given <i translate="no">parent</i>. Without OBEX, an issue is reported that files cannot be sent or received.</p>
 <!-- @@@Bluetooth -->
 </div>
 <div class="fnitem">
 <!-- $$$answerPairing[overload1]$$$answerPairingboolconstQString& -->
 <h3 class="fn" translate="no" id="answerPairing"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Bluetooth::<span class="name">answerPairing</span>(<span class="type">bool</span> <i>accept</i>, const <span class="type">QString</span> &amp;<i>text</i> = QString())</h3>
-<p>Answers the pairing shown: <i translate="no">accept</i> for YES or NO, and <i translate="no">text</i> for the PIN or passkey typed.</p>
+<p>Answers the pending pairing request: <i translate="no">accept</i> to accept or reject it, and <i translate="no">text</i> for the PIN or passkey entered.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@answerPairing -->
 </div>
 <div class="fnitem">
 <!-- $$$audioConnected[overload1]$$$audioConnected -->
 <h3 class="fn" translate="no" id="audioConnected"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Bluetooth::<span class="name">audioConnected</span>() const</h3>
-<p>Returns whether an audio device is connected (its sound would break up during a scan).</p>
+<p>Returns whether an audio device is connected (its audio breaks up during a scan).</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@audioConnected -->
 </div>
@@ -339,7 +339,7 @@
 <div class="fnitem">
 <!-- $$$disconnectDevice[overload1]$$$disconnectDeviceconstQString& -->
 <h3 class="fn" translate="no" id="disconnectDevice"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Bluetooth::<span class="name">disconnectDevice</span>(const <span class="type">QString</span> &amp;<i>address</i>)</h3>
-<p>Disconnects the device at <i translate="no">address</i>, sending the sound back to the jacks if it played through it; for a device still being connected, stops the pages to come.</p>
+<p>Disconnects the device at <i translate="no">address</i>, sending the sound back to the jacks if it played through it; for a device still being connected, cancels the pending retries.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@disconnectDevice -->
 </div>
@@ -352,14 +352,14 @@
 <div class="fnitem">
 <!-- $$$forget[overload1]$$$forgetconstQString& -->
 <h3 class="fn" translate="no" id="forget"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Bluetooth::<span class="name">forget</span>(const <span class="type">QString</span> &amp;<i>address</i>)</h3>
-<p>Unpairs and removes the device at <i translate="no">address</i>, stopping its pages and sending the sound back to the jacks if it played through it.</p>
+<p>Unpairs and removes the device at <i translate="no">address</i>, cancelling its pending retries and sending the sound back to the jacks if it played through it.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@forget -->
 </div>
 <div class="fnitem">
 <!-- $$$notify[overload1]$$$notifyconstQString&constQString& -->
 <h3 class="fn" translate="no" id="notify"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Bluetooth::<span class="name">notify</span>(const <span class="type">QString</span> &amp;<i>text</i>, const <span class="type">QString</span> &amp;<i>color</i>)</h3>
-<p>Emitted with a short status <i translate="no">text</i> to show as a toast in <i translate="no">color</i> (a CSS colour), such as &quot;PAIRED · &lt;name&gt;&quot;. Also written to the journal.</p>
+<p>Emitted with a short translated status <i translate="no">text</i>, such as &quot;PAIRED · &lt;name&gt;&quot;, and its <i translate="no">color</i> (a CSS colour). Also written to the journal.</p>
 <!-- @@@notify -->
 </div>
 <div class="fnitem">
@@ -372,14 +372,14 @@
 <div class="fnitem">
 <!-- $$$sendFile[overload1]$$$sendFileconstQString&constQString& -->
 <h3 class="fn" translate="no" id="sendFile"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Bluetooth::<span class="name">sendFile</span>(const <span class="type">QString</span> &amp;<i>address</i>, const <span class="type">QString</span> &amp;<i>path</i>)</h3>
-<p>Sends the file at <i translate="no">path</i> (a track, a bundle) to the device at <i translate="no">address</i> over OBEX Object Push; transfer follows it. Refused, with a <a href="bluetooth.html#notify" translate="no">notify</a>(), when there is no file, no OBEX, or a transfer is still running.</p>
+<p>Sends the file at <i translate="no">path</i> to the device at <i translate="no">address</i> over OBEX Object Push; transfer tracks it. Refused, with a <a href="bluetooth.html#notify" translate="no">notify</a>(), when there is no file, no OBEX, or a transfer is still running.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@sendFile -->
 </div>
 <div class="fnitem">
 <!-- $$$setDiscoverable[overload1]$$$setDiscoverablebool -->
 <h3 class="fn" translate="no" id="setDiscoverable"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Bluetooth::<span class="name">setDiscoverable</span>(<span class="type">bool</span> <i>on</i>)</h3>
-<p>Makes the device discoverable and pairable for three minutes when <i translate="no">on</i> is true, so a phone can find it and send files; hides it otherwise.</p>
+<p>Makes the device discoverable and pairable for three minutes when <i translate="no">on</i> is true; hides it otherwise.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><p><b>See also </b><a href="bluetooth.html#discoverable-prop" translate="no">discoverable</a>().</p>
 <!-- @@@setDiscoverable -->
@@ -394,13 +394,13 @@
 <div class="fnitem">
 <!-- $$$setOutputs[overload1]$$$setOutputsAudioOutputs* -->
 <h3 class="fn" translate="no" id="setOutputs"><span class="type">void</span> Bluetooth::<span class="name">setOutputs</span>(<span class="type"><a href="audiooutputs.html" translate="no">AudioOutputs</a></span> *<i>outputs</i>)</h3>
-<p>Gives Bluetooth the outputs <i translate="no">outputs</i>, through which PLAY THROUGH routes the master to a device's sink.</p>
+<p>Sets the <i translate="no">outputs</i> through which <a href="bluetooth.html#useAsOutput" translate="no">useAsOutput</a>() routes the master to a device's sink.</p>
 <!-- @@@setOutputs -->
 </div>
 <div class="fnitem">
 <!-- $$$startDiscovery[overload1]$$$startDiscovery -->
 <h3 class="fn" translate="no" id="startDiscovery"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Bluetooth::<span class="name">startDiscovery</span>()</h3>
-<p>Scans for 12 s, for classic (BR/EDR) devices only: speakers, headphones, phones and computers offer A2DP and OBEX there, while a dual-mode speaker found by its LE advertisement would pair its LE Audio side only. An inquiry shares the radio with any audio link, which breaks up while it runs, so a scan is short and explicit. Does nothing when off or already scanning.</p>
+<p>Scans for 12 s, for classic (BR/EDR) devices only: speakers, headphones, phones and computers offer A2DP and OBEX there, while a dual-mode speaker found by its LE advertisement would pair only its LE Audio side. An inquiry shares the radio with any audio link, which breaks up while it runs. Does nothing when off or already scanning.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@startDiscovery -->
 </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- computerlink.cpp -->
-  <meta name="description" content="A computer of the user's to send files to over SSH: the laptop or PC whose Downloads folder gets exported tracks, bundles and videos.">
+  <meta name="description" content="A user's computer that files are sent to over SSH, into its Downloads folder.">
   <meta name="keywords" content="class">
   <title>ComputerLink Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">ComputerLink Class</h1>
 <!-- $$$ComputerLink-brief -->
-<p>A computer of the user's to send files to over SSH: the laptop or PC whose Downloads folder gets exported tracks, bundles and videos. <a href="#details">More...</a></p>
+<p>A user's computer that files are sent to over SSH, into its Downloads folder. <a href="#details">More...</a></p>
 <!-- @@@ComputerLink -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;computerlink.h&gt;</code></td></tr>
@@ -139,9 +139,9 @@
 <!-- $$$ComputerLink-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>A SEND... destination and the export dialog's COMPUTER row. Computers owns any number of them, each in its own group of the settings file (<code translate="no">computers/&lt;id&gt;</code>), all logging in with the one device key.</p>
-<p>It is set up once in SETTINGS with the computer's host name or address, the user name there and that user's password. The password is used once and never stored: it opens the first connection so the device's own SSH key (made here, <code translate="no">~/.config/ravving/ssh/id_ed25519</code>) can be put in the computer's <code translate="no">authorized_keys</code> (ssh-copy-id); from then on the key is the credential. If the computer refuses the key (reinstalled, the key removed) the status says so and SETTINGS asks for the password again. The computer's host key is kept in a <code translate="no">known_hosts</code> of ravving's own: accepted on the first connection, refused if it changes; FORGET clears it.</p>
-<p>The password reaches ssh through <code translate="no">SSH_ASKPASS</code> (with OpenSSH 8.4's <code translate="no">SSH_ASKPASS_REQUIRE=force</code>): a helper script prints it from a file readable by this user alone, made for the seconds the set-up takes and deleted after. Nothing is typed into a terminal and no third-party program (sshpass) is needed. All ssh and scp runs are asynchronous QProcesses with timeouts; GUI thread only.</p>
+<p>Computers owns any number of them, each in its own group of the settings file (<code translate="no">computers/&lt;id&gt;</code>), all logging in with the one device key.</p>
+<p><a href="computerlink.html#setup" translate="no">setup</a>() takes the computer's host name or address, the user name there and that user's password. The password is used once and never stored: it opens the first connection so the device's own SSH key (created on demand, <code translate="no">~/.config/ravving/ssh/id_ed25519</code>) can be added to the computer's <code translate="no">authorized_keys</code> (ssh-copy-id); from then on the key is the credential. If the computer refuses the key (reinstalled, the key removed), status becomes <code translate="no">refused</code> and <a href="computerlink.html#setup" translate="no">setup</a>() must run again. The computer's host key is kept in a <code translate="no">known_hosts</code> of ravving's own: accepted on the first connection, refused if it changes; <a href="computerlink.html#forget" translate="no">forget</a>() removes it.</p>
+<p>The password reaches ssh through <code translate="no">SSH_ASKPASS</code> (with OpenSSH 8.4's <code translate="no">SSH_ASKPASS_REQUIRE=force</code>): a helper script prints it from a file readable only by this user, created for the duration of the set-up and deleted after. No terminal input and no third-party program (sshpass) is needed. All ssh and scp runs are asynchronous QProcesses with timeouts; GUI thread only.</p>
 </div>
 <!-- @@@ComputerLink -->
 <div class="prop">
@@ -187,7 +187,7 @@
 <div class="fnitem">
 <!-- $$$error-prop$$$error$$$statusChanged -->
 <h3 class="fn" translate="no" id="error-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">error</span> : <span class="type">QString</span></h3>
-<p>why the last set-up or check failed, in the user's words; empty otherwise.</p>
+<p>why the last set-up or check failed, translated; empty otherwise.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>error</b></span>() const</td></tr>
@@ -229,7 +229,7 @@
 <div class="fnitem">
 <!-- $$$id-prop$$$id -->
 <h3 class="fn" translate="no" id="id-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">id</span> : const <span class="type">QString</span></h3>
-<p>its key in the settings and the UI (<code translate="no">c1</code>, <code translate="no">c2...</code>), fixed for its life.</p>
+<p>its key in the settings (<code translate="no">c1</code>, <code translate="no">c2...</code>), fixed for its lifetime.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>id</b></span>() const</td></tr>
@@ -309,7 +309,7 @@
 <div class="fnitem">
 <!-- $$$status-prop$$$status$$$statusChanged -->
 <h3 class="fn" translate="no" id="status-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">status</span> : <span class="type">QString</span></h3>
-<p><code translate="no">unset</code> (nothing set up), <code translate="no">setting-up</code>, <code translate="no">ready</code> (the key works), <code translate="no">unreachable</code> (set up, but the computer did not answer the last time), <code translate="no">refused</code> (set up, but the key is refused: set it up again) or <code translate="no">failed</code> (the set-up itself failed; error says why).</p>
+<p><code translate="no">unset</code> (nothing set up), <code translate="no">setting-up</code>, <code translate="no">ready</code> (the key works), <code translate="no">unreachable</code> (set up, but the computer did not answer the last time), <code translate="no">refused</code> (set up, but the key is refused: run <a href="computerlink.html#setup" translate="no">setup</a>() again) or <code translate="no">failed</code> (the set-up itself failed; error says why).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>status</b></span>() const</td></tr>
@@ -360,13 +360,13 @@
 <div class="fnitem">
 <!-- $$$forgotten[overload1]$$$forgottenconstQString& -->
 <h3 class="fn" translate="no" id="forgotten"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ComputerLink::<span class="name">forgotten</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
-<p>Emitted when <a href="computerlink.html#forget" translate="no">forget</a>() ran, with the computer's <i translate="no">id</i>: the owner takes the object out of its list.</p>
+<p>Emitted when <a href="computerlink.html#forget" translate="no">forget</a>() ran, with the computer's <i translate="no">id</i>; the owner then removes the object.</p>
 <!-- @@@forgotten -->
 </div>
 <div class="fnitem">
 <!-- $$$notify[overload1]$$$notifyconstQString&constQString& -->
 <h3 class="fn" translate="no" id="notify"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ComputerLink::<span class="name">notify</span>(const <span class="type">QString</span> &amp;<i>text</i>, const <span class="type">QString</span> &amp;<i>color</i>)</h3>
-<p>Emitted with a short status <i translate="no">text</i> to show as a toast in <i translate="no">color</i> (a CSS colour).</p>
+<p>Emitted with a short translated status <i translate="no">text</i> and its <i translate="no">color</i> (a CSS colour).</p>
 <!-- @@@notify -->
 </div>
 <div class="fnitem">
@@ -392,7 +392,7 @@
 <div class="fnitem">
 <!-- $$$setupFinished[overload1]$$$setupFinishedboolconstQString& -->
 <h3 class="fn" translate="no" id="setupFinished"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ComputerLink::<span class="name">setupFinished</span>(<span class="type">bool</span> <i>ok</i>, const <span class="type">QString</span> &amp;<i>message</i>)</h3>
-<p>Emitted when <a href="computerlink.html#setup" translate="no">setup</a>() ended: <i translate="no">ok</i> when it worked, with a <i translate="no">message</i> to show.</p>
+<p>Emitted when <a href="computerlink.html#setup" translate="no">setup</a>() ended: <i translate="no">ok</i> when it worked, with a translated <i translate="no">message</i>.</p>
 <!-- @@@setupFinished -->
 </div>
 </div>

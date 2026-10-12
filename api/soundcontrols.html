@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- soundcontrols.cpp -->
-  <meta name="description" content="A machine's SOUND MODIFIERS: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's cc: and gen: controls, by symbol).">
+  <meta name="description" content="A machine's sound controls: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's cc: and gen: controls, by symbol).">
   <meta name="keywords" content="class">
   <title>SoundControls Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">SoundControls Class</h1>
 <!-- $$$SoundControls-brief -->
-<p>A machine's SOUND MODIFIERS: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's <code translate="no">cc</code>: and <code translate="no">gen</code>: controls, by symbol). <a href="#details">More...</a></p>
+<p>A machine's sound controls: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's <code translate="no">cc</code>: and <code translate="no">gen</code>: controls, by symbol). <a href="#details">More...</a></p>
 <!-- @@@SoundControls -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;soundcontrols.h&gt;</code></td></tr>
@@ -117,7 +117,7 @@
 <!-- $$$SoundControls-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Published to QML as <code translate="no">machine.sound</code>, with the same store interface as the SOUND EFFECTS (ParamCard reads values and calls <a href="soundcontrols.html#setValue" translate="no">setValue</a>()), so the same cards show both. The cards are data: each engine's profile in <code translate="no">data/engines.json</code> (<a href="engineprofiles.html" translate="no">EngineProfiles</a>), shown for the source that plays it:</p>
+<p>Published to QML as <code translate="no">machine.sound</code>, with the same store interface as <a href="trackeffects.html" translate="no">TrackEffects</a> (values and <a href="soundcontrols.html#setValue" translate="no">setValue</a>()). The cards are data: each engine's profile in <code translate="no">data/engines.json</code> (<a href="engineprofiles.html" translate="no">EngineProfiles</a>):</p>
 <pre class="cpp plain" translate="no"><code class="text">
  &quot;sound&quot;: [ { &quot;title&quot;: &quot;FILTER&quot;, &quot;knobs&quot;: [
      { &quot;name&quot;: &quot;CUTOFF&quot;, &quot;symbol&quot;: &quot;cutoff&quot;, &quot;min&quot;: 0, &quot;max&quot;: 100, &quot;default&quot;: 0.3 } ] },
@@ -125,7 +125,7 @@
      { &quot;label&quot;: &quot;SAW&quot;, &quot;controls&quot;: { &quot;osc1waveform&quot;: 0, &quot;osc1pw&quot;: 0.5 } },
      { &quot;label&quot;: &quot;SQR&quot;, &quot;controls&quot;: { &quot;osc1waveform&quot;: 0.5, &quot;osc1pw&quot;: 0.5 } } ] } ] } ]
 </code></pre>
-<p>Knob values are 0..1 everywhere. A knob maps that onto <code translate="no">min</code> .. <code translate="no">max</code> of its <code translate="no">symbol</code>, linearly, or with <code translate="no">&quot;curve&quot;: &quot;log&quot;</code> exponentially (min × (max / min)^value, for ports an engine treats as logarithmic, such as Calf's cutoff, envelope times and portamento; <code translate="no">min</code> must be over 0). A knob with <code translate="no">choices</code> is a switch (a waveform, a mode): its value snaps to choice <i>i</i> of <i>n</i> at <i>i</i> / (<i>n</i> - 1), and each choice sets its <code translate="no">controls</code> (several ports at once; every choice should name the same ports), or just its <code translate="no">value</code> on the knob's <code translate="no">symbol</code>; QML draws it as a WaveCycler rather than a dial. The values are saved with the machine and sent to the engine on every change (<a href="soundcontrols.html#controlChanged" translate="no">controlChanged</a>()) and whenever it starts (<a href="soundcontrols.html#engineControls" translate="no">engineControls</a>()). GUI thread only.</p>
+<p>Knob values are 0..1 everywhere. A knob maps its value onto <code translate="no">min</code> .. <code translate="no">max</code> of its <code translate="no">symbol</code>, linearly, or with <code translate="no">&quot;curve&quot;: &quot;log&quot;</code> exponentially (min × (max / min)^value, for ports an engine treats as logarithmic, such as Calf's cutoff, envelope times and portamento; <code translate="no">min</code> must be above 0). A knob with <code translate="no">choices</code> is a switch (a waveform, a mode): its value snaps to choice <i>i</i> of <i>n</i> at <i>i</i> / (<i>n</i> - 1), and each choice sets its <code translate="no">controls</code> (several ports at once; every choice should name the same ports), or just its <code translate="no">value</code> on the knob's <code translate="no">symbol</code>. The values are saved with the machine and sent to the engine on every change (<a href="soundcontrols.html#controlChanged" translate="no">controlChanged</a>()) and whenever it starts (<a href="soundcontrols.html#engineControls" translate="no">engineControls</a>()). GUI thread only.</p>
 </div>
 <!-- @@@SoundControls -->
 <div class="prop">
@@ -133,7 +133,7 @@
 <div class="fnitem">
 <!-- $$$cards-prop$$$cards -->
 <h3 class="fn" translate="no" id="cards-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">cards</span> : const <span class="type">QVariantList</span></h3>
-<p>This property holds the cards for ParamCardRow, as maps with <code translate="no">title</code>, <code translate="no">params</code> (the knob names) and <code translate="no">choices</code> (the switch knobs' labels, by knob).</p>
+<p>This property holds the cards, as maps with <code translate="no">title</code>, <code translate="no">params</code> (the knob names) and <code translate="no">choices</code> (the switch knobs' labels, by knob).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>cards</b></span>() const</td></tr>
@@ -166,7 +166,7 @@
 <div class="fnitem">
 <!-- $$$adopt[overload1]$$$adoptconstQVariantMap& -->
 <h3 class="fn" translate="no" id="adopt"><span class="type">void</span> SoundControls::<span class="name">adopt</span>(const <span class="type">QVariantMap</span> &amp;<i>engineValues</i>)</h3>
-<p>Shows the values the engine took, <i translate="no">engineValues</i> (symbol to value; a sound preset was loaded): each knob reads them back through its mapping (a switch takes the nearest choice). Nothing is sent to the engine. Values outside a knob's range sit at its end.</p>
+<p>Adopts the values the engine took, <i translate="no">engineValues</i> (symbol to value, as when a sound preset is loaded): each knob reads them back through its mapping (a switch takes the nearest choice). Nothing is sent to the engine. Values outside a knob's range are clamped to its ends.</p>
 <!-- @@@adopt -->
 </div>
 <div class="fnitem">
@@ -190,7 +190,7 @@
 <div class="fnitem">
 <!-- $$$restore[overload1]$$$restoreconstQVariantMap& -->
 <h3 class="fn" translate="no" id="restore"><span class="type">QStringList</span> SoundControls::<span class="name">restore</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>)</h3>
-<p>Takes the saved <i translate="no">state</i>, replacing the current values (missing knobs go back to their defaults), and sends every control to the engine again (<a href="soundcontrols.html#controlChanged" translate="no">controlChanged</a>()). Returns the saved knobs it has no knob for; they are dropped, and <a href="projectcheck.html" translate="no">ProjectCheck</a> notes them.</p>
+<p>Restores the saved <i translate="no">state</i>, replacing the current values (missing knobs return to their defaults), and sends every control to the engine again (<a href="soundcontrols.html#controlChanged" translate="no">controlChanged</a>()). Returns the saved knobs that do not exist; they are dropped.</p>
 <!-- @@@restore -->
 </div>
 <div class="fnitem">
@@ -209,13 +209,13 @@
 <div class="fnitem">
 <!-- $$$symbols[overload1]$$$symbols -->
 <h3 class="fn" translate="no" id="symbols"><span class="type">QStringList</span> SoundControls::<span class="name">symbols</span>() const</h3>
-<p>Returns every engine control a knob drives (a switch's choices' too), sorted: to check them against the engine's ports.</p>
+<p>Returns every engine control a knob drives (a switch's choices' too), sorted, for checking against the engine's ports.</p>
 <!-- @@@symbols -->
 </div>
 <div class="fnitem">
 <!-- $$$valueSet[overload1]$$$valueSetconstQString&constQString&double -->
 <h3 class="fn" translate="no" id="valueSet"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> SoundControls::<span class="name">valueSet</span>(const <span class="type">QString</span> &amp;<i>card</i>, const <span class="type">QString</span> &amp;<i>knob</i>, <span class="type">double</span> <i>value</i>)</h3>
-<p>Emitted when <i translate="no">knob</i> of <i translate="no">card</i> was set to <i translate="no">value</i> (0..1), by the user or by automation.</p>
+<p>Emitted when <i translate="no">knob</i> of <i translate="no">card</i> was set to <i translate="no">value</i> (0..1) through <a href="soundcontrols.html#setValue" translate="no">setValue</a>(), by the user or by automation.</p>
 <!-- @@@valueSet -->
 </div>
 </div>

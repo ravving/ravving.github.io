@@ -92,7 +92,14 @@ plugin base types first.</p>
    changed. A <code>//</code> comment inside the code is welcome only when it explains a non-obvious
    technical reason that is true of the code as it is ("muted rather than unlinked, so the
    jacks' sink keeps clocking the graph"). A measurement that justifies a constant is a fact
-   and may stay, stated plainly ("30 %: the lowest still readable in a lit room").</li>
+   and may stay, stated plainly ("30 %: the lowest still readable in a lit room").
+   Also out: bug report numbers, "on milo" or "measured on/with", paths to docs or notes
+   pages, lineage ("the way zynthbox-qml does", "as easyrave's…", "ported from"; keep a
+   zynthbox-qml or libzynthbox reference only as a contract the code depends on), and wording
+   from the request that created a feature.</li>
+<li><strong>A class overview describes the class, not the screen</strong>: no pages, dialogs, rows, toasts,
+   toolbars or "on screen" in a <code>\class</code> block; what QML sees is its context property and the
+   meaning of its properties and signals.</li>
 <li><strong>Every new or changed C++ API comes with its QDoc in the same commit</strong>, and
    <code>python3 tools/build-api-docs.py</code> is run so <code>site/api/</code> follows (it is committed, like
    <code>site/docs/</code>). ctest checks both (below).</li>

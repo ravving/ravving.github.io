@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- computers.cpp -->
-  <meta name="description" content="The user's computers over SSH, published to QML as computers (SETTINGS, COMPUTERS): any number of ComputerLinks, each a laptop or PC whose Downloads folder gets exports, bundles and videos.">
+  <meta name="description" content="The user's computers reached over SSH, published to QML as computers: any number of ComputerLinks, each a computer whose Downloads folder receives exports, bundles and videos.">
   <meta name="keywords" content="class">
   <title>Computers Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">Computers Class</h1>
 <!-- $$$Computers-brief -->
-<p>The user's computers over SSH, published to QML as <code translate="no">computers</code> (SETTINGS, COMPUTERS): any number of ComputerLinks, each a laptop or PC whose Downloads folder gets exports, bundles and videos. <a href="#details">More...</a></p>
+<p>The user's computers reached over SSH, published to QML as <code translate="no">computers</code>: any number of ComputerLinks, each a computer whose Downloads folder receives exports, bundles and videos. <a href="#details">More...</a></p>
 <!-- @@@Computers -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;computers.h&gt;</code></td></tr>
@@ -126,8 +126,8 @@
 <!-- $$$Computers-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>A computer is added with its host, user and password (used once: the device's one key is installed there, see <a href="computerlink.html" translate="no">ComputerLink</a>); a computer already in the list as the same user@host is set up again instead of added twice. Each is its own group of the settings file (<code translate="no">computers/&lt;id&gt;</code>, ids <code translate="no">c1</code>, <code translate="no">c2...</code>); settings found at the file's top level (a single-computer set-up) are moved into <code translate="no">c1</code> on start. FORGET on one takes it out.</p>
-<p>The links' <a href="computers.html#sent" translate="no">sent</a>(), <a href="computers.html#notify" translate="no">notify</a>() and <a href="computers.html#setupFinished" translate="no">setupFinished</a>() are passed on (the last with the computer's id), so one connection serves them all. GUI thread only.</p>
+<p>A computer is added with its host, user and password (used once to install the device's key there, see <a href="computerlink.html" translate="no">ComputerLink</a>); a computer already in the list as the same user@host is set up again instead of added twice. Each has its own group of the settings file (<code translate="no">computers/&lt;id&gt;</code>, ids <code translate="no">c1</code>, <code translate="no">c2...</code>); settings found at the file's top level (a single-computer set-up) are moved into <code translate="no">c1</code> on start. <a href="computerlink.html#forget" translate="no">ComputerLink::forget</a>() removes one.</p>
+<p>The links' <a href="computers.html#sent" translate="no">sent</a>(), <a href="computers.html#notify" translate="no">notify</a>() and <a href="computers.html#setupFinished" translate="no">setupFinished</a>() are forwarded (the last with the computer's id), so one connection covers them all. GUI thread only.</p>
 </div>
 <!-- @@@Computers -->
 <div class="prop">
@@ -173,7 +173,7 @@
 <div class="fnitem">
 <!-- $$$current-prop$$$current$$$changed -->
 <h3 class="fn" translate="no" id="current-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">current</span> : <span class="type">QObject</span>*</h3>
-<p>This property holds the computer last added or set up (the set-up dialog follows it; scripts read it: <code translate="no">get|computers.current|status</code>); null with none.</p>
+<p>This property holds the computer last added or set up; null with none.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QObject *</td><td class="memItemRight bottomAlign"><span class="name"><b>current</b></span>() const</td></tr>
@@ -273,7 +273,7 @@
 <div class="fnitem">
 <!-- $$$notify[overload1]$$$notifyconstQString&constQString& -->
 <h3 class="fn" translate="no" id="notify"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Computers::<span class="name">notify</span>(const <span class="type">QString</span> &amp;<i>text</i>, const <span class="type">QString</span> &amp;<i>color</i>)</h3>
-<p>Emitted with a short status <i translate="no">text</i> to show as a toast in <i translate="no">color</i> (a CSS colour).</p>
+<p>Emitted with a short translated status <i translate="no">text</i> and its <i translate="no">color</i> (a CSS colour).</p>
 <!-- @@@notify -->
 </div>
 <div class="fnitem">
@@ -292,7 +292,7 @@
 <div class="fnitem">
 <!-- $$$setupFinished[overload1]$$$setupFinishedconstQString&boolconstQString& -->
 <h3 class="fn" translate="no" id="setupFinished"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Computers::<span class="name">setupFinished</span>(const <span class="type">QString</span> &amp;<i>id</i>, <span class="type">bool</span> <i>ok</i>, const <span class="type">QString</span> &amp;<i>message</i>)</h3>
-<p>Emitted when the set-up of computer <i translate="no">id</i> ended, <i translate="no">ok</i> when it worked, with a <i translate="no">message</i> to show (<a href="computerlink.html#setupFinished" translate="no">ComputerLink::setupFinished</a>()).</p>
+<p>Emitted when the set-up of computer <i translate="no">id</i> ended, <i translate="no">ok</i> when it worked, with a translated <i translate="no">message</i> (<a href="computerlink.html#setupFinished" translate="no">ComputerLink::setupFinished</a>()).</p>
 <!-- @@@setupFinished -->
 </div>
 </div>

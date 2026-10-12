@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- engineprofiles.cpp -->
-  <meta name="description" content="What each engine lets a page tweak: the profiles of data&lt;@op&gt;/&lt;/@op&gt;engines&lt;@op&gt;.&lt;/@op&gt;json, one per engine (docs/engines.md).">
+  <meta name="description" content="The engine profiles of data&lt;@op&gt;/&lt;/@op&gt;engines&lt;@op&gt;.&lt;/@op&gt;json, one per engine: which controls of an engine are exposed.">
   <meta name="keywords" content="class">
   <title>EngineProfiles Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">EngineProfiles Class</h1>
 <!-- $$$EngineProfiles-brief -->
-<p>What each engine lets a page tweak: the profiles of <code translate="no">data/engines.json</code>, one per engine (docs/engines.md). <a href="#details">More...</a></p>
+<p>The engine profiles of <code translate="no">data/engines.json</code>, one per engine: which controls of an engine are exposed. <a href="#details">More...</a></p>
 <!-- @@@EngineProfiles -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;engineprofiles.h&gt;</code></td></tr>
@@ -93,14 +93,14 @@
 <!-- $$$EngineProfiles-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>A profile holds the engine's SOUND MODIFIERS (the MODS cards, <a href="soundcontrols.html" translate="no">SoundControls</a>) and its expressions (the live controls a page plays: the lead ribbon's vibrato). It is found by the engine itself: its kits.json engine object's <code translate="no">type</code> and, for <code translate="no">jalv</code>, its plugin <code translate="no">uri</code>. So every source that plays an engine shows that engine's knobs, whichever machine it is on: the lead's Calf Monosynth and the bass's 808 source on the same synth share one map, and every soundfont shares the <code translate="no">fluidsynth</code> one.</p>
+<p>A profile holds the engine's sound-control cards (<a href="soundcontrols.html" translate="no">SoundControls</a>) and its expressions (the live controls, such as <code translate="no">vibrato</code>, <a href="machine.html#setExpression" translate="no">Machine::setExpression</a>()). It is matched by the engine itself: its kits.json engine object's <code translate="no">type</code> and, for <code translate="no">jalv</code>, its plugin <code translate="no">uri</code>. So every source that plays an engine gets that engine's controls, whichever machine it is on: two machines' sources on the same synth share one profile, and every soundfont shares the <code translate="no">fluidsynth</code> one.</p>
 <pre class="cpp plain" translate="no"><code class="text">
  {&quot;engines&quot;: [{&quot;id&quot;: &quot;calf-monosynth&quot;, &quot;type&quot;: &quot;jalv&quot;,
                &quot;uri&quot;: &quot;http://calf.sourceforge.net/plugins/Monosynth&quot;,
                &quot;sound&quot;: [cards...], &quot;expressions&quot;: {&quot;vibrato&quot;: {&quot;symbol&quot;: &quot;lfo2pitch&quot;, &quot;max&quot;: 60}}},
               {&quot;id&quot;: &quot;fluidsynth&quot;, &quot;type&quot;: &quot;fluidsynth&quot;, &quot;sound&quot;: [cards...]}]}
 </code></pre>
-<p>A machine or source that brings its own <code translate="no">sound</code> in kits.json keeps it; an engine with no profile has no MODS. The symbols are checked against the engines' ports on the laptop (<code translate="no">tools/check-engines.py</code>) and when an engine starts (Studio). A plain value type.</p>
+<p>A machine or source that brings its own <code translate="no">sound</code> in kits.json keeps it; an engine with no profile has no sound controls. The studio checks the symbols against the engine's ports when it starts. A plain value type.</p>
 </div>
 <!-- @@@EngineProfiles -->
 <div class="func">
@@ -132,7 +132,7 @@
 <div class="fnitem">
 <!-- $$$resolveKit[overload1]$$$resolveKitQVariantMap -->
 <h3 class="fn" translate="no" id="resolveKit"><span class="type">QVariantMap</span> EngineProfiles::<span class="name">resolveKit</span>(<span class="type">QVariantMap</span> <i>machine</i>) const</h3>
-<p>Returns a drum machine's kits.json config <i translate="no">machine</i> with its engine profile's <code translate="no">kitSound</code> as its <code translate="no">sound</code> (a kit is one soundfont on one channel, so its MODS act on the whole kit); a <code translate="no">sound</code> it brings itself stays.</p>
+<p>Returns a drum machine's kits.json config <i translate="no">machine</i> with its engine profile's <code translate="no">kitSound</code> as its <code translate="no">sound</code> (a kit is one soundfont on one channel, so its sound controls act on the whole kit); a <code translate="no">sound</code> it brings itself stays.</p>
 <!-- @@@resolveKit -->
 </div>
 <div class="fnitem">

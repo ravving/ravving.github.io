@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- sketchpad.cpp -->
-  <meta name="description" content="The sketchpad as libzynthbox sees it: PlayGridManager's zlSketchpad.">
+  <meta name="description" content="The sketchpad object libzynthbox talks to: PlayGridManager's zlSketchpad.">
   <meta name="keywords" content="class">
   <title>Sketchpad Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">Sketchpad Class</h1>
 <!-- $$$Sketchpad-brief -->
-<p>The sketchpad as libzynthbox sees it: PlayGridManager's <code translate="no">zlSketchpad</code>. <a href="#details">More...</a></p>
+<p>The sketchpad object libzynthbox talks to: PlayGridManager's <code translate="no">zlSketchpad</code>. <a href="#details">More...</a></p>
 <!-- @@@Sketchpad -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;sketchpad.h&gt;</code></td></tr>
@@ -113,9 +113,9 @@
 <!-- $$$Sketchpad-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>SyncTimer calls into this object whenever the transport starts and stops (it reads <a href="sketchpad.html#clipToRecord-prop" translate="no">clipToRecord</a> and <a href="sketchpad.html#isRecording-prop" translate="no">isRecording</a>, and calls <a href="sketchpad.html#startPlayback" translate="no">startPlayback</a>(), <a href="sketchpad.html#stopAllPlayback" translate="no">stopAllPlayback</a>() and <a href="sketchpad.html#stopRecording" translate="no">stopRecording</a>()), and PlayGridManager follows <a href="sketchpad.html#selectedTrackId-prop" translate="no">selectedTrackId</a>. In zynthbox-qml that object is the Python sketchpad (<code translate="no">zynqtgui/sketchpad/zynthian_gui_sketchpad.py</code>); ravving publishes this class instead, with only the members libzynthbox uses.</p>
-<p>Starting playback resets every clip to stopped, so <a href="sketchpad.html#startPlayback" translate="no">startPlayback</a>() launches the clip each playing track uses, as zynthbox-qml's &quot;play the selected scene&quot; does (PlayfieldManager::setClipPlaystate()).</p>
-<p>A track plays clip a or clip b: SECTIONS write the section to come into the one that does not play and have the two change places on the next bar (<a href="sketchpad.html#cueTrackClip" translate="no">cueTrackClip</a>()), which the playfield does on the bar's first tick, before any pattern schedules a note of it. The paused tracks and the tracks on clip b are kept in atomics, since <a href="sketchpad.html#startPlayback" translate="no">startPlayback</a>() reads them on the audio thread.</p>
+<p>SyncTimer calls into this object whenever the transport starts and stops (it reads <a href="sketchpad.html#clipToRecord-prop" translate="no">clipToRecord</a> and <a href="sketchpad.html#isRecording-prop" translate="no">isRecording</a>, and calls <a href="sketchpad.html#startPlayback" translate="no">startPlayback</a>(), <a href="sketchpad.html#stopAllPlayback" translate="no">stopAllPlayback</a>() and <a href="sketchpad.html#stopRecording" translate="no">stopRecording</a>()), and PlayGridManager follows <a href="sketchpad.html#selectedTrackId-prop" translate="no">selectedTrackId</a>. This class provides only the members libzynthbox uses.</p>
+<p>Starting playback resets every clip to stopped, so <a href="sketchpad.html#startPlayback" translate="no">startPlayback</a>() launches the clip each playing track uses (PlayfieldManager::setClipPlaystate()).</p>
+<p>A track plays clip a or clip b: Sections writes the coming section into the one that is not playing and has the two swap on the next bar (<a href="sketchpad.html#cueTrackClip" translate="no">cueTrackClip</a>()), which the playfield does on the bar's first tick, before any pattern schedules a note of it. The paused tracks and the tracks on clip b are kept in atomics, since <a href="sketchpad.html#startPlayback" translate="no">startPlayback</a>() reads them on the audio thread.</p>
 </div>
 <!-- @@@Sketchpad -->
 <div class="prop">
@@ -143,7 +143,7 @@
 <div class="fnitem">
 <!-- $$$selectedTrackId-prop$$$selectedTrackId$$$selectedTrackIdChanged -->
 <h3 class="fn" translate="no" id="selectedTrackId-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">selectedTrackId</span> : <span class="type">int</span></h3>
-<p>This property holds the track hardware input plays (PlayGridManager's current sketchpad track).</p>
+<p>This property holds the track live MIDI input plays (PlayGridManager's current sketchpad track).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>selectedTrackId</b></span>() const</td></tr>
@@ -190,7 +190,7 @@
 <div class="fnitem">
 <!-- $$$setTrackPaused[overload1]$$$setTrackPausedintbool -->
 <h3 class="fn" translate="no" id="setTrackPaused"><span class="type">void</span> Sketchpad::<span class="name">setTrackPaused</span>(<span class="type">int</span> <i>track</i>, <span class="type">bool</span> <i>paused</i>)</h3>
-<p>Leaves <i translate="no">track</i>'s clip out of playback when <i translate="no">paused</i> is true (it stops now and is not launched on a start), or brings it back from the next bar: a machine's pause.</p>
+<p>Leaves <i translate="no">track</i>'s clip out of playback when <i translate="no">paused</i> is true (it stops now and is not launched on a start), or brings it back from the next bar; <a href="machine.html#paused-prop" translate="no">Machine::paused</a> uses it.</p>
 <!-- @@@setTrackPaused -->
 </div>
 <div class="fnitem">
@@ -203,7 +203,7 @@
 <div class="fnitem">
 <!-- $$$stopAllAtNextBar[overload1]$$$stopAllAtNextBar -->
 <h3 class="fn" translate="no" id="stopAllAtNextBar"><span class="type">void</span> Sketchpad::<span class="name">stopAllAtNextBar</span>()</h3>
-<p>Stops every playing track's clip on the next bar (a song's end: nothing of the bar after it sounds, then the transport stops).</p>
+<p>Stops every playing track's clip on the next bar (at a song's end: nothing of the following bar sounds, then the transport stops).</p>
 <!-- @@@stopAllAtNextBar -->
 </div>
 <div class="fnitem">

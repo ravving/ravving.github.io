@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- samplermachine.cpp -->
-  <meta name="description" content="The SAMPLE KING sampler: a Machine playing samples on libzynthbox's SamplerSynth, with four banks (A to D) of eight sample slots and steps each.">
+  <meta name="description" content="A Machine playing samples on libzynthbox's SamplerSynth, with four banks (A to D) of eight sample slots and steps each.">
   <meta name="keywords" content="class">
   <title>SamplerMachine Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">SamplerMachine Class</h1>
 <!-- $$$SamplerMachine-brief -->
-<p>The SAMPLE KING sampler: a Machine playing samples on libzynthbox's SamplerSynth, with four banks (A to D) of eight sample slots and steps each. <a href="#details">More...</a></p>
+<p>A Machine playing samples on libzynthbox's SamplerSynth, with four banks (A to D) of eight sample slots and steps each. <a href="#details">More...</a></p>
 <!-- @@@SamplerMachine -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;samplermachine.h&gt;</code></td></tr>
@@ -158,8 +158,8 @@
 <!-- $$$SamplerMachine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The bank on screen is the one that plays. Each loaded slot is one ClipAudioSource on the machine's sketchpad track (slot <i>i</i> on sample slot <i>i</i> % 5, row <i>i</i> / 5), set up on its root slice: its key zone and root note are the slot's note (kits.json's <code translate="no">baseNote</code> + <i>i</i>), so a pattern note or a live key plays exactly that sample, untransposed. It plays one-shot (a retrigger cuts the voice before); PITCH is the slice's pitch (±12 semitones); the trim (start and length, as fractions of the file) is its start and length; REVERSE plays a reversed copy of the file, rendered once in a worker thread into the cache folder. The track is <code translate="no">sample-trig</code>, so its PatternModel sends its notes to SamplerSynth for the clips the track publishes (<a href="sketchpadtrack.html#setSamples" translate="no">SketchpadTrack::setSamples</a>()).</p>
-<p>The step grid is StepGrid's pattern interface, as <a href="drummachine.html" translate="no">DrumMachine</a>'s: the rows are the slots, with an ACC row and per-row level, mute and solo kept in the velocities. Presets (<code translate="no">sampler-presets.json</code>) are rhythms over the slots: &quot;1&quot; to &quot;8&quot; a row each, &quot;x&quot; a hit and &quot;X&quot; an accented one, so the grid has a groove as soon as sounds are dropped in. The bank on screen is not part of the undo history, and a section keeps the banks' hits, not their samples.</p>
+<p>The current bank is the one that plays. Each loaded slot is one ClipAudioSource on the machine's sketchpad track (slot <i>i</i> on sample slot <i>i</i> % 5, row <i>i</i> / 5), set up on its root slice: its key zone and root note are the slot's note (kits.json's <code translate="no">baseNote</code> + <i>i</i>), so a pattern note or a live key plays exactly that sample, untransposed. It plays one-shot (a retrigger cuts the previous voice); the slot's pitch is the slice's pitch (±12 semitones); the trim (start as a fraction of the file, length as a fraction of what follows the start) is its start and length; reverse plays a reversed copy of the file, rendered once on a worker thread into the cache folder. The track is <code translate="no">sample-trig</code>, so its PatternModel sends its notes to SamplerSynth for the clips the track publishes (<a href="sketchpadtrack.html#setSamples" translate="no">SketchpadTrack::setSamples</a>()).</p>
+<p>The step pattern follows <a href="drummachine.html" translate="no">DrumMachine</a>'s interface: a row per slot, an accent row, and per-row level, mute and solo applied as velocities. Presets (<code translate="no">sampler-presets.json</code>) are rhythms over the slots: keys &quot;1&quot; to &quot;8&quot; a row each, &quot;x&quot; a hit and &quot;X&quot; an accented one. The current bank is view state, outside the undo history, and a section keeps the banks' hits, not their samples.</p>
 </div>
 <!-- @@@SamplerMachine -->
 <div class="prop">
@@ -167,7 +167,7 @@
 <div class="fnitem">
 <!-- $$$accents-prop$$$accents$$$stepsChanged -->
 <h3 class="fn" translate="no" id="accents-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">accents</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen's accents, 16 booleans.</p>
+<p>This property holds the accents of the viewed bar, 16 booleans.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>accents</b></span>() const</td></tr>
@@ -181,7 +181,7 @@
 <div class="fnitem">
 <!-- $$$bank-prop$$$bank$$$setBankint$$$bankChanged -->
 <h3 class="fn" translate="no" id="bank-prop"><span class="name">bank</span> : <span class="type">int</span></h3>
-<p>This property holds the bank on screen and playing, 0 to 3 (A to D). Switching reloads its slots' clips.</p>
+<p>This property holds the current bank, 0 to 3 (A to D): the one exposed and playing. Changing it reloads its slots' clips.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>bank</b></span>() const</td></tr>
@@ -206,7 +206,7 @@
 <div class="fnitem">
 <!-- $$$playPositions-prop$$$playPositions$$$playPositionsChanged -->
 <h3 class="fn" translate="no" id="playPositions-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">playPositions</span> : <span class="type">QVariantList</span></h3>
-<p>where each slot's clip is in its file, 0..1, or -1 when silent: the screen's playhead. Updated at most every 66 ms, since each update redraws the screen.</p>
+<p>each slot's clip position in its file, 0..1, or -1 when silent. Updated at most every 66 ms.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>playPositions</b></span>() const</td></tr>
@@ -220,7 +220,7 @@
 <div class="fnitem">
 <!-- $$$playing-prop$$$playing$$$playingChanged -->
 <h3 class="fn" translate="no" id="playing-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">playing</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds which of the bank's slots sound right now.</p>
+<p>This property holds whether each slot of the bank is playing.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>playing</b></span>() const</td></tr>
@@ -276,7 +276,7 @@
 <div class="fnitem">
 <!-- $$$rows-prop$$$rows$$$slotsChanged -->
 <h3 class="fn" translate="no" id="rows-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">rows</span> : <span class="type">QStringList</span></h3>
-<p>This property holds the grid rows: each slot's name (&quot;1 · kick&quot;, &quot;2 · &mdash;&quot;...).</p>
+<p>This property holds a label per slot: its number and sample name (&quot;1 · kick&quot;, &quot;2 · &mdash;&quot;...).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>rows</b></span>() const</td></tr>
@@ -304,7 +304,7 @@
 <div class="fnitem">
 <!-- $$$steps-prop$$$steps$$$stepsChanged -->
 <h3 class="fn" translate="no" id="steps-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">steps</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen's hits, as a list per slot of 16 booleans.</p>
+<p>This property holds the hits of the viewed bar, a list per slot of 16 booleans.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>steps</b></span>() const</td></tr>
@@ -334,14 +334,14 @@
 <div class="fnitem">
 <!-- $$$audition[overload1]$$$auditionint -->
 <h3 class="fn" translate="no" id="audition"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SamplerMachine::<span class="name">audition</span>(<span class="type">int</span> <i>row</i>)</h3>
-<p>Plays slot <i translate="no">row</i> now at its level, to hear it.</p>
+<p>Plays slot <i translate="no">row</i> now at its level.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@audition -->
 </div>
 <div class="fnitem">
 <!-- $$$bankChanged -->
 <h3 class="fn" translate="no" id="bankChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> SamplerMachine::<span class="name">bankChanged</span>()</h3>
-<p>Emitted when the bank on screen changed.</p>
+<p>Emitted when bank changes.</p>
 <div class="admonition note"><p><b>Note: </b>Notifier signal for property <a href="samplermachine.html#bank-prop" translate="no">bank</a>. </p>
 </div><!-- @@@bankChanged -->
 </div>
@@ -362,21 +362,21 @@
 <div class="fnitem">
 <!-- $$$clearSample[overload1]$$$clearSampleint -->
 <h3 class="fn" translate="no" id="clearSample"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SamplerMachine::<span class="name">clearSample</span>(<span class="type">int</span> <i>slot</i>)</h3>
-<p>Empties <i translate="no">slot</i> of the bank on screen.</p>
+<p>Empties <i translate="no">slot</i> of the current bank.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@clearSample -->
 </div>
 <div class="fnitem">
 <!-- $$$detectTransients[overload1]$$$detectTransientsintqreal -->
 <h3 class="fn" translate="no" id="detectTransients"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SamplerMachine::<span class="name">detectTransients</span>(<span class="type">int</span> <i>slot</i>, <span class="type">qreal</span> <i>threshold</i>)</h3>
-<p>Finds the onsets in the trim of <i translate="no">slot</i> above <i translate="no">threshold</i> (0..1 of the loudest peak) in a worker thread (<a href="audiofile.html#transients" translate="no">AudioFile::transients</a>()); <a href="samplermachine.html#transientsDetected" translate="no">transientsDetected</a>() follows.</p>
+<p>Finds the onsets in the trim of <i translate="no">slot</i> above <i translate="no">threshold</i> (0..1 of the loudest peak) on a worker thread (<a href="audiofile.html#transients" translate="no">AudioFile::transients</a>()); <a href="samplermachine.html#transientsDetected" translate="no">transientsDetected</a>() reports them on the GUI thread.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@detectTransients -->
 </div>
 <div class="fnitem">
 <!-- $$$loadSample[overload1]$$$loadSampleintconstQString&qrealqreal -->
 <h3 class="fn" translate="no" id="loadSample"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SamplerMachine::<span class="name">loadSample</span>(<span class="type">int</span> <i>slot</i>, const <span class="type">QString</span> &amp;<i>path</i>, <span class="type">qreal</span> <i>start</i> = 0, <span class="type">qreal</span> <i>length</i> = 1)</h3>
-<p>Puts the sample file <i translate="no">path</i> in <i translate="no">slot</i> of the bank on screen, trimmed to <i translate="no">start</i> and <i translate="no">length</i> as <a href="samplermachine.html#setSlotTrim" translate="no">setSlotTrim</a>() takes them (a recorded take comes with its last burst).</p>
+<p>Puts the sample file <i translate="no">path</i> in <i translate="no">slot</i> of the current bank, trimmed to <i translate="no">start</i> and <i translate="no">length</i> as <a href="samplermachine.html#setSlotTrim" translate="no">setSlotTrim</a>() takes them. Pitch and reverse are reset; the slot's mix stays.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@loadSample -->
 </div>
@@ -389,7 +389,7 @@
 <div class="fnitem">
 <!-- $$$loadedSlotsChanged[overload1]$$$loadedSlotsChanged -->
 <h3 class="fn" translate="no" id="loadedSlotsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> SamplerMachine::<span class="name">loadedSlotsChanged</span>()</h3>
-<p>Emitted when the set of loaded slots changed; the wiring follows (<a href="samplermachine.html#loadedSampleNumbers" translate="no">loadedSampleNumbers</a>()).</p>
+<p>Emitted when the set of loaded slots changes; the studio rewires the sample outputs (<a href="samplermachine.html#loadedSampleNumbers" translate="no">loadedSampleNumbers</a>()).</p>
 <!-- @@@loadedSlotsChanged -->
 </div>
 <div class="fnitem">
@@ -417,13 +417,13 @@
 <!-- $$$sectionBars[overload1]$$$sectionBarsconstQVariantMap& -->
 <h3 class="fn" translate="no" id="sectionBars"><code class="details extra" translate="no">[override virtual]</code> <span class="type">int</span> SamplerMachine::<span class="name">sectionBars</span>(const <span class="type">QVariantMap</span> &amp;<i>content</i>) const</h3>
 <p>Reimplements: <a href="machine.html#sectionBars" translate="no">Machine::sectionBars</a>(const QVariantMap &amp;content) const.</p>
-<p>Returns the length of the bank <i translate="no">content</i> plays: the bank on screen's.</p>
+<p>Returns the length of the bank <i translate="no">content</i> plays: the current bank's.</p>
 <!-- @@@sectionBars -->
 </div>
 <div class="fnitem">
 <!-- $$$setBridge[overload1]$$$setBridgeZynthboxBridge* -->
 <h3 class="fn" translate="no" id="setBridge"><span class="type">void</span> SamplerMachine::<span class="name">setBridge</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>)</h3>
-<p>Gives the machine libzynthbox's <i translate="no">bridge</i>, through which it loads the slots' samples; set before the machine is attached.</p>
+<p>Sets the <i translate="no">bridge</i> through which the machine loads the slots' samples; set before the machine is attached.</p>
 <!-- @@@setBridge -->
 </div>
 <div class="fnitem">
@@ -458,28 +458,28 @@
 <div class="fnitem">
 <!-- $$$setSlotPitch[overload1]$$$setSlotPitchintint -->
 <h3 class="fn" translate="no" id="setSlotPitch"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SamplerMachine::<span class="name">setSlotPitch</span>(<span class="type">int</span> <i>slot</i>, <span class="type">int</span> <i>semitones</i>)</h3>
-<p>Sets the PITCH of <i translate="no">slot</i> to <i translate="no">semitones</i>, -12 to 12.</p>
+<p>Sets the pitch of <i translate="no">slot</i> to <i translate="no">semitones</i>, clamped to -12..12.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setSlotPitch -->
 </div>
 <div class="fnitem">
 <!-- $$$setSlotReverse[overload1]$$$setSlotReverseintbool -->
 <h3 class="fn" translate="no" id="setSlotReverse"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SamplerMachine::<span class="name">setSlotReverse</span>(<span class="type">int</span> <i>slot</i>, <span class="type">bool</span> <i>reverse</i>)</h3>
-<p>Plays <i translate="no">slot</i> reversed when <i translate="no">reverse</i> is true; the reversed copy is rendered in a worker thread the first time.</p>
+<p>Plays <i translate="no">slot</i> reversed when <i translate="no">reverse</i> is true; the reversed copy is rendered on a worker thread the first time.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setSlotReverse -->
 </div>
 <div class="fnitem">
 <!-- $$$setSlotTrim[overload1]$$$setSlotTrimintqrealqreal -->
 <h3 class="fn" translate="no" id="setSlotTrim"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SamplerMachine::<span class="name">setSlotTrim</span>(<span class="type">int</span> <i>slot</i>, <span class="type">qreal</span> <i>start</i>, <span class="type">qreal</span> <i>length</i>)</h3>
-<p>Sets the trim of <i translate="no">slot</i>: <i translate="no">start</i> and <i translate="no">length</i> as fractions (0..1) of the file.</p>
+<p>Sets the trim of <i translate="no">slot</i>: <i translate="no">start</i> as a fraction of the file (0..0.999) and <i translate="no">length</i> as a fraction of what follows the start (0.001..1).</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setSlotTrim -->
 </div>
 <div class="fnitem">
 <!-- $$$slotForNote[overload1]$$$slotForNoteint -->
 <h3 class="fn" translate="no" id="slotForNote"><code class="details extra" translate="no">[invokable]</code> <span class="type">int</span> SamplerMachine::<span class="name">slotForNote</span>(<span class="type">int</span> <i>note</i>) const</h3>
-<p>Returns the slot an external keyboard's <i translate="no">note</i> plays: the slots' notes from <code translate="no">baseNote</code> up, any other note wrapping round the eight.</p>
+<p>Returns the slot a MIDI <i translate="no">note</i> plays: the slots' notes run from <code translate="no">baseNote</code> up, and any other note wraps round the eight.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@slotForNote -->
 </div>
@@ -494,7 +494,7 @@
 <!-- $$$state[overload1]$$$state -->
 <h3 class="fn" translate="no" id="state"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QVariantMap</span> SamplerMachine::<span class="name">state</span>() const</h3>
 <p>Reimplements: <a href="machine.html#state" translate="no">Machine::state</a>() const.</p>
-<p>Adds the bank on screen and every bank's slots, steps, accents and length.</p>
+<p>Adds the current bank and every bank's slots, steps, accents and length.</p>
 <!-- @@@state -->
 </div>
 <div class="fnitem">
@@ -507,14 +507,14 @@
 <div class="fnitem">
 <!-- $$$toggleAccent[overload1]$$$toggleAccentint -->
 <h3 class="fn" translate="no" id="toggleAccent"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SamplerMachine::<span class="name">toggleAccent</span>(<span class="type">int</span> <i>step</i>)</h3>
-<p>Flips the accent of <i translate="no">step</i> of the bar on screen.</p>
+<p>Toggles the accent of <i translate="no">step</i> of the viewed bar.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggleAccent -->
 </div>
 <div class="fnitem">
 <!-- $$$toggleStep[overload1]$$$toggleStepintint -->
 <h3 class="fn" translate="no" id="toggleStep"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SamplerMachine::<span class="name">toggleStep</span>(<span class="type">int</span> <i>row</i>, <span class="type">int</span> <i>step</i>)</h3>
-<p>Flips the hit of <i translate="no">row</i> (a slot) on <i translate="no">step</i> of the bar on screen; setting one also plays it.</p>
+<p>Toggles the hit of <i translate="no">row</i> (a slot) on <i translate="no">step</i> of the viewed bar; setting a hit also plays it.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggleStep -->
 </div>
@@ -527,7 +527,7 @@
 <div class="fnitem">
 <!-- $$$trimToNewFile[overload1]$$$trimToNewFileintbool -->
 <h3 class="fn" translate="no" id="trimToNewFile"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SamplerMachine::<span class="name">trimToNewFile</span>(<span class="type">int</span> <i>slot</i>, <span class="type">bool</span> <i>normalise</i>)</h3>
-<p>Writes the trim of <i translate="no">slot</i> to a new file in the library, normalised to -1 dBFS when <i translate="no">normalise</i> is true, and puts it on the slot untrimmed.</p>
+<p>Writes the trim of <i translate="no">slot</i> to a new WAV file in the sample library's <code translate="no">edits</code> folder, normalised to -1 dBFS when <i translate="no">normalise</i> is true, on a worker thread, then puts it on the slot untrimmed.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@trimToNewFile -->
 </div>

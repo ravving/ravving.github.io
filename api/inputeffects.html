@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- inputeffects.cpp -->
-  <meta name="description" content="The live effects on the device input, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;input&lt;@op&gt;.&lt;/@op&gt;effects: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded.">
+  <meta name="description" content="The effects on the device input, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;input&lt;@op&gt;.&lt;/@op&gt;effects: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded.">
   <meta name="keywords" content="class">
   <title>InputEffects Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">InputEffects Class</h1>
 <!-- $$$InputEffects-brief -->
-<p>The live effects on the device input, published to QML as <code translate="no">studio.input.effects</code>: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded. <a href="#details">More...</a></p>
+<p>The effects on the device input, published to QML as <code translate="no">studio.input.effects</code>: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded. <a href="#details">More...</a></p>
 <!-- @@@InputEffects -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;inputeffects.h&gt;</code></td></tr>
@@ -114,7 +114,7 @@
 <!-- $$$InputEffects-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p><a href="inputrecorder.html" translate="no">InputRecorder</a> wires the chain (<a href="inputeffects.html#chain" translate="no">chain</a>()). The presets are data (<code translate="no">data/input-fx.json</code>): each a chain of plugins with fixed controls and three knobs, a knob moving one or more ports across a range (linear or log). Only the preset in use runs: its plugins start when it is picked (a second or two) and stop when another is, since every running jalv costs the audio graph each period whether wired or not (thirteen running at once make the output drop out every few seconds); and it runs only while the input is in use (<a href="inputeffects.html#setActive" translate="no">setActive</a>()). The knobs are kept per preset for the session. Delays marked <code translate="no">bpm</code> follow the studio's tempo. OFF (no preset) is the plain input. GUI thread only.</p>
+<p><a href="inputrecorder.html" translate="no">InputRecorder</a> wires the chain (<a href="inputeffects.html#chain" translate="no">chain</a>()). The presets are data (<code translate="no">data/input-fx.json</code>): each a chain of plugins with fixed controls and three knobs, a knob moving one or more ports across a range (linear or log). Only the preset in use runs: its plugins start when it is selected and stop when another is, since every running jalv costs the audio graph each period whether wired or not; and it runs only while the input is in use (<a href="inputeffects.html#setActive" translate="no">setActive</a>()). The knob values are kept per preset for the session. Delays marked <code translate="no">bpm</code> follow the studio's tempo. No preset (an empty name) is the plain input. GUI thread only.</p>
 </div>
 <!-- @@@InputEffects -->
 <div class="prop">
@@ -122,7 +122,7 @@
 <div class="fnitem">
 <!-- $$$about-prop$$$about$$$presetChanged -->
 <h3 class="fn" translate="no" id="about-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">about</span> : <span class="type">QString</span></h3>
-<p>This property holds a line for the screen saying what the preset in use does.</p>
+<p>This property holds a one-line description of the preset in use.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>about</b></span>() const</td></tr>
@@ -136,7 +136,7 @@
 <div class="fnitem">
 <!-- $$$knobs-prop$$$knobs$$$knobsChanged -->
 <h3 class="fn" translate="no" id="knobs-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">knobs</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the three knobs of the preset in use, as maps with <code translate="no">name</code> and <code translate="no">value</code> (0..1); empty while OFF.</p>
+<p>This property holds the three knobs of the preset in use, as maps with <code translate="no">name</code> and <code translate="no">value</code> (0..1); empty without a preset.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>knobs</b></span>() const</td></tr>
@@ -150,7 +150,7 @@
 <div class="fnitem">
 <!-- $$$preset-prop$$$preset$$$setPresetconstQString&$$$presetChanged -->
 <h3 class="fn" translate="no" id="preset-prop"><span class="name">preset</span> : <span class="type">QString</span></h3>
-<p>This property holds the preset in use; empty for OFF, the plain input. An unknown name means OFF.</p>
+<p>This property holds the preset in use; empty for none, the plain input. An unknown name means none.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>preset</b></span>() const</td></tr>
@@ -184,7 +184,7 @@
 <div class="fnitem">
 <!-- $$$chain[overload1]$$$chain -->
 <h3 class="fn" translate="no" id="chain"><span class="type">QList</span>&lt;<span class="type"><a href="audioinsert.html" translate="no">AudioInsert</a></span> *&gt; InputEffects::<span class="name">chain</span>() const</h3>
-<p>Returns the plugins the input runs through now, in order; empty while OFF, inactive or on a desktop.</p>
+<p>Returns the plugins the input runs through now, in order; empty without a preset, while inactive or on a desktop run.</p>
 <!-- @@@chain -->
 </div>
 <div class="fnitem">
@@ -203,7 +203,7 @@
 <div class="fnitem">
 <!-- $$$setActive[overload1]$$$setActivebool -->
 <h3 class="fn" translate="no" id="setActive"><span class="type">void</span> InputEffects::<span class="name">setActive</span>(<span class="type">bool</span> <i>active</i>)</h3>
-<p>Sets whether the input is in use (<i translate="no">active</i>: a page or a dialog shows it, a take runs). The preset's plugins run only then and stop otherwise; the preset stays picked.</p>
+<p>Sets whether the input is in use (<i translate="no">active</i>). The preset's plugins run only then and stop otherwise; the preset stays selected.</p>
 <!-- @@@setActive -->
 </div>
 <div class="fnitem">
@@ -222,7 +222,7 @@
 <div class="fnitem">
 <!-- $$$setMode[overload1]$$$setModeconstQString& -->
 <h3 class="fn" translate="no" id="setMode"><span class="type">void</span> InputEffects::<span class="name">setMode</span>(const <span class="type">QString</span> &amp;<i>mode</i>)</h3>
-<p>Sets the input's <i translate="no">mode</i>; a preset not made for it goes OFF.</p>
+<p>Sets the input's <i translate="no">mode</i>; a preset not made for it is switched off.</p>
 <!-- @@@setMode -->
 </div>
 </div>

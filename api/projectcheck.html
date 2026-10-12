@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- projectcheck.cpp -->
-  <meta name="description" content="What a project names that is missing, noted while it opens (docs/testing.md, &quot;Projects that still resolve&quot;).">
+  <meta name="description" content="Collects what a project names that is missing, while it opens.">
   <meta name="keywords" content="namespace">
   <title>ProjectCheck Namespace | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">ProjectCheck Namespace</h1>
 <!-- $$$ProjectCheck-brief -->
-<p>What a project names that is missing, noted while it opens (docs/testing.md, &quot;Projects that still resolve&quot;). <a href="#details">More...</a></p>
+<p>Collects what a project names that is missing, while it opens. <a href="#details">More...</a></p>
 <!-- @@@ProjectCheck -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;projectcheck.h&gt;</code></td></tr>
@@ -90,13 +90,13 @@
 <!-- $$$ProjectCheck-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>A project names its sounds rather than holding them (a source and a factory sound by name, a kit or a sample by path, MODS knobs as <code translate="no">CARD/KNOB</code>); when one is gone the machine opens without it, on its own engine or default kit, or with the knob at its default. The machines note each miss as they resolve their state (nothing is looked up twice, so opening a project costs nothing more), and the studio turns the list into one issue once the project is open.</p>
+<p>A project names its sounds rather than holding them (a source and a factory sound by name, a kit or a sample by path, sound-control values as <code translate="no">CARD/KNOB</code>); when one is gone the machine opens without it, on its own engine or default kit, or with the knob at its default. The machines note each miss as they resolve their state (nothing is looked up twice, so opening a project costs nothing more), and the studio turns the list into one issue once the project is open.</p>
 <pre class="cpp plain" translate="no"><code class="text">
  ProjectCheck::begin();                                   // the studio, before the machines restore
  ProjectCheck::miss(&quot;bass&quot;, &quot;sound source \&quot;Upright\&quot;&quot;);  // a machine, as it misses one
  const QStringList missing = ProjectCheck::finish();      // the studio, then the issue
 </code></pre>
-<p>The same checks run on the laptop and over the device's saved projects in <code translate="no">tools/check-projects.py</code> (<code translate="no">ctest -R projects</code>, <code translate="no">tools/device.sh projects</code>). The list is global state for the GUI thread.</p>
+<p>The list is global state for the GUI thread.</p>
 </div>
 <!-- @@@ProjectCheck -->
 <div class="func">

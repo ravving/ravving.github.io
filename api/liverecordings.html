@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- liverecordings.cpp -->
-  <meta name="description" content="The RECORDER's recordings: the takes kept as played (InputRecorder::record(true)), published to QML as studio&lt;@op&gt;.&lt;/@op&gt;input&lt;@op&gt;.&lt;/@op&gt;recordings.">
+  <meta name="description" content="The input takes kept as played (InputRecorder::record(true)), published to QML as studio&lt;@op&gt;.&lt;/@op&gt;input&lt;@op&gt;.&lt;/@op&gt;recordings.">
   <meta name="keywords" content="class">
   <title>LiveRecordings Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">LiveRecordings Class</h1>
 <!-- $$$LiveRecordings-brief -->
-<p>The RECORDER's recordings: the takes kept as played (<a href="inputrecorder.html#record" translate="no">InputRecorder::record</a>(true)), published to QML as <code translate="no">studio.input.recordings</code>. <a href="#details">More...</a></p>
+<p>The input takes kept as played (<a href="inputrecorder.html#record" translate="no">InputRecorder::record</a>(true)), published to QML as <code translate="no">studio.input.recordings</code>. <a href="#details">More...</a></p>
 <!-- @@@LiveRecordings -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;liverecordings.h&gt;</code></td></tr>
@@ -114,7 +114,7 @@
 <!-- $$$LiveRecordings-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>They are kept in one of two places the user picks (<a href="inputrecorder.html#keepIn-prop" translate="no">InputRecorder::keepIn</a>): SAMPLES (<a href="paths.html#liveRecordingsx" translate="no">Paths::liveRecordings</a>(), which the samplers' browsers list) or TRACKS (<a href="paths.html#recordings" translate="no">Paths::recordings</a>(), the library's recordings, which the music player lists beside the master's own). Both folders are watched, so a copy from elsewhere shows up. RENAME, DELETE, MOVE (to the other place) and EDIT (the window of a recording, normalised or not, written as a new recording beside it in a worker thread: <a href="audiofile.html#writeWindow" translate="no">AudioFile::writeWindow</a>()) are here; playing one is <a href="studio.html#previewSample" translate="no">Studio::previewSample</a>().</p>
+<p>They are kept in one of two places (<a href="inputrecorder.html#keepIn-prop" translate="no">InputRecorder::keepIn</a>): <code translate="no">samples</code> (<a href="paths.html#liveRecordingsx" translate="no">Paths::liveRecordings</a>(), in the sample library) or <code translate="no">tracks</code> (<a href="paths.html#recordings" translate="no">Paths::recordings</a>(), beside the master's recordings in the music library). Both folders are watched, so a file copied in from elsewhere appears. <a href="liverecordings.html#rename" translate="no">rename</a>(), <a href="liverecordings.html#remove" translate="no">remove</a>(), <a href="liverecordings.html#move" translate="no">move</a>() (to the other place) and <a href="liverecordings.html#edit" translate="no">edit</a>() (the window of a recording, normalised or not, written as a new recording beside it on a worker thread: <a href="audiofile.html#writeWindow" translate="no">AudioFile::writeWindow</a>()) are here; playing one is <a href="studio.html#previewSample" translate="no">Studio::previewSample</a>().</p>
 </div>
 <!-- @@@LiveRecordings -->
 <div class="prop">
@@ -122,7 +122,7 @@
 <div class="fnitem">
 <!-- $$$busy-prop$$$busy$$$busyChanged -->
 <h3 class="fn" translate="no" id="busy-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">busy</span> : <span class="type">bool</span></h3>
-<p>This property holds whether an EDIT is being written.</p>
+<p>This property holds whether <a href="liverecordings.html#edit" translate="no">edit</a>() is writing.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>busy</b></span>() const</td></tr>
@@ -191,7 +191,7 @@
 <div class="fnitem">
 <!-- $$$refresh[overload1]$$$refresh -->
 <h3 class="fn" translate="no" id="refresh"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> LiveRecordings::<span class="name">refresh</span>()</h3>
-<p>Reads the folders again; the watcher does it on its own, this is for a script.</p>
+<p>Reads the folders again; the watcher does it on its own, so this is for scripts.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@refresh -->
 </div>

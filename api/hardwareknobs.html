@@ -101,7 +101,7 @@
 <li>an endless encoder (every knob on the older kits, the big knob on all of them) emits <a href="hardwareknobs.html#turned" translate="no">turned</a>() with the detents moved, and is recentred near the ends of its range so it never runs out;</li>
 <li>a fixed-end pot (the three small knobs of the Z2_V5B kit) emits <a href="hardwareknobs.html#moved" translate="no">moved</a>() with its position 0..1. Readings within 2 raw steps of the recent average are ignored as jitter, and the last 16 raw steps at either end snap to the end, so a control's minimum and maximum are always reached.</li>
 </ul>
-<p>The kit comes from <code translate="no">ZYNTHIAN_WIRING_LAYOUT</code>; Z2_V5 and Z2_V5B mount the small knobs reversed, which an inverted range compensates for. Ported from zynthbox-qml's <code translate="no">zynthian_qt_gui.py</code> (the zselector setup, <code translate="no">zyncoder_read()</code> and <code translate="no">knobAbsoluteCuiaEmitter()</code>). zynthbox-qml sends these as KNOBn_UP/DOWN/ABSOLUTE CUIA commands; MidiRouter's CUIA queue carries no value, so this class signals Ravving directly.</p>
+<p>The kit comes from <code translate="no">ZYNTHIAN_WIRING_LAYOUT</code>; Z2_V5 and Z2_V5B mount the small knobs reversed, which an inverted range compensates for. MidiRouter's CUIA queue carries no value, so the knobs are signalled directly rather than as CUIA commands.</p>
 </div>
 <!-- @@@HardwareKnobs -->
 <div class="func">

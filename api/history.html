@@ -129,17 +129,16 @@
 <p>Participants (<a href="historyparticipant.html" translate="no">HistoryParticipant</a>) register once with <a href="history.html#add" translate="no">add</a>() and report each change with <a href="history.html#record" translate="no">record</a>(). A step holds, for each participant it touched, the state before and after, so a step stores only what changed and undoing it restores only what it touched. At most <a href="history.html#Depth-var" translate="no">Depth</a> steps are kept.</p>
 <p>What becomes one step:</p>
 <ul>
-<li>everything recorded within one turn of the event loop: an action that touches several participants (CLEAR on every machine, a key change that moves the bass and the lead) is undone in one go;</li>
-<li>a participant's changes that follow each other within <a href="history.html#MergeMs-var" translate="no">MergeMs</a> milliseconds (a knob turning, a handle dragged);</li>
+<li>everything recorded within one turn of the event loop, so an action that touches several participants is undone in one go;</li>
+<li>a participant's changes that follow each other within <a href="history.html#MergeMs-var" translate="no">MergeMs</a> milliseconds (a control being turned);</li>
 <li>everything between <a href="history.html#begin" translate="no">begin</a>() and <a href="history.html#end" translate="no">end</a>().</li>
 </ul>
 <p>There are two ways back:</p>
 <ul>
-<li>the timeline: <a href="history.html#undo" translate="no">undo</a>() and <a href="history.html#redo" translate="no">redo</a>() walk the whole project's steps (the header's undo and redo, ALT + LEFT / RIGHT);</li>
-<li>one participant: <a href="history.html#undoIn" translate="no">undoIn</a>() and <a href="history.html#redoIn" translate="no">redoIn</a>() step through that participant's changes only (a machine's toolbar), leaving the others as they are. The participants' states are independent of each other, which makes this safe.</li>
+<li>the timeline: <a href="history.html#undo" translate="no">undo</a>() and <a href="history.html#redo" translate="no">redo</a>() walk the whole project's steps;</li>
+<li>one participant: <a href="history.html#undoIn" translate="no">undoIn</a>() and <a href="history.html#redoIn" translate="no">redoIn</a>() step through that participant's changes only, leaving the others as they are. This is safe because the participants' states are independent of each other.</li>
 </ul>
-<p><a href="history.html#forget" translate="no">forget</a>() drops a participant's steps when its state is replaced wholesale (a project opened, a section picked); <a href="history.html#clear" translate="no">clear</a>() empties the whole history.</p>
-<p>All members run on the GUI thread.</p>
+<p><a href="history.html#forget" translate="no">forget</a>() drops a participant's steps when its state is replaced wholesale (a project opened, a section picked); <a href="history.html#clear" translate="no">clear</a>() empties the whole history. GUI thread only.</p>
 </div>
 <!-- @@@History -->
 <div class="prop">

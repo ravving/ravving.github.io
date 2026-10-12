@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- monomachine.cpp -->
-  <meta name="description" content="A monophonic line: the BASS (on DISTRHO Nekobi) and the LEAD (on Calf Monosynth) are both this machine, configured in kits.json.">
+  <meta name="description" content="A Machine playing a monophonic line; kits.json configures the bass and the lead as two instances.">
   <meta name="keywords" content="class">
   <title>MonoMachine Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">MonoMachine Class</h1>
 <!-- $$$MonoMachine-brief -->
-<p>A monophonic line: the BASS (on DISTRHO Nekobi) and the LEAD (on Calf Monosynth) are both this machine, configured in kits.json. <a href="#details">More...</a></p>
+<p>A Machine playing a monophonic line; kits.json configures the bass and the lead as two instances. <a href="#details">More...</a></p>
 <!-- @@@MonoMachine -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;monomachine.h&gt;</code></td></tr>
@@ -146,12 +146,12 @@
 <h2 id="details">Detailed Description</h2>
 <p>Each step holds at most one note, with two step flags:</p>
 <ul>
-<li>ACCENT: the note plays at the accent velocity (kits.json <code translate="no">velocities</code>: the 303's 127, past Nekobi's accent threshold above 90) instead of the plain one (80);</li>
-<li>SLIDE: the note lasts half a step longer, so it overlaps the next one, which a mono engine in legato mode glides into (the 303's slide, the lead's portamento);</li>
+<li>accent: the note plays at the accent velocity (kits.json <code translate="no">velocities</code>; 127 by default) instead of the plain one (80 by default);</li>
+<li>slide: the note lasts half a step longer, so it overlaps the next one, which a mono engine in legato mode glides into;</li>
 </ul>
-<p>and a LENGTH in steps (1 unless set): a sax's half note is a note held 8 steps. A note may also have its own VELOCITY (1 to 127, over the plain or accented one; the ACCENT lane clears it) and a NUDGE (a little early or late, Machine's nudge); SELECT's knobs set the three (<a href="monomachine.html#adjustNotes" translate="no">adjustNotes</a>()). The line is the machine's own (saved with it); the PatternModel is written from it, one subnote per note. A LIVE key is a MIDI note (<a href="monomachine.html#degreeNote" translate="no">degreeNote</a>() turns the step keys' scale degrees into notes). The LIVE FX ONLY KICK silences it.</p>
-<p>The key (root and scale, set by the page from the header) places the presets, which are written in scale degrees from kits.json's <code translate="no">baseNote</code> plus the root: <code translate="no">bass-presets.json</code> and <code translate="no">lead-presets.json</code> chart NOTES &quot;1&quot; to &quot;7&quot; or &quot;.&quot;, OCTAVE &quot;+&quot; or &quot;-&quot;, ACCENT and SLIDE &quot;x&quot;, and when needed HOLD &quot;x&quot; on the steps a long note lasts through and ALTER, the semitones a note outside the key sits above its degree. The key also places the step keys' notes and <a href="monomachine.html#randomize" translate="no">randomize</a>(). octave shifts the roll's range and the step keys, not the notes already written.</p>
-<p>It provides the pattern interface PianoRoll works with: notes, accents, slides, lengths, holds, velocities, octave, <a href="monomachine.html#setNote" translate="no">setNote</a>(), <a href="monomachine.html#toggleAccent" translate="no">toggleAccent</a>(), <a href="monomachine.html#toggleSlide" translate="no">toggleSlide</a>(), <a href="monomachine.html#audition" translate="no">audition</a>(), with Machine's playhead, cursor, bars and presets.</p>
+<p>and a length in steps (1 unless set). A note may also have its own velocity (1 to 127, overriding the plain or accent one; toggling the accent clears it) and a nudge (Machine's per-note timing offset); <a href="monomachine.html#adjustNotes" translate="no">adjustNotes</a>() sets the three. The line is the machine's own data (saved with it); the PatternModel is written from it, one subnote per note. A live key is a MIDI note (<a href="monomachine.html#degreeNote" translate="no">degreeNote</a>() turns scale degrees into notes). <a href="machine.html#KickMode-enum" translate="no">Machine::OnlyKick</a> silences it.</p>
+<p>The key (root and scale) places the presets, which are written in scale degrees from kits.json's <code translate="no">baseNote</code> plus the root: <code translate="no">bass-presets.json</code> and <code translate="no">lead-presets.json</code> chart NOTES &quot;1&quot; to &quot;7&quot; or &quot;.&quot;, OCTAVE &quot;+&quot; or &quot;-&quot;, ACCENT and SLIDE &quot;x&quot;, and when needed HOLD &quot;x&quot; on the steps a long note lasts through and ALTER, the semitones a note outside the key sits above its degree. The key also places <a href="monomachine.html#degreeNote" translate="no">degreeNote</a>() and <a href="monomachine.html#randomize" translate="no">randomize</a>(). octave shifts <a href="monomachine.html#degreeNote" translate="no">degreeNote</a>(), not the notes already written.</p>
+<p>The QML piano roll uses notes, accents, slides, lengths, holds, velocities, octave, <a href="monomachine.html#setNote" translate="no">setNote</a>(), <a href="monomachine.html#toggleAccent" translate="no">toggleAccent</a>(), <a href="monomachine.html#toggleSlide" translate="no">toggleSlide</a>() and <a href="monomachine.html#audition" translate="no">audition</a>(), with Machine's playhead, cursor, bars and presets.</p>
 </div>
 <!-- @@@MonoMachine -->
 <div class="prop">
@@ -159,7 +159,7 @@
 <div class="fnitem">
 <!-- $$$accents-prop$$$accents$$$stepsChanged -->
 <h3 class="fn" translate="no" id="accents-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">accents</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen, per step: whether the step is accented.</p>
+<p>per step of the viewed bar: whether the step is accented.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>accents</b></span>() const</td></tr>
@@ -173,7 +173,7 @@
 <div class="fnitem">
 <!-- $$$baseNote-prop$$$baseNote -->
 <h3 class="fn" translate="no" id="baseNote-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">baseNote</span> : const <span class="type">int</span></h3>
-<p>This property holds the MIDI note degree 1 of octave 0 sits on before the key's root (kits.json <code translate="no">baseNote</code>: C2 for the bass, C4 for the lead): where the roll, the ribbon and the presets start.</p>
+<p>This property holds the MIDI note degree 1 of octave 0 sits on before the key's root (kits.json <code translate="no">baseNote</code>, 36 by default); presets and <a href="monomachine.html#degreeNote" translate="no">degreeNote</a>() count from it.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>baseNote</b></span>() const</td></tr>
@@ -183,7 +183,7 @@
 <div class="fnitem">
 <!-- $$$holds-prop$$$holds$$$stepsChanged -->
 <h3 class="fn" translate="no" id="holds-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">holds</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen, per step: the note an earlier one (of this bar or one before) still holds through the step, or -1.</p>
+<p>per step of the viewed bar: the note an earlier one (of this bar or one before) still holds through the step, or -1.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>holds</b></span>() const</td></tr>
@@ -197,7 +197,7 @@
 <div class="fnitem">
 <!-- $$$lengths-prop$$$lengths$$$stepsChanged -->
 <h3 class="fn" translate="no" id="lengths-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">lengths</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen, per step: the steps the note starting there lasts; 1 where none starts.</p>
+<p>per step of the viewed bar: the steps the note starting there lasts; 1 where none starts.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>lengths</b></span>() const</td></tr>
@@ -211,7 +211,7 @@
 <div class="fnitem">
 <!-- $$$notes-prop$$$notes$$$stepsChanged -->
 <h3 class="fn" translate="no" id="notes-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">notes</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen, per step: the MIDI note that starts there, or -1.</p>
+<p>per step of the viewed bar: the MIDI note that starts there, or -1.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>notes</b></span>() const</td></tr>
@@ -225,7 +225,7 @@
 <div class="fnitem">
 <!-- $$$octave-prop$$$octave$$$setOctaveint$$$octaveChanged -->
 <h3 class="fn" translate="no" id="octave-prop"><span class="name">octave</span> : <span class="type">int</span></h3>
-<p>This property holds the octave shift of the roll's range and the step keys, -2 to +2.</p>
+<p>This property holds the octave shift of <a href="monomachine.html#degreeNote" translate="no">degreeNote</a>(), -2 to +2.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>octave</b></span>() const</td></tr>
@@ -270,7 +270,7 @@
 <div class="fnitem">
 <!-- $$$slides-prop$$$slides$$$stepsChanged -->
 <h3 class="fn" translate="no" id="slides-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">slides</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen, per step: whether the step slides.</p>
+<p>per step of the viewed bar: whether the step slides.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>slides</b></span>() const</td></tr>
@@ -284,7 +284,7 @@
 <div class="fnitem">
 <!-- $$$velocities-prop$$$velocities$$$stepsChanged -->
 <h3 class="fn" translate="no" id="velocities-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">velocities</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the bar on screen, per step: the velocity the note starting there plays at (its own, else the plain or accent one); -1 where no note starts. Drawn as the ACCENT lane's fill.</p>
+<p>per step of the viewed bar: the velocity the note starting there plays at (its own, else the plain or accent one); -1 where no note starts.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>velocities</b></span>() const</td></tr>
@@ -307,14 +307,14 @@
 <div class="fnitem">
 <!-- $$$adjustNotes[overload1]$$$adjustNotesconstQVariantList&constQString&int -->
 <h3 class="fn" translate="no" id="adjustNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MonoMachine::<span class="name">adjustNotes</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>, const <span class="type">QString</span> &amp;<i>setting</i>, <span class="type">int</span> <i>delta</i>)</h3>
-<p>SELECT's knobs on the <i translate="no">picked</i> notes: <i translate="no">setting</i> <code translate="no">length</code> changes it by <i translate="no">delta</i> steps, <code translate="no">velocity</code> by 4 per detent of <i translate="no">delta</i>, <code translate="no">nudge</code> by a 16th of a step per detent (at most half a step either way). One undo step per turn.</p>
+<p>Changes <i translate="no">setting</i> of the <i translate="no">picked</i> notes by <i translate="no">delta</i>: <code translate="no">length</code> by <i translate="no">delta</i> steps (1 to 64), <code translate="no">velocity</code> by 4 per unit (1 to 127), <code translate="no">nudge</code> by a 16th of a step per unit (at most half a step either way). An undoable edit.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@adjustNotes -->
 </div>
 <div class="fnitem">
 <!-- $$$allPicks[overload1]$$$allPicks -->
 <h3 class="fn" translate="no" id="allPicks"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> MonoMachine::<span class="name">allPicks</span>() const</h3>
-<p>Returns every note of the pattern, in all its bars, as SELECT picks ([position, note] pairs, in order): a long press on SELECT picks them all.</p>
+<p>Returns every note of the pattern, in all its bars, as [position, note] picks in order.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@allPicks -->
 </div>
@@ -328,7 +328,7 @@
 <div class="fnitem">
 <!-- $$$degreeNote[overload1]$$$degreeNoteint -->
 <h3 class="fn" translate="no" id="degreeNote"><code class="details extra" translate="no">[invokable]</code> <span class="type">int</span> MonoMachine::<span class="name">degreeNote</span>(<span class="type">int</span> <i>degree</i>) const</h3>
-<p>Returns the MIDI note of scale <i translate="no">degree</i> (0 the root; 7 and up continue into the next octave) at the current octave: what step key <i translate="no">degree</i> + 1 plays.</p>
+<p>Returns the MIDI note of scale <i translate="no">degree</i> (0 the root; 7 and up continue into the next octave) at the current octave.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@degreeNote -->
 </div>
@@ -342,14 +342,14 @@
 <div class="fnitem">
 <!-- $$$moveNotes[overload1]$$$moveNotesconstQVariantList&intbool -->
 <h3 class="fn" translate="no" id="moveNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> MonoMachine::<span class="name">moveNotes</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>, <span class="type">int</span> <i>steps</i>, <span class="type">bool</span> <i>chromatic</i>)</h3>
-<p>SELECT: moves the <i translate="no">picked</i> notes (a list of [position, note] pairs, absolute positions) <i translate="no">steps</i> notes of the key up or down (semitones when <i translate="no">chromatic</i> is true), keeping their length, accent and slide. Returns the picks as they are after the move; a pick whose note is gone is dropped. One undo step.</p>
+<p>Moves the <i translate="no">picked</i> notes (a list of [position, note] pairs, absolute positions) <i translate="no">steps</i> notes of the key up or down (semitones when <i translate="no">chromatic</i> is true), keeping their length, accent and slide. Returns the picks as they are after the move; a pick whose note is gone is dropped. One undo step.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@moveNotes -->
 </div>
 <div class="fnitem">
 <!-- $$$noteSettings[overload1]$$$noteSettingsconstQVariantList& -->
 <h3 class="fn" translate="no" id="noteSettings"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantMap</span> MonoMachine::<span class="name">noteSettings</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>) const</h3>
-<p>Returns the first of the <i translate="no">picked</i> notes' settings for the readout: a map with <code translate="no">length</code>, <code translate="no">velocity</code>, <code translate="no">nudge</code> (in % of a step), <code translate="no">count</code> and <code translate="no">nudgeUnit</code> (one NUDGE detent in % of a step); an empty map when no picked note is left.</p>
+<p>Returns the settings of the first of the <i translate="no">picked</i> notes still present: a map with <code translate="no">length</code>, <code translate="no">velocity</code>, <code translate="no">nudge</code> (in % of a step), <code translate="no">count</code> and <code translate="no">nudgeUnit</code> (one nudge unit in % of a step); an empty map when none is left.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@noteSettings -->
 </div>
@@ -370,21 +370,21 @@
 <div class="fnitem">
 <!-- $$$setNote[overload1]$$$setNoteintint -->
 <h3 class="fn" translate="no" id="setNote"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MonoMachine::<span class="name">setNote</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>note</i>)</h3>
-<p>Puts <i translate="no">note</i> on <i translate="no">step</i> of the bar on screen and sounds it, or clears the step when it holds that note already.</p>
+<p>Puts <i translate="no">note</i> on <i translate="no">step</i> of the viewed bar and sounds it, or clears the step when it already holds that note.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setNote -->
 </div>
 <div class="fnitem">
 <!-- $$$setNoteLength[overload1]$$$setNoteLengthintint -->
 <h3 class="fn" translate="no" id="setNoteLength"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MonoMachine::<span class="name">setNoteLength</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>steps</i>)</h3>
-<p>Sets how many <i translate="no">steps</i> the note on <i translate="no">step</i> of the bar on screen lasts (1 to 64; it may reach into the next bars); does nothing on a step without a note.</p>
+<p>Sets how many <i translate="no">steps</i> the note on <i translate="no">step</i> of the viewed bar lasts (1 to 64; it may reach into the next bars); does nothing on a step without a note.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setNoteLength -->
 </div>
 <div class="fnitem">
 <!-- $$$shiftNotes[overload1]$$$shiftNotesconstQVariantList&int -->
 <h3 class="fn" translate="no" id="shiftNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> MonoMachine::<span class="name">shiftNotes</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>, <span class="type">int</span> <i>steps</i>)</h3>
-<p>SELECT: moves the <i translate="no">picked</i> notes <i translate="no">steps</i> steps later (positive) or earlier, with their length, accent and slide. A step holds one note, so one landing on another replaces it (undo brings it back), and one that would leave the pattern stays. Returns the picks as they are after the move. One undo step.</p>
+<p>Moves the <i translate="no">picked</i> notes <i translate="no">steps</i> steps later (positive) or earlier, with their length, accent and slide. A step holds one note, so a note landing on another replaces it, and a note that would leave the pattern stays. Returns the picks as they are after the move. One undo step.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@shiftNotes -->
 </div>
@@ -398,21 +398,21 @@
 <div class="fnitem">
 <!-- $$$stepsChanged -->
 <h3 class="fn" translate="no" id="stepsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MonoMachine::<span class="name">stepsChanged</span>()</h3>
-<p>Emitted when any of the bar on screen's lists changed.</p>
+<p>Emitted when any of the per-step lists of the viewed bar change.</p>
 <div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="monomachine.html#accents-prop" translate="no">accents</a>, <a href="monomachine.html#holds-prop" translate="no">holds</a>, <a href="monomachine.html#lengths-prop" translate="no">lengths</a>, <a href="monomachine.html#notes-prop" translate="no">notes</a>, <a href="monomachine.html#slides-prop" translate="no">slides</a>, and <a href="monomachine.html#velocities-prop" translate="no">velocities</a>. </p>
 </div><!-- @@@stepsChanged -->
 </div>
 <div class="fnitem">
 <!-- $$$toggleAccent[overload1]$$$toggleAccentint -->
 <h3 class="fn" translate="no" id="toggleAccent"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MonoMachine::<span class="name">toggleAccent</span>(<span class="type">int</span> <i>step</i>)</h3>
-<p>Flips the ACCENT of <i translate="no">step</i> of the bar on screen.</p>
+<p>Toggles the accent of <i translate="no">step</i> of the viewed bar.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggleAccent -->
 </div>
 <div class="fnitem">
 <!-- $$$toggleSlide[overload1]$$$toggleSlideint -->
 <h3 class="fn" translate="no" id="toggleSlide"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MonoMachine::<span class="name">toggleSlide</span>(<span class="type">int</span> <i>step</i>)</h3>
-<p>Flips the SLIDE of <i translate="no">step</i> of the bar on screen.</p>
+<p>Toggles the slide of <i translate="no">step</i> of the viewed bar.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggleSlide -->
 </div>

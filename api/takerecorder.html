@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- takerecorder.cpp -->
-  <meta name="description" content="A machine's REC: a fresh take of what is played LIVE on it, recorded into its pattern; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;take.">
+  <meta name="description" content="Records what is played live on a machine into its pattern as a fresh take; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;take.">
   <meta name="keywords" content="class">
   <title>TakeRecorder Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">TakeRecorder Class</h1>
 <!-- $$$TakeRecorder-brief -->
-<p>A machine's REC: a fresh take of what is played LIVE on it, recorded into its pattern; published to QML as <code translate="no">studio.take</code>. <a href="#details">More...</a></p>
+<p>Records what is played live on a machine into its pattern as a fresh take; published to QML as <code translate="no">studio.take</code>. <a href="#details">More...</a></p>
 <!-- @@@TakeRecorder -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;takerecorder.h&gt;</code></td></tr>
@@ -113,11 +113,11 @@
 <h2 id="details">Detailed Description</h2>
 <p>One take at a time. Starting one:</p>
 <ul>
-<li>with the transport stopped, the pattern is wiped and the transport starts; its first bar is the count-in (the metronome ticks it), and the take records from that bar's last 16th, so a hit played just before &quot;the one&quot; lands on it;</li>
-<li>with the transport playing, it waits for the machine's loop to come round, then wipes the pattern and records from its first step.</li>
+<li>with the transport stopped, the pattern is cleared and the transport starts; its first bar is the count-in (the metronome ticks it), and the take records from that bar's last 16th, so a hit played just before the downbeat lands on it;</li>
+<li>with the transport playing, it waits for the machine's loop to come round, then clears the pattern and records from its first step.</li>
 </ul>
-<p>While recording, every live hit (<a href="takerecorder.html#hit" translate="no">hit</a>()) is written at the nearest step, loop after loop: the first pass is the fresh take, later passes overdub. REC again, or STOP, ends it; the take is one undo step (<a href="machine.html#beginEditGroup" translate="no">Machine::beginEditGroup</a>()).</p>
-<p>The metronome ticks through a take: switched on for it if it was off, and back off when the take ends, unless it was switched by hand meanwhile. The take records notes, not audio; the mix's audio is <a href="mixrecorder.html" translate="no">MixRecorder</a>'s. GUI thread only.</p>
+<p>While recording, every live hit (<a href="takerecorder.html#hit" translate="no">hit</a>()) is written at the nearest step, loop after loop: the first pass is the fresh take, later passes overdub. <a href="takerecorder.html#toggle" translate="no">toggle</a>() again or <a href="takerecorder.html#stop" translate="no">stop</a>() ends it; the take is one undo step (<a href="machine.html#beginEditGroup" translate="no">Machine::beginEditGroup</a>()).</p>
+<p>The metronome ticks through a take: switched on for it if it was off, and back off when the take ends, unless it was switched manually meanwhile. The take records notes, not audio. GUI thread only.</p>
 </div>
 <!-- @@@TakeRecorder -->
 <div class="types">
@@ -198,7 +198,7 @@
 <div class="fnitem">
 <!-- $$$hit[overload1]$$$hitQObject*intbool -->
 <h3 class="fn" translate="no" id="hit"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> TakeRecorder::<span class="name">hit</span>(<span class="type">QObject</span> *<i>machine</i>, <span class="type">int</span> <i>row</i>, <span class="type">bool</span> <i>accented</i>)</h3>
-<p>A live hit on <i translate="no">machine</i>'s <i translate="no">row</i>, accented when <i translate="no">accented</i> is true: written into the take when that machine is recording one.</p>
+<p>Writes a live hit on <i translate="no">machine</i>'s <i translate="no">row</i>, accented when <i translate="no">accented</i> is true, into the take when that machine is recording one.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@hit -->
 </div>
@@ -212,7 +212,7 @@
 <div class="fnitem">
 <!-- $$$toggle[overload1]$$$toggleQObject* -->
 <h3 class="fn" translate="no" id="toggle"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> TakeRecorder::<span class="name">toggle</span>(<span class="type">QObject</span> *<i>machine</i>)</h3>
-<p>REC on <i translate="no">machine</i>: starts a take on it, or ends its take when it has one. Another machine's take ends and this one starts.</p>
+<p>Starts a take on <i translate="no">machine</i>, or ends its take when it has one. Another machine's take ends and this one starts.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggle -->
 </div>

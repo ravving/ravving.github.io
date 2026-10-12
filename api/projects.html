@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- projects.cpp -->
-  <meta name="description" content="The saved projects behind the header's SAVE and PROJECT menu, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;projects.">
+  <meta name="description" content="The saved projects, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;projects.">
   <meta name="keywords" content="class">
   <title>Projects Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">Projects Class</h1>
 <!-- $$$Projects-brief -->
-<p>The saved projects behind the header's SAVE and PROJECT menu, published to QML as <code translate="no">studio.projects</code>. <a href="#details">More...</a></p>
+<p>The saved projects, published to QML as <code translate="no">studio.projects</code>. <a href="#details">More...</a></p>
 <!-- @@@Projects -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;projects.h&gt;</code></td></tr>
@@ -128,9 +128,9 @@
 <!-- $$$Projects-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>A project is one JSON file in the projects folder holding everything the studio keeps (<a href="studio.html#projectState" translate="no">Studio::projectState</a>(): every machine's steps, sounds, kit, effects and levels, the tempo, swing, master, key, LIVE FX knobs...), so it can be copied, backed up or read by hand.</p>
-<p>What is on the device now is always kept by the studio itself (its session, saved after every change and restored at start); a project is a named snapshot of it. SAVE writes the session over the project it came from (a new one, &quot;RAVE 001&quot;, &quot;RAVE 002&quot;..., the first time), SAVE AS NEW always makes a new one, opening one replaces the session with it, and NEW puts everything back to how ravving ships. dirty says whether the session differs from what was last saved or opened: the states are compared, so undoing an edit makes it saved again and notifications that change nothing do not mark it unsaved.</p>
-<p>The demos ravving ships (<code translate="no">data/demos/*.json</code>, installed read-only beside kits.json) are listed after the user's projects, in their own group. One opens like any project; SAVE then keeps the changes as a new project of the user's under the demo's name (the demo itself never changes), and a demo cannot be deleted. The current project and the dirty flag survive restarts (a small marker file in the folder). GUI thread only.</p>
+<p>A project is one JSON file in the projects folder holding everything the studio keeps (<a href="studio.html#projectState" translate="no">Studio::projectState</a>(): every machine's steps, sounds, kit, effects and levels, the tempo, swing, master, key, live effects...), so it can be copied, backed up or read by hand.</p>
+<p>The current state is always kept by the studio itself (its session, saved after every change and restored at start); a project is a named snapshot of it. <a href="projects.html#save" translate="no">save</a>() writes the session over the project it came from (a new one, &quot;RAVE 001&quot;, &quot;RAVE 002&quot;..., the first time), <a href="projects.html#saveAsNew" translate="no">saveAsNew</a>() always creates a new one, <a href="projects.html#open" translate="no">open</a>() replaces the session with a project, and <a href="projects.html#newProject" translate="no">newProject</a>() starts a clean project (<a href="studio.html#cleanProjectState" translate="no">Studio::cleanProjectState</a>()). dirty says whether the session differs from what was last saved or opened: the states are compared, so undoing an edit makes it clean again and notifications that change nothing do not mark it dirty.</p>
+<p>The demos ravving ships (<code translate="no">data/demos/*.json</code>, installed read-only beside kits.json) are listed after the user's projects, in their own group. A demo opens like any project; <a href="projects.html#save" translate="no">save</a>() then keeps the changes as a new user project under the demo's name (the demo itself never changes), and a demo cannot be deleted. The current project and the dirty flag survive restarts (a small marker file in the folder). GUI thread only.</p>
 </div>
 <!-- @@@Projects -->
 <div class="prop">
@@ -152,7 +152,7 @@
 <div class="fnitem">
 <!-- $$$currentIsDemo-prop$$$currentIsDemo$$$currentChanged -->
 <h3 class="fn" translate="no" id="currentIsDemo-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">currentIsDemo</span> : <span class="type">bool</span></h3>
-<p>This property holds whether the current project is one of the shipped demos (SAVE then makes a copy of the user's).</p>
+<p>This property holds whether the current project is one of the shipped demos (<a href="projects.html#save" translate="no">save</a>() then creates a user copy).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>currentIsDemo</b></span>() const</td></tr>
@@ -223,7 +223,7 @@
 <div class="fnitem">
 <!-- $$$created[overload1]$$$created -->
 <h3 class="fn" translate="no" id="created"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Projects::<span class="name">created</span>()</h3>
-<p>Emitted when <a href="projects.html#newProject" translate="no">newProject</a>() made a clean project; the video recorder switches VIDEO off on it.</p>
+<p>Emitted when <a href="projects.html#newProject" translate="no">newProject</a>() created a clean project.</p>
 <!-- @@@created -->
 </div>
 <div class="fnitem">
@@ -236,7 +236,7 @@
 <div class="fnitem">
 <!-- $$$newProject[overload1]$$$newProjectconstQVariantMap& -->
 <h3 class="fn" translate="no" id="newProject"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Projects::<span class="name">newProject</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i> = {})</h3>
-<p>Puts everything back to how ravving ships (default presets, kits, sounds, effects, tempo and key), with what <i translate="no">state</i> holds laid over it (a template's tempo, swing, key and LIVE FX: <a href="templates.html#start" translate="no">Templates::start</a>()). Emits <a href="projects.html#created" translate="no">created</a>().</p>
+<p>Replaces the session with a clean project: every machine with an empty pattern, its own engine and the default sound, mix and effects (<a href="studio.html#cleanProjectState" translate="no">Studio::cleanProjectState</a>()), with what <i translate="no">state</i> holds laid over it (a template's tempo, swing, key and live effects: <a href="templates.html#start" translate="no">Templates::start</a>()). Emits <a href="projects.html#created" translate="no">created</a>().</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@newProject -->
 </div>
@@ -264,7 +264,7 @@
 <div class="fnitem">
 <!-- $$$saveAs[overload1]$$$saveAsconstQString& -->
 <h3 class="fn" translate="no" id="saveAs"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Projects::<span class="name">saveAs</span>(const <span class="type">QString</span> &amp;<i>wanted</i>)</h3>
-<p>Saves the session under the name <i translate="no">wanted</i> (SAVE's first time, SAVE AS NEW): tidied (<a href="projects.html#tidyName" translate="no">tidyName</a>()) and made unique unless it is the current project's own; empty falls back to the next &quot;RAVE nnn&quot;. Returns the name used.</p>
+<p>Saves the session under the name <i translate="no">wanted</i>: tidied (<a href="projects.html#tidyName" translate="no">tidyName</a>()) and made unique unless it is the current project's own; an empty name falls back to the next &quot;RAVE nnn&quot;. Returns the name used.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@saveAs -->
 </div>
@@ -278,7 +278,7 @@
 <div class="fnitem">
 <!-- $$$suggestedName[overload1]$$$suggestedName -->
 <h3 class="fn" translate="no" id="suggestedName"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Projects::<span class="name">suggestedName</span>() const</h3>
-<p>Returns the name a save gets without one: the next free &quot;RAVE nnn&quot; (the dialog's default).</p>
+<p>Returns the name a save gets without one: the next free &quot;RAVE nnn&quot;.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@suggestedName -->
 </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- livefx.cpp -->
-  <meta name="description" content="The header's LIVE FX: performance effects on the whole mix; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;liveFx.">
+  <meta name="description" content="Performance effects on the whole mix, switched by pads, and three send levels; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;liveFx.">
   <meta name="keywords" content="class">
   <title>LiveFx Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">LiveFx Class</h1>
 <!-- $$$LiveFx-brief -->
-<p>The header's LIVE FX: performance effects on the whole mix; published to QML as <code translate="no">studio.liveFx</code>. <a href="#details">More...</a></p>
+<p>Performance effects on the whole mix, switched by pads, and three send levels; published to QML as <code translate="no">studio.liveFx</code>. <a href="#details">More...</a></p>
 <!-- @@@LiveFx -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;livefx.h&gt;</code></td></tr>
@@ -129,16 +129,16 @@
 <h2 id="details">Detailed Description</h2>
 <p>The pads, in order:</p>
 <ul>
-<li>DROP: while held the kick goes and a high-pass builds up; let go and it all slams back;</li>
-<li>NO KICK and ONLY KICK: silence every drum machine's kick row, or everything but it (<a href="machine.html#setKickMode" translate="no">Machine::setKickMode</a>()); they are opposites, one switches the other off;</li>
-<li>CRUSH: the master through a bit crusher (Calf Crusher), 6 bits; dragging a held pad picks 8, 6, 4 or 3 bits (up is harder);</li>
-<li>LO PASS and HI PASS: the master sinks under a low-pass sweep (down to 300 Hz) or thins out under a high-pass (up to 950 Hz), on GlobalPlayback's own equaliser;</li>
-<li>STUTTER: while held, the 16th under way plays out and then repeats (<a href="beatrepeat.html" translate="no">BeatRepeat</a>); dragging up ratchets it to 1/32 and 1/64;</li>
-<li>LOOP: the same with a beat, from the step under way; dragging up shortens it (2 steps, 1 step), down lengthens it (half a bar). STUTTER wins while both are held.</li>
+<li>DROP: while held the kick is cut and a high-pass sweeps up; on release both return;</li>
+<li>NO KICK and ONLY KICK: silence every drum machine's kick row, or everything but it (<a href="machine.html#setKickMode" translate="no">Machine::setKickMode</a>()); they are exclusive, so one switches the other off;</li>
+<li>CRUSH: the master through a bit crusher (Calf Crusher), 6 bits; <a href="livefx.html#drag" translate="no">drag</a>() picks 8, 6, 4 or 3 bits;</li>
+<li>LO PASS and HI PASS: a low-pass sweep down to 300 Hz or a high-pass sweep up to 950 Hz, on GlobalPlayback's own equaliser;</li>
+<li>STUTTER: while held, the current 16th plays out and then repeats (<a href="beatrepeat.html" translate="no">BeatRepeat</a>); <a href="livefx.html#drag" translate="no">drag</a>() shortens it to 1/32 and 1/64;</li>
+<li>LOOP: the same with a beat, from the current step; <a href="livefx.html#drag" translate="no">drag</a>() shortens it to 2 steps or 1 step, or lengthens it to half a bar. STUTTER wins while both are held.</li>
 </ul>
-<p>NO KICK, ONLY KICK, LO PASS and HI PASS latch on a tap. DROP and CRUSH act while held, and a hold of half a second latches them too (a tap then lets go). STUTTER and LOOP act only while held (SELECT on the device latches them).</p>
-<p>The FX SENDS knobs: PHASER (Calf Phaser on the master), ECHO (every machine thrown into the studio's delay at least this much) and HEAVY (GlobalPlayback's compressor squashing harder).</p>
-<p>The master runs GlobalPlayback, the beat repeat, the crusher, the phaser, then the speakers, each passing the sound through untouched until used (<a href="livefx.html#masterInserts" translate="no">masterInserts</a>()). Without libzynthbox (a desktop) only the states change. GUI thread only.</p>
+<p>NO KICK, ONLY KICK, LO PASS and HI PASS toggle on <a href="livefx.html#press" translate="no">press</a>(). DROP and CRUSH act while pressed, and a press held for 0.5 s latches them (a later short press releases them). STUTTER and LOOP act only while pressed, unless latched with <a href="livefx.html#toggle" translate="no">toggle</a>().</p>
+<p>The send levels: phaser (Calf Phaser on the master), echo (every machine sent into the studio's delay at least this much) and heavy (GlobalPlayback's compressor squashing harder).</p>
+<p>The master chain is GlobalPlayback, the beat repeat, the crusher and the phaser, each passing the sound through untouched until used (<a href="livefx.html#masterInserts" translate="no">masterInserts</a>()). Without libzynthbox (a desktop run) only the states change. GUI thread only.</p>
 </div>
 <!-- @@@LiveFx -->
 <div class="prop">
@@ -146,7 +146,7 @@
 <div class="fnitem">
 <!-- $$$active-prop$$$active$$$activeChanged -->
 <h3 class="fn" translate="no" id="active-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">active</span> : <span class="type">QStringList</span></h3>
-<p>This property holds the pads on now.</p>
+<p>This property holds the pads that are on.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>active</b></span>() const</td></tr>
@@ -160,7 +160,7 @@
 <div class="fnitem">
 <!-- $$$available-prop$$$available -->
 <h3 class="fn" translate="no" id="available-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">available</span> : const <span class="type">QStringList</span></h3>
-<p>This property holds the pads that act: all of them.</p>
+<p>This property holds the pads that can act: all of them.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>available</b></span>() const</td></tr>
@@ -170,7 +170,7 @@
 <div class="fnitem">
 <!-- $$$echo-prop$$$echo$$$setEchoqreal$$$knobsChanged -->
 <h3 class="fn" translate="no" id="echo-prop"><span class="name">echo</span> : <span class="type">qreal</span></h3>
-<p>This property holds the ECHO knob, 0..1: the least every machine sends into the studio's delay.</p>
+<p>This property holds the echo send, 0..1: the least every machine sends into the studio's delay.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>echo</b></span>() const</td></tr>
@@ -185,7 +185,7 @@
 <div class="fnitem">
 <!-- $$$heavy-prop$$$heavy$$$setHeavyqreal$$$knobsChanged -->
 <h3 class="fn" translate="no" id="heavy-prop"><span class="name">heavy</span> : <span class="type">qreal</span></h3>
-<p>This property holds the HEAVY knob, 0..1: how hard GlobalPlayback's compressor squashes.</p>
+<p>how hard GlobalPlayback's compressor squashes, 0..1.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>heavy</b></span>() const</td></tr>
@@ -200,7 +200,7 @@
 <div class="fnitem">
 <!-- $$$pads-prop$$$pads -->
 <h3 class="fn" translate="no" id="pads-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">pads</span> : const <span class="type">QStringList</span></h3>
-<p>every pad, in order: DROP, NO KICK, ONLY KICK, CRUSH, LO PASS, HI PASS, STUTTER, LOOP.</p>
+<p>every pad name, in order: DROP, NO KICK, ONLY KICK, CRUSH, LO PASS, HI PASS, STUTTER, LOOP.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>pads</b></span>() const</td></tr>
@@ -210,7 +210,7 @@
 <div class="fnitem">
 <!-- $$$phaser-prop$$$phaser$$$setPhaserqreal$$$knobsChanged -->
 <h3 class="fn" translate="no" id="phaser-prop"><span class="name">phaser</span> : <span class="type">qreal</span></h3>
-<p>This property holds the PHASER knob, 0..1.</p>
+<p>This property holds the phaser's mix, 0..1.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>phaser</b></span>() const</td></tr>
@@ -225,7 +225,7 @@
 <div class="fnitem">
 <!-- $$$readouts-prop$$$readouts$$$activeChanged -->
 <h3 class="fn" translate="no" id="readouts-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">readouts</span> : <span class="type">QVariantMap</span></h3>
-<p>what the drag-adjusted pads are set to, shown on them while on: a map such as <code translate="no">{CRUSH: &quot;4 BIT&quot;, STUTTER: &quot;1/32&quot;, LOOP: &quot;1 BEAT&quot;}</code>.</p>
+<p>This property holds the settings of the active drag-adjustable pads, translated: a map such as <code translate="no">{CRUSH: &quot;4 BIT&quot;, STUTTER: &quot;1/32&quot;, LOOP: &quot;1 BEAT&quot;}</code>.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>readouts</b></span>() const</td></tr>
@@ -242,7 +242,7 @@
 <div class="fnitem">
 <!-- $$$LiveFx[overload1]$$$LiveFxZynthboxBridge*QObject*constQList<Machine*>&QObject* -->
 <h3 class="fn" translate="no" id="LiveFx">LiveFx::<span class="name">LiveFx</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>globalPlayback</i>, const <span class="type">QList</span>&lt;<span class="type"><a href="machine.html" translate="no">Machine</a></span> *&gt; &amp;<i>machines</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Constructs the LIVE FX over <i translate="no">globalPlayback</i> (libzynthbox's GlobalPlayback passthrough, the master; null on a desktop) and the studio's <i translate="no">machines</i> (kick cuts, echo throws), with the given <i translate="no">parent</i>. <i translate="no">bridge</i> runs the crusher and phaser and keeps the beat repeat on its grid (null on a desktop).</p>
+<p>Constructs the live effects over <i translate="no">globalPlayback</i> (libzynthbox's GlobalPlayback passthrough, the master; null on a desktop run) and the studio's <i translate="no">machines</i> (kick cuts, echo sends), with the given <i translate="no">parent</i>. <i translate="no">bridge</i> runs the crusher and phaser and keeps the beat repeat on the transport's grid (null on a desktop run).</p>
 <!-- @@@LiveFx -->
 </div>
 <div class="fnitem">
@@ -255,26 +255,26 @@
 <div class="fnitem">
 <!-- $$$audioFrame[overload1]$$$audioFrame -->
 <h3 class="fn" translate="no" id="audioFrame"><span class="type">quint64</span> LiveFx::<span class="name">audioFrame</span>() const</h3>
-<p>Returns the audio clock's frame now: the beat repeat's JACK client, in the master chain (<a href="beatrepeat.html#frameNow" translate="no">BeatRepeat::frameNow</a>()); 0 on a desktop.</p>
+<p>Returns the audio clock's current frame: the beat repeat's JACK client, in the master chain (<a href="beatrepeat.html#frameNow" translate="no">BeatRepeat::frameNow</a>()); 0 on a desktop run.</p>
 <!-- @@@audioFrame -->
 </div>
 <div class="fnitem">
 <!-- $$$audioSampleRate[overload1]$$$audioSampleRate -->
 <h3 class="fn" translate="no" id="audioSampleRate"><span class="type">int</span> LiveFx::<span class="name">audioSampleRate</span>() const</h3>
-<p>Returns the audio clock's sample rate (<a href="beatrepeat.html#sampleRate" translate="no">BeatRepeat::sampleRate</a>()); 0 on a desktop.</p>
+<p>Returns the audio clock's sample rate (<a href="beatrepeat.html#sampleRate" translate="no">BeatRepeat::sampleRate</a>()); 0 on a desktop run.</p>
 <!-- @@@audioSampleRate -->
 </div>
 <div class="fnitem">
 <!-- $$$drag[overload1]$$$dragconstQString&int -->
 <h3 class="fn" translate="no" id="drag"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> LiveFx::<span class="name">drag</span>(const <span class="type">QString</span> &amp;<i>pad</i>, <span class="type">int</span> <i>notches</i>)</h3>
-<p>A held CRUSH, STUTTER or LOOP <i translate="no">pad</i> was dragged <i translate="no">notches</i> up (negative: down) from where it was pressed: it picks the bit depth, ratchet or loop length from its starting one.</p>
+<p>Adjusts a held CRUSH, STUTTER or LOOP <i translate="no">pad</i> by <i translate="no">notches</i> (positive harder or shorter, negative the other way) from its starting setting: the bit depth, the repeat length or the loop length.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@drag -->
 </div>
 <div class="fnitem">
 <!-- $$$key[overload1]$$$keyconstQString&bool -->
 <h3 class="fn" translate="no" id="key"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> LiveFx::<span class="name">key</span>(const <span class="type">QString</span> &amp;<i>pad</i>, <span class="type">bool</span> <i>down</i>)</h3>
-<p>The device's ALT + step key of <i translate="no">pad</i> went down (<i translate="no">down</i> true) or came up: DROP, STUTTER and LOOP act only while the key is held, the other pads flip as the key goes down.</p>
+<p>Handles the hardware key of <i translate="no">pad</i> going down (<i translate="no">down</i> true) or up: DROP, STUTTER and LOOP act only while the key is held; the other pads toggle as the key goes down.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@key -->
 </div>
@@ -288,27 +288,27 @@
 <div class="fnitem">
 <!-- $$$masterInserts[overload1]$$$masterInserts -->
 <h3 class="fn" translate="no" id="masterInserts"><span class="type">QList</span>&lt;<span class="type"><a href="audioinsert.html" translate="no">AudioInsert</a></span> *&gt; LiveFx::<span class="name">masterInserts</span>() const</h3>
-<p>Returns what the master runs through, in order, for the wiring: only the inserts that have ports.</p>
+<p>Returns the master chain's inserts, in order, for the wiring: only those that have ports.</p>
 <!-- @@@masterInserts -->
 </div>
 <div class="fnitem">
 <!-- $$$press[overload1]$$$pressconstQString& -->
 <h3 class="fn" translate="no" id="press"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> LiveFx::<span class="name">press</span>(const <span class="type">QString</span> &amp;<i>pad</i>)</h3>
-<p>Presses <i translate="no">pad</i> (a touch going down); see the class description for what each pad does.</p>
+<p>Presses <i translate="no">pad</i>; see the class description for what each pad does.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@press -->
 </div>
 <div class="fnitem">
 <!-- $$$release[overload1]$$$releaseconstQString& -->
 <h3 class="fn" translate="no" id="release"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> LiveFx::<span class="name">release</span>(const <span class="type">QString</span> &amp;<i>pad</i>)</h3>
-<p>Releases <i translate="no">pad</i> (a touch coming up): a held pad stops, a tap on a latched one unlatches it.</p>
+<p>Releases <i translate="no">pad</i>: a held pad stops, and a press on a latched one unlatches it.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@release -->
 </div>
 <div class="fnitem">
 <!-- $$$toggle[overload1]$$$toggleconstQString& -->
 <h3 class="fn" translate="no" id="toggle"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> LiveFx::<span class="name">toggle</span>(const <span class="type">QString</span> &amp;<i>pad</i>)</h3>
-<p>Flips <i translate="no">pad</i>, latching it (SELECT on a highlighted pad).</p>
+<p>Toggles <i translate="no">pad</i> on or off, latching it.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggle -->
 </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- devicecontrols.cpp -->
-  <meta name="description" content="The device's own settings and vital signs for the control center (the menu drawer), published to QML as device.">
+  <meta name="description" content="The device's own settings and vital signs, published to QML as device.">
   <meta name="keywords" content="class">
   <title>DeviceControls Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">DeviceControls Class</h1>
 <!-- $$$DeviceControls-brief -->
-<p>The device's own settings and vital signs for the control center (the menu drawer), published to QML as <code translate="no">device</code>. <a href="#details">More...</a></p>
+<p>The device's own settings and vital signs, published to QML as <code translate="no">device</code>. <a href="#details">More...</a></p>
 <!-- @@@DeviceControls -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;devicecontrols.h&gt;</code></td></tr>
@@ -143,15 +143,15 @@
 <!-- $$$DeviceControls-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Everything goes through what the system already has, as zynthbox-qml does:</p>
+<p>Everything goes through the system's existing interfaces:</p>
 <ul>
-<li>brightness: the panel's backlight (<code translate="no">/sys/class/backlight</code>), kept in the settings and put back at start;</li>
-<li>output level: the Z2's output amplifier (the jacks' level, LM4811 steps) through zyncoder (<a href="zynthboxbridge.html#setOutputLevel" translate="no">ZynthboxBridge::setOutputLevel</a>()), kept and put back the same way;</li>
+<li>brightness: the panel's backlight (<code translate="no">/sys/class/backlight</code>), saved in the settings and restored at start;</li>
+<li>output level: the Z2's output amplifier (the jacks' level, LM4811 steps) through zyncoder (<a href="zynthboxbridge.html#setOutputLevel" translate="no">ZynthboxBridge::setOutputLevel</a>()), saved and restored the same way;</li>
 <li>Wi-Fi: wifi (Wifi);</li>
 <li>Bluetooth: bluetoothctl's power; <code translate="no">unavailable</code> while the service is not running;</li>
 <li>vitals: CPU load (<code translate="no">/proc/stat</code>), the SoC temperature (thermal zone 0), the free storage of the user data.</li>
 </ul>
-<p>The address, Bluetooth and vitals are polled every 2 s (Wi-Fi at its own pace) only while active (the control center on screen). System commands run asynchronously (<a href="commandresult.html#runCommand" translate="no">runCommand</a>()). A desktop has none of these: they read as unavailable.</p>
+<p>The address, Bluetooth and vitals are polled every 2 s (Wi-Fi at its own pace) only while active is set. System commands run asynchronously (<a href="commandresult.html#runCommand" translate="no">runCommand</a>()). On a desktop run they read as unavailable.</p>
 </div>
 <!-- @@@DeviceControls -->
 <div class="prop">
@@ -159,7 +159,7 @@
 <div class="fnitem">
 <!-- $$$active-prop$$$active$$$setActivebool$$$activeChanged -->
 <h3 class="fn" translate="no" id="active-prop"><span class="name">active</span> : <span class="type">bool</span></h3>
-<p>This property holds whether the control center is on screen; while it is, the address, Bluetooth and vitals are polled.</p>
+<p>This property holds whether the address, Bluetooth and vitals are polled.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>active</b></span>() const</td></tr>
@@ -271,7 +271,7 @@
 <div class="fnitem">
 <!-- $$$minBrightness-prop$$$minBrightness -->
 <h3 class="fn" translate="no" id="minBrightness-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">minBrightness</span> : const <span class="type">qreal</span></h3>
-<p>This property holds the darkest brightness allowed: 0.3, the lowest still readable in a lit room.</p>
+<p>This property holds the lowest brightness allowed: 0.3.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>minBrightness</b></span>() const</td></tr>

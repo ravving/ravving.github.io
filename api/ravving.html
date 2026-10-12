@@ -159,17 +159,17 @@
 <!-- $$$Ravving-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The pages follow the five number keys of the left column (<a href="ravving.html#Page-enum" translate="no">Page</a>): 1 drums, 2 chords, 3 bass, 4 lead, 5 sampler.</p>
+<p>The pages map to the five number keys (<a href="ravving.html#Page-enum" translate="no">Page</a>): 1 drums, 2 chords, 3 bass, 4 lead, 5 sampler.</p>
 <p>Every hardware event (a CUIA command from <a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a>, a knob from <a href="hardwareknobs.html" translate="no">HardwareKnobs</a>, a keyboard shortcut through <a href="ravving.html#simulateCuia" translate="no">simulateCuia</a>()) becomes a <a href="hardwareevent.html" translate="no">HardwareEvent</a> that <a href="hardware.html#dispatch" translate="no">Hardware::dispatch</a>() delivers to the focused item and its parents. A number key no item accepts switches the page here (<a href="ravving.html#pageButton" translate="no">pageButton</a>()), so the pages are always reachable.</p>
-<p>Some keys are taken before any dispatch:</p>
+<p>Some keys are handled before any dispatch:</p>
 <ul>
-<li>ALT is a modifier (<a href="ravving.html#altHeld-prop" translate="no">altHeld</a>): while it is held the big knob is the master volume (<a href="ravving.html#masterTurned" translate="no">masterTurned</a>()) and knobs 1 to 3 go to <a href="ravving.html#altKnobTarget-prop" translate="no">altKnobTarget</a> (the header's FX SENDS);</li>
-<li>ALT + MODE flips the header's deck (<a href="ravving.html#deckToggleRequested" translate="no">deckToggleRequested</a>()); ALT + UP focuses the header (<a href="ravving.html#headerRequested" translate="no">headerRequested</a>()); ALT + 1 opens the SONG page (<a href="ravving.html#songRequested" translate="no">songRequested</a>());</li>
-<li>ALT + step keys 1 to 8 toggle the LIVE FX pads (<a href="ravving.html#altStepPressed" translate="no">altStepPressed</a>(), <a href="ravving.html#altStepReleased" translate="no">altStepReleased</a>()), ALT + step keys 9 to 16 pick a section (<a href="ravving.html#altSectionPressed" translate="no">altSectionPressed</a>()); the release of a step key taken this way is swallowed even after ALT is let go;</li>
-<li>X and Y pick the previous and next section (<a href="ravving.html#sectionStepRequested" translate="no">sectionStepRequested</a>());</li>
-<li>while VIDEO is on, the video recorder may take RECORD and STOP (<a href="videorecorder.html#takesKey" translate="no">VideoRecorder::takesKey</a>()).</li>
+<li>ALT is a modifier (<a href="ravving.html#altHeld-prop" translate="no">altHeld</a>): while it is held the big knob emits <a href="ravving.html#masterTurned" translate="no">masterTurned</a>() and knobs 1 to 3 go to <a href="ravving.html#altKnobTarget-prop" translate="no">altKnobTarget</a>;</li>
+<li>ALT + MODE emits <a href="ravving.html#deckToggleRequested" translate="no">deckToggleRequested</a>(); ALT + UP emits <a href="ravving.html#headerRequested" translate="no">headerRequested</a>(); ALT + 1 emits <a href="ravving.html#songRequested" translate="no">songRequested</a>();</li>
+<li>ALT + step keys 1 to 8 emit <a href="ravving.html#altStepPressed" translate="no">altStepPressed</a>() and <a href="ravving.html#altStepReleased" translate="no">altStepReleased</a>(), ALT + step keys 9 to 16 emit <a href="ravving.html#altSectionPressed" translate="no">altSectionPressed</a>(); the release of a step key taken this way is consumed even after ALT is released;</li>
+<li>X and Y emit <a href="ravving.html#sectionStepRequested" translate="no">sectionStepRequested</a>();</li>
+<li>the video recorder may take RECORD and STOP (<a href="videorecorder.html#takesKey" translate="no">VideoRecorder::takesKey</a>()).</li>
 </ul>
-<p>Every key press and knob move is also tracked for <a href="ravving.html#heldKeys-prop" translate="no">heldKeys</a> and named for the screen (<a href="ravving.html#keyShown" translate="no">keyShown</a>()). Enable <code translate="no">QT_LOGGING_RULES=&quot;ravving.cuia.debug=true&quot;</code> to log every event with the focus chain it travelled.</p>
+<p>Every key press and knob move is also tracked for <a href="ravving.html#heldKeys-prop" translate="no">heldKeys</a> and named by <a href="ravving.html#keyShown" translate="no">keyShown</a>(). Enable <code translate="no">QT_LOGGING_RULES=&quot;ravving.cuia.debug=true&quot;</code> to log every event with the focus chain it travelled.</p>
 </div>
 <!-- @@@Ravving -->
 <div class="types">
@@ -208,7 +208,7 @@
 <div class="fnitem">
 <!-- $$$altKnobTarget-prop$$$altKnobTarget$$$setAltKnobTargetQObject*$$$altKnobTargetChanged -->
 <h3 class="fn" translate="no" id="altKnobTarget-prop"><span class="name">altKnobTarget</span> : <span class="type">QObject</span>*</h3>
-<p>This property holds the item knobs 1 to 3 are delivered to while ALT is held (QML sets it to the header's FX SENDS); null delivers them as usual.</p>
+<p>This property holds the item knobs 1 to 3 are delivered to while ALT is held; null delivers them as usual.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QObject *</td><td class="memItemRight bottomAlign"><span class="name"><b>altKnobTarget</b></span>() const</td></tr>
@@ -238,7 +238,7 @@
 <div class="fnitem">
 <!-- $$$drumMachine-prop$$$drumMachine$$$setDrumMachineint$$$drumMachineChanged -->
 <h3 class="fn" translate="no" id="drumMachine-prop"><span class="name">drumMachine</span> : <span class="type">int</span></h3>
-<p>This property holds the drum machine the drums page shows: 0 HOUSE 909, 1 DEEP 808, 2 LinnBeats; set values are clamped.</p>
+<p>This property holds the index of the drum machine the drums page shows, 0 to 2 (<a href="studio.html#drumMachines-prop" translate="no">Studio::drumMachines</a>); set values are clamped.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>drumMachine</b></span>() const</td></tr>
@@ -253,8 +253,8 @@
 <div class="fnitem">
 <!-- $$$framesSwapped-prop$$$framesSwapped -->
 <h3 class="fn" translate="no" id="framesSwapped-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">framesSwapped</span> : <span class="type">quint64</span></h3>
-<p>This property holds the number of frames the window has put on screen since the start.</p>
-<p>It has no notifier: read it twice a known time apart for the frame rate (<code translate="no">tools/audio-impact.sh</code> does). An idle screen should draw none, since every frame costs the render thread CPU time the audio could need. Counted on the render thread.</p>
+<p>This property holds the number of frames the window has swapped since the start.</p>
+<p>It has no notify signal: read it twice a known time apart for the frame rate. Counted on the render thread.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> quint64 </td><td class="memItemRight bottomAlign"><span class="name"><b>framesSwapped</b></span>() const</td></tr>
@@ -264,7 +264,7 @@
 <div class="fnitem">
 <!-- $$$heldKeys-prop$$$heldKeys$$$heldKeysChanged -->
 <h3 class="fn" translate="no" id="heldKeys-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">heldKeys</span> : <span class="type">QStringList</span></h3>
-<p>This property holds the device keys held now, by short name: <code translate="no">play</code>, <code translate="no">stop</code>, <code translate="no">record</code>, <code translate="no">metronome</code>, <code translate="no">menu</code>, <code translate="no">select</code>, <code translate="no">back</code>, <code translate="no">up</code>, <code translate="no">down</code>, <code translate="no">left</code>, <code translate="no">right</code>, <code translate="no">mode</code>, <code translate="no">star</code>, <code translate="no">alt</code>, <code translate="no">num1</code> to <code translate="no">num5</code>, <code translate="no">step1</code> to <code translate="no">step16</code>. The on-screen button of a key shows pressed from it. A key that reports only its release is listed for 150 ms after it.</p>
+<p>This property holds the device keys held now, by short name: <code translate="no">play</code>, <code translate="no">stop</code>, <code translate="no">record</code>, <code translate="no">metronome</code>, <code translate="no">menu</code>, <code translate="no">select</code>, <code translate="no">back</code>, <code translate="no">up</code>, <code translate="no">down</code>, <code translate="no">left</code>, <code translate="no">right</code>, <code translate="no">mode</code>, <code translate="no">star</code>, <code translate="no">alt</code>, <code translate="no">num1</code> to <code translate="no">num5</code>, <code translate="no">step1</code> to <code translate="no">step16</code>. A key that reports only its release is listed for 150 ms after it.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>heldKeys</b></span>() const</td></tr>
@@ -288,7 +288,7 @@
 <div class="fnitem">
 <!-- $$$samplerMachine-prop$$$samplerMachine$$$setSamplerMachineint$$$samplerMachineChanged -->
 <h3 class="fn" translate="no" id="samplerMachine-prop"><span class="name">samplerMachine</span> : <span class="type">int</span></h3>
-<p>This property holds the sampler the sampler page shows: 0 SAMPLE KING, 1 the PAD SAMPLER; set values are clamped.</p>
+<p>This property holds the sampler the sampler page shows: 0 the <a href="samplermachine.html" translate="no">SamplerMachine</a>, 1 the <a href="padsamplermachine.html" translate="no">PadSamplerMachine</a>; set values are clamped.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>samplerMachine</b></span>() const</td></tr>
@@ -313,7 +313,7 @@
 <div class="fnitem">
 <!-- $$$virtualKeyboard-prop$$$virtualKeyboard -->
 <h3 class="fn" translate="no" id="virtualKeyboard-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">virtualKeyboard</span> : const <span class="type">bool</span></h3>
-<p>This property holds whether the on-screen keyboard is the input method (<code translate="no">QT_IM_MODULE</code> is <code translate="no">qtvirtualkeyboard</code>, as <code translate="no">start.sh</code> sets on the device); the window then hosts its InputPanel.</p>
+<p>This property holds whether the on-screen keyboard is the input method (<code translate="no">QT_IM_MODULE</code> is <code translate="no">qtvirtualkeyboard</code>); the window then hosts its InputPanel.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>virtualKeyboard</b></span>() const</td></tr>
@@ -342,31 +342,31 @@
 <div class="fnitem">
 <!-- $$$altSectionPressed[overload1]$$$altSectionPressedint -->
 <h3 class="fn" translate="no" id="altSectionPressed"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">altSectionPressed</span>(<span class="type">int</span> <i>index</i>)</h3>
-<p>Emitted when ALT + one of step keys 9 to 16 goes down: section <i translate="no">index</i> (0 to 7) is picked.</p>
+<p>Emitted when one of step keys 9 to 16 goes down with ALT held, to pick section <i translate="no">index</i> (0 to 7).</p>
 <!-- @@@altSectionPressed -->
 </div>
 <div class="fnitem">
 <!-- $$$altStepPressed[overload1]$$$altStepPressedint -->
 <h3 class="fn" translate="no" id="altStepPressed"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">altStepPressed</span>(<span class="type">int</span> <i>index</i>)</h3>
-<p>Emitted when ALT + one of step keys 1 to 8 goes down: the header's LIVE FX pad <i translate="no">index</i> (0 to 7) toggles.</p>
+<p>Emitted when one of step keys 1 to 8 goes down with ALT held, to toggle live-effect pad <i translate="no">index</i> (0 to 7, <a href="livefx.html#pads-prop" translate="no">LiveFx::pads</a>()).</p>
 <!-- @@@altStepPressed -->
 </div>
 <div class="fnitem">
 <!-- $$$altStepReleased[overload1]$$$altStepReleasedint -->
 <h3 class="fn" translate="no" id="altStepReleased"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">altStepReleased</span>(<span class="type">int</span> <i>index</i>)</h3>
-<p>Emitted when a step key 1 to 8 pressed with ALT comes up; <i translate="no">index</i> is the LIVE FX pad (0 to 7). Momentary pads end on it.</p>
+<p>Emitted when a step key 1 to 8 pressed with ALT comes up; <i translate="no">index</i> is the live-effect pad (0 to 7), so momentary pads can end.</p>
 <!-- @@@altStepReleased -->
 </div>
 <div class="fnitem">
 <!-- $$$deckToggleRequested[overload1]$$$deckToggleRequested -->
 <h3 class="fn" translate="no" id="deckToggleRequested"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">deckToggleRequested</span>()</h3>
-<p>Emitted for ALT + MODE (on release): the header's deck flips between the LIVE FX pads and the section keys.</p>
+<p>Emitted on the release of ALT + MODE, to switch the header between the live-effect pads and the section keys.</p>
 <!-- @@@deckToggleRequested -->
 </div>
 <div class="fnitem">
 <!-- $$$handleCuia[overload1]$$$handleCuiaconstQString& -->
 <h3 class="fn" translate="no" id="handleCuia"><code class="details extra" translate="no">[slot]</code> <span class="type">void</span> Ravving::<span class="name">handleCuia</span>(const <span class="type">QString</span> &amp;<i>cuia</i>)</h3>
-<p>Handles the CUIA command <i translate="no">cuia</i> from the bridge (device buttons, MIDI-mapped controllers): tracks the key, applies the keys taken before dispatch (see the class description), turns <code translate="no">KNOBn_UP</code> / <code translate="no">KNOBn_DOWN</code> into knob turns, and dispatches the rest as a <a href="hardwareevent.html" translate="no">HardwareEvent</a>. A number key nobody accepts opens its page.</p>
+<p>Handles the CUIA command <i translate="no">cuia</i> from the bridge (device buttons, MIDI-mapped controllers): tracks the key, applies the keys handled before dispatch (see the class description), turns <code translate="no">KNOBn_UP</code> / <code translate="no">KNOBn_DOWN</code> into knob turns, and dispatches the rest as a <a href="hardwareevent.html" translate="no">HardwareEvent</a>. A number key no item accepts opens its page.</p>
 <!-- @@@handleCuia -->
 </div>
 <div class="fnitem">
@@ -378,38 +378,38 @@
 <div class="fnitem">
 <!-- $$$handleKnobTurn[overload1]$$$handleKnobTurnintint -->
 <h3 class="fn" translate="no" id="handleKnobTurn"><code class="details extra" translate="no">[slot]</code> <span class="type">void</span> Ravving::<span class="name">handleKnobTurn</span>(<span class="type">int</span> <i>knob</i>, <span class="type">int</span> <i>delta</i>)</h3>
-<p>Handles a turn of the endless <i translate="no">knob</i> (0 to 2 the small knobs, 3 the big one) by <i translate="no">delta</i> detents: the master volume for ALT + the big knob, <a href="ravving.html#altKnobTarget-prop" translate="no">altKnobTarget</a> for ALT + the others, else a <a href="hardwareevent.html" translate="no">HardwareEvent</a> dispatched to the focus chain.</p>
+<p>Handles a turn of the endless <i translate="no">knob</i> (0 to 2 the small knobs, 3 the big one) by <i translate="no">delta</i> detents: <a href="ravving.html#masterTurned" translate="no">masterTurned</a>() for ALT + the big knob, <a href="ravving.html#altKnobTarget-prop" translate="no">altKnobTarget</a> for ALT + the others, else a <a href="hardwareevent.html" translate="no">HardwareEvent</a> dispatched to the focus chain.</p>
 <!-- @@@handleKnobTurn -->
 </div>
 <div class="fnitem">
 <!-- $$$headerRequested[overload1]$$$headerRequested -->
 <h3 class="fn" translate="no" id="headerRequested"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">headerRequested</span>()</h3>
-<p>Emitted for ALT + UP: the UI gives the focus to the app header at once.</p>
+<p>Emitted for ALT + UP, to move the focus to the app header.</p>
 <!-- @@@headerRequested -->
 </div>
 <div class="fnitem">
 <!-- $$$keyShown[overload1]$$$keyShownconstQString& -->
 <h3 class="fn" translate="no" id="keyShown"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">keyShown</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
-<p>Emitted when a device key was pressed or a knob moved, with its <i translate="no">name</i> for the screen (<code translate="no">&quot;ALT + MODE&quot;</code>, <code translate="no">&quot;STEP 3&quot;</code>, <code translate="no">&quot;BIG KNOB ▲&quot;</code>, translated). The video recorder shows these while it records. Repeats of the same name within 400 ms are dropped, and a fixed pot is named only after it moved 3 % or more.</p>
+<p>Emitted when a device key was pressed or a knob moved, with its translated display <i translate="no">name</i> (<code translate="no">&quot;ALT + MODE&quot;</code>, <code translate="no">&quot;STEP 3&quot;</code>, <code translate="no">&quot;BIG KNOB ▲&quot;</code>). Repeats of the same name within 400 ms are dropped, and a fixed pot is named only after it moved 3 % or more.</p>
 <!-- @@@keyShown -->
 </div>
 <div class="fnitem">
 <!-- $$$masterTurned[overload1]$$$masterTurnedint -->
 <h3 class="fn" translate="no" id="masterTurned"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">masterTurned</span>(<span class="type">int</span> <i>delta</i>)</h3>
-<p>Emitted for ALT + the big knob: the master volume moves by <i translate="no">delta</i> detents (positive up).</p>
+<p>Emitted for ALT + the big knob, to move the master volume by <i translate="no">delta</i> detents (positive up).</p>
 <!-- @@@masterTurned -->
 </div>
 <div class="fnitem">
 <!-- $$$pageButton[overload1]$$$pageButtonint -->
 <h3 class="fn" translate="no" id="pageButton"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Ravving::<span class="name">pageButton</span>(<span class="type">int</span> <i>page</i>)</h3>
-<p>Opens <i translate="no">page</i> as its number key does. Pressing the key of the page already open cycles that page's machines: the drums page's three drum machines, the sampler page's two samplers.</p>
+<p>Opens <i translate="no">page</i> as its number key does. Pressing the key of the page already open cycles that page's machines: the three drum machines on the drums page, the two samplers on the sampler page.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@pageButton -->
 </div>
 <div class="fnitem">
 <!-- $$$sectionStepRequested[overload1]$$$sectionStepRequestedint -->
 <h3 class="fn" translate="no" id="sectionStepRequested"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">sectionStepRequested</span>(<span class="type">int</span> <i>delta</i>)</h3>
-<p>Emitted when X (<i translate="no">delta</i> -1) or Y (<i translate="no">delta</i> +1) is released: the section before or after the one on screen is picked, from any page.</p>
+<p>Emitted when X (<i translate="no">delta</i> -1) or Y (<i translate="no">delta</i> +1) is released, to pick the section before or after the current one.</p>
 <!-- @@@sectionStepRequested -->
 </div>
 <div class="fnitem">
@@ -422,7 +422,7 @@
 <div class="fnitem">
 <!-- $$$setVideoRecorder[overload1]$$$setVideoRecorderVideoRecorder* -->
 <h3 class="fn" translate="no" id="setVideoRecorder"><span class="type">void</span> Ravving::<span class="name">setVideoRecorder</span>(<span class="type"><a href="videorecorder.html" translate="no">VideoRecorder</a></span> *<i>video</i>)</h3>
-<p>Gives the key handling the video recorder <i translate="no">video</i>, which may take RECORD and STOP before anything else sees them while VIDEO is on.</p>
+<p>Gives the key handling the video recorder <i translate="no">video</i>, which may take RECORD and STOP before anything else sees them (<a href="videorecorder.html#takesKey" translate="no">VideoRecorder::takesKey</a>()).</p>
 <!-- @@@setVideoRecorder -->
 </div>
 <div class="fnitem">
@@ -448,7 +448,7 @@
 <div class="fnitem">
 <!-- $$$songRequested[overload1]$$$songRequested -->
 <h3 class="fn" translate="no" id="songRequested"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">songRequested</span>()</h3>
-<p>Emitted for ALT + 1 (on release): the SONG page opens, or closes when it is open.</p>
+<p>Emitted on the release of ALT + 1, to toggle the song view.</p>
 <!-- @@@songRequested -->
 </div>
 </div>

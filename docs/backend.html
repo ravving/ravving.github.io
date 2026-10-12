@@ -72,8 +72,8 @@
 <p class="doc-blurb">Every class of the backend library and how the others use it.</p>
 
 <p>Every class of the backend library (<code>src/backend/</code>), what it does and how the others use it. Each class has its full reference in the API reference.</p>
-<p>The drums play through libzynthbox exactly the way zynthbox-qml's sketchpad does, with
-ravving's C++ objects standing in for the Python ones libzynthbox talks to:</p>
+<p>The drums play through libzynthbox's sketchpad tracks, patterns and synth slots, with
+ravving's C++ objects in the places where libzynthbox calls back into its host:</p>
 <table>
 <thead>
 <tr>
@@ -350,7 +350,7 @@ ravving's C++ objects standing in for the Python ones libzynthbox talks to:</p>
 </tr>
 <tr>
 <td><code>MusicPlayer</code></td>
-<td>the player (<code>studio.music</code>): a queue of tracks played through Qt Multimedia (QMediaPlayer + QAudioOutput; the FFmpeg backend decodes WAV, FLAC, OGG, MP3; the sound goes out through PipeWire's default output beside the studio's graph, so the master dial does not apply to it); playNow (in after the one playing), enqueue, playAt, next / previous, pause / resume, seek, stop, <code>repeat</code>, <code>volume</code> (the output's, remembered); a track that ends starts the next; the transport pauses it when it starts, the exporter stops it. It never touches libzynthbox: its sampler cannot read MP3 and playing such a clip crashes the audio thread (bug report 16), so <code>ZynthboxBridge::createClip</code> now refuses anything but wav / aif / aiff / flac / ogg</td>
+<td>the player (<code>studio.music</code>): a queue of tracks played through Qt Multimedia (QMediaPlayer + QAudioOutput; the FFmpeg backend decodes WAV, FLAC, OGG, MP3; the sound goes out through PipeWire's default output beside the studio's graph, so the master dial does not apply to it); playNow (in after the one playing), enqueue, playAt, next / previous, pause / resume, seek, stop, <code>repeat</code>, <code>volume</code> (the output's, remembered); a track that ends starts the next; the transport pauses it when it starts, the exporter stops it. It never touches libzynthbox: its sampler cannot read MP3 and playing such a clip crashes the audio thread, so <code>ZynthboxBridge::createClip</code> refuses anything but wav / aif / aiff / flac / ogg</td>
 <td></td>
 </tr>
 <tr>

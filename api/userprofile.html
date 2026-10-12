@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- userprofile.cpp -->
-  <meta name="description" content="Who uses the device, published to QML as profile: the names the exports put on every track and bundle, and the device's own settings.">
+  <meta name="description" content="The device user's profile, published to QML as profile: the names exports put on every track and bundle, and device-wide preferences.">
   <meta name="keywords" content="class">
   <title>UserProfile Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">UserProfile Class</h1>
 <!-- $$$UserProfile-brief -->
-<p>Who uses the device, published to QML as <code translate="no">profile</code>: the names the exports put on every track and bundle, and the device's own settings. <a href="#details">More...</a></p>
+<p>The device user's profile, published to QML as <code translate="no">profile</code>: the names exports put on every track and bundle, and device-wide preferences. <a href="#details">More...</a></p>
 <!-- @@@UserProfile -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;userprofile.h&gt;</code></td></tr>
@@ -123,7 +123,7 @@
 <!-- $$$UserProfile-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>SETTINGS in the control center edits them; the export dialog starts from them. Besides the named properties, <a href="userprofile.html#value" translate="no">value</a>() and <a href="userprofile.html#setValue" translate="no">setValue</a>() hold any other entry, such as the export dialog's last album and genre and the INTERACTIONS settings. Kept in the settings <code translate="no">ravving/profile</code> (<a href="paths.html#config" translate="no">Paths::config</a>()), outside projects: it is the device's, not a song's.</p>
+<p>Besides the named properties, <a href="userprofile.html#value" translate="no">value</a>() and <a href="userprofile.html#setValue" translate="no">setValue</a>() hold any other entry, such as the last export's album and genre. Stored in the settings group <code translate="no">ravving/profile</code> (<a href="paths.html#config" translate="no">Paths::config</a>()), outside projects: it belongs to the device, not a song.</p>
 </div>
 <!-- @@@UserProfile -->
 <div class="prop">
@@ -131,7 +131,7 @@
 <div class="fnitem">
 <!-- $$$album-prop$$$album$$$setAlbumconstQString&$$$changed -->
 <h3 class="fn" translate="no" id="album-prop"><span class="name">album</span> : <span class="type">QString</span></h3>
-<p>This property holds the export dialog's last ALBUM or MIXTAPE, offered again.</p>
+<p>This property holds the album or mixtape name of the last export, offered again.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>album</b></span>() const</td></tr>
@@ -160,7 +160,7 @@
 <div class="fnitem">
 <!-- $$$genre-prop$$$genre$$$setGenreconstQString&$$$changed -->
 <h3 class="fn" translate="no" id="genre-prop"><span class="name">genre</span> : <span class="type">QString</span></h3>
-<p>This property holds the export dialog's last GENRE, offered again.</p>
+<p>This property holds the genre of the last export, offered again.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>genre</b></span>() const</td></tr>
@@ -175,7 +175,7 @@
 <div class="fnitem">
 <!-- $$$outOfScaleNotes-prop$$$outOfScaleNotes$$$setOutOfScaleNotesbool$$$changed -->
 <h3 class="fn" translate="no" id="outOfScaleNotes-prop"><span class="name">outOfScaleNotes</span> : <span class="type">bool</span></h3>
-<p>SETTINGS, INTERACTIONS: whether a key played outside the scale (a MIDI keyboard's) sounds and records on the melodic machines, in a row of its own (<code translate="no">true</code>, the default), or is muted there (<code translate="no">false</code>). Under <code translate="no">interactions/outOfScaleNotes</code>.</p>
+<p>This property holds whether a key played outside the scale (from a MIDI keyboard) sounds and records on the melodic machines, in a row of its own (<code translate="no">true</code>, the default), or is muted (<code translate="no">false</code>). Stored under <code translate="no">interactions/outOfScaleNotes</code>.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>outOfScaleNotes</b></span>() const</td></tr>
@@ -190,7 +190,7 @@
 <div class="fnitem">
 <!-- $$$splash-prop$$$splash$$$setSplashconstQString&$$$changed -->
 <h3 class="fn" translate="no" id="splash-prop"><span class="name">splash</span> : <span class="type">QString</span></h3>
-<p>SETTINGS, STARTUP: the splash's look (<code translate="no">anime</code>, <code translate="no">glow</code>, <code translate="no">still</code>, <code translate="no">zoom</code> or <code translate="no">off</code>; <a href="startupsplash.html" translate="no">StartupSplash</a>), under <code translate="no">startup/splash</code>, read at the next start.</p>
+<p>This property holds the startup splash's style (<code translate="no">anime</code>, <code translate="no">glow</code>, <code translate="no">still</code>, <code translate="no">zoom</code> or <code translate="no">off</code>; <a href="startupsplash.html" translate="no">StartupSplash</a>), stored under <code translate="no">startup/splash</code> and read at the next start.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>splash</b></span>() const</td></tr>

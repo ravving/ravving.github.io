@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- wifi.cpp -->
-  <meta name="description" content="Wi-Fi for the control center, published to QML as device&lt;@op&gt;.&lt;/@op&gt;wifi: switch it, list the networks in range, join one with its passphrase, leave it, forget it.">
+  <meta name="description" content="Wi-Fi control, published to QML as device&lt;@op&gt;.&lt;/@op&gt;wifi: switch it on or off, list the networks in range, join one with its passphrase, leave it, forget it.">
   <meta name="keywords" content="class">
   <title>Wifi Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">Wifi Class</h1>
 <!-- $$$Wifi-brief -->
-<p>Wi-Fi for the control center, published to QML as <code translate="no">device.wifi</code>: switch it, list the networks in range, join one with its passphrase, leave it, forget it. <a href="#details">More...</a></p>
+<p>Wi-Fi control, published to QML as <code translate="no">device.wifi</code>: switch it on or off, list the networks in range, join one with its passphrase, leave it, forget it. <a href="#details">More...</a></p>
 <!-- @@@Wifi -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;wifi.h&gt;</code></td></tr>
@@ -127,13 +127,13 @@
 <!-- $$$Wifi-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Shaped after Plasma's network applet (plasma-nm: a handler for the actions, a model for the list, a password field on the row), on what Zynthbox runs instead of NetworkManager:</p>
+<p>Zynthbox runs no NetworkManager, so this works on what it has:</p>
 <ul>
-<li>on and off: Zynthbox's own user services (<code translate="no">zynthbox-wifi-manager-start</code> and <code translate="no">-stop</code>, <code translate="no">set_wifi.sh</code>, as zynthbox-qml's <code translate="no">start_wifi</code> and <code translate="no">stop_wifi</code>); the choice is saved as <code translate="no">ZYNTHIAN_WIFI_MODE</code> and put back when ravving starts, as zynthbox-qml does (Zynthbox's <code translate="no">wifi-setup.service</code>, a oneshot unit, starts wpa_supplicant at boot but has it killed with its cgroup as soon as it finishes);</li>
-<li>saved networks: Zynthbox's <code translate="no">wpa_supplicant.conf</code> (<a href="wpaconfig.html" translate="no">WpaConfig</a>), which <code translate="no">set_wifi.sh</code> copies into place on every start; a join saves the network there first, so it is joined again at the next boot and zynthbox-qml and webconf see it;</li>
+<li>on and off: Zynthbox's own user services (<code translate="no">zynthbox-wifi-manager-start</code> and <code translate="no">-stop</code>, <code translate="no">set_wifi.sh</code>); the choice is saved as <code translate="no">ZYNTHIAN_WIFI_MODE</code> and restored when ravving starts, because Zynthbox's <code translate="no">wifi-setup.service</code>, a oneshot unit, starts wpa_supplicant at boot but has it killed with its cgroup as soon as it finishes;</li>
+<li>saved networks: Zynthbox's <code translate="no">wpa_supplicant.conf</code> (<a href="wpaconfig.html" translate="no">WpaConfig</a>), which <code translate="no">set_wifi.sh</code> copies into place on every start; a join saves the network there first, so it is joined again at the next boot and zynthbox-qml and webconf, which read the same file, see it;</li>
 <li>state, scans and joins: wpa_supplicant itself, through wpa_cli on <code translate="no">wlan0</code>.</li>
 </ul>
-<p>The state is polled while active (every 2 s, faster while switching or joining), and the networks are rescanned every 15 s while the list is open (scanning). A join that has not taken in time has failed (a wrong passphrase, out of range). Commands run asynchronously. Without a <code translate="no">wlan0</code> (a desktop) the state is <code translate="no">unavailable</code>. GUI thread only.</p>
+<p>The state is polled while active (every 2 s, faster while switching or joining), and the networks are rescanned every 15 s while scanning is set. A join that has not succeeded in time has failed (a wrong passphrase, out of range). Commands run asynchronously. Without a <code translate="no">wlan0</code> (a desktop run) the state is <code translate="no">unavailable</code>. GUI thread only.</p>
 </div>
 <!-- @@@Wifi -->
 <div class="prop">
@@ -141,7 +141,7 @@
 <div class="fnitem">
 <!-- $$$active-prop$$$active$$$setActivebool$$$activeChanged -->
 <h3 class="fn" translate="no" id="active-prop"><span class="name">active</span> : <span class="type">bool</span></h3>
-<p>This property holds whether something on screen shows Wi-Fi; the state is kept fresh while it does.</p>
+<p>This property holds whether the state is polled.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>active</b></span>() const</td></tr>
@@ -170,7 +170,7 @@
 <div class="fnitem">
 <!-- $$$error-prop$$$error$$$errorChanged -->
 <h3 class="fn" translate="no" id="error-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">error</span> : <span class="type">QString</span></h3>
-<p>what went wrong last (a join that did not take, a switch that failed); empty when nothing did.</p>
+<p>what went wrong last (a join that did not succeed, a switch that failed); empty otherwise.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>error</b></span>() const</td></tr>
@@ -208,7 +208,7 @@
 <div class="fnitem">
 <!-- $$$scanning-prop$$$scanning$$$setScanningbool$$$scanningChanged -->
 <h3 class="fn" translate="no" id="scanning-prop"><span class="name">scanning</span> : <span class="type">bool</span></h3>
-<p>This property holds whether the network list is open; networks are rescanned every 15 s while it is.</p>
+<p>This property holds whether the networks are rescanned every 15 s.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>scanning</b></span>() const</td></tr>
@@ -240,13 +240,13 @@
 <div class="fnitem">
 <!-- $$$Wifi[overload1]$$$WifiQObject* -->
 <h3 class="fn" translate="no" id="Wifi"><code class="details extra" translate="no">[explicit]</code> Wifi::<span class="name">Wifi</span>(<span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Constructs the Wi-Fi control with the given <i translate="no">parent</i>, switching Wi-Fi on when it was left on and the first look finds it off.</p>
+<p>Constructs the Wi-Fi control with the given <i translate="no">parent</i>, switching Wi-Fi on when it was left on and the first poll finds it off.</p>
 <!-- @@@Wifi -->
 </div>
 <div class="fnitem">
 <!-- $$$connectTo[overload1]$$$connectToconstQString&constQString& -->
 <h3 class="fn" translate="no" id="connectTo"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Wifi::<span class="name">connectTo</span>(const <span class="type">QString</span> &amp;<i>ssid</i>, const <span class="type">QString</span> &amp;<i>passphrase</i> = QString())</h3>
-<p>Joins the network <i translate="no">ssid</i> (plasma-nm's <code translate="no">activateConnection</code>): with <i translate="no">passphrase</i> when given (saved for next time), else with what is saved, or as an open network. Switches Wi-Fi on first when it is off.</p>
+<p>Joins the network <i translate="no">ssid</i>: with <i translate="no">passphrase</i> when given (saved for next time), else with the saved credentials, or as an open network. Switches Wi-Fi on first when it is off.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@connectTo -->
 </div>
@@ -267,20 +267,20 @@
 <div class="fnitem">
 <!-- $$$joined[overload1]$$$joinedconstQString& -->
 <h3 class="fn" translate="no" id="joined"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Wifi::<span class="name">joined</span>(const <span class="type">QString</span> &amp;<i>ssid</i>)</h3>
-<p>Emitted when the network <i translate="no">ssid</i> was joined, for a toast.</p>
+<p>Emitted when the network <i translate="no">ssid</i> was joined.</p>
 <!-- @@@joined -->
 </div>
 <div class="fnitem">
 <!-- $$$scan[overload1]$$$scan -->
 <h3 class="fn" translate="no" id="scan"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Wifi::<span class="name">scan</span>()</h3>
-<p>Looks for networks now.</p>
+<p>Scans for networks now.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@scan -->
 </div>
 <div class="fnitem">
 <!-- $$$setEnabled[overload1]$$$setEnabledbool -->
 <h3 class="fn" translate="no" id="setEnabled"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Wifi::<span class="name">setEnabled</span>(<span class="type">bool</span> <i>on</i>)</h3>
-<p>Switches Wi-Fi on when <i translate="no">on</i> is true, or off, and saves the choice (plasma-nm's <code translate="no">enableWireless</code>).</p>
+<p>Switches Wi-Fi on when <i translate="no">on</i> is true, or off, and saves the choice.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setEnabled -->
 </div>

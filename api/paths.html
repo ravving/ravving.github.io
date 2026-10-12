@@ -118,7 +118,7 @@
 <tr valign="top" class="odd"><td >cache</td><td ><code translate="no">$XDG_CACHE_HOME/ravving</code></td><td >what can be rebuilt: reversed samples, raw takes, <code translate="no">lv2-ports.json</code></td></tr>
 <tr valign="top" class="even"><td >library</td><td ><code translate="no">/zynthian/zynthian-my-data/ravving</code> on the device (the data partition every Zynthbox has), <code translate="no">$XDG_DATA_HOME/ravving</code> on a desktop</td><td >the user's own work, kept across reinstalls and shared over webconf</td></tr>
 </table></div>
-<p>The library holds <code translate="no">projects/</code> (named projects), <code translate="no">templates/</code> (Templates), <code translate="no">presets/</code> (the user's pattern presets, <code translate="no">&lt;machine&gt;-presets.json</code>), <code translate="no">samples/</code> (with <code translate="no">takes/</code>, <code translate="no">recordings/</code> and <code translate="no">imported/</code>), <code translate="no">soundfonts/</code>, <code translate="no">midi/</code>, <code translate="no">recordings/</code> (the master's, the header's RECORD), <code translate="no">videos/</code> and <code translate="no">exports/</code> (tracks with their covers and sidecars, and <code translate="no">.ravv</code> bundles).</p>
+<p>The library holds <code translate="no">projects/</code> (named projects), <code translate="no">templates/</code> (Templates), <code translate="no">presets/</code> (the user's pattern presets, <code translate="no">&lt;machine&gt;-presets.json</code>), <code translate="no">samples/</code> (with <code translate="no">takes/</code>, <code translate="no">recordings/</code> and <code translate="no">imported/</code>), <code translate="no">soundfonts/</code>, <code translate="no">midi/</code>, <code translate="no">recordings/</code> (the master's, <a href="mixrecorder.html" translate="no">MixRecorder</a>), <code translate="no">videos/</code> and <code translate="no">exports/</code> (tracks with their covers and sidecars, and <code translate="no">.ravv</code> bundles).</p>
 <p>For development and tests, <code translate="no">RAVVING_HOME</code> puts all four roots under one folder and <code translate="no">RAVVING_LIBRARY</code> moves the library alone; <code translate="no">RAVVING_PROJECT_DIR</code> (the session folder) and <code translate="no">RAVVING_PROJECTS_DIR</code> are honoured too.</p>
 <p><a href="paths.html#initialise" translate="no">initialise</a>() reads the environment once, before QGuiApplication reads the XDG variables (main() points them at the bundled theme after it), moves files found in the legacy layout (<code translate="no">~/.local/share/ravving</code>'s project, presets and caches; takes in zynthbox-qml's samples folder; recordings in its capture folder) into these folders, rewriting the paths the session and the projects refer to, and makes the folders. The getters only read what <a href="paths.html#initialise" translate="no">initialise</a>() decided and are thread-safe after it.</p>
 </div>
@@ -146,7 +146,7 @@
 <div class="fnitem">
 <!-- $$$describe[overload1]$$$describe -->
 <h3 class="fn" translate="no" id="describe"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantMap</span> Paths::<span class="name">describe</span>()</h3>
-<p>Returns every root and folder by name, for the log and the control center.</p>
+<p>Returns every root and folder by name.</p>
 <!-- @@@describe -->
 </div>
 <div class="fnitem">
@@ -176,7 +176,7 @@
 <div class="fnitem">
 <!-- $$$liveRecordings[overload1]$$$liveRecordings -->
 <h3 class="fn" translate="no" id="liveRecordings"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">liveRecordings</span>()</h3>
-<p>Returns the RECORDER's takes kept as played, <code translate="no">samples/recordings</code>, which the samplers list.</p>
+<p>Returns the folder of the input takes kept as played (<a href="liverecordings.html" translate="no">LiveRecordings</a>), <code translate="no">samples/recordings</code>.</p>
 <!-- @@@liveRecordings -->
 </div>
 <div class="fnitem">
@@ -218,7 +218,7 @@
 <div class="fnitem">
 <!-- $$$relocated[overload1]$$$relocatedconstQString& -->
 <h3 class="fn" translate="no" id="relocated"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">relocated</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
-<p>Returns where a sample a project names as <i translate="no">path</i> lives now: the path itself when it exists, else a take's place in <a href="paths.html#takes" translate="no">takes</a>(), else the path unchanged. Saved projects keep the paths they were saved with, and this lets them open with their samples (<code translate="no">tools/check-projects.py</code> reports what is still missing).</p>
+<p>Returns where a sample a project names as <i translate="no">path</i> lives now: the path itself when it exists, else a take's place in <a href="paths.html#takes" translate="no">takes</a>(), else the path unchanged. Saved projects keep the paths they were saved with; this resolves them after the legacy layout's files moved.</p>
 <!-- @@@relocated -->
 </div>
 <div class="fnitem">
@@ -230,7 +230,7 @@
 <div class="fnitem">
 <!-- $$$samples[overload1]$$$samples -->
 <h3 class="fn" translate="no" id="samples"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">samples</span>()</h3>
-<p>Returns the library's samples folder, which the samplers' browsers list first.</p>
+<p>Returns the library's samples folder.</p>
 <!-- @@@samples -->
 </div>
 <div class="fnitem">

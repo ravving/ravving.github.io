@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- templates.cpp -->
-  <meta name="description" content="Project templates, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;templates: how a project starts out, not what it plays.">
+  <meta name="description" content="Project templates, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;templates: the settings a new project starts with, not its patterns.">
   <meta name="keywords" content="class">
   <title>Templates Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,7 +76,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">Templates Class</h1>
 <!-- $$$Templates-brief -->
-<p>Project templates, published to QML as <code translate="no">studio.templates</code>: how a project starts out, not what it plays. <a href="#details">More...</a></p>
+<p>Project templates, published to QML as <code translate="no">studio.templates</code>: the settings a new project starts with, not its patterns. <a href="#details">More...</a></p>
 <!-- @@@Templates -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;templates.h&gt;</code></td></tr>
@@ -123,8 +123,8 @@
 <!-- $$$Templates-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>A template keeps the tempo, the swing, the key (root and scale) and the LIVE FX knobs (PHASER, ECHO, HEAVY); starting a new project from one is NEW with those set. The PROJECT menu's TEMPLATES lists them, the device's or a USB stick's, and SAVE TEMPLATE there keeps the session's settings as one.</p>
-<p>A template is one JSON file, a preset like the pattern presets, so it travels the same way (<a href="presetexchange.html" translate="no">PresetExchange</a>; on a stick under <code translate="no">ravving/presets/templates/</code>):</p>
+<p>A template keeps the tempo, the swing, the key (root and scale) and the live effects' send levels (phaser, echo, heavy); <a href="templates.html#start" translate="no">start</a>() creates a new project (<a href="projects.html#newProject" translate="no">Projects::newProject</a>()) with those set. Templates are listed from the user's folder (list) or a USB stick (<a href="templates.html#listFolder" translate="no">listFolder</a>()), and <a href="templates.html#saveCurrent" translate="no">saveCurrent</a>() stores the session's settings as one.</p>
+<p>A template is one JSON file, in the same format as the pattern presets, so it is exchanged the same way (<a href="presetexchange.html" translate="no">PresetExchange</a>; on a stick under <code translate="no">ravving/presets/templates/</code>):</p>
 <pre class="cpp plain" translate="no"><code class="text">
  {&quot;ravving&quot;: &quot;preset&quot;, &quot;type&quot;: &quot;template&quot;,
   &quot;template&quot;: {&quot;name&quot;: &quot;Black Metal&quot;, &quot;genre&quot;: &quot;Black Metal&quot;, &quot;about&quot;: &quot;...&quot;,
@@ -132,7 +132,7 @@
                &quot;root&quot;: 4, &quot;scale&quot;: &quot;Natural Minor&quot;,
                &quot;phaser&quot;: 0, &quot;echo&quot;: 0.1, &quot;heavy&quot;: 0.6}}
 </code></pre>
-<p><code translate="no">bpm</code> is the tempo in whole BPM; <code translate="no">swing</code> is SWING as the header shows it, 50 (straight) to 75 %; <code translate="no">root</code> is 0 to 11 from C and <code translate="no">scale</code> a name of <a href="templates.html#scaleNames" translate="no">scaleNames</a>(); <code translate="no">phaser</code>, <code translate="no">echo</code> and <code translate="no">heavy</code> are the LIVE FX knobs, 0..1. Any of them may be left out: NEW's own value stands for it. The genre packs in <code translate="no">data/secret</code> write one each, beside their pattern presets. GUI thread only.</p>
+<p><code translate="no">bpm</code> is the tempo in whole BPM; <code translate="no">swing</code> is a percentage, 50 (straight) to 75; <code translate="no">root</code> is 0 to 11 from C and <code translate="no">scale</code> a name of <a href="templates.html#scaleNames" translate="no">scaleNames</a>(); <code translate="no">phaser</code>, <code translate="no">echo</code> and <code translate="no">heavy</code> are <a href="livefx.html" translate="no">LiveFx</a>'s send levels, 0..1. Any of them may be left out; a new project's own value then applies. GUI thread only.</p>
 </div>
 <!-- @@@Templates -->
 <div class="types">
@@ -155,7 +155,7 @@
 <div class="fnitem">
 <!-- $$$list-prop$$$list$$$listChanged -->
 <h3 class="fn" translate="no" id="list-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">list</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the user's templates, A to Z, as maps with <code translate="no">name</code>, <code translate="no">path</code>, <code translate="no">modified</code> (what it sets, the dialog's subtitle, such as &quot;180 BPM · E NATURAL MINOR&quot;) and <code translate="no">template</code> (<code translate="no">true</code>).</p>
+<p>This property holds the user's templates, sorted by name, as maps with <code translate="no">name</code>, <code translate="no">path</code>, <code translate="no">modified</code> (a one-line summary of what it sets, such as &quot;180 BPM · E NATURAL MINOR&quot;) and <code translate="no">template</code> (<code translate="no">true</code>).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>list</b></span>() const</td></tr>
@@ -178,7 +178,7 @@
 <div class="fnitem">
 <!-- $$$add[overload1]$$$addconstQVariantMap& -->
 <h3 class="fn" translate="no" id="add"><span class="type">QString</span> Templates::<span class="name">add</span>(const <span class="type">QVariantMap</span> &amp;<i>entry</i>)</h3>
-<p>Keeps <i translate="no">entry</i>, a template taken in from a stick (<a href="presetexchange.html#take" translate="no">PresetExchange::take</a>()), among the user's under its name tidied and made unique. Returns the name it got, or an empty string.</p>
+<p>Stores <i translate="no">entry</i>, a template imported from a stick (<a href="presetexchange.html#take" translate="no">PresetExchange::take</a>()), among the user's under its name tidied and made unique. Returns the name it got, or an empty string.</p>
 <!-- @@@add -->
 </div>
 <div class="fnitem">
@@ -190,7 +190,7 @@
 <div class="fnitem">
 <!-- $$$describe[overload1]$$$describeconstQVariantMap& -->
 <h3 class="fn" translate="no" id="describe"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Templates::<span class="name">describe</span>(const <span class="type">QVariantMap</span> &amp;<i>entry</i>)</h3>
-<p>Returns what the template <i translate="no">entry</i> sets, in a line: &quot;180 BPM · E NATURAL MINOR · SWING 58 %&quot;.</p>
+<p>Returns a one-line summary of what the template <i translate="no">entry</i> sets: &quot;180 BPM · E NATURAL MINOR · SWING 58 %&quot;.</p>
 <!-- @@@describe -->
 </div>
 <div class="fnitem">
@@ -208,14 +208,14 @@
 <div class="fnitem">
 <!-- $$$isOwn[overload1]$$$isOwnconstQString& -->
 <h3 class="fn" translate="no" id="isOwn"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Templates::<span class="name">isOwn</span>(const <span class="type">QString</span> &amp;<i>path</i>) const</h3>
-<p>Returns whether the file <i translate="no">path</i> is one of the user's templates (DELETE, TO USB).</p>
+<p>Returns whether the file <i translate="no">path</i> is one of the user's templates.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@isOwn -->
 </div>
 <div class="fnitem">
 <!-- $$$listFolder[overload1]$$$listFolderconstQString& -->
 <h3 class="fn" translate="no" id="listFolder"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantList</span> Templates::<span class="name">listFolder</span>(const <span class="type">QString</span> &amp;<i>folder</i>)</h3>
-<p>Returns the templates in <i translate="no">folder</i> (a stick's <code translate="no">ravving/presets/templates</code>), listed as list lists them.</p>
+<p>Returns the templates in <i translate="no">folder</i> (a stick's <code translate="no">ravving/presets/templates</code>), in list's format.</p>
 <!-- @@@listFolder -->
 </div>
 <div class="fnitem">
@@ -227,7 +227,7 @@
 <div class="fnitem">
 <!-- $$$read[overload1]$$$readconstQString& -->
 <h3 class="fn" translate="no" id="read"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantMap</span> Templates::<span class="name">read</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
-<p>Returns what the template file at <i translate="no">path</i> holds; an empty map for a file that is no template.</p>
+<p>Returns the contents of the template file at <i translate="no">path</i>; an empty map for a file that is not a template.</p>
 <!-- @@@read -->
 </div>
 <div class="fnitem">
@@ -240,20 +240,20 @@
 <div class="fnitem">
 <!-- $$$saveCurrent[overload1]$$$saveCurrentconstQString& -->
 <h3 class="fn" translate="no" id="saveCurrent"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Templates::<span class="name">saveCurrent</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
-<p>Keeps the session's tempo, swing, key and LIVE FX as a template of the user's under <i translate="no">name</i> (tidied, made unique). Returns the name used, or an empty string on failure.</p>
+<p>Saves the session's tempo, swing, key and live-effect send levels as a user template under <i translate="no">name</i> (tidied, made unique). Returns the name used, or an empty string on failure.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@saveCurrent -->
 </div>
 <div class="fnitem">
 <!-- $$$scaleNames[overload1]$$$scaleNames -->
 <h3 class="fn" translate="no" id="scaleNames"><code class="details extra" translate="no">[static]</code> const <span class="type">QStringList</span> &amp;Templates::<span class="name">scaleNames</span>()</h3>
-<p>Returns the scales by name, in <code translate="no">Rave.scales'</code> order; the project keeps the scale's index there.</p>
+<p>Returns the scale names, in <code translate="no">Rave.scales'</code> order; the project stores the scale's index there.</p>
 <!-- @@@scaleNames -->
 </div>
 <div class="fnitem">
 <!-- $$$start[overload1]$$$startconstQString& -->
 <h3 class="fn" translate="no" id="start"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Templates::<span class="name">start</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
-<p>Starts a new project from the template in <i translate="no">path</i>: NEW, then its settings. Returns <code translate="no">false</code> when the file is no template.</p>
+<p>Starts a new project from the template in <i translate="no">path</i>: a clean project (<a href="projects.html#newProject" translate="no">Projects::newProject</a>()) with its settings. Returns <code translate="no">false</code> when the file is not a template.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@start -->
 </div>

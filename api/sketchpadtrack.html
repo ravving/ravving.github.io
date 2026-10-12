@@ -127,7 +127,7 @@
 <!-- $$$SketchpadTrack-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>A PatternModel takes its routing from the track object set as its <code translate="no">zlChannel</code>, through these properties, and configures MidiRouter itself (<code translate="no">chainedSounds</code> into MidiRouter::setZynthianChannels()). In zynthbox-qml that object is the Python sketchpad channel; ravving publishes this class instead. Ported from <code translate="no">zynqtgui/sketchpad/sketchpad_channel.py</code>: only the properties and signals PatternModel reads. The track's number is the pattern's (<code translate="no">PatternModel::sketchpadTrack</code>), not stored here.</p>
+<p>A PatternModel takes its routing from the track object set as its <code translate="no">zlChannel</code>, through these properties, and configures MidiRouter itself (<code translate="no">chainedSounds</code> into MidiRouter::setZynthianChannels()). This class provides only the properties and signals PatternModel reads. The track's number is the pattern's (<code translate="no">PatternModel::sketchpadTrack</code>), not stored here.</p>
 </div>
 <!-- @@@SketchpadTrack -->
 <div class="prop">
@@ -178,7 +178,7 @@
 <div class="fnitem">
 <!-- $$$recordingPopupActive-prop$$$recordingPopupActive$$$recordingPopupActiveChanged -->
 <h3 class="fn" translate="no" id="recordingPopupActive-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">recordingPopupActive</span> : <span class="type">bool</span></h3>
-<p>zynthbox-qml's recording popup state; always <code translate="no">false</code>.</p>
+<p>This property holds a recording state PatternModel reads; always <code translate="no">false</code>.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>recordingPopupActive</b></span>() const</td></tr>
@@ -206,7 +206,7 @@
 <div class="fnitem">
 <!-- $$$samples-prop$$$samples$$$samplesChanged -->
 <h3 class="fn" translate="no" id="samples-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">samples</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the ten sample slots (two rows of five; null for an empty one). PatternModel indexes every one, so the list always holds ten entries; each filled one is an object whose <code translate="no">cppObjId</code> is its ClipAudioSource's id, as zynthbox-qml's sketchpad clips.</p>
+<p>This property holds the ten sample slots (two rows of five; null for an empty one). PatternModel indexes every one, so the list always holds ten entries; each filled one is an object whose <code translate="no">cppObjId</code> must be its ClipAudioSource's id, which PatternModel looks the clip up by.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>samples</b></span>() const</td></tr>
@@ -234,7 +234,7 @@
 <div class="fnitem">
 <!-- $$$trackType-prop$$$trackType$$$trackTypeChanged -->
 <h3 class="fn" translate="no" id="trackType-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">trackType</span> : <span class="type">QString</span></h3>
-<p><code translate="no">synth</code> (notes go to the Zynthian channels of <a href="sketchpadtrack.html#chainedSounds-prop" translate="no">chainedSounds</a>) or <code translate="no">sample-trig</code> (notes go to SamplerSynth, which plays the samples whose key zones hold the note: the samplers). zynthbox-qml's <code translate="no">sample-loop</code> and <code translate="no">external</code> are not used.</p>
+<p><code translate="no">synth</code> (notes go to the Zynthian channels of <a href="sketchpadtrack.html#chainedSounds-prop" translate="no">chainedSounds</a>) or <code translate="no">sample-trig</code> (notes go to SamplerSynth, which plays the samples whose key zones hold the note). libzynthbox's other types, <code translate="no">sample-loop</code> and <code translate="no">external</code>, are not used.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>trackType</b></span>() const</td></tr>

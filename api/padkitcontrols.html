@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- padkitcontrols.cpp -->
-  <meta name="description" content="The PAD SAMPLER's SOUND MODIFIERS: the knobs that belong to the kit rather than to one pad.">
+  <meta name="description" content="PadSamplerMachine's kit controls: the knobs that belong to the kit rather than to one pad.">
   <meta name="keywords" content="class">
   <title>PadKitControls Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">PadKitControls Class</h1>
 <!-- $$$PadKitControls-brief -->
-<p>The PAD SAMPLER's SOUND MODIFIERS: the knobs that belong to the kit rather than to one pad. <a href="#details">More...</a></p>
+<p><a href="padsamplermachine.html" translate="no">PadSamplerMachine</a>'s kit controls: the knobs that belong to the kit rather than to one pad. <a href="#details">More...</a></p>
 <!-- @@@PadKitControls -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;padkitcontrols.h&gt;</code></td></tr>
@@ -111,13 +111,13 @@
 <!-- $$$PadKitControls-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>It has the store interface the cards read (cards, values, <a href="padkitcontrols.html#setValue" translate="no">setValue</a>(), as <a href="soundcontrols.html" translate="no">SoundControls</a> and <a href="trackeffects.html" translate="no">TrackEffects</a> have), so MachineModule shows them like any machine's:</p>
+<p>It has the same store interface as <a href="soundcontrols.html" translate="no">SoundControls</a> and <a href="trackeffects.html" translate="no">TrackEffects</a> (cards, values, <a href="padkitcontrols.html#setValue" translate="no">setValue</a>()):</p>
 <div class="table"><table class="generic">
  <thead><tr class="qt-style"><th >Card</th><th >Knobs</th></tr></thead>
-<tr valign="top" class="odd"><td >KIT</td><td >VOLUME (the kit's level, the strip's fader), SEMI and FINE (a tune added to every pad: ±24 semitones, ±90 cents)</td></tr>
-<tr valign="top" class="even"><td >16 LEVELS</td><td >TYPE: VELOCITY (the pads play the selected pad softer to harder), TUNE (a semitone per pad, the original on pad 4) or SCALE (the pads follow the header's key, pad 4 the root); and LEVELS, the switch itself</td></tr>
+<tr valign="top" class="odd"><td >KIT</td><td >VOLUME (the kit's level, <a href="machine.html#level-prop" translate="no">Machine::level</a>), SEMI and FINE (a tune added to every pad: ±24 semitones, ±90 cents)</td></tr>
+<tr valign="top" class="even"><td >16 LEVELS</td><td >TYPE: VELOCITY (the pads play the source pad softer to harder), TUNE (a semitone per pad, the original pitch on pad 4) or SCALE (the pads follow the key, pad 4 the root); and LEVELS, the switch itself</td></tr>
 </table></div>
-<p>Every value is 0..1 (switch knobs snap to their choices); <a href="padsamplermachine.html" translate="no">PadSamplerMachine</a> maps them. The values are the machine's: it keeps and saves them, this object only holds the cards and tells the machine what changed.</p>
+<p>Every value is 0..1 (switch knobs snap to their choices); <a href="padsamplermachine.html" translate="no">PadSamplerMachine</a> maps them. The values are the machine's: it saves them, and this object only holds the cards and reports what changed.</p>
 </div>
 <!-- @@@PadKitControls -->
 <div class="prop">
@@ -125,7 +125,7 @@
 <div class="fnitem">
 <!-- $$$cards-prop$$$cards -->
 <h3 class="fn" translate="no" id="cards-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">cards</span> : const <span class="type">QVariantList</span></h3>
-<p>This property holds the cards for ParamCardRow, as maps with <code translate="no">title</code>, <code translate="no">params</code> and <code translate="no">choices</code>.</p>
+<p>This property holds the cards, as maps with <code translate="no">title</code>, <code translate="no">params</code> and <code translate="no">choices</code>.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>cards</b></span>() const</td></tr>

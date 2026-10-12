@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- presetexchange.cpp -->
-  <meta name="description" content="The user's presets as files to share on a USB stick: the pattern presets they saved (a machine's PresetLibrary: the toolbar's PRESET), the sounds they saved (a machine's MY SOUNDS) and their project templates.">
+  <meta name="description" content="The user's presets as files for exchange on a USB stick: the pattern presets they saved (a machine's PresetLibrary), the sounds they saved (Machine::saveSound()) and their project templates.">
   <meta name="keywords" content="class">
   <title>PresetExchange Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -73,7 +73,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">PresetExchange Class</h1>
 <!-- $$$PresetExchange-brief -->
-<p>The user's presets as files to share on a USB stick: the pattern presets they saved (a machine's <a href="presetlibrary.html" translate="no">PresetLibrary</a>: the toolbar's PRESET), the sounds they saved (a machine's MY SOUNDS) and their project templates. <a href="#details">More...</a></p>
+<p>The user's presets as files for exchange on a USB stick: the pattern presets they saved (a machine's <a href="presetlibrary.html" translate="no">PresetLibrary</a>), the sounds they saved (<a href="machine.html#saveSound" translate="no">Machine::saveSound</a>()) and their project templates. <a href="#details">More...</a></p>
 <!-- @@@PresetExchange -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;presetexchange.h&gt;</code></td></tr>
@@ -100,7 +100,7 @@
 <!-- $$$PresetExchange-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The USB page and the FILES browser list, write and read presets through it. Each preset travels as one JSON file under a stick's <code translate="no">ravving/presets</code> folder:</p>
+<p>Each preset is one JSON file under a stick's <code translate="no">ravving/presets</code> folder:</p>
 <pre class="cpp plain" translate="no"><code class="text">
  &lt;group&gt;/patterns/&lt;name&gt;.json   {&quot;ravving&quot;: &quot;preset&quot;, &quot;type&quot;: &quot;pattern&quot;,
                                  &quot;library&quot;: &quot;bass-presets.json&quot;,
@@ -110,7 +110,7 @@
  templates/&lt;name&gt;.json          {&quot;ravving&quot;: &quot;preset&quot;, &quot;type&quot;: &quot;template&quot;,
                                  &quot;template&quot;: {name, bpm, swing, root, scale...}}
 </code></pre>
-<p>where <code translate="no">&lt;group&gt;</code> is the library's name (<code translate="no">drum</code> for the three drum machines' shared one, <code translate="no">bass...</code>). A preset taken in keeps its name, made unique against what the device has. A preset is known by an id: <code translate="no">pattern::&lt;library file&gt;::&lt;name&gt;</code>, <code translate="no">sound::&lt;machine&gt;::&lt;name&gt;</code> or <code translate="no">template::templates::&lt;name&gt;</code>. A plain object over the studio; GUI thread only.</p>
+<p>where <code translate="no">&lt;group&gt;</code> is the library's name (<code translate="no">drum</code> for the drum machines' shared one, <code translate="no">bass...</code>). An imported preset keeps its name, made unique against what the device has. A preset is identified by an id: <code translate="no">pattern::&lt;library file&gt;::&lt;name&gt;</code>, <code translate="no">sound::&lt;machine&gt;::&lt;name&gt;</code> or <code translate="no">template::templates::&lt;name&gt;</code>. A plain object over the studio; GUI thread only.</p>
 </div>
 <!-- @@@PresetExchange -->
 <div class="func">
@@ -124,7 +124,7 @@
 <div class="fnitem">
 <!-- $$$describe[overload1]$$$describeconstQString& -->
 <h3 class="fn" translate="no" id="describe"><span class="type">QVariantMap</span> PresetExchange::<span class="name">describe</span>(const <span class="type">QString</span> &amp;<i>path</i>) const</h3>
-<p>Returns what the preset file at <i translate="no">path</i> is: a map with <code translate="no">name</code>, <code translate="no">label</code> and <code translate="no">onDevice</code> (a preset of its name is on the device); an empty map for a file that is no ravving preset.</p>
+<p>Returns a summary of the preset file at <i translate="no">path</i>: a map with <code translate="no">name</code>, <code translate="no">label</code> and <code translate="no">onDevice</code> (a preset of its name is on the device); an empty map for a file that is not a ravving preset.</p>
 <!-- @@@describe -->
 </div>
 <div class="fnitem">
@@ -136,7 +136,7 @@
 <div class="fnitem">
 <!-- $$$loadStickPattern[overload1]$$$loadStickPatternconstQString&constQString&boolboolbool -->
 <h3 class="fn" translate="no" id="loadStickPattern"><span class="type">bool</span> PresetExchange::<span class="name">loadStickPattern</span>(const <span class="type">QString</span> &amp;<i>path</i>, const <span class="type">QString</span> &amp;<i>machineKey</i>, <span class="type">bool</span> <i>withSound</i> = false, <span class="type">bool</span> <i>withMods</i> = false, <span class="type">bool</span> <i>withBars</i> = true) const</h3>
-<p>Plays the stick's pattern preset at <i translate="no">path</i> on the machine <i translate="no">machineKey</i> (<a href="machine.html#applyPreset" translate="no">Machine::applyPreset</a>()), with the source or kit it keeps when <i translate="no">withSound</i> is true, its MODS when <i translate="no">withMods</i> is true and its length when <i translate="no">withBars</i> is true. Returns <code translate="no">false</code> when the file is no pattern of that machine's library.</p>
+<p>Loads the stick's pattern preset at <i translate="no">path</i> into the machine <i translate="no">machineKey</i> (<a href="machine.html#applyPreset" translate="no">Machine::applyPreset</a>()), with the source or kit it keeps when <i translate="no">withSound</i> is true, its sound-control values when <i translate="no">withMods</i> is true and its length when <i translate="no">withBars</i> is true. Returns <code translate="no">false</code> when the file is not a pattern of that machine's library.</p>
 <!-- @@@loadStickPattern -->
 </div>
 <div class="fnitem">
@@ -148,19 +148,19 @@
 <div class="fnitem">
 <!-- $$$stickPatterns[overload1]$$$stickPatternsconstQString&constQString& -->
 <h3 class="fn" translate="no" id="stickPatterns"><span class="type">QVariantList</span> PresetExchange::<span class="name">stickPatterns</span>(const <span class="type">QString</span> &amp;<i>folder</i>, const <span class="type">QString</span> &amp;<i>machineKey</i>) const</h3>
-<p>Returns the pattern presets on a stick's <i translate="no">folder</i> (its <code translate="no">ravving/presets</code>) for the machine <i translate="no">machineKey</i>, to play from there without taking them in: maps with <code translate="no">name</code>, <code translate="no">genre</code>, <code translate="no">sound</code>, <code translate="no">soundKit</code> (<a href="presetlibrary.html#soundFields" translate="no">PresetLibrary::soundFields</a>()) and <code translate="no">path</code>, sorted A to Z.</p>
+<p>Returns the pattern presets in a stick's <i translate="no">folder</i> (its <code translate="no">ravving/presets</code>) for the machine <i translate="no">machineKey</i>, to play from there without importing them: maps with <code translate="no">name</code>, <code translate="no">genre</code>, <code translate="no">sound</code>, <code translate="no">soundKit</code> (<a href="presetlibrary.html#soundFields" translate="no">PresetLibrary::soundFields</a>()) and <code translate="no">path</code>, sorted by name.</p>
 <!-- @@@stickPatterns -->
 </div>
 <div class="fnitem">
 <!-- $$$stickTemplates[overload1]$$$stickTemplatesconstQString& -->
 <h3 class="fn" translate="no" id="stickTemplates"><code class="details extra" translate="no">[static]</code> <span class="type">QVariantList</span> PresetExchange::<span class="name">stickTemplates</span>(const <span class="type">QString</span> &amp;<i>folder</i>)</h3>
-<p>Returns the project templates on a stick's <i translate="no">folder</i> (its <code translate="no">ravving/presets</code>), to start a project from there without taking them in, as <a href="templates.html#list-prop" translate="no">Templates::list</a>() lists them.</p>
+<p>Returns the project templates in a stick's <i translate="no">folder</i> (its <code translate="no">ravving/presets</code>), to start a project from there without importing them, as <a href="templates.html#list-prop" translate="no">Templates::list</a>() lists them.</p>
 <!-- @@@stickTemplates -->
 </div>
 <div class="fnitem">
 <!-- $$$take[overload1]$$$takeconstQString&QString* -->
 <h3 class="fn" translate="no" id="take"><span class="type">QString</span> PresetExchange::<span class="name">take</span>(const <span class="type">QString</span> &amp;<i>path</i>, <span class="type">QString</span> *<i>error</i>) const</h3>
-<p>Takes the preset file at <i translate="no">path</i> in. Returns the name it got, or an empty string with <i translate="no">error</i> (when not null) saying why.</p>
+<p>Imports the preset file at <i translate="no">path</i>. Returns the name it got, or an empty string with <i translate="no">error</i> (when not null) saying why.</p>
 <!-- @@@take -->
 </div>
 <div class="fnitem">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- midiinput.cpp -->
-  <meta name="description" content="External MIDI controllers (keyboards, pads) as an input for LIVE and REC, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;midiIn.">
+  <meta name="description" content="External MIDI controllers (keyboards, pads) as a note input, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;midiIn.">
   <meta name="keywords" content="class">
   <title>MidiInput Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">MidiInput Class</h1>
 <!-- $$$MidiInput-brief -->
-<p>External MIDI controllers (keyboards, pads) as an input for LIVE and REC, published to QML as <code translate="no">studio.midiIn</code>. <a href="#details">More...</a></p>
+<p>External MIDI controllers (keyboards, pads) as a note input, published to QML as <code translate="no">studio.midiIn</code>. <a href="#details">More...</a></p>
 <!-- @@@MidiInput -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;midiinput.h&gt;</code></td></tr>
@@ -103,8 +103,8 @@
 <!-- $$$MidiInput-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>A page sends the notes to the machine that is LIVE, as the step keys play it. libzynthbox's MidiRouter receives every connected controller. Left alone it would play a controller's raw notes on its current sketchpad track, straight into that track's engine; ravving parks that on a track it does not use, so the notes reach no engine and arrive only here (<code translate="no">MidiRouter::midiMessage</code>, from its hardware input port).</p>
-<p>A device can also send its channels to tracks of their own, and libzynthbox loads saved per-device settings wrongly (MidiRouterDevice turns each saved track into a bool, so every channel lands on track 1, a drum machine). So every controller's channels are set back to the current track at start and whenever one is plugged in.</p>
+<p>libzynthbox's MidiRouter receives every connected controller. Left alone it would play a controller's raw notes on its current sketchpad track, straight into that track's engine; ravving points that at a track it does not use, so the notes reach no engine and arrive only here (<code translate="no">MidiRouter::midiMessage</code>, from its hardware input port).</p>
+<p>A device can also send its channels to tracks of their own, and libzynthbox loads saved per-device settings incorrectly (MidiRouterDevice turns each saved track into a bool, so every channel lands on track 1). So every controller's channels are set back to the current track at start and whenever one is plugged in.</p>
 <p>A controller seen through two bridges (ALSA's a2j and PipeWire's Midi-Bridge) delivers each message twice; a copy arriving within a few milliseconds is dropped. Enable <code translate="no">QT_LOGGING_RULES=&quot;ravving.midi.debug=true&quot;</code> to log the messages. GUI thread only.</p>
 </div>
 <!-- @@@MidiInput -->

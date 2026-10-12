@@ -107,7 +107,7 @@
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p>The file is in <code translate="no">$ZYNTHIAN_CONFIG_DIR</code> (<code translate="no">/zynthian/config</code>), and <code translate="no">set_wifi.sh</code> copies it to <code translate="no">/etc/wpa_supplicant/</code> each time Wi-Fi starts (at boot through <code translate="no">wifi-setup.service</code>, and on every switch). zynthbox-qml and webconf write it too, one network at a time.</p>
-<p>It keeps the file's settings (country, ctrl_interface...) and every network block as it was read, so a save changes only what was asked. A block wpa_supplicant would refuse (a psk that is not 8 to 63 characters or 64 hex digits; zynthbox-qml writes <code translate="no">psk=&quot;&quot;</code> for a network joined without a password) makes wpa_supplicant refuse the whole file, and Wi-Fi then never starts; such blocks are dropped on load (<a href="wpaconfig.html#dropped" translate="no">dropped</a>() says which) and are gone from the next save. A plain value type.</p>
+<p>It keeps the file's settings (country, ctrl_interface...) and every network block as read, so a save changes only what was asked. A block wpa_supplicant would refuse (a psk that is not 8 to 63 characters or 64 hex digits, such as the <code translate="no">psk=&quot;&quot;</code> zynthbox-qml writes for an open network) makes wpa_supplicant refuse the whole file, so Wi-Fi never starts; such blocks are dropped on load (<a href="wpaconfig.html#dropped" translate="no">dropped</a>() lists them) and are gone from the next save. A plain value type.</p>
 </div>
 <!-- @@@WpaConfig -->
 <div class="func">

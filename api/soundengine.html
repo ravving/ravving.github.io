@@ -107,7 +107,7 @@
 <!-- $$$SoundEngine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Machines only see this interface, so swapping a machine's engine is a change in <code translate="no">data/kits.json</code>, and a new kind of engine is one more subclass made by <a href="soundengine.html#createEngine" translate="no">createEngine</a>(). <a href="fluidsynthengine.html" translate="no">FluidSynthEngine</a> and <a href="jalvengine.html" translate="no">JalvEngine</a> are the two kinds. Ported in spirit from zynthbox-qml's <code translate="no">zyngine/zynthian_engine.py</code>. GUI thread only.</p>
+<p>Machines only see this interface, so swapping a machine's engine is a change in <code translate="no">data/kits.json</code>, and a new kind of engine is one more subclass created by <a href="soundengine.html#createEngine" translate="no">createEngine</a>(). <a href="fluidsynthengine.html" translate="no">FluidSynthEngine</a> and <a href="jalvengine.html" translate="no">JalvEngine</a> are the two kinds. GUI thread only.</p>
 </div>
 <!-- @@@SoundEngine -->
 <div class="func">
@@ -127,7 +127,7 @@
 <div class="fnitem">
 <!-- $$$hasControl[overload1]$$$hasControlconstQString& -->
 <h3 class="fn" translate="no" id="hasControl"><code class="details extra" translate="no">[virtual]</code> <span class="type">bool</span> SoundEngine::<span class="name">hasControl</span>(const <span class="type">QString</span> &amp;<i>symbol</i>) const</h3>
-<p>Returns whether <i translate="no">symbol</i> reaches one of the engine's controls (a MODS knob on a port the engine lacks does nothing). The default returns <code translate="no">true</code>: the engine cannot tell.</p>
+<p>Returns whether <i translate="no">symbol</i> reaches one of the engine's controls (a sound control on a port the engine lacks does nothing). The default returns <code translate="no">true</code>: the engine cannot tell.</p>
 <!-- @@@hasControl -->
 </div>
 <div class="fnitem">
@@ -145,7 +145,7 @@
 <div class="fnitem">
 <!-- $$$setControl[overload1]$$$setControlconstQString&double -->
 <h3 class="fn" translate="no" id="setControl"><code class="details extra" translate="no">[virtual]</code> <span class="type">void</span> SoundEngine::<span class="name">setControl</span>(const <span class="type">QString</span> &amp;<i>symbol</i>, <span class="type">double</span> <i>value</i>)</h3>
-<p>Sets the engine's own control <i translate="no">symbol</i> (a SOUND MODIFIERS knob, in the engine's terms such as an LV2 port symbol) to <i translate="no">value</i>. The default ignores it.</p>
+<p>Sets the engine's own control <i translate="no">symbol</i> (in the engine's terms, such as an LV2 port symbol) to <i translate="no">value</i>. The default ignores it.</p>
 <p><b>See also </b><a href="soundengine.html#hasControl" translate="no">hasControl</a>().</p>
 <!-- @@@setControl -->
 </div>
@@ -164,13 +164,13 @@
 <div class="fnitem">
 <!-- $$$stop[overload1]$$$stop -->
 <h3 class="fn" translate="no" id="stop"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">void</span> SoundEngine::<span class="name">stop</span>()</h3>
-<p>Stops the engine's process for good (the machine switches to another sound source); the object is deleted after.</p>
+<p>Stops the engine's process for good (the machine switches to another sound source); the object is deleted afterwards.</p>
 <!-- @@@stop -->
 </div>
 <div class="fnitem">
 <!-- $$$title[overload1]$$$title -->
 <h3 class="fn" translate="no" id="title"><code class="details extra" translate="no">[virtual]</code> <span class="type">QString</span> SoundEngine::<span class="name">title</span>() const</h3>
-<p>Returns what the engine plays, for the machine's nameplate (an LV2 synth's own name); the default returns an empty string.</p>
+<p>Returns the name of what the engine plays (an LV2 synth's own name); the default returns an empty string.</p>
 <!-- @@@title -->
 </div>
 </div>

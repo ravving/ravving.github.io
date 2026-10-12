@@ -73,7 +73,7 @@
 
 <p>What ravving wires, how to look at it and how to measure it. The
 graph is PipeWire's, seen by libzynthbox and the engines through PipeWire's JACK library
-(<code>pw-jack</code>), the way zynthbox-qml runs. <code>tools/graph-check.py</code> (run with <code>tools/device.sh
+(<code>pw-jack</code>), as zynthbox-qml also uses it. <code>tools/graph-check.py</code> (run with <code>tools/device.sh
 graph …</code>) does the checks below in one go.</p>
 <h2 id="the-graph-ravving-makes">The graph ravving makes</h2>
 <p><code>JackWiring</code> (src/backend/jackwiring.*) asks libzynthbox's JackConnectionHandler for every
@@ -245,7 +245,7 @@ alone can point the input at the silent Dummy.</p>
   Midi-Bridge, so copies closer than 4 ms are dropped (<a href="architecture.html">architecture.md</a>).</li>
 <li>Bluetooth MIDI: <code>bluez_midi.server</code> is PipeWire's BLE MIDI node, idle unless a BLE MIDI
   device connects.</li>
-<li>Latency: a MIDI round trip is measured with <code>pw-jack jack_midi_latency_test</code> between a
+<li>Latency: measure a MIDI round trip with <code>pw-jack jack_midi_latency_test</code> between a
   hardware MIDI out and in joined by a cable (or <code>a2j</code>'s Midi Through for the software
   path alone); an audio round trip with <code>pw-jack jack_iodelay</code> and a cable from an output
   jack into input jack 4 or 5.</li>

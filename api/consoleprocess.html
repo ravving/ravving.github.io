@@ -98,8 +98,8 @@
 <!-- $$$ConsoleProcess-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The process runs exactly as zynthbox-qml runs its engines (<code translate="no">zyngine/zynthian_engine.py</code>): on a pseudo-terminal, so it dies with ravving (which leaves through <code translate="no">_exit()</code>); restarted when it crashes, with its startup commands sent again after every start; and every command a transaction that ends at the prompt. This class gives that a typed C++ face; ProcessWrapper is reached through Qt's meta-object system, like the rest of libzynthbox.</p>
-<p>Every <a href="consoleprocess.html#run" translate="no">run</a>() gets a ProcessWrapper of its own. ProcessWrapper's own restart in place stops the old process with a 0 ms timeout, so its pty process is deleted while still running, and keeps the old process's unfinished transactions queued in front of the new one's startup, which crashes ravving when, for one, a drum kit is changed twice while playing. Instead the old process is stopped properly (SIGTERM, then SIGKILL) and its wrapper goes with whatever it still had queued. GUI thread only.</p>
+<p>The process runs on a pseudo-terminal, so it dies with ravving (which leaves through <code translate="no">_exit()</code>); it is restarted when it crashes, with its startup commands sent again after every start; and every command is a transaction that ends at the prompt. This class gives that a typed C++ interface; ProcessWrapper is reached through Qt's meta-object system, like the rest of libzynthbox.</p>
+<p>Every <a href="consoleprocess.html#run" translate="no">run</a>() gets a ProcessWrapper of its own. ProcessWrapper's own restart in place stops the old process with a 0 ms timeout, so its pty process is deleted while still running, and keeps the old process's unfinished transactions queued in front of the new one's startup, which can crash ravving (a drum kit changed twice while playing). Instead the old process is stopped properly (SIGTERM, then SIGKILL) and its wrapper is discarded with whatever it still had queued. GUI thread only.</p>
 </div>
 <!-- @@@ConsoleProcess -->
 <div class="func">

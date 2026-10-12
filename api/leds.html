@@ -96,13 +96,13 @@
 <!-- $$$Leds-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>QML hands over the whole picture as a map of button name to colour:</p>
+<p>QML passes the whole picture as a map of button name to colour:</p>
 <pre class="cpp plain" translate="no"><code class="text">
  leds.setButtonColors({ step1: &quot;#e07708&quot;, num2: &quot;white&quot;, play: Qt.rgba(0, 1, 0, 1) })
 </code></pre>
-<p>Buttons left out show the dim inactive colour (blue at 1/255, times the brightness); a null, empty or transparent colour turns one off. Colours are scaled by the user's LED brightness (zynthbox-qml's <code translate="no">UI/ledBrightness</code> setting, 1 to 100 %, 15 by default) and written to the strip at the next turn of the event loop, coalesced.</p>
-<p>Button names: <code translate="no">menu</code>, <code translate="no">num1</code> to <code translate="no">num5</code>, <code translate="no">star</code>, <code translate="no">mode</code>, <code translate="no">step1</code> to <code translate="no">step16</code>, <code translate="no">alt</code>, <code translate="no">record</code>, <code translate="no">play</code>, <code translate="no">metronome</code>, <code translate="no">stop</code>, <code translate="no">back</code>, <code translate="no">up</code>, <code translate="no">select</code>, <code translate="no">left</code>, <code translate="no">down</code>, <code translate="no">right</code>, <code translate="no">global</code>. On the Z2_V4 kit only <code translate="no">step1</code> to <code translate="no">step5</code> have LEDs.</p>
-<p>The strip is a <a href="wsledstrip.html" translate="no">WsLedStrip</a> of <code translate="no">ZYNTHBOX_LED_COUNT</code> LEDs; on start the boot rainbow (<code translate="no">rainbow-leds.service</code>) is stopped. Ported from zynthbox-qml's <code translate="no">zynqtgui/zynthian_gui_led_config.py</code> and libzynthbox's ZynthboxBasics button-to-LED tables.</p>
+<p>Buttons left out show the dim inactive colour (blue at 1/255, times the brightness); a null, empty or transparent colour turns one off. Colours are scaled by the LED brightness setting shared with zynthbox-qml (<code translate="no">UI/ledBrightness</code>, 1 to 100 %, 15 by default) and written to the strip at the next turn of the event loop, coalesced.</p>
+<p>Button names: <code translate="no">menu</code>, <code translate="no">num1</code> to <code translate="no">num5</code>, <code translate="no">star</code>, <code translate="no">mode</code>, <code translate="no">step1</code> to <code translate="no">step16</code>, <code translate="no">alt</code>, <code translate="no">record</code>, <code translate="no">play</code>, <code translate="no">metronome</code>, <code translate="no">stop</code>, <code translate="no">back</code>, <code translate="no">up</code>, <code translate="no">select</code>, <code translate="no">left</code>, <code translate="no">down</code>, <code translate="no">right</code>, <code translate="no">global</code>. On the Z2_V4 kit only <code translate="no">step1</code> to <code translate="no">step5</code> have LEDs. The button-to-LED tables match libzynthbox's ZynthboxBasics.</p>
+<p>The strip is a <a href="wsledstrip.html" translate="no">WsLedStrip</a> of <code translate="no">ZYNTHBOX_LED_COUNT</code> LEDs; on start the boot rainbow (<code translate="no">rainbow-leds.service</code>) is stopped.</p>
 </div>
 <!-- @@@Leds -->
 <div class="prop">

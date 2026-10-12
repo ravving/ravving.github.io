@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- diagnostics.cpp -->
-  <meta name="description" content="The issues center, published to QML as issues: what is wrong on this device now, in the user's words, with what to do about it.">
+  <meta name="description" content="The issue registry, published to QML as issues: the problems on this device now, with translated texts and suggested fixes.">
   <meta name="keywords" content="class">
   <title>Diagnostics Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">Diagnostics Class</h1>
 <!-- $$$Diagnostics-brief -->
-<p>The issues center, published to QML as <code translate="no">issues</code>: what is wrong on this device now, in the user's words, with what to do about it. <a href="#details">More...</a></p>
+<p>The issue registry, published to QML as <code translate="no">issues</code>: the problems on this device now, with translated texts and suggested fixes. <a href="#details">More...</a></p>
 <!-- @@@Diagnostics -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;diagnostics.h&gt;</code></td></tr>
@@ -130,10 +130,10 @@
 <!-- $$$Diagnostics-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Every component runs its own checks (at start, and whenever something fails or recovers) and reports here through <a href="issues.html#report" translate="no">Issues::report</a>() and <a href="issues.html#clear" translate="no">Issues::clear</a>(). The drawer's ISSUES card shows the count and the worst one; the dialog lists them by severity with their suggestion and an action button where one exists.</p>
-<p>An issue is a map with <code translate="no">id</code>, <code translate="no">component</code> and its translated <code translate="no">componentLabel</code>, <code translate="no">severity</code>, <code translate="no">title</code>, <code translate="no">detail</code>, <code translate="no">suggestion</code>, <code translate="no">action</code> and its <code translate="no">actionLabel</code>, <code translate="no">since</code> (the ISO time of the first report) and <code translate="no">count</code> (the reports since). The severities are <code translate="no">error</code> (something does not work), <code translate="no">warning</code> (it works worse or will stop) and <code translate="no">notice</code> (worth knowing, nothing to do). The actions are <code translate="no">restart</code> (ravving), <code translate="no">unset-gdb</code> (the gdb aid off, then restart) and <code translate="no">reboot</code>.</p>
-<p>Reporting an id again updates it and counts it; <a href="diagnostics.html#clear" translate="no">clear</a>() removes it when the component sees it recovered; <a href="diagnostics.html#dismiss" translate="no">dismiss</a>() is the user's: the issue stays hidden while its detail stays the same and comes back when it changes.</p>
-<p>log keeps the last 40 warnings ravving printed (the message handler in <code translate="no">main.cpp</code> feeds <a href="diagnostics.html#note" translate="no">note</a>()), for the dialog's RECENT WARNINGS. <a href="diagnostics.html#report" translate="no">report</a>() and <a href="diagnostics.html#note" translate="no">note</a>() may be called from any thread (the stderr watch); they are queued to this object's thread. One instance, made by main() (<a href="diagnostics.html#instance" translate="no">instance</a>()).</p>
+<p>Every component runs its own checks (at start, and whenever something fails or recovers) and reports here through <a href="issues.html#report" translate="no">Issues::report</a>() and <a href="issues.html#clear" translate="no">Issues::clear</a>().</p>
+<p>An issue is a map with <code translate="no">id</code>, <code translate="no">component</code> and its translated <code translate="no">componentLabel</code>, <code translate="no">severity</code>, <code translate="no">title</code>, <code translate="no">detail</code>, <code translate="no">suggestion</code>, <code translate="no">action</code> and its <code translate="no">actionLabel</code>, <code translate="no">since</code> (the ISO time of the first report) and <code translate="no">count</code> (the reports since). The severities are <code translate="no">error</code> (something does not work), <code translate="no">warning</code> (it works worse or will stop) and <code translate="no">notice</code> (informational, no action needed). The actions are <code translate="no">restart</code> (ravving), <code translate="no">unset-gdb</code> (the gdb aid off, then restart) and <code translate="no">reboot</code>.</p>
+<p>Reporting an id again updates it and increments its count; <a href="diagnostics.html#clear" translate="no">clear</a>() removes it when the component sees it recovered; <a href="diagnostics.html#dismiss" translate="no">dismiss</a>() hides it while its detail stays the same, and it comes back when the detail changes.</p>
+<p>log keeps the last 40 warnings ravving printed (the message handler in <code translate="no">main.cpp</code> feeds <a href="diagnostics.html#note" translate="no">note</a>()). <a href="diagnostics.html#report" translate="no">report</a>() and <a href="diagnostics.html#note" translate="no">note</a>() may be called from any thread; they are queued to this object's thread. One instance, created by main() (<a href="diagnostics.html#instance" translate="no">instance</a>()).</p>
 </div>
 <!-- @@@Diagnostics -->
 <div class="prop">
@@ -141,7 +141,7 @@
 <div class="fnitem">
 <!-- $$$counts-prop$$$counts$$$issuesChanged -->
 <h3 class="fn" translate="no" id="counts-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">counts</span> : <span class="type">QVariantMap</span></h3>
-<p>how many times each issue was reported, by id; for tests and scripts (the fifo's <code translate="no">get</code>).</p>
+<p>how many times each issue was reported, by id; for tests and scripts.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>counts</b></span>() const</td></tr>
@@ -211,7 +211,7 @@
 <div class="fnitem">
 <!-- $$$summary-prop$$$summary$$$issuesChanged -->
 <h3 class="fn" translate="no" id="summary-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">summary</span> : <span class="type">QString</span></h3>
-<p>This property holds a one-line summary for the card: &quot;ALL GOOD&quot;, or &quot;N ISSUES&quot; (translated).</p>
+<p>This property holds a one-line translated summary: &quot;ALL GOOD&quot;, or &quot;N ISSUES&quot;.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>summary</b></span>() const</td></tr>
@@ -256,7 +256,7 @@
 <div class="fnitem">
 <!-- $$$Diagnostics[overload1]$$$DiagnosticsQObject* -->
 <h3 class="fn" translate="no" id="Diagnostics"><code class="details extra" translate="no">[explicit]</code> Diagnostics::<span class="name">Diagnostics</span>(<span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Constructs the issues center with the given <i translate="no">parent</i>; it becomes <a href="diagnostics.html#instance" translate="no">instance</a>().</p>
+<p>Constructs the issue registry with the given <i translate="no">parent</i>; it becomes <a href="diagnostics.html#instance" translate="no">instance</a>().</p>
 <!-- @@@Diagnostics -->
 </div>
 <div class="fnitem">
@@ -269,21 +269,21 @@
 <div class="fnitem">
 <!-- $$$clear[overload1]$$$clearconstQString& -->
 <h3 class="fn" translate="no" id="clear"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Diagnostics::<span class="name">clear</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
-<p>Removes the issue <i translate="no">id</i>: its component saw it recovered.</p>
+<p>Removes the issue <i translate="no">id</i>, for a component that sees it recovered.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@clear -->
 </div>
 <div class="fnitem">
 <!-- $$$dismiss[overload1]$$$dismissconstQString& -->
 <h3 class="fn" translate="no" id="dismiss"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Diagnostics::<span class="name">dismiss</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
-<p>Hides the issue <i translate="no">id</i> at the user's request; it returns when it is reported with another detail.</p>
+<p>Hides the issue <i translate="no">id</i>; it returns when it is reported with another detail.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@dismiss -->
 </div>
 <div class="fnitem">
 <!-- $$$instance[overload1]$$$instance -->
 <h3 class="fn" translate="no" id="instance"><code class="details extra" translate="no">[static]</code> <span class="type"><a href="diagnostics.html" translate="no">Diagnostics</a></span> *Diagnostics::<span class="name">instance</span>()</h3>
-<p>Returns the issues center main() made, or <code translate="no">nullptr</code> before it exists or after it is gone.</p>
+<p>Returns the Diagnostics instance main() created, or <code translate="no">nullptr</code> before it exists or after it is destroyed.</p>
 <!-- @@@instance -->
 </div>
 <div class="fnitem">
@@ -303,14 +303,14 @@
 <div class="fnitem">
 <!-- $$$report[overload1]$$$reportconstQString&constQString&constQString&constQString&constQString&constQString&constQString& -->
 <h3 class="fn" translate="no" id="report"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Diagnostics::<span class="name">report</span>(const <span class="type">QString</span> &amp;<i>id</i>, const <span class="type">QString</span> &amp;<i>component</i>, const <span class="type">QString</span> &amp;<i>severity</i>, const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>detail</i> = QString(), const <span class="type">QString</span> &amp;<i>suggestion</i> = QString(), const <span class="type">QString</span> &amp;<i>action</i> = QString())</h3>
-<p>Reports the problem <i translate="no">id</i>, seen (or seen again) by <i translate="no">component</i>, at <i translate="no">severity</i>, with its <i translate="no">title</i>, <i translate="no">detail</i>, <i translate="no">suggestion</i> and <i translate="no">action</i> (see the class description). An issue the user dismissed with the same detail stays hidden. Thread-safe: from another thread the report is queued. Also logs a line to the journal.</p>
+<p>Reports the problem <i translate="no">id</i>, found (or found again) by <i translate="no">component</i>, at <i translate="no">severity</i>, with its <i translate="no">title</i>, <i translate="no">detail</i>, <i translate="no">suggestion</i> and <i translate="no">action</i> (see the class description). A dismissed issue with the same detail stays hidden. Thread-safe: from another thread the report is queued. Also logs a line to the journal.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@report -->
 </div>
 <div class="fnitem">
 <!-- $$$reported[overload1]$$$reportedconstQString&constQString& -->
 <h3 class="fn" translate="no" id="reported"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Diagnostics::<span class="name">reported</span>(const <span class="type">QString</span> &amp;<i>severity</i>, const <span class="type">QString</span> &amp;<i>title</i>)</h3>
-<p>Emitted for a new error or warning, or one that got worse, with its <i translate="no">severity</i> and <i translate="no">title</i>: for a toast.</p>
+<p>Emitted for a new error or warning, or one whose severity rose, with its <i translate="no">severity</i> and <i translate="no">title</i>.</p>
 <!-- @@@reported -->
 </div>
 </div>
