@@ -1,7 +1,8 @@
 // SPDX-FileCopyrightText: 2026 Camilo Higuita <milo.h@aol.com>
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
-// The mascots: a 32×32 octopus and a wolf pup, drawn from text frames (o/k = line, w = fill,
+// The mascots: a 32×32 octopus and a wolf pup (frames: data/branding/aru, written in here by
+// data/branding/make-aru.py), drawn from text frames (o/k = line, w = fill,
 // a = the mood's signal colour) and looped by mood at a 100 ms tick. A page writes
 // <span class="aru" data-species="wolf" data-mood="metal"></span>; one timer drives every sprite
 // on screen, sprites off screen hold still, and reduced motion shows the first frame only.

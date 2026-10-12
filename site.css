@@ -495,9 +495,6 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .landing-device { position: relative; max-width: 980px; margin: clamp(28px, 5vw, 56px) auto 0; perspective: 1400px; }
 /* the device, its screen and its step keys move in as one; the screen boots once it has landed */
 .landing-stage { position: relative; transform-origin: 50% 100%; animation: landing-rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.landing-stage > img { position: relative; display: block; width: 100%; height: auto;
-  /* the render sits on black: clipped to the enclosure, as on the features page */
-  clip-path: inset(6.6% 5.1% 7.5% 5.5% round 1.6% / 2.1%); }
 .landing-glow { position: absolute; inset: 20% 10% 0; border-radius: 50%;
   background: radial-gradient(closest-side, rgba(242, 93, 10, 0.32), transparent);
   filter: blur(40px); animation: landing-glow 2s ease-out 0.4s both; }
@@ -511,9 +508,6 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .landing-fade { position: relative; animation: landing-logo 1.65s 1.4s both; }
 .landing-fade img { display: block; width: 100%; height: auto; }
 .landing-halo { position: absolute; inset: 0; animation: landing-halo 1s ease-in-out 1.5s both; }
-.landing-steps { position: absolute; left: 21.6%; top: 65.6%; width: 49.6%; height: 5.2%; pointer-events: none;
-  background: linear-gradient(90deg, transparent 0, rgba(255, 232, 33, 0) 40%, rgba(255, 232, 33, 0.55) 50%, rgba(255, 232, 33, 0) 60%, transparent 100%);
-  background-size: 300% 100%; mix-blend-mode: screen; animation: landing-run 1.1s ease-in-out 3.3s both; }
 @keyframes landing-rise { from { opacity: 0; transform: translateY(60px) rotateX(18deg) scale(0.94); } to { opacity: 1; transform: none; } }
 @keyframes landing-glow { from { opacity: 0; } to { opacity: 1; } }
 @keyframes landing-power { from { opacity: 1; } to { opacity: 0; } }
@@ -521,7 +515,6 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 @keyframes landing-logo { 0% { opacity: 0; animation-timing-function: ease-out; } 21% { opacity: 1; }
   60.6% { opacity: 1; animation-timing-function: ease-in-out; } 100% { opacity: 0; } }
 @keyframes landing-halo { 0% { opacity: 0; } 50% { opacity: 0.8; } 100% { opacity: 0.3; } }
-@keyframes landing-run { from { background-position: 100% 0; opacity: 1; } to { background-position: 0 0; opacity: 0; } }
 
 .landing-get { margin: clamp(28px, 4vw, 44px) auto 0; }
 /* the download is one of the device's keys: a charcoal cap, its legend lit, pressed on hover */
@@ -538,19 +531,42 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .landing-alt { margin: 14px auto 0; color: var(--ink-3); font-size: 14px; max-width: 60ch; }
 .landing-alt a { color: var(--ink-2); }
 
-.landing-points { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 3vw, 40px);
-  margin-top: clamp(48px, 8vw, 96px); text-align: left; }
-.landing-points h2 { font-size: 18px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em; }
-.landing-points p { margin: 0; color: var(--ink-2); max-width: 40ch; }
+/* the three points: lit cards, each with its mascot on a screen well and the step keys chasing in
+   its signal colour (--c); they lift and glow under the pointer */
+.landing-points { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px);
+  margin-top: clamp(56px, 9vw, 112px); text-align: left; }
+.point { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 14px 14px 22px; border-radius: 14px;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel)); border: 1px solid var(--hair-soft);
+  box-shadow: inset 0 1px 0 var(--cap-top), 0 18px 40px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.25s, border-color 0.25s; }
+.point::before { content: ""; position: absolute; inset: 0 22px auto; height: 2px; border-radius: 2px; background: var(--c); box-shadow: 0 0 14px var(--c); }
+.point:hover, .point:focus-within { transform: translateY(-6px); border-color: color-mix(in srgb, var(--c) 45%, transparent);
+  box-shadow: inset 0 1px 0 var(--cap-top), 0 24px 50px rgba(0, 0, 0, 0.45), 0 0 40px color-mix(in srgb, var(--c) 22%, transparent); }
+.point-screen { position: relative; display: grid; place-items: center; height: 168px; margin-bottom: 8px; border-radius: 8px; overflow: hidden;
+  background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--c) 22%, #0b0b0d), #0b0b0d 70%); border: 1px solid #000; }
+.point-screen .aru { width: 96px; height: 96px; margin-bottom: 14px; }
+.point-leds { position: absolute; left: 12px; right: 12px; bottom: 10px; display: grid; grid-template-columns: repeat(16, 1fr); gap: 3px; }
+.point-leds i { height: 5px; border-radius: 1px; background: color-mix(in srgb, var(--c) 18%, #1b1b1d);
+  animation: point-chase 1.6s steps(1) calc(var(--n) * 0.1s) infinite; }
+.point:nth-child(2) .point-leds i { animation-delay: calc(var(--n) * 0.1s + 0.5s); }
+.point:nth-child(3) .point-leds i { animation-delay: calc(var(--n) * 0.1s + 1s); }
+@keyframes point-chase { 0% { background: var(--c); box-shadow: 0 0 8px var(--c); } 12% { background: color-mix(in srgb, var(--c) 18%, #1b1b1d); box-shadow: none; } }
+.point-kicker { margin: 0; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); padding: 0 8px; }
+.point-kicker b { color: var(--c); font-weight: 500; margin-right: 6px; }
+.landing-points h2 { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.05; margin: 0; padding: 0 8px; text-transform: uppercase; letter-spacing: -0.01em; }
+.landing-points p:not(.point-kicker) { margin: 0; padding: 0 8px; color: var(--ink-2); max-width: 40ch; }
+.point-more { margin: 6px 8px 0; color: var(--c); font-weight: 600; text-decoration: none; }
+.point-more::after { content: " →"; transition: margin 0.2s; }
+.point-more:hover::after { margin-left: 4px; }
+@media (prefers-reduced-motion: reduce) { .point, .point-more::after { transition: none; } .point-leds i { animation: none; } .point:hover { transform: none; } }
 .landing-more { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin: clamp(40px, 6vw, 72px) auto clamp(48px, 7vw, 96px); }
 .landing-more a { color: var(--ink); font-weight: 600; }
 @media (max-width: 720px) { .landing-points { grid-template-columns: 1fr; } }
 .nav nav.langs a { white-space: nowrap; }
 @media (max-width: 480px) { .landing .nav nav[aria-label="Sections"] a[href$="#shortcuts"] { display: none; } }
 @media (prefers-reduced-motion: reduce) {
-  .landing-stage, .landing-glow, .landing-screen, .landing-steps { animation: none; }
+  .landing-stage, .landing-glow, .landing-screen { animation: none; }
   .landing-button { transition: none; }
-  .landing-screen, .landing-steps { display: none; }
 }
 
 /* ---- the mascots (assets/aru.js): an octopus and a wolf pup, 32×32 sprites drawn at whole-pixel
@@ -572,3 +588,41 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .aru-crew figcaption { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-align: center; }
 @media (max-width: 560px) { .aru-crew { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .section-head .aru-tip { margin: 14px 0 0; }
+
+/* ---- the landing's device, traced in lines like a ghost button (tools/landing-blueprint.py) ---- */
+.bp-grid { background-image: linear-gradient(rgba(120, 170, 255, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(120, 170, 255, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px; background-position: center;
+  mask-image: radial-gradient(ellipse at center, #000 45%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 75%);
+  position: absolute; inset: -6% -4%; pointer-events: none; }
+.bp-stage { animation: none; }
+.bp { display: block; width: 100%; height: auto; overflow: visible; }
+.bp .ln { fill: none; stroke: rgba(236, 240, 248, 0.62); stroke-width: 1.25; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1; stroke-dashoffset: 1; animation: bp-draw 0.9s cubic-bezier(0.45, 0, 0.2, 1) calc(var(--d) + 0.1s) forwards; }
+.bp .ln.strong { stroke: rgba(246, 248, 252, 0.85); stroke-width: 1.6; }
+.bp .ln.faint { stroke: rgba(236, 240, 248, 0.28); }
+.bp .lamp { display: none; }
+.bp text { font-family: var(--font-cap); text-anchor: middle; fill: var(--c); opacity: 0;
+  animation: bp-lit 0.5s ease-out calc(var(--d) + 0.6s) forwards; filter: drop-shadow(0 0 4px var(--c)); }
+.bp line.lamp { display: inline; stroke: var(--c); stroke-width: 2; opacity: 0; animation: bp-lit 0.5s ease-out calc(var(--d) + 0.6s) forwards; }
+.bp .icon { fill: none; stroke: var(--c); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; opacity: 0;
+  filter: drop-shadow(0 0 4px var(--c)); animation: bp-lit 0.5s ease-out 2.1s forwards; }
+.bp .icon.fill { fill: var(--c); stroke: none; }
+.bp .step { fill: var(--c); opacity: 0; filter: drop-shadow(0 0 5px var(--c)); animation: bp-step 0.35s ease-out calc(4s + var(--i) * 0.06s) forwards; }
+@keyframes bp-draw { to { stroke-dashoffset: 0; } }
+@keyframes bp-lit { to { opacity: 1; } }
+@keyframes bp-step { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0.85; } }
+/* the screen: it powers on to the splash once drawn, then shows the app */
+.bp-screen { background: transparent; animation: none; }
+.bp-app { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: bp-lit 0.01s linear 2.3s forwards; }
+.bp-boot { position: absolute; inset: 0; display: grid; place-items: center; background: #06050a; opacity: 0;
+  animation: bp-power-on 0.3s ease-out 1.9s forwards, landing-power 0.5s ease-in-out 3.45s forwards; }
+.bp-boot .landing-splash { animation-delay: 3.1s; }
+.bp-boot .landing-fade { animation-delay: 2.1s; }
+.bp-boot .landing-halo { animation-delay: 2.2s; }
+@keyframes bp-power-on { from { opacity: 0; } to { opacity: 1; } }
+.landing-device:has(.bp) .landing-glow { background: radial-gradient(closest-side, rgba(74, 155, 255, 0.16), transparent); }
+@media (prefers-reduced-motion: reduce) {
+  .bp .ln { stroke-dashoffset: 0; animation: none; }
+  .bp text, .bp line.lamp, .bp .icon, .bp .step, .bp-app { opacity: 1; animation: none; }
+  .bp-boot { display: none; }
+}
