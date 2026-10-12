@@ -1,0 +1,354 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/translations.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Translations · ravving docs</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="MIKO, ravving">
+      <img src="../assets/miko-wordmark-dark.svg" alt="MIKO" width="459" height="146">
+      <span class="sep" aria-hidden="true"></span>
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="manual.html">The manual</a></li>
+<li><a href="video.html">Video recordings and the computer link</a></li>
+<li><a href="history.html">Undo and redo</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="scripting-projects.html">Building a project by script</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">The designs</p><ul>
+<li><a href="sections-plan.html">Sections and the song</a></li>
+<li><a href="sampler-plan.html">SAMPLE KING</a></li>
+<li><a href="mpc-sampler-plan.html">The PAD SAMPLER</a></li>
+<li><a href="recorder-plan.html">The RECORDER</a></li>
+<li><a href="streaming-plan.html">Streaming</a></li>
+<li><a href="design-reference.html">The design reference</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li class="on"><a href="translations.html" aria-current="page">Translations</a><ul><li><a href="#how-it-works">How it works</a></li><li><a href="#keys-stay-keys">Keys stay keys</a></li><li><a href="#contexts-and-markers">Contexts and markers</a></li><li><a href="#the-glossary">The glossary</a></li><li><a href="#lengths">Lengths</a></li><li><a href="#the-workflow">The workflow</a></li><li><a href="#the-webpage">The webpage</a></li><li><a href="#adding-a-language">Adding a language</a></li><li><a href="#every-release-review-the-translations">Every release: review the translations</a></li></ul></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+<li><a href="todo.html">What is pending</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker">Under the hood <span>/</span> docs/translations.md</p>
+<h1>Translations</h1>
+<p class="doc-blurb">KI18n in the app, keys against display text, the contexts, the glossary, the webpage&#x27;s catalogs, adding a language, the release review.</p>
+
+<p>ravving speaks English, Spanish and Japanese. Every text on its screen goes through
+<a href="https://api.kde.org/frameworks/ki18n/html/prg_guide.html" rel="noopener" target="_blank">KI18n</a>, KDE's gettext layer, and the
+webpage (site/) is translated from catalogs of its own. The docs stay in English.</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>App catalog</th>
+<th>Webpage catalog</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spanish (es)</td>
+<td>po/es/ravving.po</td>
+<td>po-site/es/ravving-site.po</td>
+</tr>
+<tr>
+<td>Japanese (ja)</td>
+<td>po/ja/ravving.po</td>
+<td>po-site/ja/ravving-site.po</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-it-works">How it works</h2>
+<ul>
+<li id="the-domain"><strong>The domain.</strong> <code>Localization</code> (src/backend/localization.cpp) sets the application domain
+  <code>ravving</code> right after the <code>QGuiApplication</code> is made, as the KI18n guide asks, and adds the
+  build tree's <code>locale/</code> folder so a build runs translated before it is installed. The
+  installed catalogs are <code>/usr/share/locale/&lt;lang&gt;/LC_MESSAGES/ravving.mo</code> (CMake's
+  <code>ki18n_install(po)</code>; the AppImage's <code>default-app.sh install</code> copies them too).</li>
+<li id="qml"><strong>QML.</strong> <code>KLocalization::setupLocalizedContext(&amp;engine)</code> (KF 6.8 and later) puts <code>i18n</code>,
+  <code>i18nc</code>, <code>i18np</code> and <code>i18ncp</code> on the root context, so QML calls them bare.</li>
+<li id="settings-language"><strong>SETTINGS · LANGUAGE.</strong> SYSTEM (the default) follows the device's own language; English,
+  Español and 日本語 pick one. The choice is kept in the profile settings (<code>ui/language</code>).</li>
+<li id="live-switching"><strong>Live switching.</strong> A change sets <code>KLocalizedString::setLanguages</code>, sends
+  <code>QEvent::LanguageChange</code> to the application and calls <code>QQmlEngine::retranslate()</code>: every
+  binding that calls <code>i18n…</code> is evaluated again, so the screen changes at once. C++ models
+  whose rows carry display text (the video tiers, FILES, the USB page, the audio outputs) catch
+  the <code>LanguageChange</code> event, as the Qt guide does for plain QObjects, and emit their NOTIFY.</li>
+<li id="numbers-and-dates"><strong>Numbers and dates.</strong> C++ formats them through KI18n (<code>subs(value, 0, 'f', 1)</code>); QML uses
+  <code>Rave.num(value, decimals)</code>, the locale of the language picked. Dates use <code>QLocale</code> of the
+  first language KI18n uses.</li>
+</ul>
+<h2 id="keys-stay-keys">Keys stay keys</h2>
+<p>Only display text is translated. A text that is stored, compared, sent or looked up stays
+English: the machine roles, preset and kit names, scale names, group names, the effect and
+knob names in data/engines.json, the menu ids, the fifo names, the CUIA names. The display is
+translated where it is drawn.</p>
+<ul>
+<li><strong>QML:</strong> <code>Rave.kli18nc(context, key)</code> marks a key for extraction and returns it unchanged
+  (the QML side of KI18n's <code>kli18nc</code>, as Qt's <code>QT_TR_NOOP</code>). The helpers translate at draw
+  time: <code>Rave.group</code>, <code>Rave.drumRow</code>, <code>Rave.param</code>, <code>Rave.paramGroup</code>, <code>Rave.effect</code>,
+  <code>Rave.choice</code>, <code>Rave.tuning</code>, <code>Rave.stringInstrument</code>, <code>Rave.inputMode</code>. Menus dispatch by
+  <code>id</code>, never by the text shown.</li>
+<li><strong>C++:</strong> tables of display text are <code>KLazyLocalizedString</code> (<code>kli18nc</code>), turned into text with
+  <code>.toString()</code> when read, so a language change shows at once. A message with values is a
+  <code>KLocalizedString</code> template (<code>ki18nc(…).subs(…)</code>) passed on and finished where it is shown.</li>
+<li><strong>List models</strong> carry a display role beside the key, as Qt's <code>QAbstractListModel</code> examples
+  do: the key for the logic, the display text for the screen.</li>
+<li id="data"><strong>Data.</strong> <code>tools/i18n-data.py</code> writes the vocabulary of the data files (drum rows, the
+  engines' knobs and cards, effects, scales, tunings, groups) as <code>i18nc</code> calls into the
+  extraction, as KDE's <code>rc.cpp</code> does, under the same contexts the helpers use.</li>
+</ul>
+<h2 id="contexts-and-markers">Contexts and markers</h2>
+<p>Every call is <code>i18nc</code> with a context saying what the text is, starting with a KDE UI marker:
+<code>@action:button</code>, <code>@option:check</code>, <code>@option:radio</code>, <code>@label</code>, <code>@title:window</code>, <code>@title:group</code>,
+<code>@item:inlistbox</code>, <code>@info</code>, <code>@info:status</code>, <code>@info:placeholder</code>. The context names the music
+meaning when a word has several ("SONG" the page, "SONG" the PLAY mode). All sound vocabulary
+shares one context, so a knob name is translated once.</p>
+<p>Names printed on the device stay English in every language: MENU, ALT, MODE, BACK, SELECT,
+PLAY, STOP, RECORD, X, Y. So do product and machine names (SAMPLE KING, PAD SAMPLER, POLY-6,
+the engines and kits), MIDI, USB, HDMI, SBC-XQ and LIVE FX. <code>tools/check-ui.py</code>'s
+<code>text-translatable</code> rule finds a display text that skips <code>i18n…</code>; its keep list holds these.</p>
+<h2 id="the-glossary">The glossary</h2>
+<p>The translations use the words musicians and producers use in each language.</p>
+<table>
+<thead>
+<tr>
+<th>English</th>
+<th>Spanish</th>
+<th>Japanese</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DRUMS</td>
+<td>BATERÍA</td>
+<td>ドラム</td>
+</tr>
+<tr>
+<td>BASS</td>
+<td>BAJO</td>
+<td>ベース</td>
+</tr>
+<tr>
+<td>CHORDS</td>
+<td>ACORDES</td>
+<td>コード</td>
+</tr>
+<tr>
+<td>LEAD</td>
+<td>LEAD</td>
+<td>リード</td>
+</tr>
+<tr>
+<td>SAMPLER</td>
+<td>SAMPLER</td>
+<td>サンプラー</td>
+</tr>
+<tr>
+<td>PADS</td>
+<td>PADS</td>
+<td>パッド</td>
+</tr>
+<tr>
+<td>SONG</td>
+<td>CANCIÓN</td>
+<td>ソング</td>
+</tr>
+<tr>
+<td>SECTION</td>
+<td>SECCIÓN</td>
+<td>セクション</td>
+</tr>
+<tr>
+<td>PATTERN</td>
+<td>PATRÓN</td>
+<td>パターン</td>
+</tr>
+<tr>
+<td>PRESET</td>
+<td>PRESET</td>
+<td>プリセット</td>
+</tr>
+<tr>
+<td>KICK / SNARE</td>
+<td>BOMBO / CAJA</td>
+<td>キック / スネア</td>
+</tr>
+<tr>
+<td>SCALE / ROOT</td>
+<td>ESCALA / TÓNICA</td>
+<td>スケール / ルート</td>
+</tr>
+<tr>
+<td>BAR / STEP</td>
+<td>COMPÁS / PASO</td>
+<td>小節 / ステップ</td>
+</tr>
+<tr>
+<td>LIVE REC</td>
+<td>REC EN VIVO</td>
+<td>ライブ録音</td>
+</tr>
+<tr>
+<td>RECORDER</td>
+<td>GRABADORA</td>
+<td>レコーダー</td>
+</tr>
+<tr>
+<td>TRACK</td>
+<td>PISTA</td>
+<td>トラック</td>
+</tr>
+<tr>
+<td>SETTINGS</td>
+<td>AJUSTES</td>
+<td>設定</td>
+</tr>
+<tr>
+<td>knob / big knob</td>
+<td>perilla / perilla grande</td>
+<td>ノブ / 大ノブ</td>
+</tr>
+</tbody>
+</table>
+<p>Japanese uses katakana for the studio words (ドラム, リバーブ, スケール) and kanji for plain
+ones (保存, 削除, 設定). Spanish has two plural forms, Japanese one.</p>
+<h2 id="lengths">Lengths</h2>
+<p>Spanish runs about a third longer than English. <code>ActionButton</code> and <code>Chip</code> shrink their text to
+fit, down to 75 % of its size; a text still too long is elided. Look at every page in Spanish
+after adding text.</p>
+<h2 id="the-workflow">The workflow</h2>
+<pre><code class="language-sh">sh tools/i18n-extract.sh              # sources → po/ravving.pot and po-site/ravving-site.pot, merged into every catalog
+# translate what it marked: empty or fuzzy entries (Lokalize, Poedit or a text editor)
+python3 tools/check-translations.py   # the ctest translations-current
+python3 tools/site-i18n.py render     # po-site → site/es/ and site/ja/
+</code></pre>
+<p><code>check-translations.py</code> fails when a template is stale, a catalog does not compile
+(<code>msgfmt --check</code>), a text is untranslated or fuzzy, a translation drops a placeholder (<code>%1</code>)
+or a markup tag (<code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>), or the rendered pages are older than their catalogs.</p>
+<h2 id="the-webpage">The webpage</h2>
+<p><code>tools/site-i18n.py extract</code> collects every block of text in site/index.html (a heading, a
+paragraph, a row's words, with their inline <code>&lt;b&gt;</code>, <code>&lt;a&gt;</code> and <code>&lt;br&gt;</code>), the <code>alt</code>, <code>title</code> and
+<code>aria-label</code> attributes, and site.js's captions and marks, into po-site/ravving-site.pot.
+<code>render</code> writes site/<lang>/index.html and site.js with the links pointing one folder up; the
+language switcher in the page's top bar links the three. <code>&lt;kbd&gt;</code>, <code>&lt;code&gt;</code> and anything marked
+<code>translate="no"</code> stay as they are. The page's catalogs live in po-site/, not po/, because
+<code>ki18n_install</code> compiles every catalog in po/ into the device's install.</p>
+<h2 id="adding-a-language">Adding a language</h2>
+<ol>
+<li><code>msginit --no-translator --no-wrap -l &lt;lang&gt; -i po/ravving.pot -o po/&lt;lang&gt;/ravving.po</code>, and
+   the same from po-site/ravving-site.pot into po-site/<lang>/ravving-site.po.</li>
+<li>Translate both, following the glossary above (add a column for the new language).</li>
+<li>Add the language to the <code>Languages</code> table in src/backend/localization.cpp, by its own name.</li>
+<li>Add its link to the switcher in site/index.html and its <code>hreflang</code> alternate.</li>
+<li>Run the workflow, then look at every page in the new language on the device.</li>
+</ol>
+<h2 id="every-release-review-the-translations">Every release: review the translations</h2>
+<p>Before every release, someone who reads the language reviews what changed in each catalog
+since the last release: new and changed texts, and the screens they appear on. Run
+<code>git diff v&lt;last&gt; -- po po-site</code>, take the screenshot tour in each language, and check that
+<code>ctest -R translations-current</code> passes. A release does not ship with fuzzy or untranslated
+texts.</p>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  function load(done) {
+    if (index) return done();
+    fetch("search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
+</body>
+</html>

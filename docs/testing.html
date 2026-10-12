@@ -59,6 +59,7 @@
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
+<li><a href="translations.html">Translations</a></li>
 <li><a href="ui-rules.html">UI rules</a></li>
 <li><a href="extending.html">Extending</a></li>
 <li><a href="building.html">Building</a></li>
@@ -286,6 +287,12 @@ sound by name, its MODS knobs as "CARD/KNOB", a drum kit or a sample by path, au
 knob. A change to <code>data/kits.json</code>, <code>data/engines.json</code> or the device's files can leave a saved
 project pointing at nothing, and it then opens on another sound, silently. Three checks catch it:</p>
 <ul>
+<li><strong>On the laptop, every change of text:</strong> <code>sh tools/i18n-extract.sh</code>, translate what it marks,
+  then <code>ctest -R translations-current</code> (<code>tools/check-translations.py</code>: templates current, catalogs
+  compile, nothing untranslated or fuzzy, placeholders and markup kept, the translated pages
+  rendered). To test a language on the device: <code>device.sh set localization language es</code>
+  (<code>ja</code>, <code>en</code>, or empty for the system's), then run the page suites in it: a suite that reads a
+  display text instead of a key fails there.</li>
 <li><strong>On the laptop, every change:</strong> <code>ctest -R projects</code> runs <code>tools/check-projects.py</code> over
   <code>data/demos</code> against the repo's kits.json and engines.json (sources, MODS knobs, automation
   lanes, kit roles, sections and the song).</li>

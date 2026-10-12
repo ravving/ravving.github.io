@@ -38,7 +38,7 @@
     </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
-<li class="on"><a href="manual.html" aria-current="page">The manual</a><ul><li><a href="#build-and-run-on-the-device">Build and run on the device</a></li><li><a href="#sending-to-a-phone">Sending to a phone</a></li><li><a href="#distribution-the-store-appimage">Distribution: the Store AppImage</a></li><li><a href="#run-on-a-desktop">Run on a desktop</a></li><li><a href="#theme">Theme</a></li><li><a href="#sound-sources">Sound sources</a></li><li><a href="#sections-and-the-song">Sections and the song</a></li><li><a href="#ui-rules">UI rules</a></li><li><a href="#startup-splash">Startup splash</a></li><li><a href="#exports-and-the-music-player">Exports and the music player</a></li><li><a href="#video-recordings-and-the-computer-link">Video recordings and the computer link</a></li><li><a href="#files">Files</a></li><li><a href="#usb-sticks">USB sticks</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#audio-output">Audio output</a></li><li><a href="#the-recorder">The RECORDER</a></li><li><a href="#the-issues-center">The issues center</a></li><li><a href="#the-audio-graph">The audio graph</a></li><li><a href="#where-ravving-keeps-its-files">Where ravving keeps its files</a></li><li><a href="#environment-variables">Environment variables</a></li><li><a href="#remote-control">Remote control</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#license">License</a></li></ul></li>
+<li class="on"><a href="manual.html" aria-current="page">The manual</a><ul><li><a href="#build-and-run-on-the-device">Build and run on the device</a></li><li><a href="#sending-to-a-phone">Sending to a phone</a></li><li><a href="#distribution-the-store-appimage">Distribution: the Store AppImage</a></li><li><a href="#run-on-a-desktop">Run on a desktop</a></li><li><a href="#theme">Theme</a></li><li><a href="#sound-sources">Sound sources</a></li><li><a href="#sections-and-the-song">Sections and the song</a></li><li><a href="#ui-rules">UI rules</a></li><li><a href="#languages">Languages</a></li><li><a href="#startup-splash">Startup splash</a></li><li><a href="#exports-and-the-music-player">Exports and the music player</a></li><li><a href="#video-recordings-and-the-computer-link">Video recordings and the computer link</a></li><li><a href="#files">Files</a></li><li><a href="#usb-sticks">USB sticks</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#audio-output">Audio output</a></li><li><a href="#the-recorder">The RECORDER</a></li><li><a href="#the-issues-center">The issues center</a></li><li><a href="#the-audio-graph">The audio graph</a></li><li><a href="#where-ravving-keeps-its-files">Where ravving keeps its files</a></li><li><a href="#environment-variables">Environment variables</a></li><li><a href="#remote-control">Remote control</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#license">License</a></li></ul></li>
 <li><a href="video.html">Video recordings and the computer link</a></li>
 <li><a href="history.html">Undo and redo</a></li>
 <li><a href="bluetooth.html">Bluetooth</a></li>
@@ -59,6 +59,7 @@
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
+<li><a href="translations.html">Translations</a></li>
 <li><a href="ui-rules.html">UI rules</a></li>
 <li><a href="extending.html">Extending</a></li>
 <li><a href="building.html">Building</a></li>
@@ -483,8 +484,9 @@ one on screen is the one you edit, and what you edit stays in it when you pick a
 <li id="seeing-the-change"><strong>Seeing the change.</strong> As the section sounding changes (a SONG part, or a LOOP pick landing on
   the bar line) the plate sweeps in its colour and the instrument page glows round its frame in
   it, once; the section keys (here and on the SONG page) fill with the section's progress.</li>
-<li><strong>The SONG page</strong>, under the header like the MIXER, follows easyrave's SECTIONS shelf at a
-  finger's size: square keys wearing their number with the name under (eight a row, the first
+<li><strong>The SONG page</strong>, under the header like the MIXER (ALT + 1 from anywhere, again to go back),
+  wears its own nameplate as an instrument does and follows easyrave's SECTIONS shelf at a
+  finger's size, in a frame as the instruments' grids: square keys wearing their number with the name under (eight a row, the first
   row being the ALT keys), a dot per sounding machine; tap picks, double tap renames, hold and
   drag moves, × deletes (a second tap), ＋ copies the section on screen (A → A′). Under them:
   RENAME, NEW (empty), COLOUR, LENGTH (1–8 bars or AUTO, the longest pattern), MOVE, ADD TO
@@ -518,6 +520,15 @@ rules: squared <code>ActionButton</code>s for actions and rounded chips for stat
 leave and no CLOSE / CANCEL buttons, an <code>EmptyNote</code> in every empty view, <code>Chassis</code> / <code>PageHeader</code>
 for pages, and palettes readable by WCAG contrast. <code>tools/check-ui.py</code> checks them
 (<code>ctest -R ui-rules</code>, <code>tools/static-analysis.sh ui</code>) from <code>tools/ui-rules.json</code>, where new rules go.</p>
+<h2 id="languages">Languages</h2>
+<p>ravving speaks English, Spanish and Japanese, with the words musicians use in each (BATERÍA,
+BOMBO, COMPÁS; ドラム, キック, 小節). MENU → SETTINGS → LANGUAGE: SYSTEM (the default) follows
+the device's own language, or pick English, Español or 日本語; the screen changes at once. The
+keys printed on the device (MENU, ALT, SELECT…) and the machines' names stay as printed. The
+webpage has Spanish and Japanese pages too (the switcher in its top bar); the docs are in
+English. It is KI18n with gettext catalogs: one catalog per language for the app (po/) and one
+for the page (po-site/), so a new language is two files to translate. <strong>Every release has its
+translations reviewed.</strong> <code>docs/translations.md</code> has how it works, the glossary and the steps.</p>
 <h2 id="startup-splash">Startup splash</h2>
 <p>ravving shows its logo while it starts (StartupSplash, qml/Splash.qml and SplashLook.qml), from
 the moment libzynthbox is up until the page is ready, then plays a short show into the page.
@@ -845,6 +856,8 @@ device's copy follows the next deploy.</p>
 <li><code>docs/scripting-projects.md</code>: building a whole project by script over the fifo.</li>
 <li><code>docs/testing.md</code>: the device test tools and suites (<code>pads-test.sh</code>, <code>sections-test.sh</code>…).</li>
 <li><code>docs/design-reference.md</code>: the design reference, machine by machine.</li>
+<li><code>docs/translations.md</code>: KI18n, keys against display text, the glossary, the webpage's
+  catalogs, adding a language and the review every release.</li>
 </ul>
 <h2 id="license">License</h2>
 <p>GPL-3.0-or-later. Copyright (C) 2026 Camilo Higuita.</p>

@@ -59,6 +59,7 @@
 <li class="on"><a href="architecture.html" aria-current="page">Architecture</a><ul><li><a href="#layers">Layers</a></li><li><a href="#input-flow-the-hardware-attached-property">Input flow: the Hardware attached property</a></li><li><a href="#backend-srcbackend">Backend (src/backend/)</a></li><li><a href="#qml-components">QML components</a></li><li><a href="#the-libzynthbox-bridge">The libzynthbox bridge</a></li><li><a href="#porting-status-zynthbox-qml-python-ravving-c">Porting status (zynthbox-qml Python → ravving C++)</a></li><li><a href="#device-workflow">Device workflow</a></li><li><a href="#distribution">Distribution</a></li></ul></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
+<li><a href="translations.html">Translations</a></li>
 <li><a href="ui-rules.html">UI rules</a></li>
 <li><a href="extending.html">Extending</a></li>
 <li><a href="building.html">Building</a></li>
@@ -174,6 +175,10 @@ still not accepted. A handler that runs accepts the event unless it sets
 - ALT + ◀ / ▶ undo and redo the pattern of the machine on screen (the toolbar's ↶ ↷).
 - ALT + ▲ gives the focus to the app header at once, from wherever it is (a page's rows, a
   section's cards, the strip): <code>Ravving.headerRequested</code>, raised in C++ before any dispatch.
+- ALT + 1 opens the SONG page from anywhere, and again goes back to the page
+  (<code>Ravving.songRequested</code>, raised in C++ before any dispatch, its press swallowed too).
+- The header's INSTRUMENTS chips light the machine on screen only: none while the MIXER, the
+  SONG page, the music player or the RECORDER covers the pages (<code>Session.pageCovered</code>).
 - AUTO: the header's AUTO arms recording (<code>Studio.recordAutomation</code>): while playing, a SOUND
   MODIFIERS or SOUND EFFECTS knob turned is written into its machine's pattern at the step
   playing (<code>Machine</code> automation lanes, step → value, undoable, saved); the toolbar's AUTO plays
@@ -398,7 +403,7 @@ ravving's C++ objects standing in for the Python ones libzynthbox talks to:</p>
 </tr>
 <tr>
 <td><code>DeviceControls</code></td>
-<td>the control center's device side (<code>device</code>): screen brightness (the backlight in /sys/class/backlight, 5 % a knob detent as Plasma's applet), the output jacks' level (the LM4811 through zyncoder, <code>ZynthboxBridge::setOutputLevel</code>), both kept in QSettings <code>ravving/device</code> and put back at start; Wi-Fi (<code>device.wifi</code>, below); Bluetooth power (bluetoothctl, only while the service runs); the address shown (Wi-Fi's, else any network's); CPU, temperature, free storage; reboot / power off. Polled every 2 s only while the drawer is open; commands run through <code>runCommand</code> (command.h: asynchronous, 4 s timeout)</td>
+<td>the control center's device side (<code>device</code>): screen brightness (the backlight in /sys/class/backlight, 5 % a knob detent as Plasma's applet, never under 30 %: lower looked like a dead screen; a fixed pot spans 30–100 %), the output jacks' level (the LM4811 through zyncoder, <code>ZynthboxBridge::setOutputLevel</code>), both kept in QSettings <code>ravving/device</code> and put back at start; Wi-Fi (<code>device.wifi</code>, below); Bluetooth power (bluetoothctl, only while the service runs); the address shown (Wi-Fi's, else any network's); CPU, temperature, free storage; reboot / power off. Polled every 2 s only while the drawer is open; commands run through <code>runCommand</code> (command.h: asynchronous, 4 s timeout)</td>
 <td>zynthbox-qml's settings pages</td>
 </tr>
 <tr>

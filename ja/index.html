@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+
+<!--
+  ravving on MIKO: the hardware shortcuts and the features.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+
+  Plain HTML and CSS, no build step. The shortcut list follows docs/architecture.md
+  ("Input flow: the Hardware attached property"), README.md and docs/video.md; the features
+  follow README.md, docs/ and data/secret/README.md, and link into docs/ (rendered pages of
+  the same markdown, tools/build-site-docs.py). See README.md in this folder to keep them in
+  sync and to retake a screenshot.
+-->
+<html class="no-js" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>MIKO の ravving · ショートカットと機能</title>
+<meta content="MIKO M01 のキーとノブが ravving（Zynthbox 用のグルーヴボックス mod）で何をするか、そしてアプリでできること：ページ、プリセット、セクション、サンプラー、レコーダー、ビデオ、共有。" name="description"/>
+<link href="../site.css" rel="stylesheet"/>
+<link href="../index.html" hreflang="en" rel="alternate"/>
+<link href="../es/index.html" hreflang="es" rel="alternate"/>
+<link href="../ja/index.html" hreflang="ja" rel="alternate"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E" rel="icon"/>
+</head>
+<body>
+<a class="skip" href="#shortcuts">ショートカットへ移動</a>
+<header class="nav">
+<div class="wrap">
+<a aria-label="MIKO, ravving" class="brand" href="#top">
+<img alt="MIKO" height="146" src="../assets/miko-wordmark-dark.svg" width="459"/>
+<span aria-hidden="true" class="sep"></span>
+<img alt="ravving" class="ravving" height="104" src="../assets/ravving-wordmark.svg" width="822"/>
+</a>
+<nav aria-label="セクション"><a href="#shortcuts">ショートカット</a>
+<a href="#features">機能</a>
+<a href="../docs/index.html">ドキュメント</a></nav>
+<nav aria-label="Language" class="langs" translate="no">
+<a href="../index.html" hreflang="en" lang="en">EN</a>
+<a href="../es/index.html" hreflang="es" lang="es">ES</a>
+<a href="../ja/index.html" hreflang="ja" lang="ja">日本語</a>
+</nav>
+</div>
+</header>
+<main id="top">
+<section class="hero">
+<div class="wrap">
+<div class="kicker mono"><b>MIKO M01</b> <span>/</span> <span>ravving · グルーヴボックス mod</span></div>
+<h1>Every key.<br/>Every knob.<br/><span>ravving で。</span></h1>
+<p class="lede"><b>MIKO</b> はハードウェア：16 個のステップキー、5 個のページキー、3 個のエンコーダーとジョグホイールを備えた Zynthbox のオープンな楽器です。<b>ravving</b> はその上で動く代替アプリ（mod）で、5 ページ（ドラム、コード、ベース、リード、サンプラー）にセクション、ミキサー、レコーダーを備えたグルーヴボックスです。このページは、ravving が画面にあるときのパネルの働きと、アプリでできることの案内図です。</p>
+<div class="meta">
+<div><span class="mono">ステップキー</span><strong>16</strong></div>
+<div><span class="mono">ページキー</span><strong>5 + ✱</strong></div>
+<div><span class="mono">エンコーダー</span><strong>3 + 大ノブ</strong></div>
+<div><span class="mono">モディファイア</span><strong>ALT</strong></div>
+<div><span class="mono">アプリ</span><strong>ravving</strong></div>
+</div>
+</div>
+</section>
+<section class="wrap">
+<div class="stage">
+<div class="device">
+<img alt="画面に ravving を表示した MIKO M01 のフロントパネル：左にページキー、画面、その下に 16 個のステップキー、下部にトランスポートとナビゲーションのキー、右に 3 個のエンコーダー、GLOBAL キーと大ノブ" height="1086" src="../assets/miko-m01.webp" width="1448"/>
+</div>
+<!-- the numbered regions, placed over the artwork in percent of its size -->
+<a class="region" data-region="1" href="#knobs" style="--c: var(--r1); left: 77.6%; top: 14.6%; width: 15%; height: 74.4%"><span class="n">1</span><span class="lbl">ノブ</span></a>
+<a class="region" data-region="2" href="#pagekeys" style="--c: var(--r2); left: 8.9%; top: 18.9%; width: 9%; height: 43.2%"><span class="n">2</span><span class="lbl">ページキー</span></a>
+<a class="region" data-region="3" href="#stepkeys" style="--c: var(--r3); left: 21.1%; top: 65.1%; width: 50.8%; height: 6.3%"><span class="n">3</span><span class="lbl">ステップキー</span></a>
+<a class="region" data-region="4" href="#transport" style="--c: var(--r4); left: 21.2%; top: 74.6%; width: 18.8%; height: 11.8%"><span class="n">4</span><span class="lbl">トランスポート</span></a>
+<a class="region" data-region="5" href="#navigation" style="--c: var(--r5); left: 43.8%; top: 74.6%; width: 28.2%; height: 11.8%"><span class="n">5</span><span class="lbl">ナビゲーション</span></a>
+<a class="region" data-region="6" href="#alt" style="--c: var(--r6); left: 10.3%; top: 75.1%; width: 6.8%; height: 5.7%"><span class="n">6</span><span class="lbl">ALT</span></a>
+</div>
+<div class="legend"><a href="#knobs" style="--c: var(--r1)"><i></i>1 ノブ</a>
+<a href="#pagekeys" style="--c: var(--r2)"><i></i>2 ページキー</a>
+<a href="#stepkeys" style="--c: var(--r3)"><i></i>3 ステップキー</a>
+<a href="#transport" style="--c: var(--r4)"><i></i>4 トランスポート</a>
+<a href="#navigation" style="--c: var(--r5)"><i></i>5 ナビゲーション</a>
+<a href="#alt" style="--c: var(--r6)"><i></i>6 ALT</a></div>
+</section>
+<section class="section" id="shortcuts">
+<div class="wrap">
+<div class="section-head">
+<h2>ショートカット</h2>
+<p>パネルの領域ごとに 1 枚のカード。行にカーソルを合わせるかタップすると画面上の場所が表示され、画像の枠が見るべき所を指します。</p>
+</div>
+<div class="cards">
+<!-- 1 KNOBS -->
+<article class="card" data-region="1" id="knobs" style="--c: var(--r1)">
+<div class="card-head"><span class="n">1</span><h3>ノブ</h3><small>エンコーダー 3 個 · 大ノブ</small></div>
+<ul class="rows">
+<li class="row" data-marks="bigknob-fader" data-shot="page3">
+<span class="keys"><kbd class="knob big"><span>BIG</span></kbd></span>
+<span class="what"><b>画面のマシンの音量</b><small>ページ内では大ノブは常に表示中の楽器のフェーダーです。フェーダーには大ノブのバッジが付きます。</small></span>
+</li>
+<li class="row" data-marks="master" data-shot="page1">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob big"><span>BIG</span></kbd></span>
+<span class="what"><b>マスター音量（どこからでも）</b><small>ヘッダーの MASTER ダイヤルにバッジが付きます。フォーカスがどこにあってもページには届きません。</small></span>
+</li>
+<li class="row" data-marks="header-group" data-shot="header-focus">
+<span class="keys"><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+<span class="what"><b>フォーカス中のグループのノブ</b><small>ダイヤルのグループは操作対象をノブ 1–3 に割り当て、各対象に番号付きの小さなノブバッジが表示されます。大ノブでグループのリストを移動し（INSTRUMENTS：ノブ 1）、SELECT で決定します。</small></span>
+</li>
+<li class="row" data-marks="fx-sends" data-shot="alt-held">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+<span class="what"><b>FX センド：フェイザー、エコー、ヘビー</b><small>ALT を押している間はヘッダーのセンドを操作します：バッジ、枠、ピックアップがそちらへ移ります。</small></span>
+</li>
+<li class="row" data-marks="note-readout" data-shot="bass-select">
+<span class="keys"><kbd class="ui">SELECT</kbd><i class="then">次に</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+<span class="what"><b>ノートの 長さ、ベロシティ、ナッジ</b><small>ベースとリード：ツールバーの 選択 をオンにしてノートを選ぶと、ノブ 1 が長さ（1 クリック 1 ステップ、1 ステップ〜4 小節）、ノブ 2 がベロシティ（1 クリック 4、1–127）、ノブ 3 がナッジ（ステップの 1/16、半ステップ前〜後）になります。グリッド右上の表示は最初のノートの値で、1 クリックごとに 1 回の取り消し単位です。</small></span>
+</li>
+<li class="row" data-marks="strip" data-shot="strip-knobs">
+<span class="keys"><kbd class="ui">strip</kbd><i class="then">次に</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd></span>
+<span class="what"><b>マシンの パン と 音量</b><small>マシンのストリップをタップ：ノブ 1 でパン、ノブ 2 でレベル。BACK またはグリッドのタップでノブは行の操作に戻ります。</small></span>
+</li>
+<li class="row" data-marks="mixer-strip" data-shot="mixer-strip">
+<span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd><i class="then">次に</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob big"><span>BIG</span></kbd></span>
+<span class="what"><b>ミキサーで：レベル、パン、微調整レベル</b><small>選んだストリップ（◀ ▶ またはステップキー）の、ノブ 1 がレベル、ノブ 2 がパン、大ノブがレベルの微調整。</small></span>
+</li>
+<li class="row" data-marks="menu-sliders" data-shot="menu">
+<span class="keys"><kbd class="cap c-menu">MENU</kbd><i class="then">次に</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd></span>
+<span class="what"><b>コントロールセンターで：明るさ、出力</b><small>ノブ 1 が画面の明るさ、ノブ 2 が出力レベル。固定ポットはまず値をピックアップし、その値に達するか越えるまで何も変えません。明るさは 30 % 未満にならないので、画面が消えたように見えることはありません。</small></span>
+</li>
+<li class="row" data-marks="recorder-gain" data-shot="recorder">
+<span class="keys"><kbd class="ui">RECORDER</kbd><i class="then">次に</i><kbd class="knob big"><span>BIG</span></kbd></span>
+<span class="what"><b>レコーダーで：入力 ゲイン</b><small>数字キーでノブ 1–3 を 入力（1）、チューナー（2）、エフェクト（3）に切り替えます。</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- 2 PAGE KEYS -->
+<article class="card" data-region="2" id="pagekeys" style="--c: var(--r2)">
+<div class="card-head"><span class="n">2</span><h3>ページキー</h3><small>MENU · 1–5 · ✱ · MODE</small></div>
+<ul class="rows">
+<li class="row" data-marks="menu-drawer" data-shot="menu">
+<span class="keys"><kbd class="cap c-menu">MENU</kbd></span>
+<span class="what"><b>コントロールセンター</b><small>ミキサー、Wi‑Fi、Bluetooth、MIDI、システム、ビデオ、レコーダー、ミュージックプレーヤー、設定、電源の列（再起動 と 電源オフ は 3 秒以内にもう一度押す必要があります）。◀ ▶ でアクションを移動し、SELECT で実行します。</small></span>
+</li>
+<li class="row" data-marks="nameplate" data-shot="page1-drums2">
+<span class="keys"><kbd class="cap c-n1">1</kbd></span>
+<span class="what"><b>ドラム</b><small>もう一度押すと 3 台のドラムマシンを切り替えます：ドラム 1 → 2 → 3（ネームプレートに表示）。</small></span>
+</li>
+<li class="row" data-marks="nameplate" data-shot="page2">
+<span class="keys"><kbd class="cap c-n2">2</kbd></span>
+<span class="what"><b>コード</b><small>POLY‑6 のページ：コード、ノート、スロット のビュー。</small></span>
+</li>
+<li class="row" data-marks="nameplate" data-shot="page3">
+<span class="keys"><kbd class="cap c-n3">3</kbd></span>
+<span class="what"><b>ベース</b><small>ベースのページ：Nekobi（303）、アクセント と スライド 付きのモノラインです。</small></span>
+</li>
+<li class="row" data-marks="nameplate" data-shot="page4">
+<span class="keys"><kbd class="cap c-n4">4</kbd></span>
+<span class="what"><b>リード</b><small>Calf Monosynth、レガートとポルタメント。</small></span>
+</li>
+<li class="row" data-marks="nameplate" data-shot="page5">
+<span class="keys"><kbd class="cap c-n5">5</kbd></span>
+<span class="what"><b>サンプラー</b><small>もう一度押すと SAMPLE KING ⇄ PAD SAMPLER を切り替えます。選択は再起動後も保持されます。</small></span>
+</li>
+<li class="row" data-marks="mixer" data-shot="mixer">
+<span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd></span>
+<span class="what"><b>ミキサーを開く・閉じる</b><small>すべてのストリップを一度に表示。数字キーでそのページへ、BACK か ✱ で戻ります。</small></span>
+</li>
+<li class="row" data-marks="mode-lamp" data-shot="mode-live">
+<span class="keys"><kbd class="cap c-mode">MODE</kbd></span>
+<span class="what"><b>画面の楽器の入力モード</b><small>オフ → ライブ → ステップ + ライブ → オフ（どこからでも）。MODE の LED で状態がわかります。ライブ ではステップキーがそのマシンのパッドになります。</small></span>
+</li>
+<li class="row" data-marks="header-deck" data-shot="alt-mode">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-mode">MODE</kbd></span>
+<span class="what"><b>ヘッダーの表示を切り替える</b><small>セクションキーが LIVE FX パッドの位置に入れ替わります（もう一度で元に戻る）。ALT を押している間 MODE がオレンジに点灯します。プロジェクトのプレートを長押ししても同じです。</small></span>
+</li>
+<li class="row" data-marks="recorder-tabs" data-shot="recorder">
+<span class="keys"><kbd class="ui">RECORDER</kbd><i class="then">次に</i><kbd class="cap c-n1">1</kbd><kbd class="cap c-n2">2</kbd><kbd class="cap c-n3">3</kbd></span>
+<span class="what"><b>レコーダーで：入力、チューナー、エフェクト</b><small>ノブを 3 つのパネル間で切り替えます。</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- 3 STEP KEYS -->
+<article class="card" data-region="3" id="stepkeys" style="--c: var(--r3)">
+<div class="card-head"><span class="n">3</span><h3>ステップキー</h3><small>1–16</small></div>
+<ul class="rows">
+<li class="row" data-marks="grid" data-shot="page1">
+<span class="keys"><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>ステップを打ち込む</b><small>ライブ オフ：キーを離すと選択行のステップがオン/オフします。キー 1 つが画面の小節の 1 ステップです。LED は再生位置を追います。</small></span>
+</li>
+<li class="row" data-marks="grid" data-shot="mode-live">
+<span class="keys"><kbd class="cap c-mode">MODE</kbd><i class="then">次に</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>ライブ オンで演奏</b><small>ドラム：キー 1–8 で各行を演奏、キー 9 を押しながらでアクセント。ベース、リード、コードの ノート：16 キーすべてにスケール、▲ ▼ でオクターブ移動。コード と スロット：7 つのコードキー。再生中に録音オンなら最も近いステップに記録、停止中のステップ入力ではカーソル位置に記録します。</small></span>
+</li>
+<li class="row" data-marks="livefx" data-shot="alt-held">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s3">8</kbd></span>
+<span class="what"><b>LIVE FX パッド</b><small>ドロップ、キックなし、キックのみ、ビットクラッシュ、ローパス、ハイパス、スタッター、ループ の順です。ALT を押している間キーがオレンジに光り、パッドにキー番号が表示されます。</small></span>
+</li>
+<li class="row" data-marks="sections" data-shot="alt-mode">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s4">9</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>セクション 1–8（どのページからでも）</b><small>ALT を押している間、各セクションの色で点灯します。セクションキーをヘッダーに出していると（ALT + MODE）、ALT + 1–16 でセクション 1–16 を選べ、そのグループにフォーカスがあればステップキーだけで選べます。</small></span>
+</li>
+<li class="row" data-marks="mixer-strip" data-shot="mixer-strip">
+<span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd><i class="then">次に</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s4">9</kbd></span>
+<span class="what"><b>ミキサーで：ストリップを選ぶ</b><small>ステップの LED がストリップを表し、ミュート中は暗く、選択中は白く光ります。</small></span>
+</li>
+<li class="row" data-marks="pads" data-shot="page5-pads">
+<span class="keys"><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>PAD SAMPLER：16 個のパッド</b><small>ライブ オンでキーがパッドを鳴らします。0.5 秒以上押すとそのパッドがループでラッチされ、ラッチ中のパッドのキーを押すと止まります。STOP でラッチ中のループをすべて止めます。</small></span>
+</li>
+<li class="row" data-marks="cursor" data-shot="page3">
+<span class="keys"><kbd class="cap c-s1">1</kbd><i class="plus">+</i><kbd class="cap c-s2">5</kbd></span>
+<span class="what"><b>同時に押したキーは 1 ステップに</b><small>ステップ入力：1 列に和音を入力。</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- 4 TRANSPORT -->
+<article class="card" data-region="4" id="transport" style="--c: var(--r4)">
+<div class="card-head"><span class="n">4</span><h3>トランスポート</h3><small>● ▶ メトロノーム ■</small></div>
+<ul class="rows">
+<li class="row" data-marks="playing" data-shot="playing">
+<span class="keys"><kbd class="cap c-play"><span class="ico">▶</span></kbd></span>
+<span class="what"><b>再生</b><small>ループ、または ソング モードではソング全体。再生中はノートのグリッドがロックされ（ロック）、うっかり触れても演奏内容は変わりません。再生中は PLAY の LED が明るく光ります。</small></span>
+</li>
+<li class="row" data-marks="transport" data-shot="playing">
+<span class="keys"><kbd class="cap c-stop"><span class="ico">■</span></kbd></span>
+<span class="what"><b>停止</b><small>グリッドのロックを解除します。ビデオ がオンのときは録画を終了し（またはカウントダウンを取り消し）、音楽は鳴らし続けます。PAD SAMPLER のラッチ中ループと、レコーダーで選んだ録音の再生も止めます。</small></span>
+</li>
+<li class="row" data-marks="transport" data-shot="page1">
+<span class="keys"><kbd class="cap c-stop"><span class="ico">■</span></kbd><i class="then">停止中</i></span>
+<span class="what"><b>パニック：全ノートオフ</b><small>すべての楽器の鳴りっぱなしのノートを止めます。</small></span>
+</li>
+<li class="row" data-marks="strip-rec" data-shot="page1">
+<span class="keys"><kbd class="cap c-rec"><span class="ico">●</span></kbd></span>
+<span class="what"><b>画面のマシンのテイクを録音</b><small>楽器のページで：ストリップの ● は、停止中なら 1 小節のカウントイン、再生中ならループの頭からパンチインし、ループごとに重ね録りします。RECORD の LED はマシンの色になります。</small></span>
+</li>
+<li class="row" data-marks="header-rec" data-shot="header-focus">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-rec"><span class="ico">●</span></kbd></span>
+<span class="what"><b>ミックス全体を録音</b><small>全体録音（ヘッダーの ●、RECORD の LED が赤）をどこからでも。ヘッダーにフォーカスがあるときの RECORD も同じです。</small></span>
+</li>
+<li class="row" data-marks="video-card" data-shot="menu">
+<span class="keys"><kbd class="ui">VIDEO</kbd><i class="then">次に</i><kbd class="cap c-rec"><span class="ico">●</span></kbd><span class="plus">/</span><kbd class="cap c-stop"><span class="ico">■</span></kbd></span>
+<span class="what"><b>ビデオの開始と終了</b><small>コントロールセンターの ビデオ がオンのとき、どのページからでも RECORD で画面（または USB カメラ）とマスターの音の録画を開始し、STOP で終了します。プレートには「ライブ録音 準備完了 · ● で録音」、次に「● REC 01:23」と表示されます。</small></span>
+</li>
+<li class="row" data-marks="metronome" data-shot="page1">
+<span class="keys"><kbd class="cap c-metro"><span class="ico">♩</span></kbd></span>
+<span class="what"><b>メトロノーム</b><small>libzynthbox のクリック音をマスターに出します。テイク録音中はオンのままです。</small></span>
+</li>
+<li class="row" data-marks="recorder-rec" data-shot="recorder">
+<span class="keys"><kbd class="ui">RECORDER</kbd><i class="then">次に</i><kbd class="cap c-rec"><span class="ico">●</span></kbd><kbd class="cap c-play"><span class="ico">▶</span></kbd><kbd class="cap c-stop"><span class="ico">■</span></kbd></span>
+<span class="what"><b>レコーダーで：テイク、試聴、停止</b><small>RECORD で入力を自由にテイク録音、SELECT か PLAY で選んだ録音を試聴、STOP で停止。◀ ▶ で入力、▲ ▼ で録音を選びます。</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- 5 NAVIGATION -->
+<article class="card" data-region="5" id="navigation" style="--c: var(--r5)">
+<div class="card-head"><span class="n">5</span><h3>ナビゲーション</h3><small>BACK · ▲ ▼ ◀ ▶ · SELECT</small></div>
+<ul class="rows">
+<li class="row" data-marks="walk" data-shot="page3">
+<span class="keys"><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+<span class="what"><b>ページ内を移動</b><small>マシンごとの縦の順序：ヘッダー → ストリップ → サウンドモディファイアのカード（開いているとき）→ エディター → サウンドエフェクトのカード（開いているとき）。エディターではまず行（ドラムの行、ノートの行）を移動します。</small></span>
+</li>
+<li class="row" data-marks="header-group" data-shot="header-focus">
+<span class="keys"><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><i class="then">最上部で</i></span>
+<span class="what"><b>ヘッダーに入る</b><small>ストリップの上で ▲ を押すとヘッダーの最初のグループへ。そこでは ◀ ▶ でグループ（キー、トランスポート、テンポ、LIVE FX、インストゥルメント、マスター）を移動し、▼ か BACK でページに戻ります。</small></span>
+</li>
+<li class="row" data-marks="header-group" data-shot="header-focus">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd></span>
+<span class="what"><b>どこからでもヘッダーへ直接</b><small>ページの行、セクションのカード、ストリップのどこからでも。</small></span>
+</li>
+<li class="row" data-marks="side-keys" data-shot="page2">
+<span class="keys"><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><kbd class="cap c-arrow"><span class="ico">▶</span></kbd></span>
+<span class="what"><b>ページ内の切り替え</b><small>エディターにフォーカスがあるときのコードのビュー、ドラムマシン、サンプラーのバンク。切り替え可能なときはキーが光ります。ステップ入力では入力カーソルを 1 ステップ動かし、サウンドエフェクトのバーではチップを移動します。</small></span>
+</li>
+<li class="row" data-marks="undo" data-shot="page3">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><span class="plus">/</span><kbd class="cap c-arrow"><span class="ico">▶</span></kbd></span>
+<span class="what"><b>取り消し / やり直し</b><small>ヘッダーの ↶ ↷ と同じプロジェクトの履歴：パターン、スロット、アレンジ。複数のマシンにまたがる変更も 1 ステップです。音色、ミックス、設定は取り消しの対象外です。</small></span>
+</li>
+<li class="row" data-marks="plate" data-shot="page3">
+<span class="keys"><kbd class="cap c-xy"><span>X</span></kbd><kbd class="cap c-xy"><span>Y</span></kbd></span>
+<span class="what"><b>前 / 次のセクション</b><small>どのページやダイアログからでも、端で折り返して選びます。セクションキーと同じく、再生中は次の小節から、停止中はすぐに切り替わります（待機中はプレートが点滅）。切り替わる前にもう一度押すと、キューに追加せず選択を先へ進めます。</small></span>
+</li>
+<li class="row" data-marks="cursor" data-shot="page3">
+<span class="keys"><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+<span class="what"><b>カーソル位置に入力 · 切り替え · 実行</b><small>停止中のステップ入力：エディターで選んだ行（ノート、コードページではコード）をカーソル位置に書き込みます。サウンドエフェクトのカードやバーでは：エフェクトをオン/オフ。コントロールセンターでは：枠のアクションを実行します。</small></span>
+</li>
+<li class="row" data-marks="picked" data-shot="bass-select">
+<span class="keys"><kbd class="ui">SELECT</kbd><i class="then">次に</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+<span class="what"><b>選んだノートを移動</b><small>ツールバーの 選択 がオンのとき、▲ ▼ で選んだノートをキーの音 1 つ分上下に移動します（♭♯ オンなら半音）。長さ、アクセント、スライドは保たれ、◀ ▶ で 1 ステップ移動します。和音はまとめて動きます。</small></span>
+</li>
+<li class="row" data-marks="grid" data-shot="mode-live">
+<span class="keys"><kbd class="cap c-mode">MODE</kbd><i class="then">ライブ</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+<span class="what"><b>オクターブ、または耳で行を選ぶ</b><small>メロディのページでライブ オン：▲ ▼ でステップキーのオクターブを移動。ライブ と ステップ がオン：行を移動し、各行が鳴って確認できます。</small></span>
+</li>
+<li class="row" data-marks="mixer-strip" data-shot="mixer-strip">
+<span class="keys"><kbd class="cap c-star"><span class="ico">✱</span></kbd><i class="then">次に</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><kbd class="cap c-arrow"><span class="ico">▶</span></kbd><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+<span class="what"><b>ミキサーで：選択、ミュート、ソロ</b><small>◀ ▶ でストリップを選び、SELECT でミュート、ALT + SELECT でソロ。BACK か ✱ で戻ります。</small></span>
+</li>
+<li class="row" data-marks="fx-bar" data-shot="page2">
+<span class="keys"><kbd class="cap c-back two"><span>BACK</span><span>NO</span></kbd></span>
+<span class="what"><b>戻る、閉じる、返す</b><small>開いたセクションを閉じてフォーカスをエディターに戻し、ストリップのノブを行に返します。ヘッダー、ミキサー、ソングページ、レコーダーから抜け、ダイアログを閉じます。</small></span>
+</li>
+<li class="row" data-marks="song" data-shot="song">
+<span class="keys"><kbd class="ui">SONG</kbd><i class="then">次に</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><kbd class="cap c-arrow"><span class="ico">▶</span></kbd><kbd class="cap c-arrow"><span class="ico">▲</span></kbd><kbd class="cap c-arrow"><span class="ico">▼</span></kbd></span>
+<span class="what"><b>ソングページで</b><small>◀ ▶ で移動、▲ ▼ でセクションキーとソングのブロックを行き来、SELECT かステップキーで選択、ALT + ◀ ▶ でブロックを移動、ノブ 1 で長さ、ノブ 2 で繰り返し回数、BACK で抜けます。</small></span>
+</li>
+<li class="row" data-marks="picker" data-shot="page2">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+<span class="what"><b>サウンド選択で：★ お気に入り</b><small>枠の付いたサウンドをお気に入りにします（★ グループ）。</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- 6 ALT -->
+<article class="card" data-region="6" id="alt" style="--c: var(--r6)">
+<div class="card-head"><span class="n">6</span><h3>ALT</h3><small>押しながら使うモディファイア</small></div>
+<ul class="rows">
+<li class="row" data-marks="livefx" data-shot="alt-held">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s3">8</kbd></span>
+<span class="what"><b>LIVE FX パッド</b><small>ドロップ · キックなし · キックのみ · ビットクラッシュ · ローパス · ハイパス · スタッター · ループ。</small></span>
+</li>
+<li class="row" data-marks="sections" data-shot="alt-mode">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-s4">9</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>セクション 1–8</b><small>セクションキーをヘッダーに出していれば 1–16。</small></span>
+</li>
+<li class="row" data-marks="header-deck" data-shot="alt-mode">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-mode">MODE</kbd></span>
+<span class="what"><b>ヘッダーのセクションキー ⇄ LIVE FX パッド</b></span>
+</li>
+<li class="row" data-marks="master" data-shot="page1">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob big"><span>BIG</span></kbd></span>
+<span class="what"><b>マスター音量</b></span>
+</li>
+<li class="row" data-marks="fx-sends" data-shot="alt-held">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="knob">1</kbd><kbd class="knob">2</kbd><kbd class="knob">3</kbd></span>
+<span class="what"><b>フェイザー · エコー · ヘビー のセンド</b></span>
+</li>
+<li class="row" data-marks="header-group" data-shot="header-focus">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">▲</span></kbd></span>
+<span class="what"><b>どこからでもヘッダーへ</b></span>
+</li>
+<li class="row" data-marks="" data-shot="song">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-n1">1</kbd></span>
+<span class="what"><b>どこからでもソングページへ</b></span>
+</li>
+<li class="row" data-marks="undo" data-shot="page3">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-arrow"><span class="ico">◀</span></kbd><span class="plus">/</span><kbd class="cap c-arrow"><span class="ico">▶</span></kbd></span>
+<span class="what"><b>取り消し / やり直し</b></span>
+</li>
+<li class="row" data-marks="header-rec" data-shot="header-focus">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-rec"><span class="ico">●</span></kbd></span>
+<span class="what"><b>ミックス全体を録音</b></span>
+</li>
+<li class="row" data-marks="mixer-strip" data-shot="mixer-strip">
+<span class="keys"><kbd class="cap c-alt">ALT</kbd><i class="plus">+</i><kbd class="cap c-select two"><span>SELECT</span><span>YES</span></kbd></span>
+<span class="what"><b>ミキサーのストリップをソロ · サウンドを ★</b></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+<!-- HOLD -->
+<article class="card" id="hold" style="--c: var(--amber)">
+<div class="card-head"><span aria-hidden="true" class="n ico"><svg fill="none" height="16" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16" width="16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><h3>長押し</h3><small>長押し · ステップキーと画面上のボタン</small></div>
+<ul class="rows">
+<li class="row" data-marks="pads" data-shot="page5-pads">
+<span class="keys"><span aria-label="長押し" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="cap c-s1">1</kbd><span class="plus">…</span><kbd class="cap c-s6">16</kbd></span>
+<span class="what"><b>パッドをループでラッチ</b><small>PAD SAMPLER でライブ オン：ステップキーを 0.5 秒以上押します。ラッチ中のパッドのキーを押すと止まります。</small></span>
+</li>
+<li class="row" data-marks="strip-solo" data-shot="page1">
+<span class="keys"><span aria-label="長押し" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="ui">S</kbd></span>
+<span class="what"><b>単独ソロ</b><small>マシンの S（ストリップまたはヘッダー）を長押しすると、そのマシンだけをソロにします。</small></span>
+</li>
+<li class="row" data-marks="select-btn" data-shot="bass-select">
+<span class="keys"><span aria-label="長押し" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="ui">SELECT</kbd></span>
+<span class="what"><b>パターン全体を選択</b><small>ツールバーの 選択 を長押しすると、全小節のすべてのノート（またはコード）を選んだ状態でオンになり、パターンをまとめて動かせます。</small></span>
+</li>
+<li class="row" data-marks="plate" data-shot="alt-mode">
+<span class="keys"><span aria-label="長押し" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="ui">project plate</kbd></span>
+<span class="what"><b>ヘッダーにセクションキー</b><small>ALT + MODE と同じ。もう一度で LIVE FX パッドに戻ります。</small></span>
+</li>
+<li class="row" data-marks="auto" data-shot="page3">
+<span class="keys"><span aria-label="長押し" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="ui">AUTO</kbd></span>
+<span class="what"><b>オートメーションを消去</b><small>ツールバーの オートメ を長押しすると、そのマシンのオートメーションレーンを消去します。</small></span>
+</li>
+<li class="row" data-marks="grid" data-shot="page3">
+<span class="keys"><span aria-label="長押し" class="hold"><svg fill="none" stroke="currentColor" stroke-width="1.6" viewbox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 4.5V8l2.4 1.6"></path></svg></span><kbd class="ui">a cell</kbd></span>
+<span class="what"><b>ノートの長さを設定</b><small>ベースやリードのピアノロールのセルを長押しすると、そこまでノートの長さを伸ばします。</small></span>
+</li>
+</ul>
+<div class="media"><div class="media-in"><figure class="shot" data-figure=""></figure></div></div>
+</article>
+</div>
+</div>
+</section>
+<section class="section" id="features">
+<div class="wrap">
+<div class="section-head">
+<h2>機能</h2>
+<p>主な機能と、それぞれの本体での画面です。すべての機能は下のグループにまとめてあり、仕組みは<a href="../docs/index.html">ドキュメント</a>で説明しています。</p>
+</div>
+<div class="features">
+<!-- the instrument pages -->
+<article class="hl reveal" style="--c: #ffa236">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>ページ 1–5</b> <span>/</span> <span>8 台のマシン</span></div>
+<h3>Five keys. <span>8 台のマシン。</span></h3>
+<p>キー <b>1</b> で 3 台のドラムマシンを切り替えます。どれも FluidSynth のキットで、最初は Roland TR909、TR808、LINN9000。ネームプレートから本体フォルダーの任意のキットを選べます。<b>2</b> は Noize Mak3r（TAL NoiseMaker のオープンな移植版）によるコード、<b>3</b> は 303（DISTRHO Nekobi）のベース、<b>4</b> は Calf Monosynth のリード、<b>5</b> はサンプラーです。各マシンにストリップ、サウンドモディファイア、パターンエディター、サウンドエフェクトのチェーンがあり、ヘッダーにはキーとスケール、トランスポート、テンポとスウィング、LIVE FX、マスターがあります。</p>
+<div aria-label="マシン" class="plates">
+<span class="plate" style="--pc: #ffa236; --i: 0"><b>ドラム 1</b><span>Roland TR909</span></span>
+<span class="plate" style="--pc: #ff6a58; --i: 1"><b>ドラム 2</b><span>Roland TR808</span></span>
+<span class="plate" style="--pc: #e0b84a; --i: 2"><b>ドラム 3</b><span>LINN9000</span></span>
+<span class="plate" style="--pc: #7ab8ff; --i: 3"><b>コード</b><span>Noize Mak3r</span></span>
+<span class="plate" style="--pc: #c9ee6e; --i: 4"><b>ベース</b><span>Nekobi</span></span>
+<span class="plate" style="--pc: #e4a8ff; --i: 5"><b>リード</b><span>Calf Monosynth</span></span>
+<span class="plate" style="--pc: #6ef0d8; --i: 6"><b>サンプラー</b><span>Sample King</span></span>
+<span class="plate" style="--pc: #ff5a36; --i: 7"><b>パッド</b><span>Pad Sampler</span></span>
+</div>
+<a class="more" href="../docs/manual.html">マニュアル</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="コードページ：ローマ数字のコードロール、D ドリアンの 7 つのコードキー、ネームプレート付きのストリップ" height="800" loading="lazy" src="../shots/page2.png" width="1280"/></figure>
+<div class="screen-cap"><span>コード：度数表記のロールと、キーの 7 つのコードキー</span><small>ページ 2</small></div>
+</div>
+</article>
+<!-- the samplers -->
+<article class="hl flip reveal" style="--c: #ff5a36">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>ページ 5</b> <span>/</span> <span>Sample King · Pad Sampler</span></div>
+<h3>Two samplers <span>1 つのキーに。</span></h3>
+<p><b>SAMPLE KING</b>：8 スロット × 4 バンク、バンクごとのパターン。スロットごとにトリム、ピッチ、リバースができ、テイクを直接録音でき、バンク全体に チョップ と オートチョップ。もう一度 5 を押すと <b>PAD SAMPLER</b>：ステップキーに MPC スタイルの 16 パッド、スマート 停止付きのパッド録音、ループとラッチ、16 レベル、パッド再生中に押し続ける パッドFX（エコー、リバース、スキップ、スタッター、スクラッチ、テープストップ）、両方で共有する波形エディター。</p>
+<a class="more" href="../docs/mpc-sampler-plan.html">PAD SAMPLER の仕組み</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="PAD SAMPLER：16 パッド、サンプル画面、トリム のノブ、パッドFX の列、パッド専用のステップレーン" height="800" loading="lazy" src="../shots/page5-pads.png" width="1280"/></figure>
+<div class="screen-cap"><span>PAD SAMPLER、パッド 1 を選択、ノブ 1–3 で トリム</span><small>もう一度 5</small></div>
+</div>
+</article>
+<!-- presets and the packs -->
+<article class="hl reveal" style="--c: #c9ee6e">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>プリセット</b> <span>/</span> <span>ジャンル別パック</span></div>
+<h3>Presets that <span>音色ごと読み込む。</span></h3>
+<p>USB メモリー用のパターンプリセット 17 パック。ドラム、ベース、リード、コードそれぞれに 5 パターンずつ、スケールの度数で書かれているのでプロジェクトのキーに従います。プリセットには <b>♪</b> と想定した音色、調整を含む場合は <b>+ MODS</b> が表示され、上部の サウンドも、MODS も、小節数も で何を読み込むかを決めます。各パックには<b>テンプレート</b>が付属：そのテンポ、スウィング、キー、LIVE FX の新規プロジェクトです。</p>
+<div aria-label="パックとそのテンポ・キー" class="packs">
+<span><b>クラシック</b>100 · C メジャー</span><span><b>ヒップホップ</b>90 · C マイナー</span><span><b>ポップ</b>116 · C メジャー</span><span><b>ロック</b>122 · E メジャー</span>
+<span><b>トラップ</b>140 · F マイナー</span><span><b>レゲトン</b>93 · A マイナー</span><span><b>パンク</b>170 · A メジャー</span><span><b>トロピカル</b>130 · C メジャー</span>
+<span><b>クンビア</b>95 · G メジャー</span><span><b>Piig</b>79 · D マイナー</span><span><b>フォーク</b>110 · G メジャー</span><span><b>メタル</b>150 · E マイナー</span>
+<span><b>ブラックメタル</b>170 · E マイナー</span><span><b>ポストパンク</b>142 · A マイナー</span><span><b>グレゴリオ聖歌</b>70 · D ドリアン</span><span><b>ジャズ</b>120 · C マイナー</span><span><b>Vuelo</b>120 · A マイナー</span>
+</div>
+<a class="more" href="../docs/packs.html">パックごとの全プリセット</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="ベースの プリセット ダイアログ（ソース USB）：ジャンル別のプリセット一覧。それぞれに ♪ 音色と + MODS、上部に サウンドも、MODS も、小節数も" height="800" loading="lazy" src="../shots/presets.webp" width="1280"/></figure>
+<div class="screen-cap"><span>USB メモリーのプリセット：♪ 音色、+ MODS、ジャンルごとのグループ</span><small>プリセット</small></div>
+</div>
+</article>
+<!-- sections and the song -->
+<article class="hl flip reveal" style="--c: #ffc134">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>セクション</b> <span>/</span> <span>ループかソング</span></div>
+<h3>Sections, <span>そしてソングへ。</span></h3>
+<p>セクションはすべてのマシンのパターンをまとめて保持します。最大 16 個、どのページからでも ALT とステップキーで選べ、次の小節（<b>小節</b>）または再生中のセクションが一巡したとき（<b>セクション</b>）にサンプル単位の正確さで切り替わり、最大 3 個まで待機できます。<b>ループ</b> は画面のセクションを繰り返し、<b>ソング</b> はブロックをそれぞれの繰り返し回数で順に再生し、書き出し でソング全体を 1 テイクで録音します。</p>
+<a class="more" href="../docs/manual.html#sections-and-the-song">セクションとソング</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="ソングページ：マシンの点が付いた 6 つのセクションキー、名前変更・新規・色・長さの列、ソングのブロック、ここから再生" height="800" loading="lazy" src="../shots/song.png" width="1280"/></figure>
+<div class="screen-cap"><span>ソングページ：セクションキーとソングのブロック</span><small>プロジェクトのプレート</small></div>
+</div>
+</article>
+<!-- the recorder and the tuner -->
+<article class="hl reveal" style="--c: #ff7a3c">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>レコーダー</b> <span>/</span> <span>チューナー</span></div>
+<h3>Record anything. <span>ギターをチューニング。</span></h3>
+<p>レコーダー はビートを鳴らしたまま入力（マイク · ギター · ライン）を演奏どおりに録音します。入力専用のエフェクト付きで（ギター ではアンプとペダル：アンプ、オーバードライブ、ファズ、チューブ、ワウ、ホットアンプ）、テイクはサンプラーやトラックの隣に保存：再生、トリム、ノーマライズ、チョップ、SAMPLE KING へ、パッドへ。<b>チューナー</b>はエフェクト前の入力を読み取ります：音名と ±50 セントのメーター、最低弦から順に進む 自動、ギター・ベース・ウクレレの 15 種のチューニング、A4 = 430〜450 Hz。</p>
+<a class="more" href="../docs/manual.html#the-recorder">レコーダー</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="ギター でチューナーを開いたレコーダー：セントのメーター、「6 弦を鳴らしてください · E2」、6 本の弦ボタン、自動、チューニング、A4" height="800" loading="lazy" src="../shots/tuner.webp" width="1280"/></figure>
+<div class="screen-cap"><span>ギター でチューナー：6 弦、±50 セントのメーター</span><small>MENU → レコーダー</small></div>
+</div>
+</article>
+<!-- live recording -->
+<article class="hl flip reveal" style="--c: #ff3b2f">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>ライブ録音</b> <span>/</span> <span>セッションを、あなたの声と一緒に</span></div>
+<h3>Record the session <span>その場のままに。</span></h3>
+<p>メニューの ライブ録音 カード 1 枚で、セッション全体をファイルにできます。画面または USB カメラとマスター音声を同期した<b>ビデオ</b>（音楽に一切負担をかけないことを計測済みの 3 段階の画質）か、トラックに並ぶ 24 ビット WAV の<b>音声のみ</b>。音声は後からタイトル、アーティスト、カバーを付け、書き出しと同じダイアログで好きな形式にできます。レコーダー にマイクをつなぐと<b>ボイスオーバー</b>になります：声に合わせて音楽が下がり、話し終えると戻り、声は持ち上げてクリアにし、先読みリミッターでミックスを保ち、録音中はマイクのレベルがプロジェクトのプレートに表示されます（ゲインが高すぎると「マイクが大きすぎます」）。押したキーはすべて画面に表示されます。終了後は 削除、名前変更、または USB メモリー、コンピューター、スマホへ 送信…。</p>
+<a class="more" href="../docs/video.html">ビデオとボイスオーバー</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="録音中のドラムページ：プロジェクトのプレートに ● REC 00:06 と横にマイクのレベル、録音キーが点灯" height="800" loading="lazy" src="../shots/liverec.webp" width="1280"/></figure>
+<div class="screen-cap"><span>録音開始 6 秒：プレートに ● REC、その右にマイクのメーター</span><small>MENU → ライブ録音 → スタート</small></div>
+</div>
+</article>
+<!-- out of the device -->
+<article class="hl reveal" style="--c: #4a9bff">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>共有</b> <span>/</span> <span>USB · コンピューター · スマホ · ビデオ</span></div>
+<h3>Out of the device, <span>3 つの方法で。</span></h3>
+<p>ファイルのある場所にはどこでも <b>送信…</b> ボタン：USB メモリーの ravving フォルダー、登録したコンピューター（SSH 経由のノート PC やデスクトップ、パスワードで 1 回だけ設定）、またはスマホ（ravving 自身が配信するリンクの QR コード、アプリもペアリングも不要なので iPhone でも使えます）。<b>ビデオ</b> カード（誤タップで始まらないよう 2 回タップ）は画面または USB カメラとマスター音声を録画し、どのページからでも RECORD と STOP で開始・終了します。ファイル はライブラリーを種類別に閲覧でき、スマホからも：スマホ · 閲覧 はライブラリーをページとして開く QR コードで、各ファイルをダウンロードできます。USB メモリーのサンプル、サウンドフォント、プリセット、プロジェクトは USB ページから取り込みます。このページも：設定 → ヘルプ でアドレスを QR コードで表示します。</p>
+<a class="more" href="../docs/video.html">ビデオとコンピューター接続</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="ヘルプ · RAVVING のページ：このページを開く本体のアドレスの QR コードと、その横にリンク" height="800" loading="lazy" src="../shots/qr.webp" width="1280"/></figure>
+<div class="screen-cap"><span>スマホのカメラで開ける QR コード：ここでは本体から配信するこのページ</span><small>設定 → ヘルプ</small></div>
+</div>
+</article>
+<!-- exports and the player -->
+<article class="hl flip reveal" style="--c: #b07cff">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>書き出し</b> <span>/</span> <span>ミュージックプレーヤー</span></div>
+<h3>Export the track. <span>聴き返す。</span></h3>
+<p>プロジェクト ▾ → 書き出し で、スピーカーで鳴っているとおりの作品を WAV 24 ビット、FLAC、OGG、MP3 にタグと自動生成のカバー付きで書き出すか、別の ravving で同じに再生できるよう全サンプルを含む <b>.ravv</b> バンドルにします。<b>ミュージックプレーヤー</b> は書き出したトラックと録音をフルスクリーンで、タイトル・アルバム・アーティスト別に、キュー付きで、ジャック、HDMI、Bluetooth スピーカーで再生します。</p>
+<a class="more" href="../docs/manual.html#exports-and-the-music-player">書き出しとプレーヤー</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="書き出し ダイアログ：ファイル名、タイトル、アーティスト、アルバム、ジャンル、生成されたカバー、形式、USB とコンピューターの行、ソング か ループ" height="800" loading="lazy" src="../shots/export.webp" width="1280"/></figure>
+<div class="screen-cap"><span>書き出し：タグ、カバー、形式、送り先</span><small>プロジェクト ▾</small></div>
+</div>
+</article>
+<!-- open source -->
+<article class="hl reveal" style="--c: #3ddc84">
+<div class="hl-text">
+<div class="kicker mono"><i></i><b>エンジン</b> <span>/</span> <span>隅々までオープンソース</span></div>
+<h3>Nothing bundled. <span>すべてオープン。</span></h3>
+<p>ravving は <b>libzynthbox</b> 上の C++ Qt 6 アプリ（GPL‑3.0‑or‑later）で、Zynthbox イメージに含まれるものを鳴らします：LV2 シンセとエフェクトをホストする <b>jalv</b>、ドラムキットとサウンドフォント楽器の <b>FluidSynth 2</b>、48 kHz・256 フレームの PipeWire JACK。それらを実行時に起動して接続し、AppImage には何も同梱しません。</p>
+<div aria-label="エンジンとサウンドフォント" class="rack">
+<span>TAL NoiseMaker<small>コード</small></span><span>DISTRHO Nekobi<small>ベース</small></span><span>Calf Monosynth<small>リード · 808</small></span>
+<span>Calf Saturator · Crusher · Phaser<small>ドライブ · ビットクラッシュ · フェイザー</small></span><span>Dragonfly Room · Plate<small>リバーブ</small></span><span>TAP Echo<small>ディレイ</small></span>
+<span>guitarix<small>ペダルとアンプ</small></span><span>SwankyAmp<small>アンプ</small></span><span>Calf Compressor · Gate · Filter · Chorus · Delay<small>入力</small></span>
+<span class="fs">Roland TR909 · TR808 · LINN9000<small>sf3 キット</small></span><span class="fs">FluidR3Mono GM<small>MuseScore のサウンドフォント</small></span><span class="fs">the SF2 Instruments<small>ギター · オルガン · パッド</small></span><span class="fs">Black Pearl 5 · Red Zeppelin 5<small>AVL キット</small></span>
+</div>
+<a class="more" href="../docs/engines.html">エンジンをポートごとに</a>
+</div>
+<div class="screen-wrap reveal">
+<figure class="screen"><img alt="ベースのサウンド選択：jalv の Nekobi、続いて FluidSynth で鳴らすサウンドフォントのベース、グループ分けと並べ替え付き" height="800" loading="lazy" src="../shots/sounds.webp" width="1280"/></figure>
+<div class="screen-cap"><span>マシンのサウンド：専用エンジン、続いてサウンドフォント</span><small>ネームプレート</small></div>
+</div>
+</article>
+</div>
+<!-- every feature, grouped -->
+<div class="groups" id="every-feature">
+<div class="groups-head">
+<h3>全機能（グループ別）</h3>
+<p>グループを開くと、各行から説明ページへ移動できます。</p>
+</div>
+<div class="group" id="f-instruments" style="--c: #ffa236">
+<h3><button aria-controls="p-instruments" aria-expanded="false" class="group-btn" type="button"><span class="n">01</span><span class="t">Instruments<small>5 つのページと各マシンの機能</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-instruments"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>ドラム 1 · 2 · 3</b><span>キットの 8 行（キック、スネア、クラップ、タム、ハイハット、オープン、シンバル、パーカッション）とアクセント行。行ごとのミュート、ソロ、レベルをノブ 1–3 で。General MIDI サウンドフォント内の アコースティック キット（Jazz、Brush、Standard、Room、Power、Orchestra、ラテンとクンビアのキット）。<a href="../docs/engines.html#fluidsynth-drums-1-3-tracks-0-2">エンジン</a></span></li>
+<li><b>コード</b><span>コード、ノート、スロット のビュー。キーとスケールに合わせた 7 つのコードキーとコードセット。スロット はコード単位（各 1、2、4、8 小節）で作曲してパターンに書き込みます。音色は TAL NoiseMaker のファクトリープリセットかサウンドフォント。<a href="../docs/manual.html#sound-sources">マニュアル</a></span></li>
+<li><b>ベース</b><span>アクセント と スライド のレーン付きピアノロールのモノライン、OCT − / +、♭♯、ランダム。303 の 波形、カットオフ、レゾ、EGモッド、アクセント、チューン が MODS です。<a href="../docs/engines.html#nekobi-bass-track-3">エンジン</a></span></li>
+<li><b>リード</b><span>Calf Monosynth のレガートとポルタメント、演奏でき上へドラッグするとビブラートがかかるリボン、ローズやビブラフォンからサックス、フルート、フィドル、バグパイプまでのサウンドフォント楽器。<a href="../docs/engines.html#calf-monosynth-lead-track-5">エンジン</a></span></li>
+<li><b>SAMPLE KING</b><span>4 バンク × 8 スロット、バンクごとのパターン。トリム、ピッチ ±12、リバース、スロットへの録音、入力エフェクト、チョップ と オートチョップ。<a href="../docs/sampler-plan.html">設計</a></span></li>
+<li><b>PAD SAMPLER</b><span>ステップキーに 16 パッド、スマート 停止付きのパッド録音、ノートオン / ループ / リバース / ミュート、長押しでループをラッチ、消去、半分、倍、コピー、16 レベル、パッドFX、均等・スレッショルド・手動 のカット付き波形エディター。<a href="../docs/mpc-sampler-plan.html">設計</a></span></li>
+<li><b>音源</b><span>ベース、リード、コードはシンセの代わりにサウンドフォント楽器でも鳴らせます。選択画面ではグループ分けされ、★ お気に入りと 並び順 付き。取り込んだサウンドフォントのプリセットもすぐに加わります。<a href="../docs/manual.html#sound-sources">マニュアル</a></span></li>
+<li><b>サウンドモディファイア</b><span>エンジンごとに 1 つのプロファイル（サウンドフォントでは フィルター、エンベロープ、モーション…、シンセでは固有のノブ）。本体のノブで操作し、プロジェクトとプリセットの MODS に保存されます。<a href="../docs/engines.html#the-mods-one-profile-per-engine-dataenginesjson">エンジン</a></span></li>
+<li><b>サウンドエフェクト</b><span>各マシンのチェーン：ドライブ、コンプレッサー、リバーブ、EQ、パン、サイドチェイン、ディレイ。それぞれノブ付きのカードで、バーまたは SELECT キーでオン/オフします。<a href="../docs/architecture.html">アーキテクチャ</a></span></li>
+<li><b>LIVE FX</b><span>ドロップ、キックなし、キックのみ、ビットクラッシュ、ローパス、ハイパス、スタッター、ループ をパッドで（ALT + ステップキー 1–8）、フェイザー、エコー、ヘビー をセンドで（ALT + ノブ）。<a href="../docs/manual.html">マニュアル</a></span></li>
+<li><b>キー、スケール、テンポ、スウィング</b><span>メロディ系のマシンはすべてルートとスケールに従います（キーを変えるとラインも合わせて移動）。スウィング 8 か スウィング 16。テンポはヘッダーで、テンプレートやデモでも設定されます。<a href="../docs/manual.html">マニュアル</a></span></li>
+<li><b>ライブとテイク</b><span>MODE でステップキーが画面のマシンのパッドになります（スケール、コードキー、ドラムの行）。● でテイクを録音し、カウントインまたはループへのパンチインで、ループごとに重ね録りします。MIDI キーボードでもライブ中のマシンを演奏できます。<a href="../docs/manual.html">マニュアル</a></span></li>
+<li><b>ミキサー</b><span>すべてのストリップを一度に（✱）：レベル、パン、ミュート、ソロ、ステップキーでストリップを選択、大ノブでレベルの微調整。<a href="../docs/manual.html">マニュアル</a></span></li>
+</ul>
+<figure class="screen"><img alt="コードページの スロット ビュー：各 1 小節の空のスロット 4 つ、追加の ＋、その下にコードキー" height="800" loading="lazy" src="../shots/chords-slots.webp" width="1280"/></figure>
+</div></div></div>
+</div>
+<div class="group" id="f-patterns" style="--c: #c9ee6e">
+<h3><button aria-controls="p-patterns" aria-expanded="false" class="group-btn" type="button"><span class="n">02</span><span class="t">Patterns, presets and projects<small>打ち込み、選択、保存、やり直し</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-patterns"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>パターンエディター</b><span>ドラムとサンプラーにはステップグリッド、ベースとリードにはピアノロール、コードには度数のコードロール。最大 8 小節を ‹ › でページ送り。1 本指でドラッグ、2 本指のピンチでズーム。ロック で再生中の誤タッチによる書き込みを防ぎます。<a href="../docs/manual.html">マニュアル</a></span></li>
+<li><b>選択 とノートのノブ</b><span>書き込む代わりにノートを選び、キーの音 1 つ分または 1 ステップ動かせます。長押しでパターン全体を選択。ノブ 1–3 で選んだノートの 長さ、ベロシティ、ナッジ を設定します。<a href="../docs/manual.html">マニュアル</a></span></li>
+<li><b>プリセット</b><span>今の内容を新規保存 でパターンをマシンの音色と設定中の MODS ごと保存。ジャンルごとの グループ、並び順、★ お気に入り。ソース で本体か USB メモリーを選び、メモリーから直接再生できます。<a href="../docs/manual.html#sound-sources">マニュアル</a></span></li>
+<li><b>サウンドも · MODS も · 小節数も</b><span>プリセットが一緒に持ち込むもの：音源またはキット、MODS（指定した部分のみ）、小節数（またはパターンの小節に重ねる）。<a href="../docs/manual.html#sound-sources">マニュアル</a></span></li>
+<li><b>ジャンル別パック</b><span>17 パック、マシンごとに 5 プリセット。それぞれのテンポ、音色、スウィングは表に掲載。4 つの楽器が合うようパックごとに 1 つのスケール。ワルツとジグのパックは 3/4 と 6/8。<a href="../docs/packs.html">パック一覧</a></span></li>
+<li><b>テンプレート</b><span>プロジェクト ▾ → テンプレート：テンポ、スウィング、キー、LIVE FX を設定した新規プロジェクト。テンプレートを保存 で今のセッションの設定を保存。各パックに 1 つ付属します。<a href="../docs/manual.html#sound-sources">マニュアル</a></span></li>
+<li><b>デモ</b><span>Autumn Leaves（ジャズトリオとサックス）、5AM（4ÆM のコード進行に乗せたダークなエレクトロポップ）、B3rlin（ダークテクノ）。イメージ同梱のサウンドフォントを使い、保存 で変更されることはありません。<a href="../docs/manual.html#sound-sources">マニュアル</a></span></li>
+<li><b>プロジェクト</b><span>保存（名前は最初の 1 回だけ、上書きは もう一度？）、別名で保存、★ お気に入り、デモ と マイプロジェクト のグループ。新規プロジェクトは空の状態から始まります。<a href="../docs/manual.html">マニュアル</a></span></li>
+<li><b>取り消しとやり直し</b><span>プロジェクト全体の履歴（ヘッダーの ↶ ↷、ALT + ◀ ▶）：パターン、スロット、アレンジ。複数マシンへの変更も 1 ステップ。マシン個別の ↶ ↷ はそのマシンの変更だけを取り消します。<a href="../docs/history.html">取り消し</a></span></li>
+<li><b>オートメーション</b><span>オートメ でノブの動きをマシンごとのレーンに記録し、オートメ の長押しで消去します。<a href="../docs/architecture.html">アーキテクチャ</a></span></li>
+<li><b>スクリプトで</b><span>リモートコントロール用の fifo からプロジェクト全体を構築：サンプル、パターン、音色まですべて。<a href="../docs/scripting-projects.html">スクリプト</a></span></li>
+</ul>
+<figure class="screen"><img alt="テンプレート ダイアログ：ソース 本体 か USB、パックごとにテンポ、キー、スウィングを示すタイル" height="800" loading="lazy" src="../shots/templates.webp" width="1280"/></figure>
+</div></div></div>
+</div>
+<div class="group" id="f-song" style="--c: #ffc134">
+<h3><button aria-controls="p-song" aria-expanded="false" class="group-btn" type="button"><span class="n">03</span><span class="t">Sections and the song<small>ループを超えて</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-song"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>セクション</b><span>最大 16 個。それぞれ各マシンのパターンと休むマシンを保持します。音色、エフェクト、レベル、テンポ、キーはプロジェクト共通なので、切り替えでエンジンが再起動することはありません。編集するのは画面に表示中のセクションです。<a href="../docs/manual.html#sections-and-the-song">マニュアル</a></span></li>
+<li><b>切り替え · 小節 | セクション</b><span>選んだセクションは次の小節で切り替わるか、再生中のセクションが一巡するのを待ちます。ループ では最大 3 個まで待機し、それぞれ 1 巡ずつ再生します。<a href="../docs/manual.html#sections-and-the-song">マニュアル</a></span></li>
+<li><b>小節線ぴったりに</b><span>各マシンは新しいパターンをトラックのもう一方のクリップに書き込み、libzynthbox が小節の最初のティックで 2 つを入れ替えます。ノートの欠落も重複もありません（計測済み）。<a href="../docs/sections-plan.html">設計</a></span></li>
+<li><b>どこからでも</b><span>どのページでも ALT + ステップキー 9–16 でセクション 1–8 を選択。ALT + MODE かプレートの長押しでヘッダーにセクションキーを出すと、ALT + 1–16 で 16 個まで選べます。<a href="../docs/manual.html#sections-and-the-song">マニュアル</a></span></li>
+<li><b>ソングページ</b><span>鳴るマシンごとに点の付いた四角いキー：タップ、ダブルタップで名前変更、長押しでドラッグして移動。名前変更、新規、色、長さ、移動、ソングに追加。ソングは繰り返し回数付きのブロックの列と ここから再生。<a href="../docs/manual.html#sections-and-the-song">マニュアル</a></span></li>
+<li><b>ループ | ソング</b><span>PLAY で鳴るもの：画面のセクションのループ、またはソング全体（ページも追従し、最後の小節線で停止）。<a href="../docs/manual.html#sections-and-the-song">マニュアル</a></span></li>
+<li><b>切り替えを見る</b><span>切り替わる瞬間、プレートがセクションの色で流れ、ページの枠が光ります。キーはセクションの進行に合わせて満ちていきます。<a href="../docs/manual.html#sections-and-the-song">マニュアル</a></span></li>
+</ul>
+<figure class="screen"><img alt="ALT + MODE：LIVE FX パッドの位置にセクションキーが入ったヘッダー" height="800" loading="lazy" src="../shots/alt-mode.png" width="1280"/></figure>
+</div></div></div>
+</div>
+<div class="group" id="f-record" style="--c: #4a9bff">
+<h3><button aria-controls="p-record" aria-expanded="false" class="group-btn" type="button"><span class="n">04</span><span class="t">Record, video and share<small>入力、画面、USB メモリー、コンピューター、スマホ</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-record"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>レコーダー</b><span>ジャック 4 と 5 の マイク · ギター · ライン、モニター、メーター付きの ゲイン、入力専用エフェクト（クリーン、マイルド、ファズボイス、ロボット、電話、オクターブ、ギター用のアンプとペダル）、入ってきたままのテイク保存。<a href="../docs/manual.html#the-recorder">マニュアル</a></span></li>
+<li><b>チューナー</b><span>ギター で：guitarix のチューナーと同じ McLeod のピッチ検出、弦の選択は 自動 か 手動、15 種のチューニング、A4 430–450 Hz。画面に表示中だけ動作します。<a href="../docs/manual.html#the-recorder">マニュアル</a></span></li>
+<li><b>ミックス全体</b><span>ALT + ● でマスターを WAV に録音。マシンの ● はそのテイクを録音。テイク中はメトロノームが鳴り続けます。<a href="../docs/manual.html">マニュアル</a></span></li>
+<li><b>ライブ録音</b><span>MENU → ライブ録音：ビデオ（画面または USB カメラとマスター音声の MP4）、または 音声のみ（トラック に並ぶ 24 ビット WAV。ライブ録音を保存しました → メタデータ… でタグ付け、カバー生成、書き出しダイアログで WAV、FLAC、OGG、MP3 に変換）。xrun 0 を計測した 3 段階の画質、タイマー、レコーダー 入力のミックス（ボイスオーバー：声に合わせて音楽が下がり、スピーカーからマイクへの回り込みより 12 dB 上で判定、声は持ち上げてクリアに、ミックスに先読みリミッター、プロジェクトのプレートにマイクのレベルと「マイクが大きすぎます」警告。ギターやラインはそのまま加算）、ビデオでは押したキーを表示。ダイアログの スタート が確認です。新規プロジェクトでオフになります。ビデオを保存しました / ライブ録音を保存しました で削除（2 回タップ）、名前変更、送信ができます。<a href="../docs/video.html">ビデオ</a></span></li>
+<li><b>コンピューター接続</b><span>SSH 経由のノート PC やデスクトップをいくつでも（設定 → コンピューター → コンピューターを追加）：パスワードは本体の鍵を 1 回登録するためだけに使い、ファイルはそのコンピューターのダウンロードフォルダーに届きます。それぞれに 変更、テスト、登録解除。書き出しダイアログから書き出しと同時にトラックを送れます。<a href="../docs/video.html#the-computer-link">ビデオ</a></span></li>
+<li><b>スマホ</b><span>スマホ · QRコード：ravving が Wi‑Fi で配信するリンク（最長 15 分）、スマホを待っています / 送信中 / ダウンロード完了 ✓。iPhone にも送れる方法です。<a href="../docs/manual.html#sending-to-a-phone">マニュアル</a></span></li>
+<li><b>USB メモリー</b><span>必要なときにマウントし、取り出し で安全に外せます。USB ページにはメモリー内のサンプル、サウンドフォント、プリセット、バンドル、プロジェクトが 読み込み 付きで並びます（サンプルパックは すべて読み込み）。逆方向は ファイル → 送信… から。読み取り専用のメモリーはフォーマットできます。<a href="../docs/manual.html#usb-sticks">マニュアル</a></span></li>
+<li><b>ファイル</b><span>ライブラリーの全ファイルを種類別・新しい順に、それぞれ 送信… と 削除 付きで。あらゆるファイルが本体から出ていく唯一の場所です。スマホ · 閲覧 は同じライブラリーをスマホでページとして開く QR コードを表示し、ファイルごとに ダウンロード できます。<a href="../docs/manual.html#files">マニュアル</a></span></li>
+<li><b>Bluetooth</b><span>スピーカーとヘッドホン（ここで再生）、スマホとのファイルの送受信、パスキーによるペアリング。Zynthbox に必要な設定は ravving が適用します。<a href="../docs/bluetooth.html">Bluetooth</a></span></li>
+<li><b>オーディオ出力</b><span>ジャック、HDMI、Bluetooth 出力。ジャックがグラフのクロックを保ったまま、ループバック経由で途切れなく送ります。選んだ出力は記憶され、戻ってきたときに復元されます。<a href="../docs/manual.html#audio-output">マニュアル</a></span></li>
+</ul>
+<figure class="screen"><img alt="USB メモリー EVS の USB ページ：サンプル、プリセット、サウンドフォント、バンドル、トラック、ビデオ、MIDIファイル、サンプルパックのフォルダーと 読み込み 付きのファイル" height="800" loading="lazy" src="../shots/usb.webp" width="1280"/></figure>
+</div></div></div>
+</div>
+<div class="group" id="f-export" style="--c: #b07cff">
+<h3><button aria-controls="p-export" aria-expanded="false" class="group-btn" type="button"><span class="n">05</span><span class="t">Export and listen<small>トラック、バンドル、ミュージックプレーヤー</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-export"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>トラック</b><span>プロジェクトを最初の拍から再生しながら録音：小節 × ループ回数 + テール、またはソング全体。WAV 24 ビット、FLAC、OGG Vorbis、MP3 に、タイトル、アーティスト、アルバム、ジャンル、作曲者、コメント、日付、BPM、カバー、JSON サイドカーを付けます。<a href="../docs/manual.html#exports-and-the-music-player">マニュアル</a></span></li>
+<li><b>バンドル</b><span>使用する全サンプルを含むプロジェクトの .ravv zip。読み込み でライブラリーや USB メモリーのバンドルからプロジェクトを作ります。<a href="../docs/manual.html#exports-and-the-music-player">マニュアル</a></span></li>
+<li><b>ミュージックプレーヤー</b><span>フルスクリーン：トラック、アルバム、アーティスト、並び順、リピート、キュー、カバーとトランスポート。キーで操作できます（1 2 3 でビュー、大ノブで音量、ノブ 1 で再生位置）。<a href="../docs/manual.html#bluetooth">マニュアル</a></span></li>
+<li><b>プロフィール</b><span>設定：ユーザー と 作者。書き出したトラックすべてにクレジットされます。<a href="../docs/manual.html#exports-and-the-music-player">マニュアル</a></span></li>
+</ul>
+<figure class="screen"><img alt="ミュージックプレーヤー：新しい順に並んだトラック（それぞれに 送信…）、右にカバーとトランスポート、キュー" height="800" loading="lazy" src="../shots/player.webp" width="1280"/></figure>
+</div></div></div>
+</div>
+<div class="group" id="f-hood" style="--c: #3ddc84">
+<h3><button aria-controls="p-hood" aria-expanded="false" class="group-btn" type="button"><span class="n">06</span><span class="t">Under the hood<small>エンジン、サウンドフォント、外観、スプラッシュ、問題センター</small></span><span aria-hidden="true" class="chev"></span></button></h3>
+<div class="group-panel" id="p-hood"><div class="group-in"><div class="group-body">
+<ul class="feats">
+<li><b>エンジン</b><span>jalv が LV2 をホスト（TAL NoiseMaker、DISTRHO Nekobi、Calf Monosynth、Calf Crusher と Phaser、Dragonfly Room Reverb、TAP Echo、ドライブ には Calf Saturator）。FluidSynth 2 がキットとサウンドフォント音源を再生。各ポートの仕様はエンジン mod の調査と照合済みです。<a href="../docs/engines.html">エンジン</a></span></li>
+<li><b>サウンドフォント</b><span>SFZ Drum Machines のキット（Roland TR909、TR808、LINN9000 とフォルダー内のその他）、FluidR3Mono GM（MuseScore のもの）、SF2 Instruments（ギター、パイプオルガン、ベース、Ambients &amp; Drones のパッド）、FluidPlug バンドル内の AVL キット。USB で持ち込んだサウンドフォントはすぐに使えます。<a href="../docs/packs.html#sounds">パック一覧</a></span></li>
+<li><b>オーディオグラフ</b><span>48 kHz・256 フレームの PipeWire JACK：libzynthbox のパススルー、オンのときだけ接続する jalv のインサート、グラフのクロックに合わせた FluidSynth。クロック、接続、xrun をまとめて確認できます。<a href="../docs/routing.html">ルーティング</a></span></li>
+<li><b>外観</b><span>テーマは Miko の外観ひとつをコードで固定。各マシンは easyrave のマシンにならった専用の仕上げ（909 のクリーム、808 のダークウッド、LinnBeats、303 のライム、POLY‑6 のブルー、リードのパープル、サンプラーのグレーとブラック）。共通の基本部品と、テストで確認する UI ルール。<a href="../docs/ui-rules.html">UI ルール</a></span></li>
+<li><b>スプラッシュ</b><span>ravving の起動中はロゴ、その後ページへの短い演出：設定 → 起動 で アニメ、グロー、静止、ズーム、オフ。読み込み中は静止画です（アニメーションは起動を 2〜3 秒遅らせたため）。<a href="../docs/manual.html#startup-splash">マニュアル</a></span></li>
+<li><b>問題センター</b><span>いま本体で起きている問題を、わかりやすい言葉で重要な順に、対処法と一緒に表示します：起動できなかったエンジン、音切れ、反応しなくなったキー、マウントできない USB メモリー、ほぼ満杯のストレージ。<a href="../docs/manual.html#the-issues-center">マニュアル</a></span></li>
+<li><b>設定</b><span>スケール外のノート、起動時の演出、Bluetooth の SBC‑XQ、言語、ビデオの画質・タイマー・ソース・マイク・ボイスオーバー・キー表示、コンピューター の一覧、ヘルプ。各セクションはそれぞれの枠に収まっています。<a href="../docs/manual.html#exports-and-the-music-player">マニュアル</a></span></li>
+<li><b>言語</b><span>英語、スペイン語、日本語に対応し、それぞれのミュージシャンが使う音楽用語で表示します。設定 · 言語 は本体の言語に従うか、言語を選ぶと画面がすぐに切り替わります。新しい言語の追加は、このページも含めカタログを 1 つ翻訳するだけです。<a href="../docs/translations.html">翻訳</a></span></li>
+<li><b>Store の AppImage</b><span>本体でビルドし、Zynthbox 上のセットアップページから：試す、標準にする、起動時に Zynthbox に戻す、削除する。同梱するのは ravving だけです。<a href="../docs/packaging.html">パッケージ</a></span></li>
+<li><b>リモートコントロール</b><span>webconf の fifo 経由の CUIA コマンドとバックエンド呼び出し、そして品質を保つテストスイートとスクリーンショット巡回。<a href="../docs/testing.html">テスト</a></span></li>
+</ul>
+<figure class="screen"><img alt="設定：プロフィール、スケール外のノート、起動（アニメ グロー 静止 ズーム オフ）、BLUETOOTH SBC-XQ、ビデオの画質、タイマー、ソース、マイク、キー表示" height="800" loading="lazy" src="../shots/settings.webp" width="1280"/></figure>
+</div></div></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div class="wrap">
+<p>MIKO は Zynthbox のハードウェアです。ravving はその上で動く mod で、作者は Camilo Higuita、GPL‑3.0‑or‑later です。ショートカット一覧は ravving の docs/architecture.md に、機能は README とドキュメントに基づき、<a href="../docs/index.html">ドキュメント</a>として公開しています。本体の画像はメーカーの「Miko Button Fonts」レンダー（キーの文字は Astigmatic の Audiowide、SIL Open Font License 1.1）の画面に ravving のスクリーンショットを合成したもの。キーキャップも同じフォントで、ロゴと質感は MIKO ブランドシステムによります。</p>
+<p class="mono">スクリーンショットは本体で tools/device.sh shot により 1280 × 800 で撮影しました。</p>
+</div>
+<img alt="" aria-hidden="true" class="miko-peek" src="../assets/miko-character.png"/>
+</footer>
+<script src="../site.js"></script>
+</body>
+</html>
