@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- zynthbox-setup.qdoc -->
+  <meta name="description" content="How ravving is installed and started on a Zynthbox, and the scripts and system files that make the device ready for it.">
+  <title>Running on a Zynthbox | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="ravving-api.js" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li>Running on a Zynthbox</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#what-is-installed-where">What is installed where</a></li>
+<li class="level1"><a href="#the-service-and-the-startup-script">The service and the startup script</a></li>
+<li class="level1"><a href="#default-app-sh-which-ui-the-device-runs">default-app.sh: which UI the device runs</a></li>
+<li class="level1"><a href="#check-requirements-py-and-requirements-json">check-requirements.py and requirements.json</a></li>
+<li class="level1"><a href="#the-setup-program">The setup program</a></li>
+<li class="level1"><a href="#the-system-files">The system files</a></li>
+<li class="level1"><a href="#tools-bluetooth-setup-sh">tools/bluetooth-setup.sh</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Running on a Zynthbox</h1>
+<!-- $$$zynthbox-setup.html-description -->
+<div class="descr" id="details">
+<p>ravving runs in place of zynthbox-qml, the stock Zynthbox UI: the same <code translate="no">startx</code> session, the same display, keys and audio. Only one of the two runs at a time. Everything below is installed by <code translate="no">cmake --install</code> and by the AppImage's setup program.</p>
+<h2 id="what-is-installed-where">What is installed where</h2>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Path</th><th >What it is</th></tr></thead>
+<tr valign="top" class="odd"><td ><code translate="no">/usr/bin/ravving</code></td><td >The application.</td></tr>
+<tr valign="top" class="even"><td ><code translate="no">/usr/share/ravving/</code></td><td >Its data (<code translate="no">kits.json</code>, presets, demos, the webpage), <code translate="no">start.sh</code>, <code translate="no">default-app.sh</code>, <code translate="no">check-requirements.py</code>, <code translate="no">requirements.json</code> and <code translate="no">VERSION</code>.</td></tr>
+<tr valign="top" class="odd"><td ><code translate="no">/etc/systemd/user/ravving.service</code></td><td >The user unit that starts ravving.</td></tr>
+<tr valign="top" class="even"><td ><code translate="no">/etc/systemd/system/bluetooth.service.d/50-ravving-bluetoothd-path.conf</code></td><td >Starts bluetoothd from the path Debian ships it at.</td></tr>
+<tr valign="top" class="odd"><td ><code translate="no">/etc/wireplumber/wireplumber.conf.d/50-ravving-bluetooth.conf</code></td><td >WirePlumber's Bluetooth settings for ravving.</td></tr>
+<tr valign="top" class="even"><td ><code translate="no">/etc/wireplumber/wireplumber.conf.d/50-ravving-hardware.conf</code></td><td >One name per sound card on the JACK graph.</td></tr>
+<tr valign="top" class="odd"><td ><code translate="no">/usr/share/locale/&lt;lang&gt;/LC_MESSAGES/ravving.mo</code></td><td >The translations.</td></tr>
+</table></div>
+<h2 id="the-service-and-the-startup-script">The service and the startup script</h2>
+<p><code translate="no">ravving.service</code> (a systemd <i>user</i> unit) runs <code translate="no">startx /usr/share/ravving/start.sh</code> with zynthbox-qml's environment (<code translate="no">ZYNTHIAN_DIR</code>, <code translate="no">ZYNTHIAN_SYS_DIR</code>, <code translate="no">HOME=/root…</code>). It conflicts with <code translate="no">zynthbox-qml.service</code> and is ordered after it, so starting either stops the other before the new one starts:</p>
+<pre class="cpp" translate="no"><code class="cpp">
+ systemctl <span class="operator">-</span><span class="operator">-</span>user start ravving        <span class="preprocessor"># switch to ravving</span>
+ systemctl <span class="operator">-</span><span class="operator">-</span>user start zynthbox<span class="operator">-</span>qml   <span class="preprocessor"># and back</span>
+</code></pre>
+<p>It requires <code translate="no">pipewire.service</code> and wants <code translate="no">pipewire-pulse.service</code> (the music player plays through PulseAudio). <code translate="no">ExecStop</code> sends SIGTERM to ravving and waits for it to exit before X goes, so the button LEDs are switched off. <code translate="no">Restart=always</code> restarts it after any end that was not a requested stop; a crash loop stops after five starts in two minutes.</p>
+<p><code translate="no">start.sh</code> sets up the display and environment the same way zynthbox-qml's <code translate="no">start.sh</code> does, starts KWin, then runs <code translate="no">/usr/bin/ravving</code> (under gdb, printing a backtrace on a crash, when <code translate="no">RAVVING_GDB=1</code> is set in the user manager's environment). When ravving exits it writes the exit code and time to <code translate="no">~/.local/state/ravving/last-exit</code>, which the next start reads to report how the previous run ended (<a href="lastrun.html" translate="no">LastRun</a>).</p>
+<h2 id="default-app-sh-which-ui-the-device-runs">default-app.sh: which UI the device runs</h2>
+<p>Runs on the device as root. The setup program, <code translate="no">tools/device.sh default</code> and ravving's own switch to Zynthbox call it.</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Command</th><th >What it does</th></tr></thead>
+<tr valign="top" class="odd"><td ><code translate="no">default-app.sh ravving</code></td><td >ravving starts at boot. zynthbox-qml is masked (a <code translate="no">/dev/null</code> unit in root's <code translate="no">~/.config/systemd/user</code>), which overrides its global enable and survives the system updater re-enabling it.</td></tr>
+<tr valign="top" class="even"><td ><code translate="no">default-app.sh zynthbox</code></td><td >Back to stock: zynthbox-qml unmasked and started, ravving stopped and disabled.</td></tr>
+<tr valign="top" class="odd"><td ><code translate="no">default-app.sh zynthbox --purge</code></td><td >As <code translate="no">zynthbox</code>, and removes ravving's binary, data, unit, translations, settings, session and cache. Saved projects, takes and recordings are kept.</td></tr>
+<tr valign="top" class="even"><td ><code translate="no">default-app.sh run APP</code></td><td >Switches to <code translate="no">ravving</code> or <code translate="no">zynthbox</code> for this session only; the boot choice is unchanged.</td></tr>
+<tr valign="top" class="odd"><td ><code translate="no">default-app.sh install DIR</code></td><td >Copies a bundle (an AppImage's AppDir or a <code translate="no">cmake --install</code> staging tree) into the system: the binary, the data, the unit, the translations and the WirePlumber files.</td></tr>
+<tr valign="top" class="even"><td ><code translate="no">default-app.sh status</code></td><td >Prints which UI starts at boot, which one runs, and the installed version.</td></tr>
+<tr valign="top" class="odd"><td ><code translate="no">default-app.sh deps DIR [--install] [--json]</code></td><td >Runs <code translate="no">check-requirements.py</code> for the bundle in <code translate="no">DIR</code>.</td></tr>
+</table></div>
+<p>Stopping a UI kills every process of its service, so a switch requested from inside a UI would kill the script itself. The switching commands therefore re-run themselves in a transient unit (<code translate="no">systemd-run</code>) before they touch the services.</p>
+<h2 id="check-requirements-py-and-requirements-json">check-requirements.py and requirements.json</h2>
+<p><code translate="no">requirements.json</code> lists what the device must have: each entry has an <code translate="no">id</code>, a <code translate="no">level</code> (<code translate="no">startup</code>: ravving cannot start without it; otherwise a feature is lost), the <code translate="no">feature</code> it serves, the <code translate="no">files</code>, folders or programs that prove it is there, the Debian <code translate="no">package</code> that brings it, its <code translate="no">effect</code> when missing and how to <code translate="no">fix</code> it. A <code translate="no">libraries</code> list names the shared libraries the binary needs.</p>
+<p><code translate="no">check-requirements.py [--data DIR] [--binary PATH] [--install] [--json]</code> checks every entry, and with <code translate="no">--binary</code> the libraries <code translate="no">ldd</code> reports <i>not found</i>. <code translate="no">--install</code> runs <code translate="no">apt-get install</code> for the missing packages, then checks again. <code translate="no">--json</code> prints the result for the setup program.</p>
+<p>Exit status: <code translate="no">0</code> nothing is missing; <code translate="no">1</code> only features are missing; <code translate="no">2</code> ravving cannot start.</p>
+<h2 id="the-setup-program">The setup program</h2>
+<p>The AppImage starts <code translate="no">ravving-setup</code> (<code translate="no">setup/</code>: <code translate="no">main.cpp</code>, <code translate="no">Setup.qml</code> and <a href="bundle.html" translate="no">Bundle</a>), a full-screen page that installs the bundle and picks the UI. Bundle runs the bundle's own <code translate="no">default-app.sh</code>:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Action</th><th >Runs</th></tr></thead>
+<tr valign="top" class="odd"><td >Status, on start and after each action</td><td ><code translate="no">default-app.sh status</code></td></tr>
+<tr valign="top" class="even"><td >Requirements</td><td ><code translate="no">default-app.sh deps &lt;bundle&gt; --json</code>; installing the missing packages adds <code translate="no">--install</code></td></tr>
+<tr valign="top" class="odd"><td >Try it</td><td ><code translate="no">install &lt;bundle&gt;</code> (skipped when the installed version is the bundle's), then <code translate="no">run ravving</code></td></tr>
+<tr valign="top" class="even"><td >Make it the default</td><td ><code translate="no">install &lt;bundle&gt;</code> (skipped likewise), then <code translate="no">ravving</code></td></tr>
+<tr valign="top" class="odd"><td >Zynthbox at boot again</td><td ><code translate="no">zynthbox</code></td></tr>
+<tr valign="top" class="even"><td >Remove ravving</td><td ><code translate="no">zynthbox --purge</code>, after a second press within three seconds</td></tr>
+</table></div>
+<h2 id="the-system-files">The system files</h2>
+<ul>
+<li><code translate="no">50-ravving-bluetoothd-path.conf</code>: the image's own bluetoothd drop-in starts <code translate="no">/usr/lib/bluetooth/bluetoothd</code>, which Debian installs in <code translate="no">/usr/libexec/bluetooth/</code>; this drop-in starts it from there with the same flags (<code translate="no">--compat --experimental --noplugin=sap</code>). Without it the Bluetooth service fails and the adapter stays down.</li>
+<li><code translate="no">50-ravving-bluetooth.conf</code>: starts WirePlumber's Bluetooth monitor without a logind seat (the root <code translate="no">startx</code> session has no active seat, so otherwise no A2DP endpoint is registered); offers SBC-XQ (<code translate="no">bluez5.enable-sbc-xq</code>); and keeps a headset in A2DP when its microphone is opened (<code translate="no">bluetooth.autoswitch-to-headset-profile</code> = false).</li>
+<li><code translate="no">50-ravving-hardware.conf</code>: disables PipeWire's <code translate="no">snd-dummy</code> card, which otherwise shares the HiFiBerry's description and takes its JACK port names on some starts.</li>
+</ul>
+<p>The WirePlumber files are read when WirePlumber starts, so they apply from the device's next start.</p>
+<h2 id="tools-bluetooth-setup-sh">tools/bluetooth-setup.sh</h2>
+<p>Prepares Bluetooth on a device without a ravving build, from the laptop (<code translate="no">DEVICE=root@host sh tools/bluetooth-setup.sh</code>; <code translate="no">--check</code> only checks). It installs <code translate="no">bluez-obexd</code>, <code translate="no">libspa-0.2-bluetooth</code> and <code translate="no">libkf6bluezqt6</code>, puts the bluetoothd and WirePlumber Bluetooth drop-ins in place, restarts <code translate="no">bluetooth.service</code> and WirePlumber, and checks that the service is active, the adapter is powered, the adapter lists the Audio Source and Audio Sink UUIDs, and <code translate="no">obex.service</code> is enabled. Running it again is safe.</p>
+</div>
+<p><b>See also </b><a href="bundle.html" translate="no">Bundle</a> and <a href="https://ravving.github.io/docs/packaging.html">Packaging</a>.</p>
+<!-- @@@zynthbox-setup.html -->
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>
