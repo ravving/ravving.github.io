@@ -116,6 +116,10 @@ window.ravNav = [
     "href": "historyparticipant.html"
    },
    {
+    "title": "KeySpelling",
+    "href": "keyspelling.html"
+   },
+   {
     "title": "Localization",
     "href": "localization.html"
    },
