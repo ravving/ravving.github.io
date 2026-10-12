@@ -37,7 +37,7 @@
     </form>
     <nav aria-label="Documentation">
 <p class="mono">Using ravving</p><ul>
-<li class="on"><a href="manual.html" aria-current="page">The manual</a><ul><li><a href="#installing">Installing</a></li><li><a href="#playing-and-editing">Playing and editing</a></li><li><a href="#sample-king">SAMPLE KING</a></li><li><a href="#the-pad-sampler">The PAD SAMPLER</a></li><li><a href="#undo-and-redo">Undo and redo</a></li><li><a href="#sound-sources">Sound sources</a></li><li><a href="#sections-and-the-song">Sections and the song</a></li><li><a href="#languages">Languages</a></li><li><a href="#startup-splash">Startup splash</a></li><li><a href="#exports-and-the-music-player">Exports and the music player</a></li><li><a href="#video-recordings-and-the-computer-link">Video recordings and the computer link</a></li><li><a href="#sending-to-a-phone">Sending to a phone</a></li><li><a href="#files">Files</a></li><li><a href="#usb-sticks">USB sticks</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#audio-output">Audio output</a></li><li><a href="#the-recorder">The RECORDER</a></li><li><a href="#the-issues-center">The issues center</a></li><li><a href="#where-your-files-live">Where your files live</a></li></ul></li>
+<li class="on"><a href="manual.html" aria-current="page">The manual</a><ul><li><a href="#installing">Installing</a></li><li><a href="#playing-and-editing">Playing and editing</a></li><li><a href="#sample-king">SAMPLE KING</a></li><li><a href="#the-pad-sampler">The PAD SAMPLER</a></li><li><a href="#undo-and-redo">Undo and redo</a></li><li><a href="#sound-sources">Sound sources</a></li><li><a href="#sections-and-the-song">Sections and the song</a></li><li><a href="#languages">Languages</a></li><li><a href="#startup-splash">Startup splash</a></li><li><a href="#exports-and-the-music-player">Exports and the music player</a></li><li><a href="#video-recordings-and-the-computer-link">Video recordings and the computer link</a></li><li><a href="#sending-to-a-phone">Sending to a phone</a></li><li><a href="#files">Files</a></li><li><a href="#usb-sticks">USB sticks</a></li><li><a href="#bluetooth">Bluetooth</a></li><li><a href="#the-music-player">The music player</a></li><li><a href="#audio-output">Audio output</a></li><li><a href="#the-recorder">The RECORDER</a></li><li><a href="#the-issues-center">The issues center</a></li><li><a href="#where-your-files-live">Where your files live</a></li></ul></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -590,63 +590,166 @@ by ravving itself (the link lives until 15 minutes pass with no request from the
 the dialog closed or not); a project or anything that is a folder is listed as "on the device"; a link that ran
 out says so on the phone.</p>
 <h2 id="usb-sticks">USB sticks</h2>
-<p>A stick plugged in shows up as a USB row in the export dialog (a Zynthbox
-runs udisks but mounts nothing by itself; ravving mounts the stick when it needs it): the
-track or bundle is written to the library as always and copied to the stick's <code>ravving/
-exports/</code> or <code>ravving/projects/</code> folder, then EJECT (in the dialog or on the USB page)
-flushes, unmounts and powers it off so it can be pulled. To put a saved project on a stick,
-send it from FILES (SEND… bundles it for the stick); PROJECT ▾ → IMPORT lists the bundles found
-on every stick (its <code>ravving/projects/</code> and its root) beside the device's own. The project
-dialog also keeps favourites (★, a long press).</p>
-<p>The drawer's USB card opens the <strong>USB page</strong>: ON USB lists what the stick
-holds by kind (SAMPLES, SOUNDFONTS, PROJECTS, TRACKS, MIDI FILES: found anywhere on it, its
-<code>ravving/&lt;kind&gt;</code> folders first, system folders skipped), each with IMPORT (✓ ON DEVICE once the
-library has it); FROM DEVICE lists the library's, each with TO USB. Samples land in
-<code>samples/imported/&lt;stick&gt;/</code> keeping the stick's folders, soundfonts in <code>soundfonts/</code>, MIDI files
-in <code>midi/</code>, tracks in <code>exports/</code> (the music player lists them), projects through the bundle
-import. One copy at a time, through a part file, a copy onto the stick synced before it counts.
-The presets dialog (a pattern toolbar's PRESET) has a SOURCE row when a stick is in: DEVICE,
-or USB · <stick>, which lists that machine's pattern presets in the stick's
-<code>ravving/presets/&lt;drums|bass|lead|chords&gt;/patterns</code> and plays the one picked straight from
-there, without taking it in (one UNDO puts the pattern back). The dialog opens on the source the pattern on screen came from (the stick a preset was
-played from, while it is in), with that preset marked.
-IMPORT ALL beside the folder path brings every new file of the folder on screen and its
-folders in one go (a sample pack is one tap: IMPORTING 12 / 229 · STOP, one look through the
-stick and one message at the end; 229 samples in well under a minute).
-◀ ▶ the kinds, ALT + ◀ ▶ the side, ▲ ▼ the files, SELECT copies, EJECT in the header. With more than
-one stick (or partition) plugged in, the card names each stick and a tap asks which one to
-open. A read-only stick (an installer's ISO image, a locked stick) says so: nothing is offered
-to copy to it, exports and TO USB skip it, and its page shows FORMAT, which erases the whole
-stick into one writable FAT32 partition labelled RAVVING (EJECT and FORMAT both want a second
-press within three seconds).</p>
-<p>A soundfont brought in is used at once: one that
-looks like a drum kit (three drum roles or more in its sample names) joins the kit picker under
-IMPORTED, and every preset of every imported font is a chords / bass / lead source,
-"<font> · <preset>", grouped by font in the sound pickers.</p>
+<p>Plug a USB stick in and ravving mounts it when it needs it. When you're done, press EJECT (in
+the export dialog or on the USB page) and pull the stick out once it's safe.</p>
+<h3 id="save-to-a-stick">Save to a stick</h3>
+<ul>
+<li><strong>Exports:</strong> a stick shows up as a USB row in the export dialog. Your track or bundle is
+  saved on the device as always, and also copied to the stick's <code>ravving/exports/</code> or
+  <code>ravving/projects/</code> folder.</li>
+<li><strong>A saved project:</strong> send it from FILES. SEND… packs it into a bundle for the stick.</li>
+<li><strong>Opening a project from a stick:</strong> PROJECT ▾ → IMPORT lists the bundles on every stick
+  plugged in, next to the ones on the device.</li>
+</ul>
+<h3 id="the-usb-page">The USB page</h3>
+<p>The drawer's USB card opens the USB page. It has two sides:</p>
+<ul>
+<li><strong>ON USB</strong> lists what's on the stick by kind: SAMPLES, SOUNDFONTS, PROJECTS, TRACKS and
+  MIDI FILES. Tap IMPORT to copy one to the device; it then reads ✓ ON DEVICE.</li>
+<li><strong>FROM DEVICE</strong> lists your library, each file with TO USB.</li>
+</ul>
+<p>IMPORT ALL, next to the folder path, copies every new file of the folder on screen in one go.
+A whole sample pack is one tap, with a progress readout and a STOP button.</p>
+<p>Files you import land here:</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Samples</td>
+<td><code>samples/imported/&lt;stick&gt;/</code>, keeping the stick's folders</td>
+</tr>
+<tr>
+<td>Soundfonts</td>
+<td><code>soundfonts/</code></td>
+</tr>
+<tr>
+<td>MIDI files</td>
+<td><code>midi/</code></td>
+</tr>
+<tr>
+<td>Tracks</td>
+<td><code>exports/</code>, where the music player finds them</td>
+</tr>
+<tr>
+<td>Projects</td>
+<td>imported as a bundle</td>
+</tr>
+</tbody>
+</table>
+<p>On the device's keys: ◀ ▶ switch the kind, ALT + ◀ ▶ switch the side, ▲ ▼ pick a file,
+SELECT copies it, and EJECT sits in the header.</p>
+<h3 id="pattern-presets-from-a-stick">Pattern presets from a stick</h3>
+<p>Open a pattern toolbar's PRESET. With a stick in, a SOURCE row appears: DEVICE, or
+USB · <stick>. Pick the stick to see its presets for that machine and play one straight from
+there, without copying it. One undo step puts your pattern back.</p>
+<p>The dialog opens on the source your current pattern came from, with that preset marked.</p>
+<h3 id="soundfonts-from-a-stick">Soundfonts from a stick</h3>
+<p>A soundfont you import works right away:</p>
+<ul>
+<li>If it looks like a drum kit, it joins the kit picker under IMPORTED.</li>
+<li>Every preset in it becomes a sound for the chords, bass and lead, listed as
+  "<font> · <preset>" and grouped by font.</li>
+</ul>
+<h3 id="more-than-one-stick-or-a-locked-one">More than one stick, or a locked one</h3>
+<p>With several sticks or partitions plugged in, the USB card names each one and asks which to
+open.</p>
+<p>A read-only stick (a locked stick, or an installer image) says so. Nothing is copied to it,
+and its page offers FORMAT. FORMAT erases the whole stick into one writable FAT32 partition
+called RAVVING. EJECT and FORMAT both need a second press within three seconds.</p>
 <h2 id="bluetooth">Bluetooth</h2>
-<p>MENU → BLUETOOTH has the switch, SCAN (a short scan of classic
-devices; it starts on its own only while no speaker plays, since a scan breaks up a
-playing Bluetooth link on the Pi's shared radio), and VISIBLE (the device can be found for three
-minutes, so a phone can send it a file); the devices connected first, then paired, then in
-range. A tap on one opens its row: PAIR (a passkey to confirm or a PIN to
-type is asked in the head), CONNECT / DISCONNECT, SEND… (an exported track or bundle, picked
-next; the progress runs along the bottom), PLAY THROUGH for a speaker or headphones (the
-whole studio's sound switches to it, DEVICE OUTPUT brings it back; the same choice sits in
-the drawer's AUDIO OUTPUT card with the jacks and HDMI) and FORGET. Files sent to
-the device land in the library's <code>incoming/</code> folder: a bundle shows in PROJECT ▾ → IMPORT, a track in
-the music player under "Received". A stock Zynthbox needs a little setup for Bluetooth, which
-ravving's setup applies.</p>
-<p>A speaker that does not answer (asleep, waking up, or busy with a phone) is called again
-three more times over about 35 s (the row reads "waking…"; DISCONNECT stops it) before COULD
-NOT CONNECT. One audio device plays at a time: connecting a second one while another plays
-hands the sound over (SWITCHING FROM · the other device, which is disconnected). PLAY THROUGH
-routes once the connection is made. When Bluetooth comes on (a start, the switch) the output
-kept is connected again, once, if nothing else plays.</p>
-<p>MENU → MUSIC PLAYER (and DASHBOARD to come back) is a full-screen player for the exported
-tracks and the ● recordings: TRACKS (sorted), ALBUMS and ARTISTS on the left, the cover,
-transport, position and volume on the right over the QUEUE. Keys 1 2 3 switch the views, ▲ ▼
-pick, SELECT plays, PLAY pauses, STOP stops, the big knob is the volume and knob 1 the position,
-BACK leaves. Opening the player stops the transport and leaving it stops the player.</p>
+<p>MENU → BLUETOOTH lists your devices: the connected ones first, then the paired ones, then the
+ones in range. A paired device you aren't connected to reads "paired · not connected".</p>
+<h3 id="find-and-pair-a-device">Find and pair a device</h3>
+<ol>
+<li>Switch Bluetooth on.</li>
+<li>Tap SCAN. It's a short scan for speakers, headphones, phones and computers.</li>
+<li>Tap the device to open its row, then tap PAIR.</li>
+<li>Confirm the passkey, or type the PIN, when ravving asks at the top.</li>
+</ol>
+<p>SCAN doesn't start on its own while a speaker plays, because a scan makes a Bluetooth sound
+stutter on the device's shared radio. VISIBLE lets a phone find the device for three minutes,
+so it can send you a file.</p>
+<h3 id="what-a-devices-row-offers">What a device's row offers</h3>
+<ul>
+<li id="connect-disconnect"><strong>CONNECT / DISCONNECT.</strong></li>
+<li><strong>SEND…</strong> sends an exported track or bundle; the progress runs along the bottom.</li>
+<li><strong>PLAY THROUGH</strong> sends the whole studio's sound to a speaker or headphones. DEVICE OUTPUT
+  brings it back. The same choice is in the drawer's AUDIO OUTPUT card, with the jacks and
+  HDMI.</li>
+<li><strong>SBC-XQ</strong> picks the sound quality for this device: on for SBC-XQ, finer sound with more
+  data; off for plain SBC, sturdier on a weak link. Devices you haven't set follow SETTINGS.
+  If a speaker sounds crunchy on SBC-XQ, switch it off for that speaker.</li>
+<li><strong>FORGET</strong> unpairs it.</li>
+</ul>
+<p>Files a phone sends you land in the library's <code>incoming/</code> folder. A bundle shows up in
+PROJECT ▾ → IMPORT, and a track in the music player under "Received".</p>
+<h3 id="when-a-device-doesnt-connect">When a device doesn't connect</h3>
+<p>A speaker that's asleep, waking up or busy with a phone gets called again three more times
+over about 35 seconds. Its row reads "waking…" meanwhile, and DISCONNECT stops trying. If it
+still doesn't answer, ravving says NOT ANSWERING: FREE IT FROM A PHONE, OR TURN IT OFF AND ON.</p>
+<h3 id="one-audio-device-at-a-time">One audio device at a time</h3>
+<p>Only one speaker or pair of headphones plays at a time. Connecting a second one while another
+plays hands the sound over to it, and the first one disconnects.</p>
+<p>When Bluetooth comes on, ravving reconnects the output you picked last, once, if nothing else
+is playing.</p>
+<p>If a Bluetooth output goes silent while music is sent to it, ravving routes the sound to it
+again by itself. If that doesn't bring the sound back, the issues center tells you.</p>
+<p>A stock Zynthbox needs a little setup for Bluetooth, and ravving's setup takes care of it.</p>
+<h2 id="the-music-player">The music player</h2>
+<p>MENU → MUSIC PLAYER is a full-screen player for your exported tracks and your ● recordings.
+DASHBOARD takes you back.</p>
+<ul>
+<li><strong>On the left:</strong> TRACKS, ALBUMS and ARTISTS.</li>
+<li><strong>On the right:</strong> the cover, the transport, the position and the volume, over the QUEUE.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1, 2, 3</td>
+<td>Switch the views</td>
+</tr>
+<tr>
+<td>▲ ▼</td>
+<td>Pick a track</td>
+</tr>
+<tr>
+<td>SELECT</td>
+<td>Play it</td>
+</tr>
+<tr>
+<td>PLAY</td>
+<td>Pause</td>
+</tr>
+<tr>
+<td>STOP</td>
+<td>Stop</td>
+</tr>
+<tr>
+<td>Big knob</td>
+<td>Volume</td>
+</tr>
+<tr>
+<td>Knob 1</td>
+<td>Position in the track</td>
+</tr>
+<tr>
+<td>BACK</td>
+<td>Leave</td>
+</tr>
+</tbody>
+</table>
+<p>Opening the player stops the beat, and leaving it stops the player.</p>
 <h2 id="audio-output">Audio output</h2>
 <p>MENU → AUDIO OUTPUT picks where the studio's sound goes: the device's jacks (the default),
 HDMI, or any Bluetooth speaker or headphones connected in the BLUETOOTH dialog. The sound is
