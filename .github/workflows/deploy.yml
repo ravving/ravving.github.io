@@ -1,16 +1,12 @@
-# The ravving page, https://ravving.github.io/: the site/ folder of ravving/ravving (public),
-# deployed here as the Pages artifact. No secrets: this workflow checks that repository out
-# as anyone can and deploys with its own token. It runs when asked (workflow_dispatch; the
-# ravving repository's tools/publish-site.sh asks after a push) and once a day in case.
+# The ravving page, https://ravving.github.io/: this repository's own content (the site/
+# folder of ravving/ravving, pushed here by its tools/publish-site.sh), deployed as the
+# Pages artifact on every push. No secret, no access to the source repository needed.
 name: deploy
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '17 4 * * *'
   push:
     branches: [main]
-    paths: ['.github/workflows/deploy.yml']
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -29,13 +25,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          repository: ravving/ravving
-          sparse-checkout: site
-      - run: rm -f site/README.md
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: .
       - id: deployment
         uses: actions/deploy-pages@v4
