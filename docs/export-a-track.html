@@ -1,0 +1,199 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from guide/export-a-track.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Export a track and play it back · ravving docs</title>
+<link rel="stylesheet" href="../site.css?v=28f7125214">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+      <a href="../api/index.html">API reference</a>
+    </nav>
+    <nav class="langs" aria-label="Language" translate="no">
+      <a href="export-a-track.html" hreflang="en" lang="en">EN</a>
+      <a href="../es/docs/export-a-track.html" hreflang="es" lang="es">ES</a>
+      <a href="../ja/docs/export-a-track.html" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
+    <nav aria-label="Documentation">
+<p class="mono">Using ravving</p><ul>
+<li><a href="get-ravving.html">Get ravving</a></li>
+<li><a href="load-a-preset.html">Load a preset</a></li>
+<li><a href="loop-to-song.html">Turn your loop into a song</a></li>
+<li class="on"><a href="export-a-track.html" aria-current="page">Export a track and play it back</a><ul><li><a href="#open-export">Open EXPORT</a></li><li><a href="#name-it-and-tag-it">Name it and tag it</a></li><li><a href="#choose-the-format-and-where-it-goes">Choose the format and where it goes</a></li><li><a href="#choose-how-long">Choose how long</a></li><li><a href="#export">Export</a></li><li><a href="#play-it-back">Play it back</a></li><li><a href="#take-the-whole-project-along">Take the whole project along</a></li><li><a href="#more">More</a></li></ul></li>
+<li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
+<li><a href="machines.html">The machines</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="manual.html">The manual</a></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">Under the hood</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="translations.html">Translations</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="writing-the-guide.html">Writing the guide</a></li>
+<li><a href="writing-code-docs.html">Writing code documentation</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+</ul>
+<p class="mono">The code</p><ul>
+<li><a href="../api/index.html">API reference</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker"><b>Using ravving</b> <span>/</span> <b translate="no">guide/export-a-track.md</b></p>
+<h1>Export a track and play it back</h1>
+<p class="doc-blurb">A WAV, FLAC, OGG or MP3 with tags and a cover, then the music player, or a .ravv bundle to share.</p>
+
+<p>Turn your project into a song file: a WAV, FLAC, OGG or MP3 with its tags and a cover. Then play
+it in the music player, or send it somewhere.</p>
+<h2 id="open-export">Open EXPORT</h2>
+<p>Open <strong>PROJECT ▾</strong> in the header and tap <strong>EXPORT</strong>.</p>
+<p><img alt="The EXPORT dialog: the tags, FORMAT, where it goes, and how long" src="images/export-dialog.webp" /></p>
+<h2 id="name-it-and-tag-it">Name it and tag it</h2>
+<ul>
+<li><strong>FILE NAME</strong> and <strong>TITLE.</strong></li>
+<li><strong>ARTIST</strong> and <strong>COMPOSER</strong> start from your profile's author, set in MENU → SETTINGS.</li>
+<li><strong>ALBUM / MIXTAPE</strong> and <strong>GENRE</strong> offer the ones you typed last.</li>
+<li><strong>The cover</strong> is drawn for you from the title and the artist.</li>
+</ul>
+<h2 id="choose-the-format-and-where-it-goes">Choose the format and where it goes</h2>
+<ul>
+<li><strong>FORMAT:</strong> WAV 24-BIT, FLAC LOSSLESS, OGG or MP3.</li>
+<li><strong>USB:</strong> DEVICE ONLY, or a copy to a stick that's plugged in.</li>
+<li><strong>COMPUTER:</strong> send it to one of your computers too, once it's written.</li>
+</ul>
+<h2 id="choose-how-long">Choose how long</h2>
+<ul>
+<li><strong>WHAT: LOOP</strong> plays the section on screen for <strong>BARS × LOOPS</strong>. Knobs 1 and 2 set them.</li>
+<li><strong>WHAT: SONG</strong> records the whole song, start to end.</li>
+<li><strong>TAIL</strong> adds a few seconds at the end for the echoes to ring out. Knob 3 sets it.</li>
+</ul>
+<p>The dialog shows how long the track will be.</p>
+<h2 id="export">Export</h2>
+<p>Tap <strong>EXPORT TRACK</strong>. ravving plays your project from its first beat and records it, so keep
+quiet: the speakers are the mix. A bar shows how far it's got, and CANCEL stops it.</p>
+<p>When it's done, the dialog closes. The track is in the library's exports, with its cover and
+details beside it.</p>
+<aside class="aru-tip"><span class="aru" data-species="octopus" data-mood="pop"></span><p>Your first release! Give it a proper title before you send it out.</p></aside>
+<h2 id="play-it-back">Play it back</h2>
+<p>Open <strong>MENU → MUSIC PLAYER</strong>. Your new track is at the top of TRACKS.</p>
+<p><img alt="The music player, with the new track first" src="images/music-player.webp" /></p>
+<ul>
+<li><strong>▶</strong> plays a track, and <strong>+</strong> adds it to the queue.</li>
+<li><strong>SEND…</strong> sends it to a USB stick, a computer or your phone.</li>
+<li><strong>The big knob</strong> sets the volume, and <strong>knob 1</strong> moves through the track.</li>
+<li><strong>BACK</strong> leaves the player.</li>
+</ul>
+<h2 id="take-the-whole-project-along">Take the whole project along</h2>
+<p><strong>EXPORT .RAVV</strong> saves a bundle: the project with every sample it uses. Another ravving opens it
+from PROJECT ▾ → IMPORT and plays it exactly the same.</p>
+<h2 id="more">More</h2>
+<ul>
+<li><a href="manual.html#exports-and-the-music-player">Exports and the music player</a>: what a
+  track keeps, and how loud it comes out.</li>
+<li><a href="manual.html#the-music-player">The music player</a>: every key.</li>
+</ul>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script src="../assets/aru.js?v=b9b5e512af" defer></script>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
+  function load(done) {
+    if (index) return done();
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();</script>
+</body>
+</html>
