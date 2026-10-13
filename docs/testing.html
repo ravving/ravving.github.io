@@ -193,6 +193,14 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 <td>SECTIONS heard: sections picked at random moments while the master records, <code>tools/sections-test.py</code> checks every 8th sounds once and on time, a change only on a bar line, a rest in whole bars (below)</td>
 </tr>
 <tr>
+<td><code>tools/sections-queue-test.sh</code></td>
+<td>the SECTION queue (SWITCH: SECTION, LOOP): with D playing, B, C and D picked queue in that order, D picked again leaves it, and D, B, C, D play; 4-bar sections so each fifo pick lands in D's first pass</td>
+</tr>
+<tr>
+<td><code>tools/metronome-test.sh</code></td>
+<td>the metronome recorded at its source, the master, after BeatRepeat and after the last insert; <code>tools/metronome-check.py</code> fails on a sample beyond full scale, ticks off the beat, or a tick shorter after the inserts than at its source (the click a sampler read past a sample's end made)</td>
+</tr>
+<tr>
 <td><code>tools/bluetooth-setup.sh [--check]</code></td>
 <td>set a device up for Bluetooth (packages, the two drop-ins, services) and check every step (<a href="packaging.html">packaging.md</a>)</td>
 </tr>
@@ -202,7 +210,7 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 </tr>
 <tr>
 <td><code>tools/drums-test.sh</code></td>
-<td>the DRUMS page suite (60 checks: 55 on the device, 5 timing checks on the laptop from a recording of the lane): a new project starting clean on every page, the grid (toggle, accent, undo / redo, clear, bars, view bar, cursor and STEP entry), the kit (another loaded, reset), the row mix heard (mute, solo, level, accent, the machine's mute and pause), LIVE (a pad heard, hits recorded while playing), presets (save, load, remove), every SOUND EFFECT on and off with its knobs read back and DRIVE / COMPRESSOR / EQ / PAN heard, the kit's MODS, and <code>tools/hits-timing.py</code> (shared with the chords suite): every 8th within 12 ms, accents louder. It works in a project of its own and puts the previous one back</td>
+<td>the DRUMS page suite (67 checks: 62 on the device, 5 timing checks on the laptop from a recording of the lane): a new project starting clean on every page (patterns, pan, level, tempo, swing, LIVE, STEP, AUTO), the grid (toggle, accent, undo / redo, clear, bars, view bar, cursor and STEP entry), the kit (another loaded, reset), the row mix heard (mute, solo, level, accent, the machine's mute and pause), LIVE (a pad heard, hits recorded while playing), presets (save, load, remove), every SOUND EFFECT on and off with its knobs read back and DRIVE / COMPRESSOR / EQ / PAN heard, the kit's MODS, and <code>tools/hits-timing.py</code> (shared with the chords suite): every 8th within 12 ms, accents louder. It works in a project of its own and puts the previous one back</td>
 </tr>
 <tr>
 <td><code>tools/chords-test.sh</code></td>
