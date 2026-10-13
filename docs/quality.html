@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Quality · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=56c8e55da8">
+<link rel="stylesheet" href="../site.css?v=229e96b5f3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -297,19 +297,43 @@ not its 0.1 ms each.</p>
 <p>Never probe the debug port by connecting to it: the server takes the first connection as its
 client.</p>
 <h2 id="4-visual-checks-the-screenshot-tour">4. Visual checks: the screenshot tour</h2>
-<pre><code class="language-sh">RAVVING_STYLE=Basic QT_QPA_PLATFORM=offscreen QT_FORCE_STDERR_LOGGING=1 RAVVING_NO_ZYNTHBOX=1 \
-RAVVING_DATA_DIR=$PWD/data RAVVING_PROJECT_DIR=/tmp/tour/project RAVVING_SCREENSHOT_DIR=/tmp/tour/shots \
-    build/ravving 2&gt;&amp;1 | grep -v -i jack
+<pre><code class="language-sh">tools/tour.sh OUT_DIR [en|es|ja]           # offscreen, 1280 × 800, a fresh state each run
+tools/tour-compare.py REF_DIR NEW_DIR --diffs DIFF_DIR
 </code></pre>
-<p>It visits every page and a few dialogs, saves PNGs and quits (main.cpp).</p>
+<p>The tour (<code>RAVVING_SCREENSHOT_DIR</code>, the ScreenshotTour class) saves a PNG of each view. It shows:</p>
 <ul>
-<li>Start from an empty project folder each time, since the tour turns knobs and the session keeps
-  them.</li>
-<li>Build the reference from the previous commit the same way, and compare with
-  <code>compare -metric AE ref.png new.png null:</code> (ImageMagick).</li>
-<li><code>QT_FORCE_STDERR_LOGGING</code> matters: without a terminal, Qt logs to the journal and the run looks
-  silent.</li>
-<li>The Zynthbox style isn't on the laptop, hence <code>RAVVING_STYLE=Basic</code>.</li>
+<li>every page, drum machine and sampler editor;</li>
+<li>the header's knob focus and the sections opened;</li>
+<li>every dialog, opened, shot and closed in turn, on each page and on the mixer, SONG, MUSIC
+  PLAYER and RECORDER pages, the drawer's and the dialogs inside dialogs too.</li>
+</ul>
+<p>A dialog's shot is named <code>d-&lt;view&gt;-&lt;type&gt;-&lt;id&gt;</code> after its QML type and id, so a new dialog is in
+the tour with nothing to add. Beside the shots, the run writes:</p>
+<ul>
+<li><code>index.txt</code>: the shots in order;</li>
+<li><code>log.txt</code>: the run's output;</li>
+<li><code>style-dump.json</code>: the values the look reads from its environment (tools/style-dump.qml).
+  These are every Kirigami colour set, the units and settings, the theme's sizes and fonts, the
+  application font and palette, the size unit and the registered font families.</li>
+</ul>
+<h3 id="running-and-comparing">Running and comparing</h3>
+<ul>
+<li><code>tools/tour.sh</code> starts from a fresh profile, session, cache, library and project each time
+  (<code>RAVVING_HOME</code>), with the language given written into that profile.</li>
+<li><code>STYLE_PREFIX=DIR</code> puts <code>DIR/qml</code> and <code>DIR/plugins</code> first on the import and plugin paths. Use
+  it for a style or QML module that isn't installed system-wide.</li>
+<li><code>RAVVING_STYLE=Basic</code> instead draws plain controls.</li>
+<li><code>tools/tour-compare.py</code> counts the differing pixels per shot (<code>compare -metric AE</code>) and lists
+  the shots only one run has.</li>
+<li>With <code>--diffs</code>, it also writes a diff image per differing shot. It compares the two style dumps
+  value by value, and exits with the number of shots that differ.</li>
+<li>Two runs of the same build match on every shot except those with live values. These are the
+  MENU drawer (<code>d-*-Drawer-menu</code>: CPU load, temperature) and the issues list
+  (<code>d-*-IssuesPopup-*</code>: when each was raised). On the device, the Wi-Fi, Bluetooth and USB lists
+  vary too. A difference there alone is not a change.</li>
+<li>A reference is a tour of the previous commit, taken the same way on the same machine. The
+  laptop's fonts and Kirigami colours aren't the device's, so a laptop tour is compared with a
+  laptop tour, and the device's tour is the one that counts.</li>
 </ul>
 <h2 id="5-making-ravving-the-devices-ui">5. Making ravving the device's UI</h2>
 <pre><code class="language-sh">tools/device.sh default ravving       # or on the device: /usr/share/ravving/default-app.sh ravving

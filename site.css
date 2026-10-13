@@ -13,11 +13,11 @@
  */
 
 /* ---- fonts: the device's button font (from the Miko button-font asset, A–Z subset) with
-   the full Google face behind it for digits and punctuation; Archivo and IBM Plex Mono from
+   the full Google face behind it for digits and punctuation; IBM Plex Sans and IBM Plex Mono from
    the MIKO brand system ---- */
 @font-face { font-family: "Miko Audiowide"; src: url("assets/miko-audiowide.woff2") format("woff2"); font-display: block; }
 @font-face { font-family: "Audiowide"; src: url("assets/audiowide-latin.woff2") format("woff2"); font-display: block; }
-@font-face { font-family: "Archivo"; font-weight: 300 800; src: url("assets/archivo.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 100 700; src: url("assets/plex-sans.woff2") format("woff2"); font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; font-weight: 400; src: url("assets/plex-mono-400.woff2") format("woff2"); font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; font-weight: 500; src: url("assets/plex-mono-500.woff2") format("woff2"); font-display: swap; }
 
@@ -48,9 +48,9 @@
   --r4: #3ddc84;  /* transport */
   --r5: #b07cff;  /* navigation */
   --r6: #ffc134;  /* ALT: amber */
-  --font-body: "Archivo", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --font-cap: "Miko Audiowide", "Audiowide", "Archivo", sans-serif;
+  --font-cap: "Miko Audiowide", "Audiowide", "IBM Plex Sans", sans-serif;
   --gutter: clamp(16px, 4vw, 48px);
   --max: 1240px;
 }
@@ -574,7 +574,7 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .aru { display: inline-block; width: 64px; height: 64px; flex: none; }
 .aru svg { display: block; width: 100%; height: 100%; }
 .aru-tip { display: flex; align-items: center; gap: 14px; margin: 22px 0; }
-.aru-tip p { position: relative; margin: 0; padding: 10px 14px; border-radius: 10px; font-size: 15px; color: var(--ink);
+.aru-tip p { position: relative; margin: 0; padding: 10px 14px; border-radius: 10px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.5; color: var(--ink);
   background: var(--panel); border: 1px solid color-mix(in srgb, var(--tip-c, #f25d0a) 55%, transparent); }
 .aru-tip p::before { content: ""; position: absolute; left: -7px; top: 50%; width: 12px; height: 12px; margin-top: -6px;
   background: var(--panel); border-left: 1px solid color-mix(in srgb, var(--tip-c, #f25d0a) 55%, transparent);

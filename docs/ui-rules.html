@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UI rules · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=56c8e55da8">
+<link rel="stylesheet" href="../site.css?v=229e96b5f3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -61,7 +61,7 @@
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
-<li class="on"><a href="ui-rules.html" aria-current="page">UI rules</a><ul><li><a href="#shared-base-types">Shared base types</a></li><li><a href="#buttons-action-or-state">Buttons: action or state</a></li><li><a href="#button-sizes">Button sizes</a></li><li><a href="#controls-in-a-group-take-the-device-knobs">Controls in a group take the device knobs</a></li><li><a href="#rows-of-controls-sit-on-bands-dialogs-and-pages">Rows of controls sit on bands (dialogs and pages)</a></li><li><a href="#leaving">Leaving</a></li><li><a href="#pages">Pages</a></li><li><a href="#empty-views">Empty views</a></li><li><a href="#palettes">Palettes</a></li><li><a href="#text-is-translatable-keys-are-not">Text is translatable, keys are not</a></li><li><a href="#adding-a-rule">Adding a rule</a></li></ul></li>
+<li class="on"><a href="ui-rules.html" aria-current="page">UI rules</a><ul><li><a href="#shared-base-types">Shared base types</a></li><li><a href="#buttons-action-or-state">Buttons: action or state</a></li><li><a href="#button-sizes">Button sizes</a></li><li><a href="#controls-in-a-group-take-the-device-knobs">Controls in a group take the device knobs</a></li><li><a href="#rows-of-controls-sit-on-bands-dialogs-and-pages">Rows of controls sit on bands (dialogs and pages)</a></li><li><a href="#leaving">Leaving</a></li><li><a href="#pages">Pages</a></li><li><a href="#empty-views">Empty views</a></li><li><a href="#three-font-families">Three font families</a></li><li><a href="#palettes">Palettes</a></li><li><a href="#text-is-translatable-keys-are-not">Text is translatable, keys are not</a></li><li><a href="#adding-a-rule">Adding a rule</a></li></ul></li>
 <li><a href="extending.html">Extending</a></li>
 <li><a href="writing-the-guide.html">Writing the guide</a></li>
 <li><a href="writing-code-docs.html">Writing code documentation</a></li>
@@ -248,6 +248,49 @@ holds the rules and their exceptions, and is where a new rule goes.</p>
 <h2 id="empty-views">Empty views</h2>
 <p>An empty list or view says why and what fills it, with an <code>EmptyNote</code> ("no recordings yet · ● REC
 records the input as played"), never a <code>Text</code> of its own. <em>Checked:</em> <code>empty-says-why</code>.</p>
+<h2 id="three-font-families">Three font families</h2>
+<p>ravving's text uses three families, all built in (the Fonts class), each with one job:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Family</th>
+<th>Used for</th>
+<th>In QML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>regular</td>
+<td>IBM Plex Sans</td>
+<td>every label, caption and name</td>
+<td>the application's font: nothing to set</td>
+</tr>
+<tr>
+<td>monospaced</td>
+<td>IBM Plex Mono</td>
+<td>figures that change while watched</td>
+<td><code>Rave.monospaceFamily</code></td>
+</tr>
+<tr>
+<td>display</td>
+<td>Audiowide</td>
+<td>branding: the instruments' nameplates</td>
+<td><code>Rave.displayFamily</code></td>
+</tr>
+</tbody>
+</table>
+<p>A value you change while watching it is monospaced: every digit is as wide as the next, so a
+turning value doesn't make its label jitter or move its neighbours. That covers:</p>
+<ul>
+<li>the dials' readouts (RaveKnob's <code>valueText</code>): the MODS and effects knobs, the master and
+  input levels in dB, pan, semitones;</li>
+<li>the sliders' readouts (RaveFader, LevelSlider);</li>
+<li>counters and times.</li>
+</ul>
+<p>The display face is the one on the device's own key legends and the webpage's headers. It has one
+weight and no italic, so it is used as it is. No file names a family in place, so changing one is
+a single line in src/fonts.cpp. <em>Checked:</em> <code>font-families</code>.</p>
 <h2 id="palettes">Palettes</h2>
 <p>Every page has a finish of its own in <code>Rave.qml</code> (<code>Rave.machines</code>, <code>songFinish</code>, <code>playerFinish</code>,
 <code>recorderFinishes</code>): <code>chassisTop</code>, <code>chassisBottom</code>, <code>rail</code>, <code>well</code>, <code>ink</code>, <code>dim</code>, <code>accent</code>, <code>glow</code>,

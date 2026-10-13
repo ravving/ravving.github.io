@@ -26,6 +26,10 @@ window.ravNav = [
     "href": "cuiafifo.html"
    },
    {
+    "title": "Fonts",
+    "href": "fonts.html"
+   },
+   {
     "title": "Hardware",
     "href": "hardware.html"
    },
@@ -72,6 +76,10 @@ window.ravNav = [
    {
     "title": "SceneInspector",
     "href": "sceneinspector.html"
+   },
+   {
+    "title": "ScreenshotTour",
+    "href": "screenshottour.html"
    },
    {
     "title": "StartupSplash",
