@@ -105,8 +105,8 @@ header hand-off and an external keyboard to its <code>panel</code>. <code>BassPa
   sound picker. A double tap rebuilds its own sound from TAL's start-up sound, the engine's
   controls and the default knobs.</li>
 <li><strong>CHORDS / NOTES / SLOTS tabs:</strong> <code>ChordRoll</code>, a poly <code>PianoRoll</code> on the same steps, and
-  <code>ChordSlots</code>. ◀ ▶ switch them while the editor has the focus (<code>moveView</code>, <code>viewCount</code>). The
-  step keys and ▲ ▼ work on the view on screen.</li>
+  <code>ChordSlots</code>. Key 2 pressed again on the page turns them (<code>Ravving::pageKeyRepeated</code>); ◀ ▶
+  turn the bar page as on every grid. The step keys and ▲ ▼ work on the view on screen.</li>
 <li><strong>CHORD SET</strong>, and the chord keys played as pads, which also fill an armed slot.</li>
 <li><strong>LIVE follows the tab:</strong> on CHORDS and SLOTS, pads 1–7 are the degrees' chords. On NOTES, all
   16 pads play single scale notes, and ▲ ▼ change the octave. With STEP on, ▲ ▼ walk the rows
@@ -169,7 +169,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 <td>the MUSIC PLAYER, a full-screen view over the dashboard (<code>Session.playerView</code>, the control center's DASHBOARD / MUSIC PLAYER switch): left the library (TRACKS sorted by NEWEST / TITLE / ARTIST / ALBUM / LONGEST, ALBUMS and ARTISTS grids opening as lists with PLAY ALL / QUEUE ALL), a tap plays now, + queues; right the cover, the track, a position bar (tap to seek), ⏮ ▶ / ❚❚ ■ ⏭ REPEAT, VOLUME, and the QUEUE (tap plays, ✕ drops, CLEAR). Keys 1 2 3 or ◀ ▶ the views, ▲ ▼ the cursor, SELECT plays, PLAY pauses, STOP, big knob volume, knob 1 position, MENU the control center, BACK leaves. Opening it stops the transport, leaving it stops the player</td>
 </tr>
 <tr>
-<td><code>InstrumentChip</code>, <code>GroupLabel</code>, <code>LedDisplay</code></td>
+<td><code>InstrumentChip</code>, <code>Caption</code>, <code>LedDisplay</code></td>
 <td>header parts; a chip draws its machine's track level as a slim bar along its bottom (the mixer's colours), only while the machine sounds, from the header's <code>meters</code> (<code>studio.meters()</code> read ten times a second; the pads' second track counts too)</td>
 </tr>
 <tr>
@@ -178,7 +178,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 </tr>
 <tr>
 <td><code>MachinePanel</code> (STEP entry)</td>
-<td>◀ ▶ in STEP entry while stopped move the entry cursor a step (<code>moveCursor</code>, wrapping in the pattern) on every panel, instead of switching views or banks; keys held together join one step (<code>Machine::writeWithPrevious</code>: the second key goes where the first went, the cursor advances once)</td>
+<td>◀ ▶ in STEP entry while stopped move the entry cursor a column on the bar page shown (<code>moveCursor</code>), on into the next or previous page at its edges and stopping at the pattern's ends, on every panel; outside STEP entry they turn the bar page (<code>pageBar</code>), or a sampler's bank or tab; keys held together join one step (<code>Machine::writeWithPrevious</code>: the second key goes where the first went, the cursor advances once)</td>
 </tr>
 <tr>
 <td><code>MachineModule</code></td>
@@ -213,7 +213,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 <td>touch ribbon over two octaves from the lead's base note, snapped to the scale; <code>note</code> and <code>vibrato</code> (drag up)</td>
 </tr>
 <tr>
-<td><code>KeyCap</code>, <code>Chip</code>, <code>RaveKnob</code></td>
+<td><code>KeyCap</code>, <code>Chip</code>, <code>Knob</code></td>
 <td>the controls: drum key, LED pill toggle, labelled dial (a QQC Dial for the touch handling, drawn by <code>DialFace</code>: the ring, the body and the pointer all in Qt Quick Shapes on the curve renderer, in one frame, so nothing drifts by a sub-pixel; crisp from 26 px up; groove, accent value arc from the start or from the centre for ranges around zero, body, pointer)</td>
 </tr>
 <tr>
@@ -221,7 +221,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 <td>a focusable group the device knobs drive; the knob indicator</td>
 </tr>
 <tr>
-<td><code>RaveComboBox</code></td>
+<td><code>ComboBox</code></td>
 <td>a drop-down (ROOT, SCALE, CHORD SETS) whose list opens as a dialog centred on the screen (the dialog card, a title, 48 px rows) that the device works while open: arrows / big knob move, SELECT picks and closes, BACK closes; the focus goes back where it was</td>
 </tr>
 <tr>
@@ -241,12 +241,12 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 <td>SONG (<code>studio.sections</code>): the StackLayout's seventh view, under the header as the MIXER (<code>Session.songView</code>, the project plate opens and closes it). SECTIONS at a finger's size: square keys wearing their number, their name under, a dot per sounding machine, the one on screen filled in its colour (blinking while it waits for the bar: <code>Session.sectionBlink</code>, its timer running only then), eight a row (the first row is ALT + step keys 9–16), ＋ a copy of the one on screen; tap picks, double tap renames (NamePopup), hold and drag moves, × deletes (second tap). A row for the section on screen: RENAME, NEW, COLOUR, LENGTH (AUTO), MOVE, ADD TO SONG. The SONG as a strip of blocks as wide as bars × repeats, a row for the block picked: MOVE, REPEATS, REMOVE. Keys: ◀ ▶ walk, ▲ ▼ between, SELECT picks, step keys pick, ALT + ◀ ▶ move, knob 1 the length, knob 2 the repeats. Idle, it draws nothing</td>
 </tr>
 <tr>
-<td><code>RavePopup</code>, <code>ModalDim</code>, <code>DialogHeader</code></td>
-<td>the dialogs' base (centred, modal, focus taken and given back) and the dark layer behind dialogs, drop-down lists and the menu</td>
+<td><code>Dialog</code>, <code>DialogHeader</code></td>
+<td>the dialogs' base (centred, modal, focus taken and given back) and its header; the style darkens the page behind dialogs, drop-down lists and the menu</td>
 </tr>
 <tr>
 <td><code>ChoicePopup</code></td>
-<td>a grid picker (kits, presets, samples) with the same hardware; names wrap to two lines, subtitles elide in the middle; <code>previewable</code>: holding an item previews it until let go</td>
+<td>ravving's picker (kits, presets, samples, projects) on the kit's <code>ChoiceDialog</code> (the grid, the device's cursor, the actions, hold to preview): names wrap to two lines, subtitles elide in the middle; it adds SOURCE, the owner's options and the organised form (groups, sort, ★ favourites kept in the profile)</td>
 </tr>
 <tr>
 <td><code>InputPopup</code>, <code>InputMeter</code></td>
@@ -278,10 +278,18 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 <p>Pages combine these and hold only page-specific logic: the bassline generator, the bank
 switching, the chord cursor.</p>
 <ul>
-<li><strong>Generic controls</strong> (buttons, combo boxes, sliders, tabs) come from the Zynthbox Quick
-  Controls style, so they follow the active SVG theme.</li>
-<li><strong>The dials</strong> are ravving's own (<code>DialFace</code>): the theme's SVG dial breaks up at the small
-  sizes the machines use.</li>
+<li><strong>Generic controls</strong> (buttons, combo boxes, sliders, tabs) are Qt Quick Controls drawn by
+  ravving's style (<code>Ravving.Style</code>).</li>
+<li><strong>The base types with behaviour of their own</strong> come from <code>Ravving.Controls</code> (<code>controls/</code>).</li>
+<li>buttons: <code>ActionButton</code>, <code>Chip</code>, <code>StripButton</code>, <code>ConfirmButton</code> and <code>SecondPress</code>,
+    <code>CloseButton</code>;</li>
+<li>the knob layer: <code>Knob</code> and its <code>DialFace</code>, <code>Fader</code>, <code>LevelSlider</code>, <code>KnobGroup</code>, <code>PickUp</code>,
+    <code>KnobBadge</code>;</li>
+<li>readouts: <code>Meter</code>, <code>KeyCap</code>, <code>Nameplate</code>, <code>Plate</code>, <code>LedDisplay</code>, <code>Toast</code>, <code>EmptyNote</code>,
+    <code>ArmBar</code>, <code>Glyph</code>;</li>
+<li>dialogs and rows: <code>Dialog</code>, <code>DialogHeader</code>, <code>ChoiceDialog</code>, <code>ComboBox</code>, <code>ToolStrip</code>,
+    <code>SectionHeader</code>, <code>Caption</code>;</li>
+<li><code>KeyedListModel</code> (C++), the list model the lists keep their rows with.</li>
 <li><strong>The machine parts</strong> (key caps, nameplates, grids) are drawn in QML from each machine's
   finish in <code>Rave.machines</code>.</li>
 </ul>

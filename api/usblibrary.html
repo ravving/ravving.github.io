@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=b759fa41dd" defer></script>
-  <script src="search.js?v=9eba806fbb" defer></script>
+  <script src="nav.js?v=02ad506e5e" defer></script>
+  <script src="search.js?v=ed38cafd77" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -119,10 +119,13 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#patternPresets" translate="no">patternPresets</a></b>(const QString &amp;<i>machineKey</i>, const QString &amp;<i>device</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#presetFile" translate="no">presetFile</a></b>(const QString &amp;<i>type</i>, const QString &amp;<i>machineKey</i>, const QString &amp;<i>name</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#progress-prop" translate="no">progress</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#removeStickPreset" translate="no">removeStickPreset</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#savePattern" translate="no">savePattern</a></b>(const QString &amp;<i>machineKey</i>, const QString &amp;<i>device</i>, const QString &amp;<i>name</i>, bool <i>withSound</i>, bool <i>withMods</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#scan" translate="no">scan</a></b>(const QString &amp;<i>device</i> = QString())</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#scanning-prop" translate="no">scanning</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#setPresetExchange" translate="no">setPresetExchange</a></b>(const PresetExchange *<i>presets</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#status-prop" translate="no">status</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#takeFile" translate="no">takeFile</a></b>(const QString &amp;<i>kind</i>, const QString &amp;<i>path</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#templates" translate="no">templates</a></b>(const QString &amp;<i>device</i>)</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
@@ -366,6 +369,20 @@
 </div><!-- @@@presetFile -->
 </div>
 <div class="fnitem">
+<!-- $$$removeStickPreset[overload1]$$$removeStickPresetconstQString& -->
+<h3 class="fn" translate="no" id="removeStickPreset"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> UsbLibrary::<span class="name">removeStickPreset</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Deletes the preset file <i translate="no">path</i> from a stick. Only a file in the <code translate="no">ravving/presets</code> of a mounted stick is deleted; returns whether it was.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@removeStickPreset -->
+</div>
+<div class="fnitem">
+<!-- $$$savePattern[overload1]$$$savePatternconstQString&constQString&constQString&boolbool -->
+<h3 class="fn" translate="no" id="savePattern"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> UsbLibrary::<span class="name">savePattern</span>(const <span class="type">QString</span> &amp;<i>machineKey</i>, const <span class="type">QString</span> &amp;<i>device</i>, const <span class="type">QString</span> &amp;<i>name</i>, <span class="type">bool</span> <i>withSound</i>, <span class="type">bool</span> <i>withMods</i>)</h3>
+<p>Saves the pattern on screen of the machine <i translate="no">machineKey</i> as a preset called <i translate="no">name</i> on the stick of the partition <i translate="no">device</i> (mounted first), in its <code translate="no">ravving/presets</code>, with its sound kept as <i translate="no">withSound</i> and <i translate="no">withMods</i> say (<a href="presetexchange.html#writeStickPattern" translate="no">PresetExchange::writeStickPattern</a>()). Returns the path written, or an empty string on failure.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@savePattern -->
+</div>
+<div class="fnitem">
 <!-- $$$scan[overload1]$$$scanconstQString& -->
 <h3 class="fn" translate="no" id="scan"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> UsbLibrary::<span class="name">scan</span>(const <span class="type">QString</span> &amp;<i>device</i> = QString())</h3>
 <p>Mounts the stick of the partition <i translate="no">device</i> (the first one when empty) and looks through it again, in a worker thread; <a href="usblibrary.html#scanned" translate="no">scanned</a>() follows.</p>
@@ -384,6 +401,13 @@
 <h3 class="fn" translate="no" id="setPresetExchange"><span class="type">void</span> UsbLibrary::<span class="name">setPresetExchange</span>(const <span class="type"><a href="presetexchange.html" translate="no">PresetExchange</a></span> *<i>presets</i>)</h3>
 <p>Sets where presets come from and go to, <i translate="no">presets</i>; without one the presets kind lists nothing.</p>
 <!-- @@@setPresetExchange -->
+</div>
+<div class="fnitem">
+<!-- $$$takeFile[overload1]$$$takeFileconstQString&constQString& -->
+<h3 class="fn" translate="no" id="takeFile"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> UsbLibrary::<span class="name">takeFile</span>(const <span class="type">QString</span> &amp;<i>kind</i>, const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Takes the stick's file <i translate="no">path</i> of <i translate="no">kind</i> onto the device, as SEND… THIS DEVICE does: a preset or a sound (an exchange kind) from any stick, any other kind from the stick looked through (<a href="usblibrary.html#scan" translate="no">scan</a>()), as <a href="usblibrary.html#importEntry" translate="no">importEntry</a>() does. Returns whether it started (<a href="usblibrary.html#finished" translate="no">finished</a>() follows).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@takeFile -->
 </div>
 <div class="fnitem">
 <!-- $$$templates[overload1]$$$templatesconstQString& -->

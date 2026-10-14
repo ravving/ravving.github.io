@@ -275,6 +275,15 @@ after adding text.</p>
 python3 tools/check-translations.py   # the ctest translations-current
 python3 tools/site-i18n.py render     # po-site → site/es/ and site/ja/
 </code></pre>
+<h3 id="filling-the-apps-catalogs">Filling the app's catalogs</h3>
+<p><code>tools/po-app-fill.py</code> does the same for <code>po/&lt;lang&gt;/ravving.po</code>, after the extract:</p>
+<pre><code class="language-sh">python3 tools/po-app-fill.py status       # untranslated and fuzzy, per language
+python3 tools/po-app-fill.py todo /tmp/app   # /tmp/app/app-todo.json: context, english, es, ja
+# fill &quot;es&quot; and &quot;ja&quot; (a fuzzy one holds msgmerge's guess: read it, it is often wrong), then:
+python3 tools/po-app-fill.py apply /tmp/app/app-todo.json
+</code></pre>
+<p><code>apply</code> replaces the translation, drops the fuzzy mark and the old text's <code>#|</code> lines, and leaves
+the rest of the file as it is. Plural messages are listed but filled in an editor.</p>
 <h3 id="filling-the-webpages-catalogs">Filling the webpage's catalogs</h3>
 <p><code>tools/po-site-fill.py</code> does what needs no translator, then takes the rest as JSON:</p>
 <pre><code class="language-sh">python3 tools/po-site-fill.py relink     # the same English in a new place, or a link changed

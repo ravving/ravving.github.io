@@ -114,6 +114,21 @@ the device ones run against <code>root@milo.local</code> (<code>DEVICE=</code> f
 <td>QML warnings in its output; pixel diffs against a reference tour</td>
 </tr>
 <tr>
+<td>after CMake changes</td>
+<td><code>tools/static-analysis.sh cmake</code> (also <code>ctest -R cmake-health</code>)</td>
+<td>zero findings (§1, "The CMake's health"): the baseline is empty</td>
+</tr>
+<tr>
+<td>after a shortcut changes</td>
+<td><code>tools/static-analysis.sh shortcuts</code> (also <code>ctest -R shortcuts</code>)</td>
+<td>no file worse than <code>tools/shortcuts-baseline.json</code> (§1, "The shortcuts"); <code>--map</code> to see a page's keys</td>
+</tr>
+<tr>
+<td>after QML changes</td>
+<td><code>tools/static-analysis.sh health</code> (also <code>ctest -R qml-health</code>)</td>
+<td>no file worse than <code>tools/qml-health-baseline.json</code> (§1, "The QML's health"); lower the baseline when a file improves</td>
+</tr>
+<tr>
 <td>after anything that touches startup</td>
 <td><code>tools/boot-timing.sh restart 5</code></td>
 <td>the medians against the previous run's</td>
@@ -156,12 +171,73 @@ the drag over past its threshold. Disabling the page while a dialog is up is no 
 disabled ComboBox closes its own list at once.</p>
 <p>So:</p>
 <ul>
-<li>the modal layers (dialogs, the MENU drawer, a drop-down's list) register in <code>Session.overlays</code>,
-  by identity, so a repeated open can't leave the page blocked;</li>
-<li>every handler on a page or the header binds <code>enabled: !Session.inputBlocked</code>;</li>
+<li>the modal layers (dialogs, the MENU drawer, a drop-down's list) register in the kit's
+  <code>Interaction.overlays</code>, by identity, so a repeated open can't leave the page blocked;</li>
+<li>every handler on a page or the header binds <code>enabled: !Session.inputBlocked</code> (which reads
+  <code>Interaction.inputBlocked</code>; a kit control binds that one);</li>
 <li><code>tools/check-handlers.py</code> (<code>static-analysis.sh handlers</code>, also in <code>all</code>) fails on a new one
   that doesn't.</li>
 </ul>
+<h3 id="the-qmls-health">The QML's health</h3>
+<p><code>tools/check-qml-health.py</code> reads the style (<code>style/</code>), the UI kit (<code>controls/</code>) and the app
+(<code>qml/</code>) and counts, per file:</p>
+<ul>
+<li><strong>layering</strong>: a layer reaching up. The style may not use the kit or the app, and the kit may
+  not use the app's types, <code>Session</code>, <code>Rave</code> or the context objects. An app component that is
+  only a look on a Qt Quick Control belongs in the style. The app may not redo a kit control
+  (<code>tools/qml-health.json</code>'s <code>kit-owned</code> patterns).</li>
+<li><strong>dead</strong>: ids never used in their file, files nothing instantiates, and properties, functions
+  and signals used nowhere in the QML, the C++, the shaders or the tools.</li>
+<li><strong>stale</strong>: commented-out code, TODO / FIXME / XXX / HACK, <code>console.log</code>;</li>
+<li><strong>tangled</strong>: long files, deep nesting, long functions and handlers, <code>parent.parent</code>, files
+  reaching into many app objects (the limits are in <code>tools/qml-health.json</code>);</li>
+<li><strong>poor</strong>: untyped functions, implicit handler parameters, <code>property var</code>, loose <code>==</code>,
+  delegates without <code>pragma ComponentBehavior: Bound</code>;</li>
+<li><strong>duplicate</strong>: the same 8 lines (whitespace and comments aside) in two places.</li>
+<li><strong>skin</strong>: a colour passed by hand that the <code>Skin</code> already gives, a skin loop, the style
+  reading the skin's ink.</li>
+<li><strong>docs</strong>: a kit or Theme type without its QDoc page, or a member without its <code>/*! */</code>.</li>
+</ul>
+<h3 id="the-qml-baseline">The QML baseline</h3>
+<p><code>tools/qml-health-baseline.json</code> holds today's counts. A file that gets worse fails the check; one
+that gets better is reported, and <code>--update-baseline</code> lowers its count. <code>--verbose</code> lists every
+finding, <code>--check NAME</code> runs one family.</p>
+<h3 id="the-cmakes-health">The CMake's health</h3>
+<p><code>tools/check-cmake-health.py</code> reads every CMakeLists.txt and counts, per file:</p>
+<ul>
+<li><strong>correctness</strong>: Qt's CMake rules. Qt 6 commands only, and a version in <code>find_package(Qt6)</code>.
+  <code>qt_standard_project_setup()</code> comes before the targets, the C++ standard before Qt. QML goes
+  only in <code>qt_add_qml_module</code>, and its dependencies are named by target. Every <code>target_</code>
+  command says <code>PRIVATE</code>, <code>PUBLIC</code> or <code>INTERFACE</code>, every glob has <code>CONFIGURE_DEPENDS</code>, and no
+  setting is directory-wide.</li>
+<li><strong>dead</strong>: unused variables, options and functions; listed files that are gone; source files no
+  CMake file lists or globs.</li>
+<li><strong>stale</strong>: commented-out commands, TODOs, comments naming a gone file, a header that lists the
+  parts but misses one, a policy the setup already sets.</li>
+<li><strong>tangled</strong>: long files, deep nesting.</li>
+<li><strong>duplicate</strong>: a command or list entry twice; a definition or include folder a linked library
+  already gives. Also the same run of commands three times: a function would do, like
+  <code>ravving_test()</code> in tests/CMakeLists.txt.</li>
+<li><strong>style</strong>: lower case, indents in fours, no tabs, lines up to 120 characters. A long call puts
+  one argument per line, file lists are sorted with each header beside its source, and every
+  file starts with a header comment.</li>
+</ul>
+<h3 id="the-cmake-baseline">The CMake baseline</h3>
+<p>Its baseline (<code>tools/cmake-health-baseline.json</code>) is empty: any finding fails. Both health tools
+share <code>tools/health_report.py</code> (the table, the baseline, <code>--verbose</code>, <code>--update-baseline</code>).</p>
+<h3 id="the-shortcuts">The shortcuts</h3>
+<p><code>tools/check-shortcuts.py</code> reads the keys the C++ input layer takes before any page
+(<code>src/ravving.cpp</code>: ALT + MODE, ALT + ▲, ALT + 1, X, Y, ALT + the step keys and the knobs) and
+every <code>Hardware.on…</code> handler. It counts, per file:</p>
+<ul>
+<li><strong>shadowed</strong>: a handler, or its ALT branch, for a key the C++ layer takes first.</li>
+<li><strong>repeated</strong>: the same handler in two places; one shared type or function should hold it.</li>
+<li><strong>overlap</strong>: one key bound by two sibling objects of a file with different code.</li>
+<li><strong>tangled</strong>: long handlers, nested ternaries, <code>event</code> without <code>event =&gt;</code>, deep reaches, an
+  object's handlers scattered, a group of handlers with no comment saying what the keys do.</li>
+</ul>
+<p><code>--map</code> prints every file's keys after the global layer. <code>tools/shortcuts-baseline.json</code> holds
+today's counts, as the QML baseline does.</p>
 <h3 id="the-accepted-findings">The accepted findings</h3>
 <p>What is left is known and accepted; anything not in this list is new and worth reading.</p>
 <table>
@@ -299,6 +375,7 @@ client.</p>
 <h2 id="4-visual-checks-the-screenshot-tour">4. Visual checks: the screenshot tour</h2>
 <pre><code class="language-sh">tools/tour.sh OUT_DIR [en|es|ja]           # offscreen, 1280 × 800, a fresh state each run
 tools/tour-compare.py REF_DIR NEW_DIR --diffs DIFF_DIR
+tools/tour-diff.py REF_DIR NEW_DIR --out CROPS_DIR    # where each shot changed, old above new
 </code></pre>
 <p>The tour (<code>RAVVING_SCREENSHOT_DIR</code>, the ScreenshotTour class) saves a PNG of each view. It shows:</p>
 <ul>
@@ -312,28 +389,28 @@ the tour with nothing to add. Beside the shots, the run writes:</p>
 <ul>
 <li><code>index.txt</code>: the shots in order;</li>
 <li><code>log.txt</code>: the run's output;</li>
-<li><code>style-dump.json</code>: the values the look reads from its environment (tools/style-dump.qml).
-  These are every Kirigami colour set, the units and settings, the theme's sizes and fonts, the
-  application font and palette, the size unit and the registered font families.</li>
+<li><code>style-dump.json</code>: the values the look reads (tools/style-dump.qml): ravving's design tokens
+  (the palette, sizes, durations, icon sizes, fixed settings), the application font and palette,
+  and the registered font families.</li>
 </ul>
 <h3 id="running-and-comparing">Running and comparing</h3>
 <ul>
 <li><code>tools/tour.sh</code> starts from a fresh profile, session, cache, library and project each time
   (<code>RAVVING_HOME</code>), with the language given written into that profile.</li>
-<li><code>STYLE_PREFIX=DIR</code> puts <code>DIR/qml</code> and <code>DIR/plugins</code> first on the import and plugin paths. Use
-  it for a style or QML module that isn't installed system-wide.</li>
+<li><code>STYLE_PREFIX=DIR</code> puts <code>DIR/qml</code> and <code>DIR/plugins</code> first on the import and plugin paths.</li>
 <li><code>RAVVING_STYLE=Basic</code> instead draws plain controls.</li>
 <li><code>tools/tour-compare.py</code> counts the differing pixels per shot (<code>compare -metric AE</code>) and lists
   the shots only one run has.</li>
 <li>With <code>--diffs</code>, it also writes a diff image per differing shot. It compares the two style dumps
   value by value, and exits with the number of shots that differ.</li>
+<li><code>tools/tour-diff.py</code> shows where each shot changed, old above new (<code>--out</code>), and marks the
+  known noise listed in <code>tools/tour-noise.json</code>.</li>
 <li>Two runs of the same build match on every shot except those with live values. These are the
   MENU drawer (<code>d-*-Drawer-menu</code>: CPU load, temperature) and the issues list
   (<code>d-*-IssuesPopup-*</code>: when each was raised). On the device, the Wi-Fi, Bluetooth and USB lists
   vary too. A difference there alone is not a change.</li>
-<li>A reference is a tour of the previous commit, taken the same way on the same machine. The
-  laptop's fonts and Kirigami colours aren't the device's, so a laptop tour is compared with a
-  laptop tour, and the device's tour is the one that counts.</li>
+<li>A reference is a tour of the previous commit, taken on the same machine. The laptop's Qt is
+  newer than the device's, so compare laptop with laptop; the device's tour is the one that counts.</li>
 </ul>
 <h2 id="5-making-ravving-the-devices-ui">5. Making ravving the device's UI</h2>
 <pre><code class="language-sh">tools/device.sh default ravving       # or on the device: /usr/share/ravving/default-app.sh ravving

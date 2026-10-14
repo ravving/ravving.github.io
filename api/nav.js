@@ -90,10 +90,6 @@ window.ravNav = [
     "href": "stderrwatch.html"
    },
    {
-    "title": "StyleHost",
-    "href": "stylehost.html"
-   },
-   {
     "title": "UnixSignals",
     "href": "unixsignals.html"
    },
@@ -115,6 +111,14 @@ window.ravNav = [
   "label": "Studio and projects",
   "href": "ravving-studio.html",
   "pages": [
+   {
+    "title": "GlyphProvider",
+    "href": "glyphprovider.html"
+   },
+   {
+    "title": "Glyphs",
+    "href": "glyphs.html"
+   },
    {
     "title": "History",
     "href": "history.html"
@@ -150,6 +154,10 @@ window.ravNav = [
    {
     "title": "Projects",
     "href": "projects.html"
+   },
+   {
+    "title": "Projects::Session",
+    "href": "projects-session.html"
    },
    {
     "title": "Sections",
@@ -524,6 +532,165 @@ window.ravNav = [
    {
     "title": "Bundle",
     "href": "bundle.html"
+   }
+  ]
+ },
+ {
+  "label": "Other",
+  "pages": [
+   {
+    "title": "Skin",
+    "href": "skin.html"
+   }
+  ]
+ },
+ {
+  "label": "Ravving.Controls (QML)",
+  "href": "ravving-controls-qmlmodule.html",
+  "pages": [
+   {
+    "title": "ActionButton",
+    "href": "qml-ravving-controls-actionbutton.html"
+   },
+   {
+    "title": "ArmBar",
+    "href": "qml-ravving-controls-armbar.html"
+   },
+   {
+    "title": "Caption",
+    "href": "qml-ravving-controls-caption.html"
+   },
+   {
+    "title": "Chip",
+    "href": "qml-ravving-controls-chip.html"
+   },
+   {
+    "title": "ChoiceDialog",
+    "href": "qml-ravving-controls-choicedialog.html"
+   },
+   {
+    "title": "CloseButton",
+    "href": "qml-ravving-controls-closebutton.html"
+   },
+   {
+    "title": "ComboBox",
+    "href": "qml-ravving-controls-combobox.html"
+   },
+   {
+    "title": "ConfirmButton",
+    "href": "qml-ravving-controls-confirmbutton.html"
+   },
+   {
+    "title": "DialFace",
+    "href": "qml-ravving-controls-dialface.html"
+   },
+   {
+    "title": "Dialog",
+    "href": "qml-ravving-controls-dialog.html"
+   },
+   {
+    "title": "DialogHeader",
+    "href": "qml-ravving-controls-dialogheader.html"
+   },
+   {
+    "title": "EmptyNote",
+    "href": "qml-ravving-controls-emptynote.html"
+   },
+   {
+    "title": "Fader",
+    "href": "qml-ravving-controls-fader.html"
+   },
+   {
+    "title": "Glyph",
+    "href": "qml-ravving-controls-glyph.html"
+   },
+   {
+    "title": "Interaction",
+    "href": "qml-ravving-controls-interaction.html"
+   },
+   {
+    "title": "KeyCap",
+    "href": "qml-ravving-controls-keycap.html"
+   },
+   {
+    "title": "Knob",
+    "href": "qml-ravving-controls-knob.html"
+   },
+   {
+    "title": "KnobBadge",
+    "href": "qml-ravving-controls-knobbadge.html"
+   },
+   {
+    "title": "KnobGroup",
+    "href": "qml-ravving-controls-knobgroup.html"
+   },
+   {
+    "title": "LedDisplay",
+    "href": "qml-ravving-controls-leddisplay.html"
+   },
+   {
+    "title": "LevelSlider",
+    "href": "qml-ravving-controls-levelslider.html"
+   },
+   {
+    "title": "Meter",
+    "href": "qml-ravving-controls-meter.html"
+   },
+   {
+    "title": "Nameplate",
+    "href": "qml-ravving-controls-nameplate.html"
+   },
+   {
+    "title": "PickUp",
+    "href": "qml-ravving-controls-pickup.html"
+   },
+   {
+    "title": "Plate",
+    "href": "qml-ravving-controls-plate.html"
+   },
+   {
+    "title": "SecondPress",
+    "href": "qml-ravving-controls-secondpress.html"
+   },
+   {
+    "title": "SectionHeader",
+    "href": "qml-ravving-controls-sectionheader.html"
+   },
+   {
+    "title": "StripButton",
+    "href": "qml-ravving-controls-stripbutton.html"
+   },
+   {
+    "title": "Toast",
+    "href": "qml-ravving-controls-toast.html"
+   },
+   {
+    "title": "ToolStrip",
+    "href": "qml-ravving-controls-toolstrip.html"
+   }
+  ]
+ },
+ {
+  "label": "Ravving.Input (QML)",
+  "href": "ravving-input-qmlmodule.html",
+  "pages": [
+   {
+    "title": "Hardware",
+    "href": "qml-ravving-input-hardware.html"
+   }
+  ]
+ },
+ {
+  "label": "Ravving.Theme (QML)",
+  "href": "ravving-theme-qmlmodule.html",
+  "pages": [
+   {
+    "title": "Skin",
+    "href": "qml-ravving-theme-skin.html"
+   },
+   {
+    "title": "Theme",
+    "href": "qml-ravving-theme-theme.html"
    }
   ]
  }

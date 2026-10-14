@@ -285,6 +285,26 @@ STUTTER (<code>xdotool mousemove 400 113 mousedown 1; sleep 1.5; xdotool mouseup
 must play), then <code>python3 /tmp/repeatcheck.py --file /tmp/record.npy --bpm 120 --length-steps 1</code>:
 ~0 live, 1.000 while held. Dragging a held pad is <code>xdotool mousemove</code> steps of 5 px while the
 button is down.</p>
+<h3 id="why-a-control-has-the-wrong-colour">Why a control has the wrong colour</h3>
+<p>A kit control given no colour takes it from the <code>Skin</code> above it (theme/skin.cpp). To find out
+where a colour went wrong:</p>
+<ol>
+<li>Take a tour and compare it: <code>tools/tour-diff.py REF NEW --out DIR</code> shows each changed region,
+   old above new.</li>
+<li><code>tools/check-qml-health.py --check skin --verbose</code> lists colours passed by hand that repeat the
+   skin, skin loops, and the style reading the skin's ink.</li>
+<li>Trace the skin's way down: run with
+   <code>QT_LOGGING_RULES=qt.quick.controls.attachedpropertypropagator.debug=true</code> and read which
+   item each control's skin comes from.</li>
+</ol>
+<p>What the skin does is pinned by <code>tests/tst_skin.cpp</code>:</p>
+<ul>
+<li>A popup takes the skin of the item it belongs to. A dialog on the window's overlay takes the
+  skin of the item that declares it.</li>
+<li>The style takes only the accent from the skin.</li>
+<li>A surface of its own, like the dialog card, keeps the page's accent with its own ink
+  (<code>Skin.overrides</code>).</li>
+</ul>
 <h3 id="read-the-saved-state">Read the saved state</h3>
 <p><code>~/.local/state/ravving/session.json</code> is the whole session, in the same format as a project:</p>
 <ul>
@@ -310,7 +330,7 @@ sh tools/device.sh log 30
 <p><code>ravving.cuia</code> prints every key with where it landed (<em>accepted</em>/<em>unhandled</em>) and the focus
 chain; <code>ravving.midi</code> every external MIDI message. <code>systemctl --user unset-environment
 QT_LOGGING_RULES</code> turns them off again.</p>
-<p id="screenshots-without-the-device"><strong>Screenshots without the device.</strong> <code>RAVVING_SCREENSHOT_DIR=dir RAVVING_STYLE=Basic
+<p id="screenshots-without-the-device"><strong>Screenshots without the device.</strong> <code>RAVVING_SCREENSHOT_DIR=dir
 RAVVING_NO_ZYNTHBOX=1 RAVVING_DATA_DIR=$PWD/data QT_QPA_PLATFORM=offscreen ./build/ravving</code>
 captures every page and a few scripted states (src/main.cpp: add a step there, and find
 items by <code>objectName</code> with <code>findItem()</code>). It also shows QML warnings: a clean run prints

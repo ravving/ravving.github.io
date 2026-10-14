@@ -84,24 +84,25 @@
 <h2 id="what-ravving-is-made-of">What ravving is made of</h2>
 <p>Everything ravving builds on comes from the device. Nothing is bundled, by the AppImage either.</p>
 <h3 id="the-ui-stack">The UI stack</h3>
+<p>The look is built into the binary, with Qt alone:</p>
 <ul>
-<li><strong>The Zynthbox QtQuick Controls style</strong> (<code>qml-style-zynthbox</code>), picked by name in <code>main.cpp</code>.
-  There's no build-time check: a missing style shows the Basic look and unthemed controls.</li>
-<li><strong><code>io.zynthbox.ui</code></strong> (ZUI, from <code>qml-module-zynthbox</code>), which that style imports. Button,
-  CheckBox, Switch, Menu and TextField read their theme from it.</li>
-<li><strong>The KDE Frameworks</strong> the style draws with: Kirigami, KSvg, Plasma.</li>
-<li><strong>The fonts</strong> are ravving's own, built into the binary (<code>data/fonts</code>, the Fonts class). IBM
-  Plex Sans is for every label, IBM Plex Mono for figures, and Audiowide for the nameplates.
-  Their OFL licences install in <code>share/ravving/fonts</code>. To switch a family, add its files there
-  and change its name in <code>src/fonts.cpp</code>.</li>
+<li><strong>ravving's own Quick Controls style</strong>, <code>Ravving.Style</code> (<code>style/</code>), a static QML module
+  <code>main.cpp</code> selects. Every control is drawn in QML: no SVG theme, no KDE Frameworks.</li>
+<li><strong>Its design tokens</strong>, <code>Ravving.Theme</code> (<code>theme/</code>): the palette, sizes, durations, font
+  families and fixed settings the style, the controls and ravving's QML read. Its <code>Skin</code>
+  attached property carries a page's colours down to its controls.</li>
+<li><strong>The device's keys and knobs</strong>, <code>Ravving.Input</code> (<code>input/</code>): the <code>Hardware</code> attached property
+  the app feeds and the QML answers.</li>
+<li><strong>ravving's controls</strong>, <code>Ravving.Controls</code> (<code>controls/</code>), a static QML module: the base types
+  that need behaviour of their own as well as the look (the knob, the meter, the key cap, the
+  nameplate). It reads the tokens and draws through the style, and knows nothing of the app.</li>
+<li><strong>Its fonts</strong>, IBM Plex Sans, IBM Plex Mono and Audiowide (<code>data/fonts</code>, the Fonts class).</li>
 </ul>
 <h3 id="the-engine-and-the-build-order">The engine and the build order</h3>
 <p>The audio engine comes from <strong>libzynthbox</strong> (<code>io.zynthbox.components</code>) and <strong>zyncoder</strong>, both
-loaded at run time. So the order is: libzynthbox + zyncoder, qml-module-zynthbox,
-qml-style-zynthbox, then ravving.</p>
-<p>On a stock Zynthbox, these are the installed <code>libzynthbox</code>, <code>qml-module-zynthbox</code> and
-<code>qml-style-zynthbox</code> packages. A rebuilt module or style must be installed before ravving is
-tried.</p>
+loaded at run time. So the order is: libzynthbox + zyncoder, then ravving.</p>
+<p>On a stock Zynthbox, these are the installed <code>libzynthbox</code> and zyncoder; a rebuilt libzynthbox must
+be installed before ravving is tried.</p>
 <h3 id="the-player-and-the-exports">The player and the exports</h3>
 <ul>
 <li><strong>The music player</strong> plays through <strong>Qt Multimedia</strong>: <code>qt6-multimedia-dev</code> to build, and
@@ -143,7 +144,7 @@ at run time, and nothing bundles them:</p>
 <td><code>cmake</code>, <code>ninja-build</code>, <code>g++</code>, <code>pkg-config</code></td>
 </tr>
 <tr>
-<td>Qt 6 (Core, Gui, Qml, Quick, QuickControls2, Concurrent, Network, DBus, Multimedia)</td>
+<td>Qt 6.8 or newer (Core, Gui, Qml, Quick, QuickControls2, Concurrent, Network, DBus, Multimedia)</td>
 <td><code>qt6-base-dev</code>, <code>qt6-declarative-dev</code>, <code>qt6-multimedia-dev</code></td>
 </tr>
 <tr>
@@ -167,8 +168,6 @@ at run time, and nothing bundles them:</p>
 <p>Everything else ravving needs, it finds at run time on a stock Zynthbox:</p>
 <ul>
 <li>libzynthbox and zyncoder;</li>
-<li><code>qml-module-zynthbox</code> and <code>qml-style-zynthbox</code>, with the KDE Frameworks they draw with
-  (Kirigami, KSvg, Plasma);</li>
 <li><code>libqt6multimedia6</code>, with its FFmpeg plugin;</li>
 <li>PipeWire, with <code>pipewire-jack</code> (<code>pw-jack</code>), <code>pipewire-bin</code> (<code>pw-loopback</code>, <code>pw-link</code>,
   <code>pw-dump</code>, <code>pw-top</code>) and <code>pipewire-pulse</code> (left off by the image; ravving's service wants it);</li>
@@ -205,9 +204,9 @@ build time. To try QML on the device without rebuilding, copy the <code>qml/</co
 start ravving with <code>RAVVING_QML_DIR</code> pointing at it.</p>
 <h2 id="run-on-a-desktop">Run on a desktop</h2>
 <pre><code class="language-sh">cmake -S . -B build -G Ninja &amp;&amp; cmake --build build
-RAVVING_WINDOWED=1 RAVVING_NO_ZYNTHBOX=1 RAVVING_STYLE=Basic ./build/ravving
+RAVVING_WINDOWED=1 RAVVING_NO_ZYNTHBOX=1 ./build/ravving
 # or straight from the source tree's QML, no rebuild between QML edits:
-RAVVING_WINDOWED=1 RAVVING_NO_ZYNTHBOX=1 RAVVING_STYLE=Basic RAVVING_QML_DIR=$PWD/qml ./build/ravving
+RAVVING_WINDOWED=1 RAVVING_NO_ZYNTHBOX=1 RAVVING_QML_DIR=$PWD/qml ./build/ravving
 </code></pre>
 <p>On a desktop without a terminal, Qt logs to journald; add <code>QT_FORCE_STDERR_LOGGING=1</code> to see
 QML warnings.</p>
@@ -265,7 +264,7 @@ QML warnings.</p>
 </tr>
 <tr>
 <td><code>RAVVING_STYLE</code></td>
-<td>Quick Controls style (default <code>Zynthbox</code>)</td>
+<td>Quick Controls style (default <code>Ravving.Style</code>, the built-in one; <code>Basic</code> for plain controls)</td>
 </tr>
 <tr>
 <td><code>RAVVING_QML_DIR</code></td>
@@ -273,7 +272,7 @@ QML warnings.</p>
 </tr>
 <tr>
 <td><code>RAVVING_DATA_DIR</code></td>
-<td>read <code>kits.json</code> and the theme (<code>plasma/desktoptheme/</code>) from this folder (desktop: <code>$PWD/data</code>; the plasmarc then comes from <code>build/config/</code>)</td>
+<td>read <code>kits.json</code> and the rest of the data from this folder (desktop: <code>$PWD/data</code>)</td>
 </tr>
 <tr>
 <td><code>RAVVING_HOME</code></td>
@@ -316,7 +315,7 @@ themselves are where they were: the split is of the CMake files only):</p>
 <tbody>
 <tr>
 <td><code>CMakeLists.txt</code></td>
-<td>the project: version, C++ standard, AUTOMOC, <code>qt_standard_project_setup</code>, the dependencies (<code>find_package</code> Qt6 / KF6BluezQt / ZLIB, <code>pkg_check_modules</code> jack / sndfile / taglib), <code>RAVVING_DATA_INSTALL_DIR</code> and <code>RAVVING_THEME</code>, the build options (<code>RAVVING_QML_AOT</code>, <code>RAVVING_PCH</code>, <code>RAVVING_TIME_TRACE</code>, <code>RAVVING_UNITY</code>, <code>RAVVING_IWYU</code>, <code>RAVVING_TESTS</code>) with <code>ravving_build_settings(&lt;target&gt;)</code>, their per-target side; the <code>add_subdirectory</code> calls; the generated files (<code>VERSION</code>, <code>config/plasmarc</code>) and the install rules of the project as a whole (<code>data/</code>, the theme, systemd and WirePlumber drop-ins, the desktop entry and icons)</td>
+<td>the project: version, C++ standard, AUTOMOC, <code>qt_standard_project_setup</code>, the dependencies (<code>find_package</code> Qt6 / KF6BluezQt / ZLIB, <code>pkg_check_modules</code> jack / sndfile / taglib), <code>RAVVING_DATA_INSTALL_DIR</code>, the build options (<code>RAVVING_QML_AOT</code>, <code>RAVVING_PCH</code>, <code>RAVVING_TIME_TRACE</code>, <code>RAVVING_UNITY</code>, <code>RAVVING_IWYU</code>, <code>RAVVING_TESTS</code>) with <code>ravving_build_settings(&lt;target&gt;)</code>, their per-target side; the <code>add_subdirectory</code> calls; the generated file (<code>VERSION</code>) and the install rules of the project as a whole (<code>data/</code>, systemd and WirePlumber drop-ins, the desktop entry and icons)</td>
 </tr>
 <tr>
 <td><code>src/backend/CMakeLists.txt</code></td>
@@ -325,6 +324,22 @@ themselves are where they were: the split is of the CMake files only):</p>
 <tr>
 <td><code>src/CMakeLists.txt</code></td>
 <td><code>ravving</code>, the app: <code>src/*.cpp</code>, the <code>Ravving</code> QML module over <code>qml/</code> at the repository root (each file's path from there is its resource alias, so the resources stay <code>qrc:/qt/qml/Ravving/qml/…</code> and the module's qmldir stays at <code>build/Ravving</code>), <code>RAVVING_QML_AOT</code>, the branding resources and the shaders, the link to <code>ravving_backend</code>, the binary's install rule; the binary itself stays at <code>build/ravving</code></td>
+</tr>
+<tr>
+<td><code>style/CMakeLists.txt</code></td>
+<td><code>ravving_style</code>, the <code>Ravving.Style</code> Quick Controls style, a static QML module linked into the app</td>
+</tr>
+<tr>
+<td><code>theme/CMakeLists.txt</code></td>
+<td><code>ravving_theme</code>, the <code>Ravving.Theme</code> design tokens, a static QML module the style, the controls and the app read</td>
+</tr>
+<tr>
+<td><code>input/CMakeLists.txt</code></td>
+<td><code>ravving_input</code>, the <code>Ravving.Input</code> device keys and knobs (C++), a static QML module linked into the app</td>
+</tr>
+<tr>
+<td><code>controls/CMakeLists.txt</code></td>
+<td><code>ravving_controls</code>, the <code>Ravving.Controls</code> base types, a static QML module linked into the app</td>
 </tr>
 <tr>
 <td><code>setup/CMakeLists.txt</code></td>

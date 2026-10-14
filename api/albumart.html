@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=b759fa41dd" defer></script>
-  <script src="search.js?v=9eba806fbb" defer></script>
+  <script src="nav.js?v=02ad506e5e" defer></script>
+  <script src="search.js?v=ed38cafd77" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -82,35 +82,43 @@
 </ul>
 <h2 id="functions">Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#png" translate="no">png</a></b>(const QString &amp;<i>title</i>, const QString &amp;<i>artist</i>, const QString &amp;<i>album</i>, int <i>size</i> = 1000)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QImage </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#render" translate="no">render</a></b>(const QString &amp;<i>title</i>, const QString &amp;<i>artist</i>, const QString &amp;<i>album</i>, int <i>size</i> = 1000)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#write" translate="no">write</a></b>(const QString &amp;<i>path</i>, const QString &amp;<i>title</i>, const QString &amp;<i>artist</i>, const QString &amp;<i>album</i>, int <i>size</i> = 1000)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QRect </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#iconRect" translate="no">iconRect</a></b>(int <i>size</i> = 1000)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#png" translate="no">png</a></b>(const QString &amp;<i>title</i>, const QString &amp;<i>artist</i>, const QString &amp;<i>album</i>, const QString &amp;<i>icon</i> = QString(), int <i>size</i> = 1000)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QImage </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#render" translate="no">render</a></b>(const QString &amp;<i>title</i>, const QString &amp;<i>artist</i>, const QString &amp;<i>album</i>, const QString &amp;<i>icon</i> = QString(), int <i>size</i> = 1000)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#write" translate="no">write</a></b>(const QString &amp;<i>path</i>, const QString &amp;<i>title</i>, const QString &amp;<i>artist</i>, const QString &amp;<i>album</i>, const QString &amp;<i>icon</i> = QString(), int <i>size</i> = 1000)</td></tr>
 </table></div>
 <!-- $$$AlbumArt-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p>The art is a rounded card on a dark sleeve, filled with a gradient whose colours are seeded from the title and the artist (the same names always give the same art), with soft lights, a faint big-knob ring in a corner, the title in large type (shrunk to fit), the artist under it, the album or mixtape in small capitals, and &quot;MADE WITH&quot; with ravving's wordmark (<code translate="no">data/branding/ravving-wordmark.svg</code>) at the bottom. An empty title is drawn as &quot;Untitled&quot;.</p>
+<p>A project's icon (a built-in glyph, Glyphs), when given, sits in the card's top-left corner on a dark box, in a light tint of the card's own colours, scaled by a whole number so its pixels stay crisp (<a href="albumart.html#iconRect" translate="no">iconRect</a>() says where); the title then keeps below it. An unknown icon name draws the art as without one.</p>
 <p><a href="albumart.html#render" translate="no">render</a>() draws it, <a href="albumart.html#write" translate="no">write</a>() saves it as a PNG beside a track and <a href="albumart.html#png" translate="no">png</a>() gives the bytes that go into a file's tag. <a href="albumartprovider.html" translate="no">AlbumArtProvider</a> serves the same drawing to QML. The functions are reentrant; the exporter calls them from its worker thread.</p>
 </div>
 <!-- @@@AlbumArt -->
 <div class="func">
 <h2>Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$png[overload1]$$$pngconstQString&constQString&constQString&int -->
-<h3 class="fn" translate="no" id="png"><span class="type">QByteArray</span> AlbumArt::<span class="name">png</span>(const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>artist</i>, const <span class="type">QString</span> &amp;<i>album</i>, <span class="type">int</span> <i>size</i> = 1000)</h3>
-<p>Returns the art for <i translate="no">title</i>, <i translate="no">artist</i> and <i translate="no">album</i>, <i translate="no">size</i> pixels square, as PNG bytes (what goes into an audio file's cover tag).</p>
+<!-- $$$iconRect[overload1]$$$iconRectint -->
+<h3 class="fn" translate="no" id="iconRect"><span class="type">QRect</span> AlbumArt::<span class="name">iconRect</span>(<span class="type">int</span> <i>size</i> = 1000)</h3>
+<p>Returns where a project's icon lands on art <i translate="no">size</i> pixels square: the glyph's own pixels (32 times a whole number of them), at whole-pixel coordinates in the card's top-left corner. The dark box behind it reaches an eighth of the glyph's width further out on each side.</p>
+<!-- @@@iconRect -->
+</div>
+<div class="fnitem">
+<!-- $$$png[overload1]$$$pngconstQString&constQString&constQString&constQString&int -->
+<h3 class="fn" translate="no" id="png"><span class="type">QByteArray</span> AlbumArt::<span class="name">png</span>(const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>artist</i>, const <span class="type">QString</span> &amp;<i>album</i>, const <span class="type">QString</span> &amp;<i>icon</i> = QString(), <span class="type">int</span> <i>size</i> = 1000)</h3>
+<p>Returns the art for <i translate="no">title</i>, <i translate="no">artist</i> and <i translate="no">album</i>, wearing the glyph <i translate="no">icon</i> (empty for none), <i translate="no">size</i> pixels square, as PNG bytes (what goes into an audio file's cover tag).</p>
 <!-- @@@png -->
 </div>
 <div class="fnitem">
-<!-- $$$render[overload1]$$$renderconstQString&constQString&constQString&int -->
-<h3 class="fn" translate="no" id="render"><span class="type">QImage</span> AlbumArt::<span class="name">render</span>(const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>artist</i>, const <span class="type">QString</span> &amp;<i>album</i>, <span class="type">int</span> <i>size</i> = 1000)</h3>
-<p>Returns the art for <i translate="no">title</i>, <i translate="no">artist</i> and <i translate="no">album</i> as a square image <i translate="no">size</i> pixels wide (1000 for an export, smaller for a preview).</p>
+<!-- $$$render[overload1]$$$renderconstQString&constQString&constQString&constQString&int -->
+<h3 class="fn" translate="no" id="render"><span class="type">QImage</span> AlbumArt::<span class="name">render</span>(const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>artist</i>, const <span class="type">QString</span> &amp;<i>album</i>, const <span class="type">QString</span> &amp;<i>icon</i> = QString(), <span class="type">int</span> <i>size</i> = 1000)</h3>
+<p>Returns the art for <i translate="no">title</i>, <i translate="no">artist</i> and <i translate="no">album</i>, wearing the glyph <i translate="no">icon</i> (empty, or a name that is no built-in glyph, for none), as a square image <i translate="no">size</i> pixels wide (1000 for an export, smaller for a preview).</p>
 <!-- @@@render -->
 </div>
 <div class="fnitem">
-<!-- $$$write[overload1]$$$writeconstQString&constQString&constQString&constQString&int -->
-<h3 class="fn" translate="no" id="write"><span class="type">bool</span> AlbumArt::<span class="name">write</span>(const <span class="type">QString</span> &amp;<i>path</i>, const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>artist</i>, const <span class="type">QString</span> &amp;<i>album</i>, <span class="type">int</span> <i>size</i> = 1000)</h3>
-<p>Saves the art for <i translate="no">title</i>, <i translate="no">artist</i> and <i translate="no">album</i>, <i translate="no">size</i> pixels square, as a PNG at <i translate="no">path</i>. Returns <code translate="no">false</code> when it could not be written.</p>
+<!-- $$$write[overload1]$$$writeconstQString&constQString&constQString&constQString&constQString&int -->
+<h3 class="fn" translate="no" id="write"><span class="type">bool</span> AlbumArt::<span class="name">write</span>(const <span class="type">QString</span> &amp;<i>path</i>, const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>artist</i>, const <span class="type">QString</span> &amp;<i>album</i>, const <span class="type">QString</span> &amp;<i>icon</i> = QString(), <span class="type">int</span> <i>size</i> = 1000)</h3>
+<p>Saves the art for <i translate="no">title</i>, <i translate="no">artist</i> and <i translate="no">album</i>, wearing the glyph <i translate="no">icon</i> (empty for none), <i translate="no">size</i> pixels square, as a PNG at <i translate="no">path</i>. Returns <code translate="no">false</code> when it could not be written.</p>
 <!-- @@@write -->
 </div>
 </div>

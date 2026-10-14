@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=b759fa41dd" defer></script>
-  <script src="search.js?v=9eba806fbb" defer></script>
+  <script src="nav.js?v=02ad506e5e" defer></script>
+  <script src="search.js?v=ed38cafd77" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -87,6 +87,7 @@
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#audition" translate="no">audition</a></b></span>(int)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#automationOn-prop" translate="no">automationChanged</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#automationOn-prop" translate="no">automationOn</a></b></span>() const : bool</li>
+<li class="fn" translate="no"><span class="name"><b><a href="machine.html#barHasNotes" translate="no">barHasNotes</a></b></span>(int) const : bool</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#bars-prop" translate="no">bars</a></b></span>() const : int</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#bars-prop" translate="no">barsChanged</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#beginEditGroup" translate="no">beginEditGroup</a></b></span>()</li>
@@ -112,6 +113,8 @@
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#custom-prop" translate="no">custom</a></b></span>() const : QVariantList</li>
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#cycleSlotBars" translate="no">cycleSlotBars</a></b></span>(int)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#degreeForNote" translate="no">degreeForNote</a></b></span>(int) const : int</li>
+<li class="fn" translate="no"><span class="name"><b><a href="machine.html#editStep-prop" translate="no">editStep</a></b></span>() const : int</li>
+<li class="fn" translate="no"><span class="name"><b><a href="machine.html#editStep-prop" translate="no">editStepChanged</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#edited" translate="no">edited</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#effects-prop" translate="no">effects</a></b></span>() const : TrackEffects *</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#endEditGroup" translate="no">endEditGroup</a></b></span>()</li>
@@ -128,6 +131,8 @@
 <li class="fn" translate="no"><span class="name"><b><a href="historyparticipant.html#historyKey" translate="no">historyKey</a></b></span>() const : QString</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#historyLabel" translate="no">historyLabel</a></b></span>() const : QString</li>
 <li class="fn" translate="no"><span class="name"><b><a href="historyparticipant.html#historyLabel" translate="no">historyLabel</a></b></span>() const : QString</li>
+<li class="fn" translate="no"><span class="name"><b><a href="machine.html#historyMerges" translate="no">historyMerges</a></b></span>(const QVariantMap &amp;) const : bool</li>
+<li class="fn" translate="no"><span class="name"><b><a href="historyparticipant.html#historyMerges" translate="no">historyMerges</a></b></span>(const QVariantMap &amp;) const : bool</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#historyState" translate="no">historyState</a></b></span>() const : QVariantMap</li>
 <li class="fn" translate="no"><span class="name"><b><a href="historyparticipant.html#historyState" translate="no">historyState</a></b></span>() const : QVariantMap</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#importUserSound" translate="no">importUserSound</a></b></span>(const QVariantMap &amp;) : QString</li>
@@ -158,13 +163,14 @@
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#paused-prop" translate="no">paused</a></b></span>() const : bool</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#paused-prop" translate="no">pausedChanged</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#playLive" translate="no">playLive</a></b></span>(int, bool)</li>
+</ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#playPosition-prop" translate="no">playPosition</a></b></span>() const : int</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#playPosition-prop" translate="no">playPositionChanged</a></b></span>()</li>
-</ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#playhead-prop" translate="no">playhead</a></b></span>() const : int</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#playhead-prop" translate="no">playheadChanged</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#presetEdited-prop" translate="no">presetChanged</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#presetEdited-prop" translate="no">presetEdited</a></b></span>() const : bool</li>
+<li class="fn" translate="no"><span class="name"><b><a href="machine.html#presetEntry" translate="no">presetEntry</a></b></span>(const QString &amp;, bool, bool) const : QVariantMap</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#presetLibrary" translate="no">presetLibrary</a></b></span>() const : PresetLibrary *</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#presetName-prop" translate="no">presetName</a></b></span>() const : QString</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#presets-prop" translate="no">presets</a></b></span>() const : QVariantList</li>

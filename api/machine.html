@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=b759fa41dd" defer></script>
-  <script src="search.js?v=9eba806fbb" defer></script>
+  <script src="nav.js?v=02ad506e5e" defer></script>
+  <script src="search.js?v=ed38cafd77" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -103,6 +103,7 @@
 <li class="fn" translate="no"><b><a href="machine.html#canSavePresets-prop" translate="no">canSavePresets</a></b> : const bool</li>
 <li class="fn" translate="no"><b><a href="machine.html#canUndo-prop" translate="no">canUndo</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="machine.html#cursor-prop" translate="no">cursor</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="machine.html#editStep-prop" translate="no">editStep</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="machine.html#effects-prop" translate="no">effects</a></b> : QObject* const</li>
 <li class="fn" translate="no"><b><a href="machine.html#engineTitle-prop" translate="no">engineTitle</a></b> : QString</li>
 <li class="fn" translate="no"><b><a href="machine.html#follow-prop" translate="no">follow</a></b> : bool</li>
@@ -150,6 +151,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#attach" translate="no">attach</a></b>(QObject *<i>pattern</i>, SketchpadTrack *<i>track</i>, QObject *<i>playGridManager</i>, QObject *<i>syncTimer</i>, QObject *<i>gainHandler</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#attachSpare" translate="no">attachSpare</a></b>(QObject *<i>pattern</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#automationOn-prop" translate="no">automationOn</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#barHasNotes" translate="no">barHasNotes</a></b>(int <i>bar</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#bars-prop" translate="no">bars</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#beginEditGroup" translate="no">beginEditGroup</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#canRedo-prop" translate="no">canRedo</a></b>() const</td></tr>
@@ -162,6 +164,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#clip" translate="no">clip</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#cueSectionContent" translate="no">cueSectionContent</a></b>(const QVariantMap &amp;<i>content</i>, int <i>span</i>, bool <i>intoSpare</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#cursor-prop" translate="no">cursor</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#editStep-prop" translate="no">editStep</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> TrackEffects *</td><td class="memItemRight bottomAlign"><b><a href="machine.html#effects-prop" translate="no">effects</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#endEditGroup" translate="no">endEditGroup</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#engineConfig" translate="no">engineConfig</a></b>() const</td></tr>
@@ -185,6 +188,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#playPosition-prop" translate="no">playPosition</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#playhead-prop" translate="no">playhead</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#presetEdited-prop" translate="no">presetEdited</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#presetEntry" translate="no">presetEntry</a></b>(const QString &amp;<i>name</i>, bool <i>withSound</i>, bool <i>withMods</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> PresetLibrary *</td><td class="memItemRight bottomAlign"><b><a href="machine.html#presetLibrary" translate="no">presetLibrary</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#presetName-prop" translate="no">presetName</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="machine.html#presets-prop" translate="no">presets</a></b>() const</td></tr>
@@ -252,6 +256,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#applyHistoryState" translate="no">applyHistoryState</a></b>(const QVariantMap &amp;<i>state</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#historyKey" translate="no">historyKey</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#historyLabel" translate="no">historyLabel</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#historyMerges" translate="no">historyMerges</a></b>(const QVariantMap &amp;<i>state</i>) const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#historyState" translate="no">historyState</a></b>() const override</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
@@ -259,6 +264,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#automationOn-prop" translate="no">automationChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#bars-prop" translate="no">barsChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#cursor-prop" translate="no">cursorChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#editStep-prop" translate="no">editStepChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#edited" translate="no">edited</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#engineControlRequested" translate="no">engineControlRequested</a></b>(const QString &amp;<i>symbol</i>, double <i>value</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#engineTitle-prop" translate="no">engineTitleChanged</a></b>()</td></tr>
@@ -419,6 +425,20 @@
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>cursorChanged</b></span>()</td></tr>
 </table></div>
 <!-- @@@cursor -->
+</div>
+<div class="fnitem">
+<!-- $$$editStep-prop$$$editStep$$$editStepChanged -->
+<h3 class="fn" translate="no" id="editStep-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">editStep</span> : <span class="type">int</span></h3>
+<p>This property holds the step (in the whole pattern) the last edit of the pattern changed, or -1 when it had no one place (a clear, a preset); undo and redo put back the one of the state they restore, so STEP entry can take the cursor to the edit undone.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>editStep</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>editStepChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@editStep -->
 </div>
 <div class="fnitem">
 <!-- $$$effects-prop$$$effects -->
@@ -898,6 +918,13 @@
 <!-- @@@attachSpare -->
 </div>
 <div class="fnitem">
+<!-- $$$barHasNotes[overload1]$$$barHasNotesint -->
+<h3 class="fn" translate="no" id="barHasNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Machine::<span class="name">barHasNotes</span>(<span class="type">int</span> <i>bar</i>) const</h3>
+<p>Returns whether <i translate="no">bar</i> (from 0) holds any note in the pattern that plays, so removing it would lose something (the pattern toolbar's − asks again then).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@barHasNotes -->
+</div>
+<div class="fnitem">
 <!-- $$$beginEditGroup[overload1]$$$beginEditGroup -->
 <h3 class="fn" translate="no" id="beginEditGroup"><span class="type">void</span> Machine::<span class="name">beginEditGroup</span>()</h3>
 <p>Makes every change until <a href="machine.html#endEditGroup" translate="no">endEditGroup</a>() one history step (a recorded take); groups nest.</p>
@@ -988,6 +1015,13 @@
 <!-- @@@historyLabel -->
 </div>
 <div class="fnitem">
+<!-- $$$historyMerges[overload1]$$$historyMergesconstQVariantMap& -->
+<h3 class="fn" translate="no" id="historyMerges"><code class="details extra" translate="no">[override virtual]</code> <span class="type">bool</span> Machine::<span class="name">historyMerges</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>) const</h3>
+<p>Reimplements: <a href="historyparticipant.html#historyMerges" translate="no">HistoryParticipant::historyMerges</a>(const QVariantMap &amp;state) const.</p>
+<p>A note or step written or toggled (an edit with an <a href="machine.html#editStep-prop" translate="no">editStep</a> in <i translate="no">state</i>) is a step of its own, however quick the next one comes: one undo takes back that one only. Other changes (a knob recorded as automation) merge as History does.</p>
+<!-- @@@historyMerges -->
+</div>
+<div class="fnitem">
 <!-- $$$historyState[overload1]$$$historyState -->
 <h3 class="fn" translate="no" id="historyState"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QVariantMap</span> Machine::<span class="name">historyState</span>() const</h3>
 <p>Reimplements: <a href="historyparticipant.html#historyState" translate="no">HistoryParticipant::historyState</a>() const.</p>
@@ -1033,6 +1067,12 @@
 <p>Starts the sound of the live <i translate="no">key</i> now, accented when <i translate="no">accented</i> is true; silenced keys stay silent.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@playLive -->
+</div>
+<div class="fnitem">
+<!-- $$$presetEntry[overload1]$$$presetEntryconstQString&boolbool -->
+<h3 class="fn" translate="no" id="presetEntry"><span class="type">QVariantMap</span> Machine::<span class="name">presetEntry</span>(const <span class="type">QString</span> &amp;<i>name</i>, <span class="type">bool</span> <i>withSound</i>, <span class="type">bool</span> <i>withMods</i>) const</h3>
+<p>Returns the whole pattern as a preset entry called <i translate="no">name</i>, not stored anywhere (<a href="presetlibrary.html#entryOf" translate="no">PresetLibrary::entryOf</a>()): its sound kept as <a href="machine.html#saveAsPreset" translate="no">saveAsPreset</a>() keeps it with <i translate="no">withSound</i> and <i translate="no">withMods</i>. A preset written to a USB stick is made from it.</p>
+<!-- @@@presetEntry -->
 </div>
 <div class="fnitem">
 <!-- $$$presetLibrary[overload1]$$$presetLibrary -->

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- index.qdoc -->
-  <meta name="description" content="The C++ classes behind ravving: the app, the studio, the machines, the engines and the device services.">
+  <meta name="description" content="The C++ classes behind ravving and the QML modules its screens are built from.">
   <title>ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=54f138c7a0">
@@ -17,8 +17,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=b759fa41dd" defer></script>
-  <script src="search.js?v=9eba806fbb" defer></script>
+  <script src="nav.js?v=02ad506e5e" defer></script>
+  <script src="search.js?v=ed38cafd77" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -60,12 +60,13 @@
 <h1 class="title">ravving C++ API</h1>
 <!-- $$$index.html-description -->
 <div class="descr" id="details">
-<p>ravving is a Qt 6 application on top of libzynthbox. Its C++ side is two targets: the <code translate="no">ravving</code> app (<code translate="no">src/</code>: the window, the hardware input, the bridge to libzynthbox) and the <code translate="no">ravving_backend</code> static library (<code translate="no">src/backend/</code>: the studio, its machines, the engines, the recorders and the device services). The QML in <code translate="no">qml/</code> reaches the backend through context properties (<code translate="no">studio</code>, <code translate="no">ravving</code>, <code translate="no">zynthbox</code>) and the <code translate="no">Ravving</code> QML module; it is not documented here.</p>
+<p>ravving is a Qt 6 application on top of libzynthbox. Its C++ side is two targets: the <code translate="no">ravving</code> app (<code translate="no">src/</code>: the window, the hardware input, the bridge to libzynthbox) and the <code translate="no">ravving_backend</code> static library (<code translate="no">src/backend/</code>: the studio, its machines, the engines, the recorders and the device services). The QML in <code translate="no">qml/</code> reaches the backend through context properties (<code translate="no">studio</code>, <code translate="no">ravving</code>, <code translate="no">zynthbox</code>).</p>
+<p>The screens are built from two QML modules documented here: <a href="ravving-controls-qmlmodule.html" translate="no">Ravving.Controls</a>, the UI kit, and <a href="ravving-theme-qmlmodule.html" translate="no">Ravving.Theme</a>, the design tokens and the finish. The app's own QML (<code translate="no">qml/</code>) is not documented here.</p>
 <p>The setup program (<code translate="no">setup/</code>) installs the AppImage and its data on a Zynthbox; <a href="zynthbox-setup.html">Running on a Zynthbox</a> describes it with the service, the scripts and the system files it uses.</p>
 <h2 id="the-classes-by-area">The classes by area</h2>
 <div class="table"><table class="generic">
  <thead><tr class="qt-style"><th >Area</th><th >What it holds</th></tr></thead>
-<tr valign="top" class="odd"><td ><a href="ravving-app.html">App and hardware input</a></td><td >The application object, the device's keys, knobs and LEDs, the bridge to libzynthbox and libzyncoder, the style host and the startup splash.</td></tr>
+<tr valign="top" class="odd"><td ><a href="ravving-app.html">App and hardware input</a></td><td >The application object, the device's keys, knobs and LEDs, the bridge to libzynthbox and libzyncoder, the fonts and the startup splash.</td></tr>
 <tr valign="top" class="even"><td ><a href="ravving-studio.html">Studio and projects</a></td><td >The studio that owns the machines, the song's sections, the undo history, the projects, templates and presets.</td></tr>
 <tr valign="top" class="odd"><td ><a href="ravving-machines.html">Machines</a></td><td >The machine base class and the drum, mono, chord and sampler machines, with the kits and the sound controls they play through.</td></tr>
 <tr valign="top" class="even"><td ><a href="ravving-engines.html">Engines and effects</a></td><td >The sound engines (jalv, FluidSynth), the LV2 inserts and the effect chains.</td></tr>

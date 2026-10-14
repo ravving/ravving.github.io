@@ -52,7 +52,7 @@
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
 <p class="mono">Under the hood</p><ul>
-<li class="on"><a href="architecture.html" aria-current="page">Architecture</a><ul><li><a href="#layers">Layers</a></li><li><a href="#input-flow-the-hardware-attached-property">Input flow: the Hardware attached property</a></li><li><a href="#the-libzynthbox-bridge">The libzynthbox bridge</a></li><li><a href="#device-workflow">Device workflow</a></li><li><a href="#distribution">Distribution</a></li><li><a href="#the-theme">The theme</a></li><li><a href="#where-ravving-keeps-its-files">Where ravving keeps its files</a></li><li><a href="#the-startup-splash">The startup splash</a></li><li><a href="#the-phone-share-and-the-help-page">The phone share and the help page</a></li><li><a href="#topics-with-their-own-page">Topics with their own page</a></li></ul></li>
+<li class="on"><a href="architecture.html" aria-current="page">Architecture</a><ul><li><a href="#layers">Layers</a></li><li><a href="#input-flow-the-hardware-attached-property">Input flow: the Hardware attached property</a></li><li><a href="#the-libzynthbox-bridge">The libzynthbox bridge</a></li><li><a href="#device-workflow">Device workflow</a></li><li><a href="#distribution">Distribution</a></li><li><a href="#the-look">The look</a></li><li><a href="#where-ravving-keeps-its-files">Where ravving keeps its files</a></li><li><a href="#a-projects-file">A project&#x27;s file</a></li><li><a href="#the-startup-splash">The startup splash</a></li><li><a href="#the-phone-share-and-the-help-page">The phone share and the help page</a></li><li><a href="#topics-with-their-own-page">Topics with their own page</a></li></ul></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
 <li><a href="undo-history.html">The undo history</a></li>
@@ -87,11 +87,11 @@
  │ pages/:   DrumsPage ChordsPage BassPage LeadPage SamplerPage         │
  │ components/: the shared parts every page is built from               │
  └───────────────▲──────────────────────────────▲──────────────────────┘
-                 │ context properties           │ Zynthbox QQC style (SVG theme)
+                 │ context properties           │ Ravving.Controls (controls/)
+                 │                              │ Ravving.Style (style/), Ravving.Theme (theme/)
  ┌───────────────┴──────── C++ app (src/) ──────┴──────────────────────┐
  │ Ravving         page state, hardware → HardwareEvent   &quot;ravving&quot;    │
  │ Hardware        the `Hardware.on…` attached property  import Ravving│
- │ StyleHost       what the Zynthbox style needs          &quot;zynqtgui&quot;   │
  │ Fonts           the built-in typefaces                 &quot;fonts&quot;      │
  │ ZynthboxBridge  loads libzyncoder + libzynthbox        &quot;zynthbox&quot;   │
  │ HardwareSwitches  polls the buttons → MidiRouter's CUIA queue        │
@@ -101,7 +101,7 @@
                  │ dlopen + meta-object calls (headers are not installed yet)
  ┌───────────────┴──────────── libraries ──────────────────────────────┐
  │ libzynthbox (sequencer, sampler, mixer, MIDI router, engines)        │
- │ libzyncoder (buttons, knobs) · qml-style-zynthbox · KF6 Kirigami     │
+ │ libzyncoder (buttons, knobs)                                         │
  └─────────────────────────────────────────────────────────────────────┘
 </code></pre>
 <p><strong>Rule:</strong> ravving runs no Python. When it needs something zynthbox-qml does in Python, that
@@ -119,7 +119,9 @@ keyboard (dev) ─► Main.qml Shortcuts ─► ravving.simulateCuia / simulateK
                         HardwareEvent ─► Hardware::dispatch(window): activeFocusItem,
                                           then each parent, until one accepts it
 </code></pre>
-<pre><code class="language-qml">import Ravving
+<p><code>Hardware</code> and <code>HardwareEvent</code> are the <code>Ravving.Input</code> module (<code>input/</code>, C++ on Qt alone): the
+app feeds it, and the kit's controls and the app's QML answer it.</p>
+<pre><code class="language-qml">import Ravving.Input
 FocusScope {
     Hardware.onKnob1Up: event =&gt; level += event.delta        // knob 1 clockwise
     Hardware.onBigKnobDown: event =&gt; select(index - 1)
@@ -162,7 +164,7 @@ still not accepted. A handler that runs accepts the event unless it sets
 <li>Groups in a page (<code>ParamCard</code>, the machine strip) set <code>ownsBigKnob: false</code>, so it passes
     through to the page.</li>
 <li>Popups and the header, outside the page, keep using it.</li>
-<li>A machine's strip (role, PAN knob, VOL <code>RaveFader</code>) is a <code>KnobGroup</code>. Tap it, and knob 1 pans
+<li>A machine's strip (role, PAN knob, VOL <code>Fader</code>) is a <code>KnobGroup</code>. Tap it, and knob 1 pans
   and knob 2 sets the level. BACK or a tap in the grid give the knobs back to the rows
   (<code>StepGrid.knobsActive</code> is off while the strip has them).</li>
 </ul>
@@ -226,7 +228,9 @@ records it. LIVE, which may be left on another machine, is the step keys' only.<
     dispatched), badged on the MASTER dial.</li>
 <li>ALT + knobs 1–3 go straight to <code>Ravving.altKnobTarget</code>, the header's FX SENDS (PHASER, ECHO,
     HEAVY): a KnobGroup <code>borrowed</code> while ALT is held, with its badges, frame and pick-up.</li>
-<li>ALT + ◀ / ▶ undo and redo along the project's history (<code>studio.history</code>), like the header's ↶ ↷.</li>
+<li>BACK on a sequencer grid undoes that machine's last change (MachinePanel.undoEdit, the toolbar's ↶);
+    in STEP entry the cursor goes to the column undone (Machine::editStep). ALT + BACK passes on, and
+    Main.qml takes the focus back to the page. The header's ↶ ↷ walk the project's history.</li>
 <li>ALT + ▲ gives the focus to the app header at once, from wherever it is (a page's rows, a
     section's cards, the strip): <code>Ravving.headerRequested</code>, raised in C++ before any dispatch.</li>
 <li>ALT + 1 opens the SONG page from anywhere, and again goes back to the page
@@ -269,8 +273,9 @@ page. In it:</p>
   heading is the one way in by touch; the bar has no OPEN button.</li>
 </ul>
 <h3 id="dialogs-and-the-menu">Dialogs and the menu</h3>
-<p>Dialogs (<code>RavePopup</code>: ChoicePopup, InputPopup), drop-down lists and the menu darken the page
-behind them (<code>ModalDim</code>). A dialog takes the keys while open, and gives the focus back.</p>
+<p>Dialogs (<code>Dialog</code>: ChoicePopup, InputPopup), drop-down lists and the menu darken the page
+behind them (the style's <code>Overlay.modal</code> and <code>Overlay.modeless</code>, <code>style/private/Dim.qml</code>). A
+dialog takes the keys while open, and gives the focus back.</p>
 <ul>
 <li><strong>Dialogs</strong> wear one card look: a gradient #1e1c24 → #131118, a hairline border, radius 16,
   and a <code>DialogHeader</code> with a spaced title, a hint and the ✕.</li>
@@ -315,8 +320,7 @@ behind them (<code>ModalDim</code>). A dialog takes the keys while open, and giv
    system.</li>
 </ol>
 <p>Both libraries are opened with <code>RTLD_LOCAL</code>. <code>RTLD_GLOBAL</code> lets libzynthbox's bundled
-JUCE/tracktion symbols interpose on libraries loaded later, and the app crashes in Kirigami's
-platform-plugin lookup.</p>
+JUCE/tracktion symbols interpose on libraries loaded later, which then crash.</p>
 <h2 id="device-workflow">Device workflow</h2>
 <p>See <a href="building.html">building.md</a>, <a href="testing.html">testing.md</a> and <a href="debugging.html">debugging.md</a>
 (tools/: deploy, keys, screenshots, MIDI, measuring, logging) and <a href="extending.html">extending.md</a>
@@ -325,14 +329,23 @@ platform-plugin lookup.</p>
 <p>ravving ships as a Store AppImage that bundles ravving, the data and <code>ravving-setup</code>
 (<code>setup/</code>), the page the AppImage opens over zynthbox-qml to install ravving and pick the
 UI the device runs; both lean on <code>tools/default-app.sh</code>. See <a href="packaging.html">packaging.md</a>.</p>
-<h2 id="the-theme">The theme</h2>
-<p>ravving wears one theme, set in code. <code>RAVVING_THEME</code> in the top-level CMakeLists.txt names the
-folder under <code>data/plasma/desktoptheme/</code> that ships with the app: <code>ravving-theme</code>, the Miko theme.</p>
+<h2 id="the-look">The look</h2>
+<p>ravving's look is built into the binary and set in code; no theme file or setting changes it.</p>
 <ul>
-<li>The app makes its bundled <code>config/plasmarc</code> its only plasmarc. Neither zynthbox-qml's theme
-  chooser (<code>~/.config/plasmarc</code>) nor any user file can change it.</li>
-<li>The journal line <code>ravving: theme …</code> says what a run wears.</li>
-<li>To change the look, change the theme folder or <code>RAVVING_THEME</code>, and rebuild.</li>
+<li><code>style/</code>: <code>Ravving.Style</code>, the Quick Controls style. Its controls draw everything in QML (the
+  keys' raised and sunk faces are <code>private/KeySurface.qml</code>).</li>
+<li><code>theme/</code>: <code>Ravving.Theme</code>, the design tokens: the palette (named colour roles), sizes,
+  durations, font families and fixed settings. A new colour or size becomes a token there.
+  Its <code>Skin</code> attached property carries a page's colours down the tree; controls given no colour
+  take them.</li>
+<li><code>input/</code>: <code>Ravving.Input</code>, the device's keys and knobs (the <code>Hardware</code> attached property).</li>
+<li><code>controls/</code>: <code>Ravving.Controls</code>, the controls with behaviour of their own (Knob, KnobGroup,
+  Dialog, ComboBox, Meter, KeyCap, Toast…). They know nothing of the app. What they need of its
+  state comes in as properties, or through the <code>Interaction</code> singleton.</li>
+<li>The layers point one way: Theme and Input ← Style ← Controls ← the app's QML (<code>qml/</code>). See
+  <a href="ui-rules.html">the UI rules</a>, "Where a control lives".</li>
+<li>The Fonts class: the three typefaces, built in.</li>
+<li>To change the look, change the code and rebuild.</li>
 </ul>
 <h2 id="where-ravving-keeps-its-files">Where ravving keeps its files</h2>
 <p>Nothing of ravving's goes into zynthbox-qml's folders, and nothing of zynthbox-qml's is
@@ -371,6 +384,39 @@ written: ravving reads the device's sample library and writes only to its own pl
 </table>
 <p>On a desktop the library is <code>~/.local/share/ravving</code>. Files of an older layout are moved into
 this one at start (<code>Paths::initialise()</code>), and the session's and projects' sample paths with them.</p>
+<h2 id="a-projects-file">A project's file</h2>
+<p>A project is one JSON file in the library's <code>projects/</code> folder, named after it (<code>Projects</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>everything <code>Studio::projectState()</code> keeps</td>
+<td>the machines, the sections, tempo, swing, master, key, LIVE FX…</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>the project's name, as its file is named</td>
+</tr>
+<tr>
+<td><code>icon</code></td>
+<td>its icon, a built-in glyph's name (<code>b10-synth</code>); left out when it has none</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>The icons</strong> are the pixel glyphs of <code>assets/glyphs/</code>, built into the binary as the <code>/glyphs</code>
+  resources (<code>Glyphs</code>: 32 × 32 grids, drawn crisp at whole multiples). QML shows one through the
+  <code>glyph</code> image provider (<code>image://glyph/&lt;name&gt;[/&lt;rrggbb&gt;]</code>). A name that isn't a built-in glyph
+  reads as no icon.</li>
+<li><strong>A <code>.ravv</code> bundle</strong> keeps the icon in its <code>project.json</code> and its <code>metadata.json</code>, and an import
+  keeps it when this build has that glyph. A track's or a bundle's cover wears it (<code>AlbumArt</code>).</li>
+<li>The icon is not an edit: changing it never marks the session unsaved.</li>
+</ul>
 <h2 id="the-startup-splash">The startup splash</h2>
 <p><code>StartupSplash</code> (qml/Splash.qml and SplashLook.qml) shows the logo from the moment libzynthbox
 is up until the page is ready, then plays a short show into the page. MENU → SETTINGS → STARTUP

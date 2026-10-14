@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=b759fa41dd" defer></script>
-  <script src="search.js?v=9eba806fbb" defer></script>
+  <script src="nav.js?v=02ad506e5e" defer></script>
+  <script src="search.js?v=ed38cafd77" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -89,6 +89,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="historyparticipant.html#applyHistoryState" translate="no">applyHistoryState</a></b>(const QVariantMap &amp;<i>state</i>) = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="historyparticipant.html#historyKey" translate="no">historyKey</a></b>() const = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="historyparticipant.html#historyLabel" translate="no">historyLabel</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="historyparticipant.html#historyMerges" translate="no">historyMerges</a></b>(const QVariantMap &amp;<i>state</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="historyparticipant.html#historyState" translate="no">historyState</a></b>() const = 0</td></tr>
 </table></div>
 <!-- $$$HistoryParticipant-description -->
@@ -123,6 +124,12 @@
 <h3 class="fn" translate="no" id="historyLabel"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">QString</span> HistoryParticipant::<span class="name">historyLabel</span>() const</h3>
 <p>Returns the name a step of this participant is shown with, such as <code translate="no">&quot;BASS&quot;</code>.</p>
 <!-- @@@historyLabel -->
+</div>
+<div class="fnitem">
+<!-- $$$historyMerges[overload1]$$$historyMergesconstQVariantMap& -->
+<h3 class="fn" translate="no" id="historyMerges"><code class="details extra" translate="no">[virtual]</code> <span class="type">bool</span> HistoryParticipant::<span class="name">historyMerges</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>) const</h3>
+<p>Returns whether a change that left the participant in <i translate="no">state</i> may join the participant's step of a moment ago (a knob turning makes many changes, one step): <code translate="no">true</code> by default. A participant returns <code translate="no">false</code> for a change that is a step of its own however quick (a machine's note or step: one undo takes back that one only).</p>
+<!-- @@@historyMerges -->
 </div>
 <div class="fnitem">
 <!-- $$$historyState[overload1]$$$historyState -->

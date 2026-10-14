@@ -184,8 +184,26 @@ void History::add(HistoryParticipant *participant)
 of...", "whether ...". The groups (<code>\ingroup</code>) are the areas of the reference's landing page:
 <code>ravving-app</code>, <code>ravving-studio</code>, <code>ravving-machines</code>, <code>ravving-engines</code>, <code>ravving-audio</code>,
 <code>ravving-system</code>, <code>ravving-setup</code> (defined in <code>doc/src/index.qdoc</code>).</p>
+<h3 id="qml-types-the-ui-kit-and-the-theme">QML types: the UI kit and the theme</h3>
+<p>The QML modules the screens are built from, <code>Ravving.Controls</code> (<code>controls/</code>) and
+<code>Ravving.Theme</code> (<code>theme/</code>), are documented in their <code>.qml</code> files, for the same reference:</p>
+<ul>
+<li>The file's top comment is the type's page: <code>/*! \qmltype Knob \inqmlmodule Ravving.Controls
+  \brief … */</code> before the root object.</li>
+<li>A <code>/*! */</code> block right before a property, signal or function of the root documents it.
+  Several properties under one block are named each with
+  <code>\qmlproperty &lt;type&gt; &lt;Type&gt;::&lt;name&gt;</code> lines at its top.</li>
+<li>A function's or signal's parameters are named with <code>\a</code>, as in C++.</li>
+<li>A helper the type uses itself is marked <code>/*! \internal */</code>.</li>
+<li>The module pages and the C++ types QML sees (<code>Skin</code>, <code>Hardware</code>) are in
+  <code>doc/src/qml-modules.qdoc</code>.</li>
+</ul>
+<p>The app's own QML (<code>qml/</code>) is not part of the reference.</p>
 <h2 id="the-checks">The checks</h2>
 <ul>
+<li><strong><code>python3 tools/check-qml-health.py --check docs</code></strong> (ctest <code>qml-health</code>): every kit and
+  Theme file has its <code>\qmltype</code> block, and every property, signal and function of its root a
+  <code>/*! */</code> comment.</li>
 <li><strong><code>python3 tools/check-cpp-docs.py</code></strong> (ctest <code>cpp-docs</code>):</li>
 <li>It finds every public class, struct, namespace, property, method, signal, enum and free
     function that the headers of <code>src/</code> and <code>setup/</code> declare, and fails on any without a QDoc
