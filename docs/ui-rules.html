@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UI rules · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=229e96b5f3">
+<link rel="stylesheet" href="../site.css?v=4e88e03796">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -36,7 +36,7 @@
       <ol id="docs-results" hidden></ol>
     </form>
     <nav aria-label="Documentation">
-<p class="mono">Using ravving</p><ul>
+<p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
@@ -51,7 +51,7 @@
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">Under the hood</p><ul>
+<p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
@@ -61,7 +61,7 @@
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
-<li class="on"><a href="ui-rules.html" aria-current="page">UI rules</a><ul><li><a href="#where-a-control-lives">Where a control lives</a></li><li><a href="#shared-base-types">Shared base types</a></li><li><a href="#buttons-action-or-state">Buttons: action or state</a></li><li><a href="#button-sizes">Button sizes</a></li><li><a href="#controls-in-a-group-take-the-device-knobs">Controls in a group take the device knobs</a></li><li><a href="#rows-of-controls-sit-on-bands-dialogs-and-pages">Rows of controls sit on bands (dialogs and pages)</a></li><li><a href="#leaving">Leaving</a></li><li><a href="#pages">Pages</a></li><li><a href="#empty-views">Empty views</a></li><li><a href="#three-font-families">Three font families</a></li><li><a href="#palettes">Palettes</a></li><li><a href="#a-key-and-its-button">A key and its button</a></li><li><a href="#text-is-translatable-keys-are-not">Text is translatable, keys are not</a></li><li><a href="#adding-a-rule">Adding a rule</a></li></ul></li>
+<li class="on"><a href="ui-rules.html" aria-current="page">UI rules</a><ul><li><a href="#where-a-control-lives">Where a control lives</a></li><li><a href="#shared-base-types">Shared base types</a></li><li><a href="#buttons-action-or-state">Buttons: action or state</a></li><li><a href="#button-sizes">Button sizes</a></li><li><a href="#controls-in-a-group-take-the-device-knobs">Controls in a group take the device knobs</a></li><li><a href="#rows-of-controls-sit-on-bands-dialogs-and-pages">Rows of controls sit on bands (dialogs and pages)</a></li><li><a href="#leaving">Leaving</a></li><li><a href="#pages">Pages</a></li><li><a href="#empty-views">Empty views</a></li><li><a href="#three-font-families">Three font families</a></li><li><a href="#palettes">Palettes</a></li><li><a href="#design-tokens">Design tokens</a></li><li><a href="#a-key-and-its-button">A key and its button</a></li><li><a href="#text-is-translatable-keys-are-not">Text is translatable, keys are not</a></li><li><a href="#adding-a-rule">Adding a rule</a></li></ul></li>
 <li><a href="extending.html">Extending</a></li>
 <li><a href="writing-the-guide.html">Writing the guide</a></li>
 <li><a href="writing-code-docs.html">Writing code documentation</a></li>
@@ -77,13 +77,13 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/ui-rules.md</b></p>
+<p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/ui-rules.md</b></p>
 <h1>UI rules</h1>
 <p class="doc-blurb">The shared base types, action against state buttons, one ✕ to leave, readable palettes.</p>
 
 <p>ravving's screens share one look:</p>
 <ul>
-<li>machines with side rails and a face in their own finish;</li>
+<li>machines with side rails and a face in their own skin;</li>
 <li>controls grouped on strips;</li>
 <li>work areas recessed in wells;</li>
 <li>a dark header band on top.</li>
@@ -105,7 +105,7 @@ holds the rules and their exceptions, and is where a new rule goes.</p>
 <tr>
 <td><code>Ravving.Style</code> (<code>style/</code>)</td>
 <td>a Qt Quick Control that only needs ravving's look</td>
-<td><code>Button</code>, <code>Slider</code>, <code>TextField</code>, <code>Switch</code></td>
+<td><code>Button</code>, <code>Slider</code>, <code>TextField</code>, <code>Switch</code>, <code>Frame</code>, <code>ToolBar</code>, <code>Page</code></td>
 </tr>
 <tr>
 <td><code>Ravving.Controls</code> (<code>controls/</code>)</td>
@@ -119,6 +119,8 @@ holds the rules and their exceptions, and is where a new rule goes.</p>
 </tr>
 </tbody>
 </table>
+<p>The style adds no properties to a control: only attached ones (<code>Skin</code>). A control that needs
+properties of its own goes into the kit.</p>
 <p>Both read <code>Ravving.Theme</code> (<code>theme/</code>), the tokens; the kit also answers the device's keys and
 knobs (<code>Ravving.Input</code>, <code>input/</code>). A screen uses the kit's control rather than redoing what it
 does.</p>
@@ -137,13 +139,13 @@ page-focus request (Main.qml wires those).</p>
 </thead>
 <tbody>
 <tr>
-<td>A page's body: the rails and the face in its finish</td>
-<td><code>Chassis</code></td>
-<td>every page (<code>MachineModule</code> wears it for the machines)</td>
+<td>A page's body: the rails and the face in its skin (the chassis)</td>
+<td><code>QQC.Page</code> (a full page), <code>QQC.Pane</code> (a machine's module, less rounded)</td>
+<td>every page (<code>MachineModule</code> wears a Pane for the machines)</td>
 </tr>
 <tr>
 <td>The top band of controls (row 1: transport, plate, ✕; row 2: the deck)</td>
-<td><code>PageHeader</code></td>
+<td><code>QQC.ToolBar</code> with <code>position: QQC.ToolBar.Header</code>, its rows in <code>contentItem: ColumnLayout {}</code></td>
 <td>the dashboard (<code>RaveHeader</code>), every full-window page</td>
 </tr>
 <tr>
@@ -153,13 +155,18 @@ page-focus request (Main.qml wires those).</p>
 </tr>
 <tr>
 <td>A row of buttons on its grouping strip</td>
-<td><code>ToolStrip</code></td>
+<td><code>QQC.ToolBar</code> (any other position: a strip), its row in <code>contentItem: RowLayout {}</code>; <code>background: null</code> for a group on a header's deck</td>
 <td>the pattern toolbars, the SONG rows, the player's and the RECORDER's groups</td>
 </tr>
 <tr>
-<td>A recessed panel for a work area</td>
-<td><code>Well</code></td>
-<td>the RECORDER's input, tuner, effects, the lists</td>
+<td>The thin line between groups in a row</td>
+<td><code>QQC.ToolSeparator</code></td>
+<td>the machine strip, the SONG rows</td>
+</tr>
+<tr>
+<td>A recessed panel for a work area (a well)</td>
+<td><code>QQC.Frame</code></td>
+<td>the RECORDER's input, tuner, effects, the lists, the dialogs' sections</td>
 </tr>
 <tr>
 <td>An action</td>
@@ -243,7 +250,7 @@ page-focus request (Main.qml wires those).</p>
 </ul>
 <h2 id="rows-of-controls-sit-on-bands-dialogs-and-pages">Rows of controls sit on bands (dialogs and pages)</h2>
 <ul>
-<li><strong>A page's or a dialog's row of controls sits on one <code>ToolStrip</code></strong>: the darker rounded band a
+<li><strong>A page's or a dialog's row of controls sits on one strip (a <code>QQC.ToolBar</code>)</strong>: the darker rounded band a
   pattern toolbar is, with the preset, OCT and undo / redo on one band.</li>
 <li><strong>One row, one continuous band</strong>, never split into a band per group.</li>
 <li>The groups in it (a Caption first, then its chips) are told apart by the space between
@@ -257,7 +264,7 @@ page-focus request (Main.qml wires those).</p>
     and song rows, the pattern toolbars.</li>
 <li>So a dialog reads in rows and groups at a glance, as a page does, and a wrapping row never
   leaves a lone chip on a line of its own. <em>Checked:</em> <code>dialog-groups-on-bands</code> (a Caption in a
-  *Popup.qml outside a ToolStrip); one band per row is the reviewer's to see.</li>
+  *Popup.qml outside a strip); one band per row is the reviewer's to see.</li>
 </ul>
 <h2 id="leaving">Leaving</h2>
 <ul>
@@ -271,17 +278,20 @@ page-focus request (Main.qml wires those).</p>
 </ul>
 <h2 id="pages">Pages</h2>
 <ul>
-<li>Every page wears a <code>Chassis</code> in its own finish. <em>Checked:</em> <code>page-wears-chassis</code>.</li>
-<li>A page that takes the whole window (MUSIC PLAYER, RECORDER) has a <code>PageHeader</code> like the
-  dashboard's. <em>Checked:</em> <code>full-page-has-header</code>.</li>
+<li>Every page wears the chassis in its own skin: a <code>QQC.Page</code> (or the <code>QQC.Pane</code> of a machine's
+  module). <em>Checked:</em> <code>page-wears-chassis</code>.</li>
+<li>A page that takes the whole window (MUSIC PLAYER, RECORDER) has a header band like the
+  dashboard's: a <code>QQC.ToolBar</code> with <code>position: QQC.ToolBar.Header</code>. <em>Checked:</em>
+  <code>full-page-has-header</code>.</li>
 <li>Row 1: its transport, a <code>Plate</code> saying what's on, its own toggles, and the ✕.</li>
-<li>Row 2: its deck of grouped controls, on <code>ToolStrip</code>s.</li>
-<li>The view sits under it, on the <code>Chassis</code>.</li>
-<li>Its controls go on <code>ToolStrip</code>s by group, its work areas in <code>Well</code>s.</li>
+<li>Row 2: its deck of grouped controls, on strips (<code>QQC.ToolBar</code>).</li>
+<li>The view sits under it, on its <code>QQC.Page</code>.</li>
+<li>Its controls go on strips by group, its work areas in wells (<code>QQC.Frame</code>).</li>
 </ul>
 <h2 id="empty-views">Empty views</h2>
 <p>An empty list or view says why and what fills it, with an <code>EmptyNote</code> ("no recordings yet · ● REC
-records the input as played"), never a <code>Text</code> of its own. <em>Checked:</em> <code>empty-says-why</code>.</p>
+records the input as played"), never a <code>Text</code> of its own. Where the view has room, ARU stands
+above the words in the note's ink; <code>mascot: ""</code> leaves ARU out. <em>Checked:</em> <code>empty-says-why</code>.</p>
 <h2 id="three-font-families">Three font families</h2>
 <p>ravving's text uses three families, all built in (the Fonts class), each with one job:</p>
 <table>
@@ -308,7 +318,7 @@ records the input as played"), never a <code>Text</code> of its own. <em>Checked
 </tr>
 <tr>
 <td>display</td>
-<td>Audiowide</td>
+<td>Chakra Petch (SemiBold)</td>
 <td>branding: the instruments' nameplates</td>
 <td><code>Rave.displayFamily</code></td>
 </tr>
@@ -322,12 +332,12 @@ turning value doesn't make its label jitter or move its neighbours. That covers:
 <li>the sliders' readouts (Fader, LevelSlider);</li>
 <li>counters and times.</li>
 </ul>
-<p>The display face is the one on the device's own key legends and the webpage's headers. It has one
-weight and no italic, so it is used as it is. No file names a family in place, so changing one is
-a single line in src/fonts.cpp. <em>Checked:</em> <code>font-families</code>.</p>
+<p>The display face is ravving's own, also on the webpage's headings. It is built in at one
+weight (SemiBold) with no italic, so it is used as it is. No file names a family in place, so changing one is
+a single line in theme/fonts.cpp. <em>Checked:</em> <code>font-families</code>.</p>
 <h2 id="palettes">Palettes</h2>
-<p>Every page has a finish of its own in <code>Rave.qml</code> (<code>Rave.machines</code>, <code>songFinish</code>, <code>playerFinish</code>,
-<code>recorderFinishes</code>): <code>chassisTop</code>, <code>chassisBottom</code>, <code>rail</code>, <code>well</code>, <code>ink</code>, <code>dim</code>, <code>accent</code>, <code>glow</code>,
+<p>Every page has a skin of its own in <code>Rave.qml</code> (<code>Rave.machineSkins</code>, <code>songSkin</code>, <code>playerSkin</code>,
+<code>recorderSkins</code>): <code>chassisTop</code>, <code>chassisBottom</code>, <code>rail</code>, <code>well</code>, <code>ink</code>, <code>dim</code>, <code>accent</code>, <code>glow</code>,
 <code>dark</code>.</p>
 <p>A new one:</p>
 <ul>
@@ -401,13 +411,91 @@ a single line in src/fonts.cpp. <em>Checked:</em> <code>font-families</code>.</p
 </tr>
 </tbody>
 </table>
+<h3 id="skin-sets">Skin sets</h3>
+<p>A skin set (<code>data/skins/&lt;set&gt;.json</code>, SETTINGS → DEVICE → SKINS) gives every machine its case,
+keys, well and lights. <code>python3 tools/check-skins.py [FILE.json…]</code> checks each colour against
+what it is drawn on (all the shipped sets when no file is given):</p>
+<ul>
+<li><code>dark</code> matches the case's luminance (Rave.isDarkColour);</li>
+<li><code>ink</code> ≥ 7:1 on both chassis colours;</li>
+<li><code>ink</code> ≥ 4.5:1 on the key caps where the machine draws them (the step grids of the drums and
+  both samplers, the chords' keys): <code>cap</code>, <code>capShade</code>, <code>groupCap</code>, <code>groupCapShade</code>;</li>
+<li>what is written on the well ≥ 4.5:1 on it: the well's ink and its quiet labels (below);</li>
+<li><code>glow</code> ≥ 3:1 on those caps and on the well: a lit key, a lit step, a note or chord in a roll;</li>
+<li><code>accent</code> ≥ 3:1 on the chassis or on the well: lit chips, knob arcs, custom chords;</li>
+<li><code>glow</code> ≥ 3:1 on the header's instrument chip, <code>plateColor</code> ≥ 4.5:1 on the nameplate;</li>
+<li>every two machines' glows apart (Delta E ≥ 20), so the header's lights tell them apart.</li>
+</ul>
+<h4 id="fixing-and-comparing-sets">Fixing and comparing sets</h4>
+<p><code>tools/skin-fix.py FILE.json…</code> nudges a failing set until it passes, moving only the colours a
+check names and only their lightness. <code>tools/check-skins.py --similar</code> lists the sets closest
+to each other: a new set should stay at least 15 from every other (the mean Delta E of the
+machines' cases, keys, wells and lights).</p>
+<h4 id="light-and-dark-cases">Light and dark cases</h4>
+<p>Any machine may wear a light case or a dark one, with a light well or a dark one. The views on
+the well take what reads on it from <code>WellColours</code> (after Rave.onWell):</p>
+<ul>
+<li>the views: the step grid, the rolls, the chord slots, the ribbon and the pad grid;</li>
+<li>on a dark well: the light greys and white washes;</li>
+<li>on a light well: the same marks in the well's dark ink;</li>
+<li>the controls in them: that ink, through <code>Skin.overrides</code>.</li>
+</ul>
+<p>A light case's lights are mid tones, to read on its near-white caps and in the header's black
+chip alike.</p>
 <h3 id="the-skin">The skin</h3>
-<p>A page's root, or a machine's module, sets its finish as <code>Skin.skin</code>. It reaches every control under it
-and the dialogs the page declares. A kit control given no colour takes the skin's accent and ink;
-a style control takes only its accent. With no skin set, a control keeps its own default.</p>
+<p>A page's root, or a machine's module, sets its skin as <code>Skin.skin</code> (<code>readonly property var skin:
+Rave.…</code> and <code>Skin.skin: page.skin</code>). It reaches every control under it and the dialogs the page
+declares. With no skin set, a control keeps its own default.</p>
+<ul>
+<li>A kit control given no colour takes the skin's accent and ink.</li>
+<li>A style control takes only its accent, for what it draws on a face of its own.</li>
+<li>The style's surfaces take their parts: the chassis (Page, Pane) its rail and gradient, a well
+  (Frame) its well, a strip (ToolBar) its darkness, a separator its ink.</li>
+<li>A plain <code>Text</code> on the page reads <code>Skin.ink</code> or <code>Skin.dim</code>.</li>
+</ul>
 <p>Pass a colour only where it differs from the skin. A surface with a colour of its own, like the
 dialog card or a dark band on a light page, keeps the accent and sets its own ink with
-<code>Skin.overrides</code>. <em>Checked:</em> qml-health's <code>skin</code> family.</p>
+<code>Skin.overrides</code>. The dialog card sets its own well too (<code>Theme.colors.wellSurface</code>). <em>Checked:</em> qml-health's <code>skin</code> family.</p>
+<h2 id="design-tokens">Design tokens</h2>
+<p><code>theme/tokens.json</code> holds every shared colour, family and shape in one place. Its groups:</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>core</code></td>
+<td>the theme's colours, each naming its <code>Theme.colors</code> property and the webpage's custom property</td>
+</tr>
+<tr>
+<td><code>site</code></td>
+<td>the webpage's own tones</td>
+</tr>
+<tr>
+<td><code>fonts</code></td>
+<td>the three families</td>
+</tr>
+<tr>
+<td><code>skins</code></td>
+<td>the skins, as in Rave.qml</td>
+</tr>
+<tr>
+<td><code>aru</code></td>
+<td>the mascot's colours</td>
+</tr>
+<tr>
+<td><code>art</code></td>
+<td>the cover art's palette: the skins' accents through the covers' fade</td>
+</tr>
+</tbody>
+</table>
+<p>A colour changes there first, then in the file it names: theme/theme.h,
+site/site.css, Rave.qml or data/branding/make-aru.py. <code>python3 tools/design-tokens.py --write</code>
+recomputes the cover art's palette after a skin changes; <code>--sheet OUT.html</code> renders the
+tokens as a page. <em>Checked:</em> <code>design-tokens</code>.</p>
 <h2 id="a-key-and-its-button">A key and its button</h2>
 <p>A device key that does what an on-screen button does shows that button pressed while it is held,
 as PLAY does the header's ▶ and BACK the toolbar's ↶ on a grid (<code>down: pressed ||
@@ -439,10 +527,10 @@ keep list in tools/ui-rules.json.</p>
 </main>
 <footer>
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=48f57bf155" defer></script>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

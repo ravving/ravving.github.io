@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- livefxengine.cpp -->
+  <meta name="description" content="The punch-in effects on the whole mix, in the audio thread: LiveFx's pads beyond the kicks, the filters' sweeps, CRUSH and the beat repeat.">
+  <meta name="keywords" content="class">
+  <title>LiveFxEngine Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=54f138c7a0">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <img class="ravving" src="../assets/ravving-wordmark.svg" alt="ravving" width="822" height="104">
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>LiveFxEngine</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+<li class="level2"><a href="#the-ring-and-the-head">The ring and the head</a></li>
+<li class="level2"><a href="#the-rest-in-stereo-in-this-order">The rest, in stereo, in this order</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">LiveFxEngine Class</h1>
+<!-- $$$LiveFxEngine-brief -->
+<p>The punch-in effects on the whole mix, in the audio thread: <a href="livefx.html" translate="no">LiveFx</a>'s pads beyond the kicks, the filters' sweeps, CRUSH and the beat repeat. <a href="#details">More...</a></p>
+<!-- @@@LiveFxEngine -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;livefxengine.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="livefxengine-members.html">List of all members, including inherited members</a></li>
+<li>LiveFxEngine is part of <a href="ravving-engines.html">Engines and effects</a>.</li>
+</ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#Effect-enum" translate="no">Effect</a></b> { KillLow, KillMid, KillHigh, Reverse, Rewind, &hellip;, EffectCount }</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#LiveFxEngine" translate="no">LiveFxEngine</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint32 </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#effects" translate="no">effects</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#isIdle" translate="no">isIdle</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#prepare" translate="no">prepare</a></b>(double <i>sampleRate</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#process" translate="no">process</a></b>(const float *<i>inLeft</i>, const float *<i>inRight</i>, float *<i>outLeft</i>, float *<i>outRight</i>, quint32 <i>frames</i>, quint64 <i>startFrame</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> double </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#sampleRate" translate="no">sampleRate</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#setEffects" translate="no">setEffects</a></b>(quint32 <i>mask</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#setGrid" translate="no">setGrid</a></b>(quint64 <i>barStart</i>, double <i>framesPerStep</i>)</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#FadeFrames-var" translate="no">FadeFrames</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const double </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#LongestBeatSeconds-var" translate="no">LongestBeatSeconds</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint32 </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#bit" translate="no">bit</a></b>(LiveFxEngine::Effect <i>effect</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> double </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#framesPerStep" translate="no">framesPerStep</a></b>(double <i>sampleRate</i>, double <i>bpm</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#isHead" translate="no">isHead</a></b>(LiveFxEngine::Effect <i>effect</i>)</td></tr>
+</table></div>
+<!-- $$$LiveFxEngine-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p><a href="beatrepeat.html" translate="no">BeatRepeat</a> runs it in its JACK callback, after the repeat, so a loop held under REVERSE plays backwards. The GUI thread switches effects with <a href="livefxengine.html#setEffects" translate="no">setEffects</a>() and gives the transport's grid with <a href="livefxengine.html#setGrid" translate="no">setGrid</a>(); the audio thread reads only atomics and buffers allocated by <a href="livefxengine.html#prepare" translate="no">prepare</a>(), takes no lock and allocates nothing.</p>
+<h3 id="the-ring-and-the-head">The ring and the head</h3>
+<p>Every frame of the input goes into a stereo ring (twice the longest beat, <a href="livefxengine.html#LongestBeatSeconds-var" translate="no">LongestBeatSeconds</a>: 2.7 s at 48 kHz). One <i>head</i> at a time reads it instead of the live input:</p>
+<ul>
+<li>REVERSE: each beat plays the beat before it backwards, on the grid's beats;</li>
+<li>REWIND: the tape slows, stops and runs back faster and faster (three times the speed after 0.35 s) until the ring's past runs out, then silence until the pad lets go;</li>
+<li>TAPE STOP: the tape slows to a stop over a beat, its level with its speed, then silence;</li>
+<li>HALF: half speed, an octave down; every two beats it starts again from the first;</li>
+<li>OCTAVE UP: an octave up, two 40 ms grains crossing;</li>
+<li>WOBBLE: the tape's speed wavers four times a second, 4 ms either way around 16 ms.</li>
+</ul>
+<h3 id="the-rest-in-stereo-in-this-order">The rest, in stereo, in this order</h3>
+<p>FLANGER (a 0.7 to 4.7 ms delay with feedback swept once a bar), ECHO (a dotted 8th with darkening feedback; what is in it rings out after the pad lets go), FREEZE (a small feedback-delay reverb that takes in one 16th of the mix, then holds it; let go, it fades in about a second), the KILL LOW / MID / HIGH isolator (Linkwitz&ndash;Riley crossovers at 250 Hz and 2.44 kHz), PHONE (500 Hz to 2.5 kHz, mono, driven), ALIAS (held to 6 kHz with no filtering), GATE (open for the first half of every 16th), AUTO-PAN (the mix in mono, across and back once a beat), MONO and FADE OUT (to silence over two beats).</p>
+<p>Every switch, and every jump of the head, is crossfaded over <a href="livefxengine.html#FadeFrames-var" translate="no">FadeFrames</a>. A filter stage runs 256 frames from rest before it fades in, so its start never sounds. With nothing on and no tail ringing, <a href="livefxengine.html#process" translate="no">process</a>() only fills the ring and passes the input through.</p>
+</div>
+<!-- @@@LiveFxEngine -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<div class="fnitem">
+<!-- $$$Effect$$$KillLow$$$KillMid$$$KillHigh$$$Reverse$$$Rewind$$$TapeStop$$$Half$$$OctaveUp$$$Wobble$$$Echo$$$Freeze$$$Flanger$$$Gate$$$AutoPan$$$Mono$$$Phone$$$Alias$$$FadeOut$$$EffectCount -->
+<h3 class="fn" translate="no" id="Effect-enum">enum LiveFxEngine::<span class="name">Effect</span></h3>
+<p>The effects, as bits of <a href="livefxengine.html#setEffects" translate="no">setEffects</a>()'s mask (<a href="livefxengine.html#bit" translate="no">bit</a>()).</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::KillLow</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">The isolator's low band cut (below 250 Hz).</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::KillMid</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">Its mid band cut (250 Hz to 2.44 kHz).</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::KillHigh</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">Its high band cut (above 2.44 kHz).</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::Reverse</code></td><td class="topAlign tblval"><code translate="no">3</code></td><td class="topAlign">The head plays each beat the beat before backwards.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::Rewind</code></td><td class="topAlign tblval"><code translate="no">4</code></td><td class="topAlign">The head rewinds the tape.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::TapeStop</code></td><td class="topAlign tblval"><code translate="no">5</code></td><td class="topAlign">The head slows the tape to a stop.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::Half</code></td><td class="topAlign tblval"><code translate="no">6</code></td><td class="topAlign">The head plays at half speed.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::OctaveUp</code></td><td class="topAlign tblval"><code translate="no">7</code></td><td class="topAlign">The head plays an octave up.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::Wobble</code></td><td class="topAlign tblval"><code translate="no">8</code></td><td class="topAlign">The head's speed wavers.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::Echo</code></td><td class="topAlign tblval"><code translate="no">9</code></td><td class="topAlign">A dotted-8th echo.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::Freeze</code></td><td class="topAlign tblval"><code translate="no">10</code></td><td class="topAlign">The reverb holds the moment.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::Flanger</code></td><td class="topAlign tblval"><code translate="no">11</code></td><td class="topAlign">A flanger swept once a bar.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::Gate</code></td><td class="topAlign tblval"><code translate="no">12</code></td><td class="topAlign">The 16th gate.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::AutoPan</code></td><td class="topAlign tblval"><code translate="no">13</code></td><td class="topAlign">The auto-pan.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::Mono</code></td><td class="topAlign tblval"><code translate="no">14</code></td><td class="topAlign">Both sides the same.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::Phone</code></td><td class="topAlign tblval"><code translate="no">15</code></td><td class="topAlign">A telephone's band.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::Alias</code></td><td class="topAlign tblval"><code translate="no">16</code></td><td class="topAlign">A sample-and-hold to 6 kHz.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::FadeOut</code></td><td class="topAlign tblval"><code translate="no">17</code></td><td class="topAlign">A fade to silence over two beats.</td></tr>
+<tr><td class="topAlign"><code translate="no">LiveFxEngine::EffectCount</code></td><td class="topAlign tblval"><code translate="no">18</code></td><td class="topAlign">How many there are.</td></tr>
+</table></div>
+<!-- @@@Effect -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$LiveFxEngine[overload1]$$$LiveFxEngine -->
+<h3 class="fn" translate="no" id="LiveFxEngine">LiveFxEngine::<span class="name">LiveFxEngine</span>()</h3>
+<p>Constructs an engine with nothing on; <a href="livefxengine.html#prepare" translate="no">prepare</a>() must run before <a href="livefxengine.html#process" translate="no">process</a>().</p>
+<!-- @@@LiveFxEngine -->
+</div>
+<div class="fnitem">
+<!-- $$$bit[overload1]$$$bitLiveFxEngine::Effect -->
+<h3 class="fn" translate="no" id="bit"><code class="details extra" translate="no">[static]</code> <span class="type">quint32</span> LiveFxEngine::<span class="name">bit</span>(<span class="type"><a href="livefxengine.html#Effect-enum" translate="no">LiveFxEngine::Effect</a></span> <i>effect</i>)</h3>
+<p>Returns <i translate="no">effect</i>'s bit in <a href="livefxengine.html#setEffects" translate="no">setEffects</a>()'s mask.</p>
+<!-- @@@bit -->
+</div>
+<div class="fnitem">
+<!-- $$$effects[overload1]$$$effects -->
+<h3 class="fn" translate="no" id="effects"><span class="type">quint32</span> LiveFxEngine::<span class="name">effects</span>() const</h3>
+<p>Returns the mask <a href="livefxengine.html#setEffects" translate="no">setEffects</a>() last set.</p>
+<p><b>See also </b><a href="livefxengine.html#setEffects" translate="no">setEffects</a>().</p>
+<!-- @@@effects -->
+</div>
+<div class="fnitem">
+<!-- $$$framesPerStep[overload1]$$$framesPerStepdoubledouble -->
+<h3 class="fn" translate="no" id="framesPerStep"><code class="details extra" translate="no">[static]</code> <span class="type">double</span> LiveFxEngine::<span class="name">framesPerStep</span>(<span class="type">double</span> <i>sampleRate</i>, <span class="type">double</span> <i>bpm</i>)</h3>
+<p>Returns the length of a 16th at <i translate="no">bpm</i>, in frames at <i translate="no">sampleRate</i>.</p>
+<!-- @@@framesPerStep -->
+</div>
+<div class="fnitem">
+<!-- $$$isHead[overload1]$$$isHeadLiveFxEngine::Effect -->
+<h3 class="fn" translate="no" id="isHead"><code class="details extra" translate="no">[static]</code> <span class="type">bool</span> LiveFxEngine::<span class="name">isHead</span>(<span class="type"><a href="livefxengine.html#Effect-enum" translate="no">LiveFxEngine::Effect</a></span> <i>effect</i>)</h3>
+<p>Returns whether <i translate="no">effect</i> reads the ring in the head's place (REVERSE to WOBBLE), so plays one at a time.</p>
+<!-- @@@isHead -->
+</div>
+<div class="fnitem">
+<!-- $$$isIdle[overload1]$$$isIdle -->
+<h3 class="fn" translate="no" id="isIdle"><span class="type">bool</span> LiveFxEngine::<span class="name">isIdle</span>() const</h3>
+<p>Returns whether nothing is on and nothing rings out: <a href="livefxengine.html#process" translate="no">process</a>() then only fills the ring. The audio thread's state (tests read it between cycles).</p>
+<!-- @@@isIdle -->
+</div>
+<div class="fnitem">
+<!-- $$$prepare[overload1]$$$preparedouble -->
+<h3 class="fn" translate="no" id="prepare"><span class="type">void</span> LiveFxEngine::<span class="name">prepare</span>(<span class="type">double</span> <i>sampleRate</i>)</h3>
+<p>Allocates the buffers and sets the filters for <i translate="no">sampleRate</i>. Call it before the audio thread runs <a href="livefxengine.html#process" translate="no">process</a>(), never while it does.</p>
+<!-- @@@prepare -->
+</div>
+<div class="fnitem">
+<!-- $$$process[overload1]$$$processconstfloat*constfloat*float*float*quint32quint64 -->
+<h3 class="fn" translate="no" id="process"><span class="type">void</span> LiveFxEngine::<span class="name">process</span>(const <span class="type">float</span> *<i>inLeft</i>, const <span class="type">float</span> *<i>inRight</i>, <span class="type">float</span> *<i>outLeft</i>, <span class="type">float</span> *<i>outRight</i>, <span class="type">quint32</span> <i>frames</i>, <span class="type">quint64</span> <i>startFrame</i>)</h3>
+<p>Runs one cycle of <i translate="no">frames</i> frames starting at the audio clock's <i translate="no">startFrame</i>: <i translate="no">inLeft</i> and <i translate="no">inRight</i> in, <i translate="no">outLeft</i> and <i translate="no">outRight</i> out (they may be the same buffers). Audio thread.</p>
+<!-- @@@process -->
+</div>
+<div class="fnitem">
+<!-- $$$sampleRate[overload1]$$$sampleRate -->
+<h3 class="fn" translate="no" id="sampleRate"><span class="type">double</span> LiveFxEngine::<span class="name">sampleRate</span>() const</h3>
+<p>Returns the rate <a href="livefxengine.html#prepare" translate="no">prepare</a>() was given.</p>
+<!-- @@@sampleRate -->
+</div>
+<div class="fnitem">
+<!-- $$$setEffects[overload1]$$$setEffectsquint32 -->
+<h3 class="fn" translate="no" id="setEffects"><span class="type">void</span> LiveFxEngine::<span class="name">setEffects</span>(<span class="type">quint32</span> <i>mask</i>)</h3>
+<p>Switches the effects to <i translate="no">mask</i>, a <a href="livefxengine.html#bit" translate="no">bit</a>() per effect on; any thread. Of the head effects (<a href="livefxengine.html#isHead" translate="no">isHead</a>()) only the first one set plays.</p>
+<p><b>See also </b><a href="livefxengine.html#effects" translate="no">effects</a>().</p>
+<!-- @@@setEffects -->
+</div>
+<div class="fnitem">
+<!-- $$$setGrid[overload1]$$$setGridquint64double -->
+<h3 class="fn" translate="no" id="setGrid"><span class="type">void</span> LiveFxEngine::<span class="name">setGrid</span>(<span class="type">quint64</span> <i>barStart</i>, <span class="type">double</span> <i>framesPerStep</i>)</h3>
+<p>Gives the transport's grid: <i translate="no">barStart</i>, a frame a bar started at (or the moment of a press, the transport stopped), and <i translate="no">framesPerStep</i>, a 16th's length. Any thread; the audio thread takes the pair whole at its next cycle.</p>
+<!-- @@@setGrid -->
+</div>
+</div>
+<div class="vars">
+<h2>Member Variable Documentation</h2>
+<div class="fnitem">
+<!-- $$$FadeFrames -->
+<h3 class="fn" translate="no" id="FadeFrames-var">const <span class="type">int</span> LiveFxEngine::<span class="name">FadeFrames</span></h3>
+<p>This variable holds the length of every crossfade, in frames: 64 (1.3 ms at 48 kHz).</p>
+<!-- @@@FadeFrames -->
+</div>
+<div class="fnitem">
+<!-- $$$LongestBeatSeconds -->
+<h3 class="fn" translate="no" id="LongestBeatSeconds-var">const <span class="type">double</span> LiveFxEngine::<span class="name">LongestBeatSeconds</span></h3>
+<p>This variable holds the longest beat the effects follow (1.2 s, 50 BPM); the ring holds two of them.</p>
+<!-- @@@LongestBeatSeconds -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -68,6 +68,7 @@
 <li class="level1"><a href="#properties">Properties</a></li>
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
 <li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -87,11 +88,15 @@
 <div class="table"><table class="propsummary" translate="no">
 <tr><td class="topAlign"><ul>
 <li class="fn" translate="no"><b><a href="livefx.html#active-prop" translate="no">active</a></b> : QStringList</li>
+<li class="fn" translate="no"><b><a href="livefx.html#allPads-prop" translate="no">allPads</a></b> : const QStringList</li>
 <li class="fn" translate="no"><b><a href="livefx.html#available-prop" translate="no">available</a></b> : const QStringList</li>
+<li class="fn" translate="no"><b><a href="livefx.html#bank-prop" translate="no">bank</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="livefx.html#banks-prop" translate="no">banks</a></b> : const QStringList</li>
 <li class="fn" translate="no"><b><a href="livefx.html#echo-prop" translate="no">echo</a></b> : qreal</li>
-<li class="fn" translate="no"><b><a href="livefx.html#heavy-prop" translate="no">heavy</a></b> : qreal</li>
 </ul></td><td class="topAlign"><ul>
-<li class="fn" translate="no"><b><a href="livefx.html#pads-prop" translate="no">pads</a></b> : const QStringList</li>
+<li class="fn" translate="no"><b><a href="livefx.html#headerPads-prop" translate="no">headerPads</a></b> : QStringList</li>
+<li class="fn" translate="no"><b><a href="livefx.html#heavy-prop" translate="no">heavy</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="livefx.html#pads-prop" translate="no">pads</a></b> : QStringList</li>
 <li class="fn" translate="no"><b><a href="livefx.html#phaser-prop" translate="no">phaser</a></b> : qreal</li>
 <li class="fn" translate="no"><b><a href="livefx.html#readouts-prop" translate="no">readouts</a></b> : QVariantMap</li>
 </ul>
@@ -101,44 +106,56 @@
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#LiveFx" translate="no">LiveFx</a></b>(ZynthboxBridge *<i>bridge</i>, QObject *<i>globalPlayback</i>, const QList&lt;Machine *&gt; &amp;<i>machines</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#active-prop" translate="no">active</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#allPads-prop" translate="no">allPads</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> quint64 </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#audioFrame" translate="no">audioFrame</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#audioSampleRate" translate="no">audioSampleRate</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#available-prop" translate="no">available</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#bank-prop" translate="no">bank</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#banks-prop" translate="no">banks</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#debugState" translate="no">debugState</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#drag" translate="no">drag</a></b>(const QString &amp;<i>pad</i>, int <i>notches</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#echo-prop" translate="no">echo</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#headerPads-prop" translate="no">headerPads</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#heavy-prop" translate="no">heavy</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#key" translate="no">key</a></b>(const QString &amp;<i>pad</i>, bool <i>down</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QList&lt;AudioInsert *&gt; </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#masterInserts" translate="no">masterInserts</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#nextBank" translate="no">nextBank</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#pads-prop" translate="no">pads</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#phaser-prop" translate="no">phaser</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#press" translate="no">press</a></b>(const QString &amp;<i>pad</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#readouts-prop" translate="no">readouts</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#release" translate="no">release</a></b>(const QString &amp;<i>pad</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#bank-prop" translate="no">setBank</a></b>(int <i>bank</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#echo-prop" translate="no">setEcho</a></b>(qreal <i>echo</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#headerPads-prop" translate="no">setHeaderPads</a></b>(const QStringList &amp;<i>pads</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#heavy-prop" translate="no">setHeavy</a></b>(qreal <i>heavy</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#phaser-prop" translate="no">setPhaser</a></b>(qreal <i>phaser</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#syncGrid" translate="no">syncGrid</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#toggle" translate="no">toggle</a></b>(const QString &amp;<i>pad</i>)</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#activeChanged" translate="no">activeChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#bankChanged" translate="no">bankChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#headerPads-prop" translate="no">headerPadsChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#knobsChanged" translate="no">knobsChanged</a></b>()</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#BankSize-var" translate="no">BankSize</a></b></td></tr>
 </table></div>
 <!-- $$$LiveFx-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The pads, in order:</p>
+<p>The pads come in two banks of <a href="livefx.html#BankSize-var" translate="no">BankSize</a> (<a href="livefx.html#banks-prop" translate="no">banks</a>(), <a href="livefx.html#bank-prop" translate="no">bank</a>()); <a href="livefx.html#pads-prop" translate="no">pads</a>() lists the shown bank's, an empty name for an empty slot, and <a href="livefx.html#allPads-prop" translate="no">allPads</a>() every pad. MAIN is <a href="livefx.html#headerPads-prop" translate="no">headerPads</a>(), the sixteen the profile keeps (<code translate="no">liveFx/header</code>; the first eight stand in the header, the second eight show while ALT is held), by default:</p>
 <ul>
-<li>DROP: while held the kick is cut and a high-pass sweeps up; on release both return;</li>
-<li>NO KICK and ONLY KICK: silence every drum machine's kick row, or everything but it (<a href="machine.html#setKickMode" translate="no">Machine::setKickMode</a>()); they are exclusive, so one switches the other off;</li>
-<li>CRUSH: the master through a bit crusher (Calf Crusher), 6 bits; <a href="livefx.html#drag" translate="no">drag</a>() picks 8, 6, 4 or 3 bits;</li>
-<li>LO PASS and HI PASS: a low-pass sweep down to 300 Hz or a high-pass sweep up to 950 Hz, on GlobalPlayback's own equaliser;</li>
-<li>STUTTER: while held, the current 16th plays out and then repeats (<a href="beatrepeat.html" translate="no">BeatRepeat</a>); <a href="livefx.html#drag" translate="no">drag</a>() shortens it to 1/32 and 1/64;</li>
-<li>LOOP: the same with a beat, from the current step; <a href="livefx.html#drag" translate="no">drag</a>() shortens it to 2 steps or 1 step, or lengthens it to half a bar. STUTTER wins while both are held.</li>
+<li>MAIN: DROP (while held the kick is cut and a high-pass sweeps up; on release both return), NO KICK and ONLY KICK (silence every drum machine's kick row, or everything but it, <a href="machine.html#setKickMode" translate="no">Machine::setKickMode</a>(); exclusive), CRUSH (the master through a bit crusher, Calf Crusher, 6 bits; <a href="livefx.html#drag" translate="no">drag</a>() picks 8, 6, 4 or 3 bits), LO PASS and HI PASS (a low-pass sweep down to 300 Hz or a high-pass sweep up to 950 Hz, on GlobalPlayback's own equaliser), STUTTER (while held, the current 16th plays out and then repeats, <a href="beatrepeat.html" translate="no">BeatRepeat</a>; <a href="livefx.html#drag" translate="no">drag</a>() shortens it to 1/32 and 1/64), LOOP 4 (the same with a beat, from the current step); then LOOP 8 (an 8th), KILL LOW, KILL MID and KILL HIGH (the isolator's three bands cut, <a href="livefxengine.html" translate="no">LiveFxEngine</a>), REVERSE and STOP (the engine's heads: the beat before played backwards, the tape slowing to a stop), ECHO and FREEZE;</li>
+<li>MORE, the rest: LOOP 8T, LOOP 16 and LOOP 32 (an 8th triplet, a 16th, a 32nd), REWIND, HALF, OCT UP and WOBBLE (the other heads), FADE OUT; then FLANGER, GATE, AUTO-PAN, MONO, PHONE and ALIAS.</li>
 </ul>
-<p>NO KICK, ONLY KICK, LO PASS and HI PASS toggle on <a href="livefx.html#press" translate="no">press</a>(). DROP and CRUSH act while pressed, and a press held for 0.5 s latches them (a later short press releases them). STUTTER and LOOP act only while pressed, unless latched with <a href="livefx.html#toggle" translate="no">toggle</a>().</p>
+<p>One LOOP plays at a time, STUTTER on top of a held one; one head reads the engine's ring at a time: a press on one lets go of the others of its group.</p>
+<p>NO KICK, ONLY KICK, LO PASS, HI PASS and the KILLs toggle on <a href="livefx.html#press" translate="no">press</a>(). DROP, CRUSH, ALIAS, PHONE, MONO, FLANGER, GATE and AUTO-PAN act while pressed, and a press held for 0.5 s latches them (a later short press releases them). STUTTER, the LOOPs, the heads, ECHO, FREEZE and FADE OUT act only while pressed, unless latched with <a href="livefx.html#toggle" translate="no">toggle</a>().</p>
 <p>The send levels: phaser (Calf Phaser on the master), echo (every machine sent into the studio's delay at least this much) and heavy (GlobalPlayback's compressor squashing harder).</p>
-<p>The master chain is GlobalPlayback, the beat repeat, the crusher and the phaser, each passing the sound through untouched until used (<a href="livefx.html#masterInserts" translate="no">masterInserts</a>()). Without libzynthbox (a desktop run) only the states change. GUI thread only.</p>
+<p>The master chain is GlobalPlayback, the beat repeat (with the engine after it), the crusher and the phaser, each passing the sound through untouched until used (<a href="livefx.html#masterInserts" translate="no">masterInserts</a>()). Without libzynthbox (a desktop run) only the states change. GUI thread only.</p>
 </div>
 <!-- @@@LiveFx -->
 <div class="prop">
@@ -158,6 +175,16 @@
 <!-- @@@active -->
 </div>
 <div class="fnitem">
+<!-- $$$allPads-prop$$$allPads -->
+<h3 class="fn" translate="no" id="allPads-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">allPads</span> : const <span class="type">QStringList</span></h3>
+<p>every pad name, bank by bank.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>allPads</b></span>() const</td></tr>
+</table></div>
+<!-- @@@allPads -->
+</div>
+<div class="fnitem">
 <!-- $$$available-prop$$$available -->
 <h3 class="fn" translate="no" id="available-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">available</span> : const <span class="type">QStringList</span></h3>
 <p>This property holds the pads that can act: all of them.</p>
@@ -166,6 +193,31 @@
 <tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>available</b></span>() const</td></tr>
 </table></div>
 <!-- @@@available -->
+</div>
+<div class="fnitem">
+<!-- $$$bank-prop$$$bank$$$setBankint$$$bankChanged -->
+<h3 class="fn" translate="no" id="bank-prop"><span class="name">bank</span> : <span class="type">int</span></h3>
+<p>This property holds the shown bank, 0 or 1: the one <a href="livefx.html#pads-prop" translate="no">pads</a>() lists and the step keys reach.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>bank</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setBank</b></span>(int <i>bank</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="livefx.html#bankChanged" translate="no">bankChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@bank -->
+</div>
+<div class="fnitem">
+<!-- $$$banks-prop$$$banks -->
+<h3 class="fn" translate="no" id="banks-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">banks</span> : const <span class="type">QStringList</span></h3>
+<p>This property holds the banks' names, translated: MAIN, MORE.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>banks</b></span>() const</td></tr>
+</table></div>
+<!-- @@@banks -->
 </div>
 <div class="fnitem">
 <!-- $$$echo-prop$$$echo$$$setEchoqreal$$$knobsChanged -->
@@ -183,6 +235,21 @@
 <!-- @@@echo -->
 </div>
 <div class="fnitem">
+<!-- $$$headerPads-prop$$$headerPads$$$setHeaderPadsconstQStringList&$$$headerPadsChanged -->
+<h3 class="fn" translate="no" id="headerPads-prop"><span class="name">headerPads</span> : <span class="type">QStringList</span></h3>
+<p>This property holds the sixteen slots ALT + the step keys reach, pad names in order: the first eight stand in the header, the second eight show while ALT is held. Kept in the profile as <code translate="no">liveFx/header</code>; a name that is no pad or repeats is dropped, and short lists are filled from the default order. MORE is every other pad.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>headerPads</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setHeaderPads</b></span>(const QStringList &amp;<i>pads</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>headerPadsChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@headerPads -->
+</div>
+<div class="fnitem">
 <!-- $$$heavy-prop$$$heavy$$$setHeavyqreal$$$knobsChanged -->
 <h3 class="fn" translate="no" id="heavy-prop"><span class="name">heavy</span> : <span class="type">qreal</span></h3>
 <p>how hard GlobalPlayback's compressor squashes, 0..1.</p>
@@ -198,12 +265,16 @@
 <!-- @@@heavy -->
 </div>
 <div class="fnitem">
-<!-- $$$pads-prop$$$pads -->
-<h3 class="fn" translate="no" id="pads-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">pads</span> : const <span class="type">QStringList</span></h3>
-<p>every pad name, in order: DROP, NO KICK, ONLY KICK, CRUSH, LO PASS, HI PASS, STUTTER, LOOP.</p>
+<!-- $$$pads-prop$$$pads$$$bankChanged -->
+<h3 class="fn" translate="no" id="pads-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">pads</span> : <span class="type">QStringList</span></h3>
+<p>This property holds the shown bank's pad names, in order, <a href="livefx.html#BankSize-var" translate="no">BankSize</a> of them; an empty name is an empty slot.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>pads</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="livefx.html#bankChanged" translate="no">bankChanged</a></b></span>()</td></tr>
 </table></div>
 <!-- @@@pads -->
 </div>
@@ -225,7 +296,7 @@
 <div class="fnitem">
 <!-- $$$readouts-prop$$$readouts$$$activeChanged -->
 <h3 class="fn" translate="no" id="readouts-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">readouts</span> : <span class="type">QVariantMap</span></h3>
-<p>This property holds the settings of the active drag-adjustable pads, translated: a map such as <code translate="no">{CRUSH: &quot;4 BIT&quot;, STUTTER: &quot;1/32&quot;, LOOP: &quot;1 BEAT&quot;}</code>.</p>
+<p>This property holds the settings of the active drag-adjustable pads, translated: a map such as <code translate="no">{CRUSH: &quot;4 BIT&quot;, STUTTER: &quot;1/32&quot;}</code>.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>readouts</b></span>() const</td></tr>
@@ -242,7 +313,7 @@
 <div class="fnitem">
 <!-- $$$LiveFx[overload1]$$$LiveFxZynthboxBridge*QObject*constQList<Machine*>&QObject* -->
 <h3 class="fn" translate="no" id="LiveFx">LiveFx::<span class="name">LiveFx</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>globalPlayback</i>, const <span class="type">QList</span>&lt;<span class="type"><a href="machine.html" translate="no">Machine</a></span> *&gt; &amp;<i>machines</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Constructs the live effects over <i translate="no">globalPlayback</i> (libzynthbox's GlobalPlayback passthrough, the master; null on a desktop run) and the studio's <i translate="no">machines</i> (kick cuts, echo sends), with the given <i translate="no">parent</i>. <i translate="no">bridge</i> runs the crusher and phaser and keeps the beat repeat on the transport's grid (null on a desktop run).</p>
+<p>Constructs the live effects over <i translate="no">globalPlayback</i> (libzynthbox's GlobalPlayback passthrough, the master; null on a desktop run) and the studio's <i translate="no">machines</i> (kick cuts, echo sends), with the given <i translate="no">parent</i>. <i translate="no">bridge</i> runs the crusher and phaser and keeps the beat repeat and the engine on the transport's grid (null on a desktop run).</p>
 <!-- @@@LiveFx -->
 </div>
 <div class="fnitem">
@@ -265,16 +336,30 @@
 <!-- @@@audioSampleRate -->
 </div>
 <div class="fnitem">
+<!-- $$$bankChanged -->
+<h3 class="fn" translate="no" id="bankChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> LiveFx::<span class="name">bankChanged</span>()</h3>
+<p>Emitted when bank, and so pads, changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="livefx.html#bank-prop" translate="no">bank</a> and <a href="livefx.html#pads-prop" translate="no">pads</a>. </p>
+</div><!-- @@@bankChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$debugState[overload1]$$$debugState -->
+<h3 class="fn" translate="no" id="debugState"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> LiveFx::<span class="name">debugState</span>() const</h3>
+<p>Returns one line of the pads' state and the beat repeat's (<a href="beatrepeat.html#debugState" translate="no">BeatRepeat::debugState</a>()): the active pads, the engine effects asked for, and what the audio thread last did. For <code translate="no">call studio.liveFx debugState</code> over the fifo while a pad misbehaves; also written to the log.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@debugState -->
+</div>
+<div class="fnitem">
 <!-- $$$drag[overload1]$$$dragconstQString&int -->
 <h3 class="fn" translate="no" id="drag"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> LiveFx::<span class="name">drag</span>(const <span class="type">QString</span> &amp;<i>pad</i>, <span class="type">int</span> <i>notches</i>)</h3>
-<p>Adjusts a held CRUSH, STUTTER or LOOP <i translate="no">pad</i> by <i translate="no">notches</i> (positive harder or shorter, negative the other way) from its starting setting: the bit depth, the repeat length or the loop length.</p>
+<p>Adjusts a held CRUSH or STUTTER <i translate="no">pad</i> by <i translate="no">notches</i> (positive harder or shorter, negative the other way) from its starting setting: the bit depth or the repeat length.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@drag -->
 </div>
 <div class="fnitem">
 <!-- $$$key[overload1]$$$keyconstQString&bool -->
 <h3 class="fn" translate="no" id="key"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> LiveFx::<span class="name">key</span>(const <span class="type">QString</span> &amp;<i>pad</i>, <span class="type">bool</span> <i>down</i>)</h3>
-<p>Handles the hardware key of <i translate="no">pad</i> going down (<i translate="no">down</i> true) or up: DROP, STUTTER and LOOP act only while the key is held; the other pads toggle as the key goes down.</p>
+<p>Handles the hardware key of <i translate="no">pad</i> going down (<i translate="no">down</i> true) or up: DROP, STUTTER, the LOOPs, the heads, ECHO, FREEZE and FADE OUT act only while the key is held; the other pads toggle as the key goes down.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@key -->
 </div>
@@ -292,6 +377,13 @@
 <!-- @@@masterInserts -->
 </div>
 <div class="fnitem">
+<!-- $$$nextBank[overload1]$$$nextBank -->
+<h3 class="fn" translate="no" id="nextBank"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> LiveFx::<span class="name">nextBank</span>()</h3>
+<p>Shows the next bank, round from the last to the first.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@nextBank -->
+</div>
+<div class="fnitem">
 <!-- $$$press[overload1]$$$pressconstQString& -->
 <h3 class="fn" translate="no" id="press"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> LiveFx::<span class="name">press</span>(const <span class="type">QString</span> &amp;<i>pad</i>)</h3>
 <p>Presses <i translate="no">pad</i>; see the class description for what each pad does.</p>
@@ -306,11 +398,27 @@
 </div><!-- @@@release -->
 </div>
 <div class="fnitem">
+<!-- $$$syncGrid[overload1]$$$syncGrid -->
+<h3 class="fn" translate="no" id="syncGrid"><span class="type">void</span> LiveFx::<span class="name">syncGrid</span>()</h3>
+<p>Puts the engine's effects back on the transport's grid: the bar under way and the tempo. Call it when the tempo changes or the transport starts or stops; a pad's press does it itself.</p>
+<!-- @@@syncGrid -->
+</div>
+<div class="fnitem">
 <!-- $$$toggle[overload1]$$$toggleconstQString& -->
 <h3 class="fn" translate="no" id="toggle"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> LiveFx::<span class="name">toggle</span>(const <span class="type">QString</span> &amp;<i>pad</i>)</h3>
 <p>Toggles <i translate="no">pad</i> on or off, latching it.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggle -->
+</div>
+<div class="vars">
+<h2>Member Variable Documentation</h2>
+</div>
+<div class="fnitem">
+<!-- $$$BankSize -->
+<h3 class="fn" translate="no" id="BankSize-var">const <span class="type">int</span> LiveFx::<span class="name">BankSize</span></h3>
+<p>how many pads a bank holds: 16, the step keys ALT reaches; the first eight stand in the header, the second eight show while ALT is held.</p>
+<!-- @@@BankSize -->
+</div>
 </div>
 </article>
 </main>
@@ -321,4 +429,3 @@
 </footer>
 </body>
 </html>
-</div>

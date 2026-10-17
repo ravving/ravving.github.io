@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- albumart.cpp -->
-  <meta name="description" content="Serves AlbumArt to QML as image:&lt;@comment&gt;//albumart/&amp;lt;title&amp;gt;%09&amp;lt;artist&amp;gt;%09&amp;lt;album&amp;gt;%09&amp;lt;icon&amp;gt;&lt;/@comment&gt;.">
+  <meta name="description" content="Serves AlbumArt to QML as image:&lt;@comment&gt;//albumart/&amp;lt;title&amp;gt;%09&amp;lt;icon&amp;gt;%09&amp;lt;seed&amp;gt;%09&amp;lt;author&amp;gt;%09&amp;lt;bpm&amp;gt;%09&amp;lt;key&amp;gt;%09&amp;lt;sounds&amp;gt;%09&amp;lt;date&amp;gt;%09&amp;lt;style&amp;gt;&lt;/@comment&gt;.">
   <meta name="keywords" content="class">
   <title>AlbumArtProvider Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -73,7 +73,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">AlbumArtProvider Class</h1>
 <!-- $$$AlbumArtProvider-brief -->
-<p>Serves <a href="albumart.html" translate="no">AlbumArt</a> to QML as <code translate="no">image://albumart/&lt;title&gt;%09&lt;artist&gt;%09&lt;album&gt;%09&lt;icon&gt;</code>. <a href="#details">More...</a></p>
+<p>Serves <a href="albumart.html" translate="no">AlbumArt</a> to QML as <code translate="no">image://albumart/&lt;title&gt;%09&lt;icon&gt;%09&lt;seed&gt;%09&lt;author&gt;%09&lt;bpm&gt;%09&lt;key&gt;%09&lt;sounds&gt;%09&lt;date&gt;%09&lt;style&gt;</code>. <a href="#details">More...</a></p>
 <!-- @@@AlbumArtProvider -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;albumart.h&gt;</code></td></tr>
@@ -93,7 +93,7 @@
 <!-- $$$AlbumArtProvider-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The fields are tab-separated and percent-encoded (QML's <code translate="no">encodeURIComponent</code>); the icon (a glyph's name, empty for none) may be left out, and fields after it are ignored. Registered on the QML engine as <code translate="no">albumart</code>.</p>
+<p>The fields are tab-separated and percent-encoded (QML's <code translate="no">encodeURIComponent</code>); the sounds are separated by <code translate="no">|</code>, the date is ISO 8601, the style a name of <a href="albumart.html#styleFromName" translate="no">AlbumArt::styleFromName</a>(). Any field after the title may be left out (the icon empty for none, the seed 0, the credits none: <a href="albumart-credits.html" translate="no">AlbumArt::Credits</a>), and fields after them are ignored. Registered on the QML engine as <code translate="no">albumart</code>.</p>
 </div>
 <!-- @@@AlbumArtProvider -->
 <div class="func">
@@ -107,7 +107,7 @@
 <div class="fnitem">
 <!-- $$$requestImage[overload1]$$$requestImageconstQString&QSize*constQSize& -->
 <h3 class="fn" translate="no" id="requestImage"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QImage</span> AlbumArtProvider::<span class="name">requestImage</span>(const <span class="type">QString</span> &amp;<i>id</i>, <span class="type">QSize</span> *<i>size</i>, const <span class="type">QSize</span> &amp;<i>requestedSize</i>)</h3>
-<p>Draws the art for the fields in <i translate="no">id</i> at the requested width of <i translate="no">requestedSize</i> (at most 1000 px; 400 px when none is asked) and stores the result's size in <i translate="no">size</i> when it is not null.</p>
+<p>Draws the cover for the fields in <i translate="no">id</i> at the requested width of <i translate="no">requestedSize</i> (at most 1000 px; 400 px when none is asked) and stores the result's size in <i translate="no">size</i> when it is not null.</p>
 <!-- @@@requestImage -->
 </div>
 </div>

@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -112,7 +112,7 @@
 <!-- $$$Localization-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Every text goes through KI18n: i18nc() and friends in C++, and in QML the same functions on the root context (KLocalization::setupLocalizedContext(), KF 6.8 and later; the bare names, not the <code translate="no">org.kde.ki18n</code> module, which the device's KF6 does not have). The catalogs are <code translate="no">po/&lt;lang&gt;/ravving.po</code>, compiled by <code translate="no">ki18n_install</code> into <code translate="no">share/locale/&lt;lang&gt;/LC_MESSAGES/ravving.mo</code> (<code translate="no">build/locale/...</code> in a build tree).</p>
+<p>Every text goes through KI18n: <code translate="no">i18nc()</code> and friends in C++, and in QML the same functions on the root context (KLocalization::setupLocalizedContext(), KF 6.8 and later; the bare names, not the <code translate="no">org.kde.ki18n</code> module, which the device's KF6 does not have). The catalogs are <code translate="no">po/&lt;lang&gt;/ravving.po</code>, compiled by <code translate="no">ki18n_install</code> into <code translate="no">share/locale/&lt;lang&gt;/LC_MESSAGES/ravving.mo</code> (<code translate="no">build/locale/...</code> in a build tree).</p>
 <p>language is stored in the profile (<code translate="no">ravving/profile</code>, <code translate="no">ui/language</code>) and applied before the first i18n call at start. Changing it switches at once: KI18n's language list is set, a LanguageChange goes to the application, and the QML bindings that call i18n are evaluated again (QQmlEngine::retranslate()); backend objects with translated properties catch the LanguageChange with an event filter on the application and emit their change signals. Texts created earlier and stored (a notice already emitted, an issue reported) keep their language until the next start, which <a href="localization.html#restartAdvised-prop" translate="no">restartAdvised</a> signals.</p>
 </div>
 <!-- @@@Localization -->

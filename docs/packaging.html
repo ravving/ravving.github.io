@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Packaging · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=229e96b5f3">
+<link rel="stylesheet" href="../site.css?v=4e88e03796">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -36,7 +36,7 @@
       <ol id="docs-results" hidden></ol>
     </form>
     <nav aria-label="Documentation">
-<p class="mono">Using ravving</p><ul>
+<p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
@@ -51,7 +51,7 @@
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">Under the hood</p><ul>
+<p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
@@ -77,7 +77,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/packaging.md</b></p>
+<p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/packaging.md</b></p>
 <h1>Packaging</h1>
 <p class="doc-blurb">The Store AppImage, the setup page, what the device needs, Bluetooth on a fresh device.</p>
 
@@ -96,16 +96,30 @@ bundles no libraries at all: just ravving, the setup program and the data.</p>
 <p>What the AppImage starts isn't ravving but <strong>ravving-setup</strong> (<code>setup/</code>): a page over
 zynthbox-qml that installs ravving from the bundle and picks which UI the device runs.</p>
 <h2 id="what-the-device-needs">What the device needs</h2>
-<p>The bundle carries no libraries, so what ravving needs from the device is listed in one place,
-<code>data/requirements.json</code> (installed with the data, and in the bundle), and checked twice:</p>
+<p>Everything else ravving needs comes from the device, so it's listed in one place,
+<code>data/requirements.json</code> (installed with the data, and in the bundle), and checked in three
+places.</p>
+<h3 id="the-setup-page-before-installing">The setup page, before installing</h3>
+<p><code>default-app.sh deps DIR [--install] [--json]</code> runs <code>check-requirements.py</code> from the bundle. It
+checks every requirement, and every library the bundle's ravving links to (<code>ldd</code>'s "not found").
+<code>requirements.json</code>'s <code>libraries</code> names the Debian package of each library ravving links to.</p>
 <ul>
-<li><strong>The setup page, before installing</strong> (<code>default-app.sh deps DIR [--install] [--json]</code>, which
-  runs <code>check-requirements.py</code> from the bundle). It checks every requirement, and every library
-  the bundle's ravving links to (<code>ldd</code>'s "not found").</li>
-<li>The page lists what's missing, the feature each costs, and the Debian package that brings
-    it, with <strong>INSTALL MISSING PACKAGES</strong> (apt-get, online).</li>
+<li>The page lists what's missing, the feature each costs, and what brings it: a Debian package,
+  or "in this bundle" for a file the AppImage carries (ravving's WirePlumber settings).</li>
+<li><strong>INSTALL WHAT IS MISSING</strong> puts the bundle's files in place and installs the packages (see
+  "Installing what is missing" below), then checks again.</li>
 <li>A <code>startup</code> requirement or library missing means ravving can't start there. TRY IT and MAKE
-    IT THE DEFAULT stay dimmed, and the list says why.</li>
+  IT THE DEFAULT stay dimmed until INSTALL WHAT IS MISSING has brought it, and the CHOOSE
+  caption says to install what is missing first.</li>
+<li>A package the device's software sources don't have is named in the list and in the outcome.
+  When ravving needs it to start, the update stays blocked: there is no fallback.</li>
+<li>A tile tapped while the check still runs waits for it, and goes on only if ravving can start.</li>
+</ul>
+<h3 id="the-install-and-ravving-itself">The install, and ravving itself</h3>
+<ul>
+<li><strong>The install itself</strong> (<code>default-app.sh install</code>) puts the new binary beside the old one and
+  checks it with <code>ldd</code> first. One that lacks a library isn't installed: the installed ravving
+  stays as it was.</li>
 <li><strong>ravving, once started</strong> (<code>Requirements</code>, four seconds after the first frame). It checks the
   <code>feature</code> requirements by files and programs only: no process, microseconds.</li>
 <li>Each missing one is a warning in the issues centre, like "MUSIC PLAYER will not work", with
@@ -128,8 +142,8 @@ zynthbox-qml that installs ravving from the bundle and picks which UI the device
 </tr>
 <tr>
 <td>starting at all</td>
-<td>libraries ravving links to: Qt 6 Multimedia, KF6 BluezQt, TagLib 2, LAME, Vorbis, libsndfile</td>
-<td><code>libqt6multimedia6</code>, <code>libkf6bluezqt6</code>, <code>libtag2</code>, … (<code>requirements.json</code> "libraries")</td>
+<td>the libraries ravving links to: Qt 6, KF6 BluezQt and I18n, TagLib 2, libsndfile (with LAME, mpg123, Vorbis), JACK, zlib</td>
+<td><code>libkf6bluezqt6</code>, <code>libtag2</code>, <code>libqt6multimedia6</code>, … (<code>requirements.json</code> "libraries", one package per library; INSTALL WHAT IS MISSING fetches them)</td>
 </tr>
 <tr>
 <td>MUSIC PLAYER</td>
@@ -144,7 +158,7 @@ zynthbox-qml that installs ravving from the bundle and picks which UI the device
 <tr>
 <td>BLUETOOTH, INPUT</td>
 <td>ravving's WirePlumber settings (A2DP endpoints, one name per sound card)</td>
-<td>in the bundle (<code>etc/wireplumber/…</code>): <code>install</code> puts them in <code>/etc/wireplumber/wireplumber.conf.d/</code>, applied from the next start</td>
+<td>in the bundle (<code>etc/wireplumber/…</code>): <code>install</code> and INSTALL WHAT IS MISSING put them in <code>/etc/wireplumber/wireplumber.conf.d/</code>, applied from the next start</td>
 </tr>
 <tr>
 <td>synths, effects, drums</td>
@@ -152,14 +166,75 @@ zynthbox-qml that installs ravving from the bundle and picks which UI the device
 <td>the Zynthbox image's own packages</td>
 </tr>
 <tr>
-<td>SAMPLE KING one-shots</td>
+<td>SLOT SAMPLER one-shots</td>
 <td>libzynthbox's fix for notes cutting each other (exclusivity group −1)</td>
 <td>a libzynthbox patch not in a stock libzynthbox: there a one-shot is cut when the next starts; not detectable from ravving</td>
 </tr>
 </tbody>
 </table>
 <p>Adding a feature that needs something new: add it to <code>data/requirements.json</code> (its files,
-programs, package, the feature and its effect), and to this table.</p>
+programs, package, the feature and its effect, <code>restart</code> when it takes effect only from the
+next start), and to this table. A new library ravving links to goes into <code>libraries</code> with its
+package (<code>dpkg -S</code> on the device): ctest <code>requirements-install</code> fails on a build's library that
+has none.</p>
+<h3 id="installing-what-is-missing">Installing what is missing</h3>
+<p>INSTALL WHAT IS MISSING runs <code>default-app.sh deps &lt;bundle&gt; --install --json</code>:</p>
+<ol>
+<li>The files the bundle carries at the same path (<code>etc/wireplumber/…</code> for
+   <code>/etc/wireplumber/…</code>) are copied into place. This needs no network.</li>
+<li><code>apt-get update</code>, then <code>apt-cache policy</code> for the packages: those the device's package
+   sources don't have are left out and named.</li>
+<li><code>apt-get install</code> for the rest.</li>
+<li>The check again: the list, and the choices, follow what's there now.</li>
+</ol>
+<p>apt runs so that it can't hang or break:</p>
+<ul>
+<li>in the system's environment: no AppImage folders on <code>PATH</code> or <code>LD_LIBRARY_PATH</code>, no Python
+  virtualenv from zynthbox-qml, the standard <code>XDG_DATA_DIRS</code>;</li>
+<li>with its input closed and <code>DEBIAN_FRONTEND=noninteractive</code>, keeping changed configuration
+  files (<code>--force-confdef --force-confold</code>), so no question can wait for an answer;</li>
+<li>waiting at most two minutes for another package manager's lock, with 30 s network timeouts;</li>
+<li>after <code>dpkg --configure -a</code> when an earlier install was cut short.</li>
+</ul>
+<p>The page shows apt's latest line while it runs, and its ✕ waits until it's done. Then it says
+how it went:</p>
+<table>
+<thead>
+<tr>
+<th>Outcome</th>
+<th>The message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>done</td>
+<td>what was installed; "Everything ravving needs is here", or what's left needs more than a package</td>
+</tr>
+<tr>
+<td>offline</td>
+<td>the device couldn't reach its package sources; nothing was installed</td>
+</tr>
+<tr>
+<td>locked</td>
+<td>another program is installing software; try again in a few minutes</td>
+</tr>
+<tr>
+<td>unavailable</td>
+<td>which packages the device's software sources don't have (the others are installed); when ravving needs one to start, that it can't be installed or updated until they do</td>
+</tr>
+<tr>
+<td>interrupted, timeout, failed</td>
+<td>what happened, with apt's last error</td>
+</tr>
+<tr>
+<td>restart</td>
+<td>a WirePlumber setting or the Bluetooth plugin was installed: restart the device</td>
+</tr>
+</tbody>
+</table>
+<p>Every script run, with its output, goes to <code>~/.local/state/ravving-setup/setup.log</code> (and to
+zynthbox-qml's journal). ctest <code>requirements-install</code> walks every outcome against stand-ins
+for apt (<code>tests/requirements-install-test.py</code>).</p>
 <h2 id="what-is-in-the-bundle">What is in the bundle</h2>
 <pre><code>AppRun                          nx-apphub's launcher: exec usr/bin/ravving-setup
 ravving.desktop, ravving.png    the entry the Store lists (Name &quot;Ravving&quot;, the icon: a 256 × 256 PNG,
@@ -168,13 +243,26 @@ ravving.desktop, ravving.png    the entry the Store lists (Name &quot;Ravving&qu
 usr/bin/ravving                 the app
 usr/bin/ravving-setup           the page the AppImage opens
 usr/share/ravving/              kits.json, engines.json, the presets, requirements.json,
-                                check-requirements.py, start.sh, default-app.sh, VERSION
+                                check-requirements.py, start.sh, default-app.sh, VERSION,
+                                skins/, artworks/ (the export covers' artworks, stickers, RAVV)
+usr/share/locale/               the translations (the setup page reads them too)
 usr/share/applications, icons   the desktop entry and icon, where they came from
 etc/systemd/user/ravving.service
 etc/wireplumber/wireplumber.conf.d/50-ravving-*.conf   Bluetooth, sound card names
+etc/systemd/system/bluetooth.service.d/50-ravving-bluetoothd-path.conf
 </code></pre>
-<p><code>usr/bin/ravving</code>, <code>usr/share/ravving</code> and the unit are exactly what <code>cmake --install</code> puts on
-the device: <code>default-app.sh install DIR</code> copies them from the bundle to the system paths.</p>
+<h3 id="how-its-installed">How it's installed</h3>
+<p>The bundle is what <code>cmake --install</code> puts on the device. <code>default-app.sh install DIR</code> copies it
+from the bundle to the system paths:</p>
+<ul>
+<li>the binary, checked with <code>ldd</code> before it replaces the old one (one that lacks a library is
+  refused, and <code>deps DIR --install</code> gets its package);</li>
+<li><code>/usr/share/ravving</code> as a whole, so nothing of an older version stays behind;</li>
+<li>the unit, the translations and the WirePlumber settings;</li>
+<li>the bluetoothd path fix, where a drop-in starts a bluetoothd that isn't there.</li>
+</ul>
+<p>An update from any older version is the same install: what the older one put on the device is
+replaced, and its settings and session are kept.</p>
 <h2 id="the-setup-page">The setup page</h2>
 <p>Four choices, each a <code>default-app.sh</code> command on the bundle's own copy of the script (so the
 script always matches the files it installs):</p>
@@ -188,7 +276,7 @@ script always matches the files it installs):</p>
 </thead>
 <tbody>
 <tr>
-<td>TRY IT (LAUNCH RAVVING once installed)</td>
+<td>TRY IT (LAUNCH RAVVING once installed, UPDATE AND TRY IT over an older one)</td>
 <td><code>install</code>, then <code>run ravving</code></td>
 <td>ravving now; Zynthbox at the next boot, or from ravving's POWER → ZYNTHBOX</td>
 </tr>
@@ -209,14 +297,30 @@ script always matches the files it installs):</p>
 </tr>
 </tbody>
 </table>
-<p>The cards above them come from <code>default-app.sh status</code>, re-read after every action: the
+<p>The wells above them come from <code>default-app.sh status</code>, re-read after every action: the
 installed version, what starts at boot, and what runs now.</p>
-<p>The two installing tiles read by what the device has:</p>
+<h3 id="its-look-and-layout">Its look and layout</h3>
+<ul>
+<li>It wears ravving's look: its style, tokens, typefaces and UI kit, built into the program,
+  on a page skin of its own. Aru, the mascot, says when the device has
+  everything ravving needs.</li>
+<li>The header (the nameplate, the bundle, the one ✕ that closes the page) and the footer (the
+  outcome line) stay in place.</li>
+<li>Everything between them is one column: the status wells, what the device lacks, and the four
+  choices, which share the room that's left.</li>
+<li>When it doesn't fit (a long list, longer words in Spanish or Japanese), the column scrolls,
+  with ravving's scroll bar.</li>
+</ul>
+<p>It's in ravving's language (SETTINGS · LANGUAGE, else the system's), from ravving's own catalog.
+It links Qt only (ravving's style, kit, tokens and glyphs are Qt only), so it starts on any
+Zynthbox.</p>
+<h3 id="the-choices">The choices</h3>
+<p>The two installing choices read by what the device has:</p>
 <table>
 <thead>
 <tr>
 <th>Installed</th>
-<th>The tile reads</th>
+<th>The choice reads</th>
 </tr>
 </thead>
 <tbody>
@@ -234,7 +338,7 @@ installed version, what starts at boot, and what runs now.</p>
 </tr>
 </tbody>
 </table>
-<p>A tile that would change nothing is dimmed: MAKE IT THE DEFAULT while ravving already boots,
+<p>A choice that would change nothing is dimmed: MAKE IT THE DEFAULT while ravving already boots,
 ZYNTHBOX AT BOOT AGAIN while Zynthbox does, and REMOVE while nothing is installed. The AppImage
 itself stays in the Store's list until it's removed there.</p>
 <p>Switching stops the UI that's running, and everything it started: the setup page under
@@ -316,14 +420,15 @@ Several walks in a row can leave zynthbox-qml hung loading its sketchpad ("Start
 <p>walks the page and ravving by touch, asserting <code>default-app.sh status</code> after each step:</p>
 </li>
 <li>
-<p>TRY IT from a purged system: ravving runs, <code>installed</code> is the bundle's version,
-   <code>/usr/bin/ravving</code> is byte for byte the bundle's binary, the boot default is untouched;</p>
+<p>TRY IT from a purged system: ravving runs, and <code>installed</code> is the bundle's version.
+   <code>/usr/bin/ravving</code> is the bundle's binary, byte for byte, and finds every library (<code>ldd</code>).
+   The boot default is untouched;</p>
 </li>
 <li>ravving's POWER → ZYNTHBOX: zynthbox-qml runs;</li>
 <li>MAKE IT THE DEFAULT: ravving runs and boots, zynthbox-qml is masked;</li>
 <li>ZYNTHBOX again: zynthbox-qml runs and stays masked for boot;</li>
 <li>ZYNTHBOX AT BOOT AGAIN: zynthbox-qml boots, ravving still installed;</li>
-<li>REMOVE RAVVING twice, CLOSE: nothing of ravving left, the page gone.</li>
+<li>REMOVE RAVVING twice, then ✕: nothing of ravving left, the page gone.</li>
 </ol>
 <h3 id="how-the-walk-runs">How the walk runs</h3>
 <ul>
@@ -342,16 +447,17 @@ Several walks in a row can leave zynthbox-qml hung loading its sketchpad ("Start
 </ul>
 <h2 id="testing-an-appimage-without-the-store">Testing an AppImage without the Store</h2>
 <p>By hand on the device, the pieces the release check uses:</p>
-<pre><code class="language-sh">tools/store-register.py install dist/ravving-0.3.0-aarch64.AppImage camiloh &quot;Ravving 0.3.0&quot;
+<pre><code class="language-sh">tools/store-register.py install dist/ravving-0.4.0-aarch64.AppImage camiloh &quot;Ravving 0.4.0&quot;
                                    # → prints the AppDir; the entry shows in Apps at once
 tools/store-launch.sh &quot;$APPDIR&quot;    # the page, as zynthbox-qml's Apps list would start it
-tools/store-register.py remove &quot;~/.local/share/zynthbox/apps/camiloh/Ravving 0.3.0/ravving-0.3.0-aarch64.AppImage&quot;
+tools/store-register.py remove &quot;~/.local/share/zynthbox/apps/camiloh/Ravving 0.4.0/ravving-0.4.0-aarch64.AppImage&quot;
 </code></pre>
 <p><code>store-register.py</code> does what <code>registerAppImage</code> / <code>unregisterAppImage</code> in zynthbox-qml's
 <code>zynthian_gui_main.py</code> do, minus the UI. Or, in zynthbox-qml: <code>SCREEN_MAIN_MENU</code>
 (<code>tools/device.sh cuia</code>), tap Apps, tap Ravving.</p>
-<p>The page is touch only, and <code>tools/device.sh tap X Y</code> drives it. The tiles are the four quarters
-of the lower half:</p>
+<p>The page is touch only, and <code>tools/device.sh tap X Y</code> drives it. A tap anywhere on a tile
+chooses it, as its button does (REMOVE's first tap arms, the second removes). With nothing
+missing, the tiles are the four quarters of the lower half (these points stay inside them):</p>
 <table>
 <thead>
 <tr>
@@ -377,15 +483,70 @@ of the lower half:</p>
 <td>943 600</td>
 </tr>
 <tr>
-<td>CLOSE</td>
-<td>1160 736</td>
+<td>✕ (close)</td>
+<td>1251 23</td>
 </tr>
 </tbody>
 </table>
-<p>A desktop look without a device:</p>
-<pre><code class="language-sh">QT_QPA_PLATFORM=offscreen RAVVING_WINDOWED=1 RAVVING_BUNDLE_DIR=&lt;a staged bundle&gt; \
-  RAVVING_SETUP_SHOT=setup.png ./build/setup/ravving-setup
+<h3 id="the-setup-page-off-the-device">The setup page off the device</h3>
+<p><code>tools/setup-shots.sh [OUT_DIR]</code> screenshots the page at 1280 × 800 in each state, in English,
+Spanish and Japanese: nothing missing, a fresh device, features missing, ravving unable to
+start, a long list, installing, and each install outcome. Look at every shot after changing the
+page: nothing may overlap, and the ✕ must be reachable.</p>
+<p>It runs <code>build/setup/ravving-setup</code> offscreen against <code>tools/setup-fake.sh</code>, a stand-in for
+<code>default-app.sh</code> whose answers its variables set (<code>FAKE_LACKS</code>, <code>FAKE_INSTALL</code>, <code>FAKE_SLOW</code>…).
+The program's own switches:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RAVVING_WINDOWED=1</code></td>
+<td>a window instead of full screen</td>
+</tr>
+<tr>
+<td><code>RAVVING_BUNDLE_DIR</code></td>
+<td>the bundle to show instead of the program's own</td>
+</tr>
+<tr>
+<td><code>RAVVING_SETUP_SCRIPT</code></td>
+<td>a stand-in for the bundle's <code>default-app.sh</code>; the page acts as on a Zynthbox</td>
+</tr>
+<tr>
+<td><code>RAVVING_SETUP_CALL</code></td>
+<td>a Bundle method to call once the page is up (<code>installRequirements</code>, <code>tryIt</code>…)</td>
+</tr>
+<tr>
+<td><code>RAVVING_SETUP_SHOT</code>, <code>RAVVING_SETUP_SHOT_DELAY</code></td>
+<td>save the page as a PNG after the delay (ms), and quit</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-setup-page-on-a-device-without-ravvings-packages">The setup page on a device without ravving's packages</h3>
+<p>The release check runs on a device that has every package. To see the page as a fresh Zynthbox
+shows it, hide those packages from it. <code>tools/without.sh</code> (on the device, as root) starts a
+command in a private mount namespace where the paths given don't exist. Nothing changes on the
+device; only that command sees them gone.</p>
+<pre><code class="language-sh">cd /tmp/rvx &amp;&amp; APPIMAGE_EXTRACT_AND_RUN=1 /root/ravving/dist/ravving-&lt;version&gt;-aarch64.AppImage --appimage-extract
+L=/usr/lib/aarch64-linux-gnu
+H=$L/qt6/qml/QtQuick/Shapes,$L/qt6/qml/QtQuick/VirtualKeyboard,$L/libKF6BluezQt.so.6,$L/libtag.so.2
+H=$H,$L/qt6/plugins/multimedia/libffmpegmediaplugin.so,$L/spa-0.2/bluez5,/usr/libexec/bluetooth/obexd
+H=$H,/etc/wireplumber/wireplumber.conf.d/50-ravving-bluetooth.conf,/etc/wireplumber/wireplumber.conf.d/50-ravving-hardware.conf
+setsid /root/ravving/tools/without.sh &quot;$H&quot; -- env DISPLAY=:0 XAUTHORITY=/root/.Xauthority /tmp/rvx/squashfs-root/AppRun &amp;
 </code></pre>
+<p>Start it over zynthbox-qml (stopping ravving takes the display down), and take shots with
+<code>scrot</code> (<code>device.sh shot</code> asks ravving). The page must:</p>
+<ul>
+<li>start, and list every lack with its package;</li>
+<li>keep TRY IT and MAKE IT THE DEFAULT dimmed;</li>
+<li>run INSTALL WHAT IS MISSING through to its outcome.</li>
+</ul>
+<p>apt runs against the real system there, where the packages are already installed. It reports
+them installed, and the hidden paths stay listed.</p>
 <h2 id="bluetooth-on-a-fresh-device">Bluetooth on a fresh device</h2>
 <p>A stock Zynthbox (Debian 13, BlueZ 5.82, PipeWire 1.4, WirePlumber 0.5) cannot start
 <code>bluetooth.service</code> and registers no A2DP endpoints:</p>
@@ -420,18 +581,19 @@ of the lower half:</p>
 </tr>
 <tr>
 <td>the Qt side</td>
-<td>ravving links KDE's BluezQt (<code>libkf6bluezqt6</code>, present on the image; <code>libkf6bluezqt-dev</code> to build)</td>
-<td>—</td>
+<td>ravving links KDE's BluezQt (<code>libkf6bluezqt6</code>; <code>libkf6bluezqt-dev</code> to build), which a stock image may lack</td>
+<td>ravving can't start without it: the setup page's INSTALL WHAT IS MISSING installs it before UPDATE is offered</td>
 </tr>
 </tbody>
 </table>
 <p><code>tools/bluetooth-setup.sh</code> does all of it on a device and checks every step
 (<code>--check</code> only checks); <code>cmake --install</code> puts the two drop-ins in place as well. After the
 setup <code>bluetoothctl show</code> lists Audio Source, Audio Sink, Handsfree and Handsfree Audio Gateway.</p>
-<p><code>cmake --install</code> puts ravving's two drop-ins in place. <code>tools/bluetooth-setup.sh</code> does the
-rest, and the setup program, or the AppImage's first start, should run it: the packages
-(<code>bluez-obexd</code>, <code>libspa-0.2-bluetooth</code>, <code>libkf6bluezqt6</code>) and the service restarts. <code>--check</code>
-verifies it afterwards.</p>
+<p><code>cmake --install</code> and the AppImage's install put ravving's drop-ins in place, and the setup
+page's INSTALL WHAT IS MISSING installs the packages (<code>bluez-obexd</code>, <code>libspa-0.2-bluetooth</code>,
+<code>libkf6bluezqt6</code>); the first two take effect from the device's next start.
+<code>tools/bluetooth-setup.sh</code> does it all without the AppImage, restarting the services instead.
+<code>--check</code> verifies it afterwards.</p>
 <p>After the setup, <code>bluetoothctl show</code> lists Audio Source, Audio Sink, Handsfree and Handsfree
 Audio Gateway. ravving's WirePlumber drop-in also sets:</p>
 <ul>
@@ -446,10 +608,10 @@ speaker or headphones paging the device connect within a fraction of a second.</
 </main>
 <footer>
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=48f57bf155" defer></script>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

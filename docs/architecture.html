@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Architecture · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=229e96b5f3">
+<link rel="stylesheet" href="../site.css?v=4e88e03796">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -36,7 +36,7 @@
       <ol id="docs-results" hidden></ol>
     </form>
     <nav aria-label="Documentation">
-<p class="mono">Using ravving</p><ul>
+<p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
@@ -51,7 +51,7 @@
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">Under the hood</p><ul>
+<p class="mono">Change ravving</p><ul>
 <li class="on"><a href="architecture.html" aria-current="page">Architecture</a><ul><li><a href="#layers">Layers</a></li><li><a href="#input-flow-the-hardware-attached-property">Input flow: the Hardware attached property</a></li><li><a href="#the-libzynthbox-bridge">The libzynthbox bridge</a></li><li><a href="#device-workflow">Device workflow</a></li><li><a href="#distribution">Distribution</a></li><li><a href="#the-look">The look</a></li><li><a href="#where-ravving-keeps-its-files">Where ravving keeps its files</a></li><li><a href="#a-projects-file">A project&#x27;s file</a></li><li><a href="#the-startup-splash">The startup splash</a></li><li><a href="#the-phone-share-and-the-help-page">The phone share and the help page</a></li><li><a href="#topics-with-their-own-page">Topics with their own page</a></li></ul></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
@@ -77,7 +77,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/architecture.md</b></p>
+<p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/architecture.md</b></p>
 <h1>Architecture</h1>
 <p class="doc-blurb">The layers, the hardware input flow and the focus model, the libzynthbox bridge, files, the theme.</p>
 
@@ -236,6 +236,18 @@ records it. LIVE, which may be left on another machine, is the step keys' only.<
 <li>ALT + 1 opens the SONG page from anywhere, and again goes back to the page
     (<code>Ravving.songRequested</code>, raised in C++ before any dispatch, its press swallowed too).</li>
 </ul>
+<h3 id="alt-and-the-live-fx-pads">ALT and the LIVE FX pads</h3>
+<ul>
+<li>ALT + the step keys press the header's LIVE FX pads: <code>Ravving.altStepPressed</code> /
+  <code>altStepReleased</code>, raised in C++ before any dispatch, their releases swallowed too.</li>
+<li>Keys 1–8 are the shown bank's pads in the header, 9–16 its other eight, which take the
+    INSTRUMENTS' place while ALT is held, with the bank chips. The step LEDs show them.</li>
+<li>ALT + ▼ shows the next bank (<code>Ravving.fxBankRequested</code>, MAIN then MORE). MAIN is
+    <code>LiveFx.headerPads</code>, the sixteen slots the profile keeps under <code>liveFx/header</code>; MORE is
+    every other pad.</li>
+<li>With the section keys in the deck (<code>Session.sectionKeys</code>), ALT + 1–16 pick sections 1–16
+    instead.</li>
+</ul>
 <h3 id="mode-and-menu">MODE, ✱ and MENU</h3>
 <ul>
 <li>MODE switches LIVE on the open page's instrument, from anywhere. The MODE LED shows it.</li>
@@ -333,19 +345,21 @@ UI the device runs; both lean on <code>tools/default-app.sh</code>. See <a href=
 <p>ravving's look is built into the binary and set in code; no theme file or setting changes it.</p>
 <ul>
 <li><code>style/</code>: <code>Ravving.Style</code>, the Quick Controls style. Its controls draw everything in QML (the
-  keys' raised and sunk faces are <code>private/KeySurface.qml</code>).</li>
-<li><code>theme/</code>: <code>Ravving.Theme</code>, the design tokens: the palette (named colour roles), sizes,
-  durations, font families and fixed settings. A new colour or size becomes a token there.
-  Its <code>Skin</code> attached property carries a page's colours down the tree; controls given no colour
-  take them.</li>
+  keys' raised and sunk faces are <code>private/KeySurface.qml</code>). It adds no properties, only the
+  attached <code>Skin</code>. The screens' surfaces are its controls too:</li>
+<li>a page's chassis: <code>Page</code> (a machine's module: <code>Pane</code>);</li>
+<li>the header band: <code>ToolBar</code>, <code>position: ToolBar.Header</code>; a strip: any other <code>ToolBar</code>;</li>
+<li>a well: <code>Frame</code>; the line between groups: <code>ToolSeparator</code>.</li>
+<li><code>theme/</code>: <code>Ravving.Theme</code>, the design tokens, the C++ <code>Theme</code> singleton: the palette, sizes,
+  durations, font families and fixed settings. C++ reads them through its static getters
+  (<code>ThemeColors::accent()</code>). Its <code>Skin</code> attached property carries a page's colours down.</li>
 <li><code>input/</code>: <code>Ravving.Input</code>, the device's keys and knobs (the <code>Hardware</code> attached property).</li>
 <li><code>controls/</code>: <code>Ravving.Controls</code>, the controls with behaviour of their own (Knob, KnobGroup,
   Dialog, ComboBox, Meter, KeyCap, Toast…). They know nothing of the app. What they need of its
   state comes in as properties, or through the <code>Interaction</code> singleton.</li>
 <li>The layers point one way: Theme and Input ← Style ← Controls ← the app's QML (<code>qml/</code>). See
   <a href="ui-rules.html">the UI rules</a>, "Where a control lives".</li>
-<li>The Fonts class: the three typefaces, built in.</li>
-<li>To change the look, change the code and rebuild.</li>
+<li>The Fonts class: the three typefaces, built in. To change the look, change the code.</li>
 </ul>
 <h2 id="where-ravving-keeps-its-files">Where ravving keeps its files</h2>
 <p>Nothing of ravving's goes into zynthbox-qml's folders, and nothing of zynthbox-qml's is
@@ -429,7 +443,17 @@ picks the look, from the next start: ANIME, GLOW, STILL, ZOOM, ARU or OFF.</p>
 <li><strong>The logos</strong> are the effect SVGs drawn without their backgrounds
   (data/branding/make-splash.sh). ARU's frames, the pixel octopus, the wolf pup and the alien, are drawn by
   data/branding/make-aru.py from data/branding/aru/.</li>
-<li><strong>The album art's wordmark</strong> is data/branding/ravving-wordmark.svg.</li>
+</ul>
+<h3 id="the-export-covers">The export covers</h3>
+<ul>
+<li><strong>The art</strong> (<code>AlbumArt</code>) uses data/artworks, installed with the data and read
+  through <code>AlbumArt::setFolder()</code>. Without it, a cover is the title and label block on the
+  dark ground, and the log says so. tools/make-artworks.sh makes it from assets/artworks.</li>
+<li><strong>A seed picks</strong> the artwork, the look (a black sidebar two times in three, else the title
+  over the art beside a corner label block) and the stickers. The words on it are the title and
+  the export's real credits (<code>Exporter::coverCredits()</code>).</li>
+<li><strong>The title</strong> is in the display family; the corner look's fringe colours are what
+  theme/tokens.json <code>art.cover</code> names (ctest design-tokens). tools/render-covers.sh draws samples.</li>
 </ul>
 <h2 id="the-phone-share-and-the-help-page">The phone share and the help page</h2>
 <p><code>FileShare</code> (<code>share</code>) is ravving's one-file HTTP server, on port 8098 or the next free one. It
@@ -457,10 +481,10 @@ serves three things:</p>
 </main>
 <footer>
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=48f57bf155" defer></script>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

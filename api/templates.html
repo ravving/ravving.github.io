@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -123,16 +123,19 @@
 <!-- $$$Templates-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>A template keeps the tempo, the swing, the key (root and scale) and the live effects' send levels (phaser, echo, heavy); <a href="templates.html#start" translate="no">start</a>() creates a new project (<a href="projects.html#newProject" translate="no">Projects::newProject</a>()) with those set. Templates are listed from the user's folder (list) or a USB stick (<a href="templates.html#listFolder" translate="no">listFolder</a>()), and <a href="templates.html#saveCurrent" translate="no">saveCurrent</a>() stores the session's settings as one.</p>
+<p>A template keeps the tempo, the swing, the key (root and scale), the live effects' send levels (phaser, echo, heavy), the sections (their names, colours and lengths and the song's order, without their patterns) and each machine's sound (its source, factory sound, MODS and, for a drum machine, its kit); <a href="templates.html#start" translate="no">start</a>() creates a new project (<a href="projects.html#newProject" translate="no">Projects::newProject</a>()) with those set and every pattern empty. Templates are listed from the user's folder (list) or a USB stick (<a href="templates.html#listFolder" translate="no">listFolder</a>()), and <a href="templates.html#saveCurrent" translate="no">saveCurrent</a>() stores the session's settings as one.</p>
 <p>A template is one JSON file, in the same format as the pattern presets, so it is exchanged the same way (<a href="presetexchange.html" translate="no">PresetExchange</a>; on a stick under <code translate="no">ravving/presets/templates/</code>):</p>
 <pre class="cpp plain" translate="no"><code class="text">
  {&quot;ravving&quot;: &quot;preset&quot;, &quot;type&quot;: &quot;template&quot;,
   &quot;template&quot;: {&quot;name&quot;: &quot;Black Metal&quot;, &quot;genre&quot;: &quot;Black Metal&quot;, &quot;about&quot;: &quot;...&quot;,
                &quot;bpm&quot;: 180, &quot;swing&quot;: 50, &quot;swingEighths&quot;: false,
                &quot;root&quot;: 4, &quot;scale&quot;: &quot;Natural Minor&quot;,
-               &quot;phaser&quot;: 0, &quot;echo&quot;: 0.1, &quot;heavy&quot;: 0.6}}
+               &quot;phaser&quot;: 0, &quot;echo&quot;: 0.1, &quot;heavy&quot;: 0.6,
+               &quot;sections&quot;: [{&quot;name&quot;: &quot;INTRO&quot;, &quot;colour&quot;: 0, &quot;bars&quot;: 8}, {&quot;name&quot;: &quot;DROP&quot;, &quot;colour&quot;: 3, &quot;bars&quot;: 0}],
+               &quot;song&quot;: [{&quot;section&quot;: 0, &quot;repeats&quot;: 1}, {&quot;section&quot;: 1, &quot;repeats&quot;: 2}],
+               &quot;sounds&quot;: {&quot;drums1&quot;: {&quot;kit&quot;: &quot;…/Roland TR909.sf3&quot;}, &quot;bass&quot;: {&quot;soundSource&quot;: &quot;Upright&quot;}}}}
 </code></pre>
-<p><code translate="no">bpm</code> is the tempo in whole BPM; <code translate="no">swing</code> is a percentage, 50 (straight) to 75; <code translate="no">root</code> is 0 to 11 from C and <code translate="no">scale</code> a name of <a href="templates.html#scaleNames" translate="no">scaleNames</a>(); <code translate="no">phaser</code>, <code translate="no">echo</code> and <code translate="no">heavy</code> are <a href="livefx.html" translate="no">LiveFx</a>'s send levels, 0..1. Any of them may be left out; a new project's own value then applies. GUI thread only.</p>
+<p><code translate="no">bpm</code> is the tempo in whole BPM; <code translate="no">swing</code> is a percentage, 50 (straight) to 75; <code translate="no">root</code> is 0 to 11 from C and <code translate="no">scale</code> a name of <a href="templates.html#scaleNames" translate="no">scaleNames</a>(); <code translate="no">phaser</code>, <code translate="no">echo</code> and <code translate="no">heavy</code> are <a href="livefx.html" translate="no">LiveFx</a>'s send levels, 0..1. <code translate="no">sections</code> lists the sections in order (<code translate="no">colour</code> an index of the section colours, <code translate="no">bars</code> 0 for AUTO) and <code translate="no">song</code> the song's entries by a section's index there; <code translate="no">sounds</code> holds, by machine key, any of a machine's sound parts (<code translate="no">soundSource</code> by name, <code translate="no">soundPreset</code>, <code translate="no">sound</code>, <code translate="no">sourceSound</code>, <code translate="no">sourceSounds</code>, <code translate="no">kit</code>) as <a href="machine.html#soundState" translate="no">Machine::soundState</a>() gives them. Any of them may be left out; a new project's own value then applies (a machine the template names no sound for keeps its default one, a source or kit not on this device is skipped). GUI thread only.</p>
 </div>
 <!-- @@@Templates -->
 <div class="types">
@@ -240,7 +243,7 @@
 <div class="fnitem">
 <!-- $$$saveCurrent[overload1]$$$saveCurrentconstQString& -->
 <h3 class="fn" translate="no" id="saveCurrent"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Templates::<span class="name">saveCurrent</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
-<p>Saves the session's tempo, swing, key and live-effect send levels as a user template under <i translate="no">name</i> (tidied, made unique). Returns the name used, or an empty string on failure.</p>
+<p>Saves the session's tempo, swing, key, live-effect send levels, sections and sounds as a user template under <i translate="no">name</i> (tidied, made unique). Returns the name used, or an empty string on failure.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@saveCurrent -->
 </div>

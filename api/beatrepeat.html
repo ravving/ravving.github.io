@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -86,12 +86,15 @@
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#BeatRepeat" translate="no">BeatRepeat</a></b>(ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#debugState" translate="no">debugState</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> quint64 </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#frameNow" translate="no">frameNow</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#isRepeating" translate="no">isRepeating</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#isValid" translate="no">isValid</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#repeat" translate="no">repeat</a></b>(double <i>steps</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#sampleRate" translate="no">sampleRate</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#setEffects" translate="no">setEffects</a></b>(quint32 <i>mask</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#stop" translate="no">stop</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="beatrepeat.html#syncGrid" translate="no">syncGrid</a></b>()</td></tr>
 </table></div>
 <h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
@@ -102,8 +105,9 @@
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p><a href="beatrepeat.html#repeat" translate="no">repeat</a>() anchors at the start of the current 16th (SyncTimer's grid, sample accurate through <a href="zynthboxbridge.html#timerTickAtFrame" translate="no">ZynthboxBridge::timerTickAtFrame</a>()); that step plays out live, then the audio from the anchor repeats every <i>steps</i> 16ths until <a href="beatrepeat.html#stop" translate="no">stop</a>(). Calling <a href="beatrepeat.html#repeat" translate="no">repeat</a>() again while repeating changes only the length; the anchor stays. With the transport stopped it repeats the last <i>steps</i> of audio at once. Without a bridge the tempo is taken as 120 BPM.</p>
-<p>Each repetition's head is crossfaded (480 frames, 10 ms at 48 kHz, equal power) with what followed the slice when it first played, so the seam never dips to silence, and the switch into the repeat eases over 480 frames. The release is slower (300 ms, an S-curve), so the repeat gives way to the live sound rather than being cut. The input is always kept (2^17 frames, 2.7 s at 48 kHz); an engagement copies what it needs into the slice it repeats (at most 2^18 frames, 5.4 s). The audio thread reads only atomics and preallocated buffers.</p>
-<p>Being the first stage after the master, it also passes on only sound: a sample that is not finite, or beyond 16 times full scale, is passed on as silence. libzynthbox's sampler can read past a one-shot's end (the metronome's tick ended on two samples near 10^12), and the LV2 inserts after this stage then blank the whole block, which cuts the sound with a click.</p>
+<p>The signal processing is a <a href="repeatcore.html" translate="no">RepeatCore</a> (the seams, the crossfades, the history and the slice), which the tests run without JACK. The audio thread reads only atomics and preallocated buffers. <a href="beatrepeat.html#debugState" translate="no">debugState</a>() reads what the GUI thread last asked for and what the audio thread last did, for a fifo call while a pad misbehaves; the <code translate="no">ravving.livefx</code> logging category traces the GUI thread's calls.</p>
+<p>After the repeat the same callback runs a <a href="livefxengine.html" translate="no">LiveFxEngine</a>, the punch-in effects on the mix: <a href="beatrepeat.html#setEffects" translate="no">setEffects</a>() switches them and <a href="beatrepeat.html#syncGrid" translate="no">syncGrid</a>() gives it the bar under way and the tempo, so its beat-synced ones land on the transport's grid.</p>
+<p>Being the first stage after the master, it also passes on only sound (<a href="repeatcore.html#MaxSample-var" translate="no">RepeatCore::MaxSample</a>): a sample that is not finite, or beyond 16 times full scale, is passed on as silence. libzynthbox's sampler can read past a one-shot's end (the metronome's tick ended on two samples near 10^12), and the LV2 inserts after this stage then blank the whole block, which cuts the sound with a click.</p>
 <p>The client also watches the graph's dropouts: JACK's xrun callback counts them, except within 3 s of a client or link change and in the first 20 s after the start (the graph is rebuilding then), and every minute five or more raise an &quot;Audio dropouts&quot; issue.</p>
 </div>
 <!-- @@@BeatRepeat -->
@@ -114,6 +118,12 @@
 <h3 class="fn" translate="no" id="BeatRepeat"><code class="details extra" translate="no">[explicit]</code> BeatRepeat::<span class="name">BeatRepeat</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
 <p>Opens and activates the JACK client with its buffers, with the given <i translate="no">parent</i>; <i translate="no">bridge</i> gives the tempo and the step grid (null leaves the repeat unsynced). Without JACK, <a href="beatrepeat.html#isValid" translate="no">isValid</a>() returns <code translate="no">false</code>.</p>
 <!-- @@@BeatRepeat -->
+</div>
+<div class="fnitem">
+<!-- $$$debugState[overload1]$$$debugState -->
+<h3 class="fn" translate="no" id="debugState"><span class="type">QString</span> BeatRepeat::<span class="name">debugState</span>() const</h3>
+<p>Returns one line of the repeat's and the engine's state, for a call over the fifo while a pad misbehaves: the pads' last requests (the anchor and length <a href="beatrepeat.html#repeat" translate="no">repeat</a>() last gave the core, the effects mask), the audio clock now, and what the audio thread last did (its last cycle's start frame and the peaks of that cycle into the repeat, out of it and out of the engine). Also written to the log.</p>
+<!-- @@@debugState -->
 </div>
 <div class="fnitem">
 <!-- $$$frameNow[overload1]$$$frameNow -->
@@ -158,10 +168,22 @@
 <!-- @@@sampleRate -->
 </div>
 <div class="fnitem">
+<!-- $$$setEffects[overload1]$$$setEffectsquint32 -->
+<h3 class="fn" translate="no" id="setEffects"><span class="type">void</span> BeatRepeat::<span class="name">setEffects</span>(<span class="type">quint32</span> <i>mask</i>)</h3>
+<p>Switches the engine's effects to <i translate="no">mask</i>, a <a href="livefxengine.html#bit" translate="no">LiveFxEngine::bit</a>() per effect on (of its heads, REVERSE to WOBBLE, only the first set plays). Does nothing without a client.</p>
+<!-- @@@setEffects -->
+</div>
+<div class="fnitem">
 <!-- $$$stop[overload1]$$$stop -->
 <h3 class="fn" translate="no" id="stop"><span class="type">void</span> BeatRepeat::<span class="name">stop</span>()</h3>
 <p>Returns to the live input, over the 300 ms release.</p>
 <!-- @@@stop -->
+</div>
+<div class="fnitem">
+<!-- $$$syncGrid[overload1]$$$syncGrid -->
+<h3 class="fn" translate="no" id="syncGrid"><span class="type">void</span> BeatRepeat::<span class="name">syncGrid</span>()</h3>
+<p>Gives the engine the transport's grid as it is now: the frame the bar under way started at (the current frame while the transport is stopped) and a 16th's length at the current tempo. Does nothing without a client.</p>
+<!-- @@@syncGrid -->
 </div>
 </div>
 </article>

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Extending · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=229e96b5f3">
+<link rel="stylesheet" href="../site.css?v=4e88e03796">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -36,7 +36,7 @@
       <ol id="docs-results" hidden></ol>
     </form>
     <nav aria-label="Documentation">
-<p class="mono">Using ravving</p><ul>
+<p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
@@ -51,7 +51,7 @@
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">Under the hood</p><ul>
+<p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
@@ -62,7 +62,7 @@
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
 <li><a href="ui-rules.html">UI rules</a></li>
-<li class="on"><a href="extending.html" aria-current="page">Extending</a><ul><li><a href="#a-new-machine-a-pages-instrument">A new machine (a page&#x27;s instrument)</a></li><li><a href="#a-new-engine">A new engine</a></li><li><a href="#sound-modifiers-an-engines-own-controls">SOUND MODIFIERS: an engine&#x27;s own controls</a></li><li><a href="#a-new-effect">A new effect</a></li><li><a href="#hardware-and-focus">Hardware and focus</a></li><li><a href="#before-committing">Before committing</a></li><li><a href="#reporting-a-problem-to-the-issues-center">Reporting a problem to the issues center</a></li></ul></li>
+<li class="on"><a href="extending.html" aria-current="page">Extending</a><ul><li><a href="#a-new-machine-a-pages-instrument">A new machine (a page&#x27;s instrument)</a></li><li><a href="#a-new-engine">A new engine</a></li><li><a href="#sound-modifiers-an-engines-own-controls">SOUND MODIFIERS: an engine&#x27;s own controls</a></li><li><a href="#a-new-effect">A new effect</a></li><li><a href="#a-new-live-fx-pad-on-the-mix">A new LIVE FX pad on the mix</a></li><li><a href="#hardware-and-focus">Hardware and focus</a></li><li><a href="#before-committing">Before committing</a></li><li><a href="#reporting-a-problem-to-the-issues-center">Reporting a problem to the issues center</a></li></ul></li>
 <li><a href="writing-the-guide.html">Writing the guide</a></li>
 <li><a href="writing-code-docs.html">Writing code documentation</a></li>
 <li><a href="building.html">Building</a></li>
@@ -77,7 +77,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/extending.md</b></p>
+<p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/extending.md</b></p>
 <h1>Extending</h1>
 <p class="doc-blurb">Adding a machine, an engine, SOUND MODIFIERS, an effect, an issues-center check.</p>
 
@@ -142,10 +142,10 @@ children. Override what <code>MachinePanel</code> declares:</p>
 <h3 id="5-qml-the-page">5. QML: the page</h3>
 <p>A <code>MachinePage</code> declaring its panel (see <code>pages/ChordsPage.qml</code>); it
 forwards the device and an external keyboard to it.</p>
-<h3 id="6-build-files-and-finish">6. Build files and finish</h3>
+<h3 id="6-build-files-and-skin">6. Build files and skin</h3>
 <p>Add the C++ files to <code>src/backend/CMakeLists.txt</code> and the QML files to <code>src/CMakeLists.txt</code>
 (<code>RAVVING_QML_FILES</code>). Add a screenshot step in <code>src/main.cpp</code>, and the machine to
-<code>Rave.machines</code>, with its finish colours as strings.</p>
+<code>Rave.machineSkins</code>, with its skin colours as strings.</p>
 <h2 id="a-new-engine">A new engine</h2>
 <p>Engines are <code>SoundEngine</code> subclasses (<code>soundengine.h</code>): <code>start()</code>, <code>reconfigure(config)</code>,
 <code>midiInputPort()</code>, <code>audioOutputPorts()</code> (left, right), optional <code>setControl(symbol, value)</code>,
@@ -211,13 +211,25 @@ The values are saved with the machine.</p>
 <li>Calibrate its gain staging with <code>lv2probe.sh</code>.</li>
 <li><strong>A send</strong> (REVERB, DELAY): one shared <code>JalvPlugin</code> in <code>GlobalEffects</code>, fed from every
   lane's wet outputs (<code>JackWiring::addSends</code>) and returned with <code>addEffectReturn</code>.</li>
-<li><strong>On the master</strong> (LIVE FX: CRUSH, PHASER, STUTTER/LOOP): <code>LiveFx</code> and
+<li><strong>On the master</strong> (LIVE FX: CRUSH, PHASER, STUTTER and the LOOPs): <code>LiveFx</code> and
   <code>JackWiring::setMasterInserts</code>, which takes any <code>AudioInsert</code>.</li>
 <li><strong>Your own DSP</strong> (BeatRepeat): an <code>AudioInsert</code> subclass opening its own JACK client
-  (libjack, linked through pkg-config; PipeWire's at run time). Keep the process callback
-  lock-free: atomics from the GUI thread, buffers allocated in the constructor, no Qt
-  calls. For musical timing, <code>ZynthboxBridge::timerTickAtFrame(jack_frame_time())</code> gives
-  the transport position sample-accurately.</li>
+  (libjack, linked through pkg-config; PipeWire's at run time).</li>
+<li>The signal processing lives in a plain class of its own (<code>RepeatCore</code>, <code>LiveFxEngine</code>),
+    which a laptop test runs on known input.</li>
+<li>Keep the process callback lock-free: atomics from the GUI thread, buffers allocated
+    before the client runs, no Qt calls.</li>
+<li>For musical timing, <code>ZynthboxBridge::timerTickAtFrame(jack_frame_time())</code> gives the
+    transport position sample-accurately.</li>
+</ul>
+<h2 id="a-new-live-fx-pad-on-the-mix">A new LIVE FX pad on the mix</h2>
+<p>Three pieces:</p>
+<ul>
+<li>an <code>Effect</code> in <code>LiveFxEngine</code> (no Qt in its callback): a stage in <code>processFrame()</code>, its
+  state flushed of denormals, its switch ramped over <code>FadeFrames</code>, its tail in <code>isIdle()</code>;</li>
+<li>its name and bank slot in <code>LiveFx</code> (<code>Banks</code>, <code>EnginePads</code>, the list that says how it latches);</li>
+<li>a row in tests/tst_livefxengine.cpp: silence stays silence, noise stays finite, no click
+  at its switch, its length on the grid at a few tempos.</li>
 </ul>
 <h2 id="hardware-and-focus">Hardware and focus</h2>
 <ul>
@@ -266,10 +278,10 @@ Issues::clear(QStringLiteral(&quot;wiring&quot;));                              
 </main>
 <footer>
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=48f57bf155" defer></script>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

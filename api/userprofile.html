@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -89,6 +89,7 @@
 <li class="fn" translate="no"><b><a href="userprofile.html#album-prop" translate="no">album</a></b> : QString</li>
 <li class="fn" translate="no"><b><a href="userprofile.html#author-prop" translate="no">author</a></b> : QString</li>
 <li class="fn" translate="no"><b><a href="userprofile.html#genre-prop" translate="no">genre</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="userprofile.html#knobMode-prop" translate="no">knobMode</a></b> : QString</li>
 </ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><b><a href="userprofile.html#outOfScaleNotes-prop" translate="no">outOfScaleNotes</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="userprofile.html#splash-prop" translate="no">splash</a></b> : QString</li>
@@ -103,11 +104,13 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#author-prop" translate="no">author</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#authorEntry" translate="no">authorEntry</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#genre-prop" translate="no">genre</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#knobMode-prop" translate="no">knobMode</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#list" translate="no">list</a></b>(const QString &amp;<i>key</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#outOfScaleNotes-prop" translate="no">outOfScaleNotes</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#album-prop" translate="no">setAlbum</a></b>(const QString &amp;<i>album</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#setAuthor" translate="no">setAuthor</a></b>(const QString &amp;<i>name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#genre-prop" translate="no">setGenre</a></b>(const QString &amp;<i>genre</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#knobMode-prop" translate="no">setKnobMode</a></b>(const QString &amp;<i>mode</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#outOfScaleNotes-prop" translate="no">setOutOfScaleNotes</a></b>(bool <i>allowed</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#splash-prop" translate="no">setSplash</a></b>(const QString &amp;<i>style</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="userprofile.html#user-prop" translate="no">setUser</a></b>(const QString &amp;<i>name</i>)</td></tr>
@@ -171,6 +174,21 @@
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="userprofile.html#changed" translate="no">changed</a></b></span>()</td></tr>
 </table></div>
 <!-- @@@genre -->
+</div>
+<div class="fnitem">
+<!-- $$$knobMode-prop$$$knobMode$$$setKnobModeconstQString&$$$changed -->
+<h3 class="fn" translate="no" id="knobMode-prop"><span class="name">knobMode</span> : <span class="type">QString</span></h3>
+<p>how a fixed knob (a pot, Z2_V5B) takes over a value it does not sit on: <code translate="no">pickup</code> (it changes nothing until it reaches or crosses the value), <code translate="no">jump</code> (the value goes to the knob at once) or <code translate="no">scale</code> (the value moves toward the knob in proportion and meets it at the end of its travel); stored under <code translate="no">interactions/knobMode</code> (<a href="qml-ravving-controls-pickup.html" translate="no">PickUp</a>, in the kit).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>knobMode</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setKnobMode</b></span>(const QString &amp;<i>mode</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="userprofile.html#changed" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@knobMode -->
 </div>
 <div class="fnitem">
 <!-- $$$outOfScaleNotes-prop$$$outOfScaleNotes$$$setOutOfScaleNotesbool$$$changed -->
@@ -237,7 +255,7 @@
 <!-- $$$changed -->
 <h3 class="fn" translate="no" id="changed"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> UserProfile::<span class="name">changed</span>()</h3>
 <p>Emitted when any entry changed.</p>
-<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="userprofile.html#album-prop" translate="no">album</a>, <a href="userprofile.html#author-prop" translate="no">author</a>, <a href="userprofile.html#genre-prop" translate="no">genre</a>, <a href="userprofile.html#outOfScaleNotes-prop" translate="no">outOfScaleNotes</a>, <a href="userprofile.html#splash-prop" translate="no">splash</a>, and <a href="userprofile.html#user-prop" translate="no">user</a>. </p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="userprofile.html#album-prop" translate="no">album</a>, <a href="userprofile.html#author-prop" translate="no">author</a>, <a href="userprofile.html#genre-prop" translate="no">genre</a>, <a href="userprofile.html#knobMode-prop" translate="no">knobMode</a>, <a href="userprofile.html#outOfScaleNotes-prop" translate="no">outOfScaleNotes</a>, <a href="userprofile.html#splash-prop" translate="no">splash</a>, and <a href="userprofile.html#user-prop" translate="no">user</a>. </p>
 </div><!-- @@@changed -->
 </div>
 <div class="fnitem">

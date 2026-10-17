@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- albumart.cpp -->
-  <meta name="description" content="Cover art drawn for a track, so every export has artwork of its own.">
+  <meta name="description" content="Cover art for a track: one of ravving's artworks, the title, its real credits and at most one sticker.">
   <meta name="keywords" content="namespace">
   <title>AlbumArt Namespace | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -65,6 +65,8 @@
 <div class="toc">
 <h3 id="toc">Contents</h3>
 <ul>
+<li class="level1"><a href="#classes">Classes</a></li>
+<li class="level1"><a href="#types">Types</a></li>
 <li class="level1"><a href="#functions">Functions</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
@@ -72,7 +74,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">AlbumArt Namespace</h1>
 <!-- $$$AlbumArt-brief -->
-<p>Cover art drawn for a track, so every export has artwork of its own. <a href="#details">More...</a></p>
+<p>Cover art for a track: one of ravving's artworks, the title, its real credits and at most one sticker. <a href="#details">More...</a></p>
 <!-- @@@AlbumArt -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;albumart.h&gt;</code></td></tr>
@@ -80,45 +82,168 @@
 <ul>
 <li>AlbumArt is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
 </ul>
+<h2 id="classes">Classes</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="albumart-credits.html" translate="no">Credits</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="albumart-layout.html" translate="no">Layout</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="albumart-part.html" translate="no">Part</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="albumart-sticker.html" translate="no">Sticker</a></b></td></tr>
+</table></div>
+<h2 id="types">Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#Style-enum" translate="no">Style</a></b> { Random, Sidebar, Corner }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#Variant-enum" translate="no">Variant</a></b> { Sidebar, Corner }</td></tr>
+</table></div>
 <h2 id="functions">Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#artworkName" translate="no">artworkName</a></b>(quint32 <i>seed</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#artworks" translate="no">artworks</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#folder" translate="no">folder</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QRect </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#iconRect" translate="no">iconRect</a></b>(int <i>size</i> = 1000)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#png" translate="no">png</a></b>(const QString &amp;<i>title</i>, const QString &amp;<i>artist</i>, const QString &amp;<i>album</i>, const QString &amp;<i>icon</i> = QString(), int <i>size</i> = 1000)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QImage </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#render" translate="no">render</a></b>(const QString &amp;<i>title</i>, const QString &amp;<i>artist</i>, const QString &amp;<i>album</i>, const QString &amp;<i>icon</i> = QString(), int <i>size</i> = 1000)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#write" translate="no">write</a></b>(const QString &amp;<i>path</i>, const QString &amp;<i>title</i>, const QString &amp;<i>artist</i>, const QString &amp;<i>album</i>, const QString &amp;<i>icon</i> = QString(), int <i>size</i> = 1000)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> AlbumArt::Layout </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#layout" translate="no">layout</a></b>(const QString &amp;<i>title</i>, const QString &amp;<i>icon</i>, quint32 <i>seed</i>, int <i>size</i> = 1000, const AlbumArt::Credits &amp;<i>credits</i> = {}, AlbumArt::Style <i>style</i> = Style::Random)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint32 </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#newSeed" translate="no">newSeed</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#png" translate="no">png</a></b>(const QString &amp;<i>title</i>, const QString &amp;<i>icon</i>, quint32 <i>seed</i>, int <i>size</i> = 1000, const AlbumArt::Credits &amp;<i>credits</i> = {}, AlbumArt::Style <i>style</i> = Style::Random)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QImage </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#render" translate="no">render</a></b>(const QString &amp;<i>title</i>, const QString &amp;<i>icon</i>, quint32 <i>seed</i>, int <i>size</i> = 1000, const AlbumArt::Credits &amp;<i>credits</i> = {}, AlbumArt::Style <i>style</i> = Style::Random)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#setFolder" translate="no">setFolder</a></b>(const QString &amp;<i>folder</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#stickers" translate="no">stickers</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> AlbumArt::Style </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#styleFromName" translate="no">styleFromName</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#styleName" translate="no">styleName</a></b>(AlbumArt::Style <i>style</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="albumart.html#write" translate="no">write</a></b>(const QString &amp;<i>path</i>, const QString &amp;<i>title</i>, const QString &amp;<i>icon</i>, quint32 <i>seed</i>, int <i>size</i> = 1000, const AlbumArt::Credits &amp;<i>credits</i> = {}, AlbumArt::Style <i>style</i> = Style::Random)</td></tr>
 </table></div>
 <!-- $$$AlbumArt-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The art is a rounded card on a dark sleeve, filled with a gradient whose colours are seeded from the title and the artist (the same names always give the same art), with soft lights, a faint big-knob ring in a corner, the title in large type (shrunk to fit), the artist under it, the album or mixtape in small capitals, and &quot;MADE WITH&quot; with ravving's wordmark (<code translate="no">data/branding/ravving-wordmark.svg</code>) at the bottom. An empty title is drawn as &quot;Untitled&quot;.</p>
-<p>A project's icon (a built-in glyph, Glyphs), when given, sits in the card's top-left corner on a dark box, in a light tint of the card's own colours, scaled by a whole number so its pixels stay crisp (<a href="albumart.html#iconRect" translate="no">iconRect</a>() says where); the title then keeps below it. An unknown icon name draws the art as without one.</p>
-<p><a href="albumart.html#render" translate="no">render</a>() draws it, <a href="albumart.html#write" translate="no">write</a>() saves it as a PNG beside a track and <a href="albumart.html#png" translate="no">png</a>() gives the bytes that go into a file's tag. <a href="albumartprovider.html" translate="no">AlbumArtProvider</a> serves the same drawing to QML. The functions are reentrant; the exporter calls them from its worker thread.</p>
+<p>A cover is one of the glitch artworks (<code translate="no">glitches/</code> in the artworks folder, 1000 px JPEGs), at most one die-cut sticker (<code translate="no">stickers/</code>) turned a little and stuck along the art's edge, and the track's title in the display family (Fonts, theme/tokens.json <code translate="no">fonts.display</code>), in one of two looks (Variant) the seed picks:</p>
+<ul>
+<li><b>The sidebar</b> (two covers in three): a black column down the left quarter, the artwork filling the rest. Down the column: the title's words, one a line (at most four), each as large as fills its width; justified small print of the real facts; a thin box with bracket ticks holding the project's icon at a large whole scale (else the cover's one sticker, none then on the art; else RAVV); the title's last line; a four-pointed star; taglines under dot ticks (the author, the tempo and key, the date); and the foot's strip, the RAVV mark between the tempo's figures. What does not fit is left out, the least needed first.</li>
+<li><b>The corner</b>: the artwork filling the square, the title over its foot on a dark fade with a VHS fringe in ARU's pink and mint (<code translate="no">art.cover</code>), a label block in the bottom-right corner and a spine of small capitals up the left edge (the author, else the title). The label block is the sleeve's panel of format logos: a black plate in a thin white frame with bracket ticks at its corners; along its top, ruled apart, the project's icon (a built-in glyph, Glyphs) and ravving's short wordmark RAVV (<code translate="no">marks/ravv.png</code>, made from notes/brand/logo/ravv-ink.svg); under them a framed box with the track's credits: its tempo and key in ARU's pink, the plate's one accent, and the sounds that play. The icon is scaled by a whole number (<a href="albumart.html#iconRect" translate="no">iconRect</a>() says where); without an icon, or with a name that is no built-in glyph, RAVV stands alone; without credits there is no box. The title keeps to the left of the block, its foot level with the block's.</li>
+</ul>
+<p>Everything written on a cover is real (Credits: who made it, the sounds that play, the tempo, the key, the date) or the title; an empty title is drawn as &quot;Untitled&quot;.</p>
+<p>Which artwork, which look, which stickers and where they sit all come from a <i>seed</i>, so one seed always draws the same art and the title and the credits can change over it: <a href="albumart.html#newSeed" translate="no">newSeed</a>() picks a fresh one at random for each export, and the export's sidecar keeps it. <a href="albumart.html#layout" translate="no">layout</a>() says where every part lands, <a href="albumart.html#render" translate="no">render</a>() draws it, <a href="albumart.html#write" translate="no">write</a>() saves it as a PNG beside a track and <a href="albumart.html#png" translate="no">png</a>() gives the bytes that go into a file's tag. <a href="albumartprovider.html" translate="no">AlbumArtProvider</a> serves the same drawing to QML.</p>
+<p>The artworks folder is the data folder's <code translate="no">artworks/</code> (data/artworks in the source, installed with the rest of the data), set once with <a href="albumart.html#setFolder" translate="no">setFolder</a>() before the first cover. A folder that is missing, or a part of it, is logged, and the cover is drawn without what is missing: the title, the sidebar or the label block on the dark ground (RAVV set in the display family when its picture is missing).</p>
+<p>The functions are reentrant (the folder's listing is read once, behind a lock; the images on each call); the exporter calls them from its worker thread.</p>
 </div>
 <!-- @@@AlbumArt -->
+<div class="classes">
+<h2>Classes</h2>
+<h3> class <a href="albumart-credits.html">Credits</a></h3><!-- $$$Credits-brief -->
+<p>What a track's cover says about it: who made it and with what. The exporter fills it from the session (<a href="exporter.html#coverCredits" translate="no">Exporter::coverCredits</a>()). <a href="albumart-credits.html#details">More...</a></p>
+<!-- @@@Credits -->
+<h3> class <a href="albumart-layout.html">Layout</a></h3><!-- $$$Layout-brief -->
+<p>Where the parts of a cover land, as <a href="albumart.html#layout" translate="no">layout</a>() works them out. <a href="albumart-layout.html#details">More...</a></p>
+<!-- @@@Layout -->
+<h3> class <a href="albumart-part.html">Part</a></h3><!-- $$$Part-brief -->
+<p>One part of a cover's sidebar, as <a href="albumart.html#layout" translate="no">layout</a>() places it. <a href="albumart-part.html#details">More...</a></p>
+<!-- @@@Part -->
+<h3> class <a href="albumart-sticker.html">Sticker</a></h3><!-- $$$Sticker-brief -->
+<p>One sticker on a cover, as <a href="albumart.html#layout" translate="no">layout</a>() places it. <a href="albumart-sticker.html#details">More...</a></p>
+<!-- @@@Sticker -->
+</div>
+<div class="types">
+<h2>Type Documentation</h2>
+<div class="fnitem">
+<!-- $$$Style$$$Random$$$Sidebar$$$Corner -->
+<h3 class="fn" translate="no" id="Style-enum">enum class AlbumArt::<span class="name">Style</span></h3>
+<p>Which look a cover takes.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">AlbumArt::Style::Random</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">The seed's pick (the sidebar two times in three).</td></tr>
+<tr><td class="topAlign"><code translate="no">AlbumArt::Style::Sidebar</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">Always the sidebar.</td></tr>
+<tr><td class="topAlign"><code translate="no">AlbumArt::Style::Corner</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">Always the corner.</td></tr>
+</table></div>
+<!-- @@@Style -->
+</div>
+<div class="fnitem">
+<!-- $$$Variant$$$Sidebar$$$Corner -->
+<h3 class="fn" translate="no" id="Variant-enum">enum class AlbumArt::<span class="name">Variant</span></h3>
+<p>The two looks a seed picks between.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">AlbumArt::Variant::Sidebar</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">A black sidebar down the left quarter with the title down it, the art beside it (two covers in three).</td></tr>
+<tr><td class="topAlign"><code translate="no">AlbumArt::Variant::Corner</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">The art filling the square, the title over its foot beside the corner label block.</td></tr>
+</table></div>
+<!-- @@@Variant -->
+</div>
+</div>
 <div class="func">
 <h2>Function Documentation</h2>
 <div class="fnitem">
+<!-- $$$artworkName[overload1]$$$artworkNamequint32 -->
+<h3 class="fn" translate="no" id="artworkName"><span class="type">QString</span> AlbumArt::<span class="name">artworkName</span>(<span class="type">quint32</span> <i>seed</i>)</h3>
+<p>Returns the name of the artwork <i translate="no">seed</i> picks (its file's name without the folder and the extension, <code translate="no">glitch-record-store</code>); empty when there is none.</p>
+<!-- @@@artworkName -->
+</div>
+<div class="fnitem">
+<!-- $$$artworks[overload1]$$$artworks -->
+<h3 class="fn" translate="no" id="artworks"><span class="type">QStringList</span> AlbumArt::<span class="name">artworks</span>()</h3>
+<p>Returns the artworks (the folder's <code translate="no">glitches/</code>), by name.</p>
+<!-- @@@artworks -->
+</div>
+<div class="fnitem">
+<!-- $$$folder[overload1]$$$folder -->
+<h3 class="fn" translate="no" id="folder"><span class="type">QString</span> AlbumArt::<span class="name">folder</span>()</h3>
+<p>Returns the artworks folder <a href="albumart.html#setFolder" translate="no">setFolder</a>() read; empty before it is called.</p>
+<p><b>See also </b><a href="albumart.html#setFolder" translate="no">setFolder</a>().</p>
+<!-- @@@folder -->
+</div>
+<div class="fnitem">
 <!-- $$$iconRect[overload1]$$$iconRectint -->
 <h3 class="fn" translate="no" id="iconRect"><span class="type">QRect</span> AlbumArt::<span class="name">iconRect</span>(<span class="type">int</span> <i>size</i> = 1000)</h3>
-<p>Returns where a project's icon lands on art <i translate="no">size</i> pixels square: the glyph's own pixels (32 times a whole number of them), at whole-pixel coordinates in the card's top-left corner. The dark box behind it reaches an eighth of the glyph's width further out on each side.</p>
+<p>Returns where a project's icon lands on art <i translate="no">size</i> pixels square: the glyph's own pixels (32 times a whole number of them), at whole-pixel coordinates in the label block's plate, in the bottom-right corner.</p>
 <!-- @@@iconRect -->
 </div>
 <div class="fnitem">
-<!-- $$$png[overload1]$$$pngconstQString&constQString&constQString&constQString&int -->
-<h3 class="fn" translate="no" id="png"><span class="type">QByteArray</span> AlbumArt::<span class="name">png</span>(const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>artist</i>, const <span class="type">QString</span> &amp;<i>album</i>, const <span class="type">QString</span> &amp;<i>icon</i> = QString(), <span class="type">int</span> <i>size</i> = 1000)</h3>
-<p>Returns the art for <i translate="no">title</i>, <i translate="no">artist</i> and <i translate="no">album</i>, wearing the glyph <i translate="no">icon</i> (empty for none), <i translate="no">size</i> pixels square, as PNG bytes (what goes into an audio file's cover tag).</p>
+<!-- $$$layout[overload1]$$$layoutconstQString&constQString&quint32intconstAlbumArt::Credits&AlbumArt::Style -->
+<h3 class="fn" translate="no" id="layout"><span class="type"><a href="albumart-layout.html" translate="no">AlbumArt::Layout</a></span> AlbumArt::<span class="name">layout</span>(const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>icon</i>, <span class="type">quint32</span> <i>seed</i>, <span class="type">int</span> <i>size</i> = 1000, const <span class="type"><a href="albumart-credits.html" translate="no">AlbumArt::Credits</a></span> &amp;<i>credits</i> = {}, <span class="type"><a href="albumart.html#Style-enum" translate="no">AlbumArt::Style</a></span> <i>style</i> = Style::Random)</h3>
+<p>Returns where the parts of the cover for <i translate="no">title</i>, wearing the glyph <i translate="no">icon</i> (empty, or a name that is no built-in glyph, for none), land with <i translate="no">seed</i> on art <i translate="no">size</i> pixels square, with <i translate="no">credits</i> in the label block and up the spine, in the look <i translate="no">style</i> asks for (the seed's when <a href="albumart.html#Style-enum" translate="no">Style::Random</a>).</p>
+<p>The label block sits in the bottom-right corner, the title to its left at the foot, as large as fits that width on one line down to two thirds of its largest size, else in up to three lines. The seed picks the artwork, then at most one sticker (none when the sidebar's box holds it, for want of an icon), about a quarter of the cover across, turned 4 to 13 degrees either way, at spots along the edges taken in an order of its own; a sticker that would touch the title, the sidebar, the label block, the spine or the cover's edge is made smaller, or left off.</p>
+<!-- @@@layout -->
+</div>
+<div class="fnitem">
+<!-- $$$newSeed[overload1]$$$newSeed -->
+<h3 class="fn" translate="no" id="newSeed"><span class="type">quint32</span> AlbumArt::<span class="name">newSeed</span>()</h3>
+<p>Returns a fresh seed, at random: a cover no export has had yet, most likely.</p>
+<!-- @@@newSeed -->
+</div>
+<div class="fnitem">
+<!-- $$$png[overload1]$$$pngconstQString&constQString&quint32intconstAlbumArt::Credits&AlbumArt::Style -->
+<h3 class="fn" translate="no" id="png"><span class="type">QByteArray</span> AlbumArt::<span class="name">png</span>(const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>icon</i>, <span class="type">quint32</span> <i>seed</i>, <span class="type">int</span> <i>size</i> = 1000, const <span class="type"><a href="albumart-credits.html" translate="no">AlbumArt::Credits</a></span> &amp;<i>credits</i> = {}, <span class="type"><a href="albumart.html#Style-enum" translate="no">AlbumArt::Style</a></span> <i>style</i> = Style::Random)</h3>
+<p>Returns the cover for <i translate="no">title</i>, wearing the glyph <i translate="no">icon</i> (empty for none), drawn with <i translate="no">seed</i> and carrying <i translate="no">credits</i> in the look <i translate="no">style</i> asks for, <i translate="no">size</i> pixels square, as PNG bytes (what goes into an audio file's cover tag).</p>
 <!-- @@@png -->
 </div>
 <div class="fnitem">
-<!-- $$$render[overload1]$$$renderconstQString&constQString&constQString&constQString&int -->
-<h3 class="fn" translate="no" id="render"><span class="type">QImage</span> AlbumArt::<span class="name">render</span>(const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>artist</i>, const <span class="type">QString</span> &amp;<i>album</i>, const <span class="type">QString</span> &amp;<i>icon</i> = QString(), <span class="type">int</span> <i>size</i> = 1000)</h3>
-<p>Returns the art for <i translate="no">title</i>, <i translate="no">artist</i> and <i translate="no">album</i>, wearing the glyph <i translate="no">icon</i> (empty, or a name that is no built-in glyph, for none), as a square image <i translate="no">size</i> pixels wide (1000 for an export, smaller for a preview).</p>
+<!-- $$$render[overload1]$$$renderconstQString&constQString&quint32intconstAlbumArt::Credits&AlbumArt::Style -->
+<h3 class="fn" translate="no" id="render"><span class="type">QImage</span> AlbumArt::<span class="name">render</span>(const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>icon</i>, <span class="type">quint32</span> <i>seed</i>, <span class="type">int</span> <i>size</i> = 1000, const <span class="type"><a href="albumart-credits.html" translate="no">AlbumArt::Credits</a></span> &amp;<i>credits</i> = {}, <span class="type"><a href="albumart.html#Style-enum" translate="no">AlbumArt::Style</a></span> <i>style</i> = Style::Random)</h3>
+<p>Returns the cover for <i translate="no">title</i> wearing the glyph <i translate="no">icon</i> (empty, or a name that is no built-in glyph, for none), drawn with <i translate="no">seed</i> (<a href="albumart.html#layout" translate="no">layout</a>() says where its parts go) and carrying <i translate="no">credits</i> in the look <i translate="no">style</i> asks for, as a square image <i translate="no">size</i> pixels wide (1000 for an export, smaller for a preview).</p>
 <!-- @@@render -->
 </div>
 <div class="fnitem">
-<!-- $$$write[overload1]$$$writeconstQString&constQString&constQString&constQString&constQString&int -->
-<h3 class="fn" translate="no" id="write"><span class="type">bool</span> AlbumArt::<span class="name">write</span>(const <span class="type">QString</span> &amp;<i>path</i>, const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>artist</i>, const <span class="type">QString</span> &amp;<i>album</i>, const <span class="type">QString</span> &amp;<i>icon</i> = QString(), <span class="type">int</span> <i>size</i> = 1000)</h3>
-<p>Saves the art for <i translate="no">title</i>, <i translate="no">artist</i> and <i translate="no">album</i>, wearing the glyph <i translate="no">icon</i> (empty for none), <i translate="no">size</i> pixels square, as a PNG at <i translate="no">path</i>. Returns <code translate="no">false</code> when it could not be written.</p>
+<!-- $$$setFolder[overload1]$$$setFolderconstQString& -->
+<h3 class="fn" translate="no" id="setFolder"><span class="type">void</span> AlbumArt::<span class="name">setFolder</span>(const <span class="type">QString</span> &amp;<i>folder</i>)</h3>
+<p>Reads the artworks folder <i translate="no">folder</i>: its <code translate="no">glitches/*.jpg</code>, <code translate="no">stickers/*.png</code> and <code translate="no">marks/ravv.png</code>. Call it once at the start, before the first cover (main.cpp passes the data folder's <code translate="no">artworks/</code>). A folder or a file that is missing is logged, and the covers are drawn without it.</p>
+<p><b>See also </b><a href="albumart.html#folder" translate="no">folder</a>().</p>
+<!-- @@@setFolder -->
+</div>
+<div class="fnitem">
+<!-- $$$stickers[overload1]$$$stickers -->
+<h3 class="fn" translate="no" id="stickers"><span class="type">QStringList</span> AlbumArt::<span class="name">stickers</span>()</h3>
+<p>Returns the stickers (the folder's <code translate="no">stickers/</code>), by name.</p>
+<!-- @@@stickers -->
+</div>
+<div class="fnitem">
+<!-- $$$styleFromName[overload1]$$$styleFromNameconstQString& -->
+<h3 class="fn" translate="no" id="styleFromName"><span class="type"><a href="albumart.html#Style-enum" translate="no">AlbumArt::Style</a></span> AlbumArt::<span class="name">styleFromName</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Returns the style named <i translate="no">name</i>: <code translate="no">sidebar</code>, <code translate="no">corner</code>, else <a href="albumart.html#Style-enum" translate="no">Style::Random</a>.</p>
+<!-- @@@styleFromName -->
+</div>
+<div class="fnitem">
+<!-- $$$styleName[overload1]$$$styleNameAlbumArt::Style -->
+<h3 class="fn" translate="no" id="styleName"><span class="type">QString</span> AlbumArt::<span class="name">styleName</span>(<span class="type"><a href="albumart.html#Style-enum" translate="no">AlbumArt::Style</a></span> <i>style</i>)</h3>
+<p>Returns <i translate="no">style</i>'s name: <code translate="no">random</code>, <code translate="no">sidebar</code> or <code translate="no">corner</code> (what <a href="albumart.html#styleFromName" translate="no">styleFromName</a>() reads).</p>
+<!-- @@@styleName -->
+</div>
+<div class="fnitem">
+<!-- $$$write[overload1]$$$writeconstQString&constQString&constQString&quint32intconstAlbumArt::Credits&AlbumArt::Style -->
+<h3 class="fn" translate="no" id="write"><span class="type">bool</span> AlbumArt::<span class="name">write</span>(const <span class="type">QString</span> &amp;<i>path</i>, const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>icon</i>, <span class="type">quint32</span> <i>seed</i>, <span class="type">int</span> <i>size</i> = 1000, const <span class="type"><a href="albumart-credits.html" translate="no">AlbumArt::Credits</a></span> &amp;<i>credits</i> = {}, <span class="type"><a href="albumart.html#Style-enum" translate="no">AlbumArt::Style</a></span> <i>style</i> = Style::Random)</h3>
+<p>Saves the cover for <i translate="no">title</i>, wearing the glyph <i translate="no">icon</i> (empty for none), drawn with <i translate="no">seed</i> and carrying <i translate="no">credits</i> in the look <i translate="no">style</i> asks for, <i translate="no">size</i> pixels square, as a PNG at <i translate="no">path</i>. Returns <code translate="no">false</code> when it could not be written.</p>
 <!-- @@@write -->
 </div>
 </div>

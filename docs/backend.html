@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Backend classes · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=229e96b5f3">
+<link rel="stylesheet" href="../site.css?v=4e88e03796">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -36,7 +36,7 @@
       <ol id="docs-results" hidden></ol>
     </form>
     <nav aria-label="Documentation">
-<p class="mono">Using ravving</p><ul>
+<p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
@@ -51,7 +51,7 @@
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">Under the hood</p><ul>
+<p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
 <li class="on"><a href="backend.html" aria-current="page">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
@@ -77,7 +77,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/backend.md</b></p>
+<p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/backend.md</b></p>
 <h1>Backend classes</h1>
 <p class="doc-blurb">Every class of the backend library and how the others use it.</p>
 
@@ -105,12 +105,12 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>MonoMachine</code></td>
-<td>a mono line (one note per step) with ACCENT and SLIDE (the note lasts 1.5 steps and a legato engine glides into the next): page 3's AC 303 (<code>bass</code>, DISTRHO Nekobi: accent velocity 127 vs 80, Nekobi accents above 90) and page 4's THERE LEAD (<code>lead</code>, Calf Monosynth, legato + portamento); base note and velocities from kits.json; presets in scale degrees (<code>bass-presets.json</code>, <code>lead-presets.json</code>), RANDOM, octave; follows the header's key: a ROOT or SCALE change snaps every note to the nearest note of the new key (upwards on a tie), and the line's key is saved with it</td>
+<td>a mono line (one note per step) with ACCENT and SLIDE (the note lasts 1.5 steps and a legato engine glides into the next): page 3's BASS (<code>bass</code>, DISTRHO Nekobi: accent velocity 127 vs 80, Nekobi accents above 90) and page 4's LEAD (<code>lead</code>, Calf Monosynth, legato + portamento); base note and velocities from kits.json; presets in scale degrees (<code>bass-presets.json</code>, <code>lead-presets.json</code>), RANDOM, octave; follows the header's key: a ROOT or SCALE change snaps every note to the nearest note of the new key (upwards on a tie), and the line's key is saved with it</td>
 <td>new</td>
 </tr>
 <tr>
 <td><code>ChordMachine</code></td>
-<td>page 2's POLY-6 on TAL NoiseMaker (6 voices, Juno chorus); a custom voicing is scale degrees, or chromatic (semitones from the chord base, chart letter <code>c</code>) when a note is outside the key, so a chart can carry a C7 in E♭ major; <code>setStepNotes(step, "48,52,55,58")</code> for scripts; live keys below 1000 are chord degrees, from 1000 on single scale degrees (<code>noteKey</code>, <code>noteKeyForNote</code>, <code>noteOfKey</code>: the NOTES tab's LIVE, written one note into the step's voicing by a take or STEP entry): each step holds a voicing, a diatonic chord (a degree stacked in thirds from the scale, triad or seventh per degree by the chord set: Classic, Triads, Sevenths) or a custom set of scale degrees (built in NOTES); a run of one voicing is one held chord; everything is in scale degrees, so a key, set or octave change revoices it all. Three views: CHORDS (<code>setChord</code>), NOTES (<code>noteSets</code>, <code>toggleNote</code>), SLOTS (four <code>chordSlots</code> of 1/2/4/8 bars, <code>armedSlot</code>, <code>assignSlot</code>, <code>cycleSlotBars</code>, <code>clearSlot</code>: editing one rebuilds the steps in order). LIVE keys and the chord keys play whole chords, a keyboard note plays its degree's chord; presets <code>chord-presets.json</code> ("1111666633337777", "x" + VOICINGS for custom)</td>
+<td>page 2's CHORDS on TAL NoiseMaker (6 voices, Juno chorus); a custom voicing is scale degrees, or chromatic (semitones from the chord base, chart letter <code>c</code>) when a note is outside the key, so a chart can carry a C7 in E♭ major; <code>setStepNotes(step, "48,52,55,58")</code> for scripts; live keys below 1000 are chord degrees, from 1000 on single scale degrees (<code>noteKey</code>, <code>noteKeyForNote</code>, <code>noteOfKey</code>: the NOTES tab's LIVE, written one note into the step's voicing by a take or STEP entry): each step holds a voicing, a diatonic chord (a degree stacked in thirds from the scale, triad or seventh per degree by the chord set: Classic, Triads, Sevenths) or a custom set of scale degrees (built in NOTES); a run of one voicing is one held chord; everything is in scale degrees, so a key, set or octave change revoices it all. Three views: CHORDS (<code>setChord</code>), NOTES (<code>noteSets</code>, <code>toggleNote</code>), SLOTS (four <code>chordSlots</code> of 1/2/4/8 bars, <code>armedSlot</code>, <code>assignSlot</code>, <code>cycleSlotBars</code>, <code>clearSlot</code>: editing one rebuilds the steps in order). LIVE keys and the chord keys play whole chords, a keyboard note plays its degree's chord; presets <code>chord-presets.json</code> ("1111666633337777", "x" + VOICINGS for custom)</td>
 <td>new</td>
 </tr>
 <tr>
@@ -185,7 +185,7 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>SamplerMachine</code></td>
-<td>page 5's SAMPLE KING (<code>studio.machines.sampler</code>, track 6, "sample-trig"): 4 banks × 8 slots, each slot one ClipAudioSource (made through the bridge's exported constructor) on its track's sample slot <code>i % 5</code>, row <code>i / 5</code>, set up on its root slice: key zone = root note = <code>baseNote + i</code>, one-shot (a retrigger chokes it), PITCH = slice pitch, trim = start/length samples, 8 ms release; REVERSE plays a reversed copy rendered once in a worker (<code>AudioFile::writeReversed</code>, cached by path hash). Steps, accents and row mix as the drums (velocities); presets <code>sampler-presets.json</code> ("1"–"8": x/X). Published to the track as <code>samples</code> (<code>SketchpadTrack::setSamples</code>), its loaded slots' SamplerSynth ports wired into the lane (<code>JackWiring::setSampleOutputs</code>); <code>playing</code> / <code>playPositions</code> per slot as the PAD SAMPLER has</td>
+<td>page 5's SLOT SAMPLER (<code>studio.machines.sampler</code>, track 6, "sample-trig"): 4 banks × 8 slots, each slot one ClipAudioSource (made through the bridge's exported constructor) on its track's sample slot <code>i % 5</code>, row <code>i / 5</code>, set up on its root slice: key zone = root note = <code>baseNote + i</code>, one-shot (a retrigger chokes it), PITCH = slice pitch, trim = start/length samples, 8 ms release; REVERSE plays a reversed copy rendered once in a worker (<code>AudioFile::writeReversed</code>, cached by path hash). Steps, accents and row mix as the drums (velocities); presets <code>sampler-presets.json</code> ("1"–"8": x/X). Published to the track as <code>samples</code> (<code>SketchpadTrack::setSamples</code>), its loaded slots' SamplerSynth ports wired into the lane (<code>JackWiring::setSampleOutputs</code>); <code>playing</code> / <code>playPositions</code> per slot as the PAD SAMPLER has</td>
 <td>new</td>
 </tr>
 <tr>
@@ -255,7 +255,7 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>LiveFx</code></td>
-<td>the header's LIVE FX (<code>studio.liveFx</code>): NO KICK / ONLY KICK (drum kick mode, as velocities), LO PASS / HI PASS (sweeps on GlobalPlayback's equaliser), DROP (kick out + high-pass build while held), STUTTER / LOOP (BeatRepeat), CRUSH (Calf Crusher) and PHASER (Calf Phaser) as master inserts GlobalPlayback → repeat → crusher → phaser → speakers, ECHO (every machine thrown into the delay), HEAVY (GlobalPlayback's compressor); taps latch NO/ONLY KICK and the filters, DROP and CRUSH act while held and latch after half a second, STUTTER and LOOP only while held (dragging a held pad picks CRUSH's 8 · 6 · 4 · 3 BIT, STUTTER's 1/16 · 1/32 · 1/64, or LOOP's 1/2 BAR · 1 BEAT · 2 STEPS · 1 STEP, shown on the pad: <code>readouts</code>)</td>
+<td>the header's LIVE FX (<code>studio.liveFx</code>), thirty pads in two banks of sixteen (<code>banks</code>, <code>bank</code>, <code>pads</code> the shown bank's, <code>allPads</code>; <code>nextBank</code>; MAIN is <code>headerPads</code>, the sixteen slots the profile keeps under <code>liveFx/header</code>, the first eight standing in the header and the rest shown while ALT is held; MORE every other pad): NO KICK / ONLY KICK (drum kick mode, as velocities), LO PASS / HI PASS (sweeps on GlobalPlayback's equaliser), DROP (kick out + high-pass build while held), STUTTER and LOOP 4 / 8 / 8T / 16 / 32 (BeatRepeat; one loop at a time, STUTTER over a held loop), CRUSH (Calf Crusher) and PHASER (Calf Phaser) as master inserts GlobalPlayback → repeat (+ engine) → crusher → phaser → speakers, the rest on the LiveFxEngine after the repeat (KILL LOW / MID / HIGH, REVERSE, REWIND, STOP, HALF, OCT UP, WOBBLE, ECHO, FREEZE, FLANGER, GATE, AUTO-PAN, MONO, PHONE, ALIAS, FADE OUT; one head of REVERSE … WOBBLE at a time), ECHO (every machine thrown into the delay), HEAVY (GlobalPlayback's compressor); taps latch NO/ONLY KICK, the filters and the KILLs; DROP, CRUSH, FLANGER, GATE, AUTO-PAN, MONO, PHONE and ALIAS act while held and latch after half a second; the rest only while held (dragging a held pad picks CRUSH's 8 · 6 · 4 · 3 BIT or STUTTER's 1/16 · 1/32 · 1/64, shown on the pad: <code>readouts</code>); <code>syncGrid()</code> puts the engine back on the bar at a tempo change or a transport start; <code>debugState()</code> (<code>call studio.liveFx debugState</code>) gives the pads' state and the audio thread's last cycle</td>
 <td>new</td>
 </tr>
 <tr>
@@ -280,12 +280,12 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>Exporter</code></td>
-<td>EXPORT (<code>studio.exporter</code>, the header's PROJECT ▾ and <code>ExportPopup</code>): a TRACK, the production recorded as the speakers hear it (AudioLevels' GlobalPlayback writer, post master gain) while the transport plays the project from its first beat for BARS × LOOPS bars plus a TAIL; the recording is placed on the audio clock (<code>LiveFx::audioFrame()</code>, the beat repeat's JACK client: SyncTimer's own playhead values are on another clock) a moment before playback, cut from the frame SyncTimer began playback at (<code>ZynthboxBridge::playbackStartFrame</code>) to exactly the bars at the tempo, the tail faded, pulled down to −0.1 dBFS only if it peaked over full scale, and written by libsndfile as WAV 24-bit (default), FLAC, OGG Vorbis or MP3 (<code>AudioFile::writeCut</code>), tagged by TagLib (ID3v2 / Vorbis comments, RIFF INFO too for WAV: title, artist, album, genre, composer, comment, date, BPM, the cover as the picture) with a PNG cover and a JSON sidecar (project, tempo, key, length, peak) beside it. A BUNDLE: <code>.ravv</code>, a zip (<code>ZipWriter</code>) of project.json (the state, every sample it refers to that is not the image's rewritten to samples/<file>), the samples, metadata.json and cover.png; <code>importProject()</code> unpacks one (samples into <code>samples/imported/&lt;name&gt;/</code>) into a new project (<code>Projects::addProject</code>). Metadata as a map or JSON text ({name, format, title, artist, album, genre, composer, comment, bars, loops, tail, icon}; the icon, the current project's unless given, goes on both covers and into the bundle's two JSON files, and comes back on import); <code>busy</code> / <code>phase</code> / <code>progress</code>, started / finished / failed</td>
+<td>EXPORT (<code>studio.exporter</code>, the header's PROJECT ▾ and <code>ExportPopup</code>): a TRACK, the production recorded as the speakers hear it (AudioLevels' GlobalPlayback writer, post master gain) while the transport plays the project from its first beat for BARS × LOOPS bars plus a TAIL; the recording is placed on the audio clock (<code>LiveFx::audioFrame()</code>, the beat repeat's JACK client: SyncTimer's own playhead values are on another clock) a moment before playback, cut from the frame SyncTimer began playback at (<code>ZynthboxBridge::playbackStartFrame</code>) to exactly the bars at the tempo, the tail faded, pulled down to −0.1 dBFS only if it peaked over full scale, and written by libsndfile as WAV 24-bit (default), FLAC, OGG Vorbis or MP3 (<code>AudioFile::writeCut</code>), tagged by TagLib (ID3v2 / Vorbis comments, RIFF INFO too for WAV: title, artist, album, genre, composer, comment, date, BPM, the cover as the picture) with a PNG cover and a JSON sidecar (project, tempo, key, length, peak) beside it. A BUNDLE: <code>.ravv</code>, a zip (<code>ZipWriter</code>) of project.json (the state, every sample it refers to that is not the image's rewritten to samples/<file>), the samples, metadata.json and cover.png; <code>importProject()</code> unpacks one (samples into <code>samples/imported/&lt;name&gt;/</code>) into a new project (<code>Projects::addProject</code>). Metadata as a map or JSON text ({name, format, title, artist, album, genre, composer, comment, bars, loops, tail, icon, art, coverStyle}; <code>coverStyle</code> picks the covers' look (<code>random</code>, the default, <code>sidebar</code> or <code>corner</code>), <code>art</code> is the covers' seed (<code>AlbumArt</code>, a fresh one when left out), and <code>credits</code> (<code>coverCredits()</code>: author, sounds that play, bpm, key, date) is added for the covers and kept in the sidecar; the icon, the current project's unless given, goes on both covers and into the bundle's two JSON files, and comes back on import); <code>busy</code> / <code>phase</code> / <code>progress</code>, started / finished / failed</td>
 <td>new</td>
 </tr>
 <tr>
 <td><code>AlbumArt</code></td>
-<td>the cover drawn for a track: a rounded card on a dark sleeve with a gradient from the title and artist (the same name, the same art), soft lights, the big-knob ring, the title, artist and album, ravving's mark with MADE WITH RAVVING, the project's icon in the top-left corner when it has one (<code>iconRect()</code>, a whole multiple of the glyph's grid); <code>AlbumArtProvider</code> serves it to QML as <code>image://albumart/&lt;title&gt;%09&lt;artist&gt;%09&lt;album&gt;%09&lt;icon&gt;</code> for the dialog's preview</td>
+<td>the cover made for a track: one of the artworks in the data folder's <code>artworks/glitches</code> (data/artworks, installed with the data; <code>setFolder()</code> at start, a missing folder logged and the cover drawn on the dark ground without it) with at most one sticker (data/artworks/stickers) on it, in one of two looks (<code>Variant</code>): two times in three a black sidebar down the left quarter (the title one word a line filling the column, justified small print and taglines of the real credits, a box with the icon at a large whole scale or the cover's one sticker, a four-pointed star, RAVV between the tempo's figures at the foot; <code>Part</code>), else the art filling the square with the title at its foot in the display family with a pink and mint fringe (<code>art.cover</code>), a label block in the bottom-right corner (a black plate in a white frame with corner ticks: the icon, the RAVV wordmark from data/artworks/marks, a box with the tempo and key and the sounds) and the author up the left edge (<code>layout()</code>); the credits are real (<code>Credits</code>: author, sounds that play, tempo, key, date, from <code>Exporter::coverCredits()</code>); a seed picks the artwork, the look and the stickers (<code>newSeed()</code> at random; the export's <code>art</code> metadata, kept in the sidecar), so one seed always draws one cover; the icon a whole multiple of the glyph's grid (<code>iconRect()</code>); <code>AlbumArtProvider</code> serves it to QML as <code>image://albumart/&lt;title&gt;%09&lt;icon&gt;%09&lt;seed&gt;%09&lt;author&gt;%09&lt;bpm&gt;%09&lt;key&gt;%09&lt;sounds&gt;%09&lt;date&gt;</code> for the dialog's preview (<code>tst_albumart</code>, <code>tools/render-covers.sh</code>)</td>
 <td>new</td>
 </tr>
 <tr>
@@ -375,7 +375,17 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>BeatRepeat</code></td>
-<td>ravving's own JACK client (<code>ravving-repeat</code>), first master insert: anchors at the 16th under way (sample accurate through <code>ZynthboxBridge::timerTickAtFrame</code>, SyncTimer's frame → tick map), lets it play out, then repeats the audio from the anchor every N 16ths; 10 ms equal-power seams into the slice's own continuation (no dip to silence each pass), an eased 10 ms crossfade in and an eased 300 ms release out (the repeat gives way to the live sound); lock-free (atomics, preallocated history and slice)</td>
+<td>ravving's own JACK client (<code>ravving-repeat</code>), first master insert: anchors at the 16th under way (sample accurate through <code>ZynthboxBridge::timerTickAtFrame</code>, SyncTimer's frame → tick map, its step-ring index read back as a tick count against <code>cumulativeBeat</code>), lets it play out, then repeats the audio from the anchor every N 16ths; the signal processing is its <code>RepeatCore</code>; after the repeat the same callback runs its <code>LiveFxEngine</code> (<code>setEffects</code>, <code>syncGrid</code> with the bar under way); <code>debugState()</code> gives the last anchor, length and effects mask and the audio thread's last cycle (start frame, peaks into the repeat, out of it, out of the engine); the <code>ravving.livefx</code> logging category traces the calls</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>RepeatCore</code></td>
+<td>the beat repeat's signal processing, no JACK (tests run it on known input, with the engine after it: tests/tst_livefxchain.cpp): <code>engage(anchor, length, step)</code> copies what already played since the anchor from its history (2.7 s) into the slice (5.4 s at most) and repeats it; engaged on silence (nothing above −70 dBFS since the anchor) it waits and anchors on the step the first sound lands in, so a loop pressed in a break grabs the music coming back; 10 ms equal-power seams into the slice's own continuation (no dip to silence each pass), an eased 10 ms crossfade in and an eased 300 ms release out; passes on only sound (<code>MaxSample</code>); <code>tickCount()</code> reads a SyncTimer step-ring index back as the tick it stands for; lock-free (atomics, preallocated history and slice)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>LiveFxEngine</code></td>
+<td>the punch-in effects on the mix, in BeatRepeat's audio callback (no QObject, no allocation, lock or I/O there): a stereo ring of the input (2.7 s) read by one <em>head</em> at a time (REVERSE, REWIND, STOP, HALF, OCT UP, WOBBLE: 4-point Hermite reads, each seam crossfaded), then FLANGER, ECHO (a dotted 8th, rings out), FREEZE (a four-line feedback reverb that takes in 186 ms, then holds), the KILL isolator (Linkwitz–Riley crossovers at 250 Hz and 2.44 kHz), PHONE, ALIAS, GATE (16ths), AUTO-PAN (mono, a turn a beat), MONO, FADE OUT (two beats); REWIND, STOP, WOBBLE, AUTO-PAN, FADE OUT, PHONE, GATE, the crossovers and FREEZE's fill adapted from SLOOP's punch.c (GPL-3.0-only); every switch crossfaded over 64 frames, a filter stage warmed 256 frames before it fades in; the GUI thread sets a bit mask (<code>setEffects</code>) and the grid (<code>setGrid</code>: a bar's start frame and a 16th's length, a seqlock); <code>isIdle()</code> once nothing is on and no tail rings, when <code>process()</code> only fills the ring; tested on the laptop (tests/tst_livefxengine.cpp)</td>
 <td>new</td>
 </tr>
 <tr>
@@ -483,10 +493,10 @@ for pages whose backend is still to come (the melodic toolbars).</p>
 </main>
 <footer>
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=48f57bf155" defer></script>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

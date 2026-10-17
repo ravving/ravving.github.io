@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -142,12 +142,12 @@
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#altHeld-prop" translate="no">altHeldChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#altKnobTarget-prop" translate="no">altKnobTargetChanged</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#altSectionPressed" translate="no">altSectionPressed</a></b>(int <i>index</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#altStepPressed" translate="no">altStepPressed</a></b>(int <i>index</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#altStepReleased" translate="no">altStepReleased</a></b>(int <i>index</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#currentPage-prop" translate="no">currentPageChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#deckToggleRequested" translate="no">deckToggleRequested</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#drumMachine-prop" translate="no">drumMachineChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#fxBankRequested" translate="no">fxBankRequested</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#headerRequested" translate="no">headerRequested</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#heldKeys-prop" translate="no">heldKeysChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ravving.html#keyShown" translate="no">keyShown</a></b>(const QString &amp;<i>name</i>)</td></tr>
@@ -165,8 +165,8 @@
 <p>Some keys are handled before any dispatch:</p>
 <ul>
 <li>ALT is a modifier (<a href="ravving.html#altHeld-prop" translate="no">altHeld</a>): while it is held the big knob emits <a href="ravving.html#masterTurned" translate="no">masterTurned</a>() and knobs 1 to 3 go to <a href="ravving.html#altKnobTarget-prop" translate="no">altKnobTarget</a>;</li>
-<li>ALT + MODE emits <a href="ravving.html#deckToggleRequested" translate="no">deckToggleRequested</a>(); ALT + UP emits <a href="ravving.html#headerRequested" translate="no">headerRequested</a>(); ALT + 1 emits <a href="ravving.html#songRequested" translate="no">songRequested</a>();</li>
-<li>ALT + step keys 1 to 8 emit <a href="ravving.html#altStepPressed" translate="no">altStepPressed</a>() and <a href="ravving.html#altStepReleased" translate="no">altStepReleased</a>(), ALT + step keys 9 to 16 emit <a href="ravving.html#altSectionPressed" translate="no">altSectionPressed</a>(); the release of a step key taken this way is consumed even after ALT is released;</li>
+<li>ALT + MODE emits <a href="ravving.html#deckToggleRequested" translate="no">deckToggleRequested</a>(); ALT + UP emits <a href="ravving.html#headerRequested" translate="no">headerRequested</a>(); ALT + DOWN emits <a href="ravving.html#fxBankRequested" translate="no">fxBankRequested</a>(); ALT + 1 emits <a href="ravving.html#songRequested" translate="no">songRequested</a>();</li>
+<li>ALT + the step keys emit <a href="ravving.html#altStepPressed" translate="no">altStepPressed</a>() and <a href="ravving.html#altStepReleased" translate="no">altStepReleased</a>(); the release of a step key taken this way is consumed even after ALT is released;</li>
 <li>X and Y emit <a href="ravving.html#sectionStepRequested" translate="no">sectionStepRequested</a>();</li>
 <li>the video recorder may take RECORD and STOP (<a href="videorecorder.html#takesKey" translate="no">VideoRecorder::takesKey</a>()).</li>
 </ul>
@@ -265,7 +265,7 @@
 <div class="fnitem">
 <!-- $$$heldKeys-prop$$$heldKeys$$$heldKeysChanged -->
 <h3 class="fn" translate="no" id="heldKeys-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">heldKeys</span> : <span class="type">QStringList</span></h3>
-<p>This property holds the device keys held now, by short name: <code translate="no">play</code>, <code translate="no">stop</code>, <code translate="no">record</code>, <code translate="no">metronome</code>, <code translate="no">menu</code>, <code translate="no">select</code>, <code translate="no">back</code>, <code translate="no">up</code>, <code translate="no">down</code>, <code translate="no">left</code>, <code translate="no">right</code>, <code translate="no">mode</code>, <code translate="no">star</code>, <code translate="no">alt</code>, <code translate="no">num1</code> to <code translate="no">num5</code>, <code translate="no">step1</code> to <code translate="no">step16</code>. A key that reports only its release is listed for 150 ms after it.</p>
+<p>This property holds the device keys held now, by short name: <code translate="no">play</code>, <code translate="no">stop</code>, <code translate="no">record</code>, <code translate="no">metronome</code>, <code translate="no">menu</code>, <code translate="no">select</code>, <code translate="no">back</code>, <code translate="no">up</code>, <code translate="no">down</code>, <code translate="no">left</code>, <code translate="no">right</code>, <code translate="no">mode</code>, <code translate="no">star</code>, <code translate="no">alt</code>, <code translate="no">num1</code> to <code translate="no">num5</code>, <code translate="no">step1</code> to <code translate="no">step16</code> (<code translate="no">altstep1</code> to <code translate="no">altstep16</code> for a step key pressed with ALT held, until it is released). A key that reports only its release is listed for 150 ms after it.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>heldKeys</b></span>() const</td></tr>
@@ -341,21 +341,15 @@
 <!-- @@@Ravving -->
 </div>
 <div class="fnitem">
-<!-- $$$altSectionPressed[overload1]$$$altSectionPressedint -->
-<h3 class="fn" translate="no" id="altSectionPressed"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">altSectionPressed</span>(<span class="type">int</span> <i>index</i>)</h3>
-<p>Emitted when one of step keys 9 to 16 goes down with ALT held, to pick section <i translate="no">index</i> (0 to 7).</p>
-<!-- @@@altSectionPressed -->
-</div>
-<div class="fnitem">
 <!-- $$$altStepPressed[overload1]$$$altStepPressedint -->
 <h3 class="fn" translate="no" id="altStepPressed"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">altStepPressed</span>(<span class="type">int</span> <i>index</i>)</h3>
-<p>Emitted when one of step keys 1 to 8 goes down with ALT held, to toggle live-effect pad <i translate="no">index</i> (0 to 7, <a href="livefx.html#pads-prop" translate="no">LiveFx::pads</a>()).</p>
+<p>Emitted when a step key goes down with ALT held, to press live-effect pad <i translate="no">index</i> (0 to 15, <a href="livefx.html#pads-prop" translate="no">LiveFx::pads</a>()).</p>
 <!-- @@@altStepPressed -->
 </div>
 <div class="fnitem">
 <!-- $$$altStepReleased[overload1]$$$altStepReleasedint -->
 <h3 class="fn" translate="no" id="altStepReleased"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">altStepReleased</span>(<span class="type">int</span> <i>index</i>)</h3>
-<p>Emitted when a step key 1 to 8 pressed with ALT comes up; <i translate="no">index</i> is the live-effect pad (0 to 7), so momentary pads can end.</p>
+<p>Emitted when a step key pressed with ALT comes up; <i translate="no">index</i> is the live-effect pad (0 to 15), so momentary pads can end.</p>
 <!-- @@@altStepReleased -->
 </div>
 <div class="fnitem">
@@ -363,6 +357,12 @@
 <h3 class="fn" translate="no" id="deckToggleRequested"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">deckToggleRequested</span>()</h3>
 <p>Emitted on the release of ALT + MODE, to switch the header between the live-effect pads and the section keys.</p>
 <!-- @@@deckToggleRequested -->
+</div>
+<div class="fnitem">
+<!-- $$$fxBankRequested[overload1]$$$fxBankRequested -->
+<h3 class="fn" translate="no" id="fxBankRequested"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Ravving::<span class="name">fxBankRequested</span>()</h3>
+<p>Emitted on the release of ALT + DOWN, to show the next bank of live-effect pads (the one ALT + the step keys then reach).</p>
+<!-- @@@fxBankRequested -->
 </div>
 <div class="fnitem">
 <!-- $$$handleCuia[overload1]$$$handleCuiaconstQString& -->

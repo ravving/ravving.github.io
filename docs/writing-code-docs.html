@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Writing code documentation · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=229e96b5f3">
+<link rel="stylesheet" href="../site.css?v=4e88e03796">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -36,7 +36,7 @@
       <ol id="docs-results" hidden></ol>
     </form>
     <nav aria-label="Documentation">
-<p class="mono">Using ravving</p><ul>
+<p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
@@ -51,7 +51,7 @@
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">Under the hood</p><ul>
+<p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
@@ -77,7 +77,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/writing-code-docs.md</b></p>
+<p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/writing-code-docs.md</b></p>
 <h1>Writing code documentation</h1>
 <p class="doc-blurb">The QDoc rules for the C++ sources, the checks that enforce them and how the API reference is built.</p>
 
@@ -115,7 +115,7 @@ plugin base types first.</p>
   something changed;</li>
 <li>no bug report numbers, <code>on milo</code>, or <code>measured on</code> / <code>measured with</code>;</li>
 <li>no paths to docs or notes pages;</li>
-<li>no lineage (<code>the way zynthbox-qml does</code>, <code>as easyrave's…</code>, <code>ported from</code>), and no wording
+<li>no lineage (<code>the way zynthbox-qml does</code>, <code>as the reference's…</code>, <code>ported from</code>), and no wording
   from the request that created a feature. Keep a zynthbox-qml or libzynthbox reference only
   as a contract the code depends on.</li>
 </ul>
@@ -184,9 +184,9 @@ void History::add(HistoryParticipant *participant)
 of...", "whether ...". The groups (<code>\ingroup</code>) are the areas of the reference's landing page:
 <code>ravving-app</code>, <code>ravving-studio</code>, <code>ravving-machines</code>, <code>ravving-engines</code>, <code>ravving-audio</code>,
 <code>ravving-system</code>, <code>ravving-setup</code> (defined in <code>doc/src/index.qdoc</code>).</p>
-<h3 id="qml-types-the-ui-kit-and-the-theme">QML types: the UI kit and the theme</h3>
-<p>The QML modules the screens are built from, <code>Ravving.Controls</code> (<code>controls/</code>) and
-<code>Ravving.Theme</code> (<code>theme/</code>), are documented in their <code>.qml</code> files, for the same reference:</p>
+<h3 id="qml-types-the-ui-kit">QML types: the UI kit</h3>
+<p>The QML module the screens are built from, <code>Ravving.Controls</code> (<code>controls/</code>), is documented in
+its <code>.qml</code> files, for the same reference:</p>
 <ul>
 <li>The file's top comment is the type's page: <code>/*! \qmltype Knob \inqmlmodule Ravving.Controls
   \brief … */</code> before the root object.</li>
@@ -195,14 +195,15 @@ of...", "whether ...". The groups (<code>\ingroup</code>) are the areas of the r
   <code>\qmlproperty &lt;type&gt; &lt;Type&gt;::&lt;name&gt;</code> lines at its top.</li>
 <li>A function's or signal's parameters are named with <code>\a</code>, as in C++.</li>
 <li>A helper the type uses itself is marked <code>/*! \internal */</code>.</li>
-<li>The module pages and the C++ types QML sees (<code>Skin</code>, <code>Hardware</code>) are in
-  <code>doc/src/qml-modules.qdoc</code>.</li>
+<li>The module pages are in <code>doc/src/qml-modules.qdoc</code>. The C++ types QML sees (<code>Theme</code>, <code>Skin</code>,
+  <code>Hardware</code>) document their QML side in their <code>.cpp</code> files: a <code>\qmltype</code> block with
+  <code>\nativetype</code>, beside the <code>\class</code> one.</li>
 </ul>
 <p>The app's own QML (<code>qml/</code>) is not part of the reference.</p>
 <h2 id="the-checks">The checks</h2>
 <ul>
-<li><strong><code>python3 tools/check-qml-health.py --check docs</code></strong> (ctest <code>qml-health</code>): every kit and
-  Theme file has its <code>\qmltype</code> block, and every property, signal and function of its root a
+<li><strong><code>python3 tools/check-qml-health.py --check docs</code></strong> (ctest <code>qml-health</code>): every kit
+  file has its <code>\qmltype</code> block, and every property, signal and function of its root a
   <code>/*! */</code> comment.</li>
 <li><strong><code>python3 tools/check-cpp-docs.py</code></strong> (ctest <code>cpp-docs</code>):</li>
 <li>It finds every public class, struct, namespace, property, method, signal, enum and free
@@ -256,10 +257,10 @@ works on the public page and on the copy the device serves alike.</p>
 </main>
 <footer>
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=48f57bf155" defer></script>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Quality · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=229e96b5f3">
+<link rel="stylesheet" href="../site.css?v=4e88e03796">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -36,7 +36,7 @@
       <ol id="docs-results" hidden></ol>
     </form>
     <nav aria-label="Documentation">
-<p class="mono">Using ravving</p><ul>
+<p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
@@ -51,7 +51,7 @@
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">Under the hood</p><ul>
+<p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
@@ -77,7 +77,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/quality.md</b></p>
+<p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/quality.md</b></p>
 <h1>Quality</h1>
 <p class="doc-blurb">Static analysis, startup timing, QML profiling, the screenshot tour, what the rest costs the sound.</p>
 
@@ -112,6 +112,16 @@ the device ones run against <code>root@milo.local</code> (<code>DEVICE=</code> f
 <td>after QML changes</td>
 <td>the screenshot tour (§4)</td>
 <td>QML warnings in its output; pixel diffs against a reference tour</td>
+</tr>
+<tr>
+<td>after a skin set is added or changed (<code>data/skins/</code>)</td>
+<td><code>tools/check-skins.py</code>, then <code>tools/skin-tour.sh OUT SET</code> (§4)</td>
+<td>the set passes every contrast check; its eight machine pages in <code>OUT/SET-sheet.png</code> and its SETTINGS shots</td>
+</tr>
+<tr>
+<td>after the export covers change (<code>src/backend/albumart.cpp</code>, <code>data/artworks</code>)</td>
+<td><code>tools/make-artworks.sh</code> when an artwork or sticker was added, then <code>ctest -R albumart</code> and <code>tools/render-covers.sh OUT</code> (<a href="testing.html">testing.md</a>, "The covers, on the laptop")</td>
+<td><code>OUT/sheet.jpg</code>: every title readable, no sticker on a title or an icon, the stickers a few and along the edges</td>
 </tr>
 <tr>
 <td>after CMake changes</td>
@@ -412,6 +422,22 @@ the tour with nothing to add. Beside the shots, the run writes:</p>
 <li>A reference is a tour of the previous commit, taken on the same machine. The laptop's Qt is
   newer than the device's, so compare laptop with laptop; the device's tour is the one that counts.</li>
 </ul>
+<h3 id="skin-sets-in-the-tour">Skin sets in the tour</h3>
+<ul>
+<li><code>SKIN=&lt;set&gt;</code> starts <code>tools/tour.sh</code> in another instruments' skin set (<code>jelly</code>, <code>ravving</code>, a skin file's
+  key): a skin set is checked on every page at once, <code>SKIN=jelly tools/tour.sh OUT</code>.</li>
+<li>The tour runs in a fixed folder, so two can't run at once: when several runs may overlap,
+  start each as <code>flock /tmp/ravving-tour.lock tools/tour.sh …</code>.</li>
+<li><code>tools/skin-tour.sh OUT_DIR SET…</code> does that for skin sets: it checks each set's colours
+  (<code>tools/check-skins.py</code>), tours it under the lock into <code>OUT_DIR/SET/</code> and puts its eight
+  machine pages side by side in <code>OUT_DIR/SET-sheet.png</code>. The laptop has no drum soundfonts, so
+  the drums' rows don't show there: the checker covers what is drawn on their well.</li>
+<li><code>tools/skin-fix.py [--hues] FILE.json…</code> nudges a failing set's colours (their lightness only;
+  with <code>--hues</code>, a glow may also turn) until the checker passes it, and prints what moved.</li>
+<li><code>tools/check-skins.py --similar</code> lists the closest pairs of sets (mean Delta E of the machines'
+  cases, keys, wells and lights): a set under 15 from another looks like it on the device. The
+  checker runs as ctest <code>skins-readable</code>.</li>
+</ul>
 <h2 id="5-making-ravving-the-devices-ui">5. Making ravving the device's UI</h2>
 <pre><code class="language-sh">tools/device.sh default ravving       # or on the device: /usr/share/ravving/default-app.sh ravving
 tools/device.sh default status
@@ -615,10 +641,10 @@ the journal on a crash. Turn gdb off again for the timing rows:</p>
 </main>
 <footer>
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=48f57bf155" defer></script>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

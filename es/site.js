@@ -15,12 +15,12 @@
 
   /* The screenshots (shots/NAME.png, 1280 × 800) and what each one shows. */
   var SHOTS = {
-    "page1": { caption: "Página 1: BATERÍA 1 (Roland TR909)" },
-    "page1-drums2": { caption: "1 otra vez: BATERÍA 2 (Roland TR808)" },
+    "page1": { caption: "Página 1: DRUMS 1 (un kit 909)" },
+    "page1-drums2": { caption: "1 otra vez: DRUMS 2 (un kit 808)" },
     "page2": { caption: "Página 2, ACORDES" },
     "page3": { caption: "Página 3, BAJO" },
     "page4": { caption: "Página 4, LEAD" },
-    "page5": { caption: "Página 5, SAMPLE KING" },
+    "page5": { caption: "Página 5, SLOT SAMPLER" },
     "page5-pads": { caption: "Página 5 otra vez: el PAD SAMPLER" },
     "mixer": { caption: "✱: el MEZCLADOR" },
     "mixer-strip": { caption: "El MEZCLADOR con una tira elegida (▶)" },

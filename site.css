@@ -12,11 +12,12 @@
  * docs pages (site/docs/) wear the same tokens; their rules are at the end.
  */
 
-/* ---- fonts: the device's button font (from the Miko button-font asset, A–Z subset) with
-   the full Google face behind it for digits and punctuation; IBM Plex Sans and IBM Plex Mono from
+/* ---- fonts: the device's button font (from the Miko button-font asset, A–Z subset) for the
+   keys drawn as the device's, ravving's display face Chakra Petch (SemiBold, latin subset) for the
+   headings and behind the keys for digits and punctuation; IBM Plex Sans and IBM Plex Mono from
    the MIKO brand system ---- */
 @font-face { font-family: "Miko Audiowide"; src: url("assets/miko-audiowide.woff2") format("woff2"); font-display: block; }
-@font-face { font-family: "Audiowide"; src: url("assets/audiowide-latin.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Chakra Petch"; font-weight: 600; src: url("assets/chakra-petch-latin.woff2") format("woff2"); font-display: swap; }
 @font-face { font-family: "IBM Plex Sans"; font-weight: 100 700; src: url("assets/plex-sans.woff2") format("woff2"); font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; font-weight: 400; src: url("assets/plex-mono-400.woff2") format("woff2"); font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; font-weight: 500; src: url("assets/plex-mono-500.woff2") format("woff2"); font-display: swap; }
@@ -50,7 +51,8 @@
   --r6: #ffc134;  /* ALT: amber */
   --font-body: "IBM Plex Sans", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --font-cap: "Miko Audiowide", "Audiowide", "IBM Plex Sans", sans-serif;
+  --font-display: "Chakra Petch", "IBM Plex Sans", sans-serif;
+  --font-cap: "Miko Audiowide", "Chakra Petch", "IBM Plex Sans", sans-serif;
   --gutter: clamp(16px, 4vw, 48px);
   --max: 1240px;
 }
@@ -69,6 +71,7 @@ body {
 a { color: var(--blue-light); text-underline-offset: 3px; }
 img { max-width: 100%; display: block; }
 h1, h2, h3 { margin: 0; line-height: 1.05; letter-spacing: -0.02em; font-weight: 700; }
+h1, h2 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; }
 .mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
@@ -330,6 +333,20 @@ kbd.ui.dot { color: #ff3d5c; border-color: #ff3d5c; }
 .screen-cap { margin-top: 8px; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
 .screen-cap span { font-size: 12px; color: var(--ink-2); }
 .screen-cap small { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--ink-3); text-transform: uppercase; white-space: nowrap; }
+/* the art stack: pictures of the world (site/art/, design-system B1) fanned out on the field,
+   with no bezel, because they're art rather than a screen; the front one lifts on hover */
+.art-stack { position: relative; margin: 0; aspect-ratio: 16 / 11; }
+.art-stack img {
+  position: absolute; width: 58%; height: auto; display: block;
+  filter: drop-shadow(0 18px 26px var(--cap-edge));
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.art-stack img:nth-child(1) { left: 0; top: 4%; transform: rotate(-8deg); }
+.art-stack img:nth-child(2) { right: 0; top: 0; transform: rotate(7deg); }
+.art-stack img:nth-child(3) { left: 21%; top: 12%; transform: rotate(-1deg); filter: drop-shadow(0 22px 30px var(--cap-edge)) drop-shadow(0 0 30px color-mix(in srgb, var(--c) 22%, transparent)); }
+.hl:hover .art-stack img:nth-child(1) { transform: rotate(-11deg) translateX(-4px); }
+.hl:hover .art-stack img:nth-child(2) { transform: rotate(10deg) translateX(4px); }
+.hl:hover .art-stack img:nth-child(3) { transform: rotate(0deg) translateY(-6px); }
 /* the nameplates: the eight machines as their plates, each glowing in its colour in turn */
 .plates { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 22px; }
 .plate {
@@ -492,7 +509,7 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .region, .row, .screen, .group-panel, .group-btn .chev, .doc-card { transition: none; }
+  .region, .row, .screen, .group-panel, .group-btn .chev, .art-stack img, .doc-card { transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .plate { animation: none; }
 }
@@ -634,3 +651,31 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 }
 .rack span b { font-weight: inherit; }
 .hl-text h3 b, .hero h1 b { font-weight: inherit; }
+
+/* ---- the landing's packs, specs, open band and news (the brand pipeline's W3–W6) ---- */
+.landing-copy { display: grid; gap: 10px; align-content: start; justify-items: start; min-width: 0; }
+.landing-copy h2, .landing-open h2, .landing-news h2 { font-size: clamp(22px, 2.6vw, 32px); text-transform: uppercase; }
+.landing-copy p:not(.point-kicker), .landing-news p:not(.point-kicker) { margin: 0; color: var(--ink-2); max-width: 52ch; }
+.landing-copy .point-kicker b, .landing-news .point-kicker b { color: var(--amber); }
+.landing-safe { margin: 14px auto 0; max-width: 46ch; color: var(--ink-2); font-size: 14px; }
+.landing-packs { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(20px, 4vw, 48px); align-items: center;
+  margin-top: clamp(48px, 7vw, 88px); }
+.pack-strip { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.pack { display: grid; justify-items: center; gap: 8px; padding: 14px 8px 12px; border-radius: 6px; background: var(--field-deep);
+  border: 1px solid var(--hair-soft); box-shadow: inset 0 -3px 0 color-mix(in srgb, var(--c) 55%, transparent); }
+.pack .aru { width: 64px; height: 64px; }
+.pack span:not(.aru) { font: 500 11px var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--c); }
+.landing-specs { margin-top: clamp(40px, 6vw, 72px); display: grid; gap: 14px; }
+.landing-specs h2 { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; }
+.landing-specs dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); border-top: 1px solid var(--hair); }
+.landing-specs dl > div { display: grid; gap: 4px; padding: 14px 16px 14px 0; border-bottom: 1px solid var(--hair-soft); min-width: 0; }
+.landing-specs dt { font: 500 11px var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.landing-specs dd { margin: 0; color: var(--ink); }
+.landing-open { margin-top: clamp(40px, 6vw, 72px); display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: end; justify-content: space-between;
+  padding-block: 24px; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+.landing-open .point-more { --c: var(--orange); color: var(--ink); }
+.landing-news { margin-top: clamp(32px, 5vw, 56px); display: flex; gap: 20px; align-items: center; padding-block: 20px; }
+.landing-news .aru { flex: none; width: 88px; height: 88px; }
+.landing-news h2 { margin: 6px 0 8px; }
+@media (max-width: 720px) { .landing-packs { grid-template-columns: 1fr; } .landing-news { align-items: flex-start; } .landing-news .aru { width: 64px; height: 64px; } }
+.landing-copy .point-more, .landing-open .point-more { --cap-border: var(--cap-edge); --c: var(--orange); }

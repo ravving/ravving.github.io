@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>QML components · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=229e96b5f3">
+<link rel="stylesheet" href="../site.css?v=4e88e03796">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -36,7 +36,7 @@
       <ol id="docs-results" hidden></ol>
     </form>
     <nav aria-label="Documentation">
-<p class="mono">Using ravving</p><ul>
+<p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
@@ -51,7 +51,7 @@
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">Under the hood</p><ul>
+<p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li class="on"><a href="qml-components.html" aria-current="page">QML components</a><ul><li><a href="#pages-and-controls">Pages and controls</a></li></ul></li>
@@ -77,7 +77,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/qml-components.md</b></p>
+<p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/qml-components.md</b></p>
 <h1>QML components</h1>
 <p class="doc-blurb">The shared base types, the pages and their parts.</p>
 
@@ -101,7 +101,7 @@ header hand-off and an external keyboard to its <code>panel</code>. <code>BassPa
 </ul>
 <h3 id="chordmachinepanel">ChordMachinePanel</h3>
 <ul>
-<li><strong>The nameplate</strong> shows the loaded TAL sound's title, or POLY-6 for its own. A tap opens the
+<li><strong>The nameplate</strong> shows the loaded TAL sound's title, or CHORDS for its own. A tap opens the
   sound picker. A double tap rebuilds its own sound from TAL's start-up sound, the engine's
   controls and the default knobs.</li>
 <li><strong>CHORDS / NOTES / SLOTS tabs:</strong> <code>ChordRoll</code>, a poly <code>PianoRoll</code> on the same steps, and
@@ -142,7 +142,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 <tbody>
 <tr>
 <td><code>Rave</code> (singleton)</td>
-<td>machine finishes (colours), instruments strip, scales, chord sets, music helpers</td>
+<td>the skins (each machine's and page's colours), instruments strip, scales, chord sets, music helpers</td>
 </tr>
 <tr>
 <td><code>Session</code> (singleton)</td>
@@ -161,8 +161,12 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 <td>EXPORT: file name, title, artist, album / mixtape, genre, composer, comment, the cover drawn as typed (<code>image://albumart</code>), FORMAT (WAV 24-bit / FLAC / OGG / MP3), BARS × LOOPS + TAIL with the length; EXPORT TRACK (progress shown, CANCEL) and EXPORT .RAVV; shrinks over the on-screen keyboard and scrolls the field into view; ▲ ▼ fields, ◀ ▶ format, knobs 1–3 bars / loops / tail, SELECT exports, BACK closes</td>
 </tr>
 <tr>
-<td><code>SettingsPopup</code></td>
-<td>the profile: USER and AUTHOR, saved as typed</td>
+<td><code>WindowPage</code>, <code>HeaderPlate</code></td>
+<td>the base of a page that takes the whole window over the dashboard (the MUSIC PLAYER, the RECORDER, SETTINGS): what Main.qml asks of a page (no module or step keys), <code>closeRequested</code> / <code>menuRequested</code>, MENU and ✱ handled, a tap nothing takes stopped there; the plate in its header band saying in one line what is on</td>
+</tr>
+<tr>
+<td><code>SettingsPage</code></td>
+<td>SETTINGS, a full-window page (<code>Session.settingsView</code>, the control center's SETTINGS card): a sidebar of categories and the one picked, scrolling. Each category is a <code>SettingsCategory</code> file (<code>DeviceSettings</code>, <code>ProfileSettings</code>, <code>LiveFxSettings</code>, <code>ConnectionSettings</code>, <code>LiveRecSettings</code>, <code>AboutSettings</code>) saying its entries (<code>entryCount</code>, <code>entryItem()</code>, <code>select()</code>, <code>enterEntry()</code> for a text field); built of <code>SettingsSection</code> (a well with its name), <code>SettingsNote</code>, <code>SettingsInfo</code> and <code>SettingsAction</code>. Sidebar: ▲ ▼ the category, SELECT or ▶ into it, BACK closes; in a category: ▲ ▼ its entries, SELECT acts, BACK or ◀ back</td>
 </tr>
 <tr>
 <td><code>MusicPlayerPage</code></td>
@@ -234,7 +238,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 </tr>
 <tr>
 <td><code>MixerPage</code></td>
-<td>the MIXER: every machine folded to its MachineStrip on its own finish, one under another, a slim meter of its track (<code>Studio::meters()</code>, 20 times a second while on screen) under each; ▲ ▼ / step keys pick a machine (its strip takes knobs 1–2), SELECT mutes, ALT + SELECT solos, a nameplate opens the page. <code>Session.mixView</code> is its switch: ✱, the header's EDIT / MIX, the control center</td>
+<td>the MIXER: every machine folded to its MachineStrip on its own skin, one under another, a slim meter of its track (<code>Studio::meters()</code>, 20 times a second while on screen) under each; ▲ ▼ / step keys pick a machine (its strip takes knobs 1–2), SELECT mutes, ALT + SELECT solos, a nameplate opens the page. <code>Session.mixView</code> is its switch: ✱, the header's EDIT / MIX, the control center</td>
 </tr>
 <tr>
 <td><code>SongPage</code></td>
@@ -279,7 +283,10 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 switching, the chord cursor.</p>
 <ul>
 <li><strong>Generic controls</strong> (buttons, combo boxes, sliders, tabs) are Qt Quick Controls drawn by
-  ravving's style (<code>Ravving.Style</code>).</li>
+  ravving's style (<code>Ravving.Style</code>). So are the surfaces that only need its look:</li>
+<li>the chassis: <code>Page</code> for a full page, <code>Pane</code> for a machine's module;</li>
+<li>the header band and the strips: <code>ToolBar</code>;</li>
+<li>the wells: <code>Frame</code>; the separators: <code>ToolSeparator</code>.</li>
 <li><strong>The base types with behaviour of their own</strong> come from <code>Ravving.Controls</code> (<code>controls/</code>).</li>
 <li>buttons: <code>ActionButton</code>, <code>Chip</code>, <code>StripButton</code>, <code>ConfirmButton</code> and <code>SecondPress</code>,
     <code>CloseButton</code>;</li>
@@ -287,20 +294,20 @@ switching, the chord cursor.</p>
     <code>KnobBadge</code>;</li>
 <li>readouts: <code>Meter</code>, <code>KeyCap</code>, <code>Nameplate</code>, <code>Plate</code>, <code>LedDisplay</code>, <code>Toast</code>, <code>EmptyNote</code>,
     <code>ArmBar</code>, <code>Glyph</code>;</li>
-<li>dialogs and rows: <code>Dialog</code>, <code>DialogHeader</code>, <code>ChoiceDialog</code>, <code>ComboBox</code>, <code>ToolStrip</code>,
+<li>dialogs and their parts: <code>Dialog</code>, <code>DialogHeader</code>, <code>ChoiceDialog</code>, <code>ComboBox</code>,
     <code>SectionHeader</code>, <code>Caption</code>;</li>
 <li><code>KeyedListModel</code> (C++), the list model the lists keep their rows with.</li>
 <li><strong>The machine parts</strong> (key caps, nameplates, grids) are drawn in QML from each machine's
-  finish in <code>Rave.machines</code>.</li>
+  skin in <code>Rave.machineSkins</code>.</li>
 </ul>
   </article>
 </main>
 <footer>
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=48f57bf155" defer></script>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

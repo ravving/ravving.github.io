@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -99,7 +99,9 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#cursorShown-prop" translate="no">cursorShown</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#extraHint-prop" translate="no">extraHint</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#filters-prop" translate="no">filters</a></b> : alias</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#filtersOpen-prop" translate="no">filtersOpen</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#filtersShown-prop" translate="no">filtersShown</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#filtersSummary-prop" translate="no">filtersSummary</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#hasBottomActions-prop" translate="no">hasBottomActions</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#highlighted-prop" translate="no">highlighted</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#highlightedItem-prop" translate="no">highlightedItem</a></b> : var</li>
@@ -219,14 +221,26 @@
 <div class="fnitem">
 <!-- $$$filters -->
 <h3 class="fn qml-member qml-property" translate="no" id="filters-prop"><span class="name">filters</span> : <span class="type">alias</span></h3>
-<p>Rows between the header and the grid (a type built on this: sources, groups), set as a list (<code translate="no">filters: [ToolStrip { … }]</code>): the dialog's children stay its own.</p>
+<p>Rows between the header and the grid (a type built on this: sources, groups), set as a list (<code translate="no">filters: [ToolBar { … }]</code>): the dialog's children stay its own.</p>
 <!-- @@@filters -->
+</div>
+<div class="fnitem">
+<!-- $$$filtersOpen -->
+<h3 class="fn qml-member qml-property" translate="no" id="filtersOpen-prop"><span class="name">filtersOpen</span> : <span class="type">bool</span></h3>
+<p>Whether those rows are open: a FILTERS heading above them folds them away (the list gets the room) and back; a type keeps the state where it likes (the app's profile). Folded, <code translate="no">filtersSummary</code> says what they are set to (&quot;USB · RAVVING · ROCK · A&ndash;Z&quot;), so a list narrowed by them never looks merely short.</p>
+<!-- @@@filtersOpen -->
 </div>
 <div class="fnitem">
 <!-- $$$filtersShown -->
 <h3 class="fn qml-member qml-property" translate="no" id="filtersShown-prop"><span class="name">filtersShown</span> : <span class="type">bool</span></h3>
 <p>Whether any of those rows shows: the type says so (a hidden row's own <code translate="no">visible</code> cannot, it reads false while the column holding it is hidden).</p>
 <!-- @@@filtersShown -->
+</div>
+<div class="fnitem">
+<!-- $$$filtersSummary -->
+<h3 class="fn qml-member qml-property" translate="no" id="filtersSummary-prop"><span class="name">filtersSummary</span> : <span class="type">string</span></h3>
+<p>Whether those rows are open: a FILTERS heading above them folds them away (the list gets the room) and back; a type keeps the state where it likes (the app's profile). Folded, <code translate="no">filtersSummary</code> says what they are set to (&quot;USB · RAVVING · ROCK · A&ndash;Z&quot;), so a list narrowed by them never looks merely short.</p>
+<!-- @@@filtersSummary -->
 </div>
 <div class="fnitem">
 <!-- $$$hasBottomActions -->
@@ -249,13 +263,13 @@
 <div class="fnitem">
 <!-- $$$iconRole -->
 <h3 class="fn qml-member qml-property" translate="no" id="iconRole-prop"><span class="name">iconRole</span> : <span class="type">string</span></h3>
-<p>An item's icon: iconRole names the field holding an image's URL (a pixel glyph), drawn crisp at <code translate="no">iconSize</code> pixels on a box in the accent, beside the name (centred in the cell when the item has no name); an item without one draws none. &quot;&quot; (the default): no icons.</p>
+<p>An item's icon: iconRole names the field holding an image's URL (a pixel glyph), drawn crisp at <code translate="no">iconSize</code> pixels straight on the cell, beside the name (centred in the cell when the item has no name); an item without one draws none. &quot;&quot; (the default): no icons.</p>
 <!-- @@@iconRole -->
 </div>
 <div class="fnitem">
 <!-- $$$iconSize -->
 <h3 class="fn qml-member qml-property" translate="no" id="iconSize-prop"><span class="name">iconSize</span> : <span class="type">int</span></h3>
-<p>An item's icon: <a href="qml-ravving-controls-choicedialog.html#iconRole-prop" translate="no">iconRole</a> names the field holding an image's URL (a pixel glyph), drawn crisp at <code translate="no">iconSize</code> pixels on a box in the accent, beside the name (centred in the cell when the item has no name); an item without one draws none. &quot;&quot; (the default): no icons.</p>
+<p>An item's icon: <a href="qml-ravving-controls-choicedialog.html#iconRole-prop" translate="no">iconRole</a> names the field holding an image's URL (a pixel glyph), drawn crisp at <code translate="no">iconSize</code> pixels straight on the cell, beside the name (centred in the cell when the item has no name); an item without one draws none. &quot;&quot; (the default): no icons.</p>
 <!-- @@@iconSize -->
 </div>
 <div class="fnitem">

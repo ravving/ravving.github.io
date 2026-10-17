@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -85,6 +85,7 @@
 <h2 id="properties">Properties</h2>
 <ul>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#inputBlocked-prop" translate="no">inputBlocked</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#knobMode-prop" translate="no">knobMode</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#knobsAbsolute-prop" translate="no">knobsAbsolute</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#openDialogs-prop" translate="no">openDialogs</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#overlays-prop" translate="no">overlays</a></b> : list&lt;QtObject&gt;</li>
@@ -107,6 +108,12 @@
 <h3 class="fn qml-member qml-property" translate="no" id="inputBlocked-prop"><span class="name">inputBlocked</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
 <p>The modal layers up (the dialogs, the MENU drawer, a drop-down's list), and whether any is. The modal dimmer stops items (buttons, MouseAreas) under a dialog, but not pointer handlers: Qt Quick hands a press to every handler under it even after an item above took it, and a DragHandler then takes the drag over. So every handler on a page binds <code translate="no">enabled: !Interaction.inputBlocked</code> (the app's Session.inputBlocked reads this one; tools/check-handlers.py checks it); disabling the page instead would close the drop-downs on it (a disabled <a href="qml-ravving-controls-combobox.html" translate="no">ComboBox</a> shuts its list). Kept by identity, not counted, so a layer reported up twice (an open() repeated) or down twice cannot leave the page blocked.</p>
 <!-- @@@inputBlocked -->
+</div>
+<div class="fnitem">
+<!-- $$$knobMode -->
+<h3 class="fn qml-member qml-property" translate="no" id="knobMode-prop"><span class="name">knobMode</span> : <span class="type">string</span></h3>
+<p>How a fixed pot takes over a value it does not sit on (<a href="qml-ravving-controls-pickup.html" translate="no">PickUp</a>): <code translate="no">pickup</code>, <code translate="no">jump</code> or <code translate="no">scale</code>. The app sets it from the user's profile (SETTINGS · DEVICE).</p>
+<!-- @@@knobMode -->
 </div>
 <div class="fnitem">
 <!-- $$$knobsAbsolute -->

@@ -15,12 +15,12 @@
 
   /* The screenshots (shots/NAME.png, 1280 × 800) and what each one shows. */
   var SHOTS = {
-    "page1": { caption: "ページ 1：ドラム 1（Roland TR909）" },
-    "page1-drums2": { caption: "もう一度 1：ドラム 2（Roland TR808）" },
+    "page1": { caption: "ページ 1：DRUMS 1（909 キット）" },
+    "page1-drums2": { caption: "もう一度 1：DRUMS 2（808 キット）" },
     "page2": { caption: "ページ 2、コード" },
     "page3": { caption: "ページ 3、ベース" },
     "page4": { caption: "ページ 4、リード" },
-    "page5": { caption: "ページ 5、SAMPLE KING" },
+    "page5": { caption: "ページ 5、SLOT SAMPLER" },
     "page5-pads": { caption: "もう一度ページ 5：PAD SAMPLER" },
     "mixer": { caption: "✱：ミキサー" },
     "mixer-strip": { caption: "ストリップを選んだミキサー（▶）" },

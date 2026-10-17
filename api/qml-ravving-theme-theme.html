@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-<!-- Theme.qml -->
+<!-- theme.cpp -->
   <meta name="description" content="ravving's design tokens.">
   <meta name="keywords" content="qmltype">
-  <title>Theme QML Type | ravving C++ API 1.0</title>
+  <title>Theme QML Type (Singleton) | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=54f138c7a0">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -71,13 +71,15 @@
 </ul>
 </div>
 <div class="sidebar-content" id="sidebar-content"></div></div>
-<h1 class="title" translate="no">Theme QML Type</h1>
+<h1 class="title" translate="no">Theme QML Type (Singleton)</h1>
 <!-- $$$Theme-brief -->
 <p>ravving's design tokens. <a href="#details">More...</a></p>
 <!-- @@@Theme -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> <code translate="no">import Ravving.Theme 1.0</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> In C++:</td><td class="memItemRight bottomAlign"> <a href="theme.html" translate="no">Theme</a></td></tr>
 </table></div>
+<p><strong>Note:</strong> This type is a QML singleton. There is only one instance of this type in the QML engine.</p>
 <ul>
 <li><a href="qml-ravving-theme-theme-members.html">List of all members, including inherited members</a></li>
 </ul>
@@ -85,7 +87,7 @@
 <ul>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#actionMinWidth-prop" translate="no">actionMinWidth</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#buttonHeight-prop" translate="no">buttonHeight</a></b> : int</li>
-<li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#colors-prop" translate="no">colors</a></b> : ColorRoles</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#colors-prop" translate="no">colors</a></b> : QtObject</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#controlHeight-prop" translate="no">controlHeight</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#controlWidth-prop" translate="no">controlWidth</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#displayFamily-prop" translate="no">displayFamily</a></b> : string</li>
@@ -93,7 +95,7 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#hasTransientTouchInput-prop" translate="no">hasTransientTouchInput</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#hoverFeedback-prop" translate="no">hoverFeedback</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#humanMoment-prop" translate="no">humanMoment</a></b> : int</li>
-<li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#iconSizes-prop" translate="no">iconSizes</a></b> : IconSizeSet</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#iconSizes-prop" translate="no">iconSizes</a></b> : QtObject</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#isMobile-prop" translate="no">isMobile</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#longDuration-prop" translate="no">longDuration</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#monospaceFamily-prop" translate="no">monospaceFamily</a></b> : string</li>
@@ -107,14 +109,18 @@
 </ul>
 <!-- $$$Theme-description -->
 <h2 id="details">Detailed Description</h2>
-<p>Fixed values the style (Ravving.Style) and ravving's controls read, so a size, a colour or a duration is defined once. One look, set in code: nothing here is read from a theme or a setting. Grows with the design system (notes/style-plan.md).</p>
+<p>Fixed values the style (Ravving.Style) and ravving's controls read, so a size, a colour or a duration is defined once. One look, set in code: nothing here is read from a theme or a setting.</p>
 <!-- @@@Theme -->
 <h2>Property Documentation</h2>
 <div class="fnitem">
-<!-- $$$actionMinWidth -->
-<h3 class="fn qml-member qml-property" translate="no" id="actionMinWidth-prop"><span class="name">actionMinWidth</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<!-- $$$ -->
+<div class="fngroup">
+<h3 class="fn qml-member qml-property fngroupitem" translate="no" id="actionMinWidth-prop"><span class="name">actionMinWidth</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<h3 class="fn qml-member qml-property fngroupitem" translate="no" id="controlHeight-prop"><span class="name">controlHeight</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<h3 class="fn qml-member qml-property fngroupitem" translate="no" id="controlWidth-prop"><span class="name">controlWidth</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
+</div>
 <p>ravving's own controls: their height (every button, chip and field in a row), the smallest width of one wearing a glyph (◀ ▶ − + ✕: square), and of one wearing a word.</p>
-<!-- @@@actionMinWidth -->
+<!-- @@@ -->
 </div>
 <div class="fnitem">
 <!-- $$$buttonHeight -->
@@ -124,27 +130,18 @@
 </div>
 <div class="fnitem">
 <!-- $$$colors -->
-<h3 class="fn qml-member qml-property" translate="no" id="colors-prop"><span class="name">colors</span> : <span class="type">ColorRoles</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>ravving's palette: named colour roles, fixed (notes/style-plan.md, &quot;The palette&quot;). A new colour becomes a role here, never a hex value in a control.</p>
+<h3 class="fn qml-member qml-property" translate="no" id="colors-prop"><span class="name">colors</span> : <span class="type">QtObject</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<p>ravving's palette, named colour roles: <code translate="no">text</code>, <code translate="no">textDisabled</code>, <code translate="no">accent</code>, <code translate="no">textOnAccent</code>, the surfaces (<code translate="no">windowSurface</code>, <code translate="no">viewSurface</code>, <code translate="no">buttonSurface</code>, each with its <code translate="no">…Alt</code>), the well where no skin gives one (<code translate="no">wellSurface</code>), the header band and its line (<code translate="no">headerSurface</code>, <code translate="no">headerLine</code>), the dialog card's ink (<code translate="no">cardInk</code>, <code translate="no">cardDim</code>), <code translate="no">link</code>, <code translate="no">positive</code> and <code translate="no">negative</code>. A new colour becomes a role here, never a hex value in a control.</p>
 <!-- @@@colors -->
 </div>
 <div class="fnitem">
-<!-- $$$controlHeight -->
-<h3 class="fn qml-member qml-property" translate="no" id="controlHeight-prop"><span class="name">controlHeight</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>ravving's own controls: their height (every button, chip and field in a row), the smallest width of one wearing a glyph (◀ ▶ − + ✕: square), and of one wearing a word.</p>
-<!-- @@@controlHeight -->
+<!-- $$$ -->
+<div class="fngroup">
+<h3 class="fn qml-member qml-property fngroupitem" translate="no" id="displayFamily-prop"><span class="name">displayFamily</span> : <span class="type">string</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<h3 class="fn qml-member qml-property fngroupitem" translate="no" id="monospaceFamily-prop"><span class="name">monospaceFamily</span> : <span class="type">string</span> <code class="details extra" translate="no">[read-only]</code></h3>
 </div>
-<div class="fnitem">
-<!-- $$$controlWidth -->
-<h3 class="fn qml-member qml-property" translate="no" id="controlWidth-prop"><span class="name">controlWidth</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>ravving's own controls: their height (every button, chip and field in a row), the smallest width of one wearing a glyph (◀ ▶ − + ✕: square), and of one wearing a word.</p>
-<!-- @@@controlWidth -->
-</div>
-<div class="fnitem">
-<!-- $$$displayFamily -->
-<h3 class="fn qml-member qml-property" translate="no" id="displayFamily-prop"><span class="name">displayFamily</span> : <span class="type">string</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>The font families beside the application's own (the regular one): the monospaced one for figures that change while watched, the display one for branding (the Fonts class, C++).</p>
-<!-- @@@displayFamily -->
+<p>The font families beside the application's own (the regular one): the monospaced one for figures that change while watched, the display one for branding.</p>
+<!-- @@@ -->
 </div>
 <div class="fnitem">
 <!-- $$$ghostButtons -->
@@ -153,10 +150,14 @@
 <!-- @@@ghostButtons -->
 </div>
 <div class="fnitem">
-<!-- $$$hasTransientTouchInput -->
-<h3 class="fn qml-member qml-property" translate="no" id="hasTransientTouchInput-prop"><span class="name">hasTransientTouchInput</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>The device is a touch panel used as an instrument, not a tablet in tablet mode nor a phone: the controls keep their desktop behaviour (hover feedback, text selection by drag).</p>
-<!-- @@@hasTransientTouchInput -->
+<!-- $$$ -->
+<div class="fngroup">
+<h3 class="fn qml-member qml-property fngroupitem" translate="no" id="hasTransientTouchInput-prop"><span class="name">hasTransientTouchInput</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<h3 class="fn qml-member qml-property fngroupitem" translate="no" id="isMobile-prop"><span class="name">isMobile</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<h3 class="fn qml-member qml-property fngroupitem" translate="no" id="tabletMode-prop"><span class="name">tabletMode</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
+</div>
+<p>The device is a touch panel used as an instrument, not a tablet in tablet mode nor a phone: the controls keep their desktop behaviour (text selection by drag).</p>
+<!-- @@@ -->
 </div>
 <div class="fnitem">
 <!-- $$$hoverFeedback -->
@@ -165,46 +166,26 @@
 <!-- @@@hoverFeedback -->
 </div>
 <div class="fnitem">
-<!-- $$$humanMoment -->
-<h3 class="fn qml-member qml-property" translate="no" id="humanMoment-prop"><span class="name">humanMoment</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<!-- $$$ -->
+<div class="fngroup">
+<h3 class="fn qml-member qml-property fngroupitem" translate="no" id="humanMoment-prop"><span class="name">humanMoment</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<h3 class="fn qml-member qml-property fngroupitem" translate="no" id="longDuration-prop"><span class="name">longDuration</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<h3 class="fn qml-member qml-property fngroupitem" translate="no" id="shortDuration-prop"><span class="name">shortDuration</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
+</div>
 <p>Animation lengths: a quick change (a press, a hover), a longer one (a slide, a fade), and how long a busy or progress cycle takes to come round.</p>
-<!-- @@@humanMoment -->
+<!-- @@@ -->
 </div>
 <div class="fnitem">
 <!-- $$$iconSizes -->
-<h3 class="fn qml-member qml-property" translate="no" id="iconSizes-prop"><span class="name">iconSizes</span> : <span class="type">IconSizeSet</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>Icon sizes, in pixels; <code translate="no">sizeForLabels</code> matches the regular font's line.</p>
+<h3 class="fn qml-member qml-property" translate="no" id="iconSizes-prop"><span class="name">iconSizes</span> : <span class="type">QtObject</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<p>Icon sizes, in pixels: <code translate="no">sizeForLabels</code> (the regular font's line), <code translate="no">small</code>, <code translate="no">smallMedium</code>, <code translate="no">medium</code>, <code translate="no">large</code>, <code translate="no">huge</code>, <code translate="no">enormous</code>.</p>
 <!-- @@@iconSizes -->
-</div>
-<div class="fnitem">
-<!-- $$$isMobile -->
-<h3 class="fn qml-member qml-property" translate="no" id="isMobile-prop"><span class="name">isMobile</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>The device is a touch panel used as an instrument, not a tablet in tablet mode nor a phone: the controls keep their desktop behaviour (hover feedback, text selection by drag).</p>
-<!-- @@@isMobile -->
-</div>
-<div class="fnitem">
-<!-- $$$longDuration -->
-<h3 class="fn qml-member qml-property" translate="no" id="longDuration-prop"><span class="name">longDuration</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>Animation lengths: a quick change (a press, a hover), a longer one (a slide, a fade), and how long a busy or progress cycle takes to come round.</p>
-<!-- @@@longDuration -->
-</div>
-<div class="fnitem">
-<!-- $$$monospaceFamily -->
-<h3 class="fn qml-member qml-property" translate="no" id="monospaceFamily-prop"><span class="name">monospaceFamily</span> : <span class="type">string</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>The font families beside the application's own (the regular one): the monospaced one for figures that change while watched, the display one for branding (the Fonts class, C++).</p>
-<!-- @@@monospaceFamily -->
 </div>
 <div class="fnitem">
 <!-- $$$radius -->
 <h3 class="fn qml-member qml-property" translate="no" id="radius-prop"><span class="name">radius</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
 <p>The corner radius of the style's text fields.</p>
 <!-- @@@radius -->
-</div>
-<div class="fnitem">
-<!-- $$$shortDuration -->
-<h3 class="fn qml-member qml-property" translate="no" id="shortDuration-prop"><span class="name">shortDuration</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>Animation lengths: a quick change (a press, a hover), a longer one (a slide, a fade), and how long a busy or progress cycle takes to come round.</p>
-<!-- @@@shortDuration -->
 </div>
 <div class="fnitem">
 <!-- $$$smallSpacing -->
@@ -217,12 +198,6 @@
 <h3 class="fn qml-member qml-property" translate="no" id="spacing-prop"><span class="name">spacing</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
 <p>The spacing between a menu's entries.</p>
 <!-- @@@spacing -->
-</div>
-<div class="fnitem">
-<!-- $$$tabletMode -->
-<h3 class="fn qml-member qml-property" translate="no" id="tabletMode-prop"><span class="name">tabletMode</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>The device is a touch panel used as an instrument, not a tablet in tablet mode nor a phone: the controls keep their desktop behaviour (hover feedback, text selection by drag).</p>
-<!-- @@@tabletMode -->
 </div>
 <div class="fnitem">
 <!-- $$$toolTipDelay -->

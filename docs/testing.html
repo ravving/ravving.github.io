@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Testing on the device · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=229e96b5f3">
+<link rel="stylesheet" href="../site.css?v=4e88e03796">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -36,7 +36,7 @@
       <ol id="docs-results" hidden></ol>
     </form>
     <nav aria-label="Documentation">
-<p class="mono">Using ravving</p><ul>
+<p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
@@ -51,7 +51,7 @@
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">Under the hood</p><ul>
+<p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
@@ -77,7 +77,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/testing.md</b></p>
+<p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/testing.md</b></p>
 <h1>Testing on the device</h1>
 <p class="doc-blurb">device.sh, the fifo hooks, the suites, Bluetooth and live recording tests, building a project by script.</p>
 
@@ -122,7 +122,7 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 </tr>
 <tr>
 <td><code>tools/device.sh call OBJECT METHOD ARGS…</code></td>
-<td>call a backend method: a machine by its kits.json key (<code>pads</code>, <code>sampler</code>, <code>drums1</code>, <code>bass</code>, <code>chords</code>, <code>lead</code>), <code>studio</code>, <code>input</code>, <code>take</code>, <code>exporter</code>, <code>music</code> (and <code>music.library</code>), <code>profile</code>, <code>drives</code> (USB sticks: <code>call drives eject /dev/sda1</code>), <code>usb</code> (the USB page: <code>call usb scan</code>, <code>call usb importEntry samples /media/root/EVS/x.wav</code>, <code>call usb exportEntry soundfonts /zynthian/…/x.sf2</code>; <code>usbPopup</code> opens it: <code>call controlCenter run usb</code>), <code>bluetooth</code> (<code>call bluetooth startDiscovery</code>, <code>get bluetooth devices</code>, <code>call bluetooth pair AA:BB:…</code>, <code>call bluetooth useAsOutput AA:BB:… true</code>, <code>call bluetooth sendFile AA:BB:… /path</code>), or a QML item by objectName (<code>window showPlayer true</code>, <code>window showRecorder true</code>, <code>exportPopup open</code>, <code>settingsPopup open</code>, <code>bluetoothPopup open</code>, <code>projectPicker open</code> then <code>projectPicker actionTriggered 4</code> for IMPORT (the index counts the dividers: NEW 0, TEMPLATES 1, IMPORT 2, SAVE AS NEW 4, EXPORT 6), <code>playerPage</code>, <code>controlCenter</code>); any <code>Q_INVOKABLE</code> or slot, arguments converted (<code>call pads loadSample 0 /path.wav</code>, <code>call pads setFlag 0 looping true</code>, <code>call pads loadPreset "Boom Bap"</code>, <code>call input record</code>, <code>call input record true</code> for a RECORDER take; <code>set input.effects preset OVERDRIVE</code>; <code>get input.tuner frequency</code>; <code>call ravving setLogRules "ravving.cuia.debug=true"</code> turns a log category on while running: each key, who took it and the focus chain), <code>video</code> (<code>set video countdown 0</code>, <code>call video start</code> / <code>stop</code> / <code>toggle</code>, <code>get video state</code> / <code>lastFile</code> / <code>lastInfo</code>, <code>set video quality high</code>) and <code>computer</code> (<code>call computer setup HOST USER PASSWORD 22</code>, <code>check</code>, <code>send /path</code>, <code>forget</code>), <code>files</code> (the FILES browser: <code>get files kinds</code>, <code>call files entries videos</code>, <code>call files presetFile "pattern::bass-presets.json::My Bassline 1"</code>; <code>filesPopup open</code>, <code>filesPopup showKind presets</code>, <code>filesPopup openFolder BASS</code>: the drawer's dialogs open by script only once the MENU drawer has been shown since the start, so press MENU twice first); the journal logs each call</td>
+<td>call a backend method: a machine by its kits.json key (<code>pads</code>, <code>sampler</code>, <code>drums1</code>, <code>bass</code>, <code>chords</code>, <code>lead</code>), <code>studio</code>, <code>input</code>, <code>take</code>, <code>exporter</code>, <code>music</code> (and <code>music.library</code>), <code>profile</code>, <code>drives</code> (USB sticks: <code>call drives eject /dev/sda1</code>), <code>usb</code> (the USB page: <code>call usb scan</code>, <code>call usb importEntry samples /media/root/EVS/x.wav</code>, <code>call usb exportEntry soundfonts /zynthian/…/x.sf2</code>; <code>usbPopup</code> opens it: <code>call controlCenter run usb</code>), <code>bluetooth</code> (<code>call bluetooth startDiscovery</code>, <code>get bluetooth devices</code>, <code>call bluetooth pair AA:BB:…</code>, <code>call bluetooth useAsOutput AA:BB:… true</code>, <code>call bluetooth sendFile AA:BB:… /path</code>), or a QML item by objectName (<code>window showPlayer true</code>, <code>window showRecorder true</code>, <code>exportPopup open</code>, <code>window showSettings true</code> (then <code>settingsPage showCategory 2</code> for LIVE FX), <code>bluetoothPopup open</code>, <code>projectPicker open</code> then <code>projectPicker actionTriggered 4</code> for IMPORT (the index counts the dividers: NEW 0, TEMPLATES 1, IMPORT 2, SAVE AS NEW 4, EXPORT 6), <code>playerPage</code>, <code>controlCenter</code>); any <code>Q_INVOKABLE</code> or slot, arguments converted (<code>call pads loadSample 0 /path.wav</code>, <code>call pads setFlag 0 looping true</code>, <code>call pads loadPreset "Boom Bap"</code>, <code>call input record</code>, <code>call input record true</code> for a RECORDER take; <code>set input.effects preset OVERDRIVE</code>; <code>get input.tuner frequency</code>; <code>call ravving setLogRules "ravving.cuia.debug=true"</code> turns a log category on while running: each key, who took it and the focus chain), <code>video</code> (<code>set video countdown 0</code>, <code>call video start</code> / <code>stop</code> / <code>toggle</code>, <code>get video state</code> / <code>lastFile</code> / <code>lastInfo</code>, <code>set video quality high</code>) and <code>computer</code> (<code>call computer setup HOST USER PASSWORD 22</code>, <code>check</code>, <code>send /path</code>, <code>forget</code>), <code>files</code> (the FILES browser: <code>get files kinds</code>, <code>call files entries videos</code>, <code>call files presetFile "pattern::bass-presets.json::My Bassline 1"</code>; <code>filesPopup open</code>, <code>filesPopup showKind presets</code>, <code>filesPopup openFolder BASS</code>: the drawer's dialogs open by script only once the MENU drawer has been shown since the start, so press MENU twice first); the journal logs each call</td>
 </tr>
 <tr>
 <td><code>tools/device.sh tap X Y</code></td>
@@ -241,6 +241,22 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 <td>the video sync mechanism alone; the encoder tiers' cost while playing; a recording with the RECORDER's mic heard and measured</td>
 </tr>
 <tr>
+<td><code>tools/device-skin-shots.sh OUT_DIR [--all] SET…</code></td>
+<td>each skin set on the device, where the drums have their rows: sets the profile's skins, restarts, shoots the three drum pages (<code>--all</code>: every machine page) and a sheet per set, then puts the device's own set back</td>
+</tr>
+<tr>
+<td><code>tools/pack-smoke.sh TEMPLATE MACHINE=PRESET…</code></td>
+<td>a genre pack from the stick without listening: starts a project from its template, loads a preset per machine with its sound and MODS, meters each lane silent and playing (starts a NEW project: back up first)</td>
+</tr>
+<tr>
+<td><code>tools/render-covers.sh [OUT_DIR]</code>, <code>tools/make-artworks.sh</code></td>
+<td>sample export covers drawn on the laptop, with a contact sheet; the shipped artworks and stickers made from the originals (below, "The covers, on the laptop")</td>
+</tr>
+<tr>
+<td><code>tools/templates-test.sh</code></td>
+<td>the project templates' suite: a pack's template from the stick (tempo, sections by name, sounds per machine, empty patterns), the session saved as a template and the file read back, NEW's defaults, the saved template started again and deleted</td>
+</tr>
+<tr>
 <td><code>tools/export-test.sh</code></td>
 <td>the exports and music player suite (below): a project saved, changed and reopened, a short track export (WAV, then FLAC) checked to the sample, its tags and cover, a .ravv bundle and its import, the player's queue, playback, pause, seek and stop</td>
 </tr>
@@ -251,6 +267,10 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 <tr>
 <td><code>tools/appimage-test.sh</code>, <code>tools/store-register.py</code>, <code>tools/store-launch.sh</code></td>
 <td>the Store AppImage release check (<a href="packaging.html">packaging.md</a>)</td>
+</tr>
+<tr>
+<td><code>tools/without.sh PATH[,PATH…] -- COMMAND…</code></td>
+<td>a command run as on a device without those paths (a private mount namespace; nothing changes on the device): the setup page on a fresh Zynthbox (<a href="packaging.html">packaging.md</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -277,7 +297,7 @@ kits.json gives the track:</p>
 <td>3, 4, 5</td>
 </tr>
 <tr>
-<td>SAMPLE KING, PAD SAMPLER</td>
+<td>SLOT SAMPLER, PAD SAMPLER</td>
 <td>6, 7</td>
 </tr>
 <tr>
@@ -341,6 +361,22 @@ samples.</p>
 tools/device.sh get exporter phase      # preparing · recording · cutting · tagging · done
 tools/device.sh get exporter lastFile
 </code></pre>
+<p>Add <code>"art":1234</code> to the JSON to draw a given cover (the seed the sidecar's <code>art</code> keeps); without
+it each export picks one at random.</p>
+<h3 id="the-covers-on-the-laptop">The covers, on the laptop</h3>
+<p>The covers need no device.</p>
+<ul>
+<li><strong><code>ctest -R albumart</code>:</strong> one seed draws one cover, the seeds reach every artwork and both
+  looks. The sidebar's parts stay in its column, top to bottom, with only real credits. The
+  corner look keeps its title left of the label block. At most one sticker a cover.</li>
+<li><strong><code>tools/render-covers.sh [OUT_DIR]</code></strong> (default <code>analysis/covers</code>) saves twelve sample covers
+  (six titles in each look), two drawn without the artworks folder, and <code>OUT_DIR/sheet.jpg</code>. Both read the
+  source's <code>data/artworks</code>; the app reads the installed <code>artworks/</code> beside its other data.</li>
+<li><strong>New artworks or stickers</strong> go in <code>assets/artworks/glitches</code> or <code>assets/artworks/stickers</code>
+  (the full-size originals, named for what they show). Then <code>tools/make-artworks.sh</code> makes the
+  shipped copies in <code>data/artworks</code>: 1000 px JPEGs, trimmed 360 px PNG stickers, and the RAVV
+  mark from notes/brand/logo/ravv-ink.svg.</li>
+</ul>
 <h2 id="translations">Translations</h2>
 <ul>
 <li><strong>On the laptop, every change of text:</strong> run <code>sh tools/i18n-extract.sh</code>, translate what it
@@ -403,7 +439,7 @@ was played.</p>
 <h3 id="the-hardware-walk">The hardware walk</h3>
 <p>Switch the trace on, then <code>cuia SWITCH_ARROW_UP_RELEASED</code> step by step, and read which item
 accepted each key. <code>ALT + ▲</code> must land on the header from anywhere.</p>
-<p>Key 5 opens page 5, and pressed again toggles between SAMPLE KING and the PAD SAMPLER. The choice
+<p>Key 5 opens page 5, and pressed again toggles between SLOT SAMPLER and the PAD SAMPLER. The choice
 survives restarts, so check the nameplate in a screenshot before sending taps at a panel. A
 hold on the wrong one writes a step.</p>
 <p><strong>Reference audio</strong> for sampling tests lives in the library's <code>samples/refs/</code> folder
@@ -570,7 +606,7 @@ laptop.</p>
 <td><code>call pads clearPad N</code>, <code>call pads loadSample N PATH [start length]</code>, <code>call pads chopRegions N COUNT FIRSTPAD</code>, <code>set pads selectedPad N</code> + <code>call pads setValue MIX VOLUME 0.95</code>, <code>set pads bars 8</code>, <code>set pads viewBar B</code> + <code>toggleStep PAD STEP</code>; a long one-shot (a 16 s intro) needs a loop long enough not to retrigger it: 8 bars at 74 BPM is 26 s</td>
 </tr>
 <tr>
-<td>SAMPLE KING</td>
+<td>SLOT SAMPLER</td>
 <td><code>call sampler loadSample SLOT PATH</code>; <code>set ravving samplerMachine 1</code> puts the pads on key 5</td>
 </tr>
 <tr>
@@ -587,10 +623,10 @@ laptop.</p>
 </main>
 <footer>
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=48f57bf155" defer></script>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

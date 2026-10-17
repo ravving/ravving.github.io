@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -66,6 +66,7 @@
 <h3 id="toc">Contents</h3>
 <ul>
 <li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#methods">Methods</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -83,12 +84,17 @@
 <h2 id="properties">Properties</h2>
 <ul>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-emptynote.html#ink-prop" translate="no">ink</a></b> : color</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-emptynote.html#mascot-prop" translate="no">mascot</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-emptynote.html#shown-prop" translate="no">shown</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-emptynote.html#text-prop" translate="no">text</a></b> : string</li>
 </ul>
+<h2 id="methods">Methods</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-emptynote.html#inkHex-method" translate="no">inkHex</a></b>()</li>
+</ul>
 <!-- $$$EmptyNote-description -->
 <h2 id="details">Detailed Description</h2>
-<p>Centred in the view, dim, why it is empty and what fills it (&quot;no recordings yet · ● REC records the input as played&quot;). Put it in the view (it fills it) with <code translate="no">shown</code> bound to the view being empty. See docs/ui-rules.md.</p>
+<p>Centred in the view, dim, why it is empty and what fills it (&quot;no recordings yet · ● REC records the input as played&quot;), with ARU, ravving's mascot, above it as a pixel glyph in the same ink when the view has room (the brand's &quot;ARU in empty views&quot;, notes/brand/design-system.md B4). Which of ARU's forms shows follows the text, so a view keeps its own. Put it in the view (it fills it) with <code translate="no">shown</code> bound to the view being empty. See docs/ui-rules.md.</p>
 <pre class="cpp" translate="no"><code class="cpp">
  <span class="type">ListView</span> { <span class="name">id</span>: <span class="name">list</span>; <span class="type"><a href="qml-ravving-controls-emptynote.html" translate="no">EmptyNote</a></span> { <span class="name">shown</span>: <span class="name">list</span>.<span class="name">count</span> <span class="operator">===</span> <span class="number">0</span>; <span class="name">text</span>: <span class="string">&quot;nothing here yet · …&quot;</span> } }
 </code></pre>
@@ -101,6 +107,12 @@
 <!-- @@@ink -->
 </div>
 <div class="fnitem">
+<!-- $$$mascot -->
+<h3 class="fn qml-member qml-property" translate="no" id="mascot-prop"><span class="name">mascot</span> : <span class="type">string</span></h3>
+<p>The glyph of ARU above the text (image://glyph), or empty for none. With none given, one of ARU's three forms, picked by the text.</p>
+<!-- @@@mascot -->
+</div>
+<div class="fnitem">
 <!-- $$$shown -->
 <h3 class="fn qml-member qml-property" translate="no" id="shown-prop"><span class="name">shown</span> : <span class="type">bool</span></h3>
 <p>The view is empty, and the note's colour (with none given, the <a href="qml-ravving-theme-skin.html" translate="no">skin</a>'s dim colour, when there is one).</p>
@@ -111,6 +123,13 @@
 <h3 class="fn qml-member qml-property" translate="no" id="text-prop"><span class="name">text</span> : <span class="type">string</span></h3>
 <p>Why the view is empty, and what fills it (&quot;no X yet · how to get some&quot;).</p>
 <!-- @@@text -->
+</div>
+<h2>Method Documentation</h2>
+<div class="fnitem">
+<!-- $$$inkHex[overload1]$$$inkHex -->
+<h3 class="fn qml-member qml-method" translate="no" id="inkHex-method"><span class="name">inkHex</span>()</h3>
+<p>Returns the ink as the glyph provider's <code translate="no">rrggbb</code>.</p>
+<!-- @@@inkHex -->
 </div>
 </article>
 </main>

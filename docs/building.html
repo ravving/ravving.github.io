@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Building · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=229e96b5f3">
+<link rel="stylesheet" href="../site.css?v=4e88e03796">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -36,7 +36,7 @@
       <ol id="docs-results" hidden></ol>
     </form>
     <nav aria-label="Documentation">
-<p class="mono">Using ravving</p><ul>
+<p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
@@ -51,7 +51,7 @@
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">Under the hood</p><ul>
+<p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
@@ -77,7 +77,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/building.md</b></p>
+<p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/building.md</b></p>
 <h1>Building</h1>
 <p class="doc-blurb">What ravving is made of, the dependencies, the CMake layout, the build folders, faster builds, the site, the documentation rules.</p>
 
@@ -89,14 +89,15 @@
 <li><strong>ravving's own Quick Controls style</strong>, <code>Ravving.Style</code> (<code>style/</code>), a static QML module
   <code>main.cpp</code> selects. Every control is drawn in QML: no SVG theme, no KDE Frameworks.</li>
 <li><strong>Its design tokens</strong>, <code>Ravving.Theme</code> (<code>theme/</code>): the palette, sizes, durations, font
-  families and fixed settings the style, the controls and ravving's QML read. Its <code>Skin</code>
+  families and fixed settings the style, the controls and ravving's QML read. <code>Theme</code> is a C++
+  singleton (theme/theme.cpp), and C++ reads it through its static getters too. Its <code>Skin</code>
   attached property carries a page's colours down to its controls.</li>
 <li><strong>The device's keys and knobs</strong>, <code>Ravving.Input</code> (<code>input/</code>): the <code>Hardware</code> attached property
   the app feeds and the QML answers.</li>
 <li><strong>ravving's controls</strong>, <code>Ravving.Controls</code> (<code>controls/</code>), a static QML module: the base types
   that need behaviour of their own as well as the look (the knob, the meter, the key cap, the
   nameplate). It reads the tokens and draws through the style, and knows nothing of the app.</li>
-<li><strong>Its fonts</strong>, IBM Plex Sans, IBM Plex Mono and Audiowide (<code>data/fonts</code>, the Fonts class).</li>
+<li><strong>Its fonts</strong>, IBM Plex Sans, IBM Plex Mono and Chakra Petch (<code>data/fonts</code>, the Fonts class).</li>
 </ul>
 <h3 id="the-engine-and-the-build-order">The engine and the build order</h3>
 <p>The audio engine comes from <strong>libzynthbox</strong> (<code>io.zynthbox.components</code>) and <strong>zyncoder</strong>, both
@@ -331,11 +332,15 @@ themselves are where they were: the split is of the CMake files only):</p>
 </tr>
 <tr>
 <td><code>theme/CMakeLists.txt</code></td>
-<td><code>ravving_theme</code>, the <code>Ravving.Theme</code> design tokens, a static QML module the style, the controls and the app read</td>
+<td><code>ravving_theme</code>, the <code>Ravving.Theme</code> design tokens (<code>Theme</code>) and <code>Skin</code>, C++ in a static QML module the style, the controls and the app read</td>
 </tr>
 <tr>
 <td><code>input/CMakeLists.txt</code></td>
 <td><code>ravving_input</code>, the <code>Ravving.Input</code> device keys and knobs (C++), a static QML module linked into the app</td>
+</tr>
+<tr>
+<td><code>glyphs/CMakeLists.txt</code></td>
+<td><code>ravving_glyphs</code>, the pixel glyphs of <code>assets/glyphs/</code> drawn crisp (<code>Glyphs</code>) and served as <code>image://glyph/…</code> (<code>GlyphProvider</code>): Qt only, linked into the backend, the app and the setup program</td>
 </tr>
 <tr>
 <td><code>controls/CMakeLists.txt</code></td>
@@ -487,6 +492,10 @@ reads <code>notes/</code>, <code>guide/_material/</code> or <code>.claude/</code
   files in its <code>code</code> still exist in site/api/ or qml/. Edit the JSON, then run the script
   without <code>--check</code> to rewrite the page.</li>
 </ul>
+<h3 id="seeing-it-live">Seeing it live</h3>
+<p><code>sh tools/site-serve.sh [PORT]</code> serves <code>site/</code> at http://localhost:8099/ and reloads the browser
+on every change. It also rebuilds the features page when <code>data/features.json</code> changes, and the
+docs pages when <code>docs/</code>, <code>guide/</code> or <code>data/secret/README.md</code> change. It needs node's <code>npx</code>.</p>
 <h3 id="publishing">Publishing</h3>
 <p>The page is public at https://ravving.github.io/. Run <code>sh tools/publish-site.sh</code> once <code>site/</code> is
 committed:</p>
@@ -528,10 +537,10 @@ converter otherwise; <code>PAGES</code> in the script lists the documents, their
 </main>
 <footer>
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=48f57bf155" defer></script>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

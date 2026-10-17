@@ -308,6 +308,14 @@ window.ravNav = [
     "href": "livefx.html"
    },
    {
+    "title": "LiveFxEngine",
+    "href": "livefxengine.html"
+   },
+   {
+    "title": "RepeatCore",
+    "href": "repeatcore.html"
+   },
+   {
     "title": "SoundEngine",
     "href": "soundengine.html"
    },
@@ -340,6 +348,22 @@ window.ravNav = [
    {
     "title": "AlbumArt",
     "href": "albumart.html"
+   },
+   {
+    "title": "AlbumArt::Credits",
+    "href": "albumart-credits.html"
+   },
+   {
+    "title": "AlbumArt::Layout",
+    "href": "albumart-layout.html"
+   },
+   {
+    "title": "AlbumArt::Part",
+    "href": "albumart-part.html"
+   },
+   {
+    "title": "AlbumArt::Sticker",
+    "href": "albumart-sticker.html"
    },
    {
     "title": "AlbumArtProvider",
@@ -532,6 +556,10 @@ window.ravNav = [
    {
     "title": "Bundle",
     "href": "bundle.html"
+   },
+   {
+    "title": "Catalog",
+    "href": "catalog.html"
    }
   ]
  },
@@ -541,6 +569,22 @@ window.ravNav = [
    {
     "title": "Skin",
     "href": "skin.html"
+   },
+   {
+    "title": "SkinFiles",
+    "href": "skinfiles.html"
+   },
+   {
+    "title": "Theme",
+    "href": "theme.html"
+   },
+   {
+    "title": "ThemeColors",
+    "href": "themecolors.html"
+   },
+   {
+    "title": "ThemeIconSizes",
+    "href": "themeiconsizes.html"
    }
   ]
  },
@@ -663,10 +707,6 @@ window.ravNav = [
    {
     "title": "Toast",
     "href": "qml-ravving-controls-toast.html"
-   },
-   {
-    "title": "ToolStrip",
-    "href": "qml-ravving-controls-toolstrip.html"
    }
   ]
  },

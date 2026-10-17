@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- PickUp.qml -->
-  <meta name="description" content="Pick-up for the fixed pots (Z2_V5B).">
+  <meta name="description" content="How the fixed pots (Z2_V5B) take over a value they do not sit on.">
   <meta name="keywords" content="qmltype">
   <title>PickUp QML Type | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,8 +18,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=02ad506e5e" defer></script>
-  <script src="search.js?v=ed38cafd77" defer></script>
+  <script src="nav.js?v=6d3fec3ba2" defer></script>
+  <script src="search.js?v=ca2ed9567f" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -73,7 +73,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">PickUp QML Type</h1>
 <!-- $$$PickUp-brief -->
-<p>Pick-up for the fixed pots (Z2_V5B). <a href="#details">More...</a></p>
+<p>How the fixed pots (Z2_V5B) take over a value they do not sit on. <a href="#details">More...</a></p>
 <!-- @@@PickUp -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> <code translate="no">import Ravving.Controls 1.0</code></td></tr>
@@ -84,20 +84,28 @@
 <h2 id="properties">Properties</h2>
 <ul>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-pickup.html#count-prop" translate="no">count</a></b> : int</li>
-<li class="fn" translate="no"><b><a href="qml-ravving-controls-pickup.html#pickedUp-prop" translate="no">pickedUp</a></b> : var</li>
-<li class="fn" translate="no"><b><a href="qml-ravving-controls-pickup.html#potSide-prop" translate="no">potSide</a></b> : var</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-pickup.html#lastPosition-prop" translate="no">lastPosition</a></b> : list&lt;real&gt;</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-pickup.html#mode-prop" translate="no">mode</a></b> : string</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-pickup.html#pickedUp-prop" translate="no">pickedUp</a></b> : list&lt;bool&gt;</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-pickup.html#potSide-prop" translate="no">potSide</a></b> : list&lt;int&gt;</li>
 </ul>
 <h2 id="methods">Methods</h2>
 <ul>
-<li class="fn" translate="no"><b><a href="qml-ravving-controls-pickup.html#allows-method" translate="no">allows</a></b>(<i>knob</i>, <i>wanted</i>, <i>current</i>, <i>span</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-pickup.html#reset-method" translate="no">reset</a></b>()</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-pickup.html#take-method" translate="no">take</a></b>(<i>knob</i>, <i>position</i>, <i>current</i>, <i>from</i>, <i>to</i>)</li>
 </ul>
 <!-- $$$PickUp-description -->
 <h2 id="details">Detailed Description</h2>
-<p>A pot sitting anywhere must not throw a value to its own position the moment its owner takes the knobs (a brightness pot resting at its minimum would black the screen out as the control center opens). A pot changes nothing until it comes within 2 % of the value or crosses it; from then on it drives the value directly. One state per knob (<code translate="no">count</code>); <a href="qml-ravving-controls-pickup.html#reset-method" translate="no">reset</a>() when the owner takes the knobs again. <a href="qml-ravving-controls-knobgroup.html" translate="no">KnobGroup</a> and the control center share it; a <a href="qml-ravving-controls-knobbadge.html" translate="no">KnobBadge</a> pulses while <code translate="no">pickedUp[knob]</code> is false.</p>
+<p>A pot sitting anywhere must not throw a value to its own position the moment its owner takes the knobs unasked (a brightness pot resting at its minimum would black the screen out as the control center opens). Three ways, the user's choice (<a href="qml-ravving-controls-interaction.html#knobMode-prop" translate="no">Interaction.knobMode</a>, SETTINGS · DEVICE):</p>
+<ul>
+<li><code translate="no">pickup</code>: the pot changes nothing until it comes within 2 % of the value or crosses it; from then on it drives the value directly.</li>
+<li><code translate="no">jump</code>: the value goes to the pot's position at once.</li>
+<li><code translate="no">scale</code>: the value moves toward the pot in proportion to the pot's travel left, and meets it at the end of that travel (no dead zone, no jump); from then on the pot drives it directly.</li>
+</ul>
+<p>One state per knob (<code translate="no">count</code>); <a href="qml-ravving-controls-pickup.html#reset-method" translate="no">reset</a>() when the owner takes the knobs again. <a href="qml-ravving-controls-knobgroup.html" translate="no">KnobGroup</a> and the control center share it; a <a href="qml-ravving-controls-knobbadge.html" translate="no">KnobBadge</a> pulses while <code translate="no">pickedUp[knob]</code> is false.</p>
 <pre class="cpp" translate="no"><code class="cpp">
  PickUp { id: pickUp; count: <span class="number">2</span> }
- Hardware<span class="operator">.</span>onKnobMoved: event <span class="operator">=</span><span class="operator">&gt;</span> { <span class="keyword">if</span> (pickUp<span class="operator">.</span>allows(event<span class="operator">.</span>knob<span class="operator">,</span> event<span class="operator">.</span>value<span class="operator">,</span> current<span class="operator">,</span> <span class="number">1</span>)) current <span class="operator">=</span> event<span class="operator">.</span>value }
+ Hardware<span class="operator">.</span>onKnobMoved: event <span class="operator">=</span><span class="operator">&gt;</span> current <span class="operator">=</span> pickUp<span class="operator">.</span>take(event<span class="operator">.</span>knob<span class="operator">,</span> event<span class="operator">.</span>value<span class="operator">,</span> current<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span>)
 </code></pre>
 <!-- @@@PickUp -->
 <h2>Property Documentation</h2>
@@ -108,29 +116,41 @@
 <!-- @@@count -->
 </div>
 <div class="fnitem">
+<!-- $$$lastPosition -->
+<h3 class="fn qml-member qml-property" translate="no" id="lastPosition-prop"><span class="name">lastPosition</span> : <span class="type">list</span>&lt;<span class="type">real</span>&gt;</h3>
+<p>Per knob: driving the value directly yet; which side of the value the pot was last seen on (−1, 0, 1); where the pot was last (0..1, −1 not yet seen).</p>
+<!-- @@@lastPosition -->
+</div>
+<div class="fnitem">
+<!-- $$$mode -->
+<h3 class="fn qml-member qml-property" translate="no" id="mode-prop"><span class="name">mode</span> : <span class="type">string</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<p>How the pots take over: <code translate="no">pickup</code>, <code translate="no">jump</code> or <code translate="no">scale</code> (Interaction.knobMode).</p>
+<!-- @@@mode -->
+</div>
+<div class="fnitem">
 <!-- $$$pickedUp -->
-<h3 class="fn qml-member qml-property" translate="no" id="pickedUp-prop"><span class="name">pickedUp</span> : <span class="type">var</span></h3>
-<p>Per knob: picked up yet; which side of the value the pot was last seen on (−1, 0, 1).</p>
+<h3 class="fn qml-member qml-property" translate="no" id="pickedUp-prop"><span class="name">pickedUp</span> : <span class="type">list</span>&lt;<span class="type">bool</span>&gt;</h3>
+<p>Per knob: driving the value directly yet; which side of the value the pot was last seen on (−1, 0, 1); where the pot was last (0..1, −1 not yet seen).</p>
 <!-- @@@pickedUp -->
 </div>
 <div class="fnitem">
 <!-- $$$potSide -->
-<h3 class="fn qml-member qml-property" translate="no" id="potSide-prop"><span class="name">potSide</span> : <span class="type">var</span></h3>
-<p>Per knob: picked up yet; which side of the value the pot was last seen on (−1, 0, 1).</p>
+<h3 class="fn qml-member qml-property" translate="no" id="potSide-prop"><span class="name">potSide</span> : <span class="type">list</span>&lt;<span class="type">int</span>&gt;</h3>
+<p>Per knob: driving the value directly yet; which side of the value the pot was last seen on (−1, 0, 1); where the pot was last (0..1, −1 not yet seen).</p>
 <!-- @@@potSide -->
 </div>
 <h2>Method Documentation</h2>
 <div class="fnitem">
-<!-- $$$allows[overload1]$$$allows -->
-<h3 class="fn qml-member qml-method" translate="no" id="allows-method"><span class="name">allows</span>(<i>knob</i>, <i>wanted</i>, <i>current</i>, <i>span</i>)</h3>
-<p>Returns whether pot <i translate="no">knob</i> at <i translate="no">wanted</i> may drive a value now at <i translate="no">current</i> (<i translate="no">span</i> = the value's range): true once it is close or has crossed it, and from then on.</p>
-<!-- @@@allows -->
-</div>
-<div class="fnitem">
 <!-- $$$reset[overload1]$$$reset -->
 <h3 class="fn qml-member qml-method" translate="no" id="reset-method"><span class="name">reset</span>()</h3>
-<p>Forgets every knob's pick-up: call it when the owner takes the knobs again.</p>
+<p>Forgets every knob's state: call it when the owner takes the knobs again.</p>
 <!-- @@@reset -->
+</div>
+<div class="fnitem">
+<!-- $$$take[overload1]$$$take -->
+<h3 class="fn qml-member qml-method" translate="no" id="take-method"><span class="name">take</span>(<i>knob</i>, <i>position</i>, <i>current</i>, <i>from</i>, <i>to</i>)</h3>
+<p>Returns the value pot <i translate="no">knob</i> at <i translate="no">position</i> (0..1) gives a value now at <i translate="no">current</i>, which runs from <i translate="no">from</i> to <i translate="no">to</i>: the pot's own value once it drives it, else what the mode says (<i translate="no">current</i> while a <code translate="no">pickup</code> waits).</p>
+<!-- @@@take -->
 </div>
 </article>
 </main>

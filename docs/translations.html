@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Translations · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=229e96b5f3">
+<link rel="stylesheet" href="../site.css?v=4e88e03796">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23212425'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='%23f25d0a'/%3E%3C/svg%3E">
 </head>
 <body class="docs">
@@ -36,7 +36,7 @@
       <ol id="docs-results" hidden></ol>
     </form>
     <nav aria-label="Documentation">
-<p class="mono">Using ravving</p><ul>
+<p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
@@ -51,7 +51,7 @@
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
-<p class="mono">Under the hood</p><ul>
+<p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
@@ -60,7 +60,7 @@
 <li><a href="live-recording.html">Live recordings</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
-<li class="on"><a href="translations.html" aria-current="page">Translations</a><ul><li><a href="#how-it-works">How it works</a></li><li><a href="#keys-stay-keys">Keys stay keys</a></li><li><a href="#contexts-and-markers">Contexts and markers</a></li><li><a href="#the-glossary">The glossary</a></li><li><a href="#lengths">Lengths</a></li><li><a href="#the-workflow">The workflow</a></li><li><a href="#the-webpage">The webpage</a></li><li><a href="#adding-a-language">Adding a language</a></li><li><a href="#every-release-review-the-translations">Every release: review the translations</a></li></ul></li>
+<li class="on"><a href="translations.html" aria-current="page">Translations</a><ul><li><a href="#how-it-works">How it works</a></li><li><a href="#keys-stay-keys">Keys stay keys</a></li><li><a href="#contexts-and-markers">Contexts and markers</a></li><li><a href="#the-setup-page">The setup page</a></li><li><a href="#the-glossary">The glossary</a></li><li><a href="#lengths">Lengths</a></li><li><a href="#the-workflow">The workflow</a></li><li><a href="#the-webpage">The webpage</a></li><li><a href="#adding-a-language">Adding a language</a></li><li><a href="#every-release-review-the-translations">Every release: review the translations</a></li></ul></li>
 <li><a href="ui-rules.html">UI rules</a></li>
 <li><a href="extending.html">Extending</a></li>
 <li><a href="writing-the-guide.html">Writing the guide</a></li>
@@ -77,7 +77,7 @@
     </nav>
   </details>
   <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Under the hood</b> <span>/</span> <b translate="no">docs/translations.md</b></p>
+<p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/translations.md</b></p>
 <h1>Translations</h1>
 <p class="doc-blurb">KI18n in the app, keys against display text, the contexts, the glossary, the webpage&#x27;s catalogs, adding a language, the release review.</p>
 
@@ -157,9 +157,19 @@ looked up stays English:</p>
 meaning when a word has several ("SONG" the page, "SONG" the PLAY mode). All sound vocabulary
 shares one context, so a knob name is translated once.</p>
 <p>Names printed on the device stay English in every language: MENU, ALT, MODE, BACK, SELECT,
-PLAY, STOP, RECORD, X, Y. So do product and machine names (SAMPLE KING, PAD SAMPLER, POLY-6,
+PLAY, STOP, RECORD, X, Y. So do product and machine names (SLOT SAMPLER, PAD SAMPLER,
 the engines and kits), MIDI, USB, HDMI, SBC-XQ and LIVE FX. <code>tools/check-ui.py</code>'s
 <code>text-translatable</code> rule finds a display text that skips <code>i18n…</code>; its keep list holds these.</p>
+<h2 id="the-setup-page">The setup page</h2>
+<p><code>ravving-setup</code>, the program the AppImage opens, uses the app's catalog:</p>
+<ul>
+<li>Its texts are extracted with the app's (<code>setup/</code>).</li>
+<li><code>Catalog</code> (setup/catalog.cpp) reads <code>ravving.mo</code> itself. The page links Qt only, since it
+  must start before anything else is installed.</li>
+<li>It follows the same choice: SETTINGS · LANGUAGE, else the system's language.</li>
+<li>The requirements' features and effects (<code>data/requirements.json</code>) are extracted by
+  <code>tools/i18n-data.py</code>, for the page and the issues centre.</li>
+</ul>
 <h2 id="the-glossary">The glossary</h2>
 <p>The translations use the words musicians and producers use in each language.</p>
 <table>
@@ -344,10 +354,10 @@ texts.</p>
 </main>
 <footer>
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL‑3.0‑or‑later; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=48f57bf155" defer></script>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {
