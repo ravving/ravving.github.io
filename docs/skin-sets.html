@@ -1,0 +1,421 @@
+<!doctype html>
+<!--
+  ravving on MIKO: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/skin-sets.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make a skin set · ravving docs</title>
+<link rel="stylesheet" href="../site.css?v=57a1c6a25f">
+<link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+    </a>
+    <nav aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+      <a href="../api/index.html">API reference</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
+    <nav aria-label="Documentation">
+<p class="mono">Play</p><ul>
+<li><a href="get-ravving.html">Get ravving</a></li>
+<li><a href="load-a-preset.html">Load a preset</a></li>
+<li><a href="loop-to-song.html">Turn your loop into a song</a></li>
+<li><a href="export-a-track.html">Export a track and play it back</a></li>
+<li><a href="film-a-session.html">Film your session</a></li>
+<li><a href="send-to-phone.html">Send a file to your phone</a></li>
+<li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
+<li><a href="machines.html">The machines</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="manual.html">The manual</a></li>
+</ul>
+<p class="mono">Make your own</p><ul>
+<li class="on"><a href="skin-sets.html" aria-current="page">Make a skin set</a><ul><li><a href="#downloads">Downloads</a></li><li><a href="#the-screen-it-paints">The screen it paints</a></li><li><a href="#the-file">The file</a></li><li><a href="#the-rules">The rules</a></li><li><a href="#make-it-good-not-only-legal">Make it good, not only legal</a></li><li><a href="#put-it-on-a-miko">Put it on a MIKO</a></li><li><a href="#checklist-for-a-new-set">Checklist for a new set</a></li></ul></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">Change ravving</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="translations.html">Translations</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="writing-the-guide.html">Writing the guide</a></li>
+<li><a href="writing-code-docs.html">Writing code documentation</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+</ul>
+<p class="mono">The code</p><ul>
+<li><a href="../api/index.html">API reference</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker"><b>Make your own</b> <span>/</span> <b translate="no">docs/skin-sets.md</b></p>
+<h1>Make a skin set</h1>
+<p class="doc-blurb">The colours of the eight instrument pages as one JSON file: every key, the contrast rules, a checker to download, and how to put the set on a MIKO.</p>
+
+<p>A skin set gives every instrument page in ravving its colours: the case, the keys, the
+grid's inset and the lights. It is one JSON file. Drop it on the device and it shows up in
+SETTINGS → DEVICE → SKINS by its name, with no restart.</p>
+<p>This page is all you need to make one, with or without ravving's source: the file format,
+what each colour paints, the rules a set must pass, a checker to run them, and how to put the
+set on a MIKO.</p>
+<h2 id="downloads">Downloads</h2>
+<ul>
+<li><a href="../docs/skins/check-skins.py">check-skins.py</a>: the checker. Python 3, nothing to install.</li>
+<li>Sets to start from: <a href="../docs/skins/pencil.json">pencil.json</a>,
+  <a href="../docs/skins/previous.json">previous.json</a>, <a href="../docs/skins/studio.json">studio.json</a>,
+  <a href="../docs/skins/metro.json">metro.json</a>.</li>
+</ul>
+<h2 id="the-screen-it-paints">The screen it paints</h2>
+<p>The MIKO's screen is 1280 × 800. A fixed dark graphite header sits on top of every page: the
+transport, the LIVE FX pads, and a chip per instrument lit in that instrument's <code>glow</code>. Under it,
+the page of the instrument on screen, in its skin:</p>
+<table>
+<thead>
+<tr>
+<th>Machine key</th>
+<th>Page</th>
+<th>What sits on its well</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>drums1</code>, <code>drums2</code>, <code>drums3</code></td>
+<td>the three drum machines</td>
+<td>a step grid: 16 key caps per row, nine rows, every other group of four in <code>groupCap</code></td>
+</tr>
+<tr>
+<td><code>chords</code></td>
+<td>CHORDS</td>
+<td>a chord roll (rows of chords, notes as bars), the SLOTS view, and seven chord keys under it on <code>cap</code></td>
+</tr>
+<tr>
+<td><code>bass</code>, <code>lead</code></td>
+<td>BASS, LEAD</td>
+<td>a piano roll: note rows, notes as lit cells</td>
+</tr>
+<tr>
+<td><code>sampler</code></td>
+<td>SLOT SAMPLER</td>
+<td>slots, a waveform, a step grid of caps</td>
+</tr>
+<tr>
+<td><code>pads</code></td>
+<td>PAD SAMPLER</td>
+<td>16 pads, a waveform, a step lane of caps</td>
+</tr>
+</tbody>
+</table>
+<p>The player, the RECORDER and the SONG page keep their own colours: a set changes the eight
+machines only.</p>
+<h2 id="the-file">The file</h2>
+<pre><code class="language-json">{
+    &quot;ravving&quot;: &quot;preset&quot;,
+    &quot;type&quot;: &quot;skin&quot;,
+    &quot;skin&quot;: {
+        &quot;name&quot;: &quot;PENCIL&quot;,
+        &quot;about&quot;: &quot;a pencil case: kraft, graph and lined paper, a chalkboard, a red case and highlighters&quot;,
+        &quot;machines&quot;: {
+            &quot;drums1&quot;: {&quot;plateColor&quot;: &quot;#fea292&quot;, &quot;dark&quot;: false, &quot;chassisTop&quot;: &quot;#fee7cd&quot;, &quot;chassisBottom&quot;: &quot;#f0d4b5&quot;, &quot;ink&quot;: &quot;#281d0f&quot;, &quot;accent&quot;: &quot;#c13425&quot;, &quot;glow&quot;: &quot;#cf4a3a&quot;, &quot;cap&quot;: &quot;#fef5eb&quot;, &quot;capShade&quot;: &quot;#edd5ba&quot;, &quot;capBorder&quot;: &quot;#7d6446&quot;, &quot;groupCap&quot;: &quot;#fee4e0&quot;, &quot;groupCapShade&quot;: &quot;#fac6bd&quot;, &quot;well&quot;: &quot;#edd0b0&quot;, &quot;rail&quot;: &quot;#76382e&quot;},
+            &quot;drums2&quot;: {&quot;...&quot;: &quot;the same fourteen keys&quot;},
+            &quot;drums3&quot;: {}, &quot;chords&quot;: {}, &quot;bass&quot;: {}, &quot;lead&quot;: {}, &quot;sampler&quot;: {}, &quot;pads&quot;: {}
+        }
+    }
+}
+</code></pre>
+<ul>
+<li><code>"ravving": "preset"</code> and <code>"type": "skin"</code> are required, or the file is ignored.</li>
+<li><code>name</code> is the button in SKINS (capitals read best); <code>about</code> is the line under the swatches.</li>
+<li>The file name, without <code>.json</code>, is the set's key: lowercase letters and digits, no spaces
+  (<code>harbour.json</code>). A file named like a shipped set replaces it on that device.</li>
+<li>A machine left out, or a key left out of a machine, keeps ravving's own colour. Give all
+  eight machines all fourteen keys, so the set looks as you made it.</li>
+<li>Colours are <code>#rrggbb</code>. No alpha, no names.</li>
+</ul>
+<h3 id="the-keys">The keys</h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>What it paints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dark</code></td>
+<td><code>true</code> for a dark case, <code>false</code> for a light one. It picks the ink of everything drawn on the case, so it must match the case (the checker says when it doesn't).</td>
+</tr>
+<tr>
+<td><code>chassisTop</code>, <code>chassisBottom</code></td>
+<td>the page's case: a vertical gradient from top to bottom. Keep the two close.</td>
+</tr>
+<tr>
+<td><code>rail</code></td>
+<td>the case's end cheeks, left and right of the page, and the rails of strips.</td>
+</tr>
+<tr>
+<td><code>ink</code></td>
+<td>text and icons on the case and on the keys: labels, names, values.</td>
+</tr>
+<tr>
+<td><code>accent</code></td>
+<td>what's on: lit chips and buttons, knob arcs, custom chords.</td>
+</tr>
+<tr>
+<td><code>glow</code></td>
+<td>the lights: a lit step, an LED, a note or chord in a roll, the header's chip. Usually a lighter step of <code>accent</code>.</td>
+</tr>
+<tr>
+<td><code>plateColor</code></td>
+<td>the instrument's name on its nameplate (a black plate), drawn as neon.</td>
+</tr>
+<tr>
+<td><code>cap</code>, <code>capShade</code></td>
+<td>a key cap: its face, and the shade at its foot.</td>
+</tr>
+<tr>
+<td><code>capBorder</code></td>
+<td>the keys' outline.</td>
+</tr>
+<tr>
+<td><code>groupCap</code>, <code>groupCapShade</code></td>
+<td>the caps of every other group of four steps, so a bar reads as 4 + 4 + 4 + 4. Same lightness as <code>cap</code>, a small shift in hue.</td>
+</tr>
+<tr>
+<td><code>well</code></td>
+<td>the inset the grids and rolls sit in.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="light-cases-and-dark-wells">Light cases and dark wells</h3>
+<p>Any machine may wear a light case or a dark one, with a light well or a dark one. The marks on
+the well (grid lines, row names, empty cells) take their colour from the well, not the case:</p>
+<ul>
+<li>a well as dark as the case (or as light) uses the machine's <code>ink</code>;</li>
+<li>a dark well in a light case uses near white <code>#f4f4f6</code>; a light well in a dark case uses near
+  black <code>#16161a</code>;</li>
+<li>quiet labels on the well: <code>#a0a0a8</code> on a dark well, the ink at 70 % on a light one.</li>
+</ul>
+<p>A light case's lights must be mid tones: they have to read on its near-white caps and in the
+header's black chip alike.</p>
+<h2 id="the-rules">The rules</h2>
+<p>Contrast is WCAG 2.x (relative luminance; ratios from 1:1 to 21:1). A set passes when every
+machine passes all of these, and the checker reports nothing:</p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Minimum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dark</code> matches the case: the mean of <code>chassisTop</code> and <code>chassisBottom</code> is dark when its Rec. 709 luma (0.2126 R + 0.7152 G + 0.0722 B, channels 0–1, not linearised) is under 0.5</td>
+<td>must match</td>
+</tr>
+<tr>
+<td><code>ink</code> on <code>chassisTop</code> and on <code>chassisBottom</code></td>
+<td>7:1</td>
+</tr>
+<tr>
+<td><code>ink</code> on the caps, where the machine has caps (drums, both samplers: <code>cap</code>, <code>capShade</code>, <code>groupCap</code>, <code>groupCapShade</code>; chords: <code>cap</code>, <code>capShade</code>)</td>
+<td>4.5:1</td>
+</tr>
+<tr>
+<td>the well's ink and its quiet labels (above) on <code>well</code></td>
+<td>4.5:1</td>
+</tr>
+<tr>
+<td><code>glow</code> on those caps and on <code>well</code>: a lit step, a lit key, a note in a roll</td>
+<td>3:1</td>
+</tr>
+<tr>
+<td><code>accent</code> on the case (both chassis colours) or on <code>well</code>, whichever is higher</td>
+<td>3:1</td>
+</tr>
+<tr>
+<td><code>glow</code> on the header's chip, <code>#0f0f12</code></td>
+<td>3:1</td>
+</tr>
+<tr>
+<td><code>plateColor</code> on the nameplate, <code>#1b1b20</code></td>
+<td>4.5:1</td>
+</tr>
+<tr>
+<td>every two machines' <code>glow</code>s apart (CIE76 Delta E in Lab)</td>
+<td>20</td>
+</tr>
+<tr>
+<td>the file has a <code>name</code> and an <code>about</code></td>
+<td>required</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-sh">python3 check-skins.py harbour.json
+</code></pre>
+<p>It prints <code>harbour: ok</code>, or each failure with the colour, the ratio and what it was measured on,
+and exits 1 on a failure. Fix the failures by moving the named colour's lightness (keep its hue),
+then run it again.</p>
+<h2 id="make-it-good-not-only-legal">Make it good, not only legal</h2>
+<p>Passing the checker means it reads. Whether it is pleasant to play on for an evening is design:</p>
+<ul>
+<li id="calm-surfaces-clear-lights"><strong>Calm surfaces, clear lights.</strong> Large areas (case, well, caps) muted or pastel; the signal
+  (<code>accent</code>, <code>glow</code>) carries the colour. No large saturated red, green or blue case: a deep red
+  case with a green light looked awful, and so did a pale blue-grey grid on a pale case, where
+  the empty cells washed out.</li>
+<li id="lit-against-unlit-by-lightness-not-only-hue"><strong>Lit against unlit by lightness, not only hue.</strong> About one person in twelve doesn't tell red
+  from green: a lit step has to be clearly lighter (on a dark well) or deeper (on a light well)
+  than an empty one.</li>
+<li id="not-glaring"><strong>Not glaring.</strong> A light case is off-white, not <code>#ffffff</code>; a dark one is a deep grey or a
+  tinted near-black, not <code>#000000</code>. Avoid pure white text on pure black.</li>
+<li id="one-family-eight-faces"><strong>One family, eight faces.</strong> Each page needs its own identity, because the number keys flip
+  between them, but the set should feel like one product: a theme (a studio rack, a pencil case,
+  a night train), with one material or tone per machine.</li>
+<li><strong>Mix light and dark cases</strong> across the eight, so neighbouring pages change visibly.</li>
+<li><strong>The header's lights tell the machines apart</strong> (the Delta E rule): pick eight glows that
+  differ in hue, then in lightness.</li>
+<li><strong>A good place to start:</strong> a tested scale (Radix, Tailwind, Material, OKLCH ramps), not a guess.
+  For a dark machine: case 950–900, well a step darker, rail a mid step of the same hue, ink 50,
+  accent 400–500, glow a lighter step of the accent. For a light machine: case 50–100, well
+  100–200 (or a dark inset), ink 950, accent 600–700.</li>
+</ul>
+<h2 id="put-it-on-a-miko">Put it on a MIKO</h2>
+<ol>
+<li><strong>From a USB stick:</strong> copy the file into <code>ravving/presets/skins/</code> on the stick. On the MIKO,
+   MENU → the stick's tile opens the USB page; it copies presets both ways, skins among them.</li>
+<li><strong>Over the network</strong> (developers): copy it to <code>/zynthian/zynthian-my-data/ravving/skins/</code> on
+   the device, for example with <code>scp harbour.json root@&lt;device&gt;:/zynthian/zynthian-my-data/ravving/skins/</code>.
+   Write the file in one go (copy to another name, then rename), so ravving never reads it half
+   written.</li>
+<li>SETTINGS → DEVICE → SKINS: the set is there by its <code>name</code>, with swatches of its colours.
+   Tap it: the pages change at once, and the pick stays after a restart.</li>
+</ol>
+<p>To share a set, share the file.</p>
+<h2 id="checklist-for-a-new-set">Checklist for a new set</h2>
+<ol>
+<li>Pick a theme and write the <code>name</code> and <code>about</code>.</li>
+<li>Choose eight cases (some light, some dark) and eight distinct lights.</li>
+<li>Fill all fourteen keys for all eight machines.</li>
+<li>Run <code>check-skins.py</code> until it prints <code>ok</code>.</li>
+<li>Look at every page on the device (1 to 5, then 5 again for the PAD SAMPLER, and 1 again for
+   DRUMS 2 and 3): an empty grid, a full one, and while playing.</li>
+<li>Hand over the file, the checker's output, and a line per machine on why its colours.</li>
+</ol>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script src="../assets/aru.js?v=7bcc475539" defer></script>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
+  function load(done) {
+    if (index) return done();
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();
+(function () {
+  var NOTES = {
+    es: ["Esta página solo está en inglés.", "Documentación en español"],
+    ja: ["このページは英語のみです。", "日本語のドキュメント"]
+  };
+  var lang = document.documentElement.lang || "en";
+  var want;
+  try {
+    if (document.querySelector("nav.langs")) { localStorage.setItem("ravving-lang", lang); return; }
+    want = localStorage.getItem("ravving-lang");
+  } catch (e) { return; }
+  var note = NOTES[want];
+  if (!note) return;
+  var p = document.createElement("p");
+  p.className = "doc-langnote";
+  p.lang = want;
+  var a = document.createElement("a");
+  a.href = "../" + want + "/docs/index.html";
+  a.textContent = "← " + note[1];
+  p.append(note[0] + " ", a);
+  var doc = document.getElementById("doc");
+  doc.insertBefore(p, doc.firstChild);
+})();</script>
+</body>
+</html>
