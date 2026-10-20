@@ -22,7 +22,7 @@
     }());
   </script>
   <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=ec45397431" defer></script>
+  <script src="search.js?v=d2d200390a" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -100,6 +100,7 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#columns-prop" translate="no">columns</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#currentValue-prop" translate="no">currentValue</a></b> : var</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#cursorShown-prop" translate="no">cursorShown</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#emptyText-prop" translate="no">emptyText</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#extraHint-prop" translate="no">extraHint</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#filters-prop" translate="no">filters</a></b> : alias</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#filtersOpen-prop" translate="no">filtersOpen</a></b> : bool</li>
@@ -144,7 +145,7 @@
 <p>The current item is marked, the highlighted one follows the device, and choosing one closes the dialog.</p>
 <p>Optional <code translate="no">actions</code> add buttons to the header (SAVE, DELETE) or a band along the bottom (OPEN, EXPORT) that act on the highlighted item through <code translate="no">actionTriggered</code>.</p>
 <p>The device while open: the big knob or the arrows move the highlight, SELECT chooses it, BACK closes without choosing. Closing gives the focus back to whatever had it (Dialog).</p>
-<p>An owner that may want to ask first (opening a project over unsaved work) sets <code translate="no">closeOnChoose</code> false, closes it itself, and can show a line of <code translate="no">notice</code>. What waits for a confirming second press shows it as everywhere else in ravving: the <a href="qml-ravving-controls-armbar.html" translate="no">ArmBar</a> countdown inside that very button, the header action (<code translate="no">armedAction</code>) or the item (<code translate="no">armedValue</code>).</p>
+<p>An owner that may want to ask first (opening a project over unsaved work) sets <code translate="no">closeOnChoose</code> false, closes it itself, and can show a line of <code translate="no">notice</code>. A grid with nothing in it says why with an <a href="qml-ravving-controls-emptynote.html" translate="no">EmptyNote</a> (<code translate="no">emptyText</code>). What waits for a confirming second press shows it as everywhere else in ravving: the <a href="qml-ravving-controls-armbar.html" translate="no">ArmBar</a> countdown inside that very button, the header action (<code translate="no">armedAction</code>) or the item (<code translate="no">armedValue</code>).</p>
 <p>With <code translate="no">previewable</code>, holding an item previews it (a sample is heard) until it is let go: <a href="qml-ravving-controls-choicedialog.html#previewStarted-signal" translate="no">previewStarted</a>(value) on the hold, <a href="qml-ravving-controls-choicedialog.html#previewStopped-signal" translate="no">previewStopped</a>() on the release or when the dialog closes.</p>
 <p>A type built on it (the app's ChoicePopup: sources, groups, favourites) puts rows of its own between the header and the grid (<code translate="no">filters</code>), narrows or orders the list (<code translate="no">shownItems</code>), adds to the keys' hint (<code translate="no">extraHint</code>), draws a badge in each cell's corner (<code translate="no">cellBadge</code>, which reads its loader's <code translate="no">cellItem</code>), and takes the device's other inputs through the hooks below: <a href="qml-ravving-controls-choicedialog.html#itemHeld-method" translate="no">itemHeld</a>(), <a href="qml-ravving-controls-choicedialog.html#selectHandled-method" translate="no">selectHandled</a>(), <a href="qml-ravving-controls-choicedialog.html#knobTurned-method" translate="no">knobTurned</a>() and <a href="qml-ravving-controls-choicedialog.html#subtitleOf-method" translate="no">subtitleOf</a>().</p>
 <!-- @@@ChoiceDialog -->
@@ -214,6 +215,12 @@
 <h3 class="fn qml-member qml-property" translate="no" id="cursorShown-prop"><span class="name">cursorShown</span> : <span class="type">bool</span></h3>
 <p>Index of the highlighted item (the device's cursor, in <a href="qml-ravving-controls-choicedialog.html#shownItems-prop" translate="no">shownItems</a>; −1 none), and the item itself. Opened, the cursor's frame sits on the item in use; with none in use it shows only once the device moves it (<code translate="no">cursorShown</code>), never on an item merely first in the list.</p>
 <!-- @@@cursorShown -->
+</div>
+<div class="fnitem">
+<!-- $$$emptyText -->
+<h3 class="fn qml-member qml-property" translate="no" id="emptyText-prop"><span class="name">emptyText</span> : <span class="type">string</span></h3>
+<p>What the grid says while it lists nothing, as an <a href="qml-ravving-controls-emptynote.html" translate="no">EmptyNote</a> (why, and what fills it: &quot;nothing here yet · …&quot;); &quot;&quot; for no note.</p>
+<!-- @@@emptyText -->
 </div>
 <div class="fnitem">
 <!-- $$$extraHint -->

@@ -22,7 +22,7 @@
     }());
   </script>
   <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=ec45397431" defer></script>
+  <script src="search.js?v=d2d200390a" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -113,10 +113,13 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="store.html#entries-prop" translate="no">entries</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="store.html#entriesOf" translate="no">entriesOf</a></b>(const QString &amp;<i>kind</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="store.html#entry" translate="no">entry</a></b>(const QString &amp;<i>id</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="store.html#fetchPreset" translate="no">fetchPreset</a></b>(const QString &amp;<i>key</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="store.html#fetched-prop" translate="no">fetched</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="store.html#install" translate="no">install</a></b>(const QString &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="store.html#keepPreset" translate="no">keepPreset</a></b>(const QString &amp;<i>key</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="store.html#kinds-prop" translate="no">kinds</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="store.html#notice-prop" translate="no">notice</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="store.html#patternPresets" translate="no">patternPresets</a></b>(const QString &amp;<i>machineKey</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="store.html#progress-prop" translate="no">progress</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="store.html#refresh" translate="no">refresh</a></b>(bool <i>force</i> = false)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="store.html#refreshing-prop" translate="no">refreshing</a></b>() const</td></tr>
@@ -131,6 +134,9 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="store.html#entries-prop" translate="no">catalogChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="store.html#finished" translate="no">finished</a></b>(const QString &amp;<i>id</i>, const QString &amp;<i>kind</i>, bool <i>ok</i>, const QString &amp;<i>message</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="store.html#installed" translate="no">installed</a></b>(const QString &amp;<i>kind</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="store.html#presetFailed" translate="no">presetFailed</a></b>(const QString &amp;<i>key</i>, const QString &amp;<i>message</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="store.html#presetFetched" translate="no">presetFetched</a></b>(const QString &amp;<i>key</i>, const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="store.html#presetKept" translate="no">presetKept</a></b>(const QString &amp;<i>key</i>, const QString &amp;<i>message</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="store.html#progress-prop" translate="no">progressChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="store.html#refreshing-prop" translate="no">refreshingChanged</a></b>()</td></tr>
 </table></div>
@@ -155,6 +161,7 @@
 <tr valign="top" class="odd"><td ><code translate="no">project</code></td><td >PROJECTS</td><td >a <code translate="no">.ravv</code> bundle or a project file</td><td >PROJECT ▾</td></tr>
 </table></div>
 <p>One install at a time, async on the GUI thread (the network's replies), its progress and status under the list; <a href="store.html#finished" translate="no">finished</a>() ends it. GUI thread only.</p>
+<p>A pattern preset of the catalog also plays without being taken in (the ONLINE source of the presets picker): the catalog lists each preset of a pattern entry or a pack one by one (an entry's <code translate="no">presets</code>: name, genre, library, sound, and its single file's URL, size and SHA-256), and <a href="store.html#patternPresets" translate="no">patternPresets</a>() gives a machine's. <a href="store.html#fetchPreset" translate="no">fetchPreset</a>() downloads one file into the cache's <code translate="no">store/presets/</code> (the same download as an install's, checked the same way; a cached file whose checksum holds is used at once, offline too) and <a href="store.html#presetFetched" translate="no">presetFetched</a>() hands its path to the picker, which loads it as a stick's preset (<a href="usblibrary.html#loadPattern" translate="no">UsbLibrary::loadPattern</a>()). <a href="store.html#keepPreset" translate="no">keepPreset</a>() does the same and takes it into the machine's library; a single pattern entry is then recorded as an install would be.</p>
 </div>
 <!-- @@@Store -->
 <div class="prop">
@@ -326,6 +333,13 @@
 </div><!-- @@@entry -->
 </div>
 <div class="fnitem">
+<!-- $$$fetchPreset[overload1]$$$fetchPresetconstQString& -->
+<h3 class="fn" translate="no" id="fetchPreset"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Store::<span class="name">fetchPreset</span>(const <span class="type">QString</span> &amp;<i>key</i>)</h3>
+<p>Fetches the catalog's preset <i translate="no">key</i> (<a href="store.html#patternPresets" translate="no">patternPresets</a>()) into the cache, checked against the catalog's size and SHA-256; <a href="store.html#presetFetched" translate="no">presetFetched</a>() hands over its path. A cached copy whose checksum holds is handed over at once, without the network. Returns <code translate="no">false</code> when the key is unknown or an install is under way.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@fetchPreset -->
+</div>
+<div class="fnitem">
 <!-- $$$finished[overload1]$$$finishedconstQString&constQString&boolconstQString& -->
 <h3 class="fn" translate="no" id="finished"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Store::<span class="name">finished</span>(const <span class="type">QString</span> &amp;<i>id</i>, const <span class="type">QString</span> &amp;<i>kind</i>, <span class="type">bool</span> <i>ok</i>, const <span class="type">QString</span> &amp;<i>message</i>)</h3>
 <p>Emitted when an install or a removal ended: the entry <i translate="no">id</i> of <i translate="no">kind</i>, whether it worked (<i translate="no">ok</i>) and a translated line on it (<i translate="no">message</i>: what landed and where, or why not).</p>
@@ -345,10 +359,42 @@
 <!-- @@@installed -->
 </div>
 <div class="fnitem">
+<!-- $$$keepPreset[overload1]$$$keepPresetconstQString& -->
+<h3 class="fn" translate="no" id="keepPreset"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Store::<span class="name">keepPreset</span>(const <span class="type">QString</span> &amp;<i>key</i>)</h3>
+<p>Fetches the catalog's preset <i translate="no">key</i> as <a href="store.html#fetchPreset" translate="no">fetchPreset</a>() does, then takes it into its machine's library (the <a href="storetaker.html" translate="no">StoreTaker</a>); <a href="store.html#presetKept" translate="no">presetKept</a>() says what it became. A single pattern entry kept this way is recorded as installed, as GET would record it. Returns <code translate="no">false</code> when the key is unknown or an install is under way.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@keepPreset -->
+</div>
+<div class="fnitem">
 <!-- $$$kindOf[overload1]$$$kindOfconstQString& -->
 <h3 class="fn" translate="no" id="kindOf"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Store::<span class="name">kindOf</span>(const <span class="type">QString</span> &amp;<i>type</i>)</h3>
 <p>Returns the kind (the dialog's key, &quot;patterns&quot;) an entry's <i translate="no">type</i> (&quot;pattern&quot;) belongs to; empty for a type the store does not know.</p>
 <!-- @@@kindOf -->
+</div>
+<div class="fnitem">
+<!-- $$$patternPresets[overload1]$$$patternPresetsconstQString& -->
+<h3 class="fn" translate="no" id="patternPresets"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> Store::<span class="name">patternPresets</span>(const <span class="type">QString</span> &amp;<i>machineKey</i>) const</h3>
+<p>Returns the catalog's pattern presets for the machine <i translate="no">machineKey</i> (those of its library, <a href="storetaker.html#patternLibrary" translate="no">StoreTaker::patternLibrary</a>()), from the pattern entries and from inside the packs, in the catalog's order: maps with <code translate="no">key</code> (what <a href="store.html#fetchPreset" translate="no">fetchPreset</a>() takes), <code translate="no">name</code>, <code translate="no">genre</code>, <code translate="no">entry</code> (the pack's or the entry's name), <code translate="no">sound</code>, <code translate="no">soundKit</code> and <code translate="no">soundMods</code> (<a href="presetlibrary.html#soundFields" translate="no">PresetLibrary::soundFields</a>()) and <code translate="no">cached</code> (the file is in the cache: it loads offline too). An entry that needs a newer ravving lists none; a catalog from before the presets were listed (no <code translate="no">presets</code>) lists nothing.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@patternPresets -->
+</div>
+<div class="fnitem">
+<!-- $$$presetFailed[overload1]$$$presetFailedconstQString&constQString& -->
+<h3 class="fn" translate="no" id="presetFailed"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Store::<span class="name">presetFailed</span>(const <span class="type">QString</span> &amp;<i>key</i>, const <span class="type">QString</span> &amp;<i>message</i>)</h3>
+<p>Emitted when the preset <i translate="no">key</i> asked for by <a href="store.html#fetchPreset" translate="no">fetchPreset</a>() or <a href="store.html#keepPreset" translate="no">keepPreset</a>() could not be had (the network, a checksum) or taken in, with <i translate="no">message</i> (translated) saying why.</p>
+<!-- @@@presetFailed -->
+</div>
+<div class="fnitem">
+<!-- $$$presetFetched[overload1]$$$presetFetchedconstQString&constQString& -->
+<h3 class="fn" translate="no" id="presetFetched"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Store::<span class="name">presetFetched</span>(const <span class="type">QString</span> &amp;<i>key</i>, const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Emitted when the preset <i translate="no">key</i> asked for by <a href="store.html#fetchPreset" translate="no">fetchPreset</a>() is in the cache at <i translate="no">path</i>, checked, ready to load.</p>
+<!-- @@@presetFetched -->
+</div>
+<div class="fnitem">
+<!-- $$$presetKept[overload1]$$$presetKeptconstQString&constQString& -->
+<h3 class="fn" translate="no" id="presetKept"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Store::<span class="name">presetKept</span>(const <span class="type">QString</span> &amp;<i>key</i>, const <span class="type">QString</span> &amp;<i>message</i>)</h3>
+<p>Emitted when the preset <i translate="no">key</i> asked for by <a href="store.html#keepPreset" translate="no">keepPreset</a>() is in its machine's library, with <i translate="no">message</i> (translated) saying what it is called there.</p>
+<!-- @@@presetKept -->
 </div>
 <div class="fnitem">
 <!-- $$$refresh[overload1]$$$refreshbool -->

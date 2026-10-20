@@ -561,8 +561,25 @@ URL serves a test.</p>
 </tr>
 </tbody>
 </table>
-<p><code>tst_store</code> covers the catalog from a folder, a skin and a pack installed, a bad checksum
-dropped, an update and a removal.</p>
+<h4 id="single-presets-the-presets-dialogs-online">Single presets: the presets dialog's ONLINE</h4>
+<p>The presets dialog's ONLINE source plays single presets without installing anything. The
+catalog lists each pattern entry's and each pack's pattern presets one by one, as the entry's
+<code>presets</code>: name, genre, library, sound, and the single file's URL, size and SHA-256. A pack's
+files are published beside its zip. Older ravvings read past the key.</p>
+<ul>
+<li><code>patternPresets(machineKey)</code>: the catalog's presets of the machine's library
+  (<code>StoreTaker::patternLibrary()</code>), with their sound fields as the device's presets have them,
+  and <code>cached</code>.</li>
+<li><code>fetchPreset(key)</code>: the one file, through the same download as an install, into the cache's
+  <code>store/presets/</code> (named after its URL's hash). Its size and hash are checked; a cached file
+  whose hash holds is used at once, offline too.</li>
+<li><code>presetFetched(key, path)</code>: the dialog loads it as a stick's file
+  (<code>UsbLibrary::loadPattern()</code>). <code>presetKept</code> and <code>presetFailed</code> carry a line to show.</li>
+<li><code>keepPreset(key)</code>: the same, then <code>StoreTaker::takePreset()</code>; a single pattern entry is
+  recorded in <code>store.json</code> as GET would record it.</li>
+</ul>
+<p><code>tst_store</code> covers the catalog, installs, checksums, updates and removals, and these single
+presets: listed, fetched, loaded again offline, a bad one dropped, one kept.</p>
   </article>
 </main>
 <footer>
