@@ -4,7 +4,7 @@
   ravving: the documentation.
   Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
   SPDX-License-Identifier: GPL-3.0-or-later
-  Rendered from data/secret/README.md by tools/build-site-docs.py: edit the markdown, not this file.
+  Rendered from docs/packs.md by tools/build-site-docs.py: edit the markdown, not this file.
 -->
 <html class="no-js" data-docs-base="../../docs/" lang="es">
 <head>
@@ -86,10 +86,13 @@
 </nav>
 </details>
 <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>Los packs de patrones</b> <span>/</span> <b translate="no">data/secret/README.md</b></p>
+<p class="mono doc-kicker"><b>Los packs de patrones</b> <span>/</span> <b translate="no">docs/packs.md</b></p>
 <h1>Los packs de géneros</h1>
 <p class="doc-blurb">Los packs de presets de patrones para una memoria USB: qué es cada preset, su tempo, su sonido, la escala en que está escrito y la plantilla que trae.</p>
-<p>Veinticinco bandas en una carpeta. Copia una a una memoria USB, y la batería, el bajo, el lead y los acordes tocan tu género, en tu tonalidad. Los packs no vienen instalados con ravving: cada uno se puede descargar, usar y remezclar gratis. Cada uno está escrito en un estilo, a menudo a partir de las bandas y discos que lo definen.</p>
+<p>Veinticinco bandas para descargar. Consigue una, y la batería, el bajo, el lead y los acordes tocan tu género,
+en tu tonalidad. Los packs no vienen instalados con ravving: cada uno se puede descargar, usar y
+remezclar gratis. Cada uno está escrito en un estilo, a menudo según las bandas y los discos que
+lo definen.</p>
 <table>
 <thead>
 <tr>
@@ -130,12 +133,14 @@
 </table>
 <p>La mayoría de packs tienen cinco presets para la batería, el bajo, el lead y los acordes. Solos, Bebop, Body y Fukui tienen seis, y Piig tiene tres.</p>
 <h2 id="play-a-pack">Toca un pack</h2>
-<ol>
-<li>Copia la carpeta <code>ravving</code> del pack a la raíz de una memoria USB.</li>
-<li>Conecta la memoria.</li>
-<li>Abre un diálogo de presets y elige <strong>SOURCE · USB</strong>. Los presets suenan directamente desde la memoria.</li>
-</ol>
-<p>La página USB también puede importarlos, para que se queden en el aparato.</p>
+<ul>
+<li><strong>Consíguelo:</strong> MENU → GET MORE → PACKS, y luego GET en un pack. Sus presets se suman al diálogo de presets de cada
+  instrumento bajo el género del pack, y sus plantillas a TEMPLATES.</li>
+<li><strong>Prueba uno antes:</strong> la <strong>SOURCE · ONLINE</strong> de un diálogo de presets toca cualquier preset de un pack directamente
+  desde el catálogo, sin descargar el resto.</li>
+<li><strong>En una memoria USB:</strong> la <a href="https://ravving.github.io/ravving_repo/" rel="noopener" target="_blank">página del catálogo</a> tiene cada pack
+  como zip. Descomprime su carpeta <code>ravving</code> en la raíz de una memoria, conéctala y elige <strong>SOURCE · USB</strong>.</li>
+</ul>
 <h2 id="the-notes-follow-your-key">Las notas siguen tu tonalidad</h2>
 <p>Las notas están escritas como grados de la escala, así que un pack suena en la tonalidad y escala que pongas. Cada pack se ciñe a una escala, para que sus cuatro instrumentos toquen juntos:</p>
 <ul>
@@ -479,11 +484,14 @@
 <p>Algunos presets están en 3/4 o 6/8, como el trío de vals de Clásica (Waltz, Waltz Oom y Waltz Pah-Pah). Tres compases de 16 pasos contienen cuatro de 12 pasos, así que entran en bucle juntos. El tempo cuenta una negra como cuatro pasos, así que una giga a negra con puntillo de 110 se lee 165.</p>
 <h2 id="making-a-pack">Hacer un pack</h2>
 <p>Cada pack se construye con un script, y un comprobador prueba cada pack con los propios lectores de ravving.</p>
-<pre><code>data/secret/&lt;genre&gt;-presets/build.py                     the generator (python3 build.py)
-data/secret/&lt;genre&gt;-presets/ravving/presets/&lt;drums|bass|lead|chords&gt;/patterns/&lt;Genre&gt; · &lt;Name&gt;.json
-data/secret/patternkit.py                                shared by the genre build.py files (not the jazz one)
-data/secret/validate.py                                  checks every pack against ravving's parsers
+<p>Viven en el catálogo, <a href="https://github.com/ravving/ravving_repo" rel="noopener" target="_blank">ravving_repo</a>:</p>
+<pre><code>tools/packs/&lt;id&gt;.py                     the generator (python3 tools/packs/&lt;id&gt;.py)
+packs/&lt;id&gt;/ravving/presets/&lt;drums|bass|lead|chords&gt;/patterns/&lt;Genre&gt; · &lt;Name&gt;.json
+tools/packs/patternkit.py               shared by the generators (not the jazz one)
+tools/packs/check.py                    checks every pack against ravving's parsers
 </code></pre>
+<p>Los generadores leen <code>data/kits.json</code> y <code>engines.json</code> de ravving desde la copia de ravving
+junto al catálogo (o <code>RAVVING_DATA</code>).</p>
 <p>Cada archivo de preset es
 <code>{"ravving": "preset", "type": "pattern", "library": "&lt;x&gt;-presets.json", "preset": {"name", "genre", "chart", "sound"}}</code>.</p>
 <ul>
@@ -3590,7 +3598,7 @@ ya están ahí: no hay nada que instalar.</p>
 <li><a href="https://martinhackworth.substack.com/p/chet-bakers-long-goodbye" rel="noopener" target="_blank">Chet Baker's long goodbye (Hackworth)</a></li>
 </ul>
 <h2 id="jazz">Jazz</h2>
-<p>El pack original. No tiene campo <code>sound</code>. Ver <code>jazz-presets/build.py</code>.</p>
+<p>El pack original. No tiene campo <code>sound</code>. Mira <code>tools/packs/jazz.py</code> en ravving_repo.</p>
 <h2 id="vuelo-flight-facilities">Vuelo (Flight Facilities)</h2>
 <p>Menor natural. Hay dos plantillas, las dos a 120 BPM: <strong>Vuelo</strong> en A menor, la tonalidad de Arty Boy, y <strong>Vuelo · Crave</strong> en C# menor, la de Crave You.</p>
 <h3 id="the-songs">Las canciones</h3>

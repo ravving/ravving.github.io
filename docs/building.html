@@ -471,7 +471,7 @@ and the documentation; <code>site/README.md</code> says how it is made and how t
 It is installed as it is (<code>install(DIRECTORY site …)</code>, this README left out), so it must be
 plain static files with relative references, and its documentation pages are generated into
 the repository:</p>
-<pre><code class="language-sh">python3 tools/build-site-docs.py          # guide/*.md, docs/*.md, data/secret/README.md → site/docs/*.html
+<pre><code class="language-sh">python3 tools/build-site-docs.py          # guide/*.md, docs/*.md, docs/packs.md → site/docs/*.html
 python3 tools/build-site-docs.py --list   # the pages
 python3 tools/build-site-docs.py --plain  # the script's own converter, as on a machine without python-markdown
 </code></pre>
@@ -508,7 +508,7 @@ reads <code>notes/</code>, <code>guide/_material/</code> or <code>.claude/</code
 <h3 id="seeing-it-live">Seeing it live</h3>
 <p><code>sh tools/site-serve.sh [PORT]</code> serves <code>site/</code> at http://localhost:8099/ and reloads the browser
 on every change. It also rebuilds the features page when <code>data/features.json</code> changes, and the
-docs pages when <code>docs/</code>, <code>guide/</code> or <code>data/secret/README.md</code> change. It needs node's <code>npx</code>.</p>
+docs pages when <code>docs/</code>, <code>guide/</code> or <code>docs/packs.md</code> change. It needs node's <code>npx</code>.</p>
 <h3 id="publishing">Publishing</h3>
 <p>The page is public at https://ravving.github.io/. Run <code>sh tools/publish-site.sh</code> once <code>site/</code> is
 committed:</p>

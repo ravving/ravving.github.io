@@ -4,7 +4,7 @@
   ravving: the documentation.
   Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
   SPDX-License-Identifier: GPL-3.0-or-later
-  Rendered from data/secret/README.md by tools/build-site-docs.py: edit the markdown, not this file.
+  Rendered from docs/packs.md by tools/build-site-docs.py: edit the markdown, not this file.
 -->
 <html class="no-js" data-docs-base="../../docs/" lang="ja">
 <head>
@@ -86,10 +86,12 @@
 </nav>
 </details>
 <article class="doc" id="doc">
-<p class="mono doc-kicker"><b>パターンパック</b> <span>/</span> <b translate="no">data/secret/README.md</b></p>
+<p class="mono doc-kicker"><b>パターンパック</b> <span>/</span> <b translate="no">docs/packs.md</b></p>
 <h1>ジャンル別パック</h1>
 <p class="doc-blurb">USB メモリー用のパターンプリセットパック：各プリセットの内容、テンポ、音色、書かれたスケール、付属のテンプレート。</p>
-<p>フォルダーに 25 のバンド。ひとつを USB メモリにコピーすれば、ドラム、ベース、リード、コードがあなたのジャンルを、あなたのキーで演奏します。パックは ravving に最初から入っていません。どれも無料でダウンロード、使用、リミックスできます。それぞれがひとつのスタイルで書かれ、多くはそのスタイルを決めたバンドやレコードにならっています。</p>
+<p>ダウンロードできる 25 のバンド。1 つ入手すれば、ドラム、ベース、リード、コードがあなたのジャンルを、
+あなたのキーで演奏します。パックは ravving に最初から入っていません:どれも無料でダウンロード、使用、
+リミックスできます。それぞれのスタイルで書かれ、多くはそのスタイルを決めたバンドやレコードにならっています。</p>
 <table>
 <thead>
 <tr>
@@ -130,12 +132,14 @@
 </table>
 <p>ほとんどのパックはドラム、ベース、リード、コードにそれぞれ 5 つのプリセットがあります。Solos、Bebop、Body、Fukui は 6 つ、Piig は 3 つです。</p>
 <h2 id="play-a-pack">パックを鳴らす</h2>
-<ol>
-<li>パックの <code>ravving</code> フォルダーを USB メモリーのいちばん上にコピーします。</li>
-<li>USB メモリーを挿します。</li>
-<li>プリセットのダイアログを開いて <strong>SOURCE · USB</strong> を選びます。プリセットはメモリーから直接鳴ります。</li>
-</ol>
-<p>USB ページで取り込めば、本体に残しておけます。</p>
+<ul>
+<li><strong>入手する:</strong>MENU → GET MORE → PACKS で、パックの GET を押します。プリセットは各楽器の
+  プリセットダイアログにパックのジャンルで加わり、テンプレートは TEMPLATES に加わります。</li>
+<li><strong>まず試す:</strong>プリセットダイアログの <strong>SOURCE · ONLINE</strong> なら、どのパックのプリセットも
+  残りをダウンロードせずにカタログから直接鳴らせます。</li>
+<li><strong>USB メモリーで:</strong><a href="https://ravving.github.io/ravving_repo/" rel="noopener" target="_blank">カタログのページ</a>に各パックの
+  zip があります。<code>ravving</code> フォルダーをメモリーのルートに展開し、挿して <strong>SOURCE · USB</strong> を選びます。</li>
+</ul>
 <h2 id="the-notes-follow-your-key">音はキーに従う</h2>
 <p>音はスケールの度数で書かれているので、パックは設定したキーとスケールで鳴ります。パックごとにスケールは 1 つなので、4 つの楽器が一緒に鳴ります：</p>
 <ul>
@@ -479,11 +483,14 @@
 <p>3/4 や 6/8 のプリセットもあります。クラシックのワルツ 3 部作（Waltz、Waltz Oom、Waltz Pah-Pah）などです。16 ステップの 3 小節に 12 ステップの 4 小節が収まるので、一緒にループします。テンポは 4 分音符を 4 ステップと数えるので、付点 4 分 = 110 のジグは 165 と表示されます。</p>
 <h2 id="making-a-pack">パックの作り方</h2>
 <p>各パックはスクリプトで作り、チェッカーが ravving 自身の読み込み処理ですべてのパックを確かめます。</p>
-<pre><code>data/secret/&lt;genre&gt;-presets/build.py                     the generator (python3 build.py)
-data/secret/&lt;genre&gt;-presets/ravving/presets/&lt;drums|bass|lead|chords&gt;/patterns/&lt;Genre&gt; · &lt;Name&gt;.json
-data/secret/patternkit.py                                shared by the genre build.py files (not the jazz one)
-data/secret/validate.py                                  checks every pack against ravving's parsers
+<p>パックはカタログ <a href="https://github.com/ravving/ravving_repo" rel="noopener" target="_blank">ravving_repo</a> にあります:</p>
+<pre><code>tools/packs/&lt;id&gt;.py                     the generator (python3 tools/packs/&lt;id&gt;.py)
+packs/&lt;id&gt;/ravving/presets/&lt;drums|bass|lead|chords&gt;/patterns/&lt;Genre&gt; · &lt;Name&gt;.json
+tools/packs/patternkit.py               shared by the generators (not the jazz one)
+tools/packs/check.py                    checks every pack against ravving's parsers
 </code></pre>
+<p>ジェネレーターは ravving の <code>data/kits.json</code> と <code>engines.json</code> を、カタログの隣にある ravving の
+チェックアウト(または <code>RAVVING_DATA</code>)から読み込みます。</p>
 <p>各プリセットファイルの形式：
 <code>{"ravving": "preset", "type": "pattern", "library": "&lt;x&gt;-presets.json", "preset": {"name", "genre", "chart", "sound"}}</code>.</p>
 <ul>
@@ -3590,7 +3597,7 @@ data/secret/validate.py                                  checks every pack again
 <li><a href="https://martinhackworth.substack.com/p/chet-bakers-long-goodbye" rel="noopener" target="_blank">Chet Baker's long goodbye (Hackworth)</a></li>
 </ul>
 <h2 id="jazz">Jazz</h2>
-<p>最初のパックです。<code>sound</code> フィールドはありません。<code>jazz-presets/build.py</code> を参照。</p>
+<p>最初のパック。<code>sound</code> フィールドはありません。ravving_repo の <code>tools/packs/jazz.py</code> を参照。</p>
 <h2 id="vuelo-flight-facilities">Vuelo（Flight Facilities）</h2>
 <p>ナチュラルマイナー。テンプレートは 2 つで、どちらも 120 BPM：<strong>Vuelo</strong> は Arty Boy のキーの A マイナー、<strong>Vuelo · Crave</strong> は Crave You のキーの C# マイナー。</p>
 <h3 id="the-songs">曲</h3>
