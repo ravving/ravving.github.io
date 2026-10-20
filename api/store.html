@@ -22,7 +22,7 @@
     }());
   </script>
   <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=d2d200390a" defer></script>
+  <script src="search.js?v=25467c9c46" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -126,6 +126,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="store.html#remove" translate="no">remove</a></b>(const QString &amp;<i>id</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="store.html#setTaker" translate="no">setTaker</a></b>(StoreTaker *<i>taker</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="store.html#status-prop" translate="no">status</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="store.html#templatePresets" translate="no">templatePresets</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="store.html#updates-prop" translate="no">updates</a></b>() const</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
@@ -335,7 +336,7 @@
 <div class="fnitem">
 <!-- $$$fetchPreset[overload1]$$$fetchPresetconstQString& -->
 <h3 class="fn" translate="no" id="fetchPreset"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Store::<span class="name">fetchPreset</span>(const <span class="type">QString</span> &amp;<i>key</i>)</h3>
-<p>Fetches the catalog's preset <i translate="no">key</i> (<a href="store.html#patternPresets" translate="no">patternPresets</a>()) into the cache, checked against the catalog's size and SHA-256; <a href="store.html#presetFetched" translate="no">presetFetched</a>() hands over its path. A cached copy whose checksum holds is handed over at once, without the network. Returns <code translate="no">false</code> when the key is unknown or an install is under way.</p>
+<p>Fetches the catalog's preset <i translate="no">key</i> (<a href="store.html#patternPresets" translate="no">patternPresets</a>(), <a href="store.html#templatePresets" translate="no">templatePresets</a>()) into the cache, checked against the catalog's size and SHA-256; <a href="store.html#presetFetched" translate="no">presetFetched</a>() hands over its path. A cached copy whose checksum holds is handed over at once, without the network. Returns <code translate="no">false</code> when the key is unknown or an install is under way.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@fetchPreset -->
 </div>
@@ -415,6 +416,13 @@
 <h3 class="fn" translate="no" id="setTaker"><span class="type">void</span> Store::<span class="name">setTaker</span>(<span class="type"><a href="storetaker.html" translate="no">StoreTaker</a></span> *<i>taker</i>)</h3>
 <p>Sets <i translate="no">taker</i>, what takes the preset files and project bundles in (<a href="presetexchange.html" translate="no">PresetExchange</a> and the Exporter, behind a <a href="storetaker.html" translate="no">StoreTaker</a>): without one, only skins, soundfonts and plain projects install.</p>
 <!-- @@@setTaker -->
+</div>
+<div class="fnitem">
+<!-- $$$templatePresets[overload1]$$$templatePresets -->
+<h3 class="fn" translate="no" id="templatePresets"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> Store::<span class="name">templatePresets</span>() const</h3>
+<p>Returns the catalog's project templates, from the template entries and from inside the packs, in the catalog's order: maps with <code translate="no">key</code> (what <a href="store.html#fetchPreset" translate="no">fetchPreset</a>() and <a href="store.html#keepPreset" translate="no">keepPreset</a>() take, and what the templates dialog picks by), <code translate="no">name</code>, <code translate="no">genre</code>, <code translate="no">about</code>, <code translate="no">bpm</code>, <code translate="no">root</code>, <code translate="no">scale</code>, <code translate="no">entry</code> (the pack's or the entry's name) and <code translate="no">cached</code>. A fetched template is a file <a href="templates.html#start" translate="no">Templates::start</a>() opens. An entry that needs a newer ravving lists none.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@templatePresets -->
 </div>
 <div class="fnitem">
 <!-- $$$versionBefore[overload1]$$$versionBeforeconstQString&constQString& -->
