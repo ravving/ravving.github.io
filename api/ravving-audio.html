@@ -6,8 +6,11 @@
   <meta name="description" content="The JACK graph, the outputs, taps, recorders, the tuner, exports and playback.">
   <title>Audio, recording and export | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=54f138c7a0">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
   <script>
     (function () {
       var t = null;
@@ -17,8 +20,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=6d3fec3ba2" defer></script>
-  <script src="search.js?v=ca2ed9567f" defer></script>
+  <script src="nav.js?v=1bc6ffb8e9" defer></script>
+  <script src="search.js?v=ec45397431" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -29,7 +32,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
     </button>
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav class="sections" aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -79,18 +82,21 @@
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audiotap.html">AudioTap</a></p></td><td class="tblDescr"><p>A JACK client that copies the master's output into a ring buffer and feeds it to ffmpeg through a named pipe; VideoRecorder's audio source</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="exporter.html">Exporter</a></p></td><td class="tblDescr"><p>Project's exports, published to QML as studio.exporter: a track (an audio file) or a bundle (a .ravv zip), both into the library's exports folder (Paths::exports()), where the music player finds them</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareports.html">HardwarePorts</a></p></td><td class="tblDescr"><p>A sound card's ports on the JACK graph, found by the card, never by a fixed JACK name</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="inputeffects.html">InputEffects</a></p></td><td class="tblDescr"><p>Effects on the device input, published to QML as studio.input.effects: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="inputcard.html">InputCard</a></p></td><td class="tblDescr"><p>Device's input card as its two users share it: the input modes, each mode's gain range and default, and the card's mixer (amixer)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="inputeffects.html">InputEffects</a></p></td><td class="tblDescr"><p>Effects on the device input: a chain of LV2 plugins (jalv) between the input and whoever hears it (the monitor and the take, or the live recording's tap), so what is heard is what is recorded</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="inputmixer.html">InputMixer</a></p></td><td class="tblDescr"><p>Input card's mixer set from a knob: the last setting asked for goes to the card (InputCard::apply()) once the knob has rested for 60 ms, so a fast turn starts one amixer, not one per detent</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="inputrecorder.html">InputRecorder</a></p></td><td class="tblDescr"><p>Device's audio input, recorded into the samplers or kept as played (LiveRecordings); published to QML as studio.input</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="jackwiring.html">JackWiring</a></p></td><td class="tblDescr"><p>Keeps the JACK graph wired for ravving's tracks, with the topology libzynthbox's tracks expect (the one zynthbox-qml's autoconnect produces for a synth on a sketchpad track)</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="liverecordings.html">LiveRecordings</a></p></td><td class="tblDescr"><p>Input takes kept as played (InputRecorder::record(true)), published to QML as studio.input.recordings</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="midiinput.html">MidiInput</a></p></td><td class="tblDescr"><p>External MIDI controllers (keyboards, pads) as a note input, published to QML as studio.midiIn</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="mixrecorder.html">MixRecorder</a></p></td><td class="tblDescr"><p>Global recording: everything that reaches the speakers (libzynthbox's GlobalPlayback, the master) written to a WAV file; published to QML as studio.mix</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="musiclibrary.html">MusicLibrary</a></p></td><td class="tblDescr"><p>Tracks on the device the music player plays from, published to QML as studio.music.library</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="musicplayer.html">MusicPlayer</a></p></td><td class="tblDescr"><p>Plays a queue of the library's tracks (MusicLibrary) one after the other through Qt Multimedia; published to QML as studio.music</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="outputwatch.html">OutputWatch</a></p></td><td class="tblDescr"><p>Checks that the sound sent to another output (AudioOutputs' loopback into a Bluetooth or HDMI sink) comes out of it</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="pitchdetector.html">PitchDetector</a></p></td><td class="tblDescr"><p>Finds the pitch of a plucked string in a block of mono audio; Tuner's detector</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="tuner.html">Tuner</a></p></td><td class="tblDescr"><p>Measures the pitch of a string played into the device input against a tuning's open strings; published to QML as studio.input.tuner</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="videorecorder.html">VideoRecorder</a></p></td><td class="tblDescr"><p>Records the screen or a USB camera with the master's sound into one MP4 in the videos folder (Paths::videos()), or the sound alone into a WAV; published to QML as video</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="liverecmic.html">LiveRecMic</a></p></td><td class="tblDescr"><p>Live recording's own input path, published to QML as video.input: the mic (or guitar, or line) as the recording hears it, with its own mode, gain, role and effects, apart from the RECORDER's (InputRecorder)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="liverecordings.html">LiveRecordings</a></p></td><td class="tblDescr"><p>Input takes kept as played (InputRecorder::record(true)), published to QML as studio.input.recordings</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="midiinput.html">MidiInput</a></p></td><td class="tblDescr"><p>External MIDI controllers (keyboards, pads) as a note input, published to QML as studio.midiIn</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="mixrecorder.html">MixRecorder</a></p></td><td class="tblDescr"><p>Global recording: everything that reaches the speakers (libzynthbox's GlobalPlayback, the master) written to a WAV file; published to QML as studio.mix</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="musiclibrary.html">MusicLibrary</a></p></td><td class="tblDescr"><p>Tracks on the device the music player plays from, published to QML as studio.music.library</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="musicplayer.html">MusicPlayer</a></p></td><td class="tblDescr"><p>Plays a queue of the library's tracks (MusicLibrary) one after the other through Qt Multimedia; published to QML as studio.music</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="outputwatch.html">OutputWatch</a></p></td><td class="tblDescr"><p>Checks that the sound sent to another output (AudioOutputs' loopback into a Bluetooth or HDMI sink) comes out of it</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="pitchdetector.html">PitchDetector</a></p></td><td class="tblDescr"><p>Finds the pitch of a plucked string in a block of mono audio; Tuner's detector</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="tuner.html">Tuner</a></p></td><td class="tblDescr"><p>Measures the pitch of a string played into the device input against a tuning's open strings; published to QML as studio.input.tuner</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="videorecorder.html">VideoRecorder</a></p></td><td class="tblDescr"><p>Records the screen or a USB camera with the master's sound into one MP4 in the videos folder (Paths::videos()), or the sound alone into a WAV; published to QML as video</p></td></tr>
 </table></div>
 </div>
 <!-- @@@ravving-audio -->
@@ -110,18 +116,21 @@
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audiotap.html">AudioTap</a></p></td><td class="tblDescr"><p>A JACK client that copies the master's output into a ring buffer and feeds it to ffmpeg through a named pipe; VideoRecorder's audio source</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="exporter.html">Exporter</a></p></td><td class="tblDescr"><p>Project's exports, published to QML as studio.exporter: a track (an audio file) or a bundle (a .ravv zip), both into the library's exports folder (Paths::exports()), where the music player finds them</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareports.html">HardwarePorts</a></p></td><td class="tblDescr"><p>A sound card's ports on the JACK graph, found by the card, never by a fixed JACK name</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="inputeffects.html">InputEffects</a></p></td><td class="tblDescr"><p>Effects on the device input, published to QML as studio.input.effects: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="inputcard.html">InputCard</a></p></td><td class="tblDescr"><p>Device's input card as its two users share it: the input modes, each mode's gain range and default, and the card's mixer (amixer)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="inputeffects.html">InputEffects</a></p></td><td class="tblDescr"><p>Effects on the device input: a chain of LV2 plugins (jalv) between the input and whoever hears it (the monitor and the take, or the live recording's tap), so what is heard is what is recorded</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="inputmixer.html">InputMixer</a></p></td><td class="tblDescr"><p>Input card's mixer set from a knob: the last setting asked for goes to the card (InputCard::apply()) once the knob has rested for 60 ms, so a fast turn starts one amixer, not one per detent</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="inputrecorder.html">InputRecorder</a></p></td><td class="tblDescr"><p>Device's audio input, recorded into the samplers or kept as played (LiveRecordings); published to QML as studio.input</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="jackwiring.html">JackWiring</a></p></td><td class="tblDescr"><p>Keeps the JACK graph wired for ravving's tracks, with the topology libzynthbox's tracks expect (the one zynthbox-qml's autoconnect produces for a synth on a sketchpad track)</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="liverecordings.html">LiveRecordings</a></p></td><td class="tblDescr"><p>Input takes kept as played (InputRecorder::record(true)), published to QML as studio.input.recordings</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="midiinput.html">MidiInput</a></p></td><td class="tblDescr"><p>External MIDI controllers (keyboards, pads) as a note input, published to QML as studio.midiIn</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="mixrecorder.html">MixRecorder</a></p></td><td class="tblDescr"><p>Global recording: everything that reaches the speakers (libzynthbox's GlobalPlayback, the master) written to a WAV file; published to QML as studio.mix</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="musiclibrary.html">MusicLibrary</a></p></td><td class="tblDescr"><p>Tracks on the device the music player plays from, published to QML as studio.music.library</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="musicplayer.html">MusicPlayer</a></p></td><td class="tblDescr"><p>Plays a queue of the library's tracks (MusicLibrary) one after the other through Qt Multimedia; published to QML as studio.music</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="outputwatch.html">OutputWatch</a></p></td><td class="tblDescr"><p>Checks that the sound sent to another output (AudioOutputs' loopback into a Bluetooth or HDMI sink) comes out of it</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="pitchdetector.html">PitchDetector</a></p></td><td class="tblDescr"><p>Finds the pitch of a plucked string in a block of mono audio; Tuner's detector</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="tuner.html">Tuner</a></p></td><td class="tblDescr"><p>Measures the pitch of a string played into the device input against a tuning's open strings; published to QML as studio.input.tuner</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="videorecorder.html">VideoRecorder</a></p></td><td class="tblDescr"><p>Records the screen or a USB camera with the master's sound into one MP4 in the videos folder (Paths::videos()), or the sound alone into a WAV; published to QML as video</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="liverecmic.html">LiveRecMic</a></p></td><td class="tblDescr"><p>Live recording's own input path, published to QML as video.input: the mic (or guitar, or line) as the recording hears it, with its own mode, gain, role and effects, apart from the RECORDER's (InputRecorder)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="liverecordings.html">LiveRecordings</a></p></td><td class="tblDescr"><p>Input takes kept as played (InputRecorder::record(true)), published to QML as studio.input.recordings</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="midiinput.html">MidiInput</a></p></td><td class="tblDescr"><p>External MIDI controllers (keyboards, pads) as a note input, published to QML as studio.midiIn</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="mixrecorder.html">MixRecorder</a></p></td><td class="tblDescr"><p>Global recording: everything that reaches the speakers (libzynthbox's GlobalPlayback, the master) written to a WAV file; published to QML as studio.mix</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="musiclibrary.html">MusicLibrary</a></p></td><td class="tblDescr"><p>Tracks on the device the music player plays from, published to QML as studio.music.library</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="musicplayer.html">MusicPlayer</a></p></td><td class="tblDescr"><p>Plays a queue of the library's tracks (MusicLibrary) one after the other through Qt Multimedia; published to QML as studio.music</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="outputwatch.html">OutputWatch</a></p></td><td class="tblDescr"><p>Checks that the sound sent to another output (AudioOutputs' loopback into a Bluetooth or HDMI sink) comes out of it</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="pitchdetector.html">PitchDetector</a></p></td><td class="tblDescr"><p>Finds the pitch of a plucked string in a block of mono audio; Tuner's detector</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="tuner.html">Tuner</a></p></td><td class="tblDescr"><p>Measures the pitch of a string played into the device input against a tuning's open strings; published to QML as studio.input.tuner</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="videorecorder.html">VideoRecorder</a></p></td><td class="tblDescr"><p>Records the screen or a USB camera with the master's sound into one MP4 in the videos folder (Paths::videos()), or the sound alone into a WAV; published to QML as video</p></td></tr>
 </table></div>
 </article>
 </main>

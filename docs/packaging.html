@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  ravving on MIKO: the documentation.
+  ravving: the documentation.
   Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
   SPDX-License-Identifier: GPL-3.0-or-later
   Rendered from docs/packaging.md by tools/build-site-docs.py: edit the markdown, not this file.
@@ -10,15 +10,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Packaging · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=57a1c6a25f">
+<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<script src="../assets/theme.js?v=3307b56d38"></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
 </head>
 <body class="docs">
 <a class="skip" href="#doc">Skip to the text</a>
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -26,6 +30,7 @@
       <a href="index.html" aria-current="true">Docs</a>
       <a href="../api/index.html">API reference</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Theme"><svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg></button>
   </div>
 </header>
 <main class="wrap docs-wrap">
@@ -47,6 +52,9 @@
 <li><a href="machines.html">The machines</a></li>
 <li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
+</ul>
+<p class="mono">Make your own</p><ul>
+<li><a href="skin-sets.html">Make a skin set</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -109,11 +117,17 @@ checks every requirement, and every library the bundle's ravving links to (<code
 <li><strong>INSTALL WHAT IS MISSING</strong> puts the bundle's files in place and installs the packages (see
   "Installing what is missing" below), then checks again.</li>
 <li>A <code>startup</code> requirement or library missing means ravving can't start there. TRY IT and MAKE
-  IT THE DEFAULT stay dimmed until INSTALL WHAT IS MISSING has brought it, and the CHOOSE
-  caption says to install what is missing first.</li>
+  IT THE DEFAULT stay dimmed until INSTALL WHAT IS MISSING has brought it: the title says
+  FIRST, WHAT'S MISSING, and INSTALL is the page's orange button meanwhile.</li>
 <li>A package the device's software sources don't have is named in the list and in the outcome.
   When ravving needs it to start, the update stays blocked: there is no fallback.</li>
-<li>A tile tapped while the check still runs waits for it, and goes on only if ravving can start.</li>
+<li>A choice tapped while the check still runs waits for it, and goes on only if ravving can start.</li>
+</ul>
+<h3 id="the-hand-off">The hand-off</h3>
+<ul>
+<li>TRY IT and MAKE IT THE DEFAULT hand over to ARU's party (the three shapes dancing) until
+  Zynthbox stops, and the page with it; ravving's own splash comes next. A failure ends the
+  party and the page says why.</li>
 </ul>
 <h3 id="the-install-and-ravving-itself">The install, and ravving itself</h3>
 <ul>
@@ -291,50 +305,50 @@ script always matches the files it installs):</p>
 <td>zynthbox-qml at boot; ravving stays installed</td>
 </tr>
 <tr>
-<td>REMOVE RAVVING (press twice)</td>
+<td>REMOVE RAVVING (tap twice)</td>
 <td><code>zynthbox --purge</code></td>
 <td>the same, and ravving's program and data leave the system; projects, takes and recordings stay</td>
 </tr>
 </tbody>
 </table>
-<p>The wells above them come from <code>default-app.sh status</code>, re-read after every action: the
-installed version, what starts at boot, and what runs now.</p>
+<p>The page's title and its RIGHT NOW line come from <code>default-app.sh status</code>, re-read after every
+action: the installed version, what starts at boot, and what runs now.</p>
 <h3 id="its-look-and-layout">Its look and layout</h3>
+<p>Laid out as the webpage's landing (design-system B22):</p>
 <ul>
-<li>It wears ravving's look: its style, tokens, typefaces and UI kit, built into the program,
-  on a page skin of its own. Aru, the mascot, says when the device has
-  everything ravving needs.</li>
-<li>The header (the nameplate, the bundle, the one ✕ that closes the page) and the footer (the
-  outcome line) stay in place.</li>
-<li>Everything between them is one column: the status wells, what the device lacks, and the four
-  choices, which share the room that's left.</li>
-<li>When it doesn't fit (a long list, longer words in Spanish or Japanese), the column scrolls,
-  with ravving's scroll bar.</li>
+<li><strong>The column at the left,</strong> centred on the field's grain: the eyebrow (SETUP · BUNDLE), a
+  title, the versions in orange and the lede. The title says where the device stands: TRY IT ON
+  YOUR MIKO, UPDATE RAVVING, RAVVING IS READY, RAVVING STARTS AT BOOT or FIRST, WHAT'S MISSING.</li>
+<li><strong>The choices:</strong> TRY IT (the page's one orange button) and MAKE IT THE DEFAULT, then what each
+  does and RIGHT NOW as the landing's list of ways. What the device lacks is a card under them.</li>
+<li><strong>The ways back</strong> at the foot under a hairline: ZYNTHBOX AT BOOT AGAIN and REMOVE RAVVING.</li>
+<li><strong>The sidebar at the right:</strong> one of the covers' artworks, a new one at each start, with the
+  logo at its foot and the ✕ in its corner. The outcome line runs along the foot of the column.</li>
+<li>When the column doesn't fit (a long list, longer words in Spanish or Japanese), it scrolls.</li>
 </ul>
 <p>It's in ravving's language (SETTINGS · LANGUAGE, else the system's), from ravving's own catalog.
-It links Qt only (ravving's style, kit, tokens and glyphs are Qt only), so it starts on any
-Zynthbox.</p>
+It links Qt only (ravving's style, kit and tokens are Qt only), so it starts on any Zynthbox.</p>
 <h3 id="the-choices">The choices</h3>
-<p>The two installing choices read by what the device has:</p>
+<p>The orange line reads by what the device has:</p>
 <table>
 <thead>
 <tr>
 <th>Installed</th>
-<th>The choice reads</th>
+<th>The line reads</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>nothing</td>
-<td>"Install this bundle and …"</td>
+<td>"Version Y, ready to try."</td>
 </tr>
 <tr>
 <td>another version</td>
-<td>"Update the installed X to this bundle's Y and …"</td>
+<td>"From X to Y."</td>
 </tr>
 <tr>
 <td>this version</td>
-<td>"ravving Y is already installed: …", and the install step is skipped (TRY IT reads LAUNCH RAVVING)</td>
+<td>"Version Y is installed." (the install step is skipped, and TRY IT reads LAUNCH RAVVING)</td>
 </tr>
 </tbody>
 </table>
@@ -384,8 +398,8 @@ git checkout into a venv). Then it runs <code>tools/build-appimage.sh</code> the
 <p>Next to the AppImage, the Store listing wants an icon and a gallery:</p>
 <ul>
 <li><code>device.sh appimage</code> also renders <code>ravving-icon-512.png</code> from <code>data/icons/ravving.svg</code>
-  (the icon the bundle carries: the 808 plate, the big knob lit in the drums' orange over a
-  step row) into the same output folder;</li>
+  (the icon the bundle carries: ravving's mark, the two Vs and the pink diamond, on a dark
+  rounded tile) into the same output folder;</li>
 <li><code>device.sh gallery [OUT_DIR]</code> screenshots each of the five pages of the ravving that is
   running on the device (<code>ravving-1-drums.png</code> … <code>ravving-5-sampler.png</code>, 1280 × 800, by
   the number keys) into the Store packages folder's <code>gallery/</code>; pick three for the page.
@@ -436,7 +450,7 @@ Several walks in a row can leave zynthbox-qml hung loading its sketchpad ("Start
   on the device's display. That's exactly a Store launch, so a switch that kills zynthbox-qml
   kills the page too, as in real use.</li>
 <li><strong>The record:</strong> screenshots and the status after every step go to
-  <code>analysis/appimage-test-&lt;date&gt;/</code>. Eyeball the page shots for dimmed tiles and messages.</li>
+  <code>analysis/appimage-test-&lt;date&gt;/</code>. Eyeball the page shots for dimmed choices and messages.</li>
 <li><strong>Your data:</strong> the user's ravving settings (<code>~/.config/ravving</code>) and live session
   (<code>~/.local/state/ravving</code>) are copied aside before the walk's purge, and put back at the end,
   even after a failed step.</li>
@@ -447,44 +461,44 @@ Several walks in a row can leave zynthbox-qml hung loading its sketchpad ("Start
 </ul>
 <h2 id="testing-an-appimage-without-the-store">Testing an AppImage without the Store</h2>
 <p>By hand on the device, the pieces the release check uses:</p>
-<pre><code class="language-sh">tools/store-register.py install dist/ravving-0.4.0-aarch64.AppImage camiloh &quot;Ravving 0.4.0&quot;
+<pre><code class="language-sh">tools/store-register.py install dist/ravving-0.5.0-aarch64.AppImage camiloh &quot;Ravving 0.5.0&quot;
                                    # → prints the AppDir; the entry shows in Apps at once
 tools/store-launch.sh &quot;$APPDIR&quot;    # the page, as zynthbox-qml's Apps list would start it
-tools/store-register.py remove &quot;~/.local/share/zynthbox/apps/camiloh/Ravving 0.4.0/ravving-0.4.0-aarch64.AppImage&quot;
+tools/store-register.py remove &quot;~/.local/share/zynthbox/apps/camiloh/Ravving 0.5.0/ravving-0.5.0-aarch64.AppImage&quot;
 </code></pre>
 <p><code>store-register.py</code> does what <code>registerAppImage</code> / <code>unregisterAppImage</code> in zynthbox-qml's
 <code>zynthian_gui_main.py</code> do, minus the UI. Or, in zynthbox-qml: <code>SCREEN_MAIN_MENU</code>
 (<code>tools/device.sh cuia</code>), tap Apps, tap Ravving.</p>
-<p>The page is touch only, and <code>tools/device.sh tap X Y</code> drives it. A tap anywhere on a tile
-chooses it, as its button does (REMOVE's first tap arms, the second removes). With nothing
-missing, the tiles are the four quarters of the lower half (these points stay inside them):</p>
+<p>The page is touch only, and <code>tools/device.sh tap X Y</code> drives it (REMOVE's first tap arms, the
+second removes). The choices keep one width and the outcome line keeps its room, so these points
+hold in every state but a long list of what is missing, which pushes the ways back down:</p>
 <table>
 <thead>
 <tr>
-<th>Tile</th>
+<th>Choice</th>
 <th>X Y</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>TRY IT</td>
-<td>337 390</td>
+<td>291 300</td>
 </tr>
 <tr>
 <td>MAKE IT THE DEFAULT</td>
-<td>943 390</td>
+<td>605 300</td>
 </tr>
 <tr>
 <td>ZYNTHBOX AT BOOT AGAIN</td>
-<td>337 600</td>
+<td>283 643</td>
 </tr>
 <tr>
 <td>REMOVE</td>
-<td>943 600</td>
+<td>613 643</td>
 </tr>
 <tr>
 <td>✕ (close)</td>
-<td>1251 23</td>
+<td>1248 31</td>
 </tr>
 </tbody>
 </table>

@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  ravving on MIKO: the documentation.
+  ravving: the documentation.
   Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
   SPDX-License-Identifier: GPL-3.0-or-later
   Rendered from docs/testing.md by tools/build-site-docs.py: edit the markdown, not this file.
@@ -10,15 +10,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Testing on the device · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=57a1c6a25f">
+<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<script src="../assets/theme.js?v=3307b56d38"></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
 </head>
 <body class="docs">
 <a class="skip" href="#doc">Skip to the text</a>
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -26,6 +30,7 @@
       <a href="index.html" aria-current="true">Docs</a>
       <a href="../api/index.html">API reference</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Theme"><svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg></button>
   </div>
 </header>
 <main class="wrap docs-wrap">
@@ -47,6 +52,9 @@
 <li><a href="machines.html">The machines</a></li>
 <li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
+</ul>
+<p class="mono">Make your own</p><ul>
+<li><a href="skin-sets.html">Make a skin set</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -146,7 +154,7 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 </tr>
 <tr>
 <td><code>tools/tour.sh OUT_DIR [LANGUAGE]</code>, <code>tools/tour-compare.py REF NEW</code>, <code>tools/tour-diff.py REF NEW --out DIR</code></td>
-<td>the screenshot tour (every page, state and dialog, offscreen at 1280 × 800), its shot-by-shot comparison, and where each shot changed, old above new (<a href="quality.html">quality.md</a> §4)</td>
+<td>the screenshot tour (every page, state and dialog, offscreen at 1280 × 800; <code>ONLY=1-drums-909</code> takes just the named shots and stops), its shot-by-shot comparison, and where each shot changed, old above new (<a href="quality.html">quality.md</a> §4)</td>
 </tr>
 <tr>
 <td><code>tools/device.sh log [SECONDS]</code></td>
@@ -223,6 +231,10 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 <tr>
 <td><code>tools/video-test.sh</code></td>
 <td>the video recorder suite (<a href="architecture.html">architecture.md</a>, "Live recordings"): a recording over the fifo while playing, its MP4 (streams, starts, length, frame rate), the ring's dropped frames, the graph's xruns meanwhile, RECORD / STOP by the keys, the TIMER and its cancel, VIDEO off</td>
+</tr>
+<tr>
+<td><code>tools/liverec-mic-test.sh</code></td>
+<td>the live recording's mic apart from the RECORDER's (<a href="live-recording.html">live-recording.md</a>, "A microphone in the sound"): an effect on the RECORDER's MIC, an audio LIVE REC with the mic in, the tap fed by the live chain alone (<code>jack_lsp -c</code>), the live chain fed by the jack the live path picked at run time (<code>video.input sources</code>; <code>MIC_PORT=capture_FR</code> / <code>left</code> / <code>right</code> names the jack the mic is in, found by name since the port names move between boots, and it must carry a signal), the RECORDER's paths unwired and its take refused meanwhile, the live chain passing a tone (tone.py → meter.py), a custom effect and the roles, the xruns of a steady recording, STOP once / twice, the RECORDER's take holding the line first (busy → holding), everything back afterwards</td>
 </tr>
 <tr>
 <td><code>tools/share-test.sh [FILE]</code></td>
@@ -515,6 +527,10 @@ tools/device.sh call bluetooth sendFile AA:BB:CC:DD:EE:FF &quot;/zynthian/zynthi
 <td>the feature suite on the device (41 checks): a recording over the fifo while playing, the MP4's streams, starts, length and frame rate, the ring's dropped frames, the graph's xruns meanwhile, RECORD / STOP by the device keys (the music goes on), the TIMER and its cancel, VIDEO off, the computer link's state</td>
 </tr>
 <tr>
+<td><code>tools/liverec-mic-test.sh</code></td>
+<td>the live recording's mic apart from the RECORDER's input (56 checks): ROBOT on the RECORDER's MIC, an audio LIVE REC with the mic in, <code>ravving-video:mic_l</code> fed by <code>ravving-in-liverec-*</code> and never <code>ravving-in-recorder-*</code>, the RECORDER's recorder and monitor unwired and its take refused while the line is held, a 440 Hz tone into the live chain metered where the tap is fed, TELEPHONE on the live mic with ROBOT untouched, SINGING's chain, 0 xruns, STOP once (the recording and the music end, LIVE REC stays) then STOP again (LIVE REC off, the line free), a lone STOP STOP from ready, two STOPs 3.5 s apart staying on, a RECORDER take holding the line first (busy, then holding as it ends), the RECORDER's chain and take back afterwards</td>
+</tr>
+<tr>
 <td><code>tools/computer-link-test.sh</code></td>
 <td>the computer link end to end against the device's own sshd (21 checks): a throwaway local user stands in for the computer (set up with the password, the key installed, Downloads found, a wrong password told apart, a file sent and compared, the key removed → refused); the user is removed and the previous computer put back</td>
 </tr>
@@ -537,8 +553,10 @@ tools/device.sh call bluetooth sendFile AA:BB:CC:DD:EE:FF &quot;/zynthian/zynthi
 </tbody>
 </table>
 <p>Scripts: <code>set video countdown 0</code>, <code>call video start</code>, <code>get video state</code>, <code>call video stop</code>,
-<code>get video lastFile</code>, <code>get video lastInfo</code>, <code>call video toggle</code>, <code>set video quality high</code>,
-<code>set video source camera</code>, <code>get video cameras</code>; <code>call computer setup HOST USER PASSWORD 22</code>,
+<code>call video stopPressed</code> (STOP as the key does it), <code>get video lastFile</code>, <code>get video lastInfo</code>, <code>call video toggle</code>, <code>set video quality high</code>,
+<code>set video source camera</code>, <code>get video cameras</code>; the live mic: <code>set video mic true</code>, <code>set video.input mode mic</code>,
+<code>set video.input role singing</code>, <code>set video.input.effects preset TELEPHONE</code>, <code>get video.input status</code> (off / busy /
+holding), <code>get input held</code> / <code>heldBy</code>; <code>call computer setup HOST USER PASSWORD 22</code>,
 <code>call computer check</code>, <code>call computer send /path/file</code>, <code>call computer forget</code>.</p>
 <h2 id="building-a-project-by-script">Building a project by script</h2>
 <p>Everything a finger does on the device, a script can do through the remote-control fifo: load

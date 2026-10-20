@@ -7,8 +7,11 @@
   <meta name="keywords" content="class">
   <title>JackWiring Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=54f138c7a0">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
   <script>
     (function () {
       var t = null;
@@ -18,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=6d3fec3ba2" defer></script>
-  <script src="search.js?v=ca2ed9567f" defer></script>
+  <script src="nav.js?v=1bc6ffb8e9" defer></script>
+  <script src="search.js?v=ec45397431" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -30,7 +33,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
     </button>
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav class="sections" aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -92,7 +95,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#masterOutputPorts" translate="no">masterOutputPorts</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#removeSynth" translate="no">removeSynth</a></b>(SoundEngine *<i>engine</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#setCaptureMeter" translate="no">setCaptureMeter</a></b>(const QStringList &amp;<i>inputs</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#setInputChain" translate="no">setInputChain</a></b>(int <i>track</i>, const QList&lt;QStringList&gt; &amp;<i>sources</i>, const QList&lt;AudioInsert *&gt; &amp;<i>inserts</i>, bool <i>monitor</i>, bool <i>record</i>, const QStringList &amp;<i>listeners</i> = {})</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#setInputChain" translate="no">setInputChain</a></b>(const QString &amp;<i>chain</i>, int <i>track</i>, const QList&lt;QStringList&gt; &amp;<i>sources</i>, const QList&lt;AudioInsert *&gt; &amp;<i>inserts</i>, bool <i>monitor</i>, bool <i>record</i>, const QStringList &amp;<i>listeners</i> = {})</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#setInsertActive" translate="no">setInsertActive</a></b>(AudioInsert *<i>insert</i>, bool <i>active</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#setMasterInserts" translate="no">setMasterInserts</a></b>(const QList&lt;AudioInsert *&gt; &amp;<i>inserts</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#setSampleOutputs" translate="no">setSampleOutputs</a></b>(int <i>track</i>, const QList&lt;int&gt; &amp;<i>samples</i>, int <i>laneTrack</i> = -1)</td></tr>
@@ -170,9 +173,9 @@
 <!-- @@@setCaptureMeter -->
 </div>
 <div class="fnitem">
-<!-- $$$setInputChain[overload1]$$$setInputChainintconstQList<QStringList>&constQList<AudioInsert*>&boolboolconstQStringList& -->
-<h3 class="fn" translate="no" id="setInputChain"><span class="type">void</span> JackWiring::<span class="name">setInputChain</span>(<span class="type">int</span> <i>track</i>, const <span class="type">QList</span>&lt;<span class="type">QStringList</span>&gt; &amp;<i>sources</i>, const <span class="type">QList</span>&lt;<span class="type"><a href="audioinsert.html" translate="no">AudioInsert</a></span> *&gt; &amp;<i>inserts</i>, <span class="type">bool</span> <i>monitor</i>, <span class="type">bool</span> <i>record</i>, const <span class="type">QStringList</span> &amp;<i>listeners</i> = {})</h3>
-<p>Wires the device input's path, replacing the one wired before: <i translate="no">sources</i> (the capture ports feeding the left side, then the right; several on a side are summed by JACK) through <i translate="no">inserts</i> in order (the input effects), and from there, with <i translate="no">monitor</i>, into sketchpad <i translate="no">track</i>'s lane (its level is the monitor's; <a href="jackwiring.html#addTrackLane" translate="no">addTrackLane</a>() wires it to the master) and, with <i translate="no">record</i>, into AudioLevels' port recorder (its meter and takes). A mono plugin takes both sides summed and feeds both sides of what follows. <i translate="no">listeners</i> (left, right) are fed by the chain's end too (<a href="audiotap.html" translate="no">AudioTap</a>'s mic inputs). Empty <i translate="no">sources</i> wire nothing.</p>
+<!-- $$$setInputChain[overload1]$$$setInputChainconstQString&intconstQList<QStringList>&constQList<AudioInsert*>&boolboolconstQStringList& -->
+<h3 class="fn" translate="no" id="setInputChain"><span class="type">void</span> JackWiring::<span class="name">setInputChain</span>(const <span class="type">QString</span> &amp;<i>chain</i>, <span class="type">int</span> <i>track</i>, const <span class="type">QList</span>&lt;<span class="type">QStringList</span>&gt; &amp;<i>sources</i>, const <span class="type">QList</span>&lt;<span class="type"><a href="audioinsert.html" translate="no">AudioInsert</a></span> *&gt; &amp;<i>inserts</i>, <span class="type">bool</span> <i>monitor</i>, <span class="type">bool</span> <i>record</i>, const <span class="type">QStringList</span> &amp;<i>listeners</i> = {})</h3>
+<p>Wires the device input's path named <i translate="no">chain</i> (<code translate="no">recorder</code>, <code translate="no">liverec</code>: each user of the input has its own, replaced by the next call with the same name): <i translate="no">sources</i> (the capture ports feeding the left side, then the right; several on a side are summed by JACK) through <i translate="no">inserts</i> in order (the input effects), and from there, with <i translate="no">monitor</i>, into sketchpad <i translate="no">track</i>'s lane (its level is the monitor's; <a href="jackwiring.html#addTrackLane" translate="no">addTrackLane</a>() wires it to the master) and, with <i translate="no">record</i>, into AudioLevels' port recorder (its meter and takes). A mono plugin takes both sides summed and feeds both sides of what follows. <i translate="no">listeners</i> (left, right) are fed by the chain's end too (<a href="audiotap.html" translate="no">AudioTap</a>'s mic inputs). Empty <i translate="no">sources</i> wire nothing: the path comes down.</p>
 <!-- @@@setInputChain -->
 </div>
 <div class="fnitem">

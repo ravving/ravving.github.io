@@ -406,8 +406,16 @@ window.ravNav = [
     "href": "hardwareports.html"
    },
    {
+    "title": "InputCard",
+    "href": "inputcard.html"
+   },
+   {
     "title": "InputEffects",
     "href": "inputeffects.html"
+   },
+   {
+    "title": "InputMixer",
+    "href": "inputmixer.html"
    },
    {
     "title": "InputRecorder",
@@ -416,6 +424,10 @@ window.ravNav = [
    {
     "title": "JackWiring",
     "href": "jackwiring.html"
+   },
+   {
+    "title": "LiveRecMic",
+    "href": "liverecmic.html"
    },
    {
     "title": "LiveRecordings",
@@ -516,6 +528,18 @@ window.ravNav = [
     "href": "requirements.html"
    },
    {
+    "title": "SecondPress",
+    "href": "secondpress.html"
+   },
+   {
+    "title": "Store",
+    "href": "store.html"
+   },
+   {
+    "title": "StoreTaker",
+    "href": "storetaker.html"
+   },
+   {
     "title": "UsbLibrary",
     "href": "usblibrary.html"
    },
@@ -585,6 +609,10 @@ window.ravNav = [
    {
     "title": "ThemeIconSizes",
     "href": "themeiconsizes.html"
+   },
+   {
+    "title": "ThemeType",
+    "href": "themetype.html"
    }
   ]
  },
@@ -599,6 +627,10 @@ window.ravNav = [
    {
     "title": "ArmBar",
     "href": "qml-ravving-controls-armbar.html"
+   },
+   {
+    "title": "BrowseList",
+    "href": "qml-ravving-controls-browselist.html"
    },
    {
     "title": "Caption",
@@ -645,6 +677,14 @@ window.ravNav = [
     "href": "qml-ravving-controls-fader.html"
    },
    {
+    "title": "FileRow",
+    "href": "qml-ravving-controls-filerow.html"
+   },
+   {
+    "title": "FormRow",
+    "href": "qml-ravving-controls-formrow.html"
+   },
+   {
     "title": "Glyph",
     "href": "qml-ravving-controls-glyph.html"
    },
@@ -655,6 +695,10 @@ window.ravNav = [
    {
     "title": "KeyCap",
     "href": "qml-ravving-controls-keycap.html"
+   },
+   {
+    "title": "KindList",
+    "href": "qml-ravving-controls-kindlist.html"
    },
    {
     "title": "Knob",
@@ -685,6 +729,18 @@ window.ravNav = [
     "href": "qml-ravving-controls-nameplate.html"
    },
    {
+    "title": "OnOffChip",
+    "href": "qml-ravving-controls-onoffchip.html"
+   },
+   {
+    "title": "OutcomeLine",
+    "href": "qml-ravving-controls-outcomeline.html"
+   },
+   {
+    "title": "PathRow",
+    "href": "qml-ravving-controls-pathrow.html"
+   },
+   {
     "title": "PickUp",
     "href": "qml-ravving-controls-pickup.html"
    },
@@ -701,12 +757,24 @@ window.ravNav = [
     "href": "qml-ravving-controls-sectionheader.html"
    },
    {
+    "title": "SideBarItem",
+    "href": "qml-ravving-controls-sidebaritem.html"
+   },
+   {
     "title": "StripButton",
     "href": "qml-ravving-controls-stripbutton.html"
    },
    {
     "title": "Toast",
     "href": "qml-ravving-controls-toast.html"
+   },
+   {
+    "title": "ValueBubble",
+    "href": "qml-ravving-controls-valuebubble.html"
+   },
+   {
+    "title": "ValueTip",
+    "href": "qml-ravving-controls-valuetip.html"
    }
   ]
  },

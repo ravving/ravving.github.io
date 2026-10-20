@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- inputcard.cpp -->
+  <meta name="description" content="The device's input card as its two users share it: the input modes, each mode's gain range and default, and the card's mixer (amixer).">
+  <meta name="keywords" content="namespace">
+  <title>InputCard Namespace | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=1bc6ffb8e9" defer></script>
+  <script src="search.js?v=ec45397431" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-audio.html">Audio, recording and export</a></li>
+<li>InputCard Namespace</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#functions">Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">InputCard Namespace</h1>
+<!-- $$$InputCard-brief -->
+<p>The device's input card as its two users share it: the input modes, each mode's gain range and default, and the card's mixer (amixer). <a href="#details">More...</a></p>
+<!-- @@@InputCard -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;inputcard.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li>InputCard is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="functions">Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputcard.html#apply" translate="no">apply</a></b>(const QString &amp;<i>card</i>, qreal <i>gainDb</i>, const QString &amp;<i>mode</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="inputcard.html#clampGain" translate="no">clampGain</a></b>(qreal <i>gain</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="inputcard.html#defaultGain" translate="no">defaultGain</a></b>(const QString &amp;<i>mode</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="inputcard.html#isMono" translate="no">isMono</a></b>(const QString &amp;<i>mode</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="inputcard.html#maxGain" translate="no">maxGain</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="inputcard.html#minGain" translate="no">minGain</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const QStringList &amp;</td><td class="memItemRight bottomAlign"><b><a href="inputcard.html#modes" translate="no">modes</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="inputcard.html#readGains" translate="no">readGains</a></b>(const QVariantMap &amp;<i>saved</i>)</td></tr>
+</table></div>
+<!-- $$$InputCard-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The card is one: whoever holds the input line (<a href="inputrecorder.html" translate="no">InputRecorder</a>, or the live recording's <a href="liverecmic.html" translate="no">LiveRecMic</a>) sets its PGA gain and mic bias through <a href="inputcard.html#apply" translate="no">apply</a>(); the ranges and defaults are the same for both, so a gain kept by one is valid for the other.</p>
+</div>
+<!-- @@@InputCard -->
+<div class="func">
+<h2>Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$apply[overload1]$$$applyconstQString&qrealconstQString& -->
+<h3 class="fn" translate="no" id="apply"><span class="type">void</span> InputCard::<span class="name">apply</span>(const <span class="type">QString</span> &amp;<i>card</i>, <span class="type">qreal</span> <i>gainDb</i>, const <span class="type">QString</span> &amp;<i>mode</i>)</h3>
+<p>Sets the ALSA <i translate="no">card</i>'s PGA gain on both channels to <i translate="no">gainDb</i> (one of its half-dB steps) and its mic bias on for the <code translate="no">mic</code> <i translate="no">mode</i>, off otherwise, through amixer (detached: a knob turns fast). An empty card does nothing.</p>
+<!-- @@@apply -->
+</div>
+<div class="fnitem">
+<!-- $$$clampGain[overload1]$$$clampGainqreal -->
+<h3 class="fn" translate="no" id="clampGain"><span class="type">qreal</span> InputCard::<span class="name">clampGain</span>(<span class="type">qreal</span> <i>gain</i>)</h3>
+<p>Returns <i translate="no">gain</i> rounded to the PGA's half-dB steps and kept within <a href="inputcard.html#minGain" translate="no">minGain</a>() and <a href="inputcard.html#maxGain" translate="no">maxGain</a>().</p>
+<!-- @@@clampGain -->
+</div>
+<div class="fnitem">
+<!-- $$$defaultGain[overload1]$$$defaultGainconstQString& -->
+<h3 class="fn" translate="no" id="defaultGain"><span class="type">qreal</span> InputCard::<span class="name">defaultGain</span>(const <span class="type">QString</span> &amp;<i>mode</i>)</h3>
+<p>Returns the gain a fresh <i translate="no">mode</i> starts with, in dB: 30 for a mic, 10 for a guitar, 0 for a line.</p>
+<!-- @@@defaultGain -->
+</div>
+<div class="fnitem">
+<!-- $$$isMono[overload1]$$$isMonoconstQString& -->
+<h3 class="fn" translate="no" id="isMono"><span class="type">bool</span> InputCard::<span class="name">isMono</span>(const <span class="type">QString</span> &amp;<i>mode</i>)</h3>
+<p>Returns whether <i translate="no">mode</i> records one channel (the jack's tip): <code translate="no">mic</code> and <code translate="no">guitar</code> do, <code translate="no">line</code> keeps left and right.</p>
+<!-- @@@isMono -->
+</div>
+<div class="fnitem">
+<!-- $$$maxGain[overload1]$$$maxGain -->
+<h3 class="fn" translate="no" id="maxGain"><span class="type">qreal</span> InputCard::<span class="name">maxGain</span>()</h3>
+<p>Returns the highest gain the card's PGA takes: +40 dB.</p>
+<!-- @@@maxGain -->
+</div>
+<div class="fnitem">
+<!-- $$$minGain[overload1]$$$minGain -->
+<h3 class="fn" translate="no" id="minGain"><span class="type">qreal</span> InputCard::<span class="name">minGain</span>()</h3>
+<p>Returns the lowest gain the card's PGA takes: -12 dB.</p>
+<!-- @@@minGain -->
+</div>
+<div class="fnitem">
+<!-- $$$modes[overload1]$$$modes -->
+<h3 class="fn" translate="no" id="modes">const <span class="type">QStringList</span> &amp;InputCard::<span class="name">modes</span>()</h3>
+<p>Returns the input modes: <code translate="no">mic</code>, <code translate="no">guitar</code> and <code translate="no">line</code>.</p>
+<!-- @@@modes -->
+</div>
+<div class="fnitem">
+<!-- $$$readGains[overload1]$$$readGainsconstQVariantMap& -->
+<h3 class="fn" translate="no" id="readGains"><span class="type">QVariantMap</span> InputCard::<span class="name">readGains</span>(const <span class="type">QVariantMap</span> &amp;<i>saved</i>)</h3>
+<p>Returns every mode's gain: the defaults, with the gains in <i translate="no">saved</i> (a settings map of mode to dB) over them, clamped; unknown modes are dropped.</p>
+<!-- @@@readGains -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

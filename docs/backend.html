@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  ravving on MIKO: the documentation.
+  ravving: the documentation.
   Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
   SPDX-License-Identifier: GPL-3.0-or-later
   Rendered from docs/backend.md by tools/build-site-docs.py: edit the markdown, not this file.
@@ -10,15 +10,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Backend classes · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=57a1c6a25f">
+<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<script src="../assets/theme.js?v=3307b56d38"></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
 </head>
 <body class="docs">
 <a class="skip" href="#doc">Skip to the text</a>
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -26,6 +30,7 @@
       <a href="index.html" aria-current="true">Docs</a>
       <a href="../api/index.html">API reference</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Theme"><svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg></button>
   </div>
 </header>
 <main class="wrap docs-wrap">
@@ -47,6 +52,9 @@
 <li><a href="machines.html">The machines</a></li>
 <li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
+</ul>
+<p class="mono">Make your own</p><ul>
+<li><a href="skin-sets.html">Make a skin set</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -145,7 +153,7 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>VideoRecorder</code></td>
-<td>LIVE REC (<code>video</code>, "Live recordings" below): a video of the screen (x11grab) or a USB camera (v4l2) with the master's sound, or (<code>mode</code> "audio") the sound alone as a 24-bit WAV among the exports (finished with tags through <code>Exporter::finishRecording</code>), encoded by ffmpeg (libx264, two threads, nice 10; three quality tiers) into <code>videos/&lt;project&gt; - &lt;date&gt;.mp4</code>; the sound comes from <code>AudioTap</code>, the sync from the wall clock on both inputs (<code>-copyts</code>, <code>-itsoffset</code> = the tap's first-sample moment), the file goes to Matroska first and is remuxed once to MP4 with its head cut to the first frame; states off / ready / countdown / starting / recording / saving, <code>takesKey</code> gives it RECORD and STOP while VIDEO is on (<code>Ravving::handleCuia</code>); VIDEO SAVED sends it on (<code>ComputerLink</code>, a USB stick)</td>
+<td>LIVE REC (<code>video</code>, "Live recordings" below): a video of the screen (x11grab) or a USB camera (v4l2) with the master's sound, or (<code>mode</code> "audio") the sound alone as a 24-bit WAV among the exports (finished with tags through <code>Exporter::finishRecording</code>), encoded by ffmpeg (libx264, two threads, nice 10; three quality tiers) into <code>videos/&lt;project&gt; - &lt;date&gt;.mp4</code>; the sound comes from <code>AudioTap</code>, the sync from the wall clock on both inputs (<code>-copyts</code>, <code>-itsoffset</code> = the tap's first-sample moment), the file goes to Matroska first and is remuxed once to MP4 with its head cut to the first frame; states off / ready / countdown / starting / recording / saving, <code>takesKey</code> gives it RECORD and STOP while LIVE REC is on (<code>Ravving::handleCuia</code>; <code>stopPressed</code>: STOP ends the recording and the music, STOP again within three seconds leaves LIVE REC, <code>SecondPress</code>); its mic is <code>input</code>, a LiveRecMic; VIDEO SAVED sends it on (<code>ComputerLink</code>, a USB stick)</td>
 <td>new</td>
 </tr>
 <tr>
@@ -190,7 +198,7 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>InputEffects</code></td>
-<td>the live effects on the device input (<code>studio.input.effects</code>): presets from <code>data/input-fx.json</code> (TAME, FUZZ VOICE, ROBOT, TELEPHONE, OCTAVE, AMP; OFF = the plain input), each a chain of jalv plugins (<code>ravving-in-&lt;preset&gt;-&lt;n&gt;</code>, started the first time it is picked and kept running) with fixed controls and three knobs mapped onto ports (linear or log); "bpm" delays follow the studio tempo. InputRecorder wires input → chain → monitor track and → the port recorder (<code>JackWiring::setInputChain</code>, which also makes the recorder connections, retried until a new plugin's ports exist): what is heard is what is recorded</td>
+<td>the live effects on the device input, one instance per user: the RECORDER's (<code>studio.input.effects</code>, wired by InputRecorder) and the live recording's (<code>video.input.effects</code>, wired by LiveRecMic); presets from <code>data/input-fx.json</code> (CLEAN, TAME, FUZZ VOICE, ROBOT, TELEPHONE, OCTAVE, the guitar amps and pedals; VOICE-OVER and SINGING for the live recording only, a preset's <code>uses</code>; OFF = the plain input), each a chain of jalv plugins (<code>ravving-in-&lt;use&gt;-&lt;preset&gt;-&lt;n&gt;</code>, started when picked while the input is in use) with fixed controls and three knobs mapped onto ports (linear or log); "bpm" delays follow the studio tempo. The live recording's preset and knobs are kept in QSettings (<code>ravving/liverec-fx</code>), the RECORDER's last a session. What is heard is what is recorded</td>
 <td>new</td>
 </tr>
 <tr>
@@ -205,7 +213,22 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>InputRecorder</code></td>
-<td>the device input (<code>studio.input</code>): MIC / GUITAR (mono: the jack with the signal, <code>activeJack</code>, followed between takes) / LINE set the ADC's PGA gain and mic bias through amixer (<code>--</code> before the arguments: negative gains); <code>armed</code> connects the input to AudioLevels' port recorder, whose meter is <code>level</code>; MONITOR runs the input through its own track (kits.json <code>input.track</code>, 9) whose gain is <code>monitorLevel</code>; a take is the port recorder into a raw WAV, processed in a worker into <code>samples/my-samples/ravving/</code> (<code>takeReady(file, start, length)</code>). Mode, gains and monitor level are the device's (QSettings <code>ravving/input</code>)</td>
+<td>the device input (<code>studio.input</code>): MIC / GUITAR (mono: the jack with the signal, <code>activeJack</code>, followed between takes) / LINE set the ADC's PGA gain and mic bias through amixer (<code>InputCard::apply</code>); <code>armed</code> connects the input to AudioLevels' port recorder, whose meter is <code>level</code>; MONITOR runs the input through its own track (kits.json <code>input.track</code>, 9) whose gain is <code>monitorLevel</code>; a take is the port recorder into a raw WAV, processed in a worker into <code>samples/my-samples/ravving/</code> (<code>takeReady(file, start, length)</code>). The line has one owner at a time: <code>hold(holder)</code> / <code>release(holder)</code> (<code>held</code>, <code>heldBy</code>); while held (the live recording's) it wires nothing of its own, leaves the card to the holder and refuses a take with a reason; a hold is refused while a take runs. Mode, gains and monitor level are the device's (QSettings <code>ravving/input</code>)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>LiveRecMic</code></td>
+<td>the live recording's own input path (<code>video.input</code>, the studio's): while LIVE REC is on with MIC it holds the device input (<code>InputRecorder::hold("liverec")</code>: <code>status</code> holding, or busy while a RECORDER take runs, taking the line when it ends) and wires the jack in use through its own InputEffects into AudioTap's mic ports (<code>JackWiring::setInputChain("liverec", …)</code>, no monitor, no take), with its own <code>mode</code>, per-mode <code>gain</code> (the card's, <code>InputCard::apply</code>) and <code>role</code>: voiceover (the music ducks, the VOICE-OVER chain) or singing (the music stays, the SINGING chain; <code>ducks</code>); released when not wanted or destroyed (the path down first, then the line back); the first run loads the role's chain; its settings are QSettings <code>ravving/video</code> (micMode, micGains, micRole), written once a knob rests</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>InputCard</code>, <code>InputMixer</code></td>
+<td>the input card as its two users share it: the modes (mic, guitar, line), each mode's gain range (−12 … +40 dB in half-dB steps) and default (30 / 10 / 0 dB), <code>readGains</code>, and <code>apply(card, gainDb, mode)</code>, the PGA gain and mic bias through amixer; <code>InputMixer</code> is the debounced setter each holder owns (the last setting goes to the card once the knob rests for 60 ms)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>SecondPress</code></td>
+<td>a key's confirming second press, the backend's counterpart of the kit's SecondPress / ConfirmButton: <code>press()</code> is false the first time and true within the window (3 s), no timer runs (QElapsedTimer)</td>
 <td>new</td>
 </tr>
 <tr>
@@ -489,6 +512,57 @@ toggleAccent(), clear(), loadPreset(), saveAsPreset(), removePreset(), setRowLev
 setRowMuted(), setRowSoloed(), audition()</code>. The studio's
 <code>DrumMachine</code> and <code>SamplerMachine</code> implement it; <code>PatternState.qml</code> implements it in memory
 for pages whose backend is still to come (the melodic toolbars).</p>
+<h3 id="get-more-the-store">GET MORE: the store</h3>
+<p><code>Store</code> (<code>src/backend/store.h</code>, published as <code>store</code>) lists the free things of the
+<a href="https://github.com/ravving/ravving_repo" rel="noopener" target="_blank">ravving_repo</a> repository and brings them into the
+library. The device never browses GitHub.</p>
+<p>The repository's <code>publish</code> workflow builds one <code>index.json</code> from every entry's <code>meta.json</code>
+(each file's URL, size and SHA-256; a pack zipped) and deploys it to the repository's GitHub
+Pages site, which <code>Store::catalogUrl</code> names. <code>RAVVING_STORE_URL</code> overrides it; a <code>file://</code>
+URL serves a test.</p>
+<ul>
+<li><code>refresh()</code>: a conditional GET with the ETag kept beside the cached copy under the cache's
+  <code>store/</code>. Offline, the cached list shows with a <code>notice</code>.</li>
+<li><code>install(id)</code>: the entry's files downloaded in turn into <code>store/&lt;id&gt;/</code>, each one's size and
+  hash verified as it streams, then taken in by type (the table below). One install at a time,
+  async on the GUI thread; <code>finished(id, kind, ok, message)</code> ends it.</li>
+<li><code>store.json</code> in the library: what landed, by entry id, with its version and items
+  (PresetExchange's ids, or paths). From it <code>entries</code> says <code>installed</code> and <code>update</code> (the
+  catalog's version is newer), and <code>remove(id)</code> takes the items out. An update removes the old
+  items first, so names stay.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Taken in through</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pattern, sound, template</td>
+<td><code>StoreTaker</code> → <code>PresetExchange::take()</code>, the USB page's way in</td>
+</tr>
+<tr>
+<td>skin</td>
+<td><code>SkinFiles::importSkin()</code></td>
+</tr>
+<tr>
+<td>pack (a stick's layout in a zip)</td>
+<td><code>ZipReader</code>, then the taker file by file</td>
+</tr>
+<tr>
+<td>soundfont</td>
+<td><code>Paths::soundfonts()</code>, then <code>Studio::refreshImported()</code></td>
+</tr>
+<tr>
+<td>project</td>
+<td>a <code>.ravv</code> through the Exporter; a project file into <code>Paths::projects()</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>tst_store</code> covers the catalog from a folder, a skin and a pack installed, a bad checksum
+dropped, an update and a removal.</p>
   </article>
 </main>
 <footer>

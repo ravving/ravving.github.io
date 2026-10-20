@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  ravving on MIKO: the documentation.
+  ravving: the documentation.
   Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
   SPDX-License-Identifier: GPL-3.0-or-later
   Rendered from docs/skin-sets.md by tools/build-site-docs.py: edit the markdown, not this file.
@@ -10,15 +10,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Make a skin set · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=57a1c6a25f">
+<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<script src="../assets/theme.js?v=3307b56d38"></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
 </head>
 <body class="docs">
 <a class="skip" href="#doc">Skip to the text</a>
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -26,6 +30,7 @@
       <a href="index.html" aria-current="true">Docs</a>
       <a href="../api/index.html">API reference</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Theme"><svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg></button>
   </div>
 </header>
 <main class="wrap docs-wrap">
@@ -82,14 +87,14 @@
   <article class="doc" id="doc">
 <p class="mono doc-kicker"><b>Make your own</b> <span>/</span> <b translate="no">docs/skin-sets.md</b></p>
 <h1>Make a skin set</h1>
-<p class="doc-blurb">The colours of the eight instrument pages as one JSON file: every key, the contrast rules, a checker to download, and how to put the set on a MIKO.</p>
+<p class="doc-blurb">The colours of the eight instrument pages as one JSON file: every key, the contrast rules, a checker to download, and how to add the set to ravving.</p>
 
 <p>A skin set gives every instrument page in ravving its colours: the case, the keys, the
 grid's inset and the lights. It is one JSON file. Drop it on the device and it shows up in
-SETTINGS → DEVICE → SKINS by its name, with no restart.</p>
-<p>This page is all you need to make one, with or without ravving's source: the file format,
-what each colour paints, the rules a set must pass, a checker to run them, and how to put the
-set on a MIKO.</p>
+SETTINGS → LOOK → SKINS by its name, with no restart.</p>
+<p>This page is all you need to make one, with or without ravving's source. It covers the file
+format, what each colour paints, the rules a set must pass and a checker to run them. Then it
+shows how to add the set to ravving.</p>
 <h2 id="downloads">Downloads</h2>
 <ul>
 <li><a href="../docs/skins/check-skins.py">check-skins.py</a>: the checker. Python 3, nothing to install.</li>
@@ -284,7 +289,7 @@ machine passes all of these, and the checker reports nothing:</p>
 </table>
 <pre><code class="language-sh">python3 check-skins.py harbour.json
 </code></pre>
-<p>It prints <code>harbour: ok</code>, or each failure with the colour, the ratio and what it was measured on,
+<p>It prints <code>harbour: ok</code>, or each failure with the colour, the ratio and the colour it was checked against,
 and exits 1 on a failure. Fix the failures by moving the named colour's lightness (keep its hue),
 then run it again.</p>
 <h2 id="make-it-good-not-only-legal">Make it good, not only legal</h2>
@@ -295,21 +300,55 @@ then run it again.</p>
   case with a green light looked awful, and so did a pale blue-grey grid on a pale case, where
   the empty cells washed out.</li>
 <li id="lit-against-unlit-by-lightness-not-only-hue"><strong>Lit against unlit by lightness, not only hue.</strong> About one person in twelve doesn't tell red
-  from green: a lit step has to be clearly lighter (on a dark well) or deeper (on a light well)
-  than an empty one.</li>
+  from green. So a lit step has to be clearly lighter than an empty one on a dark well, or
+  deeper on a light well.</li>
+</ul>
+<h3 id="across-the-eight-machines">Across the eight machines</h3>
+<ul>
 <li id="not-glaring"><strong>Not glaring.</strong> A light case is off-white, not <code>#ffffff</code>; a dark one is a deep grey or a
   tinted near-black, not <code>#000000</code>. Avoid pure white text on pure black.</li>
 <li id="one-family-eight-faces"><strong>One family, eight faces.</strong> Each page needs its own identity, because the number keys flip
-  between them, but the set should feel like one product: a theme (a studio rack, a pencil case,
-  a night train), with one material or tone per machine.</li>
+  between them. Still, the set should feel like one product: a theme (a studio rack, a pencil
+  case, a night train), with one material or tone per machine.</li>
 <li><strong>Mix light and dark cases</strong> across the eight, so neighbouring pages change visibly.</li>
 <li><strong>The header's lights tell the machines apart</strong> (the Delta E rule): pick eight glows that
   differ in hue, then in lightness.</li>
-<li><strong>A good place to start:</strong> a tested scale (Radix, Tailwind, Material, OKLCH ramps), not a guess.
-  For a dark machine: case 950–900, well a step darker, rail a mid step of the same hue, ink 50,
-  accent 400–500, glow a lighter step of the accent. For a light machine: case 50–100, well
-  100–200 (or a dark inset), ink 950, accent 600–700.</li>
 </ul>
+<h3 id="where-to-start">Where to start</h3>
+<p>Start from a tested scale (Radix, Tailwind, Material, OKLCH ramps), not a guess:</p>
+<table>
+<thead>
+<tr>
+<th>Machine</th>
+<th>Case</th>
+<th>Well</th>
+<th>Rail</th>
+<th>Ink</th>
+<th>Accent</th>
+<th>Glow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dark</td>
+<td>950–900</td>
+<td>a step darker</td>
+<td>a mid step of the same hue</td>
+<td>50</td>
+<td>400–500</td>
+<td>a lighter step of the accent</td>
+</tr>
+<tr>
+<td>light</td>
+<td>50–100</td>
+<td>100–200, or a dark inset</td>
+<td>a mid step of the same hue</td>
+<td>950</td>
+<td>600–700</td>
+<td>a lighter step of the accent</td>
+</tr>
+</tbody>
+</table>
 <h2 id="put-it-on-a-miko">Put it on a MIKO</h2>
 <ol>
 <li><strong>From a USB stick:</strong> copy the file into <code>ravving/presets/skins/</code> on the stick. On the MIKO,
@@ -318,7 +357,7 @@ then run it again.</p>
    the device, for example with <code>scp harbour.json root@&lt;device&gt;:/zynthian/zynthian-my-data/ravving/skins/</code>.
    Write the file in one go (copy to another name, then rename), so ravving never reads it half
    written.</li>
-<li>SETTINGS → DEVICE → SKINS: the set is there by its <code>name</code>, with swatches of its colours.
+<li>SETTINGS → LOOK → SKINS: the set is there by its <code>name</code>, with swatches of its colours.
    Tap it: the pages change at once, and the pick stays after a restart.</li>
 </ol>
 <p>To share a set, share the file.</p>

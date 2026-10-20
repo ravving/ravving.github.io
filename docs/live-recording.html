@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  ravving on MIKO: the documentation.
+  ravving: the documentation.
   Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
   SPDX-License-Identifier: GPL-3.0-or-later
   Rendered from docs/live-recording.md by tools/build-site-docs.py: edit the markdown, not this file.
@@ -10,15 +10,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Live recordings · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=57a1c6a25f">
+<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<script src="../assets/theme.js?v=3307b56d38"></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
 </head>
 <body class="docs">
 <a class="skip" href="#doc">Skip to the text</a>
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -26,6 +30,7 @@
       <a href="index.html" aria-current="true">Docs</a>
       <a href="../api/index.html">API reference</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Theme"><svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg></button>
   </div>
 </header>
 <main class="wrap docs-wrap">
@@ -47,6 +52,9 @@
 <li><a href="machines.html">The machines</a></li>
 <li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
+</ul>
+<p class="mono">Make your own</p><ul>
+<li><a href="skin-sets.html">Make a skin set</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -143,25 +151,77 @@ dies; an MP4 without its index isn't. On STOP:</p>
 <p>The remux copies packets, so it takes a few seconds for a long recording ("SAVING" on the card
 and the plate). If the remux fails, the Matroska is kept under the final name.</p>
 <h2 id="a-microphone-in-the-sound">A microphone in the sound</h2>
-<p>SETTINGS · VIDEO · MIC mixes the RECORDER's input into the video's sound, as it's set up there:
-MIC, GUITAR or LINE, the jack in use, its GAIN and its effects.</p>
+<p>MIC (the LIVE REC dialog, SETTINGS · LIVE REC) mixes the device input into the recording's
+sound through the live recording's own input path, <code>video.input</code> (a <code>LiveRecMic</code>). The path has
+its own INPUT (MIC, GUITAR or LINE), its own GAIN, its role (VOICE-OVER or SINGING) and its own
+EFFECTS.</p>
+<p>The RECORDER page's input (<code>studio.input</code>, an <code>InputRecorder</code>) is a separate path with its own
+settings. Nothing set on the RECORDER page reaches a live recording, and nothing set for a live
+recording reaches the RECORDER.</p>
+<h3 id="one-owner-of-the-line">One owner of the line</h3>
+<p>The input line (the card's jacks and its gain) has one owner at a time.</p>
 <ul>
-<li id="nothing-of-the-input-is-repeated-for-the-video"><strong>Nothing of the input is repeated for the video.</strong> <code>InputRecorder::setListener(ports)</code> adds the
-  tap's two mic ports (<code>ravving-video:mic_l</code> / <code>mic_r</code>) as one more destination at the end of the
-  input chain. That's <code>JackWiring::setInputChain</code>'s <code>listeners</code>, beside the monitor lane and the
-  take recorder; a mono input feeds both.</li>
-<li><strong>The input counts as in use</strong> while a listener is set, so its effects run.</li>
-<li><strong>The audio thread</strong> adds the ports to the master's sound, as the video hears it.</li>
-<li id="the-master-itself-is-untouched"><strong>The master itself is untouched.</strong> The speakers get the mic only with the RECORDER's MONITOR
-  on. Then the video hears it twice, louder, so use one or the other.</li>
+<li><strong>While LIVE REC is on with MIC,</strong> the live recording holds the line
+  (<code>InputRecorder::hold("liverec")</code>): <code>studio.input.held</code> is true and <code>heldBy</code> says <code>liverec</code>.</li>
+<li><strong>The RECORDER wires nothing of its own meanwhile:</strong> no take, no monitor, no effects, no
+  tuner. It leaves the card's gain to the holder, and refuses a take with a reason.</li>
+<li id="every-user-says-why-it-waits"><strong>Every user says why it waits.</strong> The RECORDER's plate reads IN THE LIVE RECORDING · ■ TWICE
+  LEAVES LIVE REC; its ● REC, tabs, MONITOR and GAIN wait. The samplers' ● REC reads IN LIVE REC.</li>
+<li id="a-recorder-take-already-running-keeps-the-line"><strong>A RECORDER take already running keeps the line.</strong> The live recording then records without
+  the mic (<code>video.input.status</code> is <code>busy</code>, a notice says so) and takes the line the moment the
+  take ends (MIC IN).</li>
+<li><strong>Released</strong> when LIVE REC goes off (STOP twice, the card, a new project), when MIC is switched
+  off, and when the recorder is destroyed (the application leaving). The card gets the
+  RECORDER's gain and bias back, and its paths are wired as its settings want.</li>
+<li id="never-kept-across-a-start"><strong>Never kept across a start.</strong> The hold lives in memory only, so a crash or a restart starts
+  free.</li>
 </ul>
-<p><code>tools/video-test.sh</code> records once with MIC on and checks the link. <code>tools/video-mic-check.sh</code> is
-the listening test: a recording with the music stopped while someone speaks, then the file's
+<h3 id="the-path">The path</h3>
+<ul>
+<li id="its-own-effects"><strong>Its own effects.</strong> <code>video.input.effects</code> is a second <code>InputEffects</code> on the same
+  <code>data/input-fx.json</code>: a preset's <code>uses</code> says who it's offered to (<code>liverec</code> for VOICE-OVER
+  and SINGING; the rest to both). Its jalv clients are <code>ravving-in-liverec-&lt;preset&gt;-&lt;n&gt;</code>, the
+  RECORDER's <code>ravving-in-recorder-&lt;preset&gt;-&lt;n&gt;</code>; only the preset in use runs, and only while
+  the line is held.</li>
+<li id="its-own-wiring"><strong>Its own wiring.</strong> The jack in use goes through the live chain into the tap's two mic ports
+  (<code>ravving-video:mic_l</code> / <code>mic_r</code>): <code>JackWiring::setInputChain("liverec", …)</code>, a chain of its
+  own beside the RECORDER's <code>"recorder"</code>. The jack is the RECORDER's <code>activeJack</code>, which follows
+  the signal between takes and serves both. A mono input feeds both ports.</li>
+<li id="the-card-is-one"><strong>The card is one.</strong> The holder sets its PGA gain and mic bias (<code>InputCard::apply</code>); the live
+  recording keeps a gain per mode of its own.</li>
+<li id="no-monitor"><strong>No monitor.</strong> The live mic never reaches the speakers (a mic by the speakers howls); the tap
+  hears it, the room hears the person.</li>
+<li><strong>The audio thread</strong> adds the mic ports to the master's sound, as the recording hears it. The
+  master itself is untouched.</li>
+</ul>
+<h3 id="voice-over-and-singing">VOICE-OVER and SINGING</h3>
+<p>The role (<code>video.input.role</code>, the VOICE chips) says how the voice sits in the recording, and
+brings its own chain:</p>
+<ul>
+<li><strong>VOICE-OVER:</strong> the music ducks under the voice (the DUCK setting). The chain is dry and
+  close: a 100 Hz high-pass, a gate on the pauses, 4:1 compression, a de-esser and a presence
+  lift (GATE, SQUASH and PRESENCE knobs).</li>
+<li><strong>SINGING:</strong> the music stays as it is under the voice, and the chain has room: an 80 Hz
+  high-pass, gentle compression, a little air, a tempo echo and a plate (EVEN, ECHO and SPACE
+  knobs).</li>
+</ul>
+<h3 id="any-effect-on-the-voice">Any effect on the voice</h3>
+<p>Picking a role loads its chain, and the first run loads it by itself. EFFECTS may then change it
+to any other (TAME, ROBOT, OCTAVE…), and the role keeps saying whether the music ducks
+(<code>video.input.ducks</code>). The role picked again brings its chain back.</p>
+<p>On GUITAR or LINE there is no role: the input is summed as it is, and a role picked there waits
+for the mic.</p>
+<p>Mode, gain, role, preset and knobs are the live recording's own settings, kept between
+sessions (<code>ravving/video</code>, <code>ravving/liverec-fx</code>).</p>
+<p><code>tools/liverec-mic-test.sh</code> checks all of it on the device (<a href="testing.html">testing.md</a>).
+<code>tools/video-test.sh</code> records once with MIC on and checks the link. <code>tools/video-mic-check.sh</code>
+is the listening test: a recording with the music stopped while someone speaks, then the file's
 audio measured.</p>
 <h2 id="the-voice-over">The voice over</h2>
-<p>With MIC on, the tap mixes the master and the mic as a voice over (<code>AudioTap::setVoiceOver</code>,
-SETTINGS · VIDEO · VOICE). A plain sum leaves a voice at a normal distance some 25 dB under the
-master.</p>
+<p>With MIC on in the VOICE-OVER role, the tap mixes the master and the mic as a voice over
+(<code>AudioTap::setVoiceOver</code>, SETTINGS · LIVE REC · DUCK and LIFT). A plain sum leaves a voice at
+a normal distance some 25 dB under the master. In the SINGING role the duck is off and the lift
+stays.</p>
 <h3 id="the-voice">The voice</h3>
 <p>The mic is made crisp: a 120 Hz high-pass, and a +4 dB high shelf from 3 kHz (RBJ biquads on the
 audio thread). Then VOICE LIFT lifts it: +6 dB by default, +12, or flat.</p>
@@ -184,7 +244,7 @@ the tap learns as the mic's level over the master's.</p>
 <li><strong>The limits:</strong> a mic that hears the speakers louder than −26 dB of the master (in front of the
   speaker) still ducks itself. A leak between the start value and the cap ducks the beat for a
   second or two at its start, until the ratio has climbed.</li>
-<li><strong>The RECORDER's GAIN</strong> scales the voice and the leak alike, so the ratio holds when it's
+<li><strong>The live mic's GAIN</strong> scales the voice and the leak alike, so the ratio holds when it's
   turned.</li>
 </ul>
 <h3 id="the-limiter">The limiter</h3>
@@ -198,11 +258,13 @@ release.</p>
 <li>The 1 ms sits inside the 3 ms of audio offset. The master without the mic isn't delayed.</li>
 </ul>
 <h3 id="the-mics-level">The mic's level</h3>
-<p>The RECORDER's GAIN still sets how hot the voice comes in, and the recorder watches it.</p>
+<p>The live mic's GAIN (SETTINGS · LIVE REC) sets how hot the voice comes in, and the recorder
+watches it.</p>
 <ul>
-<li><strong>While VIDEO is on with MIC,</strong> the input is wired into the tap at once, not only while
-  recording. Its peak is metered ten times a second (<code>micLevel</code>, before the lift).</li>
-<li><strong>SETTINGS · VIDEO</strong> shows it on a LEVEL bar with a −6 dB mark.</li>
+<li><strong>While LIVE REC is on with MIC</strong> and the line is held, the input is wired into the tap at
+  once, not only while recording. Its peak is metered ten times a second (<code>micLevel</code>, before the
+  lift).</li>
+<li><strong>SETTINGS · LIVE REC</strong> shows it on a LEVEL bar with a −6 dB mark.</li>
 <li><strong>The project plate</strong> carries it standing in its right corner while VIDEO is on: red while
   hot, with a blue dot at its foot while the music ducks.</li>
 <li><strong><code>micHot</code>:</strong> a peak over −6 dBFS within the last two seconds. The bar turns red, and the
@@ -210,9 +272,9 @@ release.</p>
   and the limiter idle.</li>
 </ul>
 <h3 id="guitar-and-line">Guitar and line</h3>
-<p>The voice over is for a voice. With the RECORDER on GUITAR or LINE, the input is summed as it is,
-through the limiter, and nothing ducks under a guitar; the VOICE rows say so. The settings apply
-at once, on a recording under way too.</p>
+<p>The voice over is for a voice. With the live mic's INPUT on GUITAR or LINE, the input is summed
+as it is, through the limiter, and nothing ducks under a guitar; the rows say so. The settings
+apply at once, on a recording under way too.</p>
 <h3 id="checking-it">Checking it</h3>
 <p><code>tools/video-voice-check.sh</code> measures the voice over:</p>
 <ul>
@@ -232,7 +294,7 @@ at once, on a recording under way too.</p>
 <ul>
 <li><strong>WHAT:</strong> a VIDEO (the screen or a USB camera with the master's sound, an MP4 among the
   VIDEOS), or AUDIO ONLY (the sound alone, a 24-bit WAV among the TRACKS, below);</li>
-<li><strong>MIC:</strong> the RECORDER's input in the sound;</li>
+<li><strong>MIC:</strong> the recording's own input in the sound, and its role, VOICE-OVER or SINGING;</li>
 <li><strong>START:</strong> switches LIVE REC on, and begins after the TIMER.</li>
 </ul>
 <p>The dialog is the confirmation, so a stray tap never starts a recording. The drawer closes first,
@@ -249,9 +311,14 @@ the project menu) switches LIVE REC off too, saving a recording under way first
 <ul>
 <li>RECORD starts when idle. When already recording, a toast says ■ stops it.</li>
 <li>STOP ends the recording, and stops the music with it: the session is over. During the
-  countdown, it cancels.</li>
-<li>STOP with nothing recording is the transport's again.</li>
-<li>The header's ● and ■ do the same (<code>Session.toggleRecording</code> / <code>Session.stop</code>).</li>
+  countdown, it cancels. A toast says ■ AGAIN LEAVES LIVE REC.</li>
+<li>STOP again within three seconds leaves LIVE REC (<code>VideoRecorder::stopPressed</code>,
+  <code>SecondPress</code>): armed off, the mic's line given back, LIVE REC OFF. Three seconds is the
+  window every second press in ravving uses (AGAIN?, PRESS AGAIN, DELETE).</li>
+<li>STOP with nothing recording is the transport's (not consumed) and arms the same window, so
+  STOP STOP leaves LIVE REC from the ready state too.</li>
+<li>The header's ● and ■ do the same (<code>Session.toggleRecording</code> / <code>Session.stop</code>, which calls
+  <code>stopPressed</code>).</li>
 </ul>
 <h3 id="what-shows-while-recording">What shows while recording</h3>
 <ul>

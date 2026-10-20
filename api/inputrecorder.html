@@ -7,8 +7,11 @@
   <meta name="keywords" content="class">
   <title>InputRecorder Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=54f138c7a0">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
   <script>
     (function () {
       var t = null;
@@ -18,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=6d3fec3ba2" defer></script>
-  <script src="search.js?v=ca2ed9567f" defer></script>
+  <script src="nav.js?v=1bc6ffb8e9" defer></script>
+  <script src="search.js?v=ec45397431" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -30,7 +33,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
     </button>
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav class="sections" aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -95,6 +98,8 @@
 <li class="fn" translate="no"><b><a href="inputrecorder.html#effects-prop" translate="no">effects</a></b> : QObject* const</li>
 <li class="fn" translate="no"><b><a href="inputrecorder.html#folder-prop" translate="no">folder</a></b> : const QString</li>
 <li class="fn" translate="no"><b><a href="inputrecorder.html#gain-prop" translate="no">gain</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="inputrecorder.html#held-prop" translate="no">held</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="inputrecorder.html#heldBy-prop" translate="no">heldBy</a></b> : QString</li>
 <li class="fn" translate="no"><b><a href="inputrecorder.html#jackLevels-prop" translate="no">jackLevels</a></b> : QVariantList</li>
 <li class="fn" translate="no"><b><a href="inputrecorder.html#keepIn-prop" translate="no">keepIn</a></b> : QString</li>
 <li class="fn" translate="no"><b><a href="inputrecorder.html#level-prop" translate="no">level</a></b> : qreal</li>
@@ -107,6 +112,7 @@
 <li class="fn" translate="no"><b><a href="inputrecorder.html#modes-prop" translate="no">modes</a></b> : const QStringList</li>
 <li class="fn" translate="no"><b><a href="inputrecorder.html#monitor-prop" translate="no">monitor</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="inputrecorder.html#monitorLevel-prop" translate="no">monitorLevel</a></b> : qreal</li>
+<li class="fn" translate="no"><b><a href="inputrecorder.html#ports-prop" translate="no">ports</a></b> : QStringList</li>
 <li class="fn" translate="no"><b><a href="inputrecorder.html#recordings-prop" translate="no">recordings</a></b> : QObject* const</li>
 <li class="fn" translate="no"><b><a href="inputrecorder.html#seconds-prop" translate="no">seconds</a></b> : qreal</li>
 <li class="fn" translate="no"><b><a href="inputrecorder.html#status-prop" translate="no">status</a></b> : QString</li>
@@ -123,9 +129,13 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#autoStopHoldMs-prop" translate="no">autoStopHoldMs</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#autoStopThreshold-prop" translate="no">autoStopThreshold</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#available-prop" translate="no">available</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#card" translate="no">card</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#effects-prop" translate="no">effects</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#folder-prop" translate="no">folder</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#gain-prop" translate="no">gain</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#held-prop" translate="no">held</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#heldBy-prop" translate="no">heldBy</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#hold" translate="no">hold</a></b>(const QString &amp;<i>holder</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#jackLevels-prop" translate="no">jackLevels</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#keepIn-prop" translate="no">keepIn</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#level-prop" translate="no">level</a></b>() const</td></tr>
@@ -137,8 +147,10 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#modes-prop" translate="no">modes</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#monitor-prop" translate="no">monitor</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#monitorLevel-prop" translate="no">monitorLevel</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#ports-prop" translate="no">ports</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#record" translate="no">record</a></b>(bool <i>asPlayed</i> = false)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#recordings-prop" translate="no">recordings</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#release" translate="no">release</a></b>(const QString &amp;<i>holder</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#seconds-prop" translate="no">seconds</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#armed-prop" translate="no">setArmed</a></b>(bool <i>armed</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#autoStop-prop" translate="no">setAutoStop</a></b>(bool <i>autoStop</i>)</td></tr>
@@ -146,7 +158,6 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#autoStopThreshold-prop" translate="no">setAutoStopThreshold</a></b>(qreal <i>db</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#gain-prop" translate="no">setGain</a></b>(qreal <i>gain</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#keepIn-prop" translate="no">setKeepIn</a></b>(const QString &amp;<i>place</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#setListener" translate="no">setListener</a></b>(const QStringList &amp;<i>ports</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#mode-prop" translate="no">setMode</a></b>(const QString &amp;<i>mode</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#monitor-prop" translate="no">setMonitor</a></b>(bool <i>monitor</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#monitorLevel-prop" translate="no">setMonitorLevel</a></b>(qreal <i>db</i>)</td></tr>
@@ -158,7 +169,9 @@
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#activeJack-prop" translate="no">activeJackChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#armed-prop" translate="no">armedChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#heldByChanged" translate="no">heldByChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#level-prop" translate="no">levelChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#portsChanged" translate="no">portsChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#recordingReady" translate="no">recordingReady</a></b>(const QString &amp;<i>file</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#seconds-prop" translate="no">secondsChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#autoStop-prop" translate="no">settingsChanged</a></b>()</td></tr>
@@ -176,7 +189,8 @@
 <li>Effects: the input effects (effects, an <a href="inputeffects.html" translate="no">InputEffects</a>) sit between the input and both the monitor and the take, so what is heard is what is recorded.</li>
 <li>Takes: <a href="inputrecorder.html#record" translate="no">record</a>() starts the port recorder on the input, after its effects (a 16-bit WAV in the cache); <a href="inputrecorder.html#stop" translate="no">stop</a>() or <a href="inputrecorder.html#autoStop-prop" translate="no">autoStop</a> ends it. A sampler take is then processed on a worker thread (<a href="audiofile.html#processTake" translate="no">AudioFile::processTake</a>()), written to the samples folder and announced with <a href="inputrecorder.html#takeReady" translate="no">takeReady</a>(), with its last burst of sound as the trim. An as-played take (record(true)) is kept unprocessed (<a href="liverecordings.html" translate="no">LiveRecordings</a>) and announced with <a href="inputrecorder.html#recordingReady" translate="no">recordingReady</a>().</li>
 </ul>
-<p>AudioLevels runs one recording at a time for all its recorders, so a take is refused while the mix recording (<a href="mixrecorder.html" translate="no">MixRecorder</a>) runs, and the other way round. GUI thread only.</p>
+<p>AudioLevels runs one recording at a time for all its recorders, so a take is refused while the mix recording (<a href="mixrecorder.html" translate="no">MixRecorder</a>) runs, and the other way round.</p>
+<p>The input line (the card's jacks and its gain) has one owner at a time. Another user (the live recording's <a href="liverecmic.html" translate="no">LiveRecMic</a>) takes it with <a href="inputrecorder.html#hold" translate="no">hold</a>() and gives it back with <a href="inputrecorder.html#release" translate="no">release</a>(): while it is held (held, <a href="inputrecorder.html#heldBy-prop" translate="no">heldBy</a>) this recorder wires nothing of its own (no monitor, no take, no effects, no tuner), leaves the card's gain to the holder, refuses a take, and nothing it is set to (mode, gain, effects) reaches the holder's path. A hold is refused while a take is in progress. GUI thread only.</p>
 </div>
 <!-- @@@InputRecorder -->
 <div class="prop">
@@ -299,6 +313,34 @@
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="inputrecorder.html#autoStop-prop" translate="no">settingsChanged</a></b></span>()</td></tr>
 </table></div>
 <!-- @@@gain -->
+</div>
+<div class="fnitem">
+<!-- $$$held-prop$$$held$$$heldByChanged -->
+<h3 class="fn" translate="no" id="held-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">held</span> : <span class="type">bool</span></h3>
+<p>This property holds whether another user holds the input line (<a href="inputrecorder.html#hold" translate="no">hold</a>()): the recorder's monitor, takes, effects and tuner are off meanwhile and a take is refused.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>held</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="inputrecorder.html#heldByChanged" translate="no">heldByChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@held -->
+</div>
+<div class="fnitem">
+<!-- $$$heldBy-prop$$$heldBy$$$heldByChanged -->
+<h3 class="fn" translate="no" id="heldBy-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">heldBy</span> : <span class="type">QString</span></h3>
+<p>who holds the input line (<code translate="no">liverec</code> for the live recording); empty when it is free.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>heldBy</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="inputrecorder.html#heldByChanged" translate="no">heldByChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@heldBy -->
 </div>
 <div class="fnitem">
 <!-- $$$jackLevels-prop$$$jackLevels$$$levelChanged -->
@@ -439,6 +481,20 @@
 <!-- @@@monitorLevel -->
 </div>
 <div class="fnitem">
+<!-- $$$ports-prop$$$ports$$$portsChanged -->
+<h3 class="fn" translate="no" id="ports-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">ports</span> : <span class="type">QStringList</span></h3>
+<p>This property holds the input's JACK capture ports, the left (jack 4) then the right (jack 5), as last found (looked up again when armed: their names move between boots).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>ports</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="inputrecorder.html#portsChanged" translate="no">portsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@ports -->
+</div>
+<div class="fnitem">
 <!-- $$$recordings-prop$$$recordings -->
 <h3 class="fn" translate="no" id="recordings-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">recordings</span> : <span class="type">QObject</span>* const</h3>
 <p>This property holds the as-played takes; a <a href="liverecordings.html" translate="no">LiveRecordings</a> owned by this object.</p>
@@ -496,9 +552,35 @@
 <!-- @@@InputRecorder -->
 </div>
 <div class="fnitem">
+<!-- $$$card[overload1]$$$card -->
+<h3 class="fn" translate="no" id="card"><span class="type">QString</span> InputRecorder::<span class="name">card</span>() const</h3>
+<p>Returns the ALSA card the input is on (kits.json's <code translate="no">input</code> <code translate="no">card</code>); empty without an input.</p>
+<!-- @@@card -->
+</div>
+<div class="fnitem">
+<!-- $$$heldByChanged -->
+<h3 class="fn" translate="no" id="heldByChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> InputRecorder::<span class="name">heldByChanged</span>()</h3>
+<p>Emitted when the input line is taken by another user or given back (held, <a href="inputrecorder.html#heldBy-prop" translate="no">heldBy</a>).</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="inputrecorder.html#held-prop" translate="no">held</a> and <a href="inputrecorder.html#heldBy-prop" translate="no">heldBy</a>. </p>
+</div><!-- @@@heldByChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$hold[overload1]$$$holdconstQString& -->
+<h3 class="fn" translate="no" id="hold"><span class="type">bool</span> InputRecorder::<span class="name">hold</span>(const <span class="type">QString</span> &amp;<i>holder</i>)</h3>
+<p>Gives the input line to <i translate="no">holder</i> (a name, <code translate="no">liverec</code>): from here on this recorder wires nothing of its own and refuses takes, and the holder sets the card's gain. Returns <code translate="no">false</code> when refused: another holder has it, or a take is in progress (status not <code translate="no">idle</code>). Holding it again as the same holder returns <code translate="no">true</code>.</p>
+<!-- @@@hold -->
+</div>
+<div class="fnitem">
+<!-- $$$portsChanged -->
+<h3 class="fn" translate="no" id="portsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> InputRecorder::<span class="name">portsChanged</span>()</h3>
+<p>Emitted when the capture ports were found under other names (ports).</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for property <a href="inputrecorder.html#ports-prop" translate="no">ports</a>. </p>
+</div><!-- @@@portsChanged -->
+</div>
+<div class="fnitem">
 <!-- $$$record[overload1]$$$recordbool -->
 <h3 class="fn" translate="no" id="record"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> InputRecorder::<span class="name">record</span>(<span class="type">bool</span> <i>asPlayed</i> = false)</h3>
-<p>Starts a take. A sampler take (<i translate="no">asPlayed</i> false, the default) is processed for a slot and may end by itself (<a href="inputrecorder.html#autoStop-prop" translate="no">autoStop</a>), then <a href="inputrecorder.html#takeReady" translate="no">takeReady</a>() is emitted; an as-played take (<i translate="no">asPlayed</i> true) is kept as recorded, runs until <a href="inputrecorder.html#stop" translate="no">stop</a>() and is stored where <a href="inputrecorder.html#keepIn-prop" translate="no">keepIn</a> says, then <a href="inputrecorder.html#recordingReady" translate="no">recordingReady</a>() is emitted. Returns <code translate="no">false</code> when refused: not available, the mix recording runs, or a take is in progress.</p>
+<p>Starts a take. A sampler take (<i translate="no">asPlayed</i> false, the default) is processed for a slot and may end by itself (<a href="inputrecorder.html#autoStop-prop" translate="no">autoStop</a>), then <a href="inputrecorder.html#takeReady" translate="no">takeReady</a>() is emitted; an as-played take (<i translate="no">asPlayed</i> true) is kept as recorded, runs until <a href="inputrecorder.html#stop" translate="no">stop</a>() and is stored where <a href="inputrecorder.html#keepIn-prop" translate="no">keepIn</a> says, then <a href="inputrecorder.html#recordingReady" translate="no">recordingReady</a>() is emitted. Returns <code translate="no">false</code> when refused: not available, the line is held by the live recording (<a href="inputrecorder.html#takeFailed" translate="no">takeFailed</a>() says so), the mix recording runs, or a take is in progress.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@record -->
 </div>
@@ -509,10 +591,10 @@
 <!-- @@@recordingReady -->
 </div>
 <div class="fnitem">
-<!-- $$$setListener[overload1]$$$setListenerconstQStringList& -->
-<h3 class="fn" translate="no" id="setListener"><span class="type">void</span> InputRecorder::<span class="name">setListener</span>(const <span class="type">QStringList</span> &amp;<i>ports</i>)</h3>
-<p>Feeds <i translate="no">ports</i> (left, right) with the input as heard (the jack in use, the gain, the effects), besides the monitor and the takes; <a href="videorecorder.html" translate="no">VideoRecorder</a> uses it for its mic. An empty list feeds none. The input counts as in use while ports are set.</p>
-<!-- @@@setListener -->
+<!-- $$$release[overload1]$$$releaseconstQString& -->
+<h3 class="fn" translate="no" id="release"><span class="type">void</span> InputRecorder::<span class="name">release</span>(const <span class="type">QString</span> &amp;<i>holder</i>)</h3>
+<p>Gives the input line back from <i translate="no">holder</i>; another holder's name does nothing. The card gets this recorder's gain and bias again and its paths are wired as its settings want.</p>
+<!-- @@@release -->
 </div>
 <div class="fnitem">
 <!-- $$$stop[overload1]$$$stop -->

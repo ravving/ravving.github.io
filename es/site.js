@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
  * Four small interactions, nothing else: a shortcut row shows its screenshot in the card's
- * figure (with a frame around what to look at), hovering a card's rows lights the matching
+ * figure (with a frame around what to look at), hovering or focusing a card's rows lights the matching
  * region on the device artwork, a feature row slides in as it scrolls into view, and a
  * feature group opens and closes on its heading. The page reads fine with JavaScript off:
  * the figures are then empty, the rows all shown, the groups all open (html.no-js).
@@ -186,6 +186,9 @@
     if (region) {
       card.addEventListener("mouseenter", function () { light(region, true); });
       card.addEventListener("mouseleave", function () { light(region, false); });
+      // the keyboard's way in: a focused row lights its region too
+      card.addEventListener("focusin", function () { light(region, true); });
+      card.addEventListener("focusout", function (e) { if (!card.contains(e.relatedTarget)) light(region, false); });
     }
   });
 

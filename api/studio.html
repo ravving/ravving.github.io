@@ -7,8 +7,11 @@
   <meta name="keywords" content="class">
   <title>Studio Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=54f138c7a0">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
   <script>
     (function () {
       var t = null;
@@ -18,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=6d3fec3ba2" defer></script>
-  <script src="search.js?v=ca2ed9567f" defer></script>
+  <script src="nav.js?v=1bc6ffb8e9" defer></script>
+  <script src="search.js?v=ec45397431" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -30,7 +33,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
     </button>
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav class="sections" aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -147,6 +150,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="studio.html#inputPortsCard" translate="no">inputPortsCard</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="studio.html#live-prop" translate="no">live</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="studio.html#liveFx-prop" translate="no">liveFx</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> LiveRecMic *</td><td class="memItemRight bottomAlign"><b><a href="studio.html#liveRecMic" translate="no">liveRecMic</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="studio.html#loadingDone-prop" translate="no">loadingDone</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="studio.html#loadingEngines-prop" translate="no">loadingEngines</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="studio.html#loadingTotal-prop" translate="no">loadingTotal</a></b>() const</td></tr>
@@ -695,6 +699,12 @@
 <h3 class="fn" translate="no" id="inputPortsCard"><span class="type">QString</span> Studio::<span class="name">inputPortsCard</span>() const</h3>
 <p>Returns the sound card whose capture ports are the input jacks (kits.json's <code translate="no">input</code> <code translate="no">portsCard</code>, found by <a href="hardwareports.html#captureOf" translate="no">HardwarePorts::captureOf</a>()); empty without an input.</p>
 <!-- @@@inputPortsCard -->
+</div>
+<div class="fnitem">
+<!-- $$$liveRecMic[overload1]$$$liveRecMic -->
+<h3 class="fn" translate="no" id="liveRecMic"><span class="type"><a href="liverecmic.html" translate="no">LiveRecMic</a></span> *Studio::<span class="name">liveRecMic</span>() const</h3>
+<p>Returns the live recording's own input path (<a href="liverecmic.html" translate="no">LiveRecMic</a>) over the same device input, which <a href="videorecorder.html" translate="no">VideoRecorder</a> publishes as <code translate="no">video.input</code>.</p>
+<!-- @@@liveRecMic -->
 </div>
 <div class="fnitem">
 <!-- $$$loadingChanged -->

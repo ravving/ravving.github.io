@@ -3,12 +3,15 @@
 <head>
   <meta charset="utf-8">
 <!-- inputeffects.cpp -->
-  <meta name="description" content="The effects on the device input, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;input&lt;@op&gt;.&lt;/@op&gt;effects: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded.">
+  <meta name="description" content="The effects on the device input: a chain of LV2 plugins (jalv) between the input and whoever hears it (the monitor and the take, or the live recording's tap), so what is heard is what is recorded.">
   <meta name="keywords" content="class">
   <title>InputEffects Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=54f138c7a0">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
   <script>
     (function () {
       var t = null;
@@ -18,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=6d3fec3ba2" defer></script>
-  <script src="search.js?v=ca2ed9567f" defer></script>
+  <script src="nav.js?v=1bc6ffb8e9" defer></script>
+  <script src="search.js?v=ec45397431" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -30,7 +33,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
     </button>
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav class="sections" aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -74,7 +77,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">InputEffects Class</h1>
 <!-- $$$InputEffects-brief -->
-<p>The effects on the device input, published to QML as <code translate="no">studio.input.effects</code>: a chain of LV2 plugins (jalv) between the input and both the monitor and the take, so what is heard is what is recorded. <a href="#details">More...</a></p>
+<p>The effects on the device input: a chain of LV2 plugins (jalv) between the input and whoever hears it (the monitor and the take, or the live recording's tap), so what is heard is what is recorded. <a href="#details">More...</a></p>
 <!-- @@@InputEffects -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;inputeffects.h&gt;</code></td></tr>
@@ -92,7 +95,7 @@
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#InputEffects" translate="no">InputEffects</a></b>(const QString &amp;<i>presetsFile</i>, ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#InputEffects" translate="no">InputEffects</a></b>(const QString &amp;<i>presetsFile</i>, const QString &amp;<i>use</i>, const QString &amp;<i>settingsFile</i>, ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#about-prop" translate="no">about</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QList&lt;AudioInsert *&gt; </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#chain" translate="no">chain</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#knobs-prop" translate="no">knobs</a></b>() const</td></tr>
@@ -114,7 +117,7 @@
 <!-- $$$InputEffects-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p><a href="inputrecorder.html" translate="no">InputRecorder</a> wires the chain (<a href="inputeffects.html#chain" translate="no">chain</a>()). The presets are data (<code translate="no">data/input-fx.json</code>): each a chain of plugins with fixed controls and three knobs, a knob moving one or more ports across a range (linear or log). Only the preset in use runs: its plugins start when it is selected and stop when another is, since every running jalv costs the audio graph each period whether wired or not; and it runs only while the input is in use (<a href="inputeffects.html#setActive" translate="no">setActive</a>()). The knob values are kept per preset for the session. Delays marked <code translate="no">bpm</code> follow the studio's tempo. No preset (an empty name) is the plain input. GUI thread only.</p>
+<p>Each user of the input has its own instance, with its own preset and knobs: the RECORDER's (<code translate="no">studio.input.effects</code>, wired by <a href="inputrecorder.html" translate="no">InputRecorder</a>) and the live recording's (<code translate="no">video.input.effects</code>, wired by <a href="liverecmic.html" translate="no">LiveRecMic</a>). The presets are data (<code translate="no">data/input-fx.json</code>): each a chain of plugins with fixed controls and three knobs, a knob moving one or more ports across a range (linear or log); a preset's <code translate="no">uses</code> names the users it is offered to (none: all). Only the preset in use runs: its plugins start when it is selected and stop when another is, since every running jalv costs the audio graph each period whether wired or not; and it runs only while the input is in use (<a href="inputeffects.html#setActive" translate="no">setActive</a>()). The knob values are kept per preset, for the session or in a settings file (the live recording's). Delays marked <code translate="no">bpm</code> follow the studio's tempo. No preset (an empty name) is the plain input. GUI thread only.</p>
 </div>
 <!-- @@@InputEffects -->
 <div class="prop">
@@ -176,9 +179,9 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$InputEffects[overload1]$$$InputEffectsconstQString&ZynthboxBridge*QObject* -->
-<h3 class="fn" translate="no" id="InputEffects">InputEffects::<span class="name">InputEffects</span>(const <span class="type">QString</span> &amp;<i>presetsFile</i>, <span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Reads the presets from <i translate="no">presetsFile</i> (<code translate="no">data/input-fx.json</code>), with their plugins run through <i translate="no">bridge</i> (null: nothing runs), with the given <i translate="no">parent</i>.</p>
+<!-- $$$InputEffects[overload1]$$$InputEffectsconstQString&constQString&constQString&ZynthboxBridge*QObject* -->
+<h3 class="fn" translate="no" id="InputEffects">InputEffects::<span class="name">InputEffects</span>(const <span class="type">QString</span> &amp;<i>presetsFile</i>, const <span class="type">QString</span> &amp;<i>use</i>, const <span class="type">QString</span> &amp;<i>settingsFile</i>, <span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Reads the presets made for <i translate="no">use</i> (<code translate="no">recorder</code>, <code translate="no">liverec</code>: a preset's <code translate="no">uses</code> in the file; one without is for all) from <i translate="no">presetsFile</i> (<code translate="no">data/input-fx.json</code>), with their plugins run through <i translate="no">bridge</i> (null: nothing runs), with the given <i translate="no">parent</i>. With a <i translate="no">settingsFile</i> (a QSettings file name under ravving's, <code translate="no">liverec-fx</code>) the preset in use and the knobs are read from it and kept there; empty, they last the session.</p>
 <!-- @@@InputEffects -->
 </div>
 <div class="fnitem">

@@ -7,8 +7,11 @@
   <meta name="keywords" content="qmltype">
   <title>Fader QML Type | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=54f138c7a0">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
   <script>
     (function () {
       var t = null;
@@ -18,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=6d3fec3ba2" defer></script>
-  <script src="search.js?v=ca2ed9567f" defer></script>
+  <script src="nav.js?v=1bc6ffb8e9" defer></script>
+  <script src="search.js?v=ec45397431" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -30,7 +33,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
     </button>
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav class="sections" aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -67,6 +70,7 @@
 <ul>
 <li class="level1"><a href="#properties">Properties</a></li>
 <li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#methods">Methods</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -94,15 +98,21 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-fader.html#length-prop" translate="no">length</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-fader.html#to-prop" translate="no">to</a></b> : real</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-fader.html#value-prop" translate="no">value</a></b> : real</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-fader.html#valueText-prop" translate="no">valueText</a></b> : string</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-fader.html#vertical-prop" translate="no">vertical</a></b> : bool</li>
 </ul>
 <h2 id="signals">Signals</h2>
 <ul>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-fader.html#moved-signal" translate="no">moved</a></b>()</li>
 </ul>
+<h2 id="methods">Methods</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-fader.html#showValue-method" translate="no">showValue</a></b>()</li>
+</ul>
 <!-- $$$Fader-description -->
 <h2 id="details">Detailed Description</h2>
 <p>The caption and a 0&ndash;100 readout on a line above the Zynthbox style's QQC Slider (so it wears the active SVG theme), in the machine's ink. Stacked, not side by side, so it takes no more width than the slider (the strip's row is full).</p>
-<p>Like Knob it is a <a href="qml-ravving-controls-knobgroup.html" translate="no">KnobGroup</a> target (value, from, to, <a href="qml-ravving-controls-fader.html#knobStep-prop" translate="no">knobStep</a>, <a href="qml-ravving-controls-fader.html#fineStep-prop" translate="no">fineStep</a>, <a href="qml-ravving-controls-fader.html#knobBadge-prop" translate="no">knobBadge</a>, <a href="qml-ravving-controls-fader.html#knobPending-prop" translate="no">knobPending</a>), so a device knob can drive it and its <a href="qml-ravving-controls-knobbadge.html" translate="no">KnobBadge</a> sits over the handle. A page can also put the big knob on it (<code translate="no">bigKnob</code>), which shows the big-knob badge while no group has given it a knob of its own.</p>
+<p>Like Knob it is a <a href="qml-ravving-controls-knobgroup.html" translate="no">KnobGroup</a> target (value, from, to, <a href="qml-ravving-controls-fader.html#knobStep-prop" translate="no">knobStep</a>, <a href="qml-ravving-controls-fader.html#fineStep-prop" translate="no">fineStep</a>, <a href="qml-ravving-controls-fader.html#knobBadge-prop" translate="no">knobBadge</a>, <a href="qml-ravving-controls-fader.html#knobPending-prop" translate="no">knobPending</a>), so a device knob can drive it and its <a href="qml-ravving-controls-knobbadge.html" translate="no">KnobBadge</a> sits on the caption line (beside the caption, or the value when standing up), never over the handle. A page can also put the big knob on it (<code translate="no">bigKnob</code>), which shows the big-knob badge while no group has given it a knob of its own.</p>
 <!-- @@@Fader -->
 <h2>Property Documentation</h2>
 <div class="fnitem">
@@ -171,6 +181,18 @@
 <p>The fader's value and range.</p>
 <!-- @@@value -->
 </div>
+<div class="fnitem">
+<!-- $$$valueText -->
+<h3 class="fn qml-member qml-property" translate="no" id="valueText-prop"><span class="name">valueText</span> : <span class="type">string</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<p>The value as the fader reads it, 0 to 100.</p>
+<!-- @@@valueText -->
+</div>
+<div class="fnitem">
+<!-- $$$vertical -->
+<h3 class="fn qml-member qml-property" translate="no" id="vertical-prop"><span class="name">vertical</span> : <span class="type">bool</span></h3>
+<p>Standing up (the MIXER's strips): <code translate="no">length</code> is then its height, the value sits on top and the caption is left out (the strip names the machine).</p>
+<!-- @@@vertical -->
+</div>
 <h2>Signal Documentation</h2>
 <div class="fnitem">
 <!-- $$$moved[overload1]$$$moved -->
@@ -178,6 +200,14 @@
 <p>The user dragged the fader (not emitted for programmatic changes).</p>
 <div class="admonition note"><p><b>Note: </b>The corresponding handler is <code translate="no">onMoved</code>.</p>
 </div><!-- @@@moved -->
+<h2>Method Documentation</h2>
+</div>
+<div class="fnitem">
+<!-- $$$showValue[overload1]$$$showValue -->
+<h3 class="fn qml-member qml-method" translate="no" id="showValue-method"><span class="name">showValue</span>()</h3>
+<p>Puts the fader's name and value in the value bubble (<a href="qml-ravving-controls-valuetip.html" translate="no">ValueTip</a>): on a drag, and from <a href="qml-ravving-controls-knobgroup.html" translate="no">KnobGroup</a> when a device knob moves it.</p>
+<!-- @@@showValue -->
+</div>
 </article>
 </main>
 <footer class="api-footer">
@@ -187,4 +217,3 @@
 </footer>
 </body>
 </html>
-</div>

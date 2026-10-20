@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  ravving on MIKO: the documentation.
+  ravving: the documentation.
   Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
   SPDX-License-Identifier: GPL-3.0-or-later
   Rendered from docs/ui-rules.md by tools/build-site-docs.py: edit the markdown, not this file.
@@ -10,15 +10,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UI rules · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=57a1c6a25f">
+<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<script src="../assets/theme.js?v=3307b56d38"></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
 </head>
 <body class="docs">
 <a class="skip" href="#doc">Skip to the text</a>
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -26,6 +30,7 @@
       <a href="index.html" aria-current="true">Docs</a>
       <a href="../api/index.html">API reference</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Theme"><svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg></button>
   </div>
 </header>
 <main class="wrap docs-wrap">
@@ -48,6 +53,9 @@
 <li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
 </ul>
+<p class="mono">Make your own</p><ul>
+<li><a href="skin-sets.html">Make a skin set</a></li>
+</ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
@@ -61,7 +69,7 @@
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
-<li class="on"><a href="ui-rules.html" aria-current="page">UI rules</a><ul><li><a href="#where-a-control-lives">Where a control lives</a></li><li><a href="#shared-base-types">Shared base types</a></li><li><a href="#buttons-action-or-state">Buttons: action or state</a></li><li><a href="#button-sizes">Button sizes</a></li><li><a href="#controls-in-a-group-take-the-device-knobs">Controls in a group take the device knobs</a></li><li><a href="#rows-of-controls-sit-on-bands-dialogs-and-pages">Rows of controls sit on bands (dialogs and pages)</a></li><li><a href="#leaving">Leaving</a></li><li><a href="#pages">Pages</a></li><li><a href="#empty-views">Empty views</a></li><li><a href="#three-font-families">Three font families</a></li><li><a href="#palettes">Palettes</a></li><li><a href="#design-tokens">Design tokens</a></li><li><a href="#a-key-and-its-button">A key and its button</a></li><li><a href="#text-is-translatable-keys-are-not">Text is translatable, keys are not</a></li><li><a href="#adding-a-rule">Adding a rule</a></li></ul></li>
+<li class="on"><a href="ui-rules.html" aria-current="page">UI rules</a><ul><li><a href="#where-a-control-lives">Where a control lives</a></li><li><a href="#shared-base-types">Shared base types</a></li><li><a href="#buttons-action-or-state">Buttons: action or state</a></li><li><a href="#button-sizes">Button sizes</a></li><li><a href="#controls-in-a-group-take-the-device-knobs">Controls in a group take the device knobs</a></li><li><a href="#rows-of-controls-sit-on-bands-dialogs-and-pages">Rows of controls sit on bands (dialogs and pages)</a></li><li><a href="#leaving">Leaving</a></li><li><a href="#pages">Pages</a></li><li><a href="#empty-views">Empty views</a></li><li><a href="#scrolling-views">Scrolling views</a></li><li><a href="#the-type-scale">The type scale</a></li><li><a href="#three-font-families">Three font families</a></li><li><a href="#palettes">Palettes</a></li><li><a href="#design-tokens">Design tokens</a></li><li><a href="#a-key-and-its-button">A key and its button</a></li><li><a href="#text-is-translatable-keys-are-not">Text is translatable, keys are not</a></li><li><a href="#adding-a-rule">Adding a rule</a></li></ul></li>
 <li><a href="extending.html">Extending</a></li>
 <li><a href="writing-the-guide.html">Writing the guide</a></li>
 <li><a href="writing-code-docs.html">Writing code documentation</a></li>
@@ -194,9 +202,39 @@ page-focus request (Main.qml wires those).</p>
 <td>every list and grid</td>
 </tr>
 <tr>
+<td>A value shown large while it changes by hand</td>
+<td><code>ValueTip.show(item, label, text, accent)</code>, drawn by the one <code>ValueBubble</code> in Main</td>
+<td>Knob (a touch, a drag, a device knob through KnobGroup)</td>
+</tr>
+<tr>
 <td>A dialog's title row</td>
 <td><code>DialogHeader</code></td>
 <td>every dialog</td>
+</tr>
+<tr>
+<td>A browsing dialog's kinds down the left, with their counts</td>
+<td><code>KindList</code></td>
+<td>FILES, USB, GET MORE</td>
+</tr>
+<tr>
+<td>A browsing dialog's path row: ↑ UP, the kind and the folders opened, the owner's buttons</td>
+<td><code>PathRow</code></td>
+<td>FILES, USB, GET MORE (its FIND)</td>
+</tr>
+<tr>
+<td>A browsing dialog's list, set the one way (clip, 4 px rows, no bounce, no pooled delegates)</td>
+<td><code>BrowseList</code></td>
+<td>FILES, USB, GET MORE</td>
+</tr>
+<tr>
+<td>A browsing dialog's row: a name, a line of detail, its actions (a folder opens)</td>
+<td><code>FileRow</code></td>
+<td>FILES, USB, GET MORE</td>
+</tr>
+<tr>
+<td>What is under way (its progress), else how the last thing went</td>
+<td><code>OutcomeLine</code></td>
+<td>FILES, USB, GET MORE</td>
 </tr>
 <tr>
 <td>The way a file leaves the device: a SEND… button opening the destinations (USB sticks, the computer, the phone by QR code)</td>
@@ -210,6 +248,8 @@ page-focus request (Main.qml wires those).</p>
 <li><strong>Squared <code>ActionButton</code>: it does something once and leaves no state.</strong> LOAD, CLEAR, SAVE,
   RENAME, NEW, −/+, ◀ ▶, PLAY FROM HERE, TRIM, TO PADS, the transport keys, a picker showing its
   current value (it opens a list).</li>
+<li><strong>One <code>highlighted</code> action at most on a page:</strong> its main one, drawn as the webpage's flat
+    orange face (design-system B22), as the setup page's TRY IT. Every other action keeps the key.</li>
 <li><strong>Rounded <code>Chip</code> / <code>StripButton</code>: a state you can see.</strong> It stays lit while the state is on,
   so it always binds <code>checked</code>, or is checkable. <em>Checked:</em> <code>chip-shows-state</code>.</li>
 <li>An on/off toggle wears its LED: SET, STEP, LIVE, S/M, MONITOR, REPEAT.</li>
@@ -221,7 +261,7 @@ page-focus request (Main.qml wires those).</p>
 </ul>
 <h2 id="button-sizes">Button sizes</h2>
 <ul>
-<li><strong>One height: <code>Rave.controlHeight</code> (36 px)</strong> for every button, action or state, so a row of
+<li><strong>One height: <code>Rave.controlHeight</code> (42 px)</strong> for every button, action or state, so a row of
   them lines up and a finger always finds the same target on the 1280×800 touch screen.</li>
 <li><strong>A smallest width:</strong> <code>Rave.controlWidth</code> (48 px, square) for a glyph (◀ ▶ − + ⟳ ✕), and
   <code>Rave.actionMinWidth</code> (88 px) for a word (LOAD, SCAN, SAVE). A short word is no smaller a
@@ -292,6 +332,52 @@ page-focus request (Main.qml wires those).</p>
 <p>An empty list or view says why and what fills it, with an <code>EmptyNote</code> ("no recordings yet · ● REC
 records the input as played"), never a <code>Text</code> of its own. Where the view has room, ARU stands
 above the words in the note's ink; <code>mascot: ""</code> leaves ARU out. <em>Checked:</em> <code>empty-says-why</code>.</p>
+<h2 id="scrolling-views">Scrolling views</h2>
+<p>A view that can be taller (or wider) than its room carries the style's <code>ScrollIndicator</code>
+(<code>QQC.ScrollIndicator.vertical: QQC.ScrollIndicator {}</code>). It is a 3 px pill along the edge, there
+whenever the content doesn't fit, faint at rest and brighter while it moves. A finger scrolls the
+view itself; the indicator only says there is more.</p>
+<h2 id="the-type-scale">The type scale</h2>
+<p>Every text takes one of ten steps from <code>Theme.type</code>, family, size, weight, tracking and case in
+one: <code>font: Theme.type.label</code>. Set the whole font, not <code>font.pixelSize</code> beside it. The values
+come from theme/tokens.json <code>type.steps</code> (ctest design-tokens holds them equal).</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Face</th>
+<th>Size</th>
+<th>For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hero</code>, <code>title</code>, <code>heading</code>, <code>plate</code></td>
+<td>display, capitals</td>
+<td>40, 28, 22, 15</td>
+<td>the splash, titles, a card's heading or a value bubble, nameplates and dialog titles</td>
+</tr>
+<tr>
+<td><code>lede</code>, <code>body</code>, <code>label</code></td>
+<td>regular</td>
+<td>15, 13, 12</td>
+<td>a line under a title, running text, a control's caption</td>
+</tr>
+<tr>
+<td><code>caps</code>, <code>micro</code></td>
+<td>monospaced, capitals</td>
+<td>11, 9</td>
+<td>group titles, tags and hints; a sub-label on a plate or a key, nothing smaller</td>
+</tr>
+<tr>
+<td><code>figure</code></td>
+<td>monospaced</td>
+<td>13</td>
+<td>a value that changes while watched</td>
+</tr>
+</tbody>
+</table>
+<p>A text with no step of its own takes the application font, <code>body</code>'s size.</p>
 <h2 id="three-font-families">Three font families</h2>
 <p>ravving's text uses three families, all built in (the Fonts class), each with one job:</p>
 <table>
@@ -412,9 +498,12 @@ a single line in theme/fonts.cpp. <em>Checked:</em> <code>font-families</code>.<
 </tbody>
 </table>
 <h3 id="skin-sets">Skin sets</h3>
-<p>A skin set (<code>data/skins/&lt;set&gt;.json</code>, SETTINGS → DEVICE → SKINS) gives every machine its case,
-keys, well and lights. <code>python3 tools/check-skins.py [FILE.json…]</code> checks each colour against
-what it is drawn on (all the shipped sets when no file is given):</p>
+<p>A skin set (<code>data/skins/&lt;set&gt;.json</code>, SETTINGS → LOOK → SKINS) gives every machine its case,
+keys, well and lights. The shipped sets: ARCADE, CEL, JELLY, KISSA, METRO, PENCIL (the default),
+PREVIOUS, REEF, SIGNAL, SORBET, STUDIO and TOON, beside ravving's own (Rave.ownSkins). A profile
+naming a set that is not there wears PENCIL.</p>
+<p><code>python3 tools/check-skins.py [FILE.json…]</code> checks each colour against what it is drawn on (all
+the shipped sets when no file is given):</p>
 <ul>
 <li><code>dark</code> matches the case's luminance (Rave.isDarkColour);</li>
 <li><code>ink</code> ≥ 7:1 on both chassis colours;</li>
@@ -429,16 +518,18 @@ what it is drawn on (all the shipped sets when no file is given):</p>
 <h4 id="fixing-and-comparing-sets">Fixing and comparing sets</h4>
 <p><code>tools/skin-fix.py FILE.json…</code> nudges a failing set until it passes, moving only the colours a
 check names and only their lightness. <code>tools/check-skins.py --similar</code> lists the sets closest
-to each other: a new set should stay at least 15 from every other (the mean Delta E of the
+to each other: a new set should stay at least 16 from every other (the mean Delta E of the
 machines' cases, keys, wells and lights).</p>
 <h4 id="light-and-dark-cases">Light and dark cases</h4>
 <p>Any machine may wear a light case or a dark one, with a light well or a dark one. The views on
 the well take what reads on it from <code>WellColours</code> (after Rave.onWell):</p>
 <ul>
-<li>the views: the step grid, the rolls, the chord slots, the ribbon and the pad grid;</li>
+<li>the views: the drums' step grid, the chords' roll and slots, the bass and lead rolls, the
+  lead's ribbon and the pad grid, so every page can wear a light case;</li>
 <li>on a dark well: the light greys and white washes;</li>
 <li>on a light well: the same marks in the well's dark ink;</li>
-<li>the controls in them: that ink, through <code>Skin.overrides</code>.</li>
+<li>the controls in them: that ink, through <code>Skin.overrides</code>;</li>
+<li>the tabs over them (TabButton): the case's ink.</li>
 </ul>
 <p>A light case's lights are mid tones, to read on its near-white caps and in the header's black
 chip alike.</p>
@@ -472,7 +563,7 @@ dialog card or a dark band on a light page, keeps the accent and sets its own in
 </tr>
 <tr>
 <td><code>site</code></td>
-<td>the webpage's own tones</td>
+<td>the webpage's own tones, and its light set (<code>site.light</code>: the paper colours, what the art keeps, the contrast pairs checked)</td>
 </tr>
 <tr>
 <td><code>fonts</code></td>
@@ -490,11 +581,15 @@ dialog card or a dark band on a light page, keeps the accent and sets its own in
 <td><code>art</code></td>
 <td>the cover art's palette: the skins' accents through the covers' fade</td>
 </tr>
+<tr>
+<td><code>type</code></td>
+<td>the type scale: <code>Theme.type</code>'s steps, and the <code>--t-&lt;step&gt;</code> sizes of the webpage (site/site.css) and the API reference (doc/global/style/ravving.css)</td>
+</tr>
 </tbody>
 </table>
 <p>A colour changes there first, then in the file it names: theme/theme.h,
 site/site.css, Rave.qml or data/branding/make-aru.py. <code>python3 tools/design-tokens.py --write</code>
-recomputes the cover art's palette after a skin changes; <code>--sheet OUT.html</code> renders the
+recomputes the cover art's palette after a skin changes and writes the type scale into both stylesheets; <code>--sheet OUT.html</code> renders the
 tokens as a page. <em>Checked:</em> <code>design-tokens</code>.</p>
 <h2 id="a-key-and-its-button">A key and its button</h2>
 <p>A device key that does what an on-screen button does shows that button pressed while it is held,

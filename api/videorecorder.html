@@ -7,8 +7,11 @@
   <meta name="keywords" content="class">
   <title>VideoRecorder Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=54f138c7a0">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
   <script>
     (function () {
       var t = null;
@@ -18,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=6d3fec3ba2" defer></script>
-  <script src="search.js?v=ca2ed9567f" defer></script>
+  <script src="nav.js?v=1bc6ffb8e9" defer></script>
+  <script src="search.js?v=ec45397431" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -30,7 +33,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
     </button>
     <a class="brand" href="../index.html" aria-label="ravving">
-      <picture><source media="(max-width: 600px)" srcset="../assets/vv-16.svg" width="16" height="16"><img class="ravv" src="../assets/ravv.svg" alt="ravving" width="492" height="104"></picture>
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
     </a>
     <nav class="sections" aria-label="Sections">
       <a href="../features.html#features">Features</a>
@@ -98,6 +101,7 @@
 <li class="fn" translate="no"><b><a href="videorecorder.html#elapsed-prop" translate="no">elapsed</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="videorecorder.html#error-prop" translate="no">error</a></b> : QString</li>
 <li class="fn" translate="no"><b><a href="videorecorder.html#folder-prop" translate="no">folder</a></b> : const QString</li>
+<li class="fn" translate="no"><b><a href="videorecorder.html#input-prop" translate="no">input</a></b> : QObject* const</li>
 <li class="fn" translate="no"><b><a href="videorecorder.html#lastFile-prop" translate="no">lastFile</a></b> : QString</li>
 <li class="fn" translate="no"><b><a href="videorecorder.html#lastInfo-prop" translate="no">lastInfo</a></b> : QVariantMap</li>
 <li class="fn" translate="no"><b><a href="videorecorder.html#mic-prop" translate="no">mic</a></b> : bool</li>
@@ -139,6 +143,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#elapsed-prop" translate="no">elapsed</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#error-prop" translate="no">error</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#folder-prop" translate="no">folder</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#input-prop" translate="no">input</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#lastFile-prop" translate="no">lastFile</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#lastInfo-prop" translate="no">lastInfo</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#mic-prop" translate="no">mic</a></b>() const</td></tr>
@@ -169,6 +174,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#start" translate="no">start</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#state-prop" translate="no">state</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#stop" translate="no">stop</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#stopPressed" translate="no">stopPressed</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#takesKey" translate="no">takesKey</a></b>(const QString &amp;<i>cuia</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#toggle" translate="no">toggle</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="videorecorder.html#unavailableReason-prop" translate="no">unavailableReason</a></b>() const</td></tr>
@@ -197,14 +203,14 @@
 <!-- $$$VideoRecorder-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>While armed, <a href="videorecorder.html#takesKey" translate="no">takesKey</a>() consumes the RECORD and STOP keys to start and stop a recording. How a recording is made:</p>
+<p>While armed, <a href="videorecorder.html#takesKey" translate="no">takesKey</a>() consumes the RECORD and STOP keys: RECORD starts a recording, STOP ends it (and the music), and a second STOP within three seconds (<a href="videorecorder.html#stopPressed" translate="no">stopPressed</a>(), <a href="qml-ravving-controls-secondpress.html" translate="no">SecondPress</a>) leaves LIVE REC: armed off, the mic's line given back. How a recording is made:</p>
 <ul>
 <li>The sound is tapped from the master's last outputs (after its inserts) by <a href="audiotap.html" translate="no">AudioTap</a>, ravving's own JACK client with a ring of 2^20 frames (about 21 s at 48 kHz), and fed to ffmpeg through a named pipe as raw float samples. It does not go through AudioLevels, which stays free for other recorders, nor through ffmpeg's JACK input, whose small ring a storage stall would overrun.</li>
 <li>The picture is ffmpeg's x11grab of the display (or v4l2 of the camera), encoded with libx264 on two threads under <code translate="no">nice</code>. qualities lists the tiers.</li>
 <li>Sync: ffmpeg stamps every frame with the wall clock (<code translate="no">-use_wallclock_as_timestamps</code>), the tap records the wall-clock time of its first sample (<a href="audiotap.html#startRealtimeUs" translate="no">AudioTap::startRealtimeUs</a>()), which ffmpeg gets as <code translate="no">-itsoffset</code>; with <code translate="no">-copyts</code> both streams share one clock in the file. The recording is written to a Matroska file first (readable after a crash), then a <code translate="no">-c copy</code> remux cuts the head up to the first video frame and writes the MP4 with its index at the front (<code translate="no">+faststart</code>) and its tags.</li>
 </ul>
 <p>The states (state): <code translate="no">off</code> (not armed), <code translate="no">ready</code> (armed), <code translate="no">countdown</code>, <code translate="no">starting</code> (ffmpeg launching), <code translate="no">recording</code> and <code translate="no">saving</code> (the remux). <a href="videorecorder.html#finished" translate="no">finished</a>() or <a href="videorecorder.html#failed" translate="no">failed</a>() reports the end.</p>
-<p>The settings, stored under <code translate="no">ravving/video</code>, are mode, source, quality, countdown, camera, mic (<a href="inputrecorder.html" translate="no">InputRecorder</a>'s input mixed into the sound: <a href="inputrecorder.html#setListener" translate="no">InputRecorder::setListener</a>() feeds the tap's mic ports), the voice-over levels and <a href="videorecorder.html#showKeys-prop" translate="no">showKeys</a>. <a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a>() is emitted again on a language change, so translated labels are re-read. GUI thread only.</p>
+<p>The settings, stored under <code translate="no">ravving/video</code>, are mode, source, quality, countdown, camera, mic (the live recording's own input path, input, a <a href="liverecmic.html" translate="no">LiveRecMic</a>: while LIVE REC is on with MIC it holds the device input for itself and feeds the tap's mic ports through its own effects; nothing of the RECORDER's reaches the recording), the voice-over levels and <a href="videorecorder.html#showKeys-prop" translate="no">showKeys</a>. <a href="videorecorder.html#camera-prop" translate="no">settingsChanged</a>() is emitted again on a language change, so translated labels are re-read. GUI thread only.</p>
 </div>
 <!-- @@@VideoRecorder -->
 <div class="prop">
@@ -373,6 +379,16 @@
 <!-- @@@folder -->
 </div>
 <div class="fnitem">
+<!-- $$$input-prop$$$input -->
+<h3 class="fn" translate="no" id="input-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">input</span> : <span class="type">QObject</span>* const</h3>
+<p>This property holds the live recording's input path, a <a href="liverecmic.html" translate="no">LiveRecMic</a> owned by the studio: its mode, gain, role (voice-over or singing), effects and whether it holds the line now.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QObject *</td><td class="memItemRight bottomAlign"><span class="name"><b>input</b></span>() const</td></tr>
+</table></div>
+<!-- @@@input -->
+</div>
+<div class="fnitem">
 <!-- $$$lastFile-prop$$$lastFile$$$lastFileChanged -->
 <h3 class="fn" translate="no" id="lastFile-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">lastFile</span> : <span class="type">QString</span></h3>
 <p>This property holds the file of the last recording; empty before any.</p>
@@ -403,7 +419,7 @@
 <div class="fnitem">
 <!-- $$$mic-prop$$$mic$$$setMicbool$$$settingsChanged -->
 <h3 class="fn" translate="no" id="mic-prop"><span class="name">mic</span> : <span class="type">bool</span></h3>
-<p>This property holds whether <a href="inputrecorder.html" translate="no">InputRecorder</a>'s input (its mode, jack, gain and effects) is mixed into the sound (<a href="inputrecorder.html#setListener" translate="no">InputRecorder::setListener</a>() into <a href="audiotap.html" translate="no">AudioTap</a>'s mic ports).</p>
+<p>This property holds whether the live recording's own input path (input: its mode, gain, role and effects) is mixed into the sound (<a href="liverecmic.html#setListener" translate="no">LiveRecMic::setListener</a>() into <a href="audiotap.html" translate="no">AudioTap</a>'s mic ports); while LIVE REC is on with it the device input is the recording's alone.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>mic</b></span>() const</td></tr>
@@ -446,7 +462,7 @@
 <div class="fnitem">
 <!-- $$$micLive-prop$$$micLive$$$micChanged -->
 <h3 class="fn" translate="no" id="micLive-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">micLive</span> : <span class="type">bool</span></h3>
-<p>This property holds whether the mic is wired into the tap: while armed with mic on and an input present, so <a href="videorecorder.html#micLevel-prop" translate="no">micLevel</a> reads before the recording starts.</p>
+<p>This property holds whether the mic is wired into the tap: while armed with mic on and the line held (an input present, no RECORDER take running), so <a href="videorecorder.html#micLevel-prop" translate="no">micLevel</a> reads before the recording starts.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>micLive</b></span>() const</td></tr>
@@ -604,7 +620,7 @@
 <div class="fnitem">
 <!-- $$$voiceDuck-prop$$$voiceDuck$$$setVoiceDuckint$$$settingsChanged -->
 <h3 class="fn" translate="no" id="voiceDuck-prop"><span class="name">voiceDuck</span> : <span class="type">int</span></h3>
-<p>by how many dB the music ducks under the voice, one of <a href="videorecorder.html#voiceDucks-prop" translate="no">voiceDucks</a> (0 none); applied at once, to a recording under way too (<a href="audiotap.html#setVoiceOver" translate="no">AudioTap::setVoiceOver</a>()).</p>
+<p>by how many dB the music ducks under the voice, one of <a href="videorecorder.html#voiceDucks-prop" translate="no">voiceDucks</a> (0 none); applied at once, to a recording under way too (<a href="audiotap.html#setVoiceOver" translate="no">AudioTap::setVoiceOver</a>()), in the voice-over role only (<a href="liverecmic.html#ducks-prop" translate="no">LiveRecMic::ducks</a>()).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>voiceDuck</b></span>() const</td></tr>
@@ -734,9 +750,16 @@
 </div><!-- @@@stop -->
 </div>
 <div class="fnitem">
+<!-- $$$stopPressed[overload1]$$$stopPressed -->
+<h3 class="fn" translate="no" id="stopPressed"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> VideoRecorder::<span class="name">stopPressed</span>()</h3>
+<p>STOP, pressed while armed (the device's key through <a href="videorecorder.html#takesKey" translate="no">takesKey</a>(), or the transport's stop): a recording or its countdown under way is stopped (<a href="videorecorder.html#stop" translate="no">stop</a>(): the music stops with it) and the press is consumed; a second press within three seconds (<a href="qml-ravving-controls-secondpress.html" translate="no">SecondPress</a>) leaves LIVE REC (<a href="videorecorder.html#armed-prop" translate="no">setArmed</a>(false): the mic's line goes back) and is consumed too. A lone STOP with nothing recording arms that second press and is not consumed, so the transport stops as it would. Returns whether the press was consumed; <code translate="no">false</code> when not armed.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@stopPressed -->
+</div>
+<div class="fnitem">
 <!-- $$$takesKey[overload1]$$$takesKeyconstQString& -->
 <h3 class="fn" translate="no" id="takesKey"><span class="type">bool</span> VideoRecorder::<span class="name">takesKey</span>(const <span class="type">QString</span> &amp;<i>cuia</i>)</h3>
-<p>Offers the device key <i translate="no">cuia</i> to the recorder before anything else handles it. Returns <code translate="no">true</code> when it was consumed: while armed, <code translate="no">SWITCH_RECORD_RELEASED</code> (starts a recording when idle) and <code translate="no">SWITCH_STOP_RELEASED</code> during a countdown or recording (<a href="videorecorder.html#stop" translate="no">stop</a>()).</p>
+<p>Offers the device key <i translate="no">cuia</i> to the recorder before anything else handles it. Returns <code translate="no">true</code> when it was consumed: while armed, <code translate="no">SWITCH_RECORD_RELEASED</code> (starts a recording when idle) and <code translate="no">SWITCH_STOP_RELEASED</code> while a recording or its countdown runs (<a href="videorecorder.html#stopPressed" translate="no">stopPressed</a>() ends it). A STOP with nothing recording is not consumed: it reaches the transport's stop, which asks <a href="videorecorder.html#stopPressed" translate="no">stopPressed</a>() itself, so the press counts once.</p>
 <!-- @@@takesKey -->
 </div>
 <div class="fnitem">

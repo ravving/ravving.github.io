@@ -64,6 +64,29 @@
   --cap: #212425;
   --cap-edge: #0c0d0e;
   --cap-top: rgba(255, 255, 255, 0.14);
+  /* the dark set's other tones, each redefined by the light set below */
+  --panel-end: #262829;
+  --line-strong: rgba(255, 255, 255, 0.28);
+  --on-accent: #160a02;
+  --on-c: #141414;
+  /* a card's or a row's colour (--c) as text or a mark: on dark at least 0.68 OKLCH lightness
+     (the red #ff3b2f as a kicker then reads at 4.5:1 on the field), deepened on paper */
+  --c-l: max(l, 0.68);
+  --c-c: c;
+  --tint: rgba(255, 255, 255, 0.04);
+  --tint-2: rgba(255, 255, 255, 0.06);
+  --accent-soft: rgba(242, 93, 10, 0.28);
+  --code-bg: #161718;
+  /* what the light set changes besides colours: the grain, the art's dark ground, the logo's cuts,
+     the theme switch's icon */
+  --grain: url("assets/grain-dark.png");
+  --art-ground: transparent;
+  --art-pad: 0;
+  --art-clip: visible;
+  --wordmark: normal;
+  --wordmark-short: normal;
+  --icon-sun: none;
+  --icon-moon: block;
   /* the six panel regions */
   --r1: #f25d0a;  /* knobs: signal orange */
   --r2: #4a9bff;  /* page keys: circuit blue, lit */
@@ -79,11 +102,116 @@
   --max: 1240px;
 }
 
+/* the light set (theme/tokens.json site.light, B19; tools/design-tokens.py --write) */
+@media (prefers-color-scheme: light) {
+:root:not([data-theme="dark"]) {
+  color-scheme: light;
+  --field: #f3f2ee;
+  --field-deep: #e9e7e1;
+  --panel: #fbfaf7;
+  --panel-2: #f6f5f1;
+  --panel-end: #f6f5f1;
+  --ink: #1a1a1b;
+  --ink-2: #3a3b3c;
+  --ink-3: #5a5b5f;
+  --hair: rgba(26, 26, 27, 0.18);
+  --hair-soft: rgba(26, 26, 27, 0.09);
+  --line-strong: #5a5b5f;
+  --orange: #b54304;
+  --amber: #805300;
+  --blue-light: #1458b8;
+  --cap: #f7f6f3;
+  --cap-edge: #a9a69e;
+  --cap-top: rgba(255, 255, 255, 0.8);
+  --on-accent: #fffcb8;
+  --on-c: #fbfaf7;
+  --c-l: min(l, 0.48);
+  --c-c: min(c, 0.14);
+  --tint: rgba(26, 26, 27, 0.04);
+  --tint-2: rgba(26, 26, 27, 0.07);
+  --accent-soft: rgba(181, 67, 4, 0.16);
+  --code-bg: #ecebe6;
+  --grain: none;
+  --art-ground: #1a1a1b;
+  --art-pad: clamp(8px, 2.4vw, 28px);
+  --art-clip: hidden;
+  --wordmark: url("assets/ravving-light.svg");
+  --wordmark-short: url("assets/ravv-light.svg");
+  --icon-sun: block;
+  --icon-moon: none;
+}
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --field: #f3f2ee;
+  --field-deep: #e9e7e1;
+  --panel: #fbfaf7;
+  --panel-2: #f6f5f1;
+  --panel-end: #f6f5f1;
+  --ink: #1a1a1b;
+  --ink-2: #3a3b3c;
+  --ink-3: #5a5b5f;
+  --hair: rgba(26, 26, 27, 0.18);
+  --hair-soft: rgba(26, 26, 27, 0.09);
+  --line-strong: #5a5b5f;
+  --orange: #b54304;
+  --amber: #805300;
+  --blue-light: #1458b8;
+  --cap: #f7f6f3;
+  --cap-edge: #a9a69e;
+  --cap-top: rgba(255, 255, 255, 0.8);
+  --on-accent: #fffcb8;
+  --on-c: #fbfaf7;
+  --c-l: min(l, 0.48);
+  --c-c: min(c, 0.14);
+  --tint: rgba(26, 26, 27, 0.04);
+  --tint-2: rgba(26, 26, 27, 0.07);
+  --accent-soft: rgba(181, 67, 4, 0.16);
+  --code-bg: #ecebe6;
+  --grain: none;
+  --art-ground: #1a1a1b;
+  --art-pad: clamp(8px, 2.4vw, 28px);
+  --art-clip: hidden;
+  --wordmark: url("assets/ravving-light.svg");
+  --wordmark-short: url("assets/ravv-light.svg");
+  --icon-sun: block;
+  --icon-moon: none;
+}
+/* the art keeps the dark set on a light page */
+.landing-device, .plate, kbd.cap, kbd.knob, .pack, .shot, .screen {
+  --field: #242424;
+  --field-deep: #1a1a1b;
+  --panel: #2c2e2f;
+  --panel-2: #333536;
+  --panel-end: #262829;
+  --ink: #fafafa;
+  --ink-2: #c9c9c9;
+  --ink-3: #9a9a9a;
+  --hair: rgba(250, 250, 250, 0.16);
+  --hair-soft: rgba(250, 250, 250, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.28);
+  --orange: #f25d0a;
+  --amber: #ffc134;
+  --blue-light: #a8c4ee;
+  --cap: #212425;
+  --cap-edge: #0c0d0e;
+  --cap-top: rgba(255, 255, 255, 0.14);
+  --on-accent: #160a02;
+  --on-c: #141414;
+  --c-l: max(l, 0.68);
+  --c-c: c;
+  --tint: rgba(255, 255, 255, 0.04);
+  --tint-2: rgba(255, 255, 255, 0.06);
+  --accent-soft: rgba(242, 93, 10, 0.28);
+  --code-bg: #161718;
+}
+/* end of the light set */
+
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 body {
   margin: 0;
-  background: var(--field) url("assets/grain-dark.png") repeat;
+  background: var(--field) var(--grain) repeat;
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--t-body);
@@ -97,7 +225,7 @@ h1, h2 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.
 .mono { font-family: var(--font-mono); font-size: var(--t-caps); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
-.skip { position: absolute; left: -999px; top: 8px; background: var(--amber); color: #242424; padding: 6px 10px; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--amber); color: var(--field); padding: 6px 10px; }
 .skip:focus { left: 8px; z-index: 50; }
 
 /* ---- top nav ---- */
@@ -111,9 +239,21 @@ h1, h2 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.
 .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: inherit; }
 .brand img { height: 22px; width: auto; }
 .brand .sep { width: 1px; height: 22px; background: var(--hair); }
-/* the logo family (B11): RAVV in the bar (from 18 px), the pixel mark at 16 px on a phone */
+/* the logo family (B11): the full wordmark in the bar (28 px), RAVV on a phone (18 px); on paper
+   the light cuts (the light set's --wordmark, --wordmark-short) */
 .brand picture { display: flex; }
-.brand .ravv { height: 18px; }
+.brand .wordmark { height: 28px; content: var(--wordmark); }
+/* light or dark (assets/theme.js), the API reference's switch */
+.theme-toggle {
+  display: none; place-items: center; flex: none; width: 34px; height: 34px; padding: 0; margin-left: 4px;
+  border: 1px solid transparent; border-radius: 4px; background: transparent; color: var(--ink-2); cursor: pointer;
+}
+.theme-toggle:hover { border-color: var(--hair); color: var(--ink); }
+.theme-toggle svg { width: 18px; height: 18px; fill: currentColor; }
+.theme-toggle .icon-sun { display: var(--icon-sun); }
+.theme-toggle .icon-moon { display: var(--icon-moon); }
+/* shown once assets/theme.js has set the theme: without scripting the system decides */
+:root[data-theme] .theme-toggle { display: inline-grid; }
 .nav nav { margin-left: auto; display: flex; gap: 4px; }
 .nav nav a {
   font-family: var(--font-mono); font-size: var(--t-caps); letter-spacing: 0.14em; text-transform: uppercase;
@@ -177,11 +317,25 @@ html[lang="en"] .nav nav.langs a[lang="en"], html[lang="es"] .nav nav.langs a[la
   .nav .wrap { gap: 10px; }
   .brand { gap: 10px; }
   .brand img { height: 16px; }
-  .brand .ravv { height: 16px; width: 16px; image-rendering: pixelated; }
+  .brand .wordmark { height: 18px; content: var(--wordmark-short); }
+  /* the bar keeps the wordmark at its size and the switch in reach: tighter items, never a smaller logo */
+  .brand { flex: none; }
+  .theme-toggle { width: 28px; height: 30px; margin-left: 0; }
   .nav nav { gap: 0; }
-  .nav nav a { padding: 8px 6px; font-size: var(--t-micro); letter-spacing: 0.1em; }
+  .nav nav a { padding: 8px 5px; font-size: var(--t-micro); letter-spacing: 0.06em; white-space: nowrap; }
+  .nav nav.langs { margin-left: 0; }
+  .nav nav.langs a { padding: 8px 5px; }
+  /* the shortcuts stay one tap away on the features page */
+  .nav nav a[href$="#shortcuts"] { display: none; }
   /* the API reference stays reachable from the docs pages; the bar keeps to the screen */
   .nav nav a[href$="api/index.html"] { display: none; }
+}
+
+/* the narrowest phones (320 px): the items closer still */
+@media (max-width: 374px) {
+  .nav .wrap { gap: 4px; }
+  .nav nav a, .nav nav.langs a { padding: 8px 3px; letter-spacing: 0; }
+  .theme-toggle { width: 26px; }
 }
 
 @media (max-width: 640px) {
@@ -191,7 +345,7 @@ html[lang="en"] .nav nav.langs a[lang="en"], html[lang="es"] .nav nav.langs a[la
 }
 .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: center; margin-top: 18px; }
 .legend a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink-2); font-size: var(--t-label); }
-.legend a i { width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); }
+.legend a i { width: 10px; height: 10px; border-radius: 50%; background: oklch(from var(--c) var(--c-l) var(--c-c) h); box-shadow: 0 0 10px var(--c); }
 
 /* ---- sections ---- */
 .section { padding: clamp(40px, 7vw, 96px) 0 0; }
@@ -204,20 +358,20 @@ html[lang="en"] .nav nav.langs a[lang="en"], html[lang="es"] .nav nav.langs a[la
 .cards { display: grid; grid-template-columns: 1fr; gap: 22px; }
 .card {
   --c: var(--ink-3);
-  background: linear-gradient(180deg, var(--panel) 0%, #262829 100%);
+  background: linear-gradient(180deg, var(--panel) 0%, var(--panel-end) 100%);
   border: 1px solid var(--hair); border-radius: 10px;
   padding: 18px 18px 14px;
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 42%); gap: 12px 26px; align-items: start;
   position: relative; overflow: clip;
 }
-.card::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: var(--c); opacity: 0.9; }
+.card::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: oklch(from var(--c) var(--c-l) var(--c-c) h); opacity: 0.9; }
 .card-head { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; }
 .card-head .n {
   width: 30px; height: 30px; border-radius: 50%; flex: none;
-  display: grid; place-items: center; background: var(--c); color: #141414;
+  display: grid; place-items: center; background: oklch(from var(--c) var(--c-l) var(--c-c) h); color: var(--on-c);
   font-family: var(--font-mono); font-weight: 500; font-size: var(--t-figure);
 }
-.card-head .n.ico { background: transparent; border: 1.5px solid var(--c); color: var(--c); }
+.card-head .n.ico { background: transparent; border: 1.5px solid oklch(from var(--c) var(--c-l) var(--c-c) h); color: oklch(from var(--c) var(--c-l) var(--c-c) h); }
 .card-head h3 { font-size: var(--t-heading); text-transform: uppercase; letter-spacing: 0.02em; }
 .card-head small { margin-left: auto; font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); text-align: right; }
 .media { align-self: stretch; min-width: 0; }
@@ -236,14 +390,14 @@ html[lang="en"] .nav nav.langs a[lang="en"], html[lang="es"] .nav nav.langs a[la
   cursor: default;
 }
 .rows > .row:first-child { border-top: 0; }
-.row:hover, .row.on { background: rgba(255, 255, 255, 0.045); }
-.row.on { box-shadow: inset 2px 0 0 var(--c); }
+.row:hover, .row.on { background: var(--tint); }
+.row.on { box-shadow: inset 2px 0 0 oklch(from var(--c) var(--c-l) var(--c-c) h); }
 .row .keys { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; padding-top: 1px; }
 .row .what { min-width: 0; }
 .row .what b { font-weight: 600; display: block; }
 .row .what small { display: block; color: var(--ink-3); font-size: var(--t-label); line-height: 1.4; margin-top: 1px; }
 .row .what small em { font-style: normal; color: var(--ink-2); }
-.rows .group { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.14em; text-transform: uppercase; color: var(--c); padding: 12px 0 4px; border-top: 1px solid var(--hair-soft); }
+.rows .group { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.14em; text-transform: uppercase; color: oklch(from var(--c) var(--c-l) var(--c-c) h); padding: 12px 0 4px; border-top: 1px solid var(--hair-soft); }
 @media (max-width: 480px) { .row { grid-template-columns: 1fr; gap: 4px; } }
 
 /* ---- key caps: the M01's own keys ---- */
@@ -289,7 +443,7 @@ kbd.knob.big::after { content: ""; position: absolute; inset: -5px; border-radiu
 kbd.knob.big span { position: relative; top: 1px; }
 /* an on-screen control (a touch target in the UI, not a key) */
 kbd.ui { height: 24px; padding: 0 8px; border-radius: 12px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px dashed var(--ink-3); color: var(--ink-2); }
-kbd.ui.dot { color: #ff3d5c; border-color: #ff3d5c; }
+kbd.ui.dot { color: oklch(from #ff3d5c var(--c-l) var(--c-c) h); border-color: currentColor; }
 .plus { font-family: var(--font-mono); color: var(--ink-3); font-size: var(--t-figure); padding: 0 1px; }
 .then { font-family: var(--font-mono); color: var(--ink-3); font-size: var(--t-micro); letter-spacing: 0.1em; padding: 0 2px; }
 .hold { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; color: var(--amber); flex: none; }
@@ -330,19 +484,19 @@ kbd.ui.dot { color: #ff3d5c; border-color: #ff3d5c; }
 .hl:first-child { border-top: 0; padding-top: 8px; }
 .hl.flip .hl-text { order: 2; }
 .hl-text .kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-.hl-text .kicker i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); flex: none; }
-.hl-text .kicker b { color: var(--c); font-weight: 500; }
+.hl-text .kicker i { width: 8px; height: 8px; border-radius: 50%; background: oklch(from var(--c) var(--c-l) var(--c-c) h); box-shadow: 0 0 10px var(--c); flex: none; }
+.hl-text .kicker b { color: oklch(from var(--c) var(--c-l) var(--c-c) h); font-weight: 500; }
 .hl-text h3 { font-size: var(--t-title); text-transform: uppercase; letter-spacing: -0.02em; max-width: 16ch; }
 .hl-text h3 span { color: var(--ink-3); font-weight: 300; }
 .hl-text p { color: var(--ink-2); font-size: var(--t-body); max-width: 48ch; margin: 16px 0 0; }
 .hl-text p b { color: var(--ink); font-weight: 600; }
 .hl-points { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; max-width: 48ch; }
 .hl-points li { position: relative; padding-left: 18px; color: var(--ink-2); font-size: var(--t-body); line-height: 1.45; }
-.hl-points li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 7px; height: 7px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+.hl-points li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 7px; height: 7px; border-radius: 50%; background: oklch(from var(--c) var(--c-l) var(--c-c) h); box-shadow: 0 0 8px var(--c); }
 .hl-points li b { color: var(--ink); font-weight: 600; margin-right: 4px; }
 .hl-text .more { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-family: var(--font-mono); font-size: var(--t-caps); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--hair); padding-bottom: 4px; }
-.hl-text .more::after { content: "→"; color: var(--c); transition: transform 0.2s; }
-.hl-text .more:hover { border-color: var(--c); }
+.hl-text .more::after { content: "→"; color: oklch(from var(--c) var(--c-l) var(--c-c) h); transition: transform 0.2s; }
+.hl-text .more:hover { border-color: oklch(from var(--c) var(--c-l) var(--c-c) h); }
 .hl-text .more:hover::after { transform: translateX(4px); }
 /* the screen: a bezel around the picture, the device's own 16:10 */
 .screen {
@@ -392,11 +546,11 @@ a.plate:hover, a.plate:focus-visible { transform: translateY(-2px); border-color
 .rack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
 .rack span { display: inline-flex; align-items: baseline; gap: 6px; padding: 6px 10px; border-radius: 4px; background: var(--panel); border: 1px solid var(--hair-soft); font-size: var(--t-label); color: var(--ink); }
 .rack span small { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
-.rack span.fs { border-color: color-mix(in srgb, var(--c) 40%, transparent); }
+.rack span.fs { border-color: color-mix(in srgb, oklch(from var(--c) var(--c-l) var(--c-c) h) 40%, transparent); }
 /* the packs: a strip of genres with their keys and tempos, scrolling slowly under the pointer's reach */
 .packs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
 .packs span { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); padding: 5px 8px; border-radius: 3px; border: 1px solid var(--hair-soft); }
-.packs span b { color: var(--c); font-weight: 500; margin-right: 6px; }
+.packs span b { color: oklch(from var(--c) var(--c-l) var(--c-c) h); font-weight: 500; margin-right: 6px; }
 /* the reveal: a row sits a little low and fades in when it scrolls into view */
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .reveal.is-in, .no-js .reveal { opacity: 1; transform: none; }
@@ -420,15 +574,15 @@ a.plate:hover, a.plate:focus-visible { transform: translateY(-2px); border-color
   all: unset; box-sizing: border-box; display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: center; gap: 16px;
   width: 100%; padding: 16px 8px; cursor: pointer; border-radius: 6px; font: inherit; color: inherit;
 }
-.group-btn:hover { background: rgba(255, 255, 255, 0.035); }
+.group-btn:hover { background: var(--tint); }
 .group-btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
-.group-btn .n { font-family: var(--font-mono); font-size: var(--t-figure); color: var(--c); letter-spacing: 0.1em; }
+.group-btn .n { font-family: var(--font-mono); font-size: var(--t-figure); color: oklch(from var(--c) var(--c-l) var(--c-c) h); letter-spacing: 0.1em; }
 .group-btn .t { font-size: var(--t-heading); font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
 .group-btn .t b { font-weight: inherit; }
 .group-btn .t small { display: block; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: var(--t-label); color: var(--ink-3); margin-top: 2px; }
 .group-btn .chev { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--hair); display: grid; place-items: center; color: var(--ink-2); transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), background 0.2s; }
 .group-btn .chev::before { content: ""; width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); }
-.group.open .group-btn .chev { transform: rotate(180deg); background: color-mix(in srgb, var(--c) 18%, transparent); border-color: var(--c); color: var(--c); }
+.group.open .group-btn .chev { transform: rotate(180deg); background: color-mix(in srgb, var(--c) 18%, transparent); border-color: oklch(from var(--c) var(--c-l) var(--c-c) h); color: oklch(from var(--c) var(--c-l) var(--c-c) h); }
 .group-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .group.open .group-panel, .no-js .group-panel { grid-template-rows: 1fr; }
 .group-in { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s 0.45s; }
@@ -463,8 +617,8 @@ a.plate:hover, a.plate:focus-visible { transform: translateY(-2px); border-color
 .docs-side ul { list-style: none; margin: 0 0 16px; padding: 0; }
 .docs-side li { margin: 0; }
 .docs-side li a { display: block; padding: 5px 8px; border-radius: 4px; color: var(--ink-2); text-decoration: none; border-left: 2px solid transparent; }
-.docs-side li a:hover { background: rgba(255, 255, 255, 0.04); color: var(--ink); }
-.docs-side li.on > a { color: var(--ink); border-left-color: var(--orange); background: rgba(255, 255, 255, 0.04); }
+.docs-side li a:hover { background: var(--tint); color: var(--ink); }
+.docs-side li.on > a { color: var(--ink); border-left-color: var(--orange); background: var(--tint); }
 .docs-side li.on ul { margin: 2px 0 6px 10px; border-left: 1px solid var(--hair-soft); }
 .docs-side li.on ul a { font-size: var(--t-label); color: var(--ink-3); padding: 3px 10px; }
 .docs-side .mono { margin: 10px 0 4px; }
@@ -480,7 +634,7 @@ a.plate:hover, a.plate:focus-visible { transform: translateY(-2px); border-color
 #docs-results li a b { font-size: var(--t-label); color: var(--ink); }
 #docs-results li a .mono { margin: 0; font-size: var(--t-micro); }
 #docs-results li a em { font-style: normal; font-size: var(--t-label); color: var(--ink-3); line-height: 1.4; }
-#docs-results mark { background: rgba(242, 93, 10, 0.28); color: var(--ink); border-radius: 2px; padding: 0 1px; }
+#docs-results mark { background: var(--accent-soft); color: var(--ink); border-radius: 2px; padding: 0 1px; }
 #docs-results .none { padding: 8px 10px; font-size: var(--t-label); color: var(--ink-3); }
 .doc { max-width: 70ch; min-width: 0; padding-bottom: 40px; }
 .doc .doc-kicker { margin: 0 0 10px; }
@@ -501,8 +655,8 @@ a.plate:hover, a.plate:focus-visible { transform: translateY(-2px); border-color
 .doc strong { color: var(--ink); }
 .doc ul, .doc ol { padding-left: 22px; margin: 0 0 14px; }
 .doc li { margin: 4px 0; }
-.doc code { font-family: var(--font-mono); font-size: 0.9em; background: rgba(255, 255, 255, 0.06); padding: 1px 5px; border-radius: 3px; color: var(--ink); }
-.doc pre { background: #161718; border: 1px solid var(--hair-soft); border-radius: 6px; padding: 12px 14px; overflow: auto; margin: 0 0 16px; font-size: var(--t-figure); line-height: 1.5; }
+.doc code { font-family: var(--font-mono); font-size: 0.9em; background: var(--tint-2); padding: 1px 5px; border-radius: 3px; color: var(--ink); }
+.doc pre { background: var(--code-bg); border: 1px solid var(--hair-soft); border-radius: 6px; padding: 12px 14px; overflow: auto; margin: 0 0 16px; font-size: var(--t-figure); line-height: 1.5; }
 .doc pre code { background: none; padding: 0; font-size: inherit; }
 .doc table { border-collapse: collapse; width: 100%; margin: 0 0 18px; font-size: var(--t-label); display: block; overflow: auto; }
 .doc th, .doc td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--hair-soft); }
@@ -542,28 +696,42 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .landing-hero { text-align: center; padding-top: clamp(32px, 7vw, 88px); }
 .landing-hero h1 { font-size: var(--t-hero); text-transform: uppercase; letter-spacing: -0.02em; line-height: 1; margin: 0 auto; max-width: 16ch; }
 .landing-hero .lede { margin: 20px auto 0; max-width: 46ch; font-size: var(--t-lede); color: var(--ink-2); }
+/* what it is first (the audit's flow: what it is, hear it, see the keys, make a song, try it) */
+.landing-eyebrow { margin: 0 auto 18px; }
+.landing-band { margin: 18px auto 0; font-family: var(--font-display); font-size: var(--t-heading); line-height: var(--t-heading-line);
+  font-weight: 600; color: var(--orange); }
+.landing-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin: clamp(22px, 3vw, 32px) auto 0; }
+.landing-hear[hidden] { display: none; }
+.landing-miko { max-width: 62ch; margin: clamp(36px, 5vw, 56px) auto 0; text-align: left; }
+.landing-miko h2 { font-family: var(--font-display); font-size: var(--t-heading); line-height: var(--t-heading-line); margin: 0 0 10px; }
+.landing-miko p { margin: 0 0 10px; color: var(--ink-2); font-size: var(--t-body); line-height: var(--t-body-line); }
+.landing-try { text-align: center; margin-top: clamp(48px, 7vw, 88px); }
+.landing-try h2 { font-family: var(--font-display); font-size: var(--t-title); line-height: var(--t-title-line); margin: 0; }
+.landing-ways { display: grid; gap: 10px; max-width: 60ch; margin: 22px auto 0; padding: 0; text-align: left; }
+.landing-ways div { display: grid; grid-template-columns: 7.5em 1fr; gap: 12px; align-items: baseline; }
+.landing-ways dt { font-family: var(--font-mono); font-size: var(--t-caps); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.landing-ways dd { margin: 0; color: var(--ink-2); font-size: var(--t-body); }
 
 /* the device comes in: rises from a tilt, its screen lights up, the step keys run once */
-.landing-device { position: relative; max-width: 980px; margin: clamp(28px, 5vw, 56px) auto 0; perspective: 1400px; }
+/* on paper the drawing sits on a dark ground of its own (the light set's --art-ground), as art */
+.landing-device { position: relative; max-width: 980px; margin: clamp(28px, 5vw, 56px) auto 0; perspective: 1400px;
+  background: var(--art-ground); padding: var(--art-pad); border-radius: 18px; overflow: var(--art-clip); }
 /* the device, its screen and its step keys move in as one; the screen boots once it has landed */
 .landing-stage { position: relative; transform-origin: 50% 100%; animation: landing-rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .landing-glow { position: absolute; inset: 20% 10% 0; border-radius: 50%;
   background: radial-gradient(closest-side, rgba(242, 93, 10, 0.32), transparent);
   filter: blur(40px); animation: landing-glow 2s ease-out 0.4s both; }
-.landing-get { margin: clamp(28px, 4vw, 44px) auto 0; }
-/* the download is one of the device's keys: a charcoal cap, its legend lit, pressed on hover */
-.landing-button { display: inline-flex; align-items: center; gap: 12px; padding: 15px 26px 14px; border-radius: 4px;
-  background: linear-gradient(180deg, #2a2d2e, var(--cap)); color: var(--orange); text-decoration: none;
-  font-family: var(--font-cap); font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase;
-  text-shadow: 0 0 12px rgba(242, 93, 10, 0.55);
-  box-shadow: inset 0 1px 0 var(--cap-top), 0 3px 0 var(--cap-edge), 0 10px 24px rgba(0, 0, 0, 0.45);
-  transition: transform 0.12s, box-shadow 0.12s, color 0.2s; }
-.landing-button::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px currentColor; }
-.landing-button:hover, .landing-button:focus-visible { color: var(--amber); transform: translateY(2px);
-  box-shadow: inset 0 1px 0 var(--cap-top), 0 1px 0 var(--cap-edge), 0 6px 16px rgba(0, 0, 0, 0.45); }
-.landing-button:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
-.landing-alt { margin: 14px auto 0; color: var(--ink-3); font-size: var(--t-label); max-width: 60ch; }
-.landing-alt a { color: var(--ink-2); }
+/* the design system's button (the sheet's landing card): Plex Mono at the caps step, upper case,
+   on signal orange; .landing-hear and .bp-sound are its outline variant */
+.landing-button, .landing-hear, .bp-sound { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px;
+  border-radius: 4px; border: 1px solid var(--orange); text-decoration: none; cursor: pointer;
+  font-family: var(--font-mono); font-weight: 500; font-size: var(--t-caps); line-height: var(--t-caps-line);
+  letter-spacing: 0.14em; text-transform: uppercase; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+.landing-button { background: var(--orange); color: var(--on-accent); }
+.landing-button:hover, .landing-button:focus-visible { background: var(--amber); border-color: var(--amber); }
+.landing-hear, .bp-sound { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.landing-hear:hover, .landing-hear:focus-visible, .bp-sound:hover, .bp-sound:focus-visible { color: var(--amber); border-color: var(--amber); }
+.landing-button:focus-visible, .landing-hear:focus-visible, .bp-sound:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
 
 /* the three points, each in an instrument page's finish (qml/components/Rave.qml machines: the
    face's gradient, the rails at its ends, its ink, accent and glow, its well), with the mascot
@@ -581,6 +749,11 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .point::after { right: -1px; border-radius: 3px 10px 10px 3px; }
 .point:hover, .point:focus-within { transform: translateY(-6px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 24px 50px rgba(0, 0, 0, 0.55), 0 0 44px color-mix(in srgb, var(--glow) 28%, transparent); }
+/* the points' finishes (theme/tokens.json site.points, S7; tools/design-tokens.py --write) */
+#landing-band { --top: #2D2632; --bottom: #221D28; --ink: #F0EAF2; --dim: #b9b3bc; --c: #F19AB5; --glow: #F19AB5; --well: #1A1821; --rail: #594B5B; --cap: #413844; --cap-border: #251F2C; }
+#landing-song { --top: #252A32; --bottom: #1C2028; --ink: #F0EAF2; --dim: #b7b4bc; --c: #83D6CC; --glow: #83D6CC; --well: #151A21; --rail: #4B515A; --cap: #383C44; --cap-border: #1F222C; }
+#landing-share { --top: #2A2635; --bottom: #201D2A; --ink: #F0EAF2; --dim: #b9b3bd; --c: #C9ACF2; --glow: #C9ACF2; --well: #181823; --rail: #544B60; --cap: #3E3848; --cap-border: #23202F; }
+/* end of the points' finishes */
 .point-screen { position: relative; display: grid; place-items: center; height: 168px; margin-bottom: 8px; border-radius: 6px; overflow: hidden;
   background: radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--glow) 18%, #0b0b0d), #0b0b0d 72%);
   border: 1px solid #000; box-shadow: 0 0 0 4px var(--well), inset 0 2px 8px rgba(0, 0, 0, 0.7); }
@@ -595,6 +768,8 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .point-kicker b { color: var(--c); font-weight: 600; margin-right: 6px; }
 .landing-points h2 { font-size: var(--t-heading); line-height: 1.05; margin: 0; text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); }
 .landing-points p:not(.point-kicker) { margin: 0; color: var(--dim); max-width: 40ch; }
+/* the cards' buttons sit on one line along the bottom, whatever the text above */
+.landing-points .point-more { margin-top: auto; }
 .point-more { margin-top: 6px; align-self: flex-start; padding: 9px 14px 8px; border-radius: 4px; color: var(--ink); font-weight: 600; text-decoration: none;
   background: var(--cap); border: 1px solid var(--cap-border); border-bottom-width: 3px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25); }
 .point-more::after { content: " →"; color: var(--c); }
@@ -614,6 +789,8 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
    multiples; a tip is a sprite beside a speech bubble in the mood's signal colour ---- */
 .aru { display: inline-block; width: 64px; height: 64px; flex: none; }
 .aru svg { display: block; width: 100%; height: 100%; }
+/* a plain line pointing the reader to what to try (ARU never explains: B4) */
+.page-hint { margin: 18px 0; font-family: var(--font-mono); font-size: var(--t-caps); letter-spacing: 0.08em; color: var(--ink-2); }
 .aru-tip { display: flex; align-items: center; gap: 14px; margin: 22px 0; }
 .aru-tip p { position: relative; margin: 0; padding: 10px 14px; border-radius: 10px; font-family: var(--font-mono); font-size: var(--t-figure); line-height: 1.5; color: var(--ink);
   background: var(--panel); border: 1px solid color-mix(in srgb, var(--tip-c, #f25d0a) 55%, transparent); }
@@ -648,17 +825,21 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .bp .ln.strong { stroke: #fbfcfe; stroke-width: calc(var(--bp-w) * 1.4); }
 .bp .ln.faint { stroke: rgba(236, 240, 248, 0.4); }
 .bp .lamp { display: none; }
+/* the outlines first (the last key is drawn by about 2.3 s), then the legends and the LEDs light,
+   in the order the lines were drawn */
+.bp { --lit-at: 2.4s; }
 .bp text { font-family: var(--font-cap); text-anchor: middle; fill: var(--c); opacity: 0;
-  animation: bp-lit 0.5s ease-out calc(var(--d) + 0.6s) forwards; filter: drop-shadow(0 0 4px var(--c)); }
-.bp line.lamp { display: inline; stroke: var(--c); stroke-width: 2; opacity: 0; animation: bp-lit 0.5s ease-out calc(var(--d) + 0.6s) forwards; }
+  animation: bp-lit 0.5s ease-out calc(var(--lit-at) + var(--d) * 0.25) forwards; filter: drop-shadow(0 0 4px var(--c)); }
+.bp line.lamp { display: inline; stroke: var(--c); stroke-width: 2; opacity: 0; animation: bp-lit 0.5s ease-out calc(var(--lit-at) + var(--d) * 0.25) forwards; }
 .bp .icon { fill: none; stroke: var(--c); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; opacity: 0;
-  filter: drop-shadow(0 0 4px var(--c)); animation: bp-lit 0.5s ease-out 1.6s forwards; }
+  filter: drop-shadow(0 0 4px var(--c)); animation: bp-lit 0.5s ease-out calc(var(--lit-at) + 0.3s) forwards; }
 .bp .icon.fill { fill: var(--c); stroke: none; }
-/* the step keys: lit in a run, then a sequence playing: each flashes as the playhead passes it
-   (in step with the screen's, 0.2 s a step from 2.6 s) and rests dim in its colour */
+/* the step keys: lit in a run once, then resting dim in their colours; while the jam plays with its
+   sound, the step under its playhead lights (.on) */
 .bp .step { fill: var(--c); opacity: 0; filter: drop-shadow(0 0 5px var(--c));
-  animation: bp-step 0.35s ease-out calc(1.9s + var(--i) * 0.03s) forwards, bp-seq 3.2s steps(1, end) calc(2.6s + var(--i) * 0.2s) infinite; }
-@keyframes bp-seq { 0% { opacity: 1; } 6.25% { opacity: 0.28; } 100% { opacity: 0.28; } }
+  animation: bp-step 0.35s ease-out calc(var(--lit-at) + 0.4s + var(--i) * 0.03s) forwards; }
+/* the step under the jam's playhead, only while it plays with its sound (jam.js, on its tempo) */
+.bp .step.on { opacity: 1 !important; }
 @keyframes bp-draw { to { stroke-dashoffset: 0; } }
 /* the drums page on the screen: thinner lines, the beat's hits, a playhead walking the 16 steps */
 .bp .ln.ui { stroke: rgba(236, 240, 248, 0.72); stroke-width: calc(var(--bp-w) * 0.75); animation-duration: 0.6s; }
@@ -668,10 +849,55 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 @keyframes bp-lit { to { opacity: 1; } }
 @keyframes bp-step { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0.28; } }
 .landing-device:has(.bp) .landing-glow { background: radial-gradient(closest-side, rgba(74, 155, 255, 0.16), transparent); }
+/* The jam (S6): the LIVE REC take over the drawn screen (539 × 330 at 230, 130 of the 1000 × 750
+   drawing), lit once the lines have drawn the drums page, as the device's own screen would be. */
+.bp-video { position: absolute; left: 23%; top: 17.333%; width: 53.9%; height: 44%; object-fit: fill;
+  border-radius: 0.3%; background: #0b0c0e; opacity: 0; animation: bp-lit 0.5s ease-out forwards; }
+/* the screen and its bezel are there from the start, and the MIKO is drawn around them: the
+   drawn drums page under the jam is not needed */
+.bp-stage:has(.bp-video) .bp :is(.playhead, .hit, .ln.ui, .screen-edge) { display: none; }
+.bp .bezel { fill: #0b0c0e; opacity: 0; animation: bp-lit 0.5s ease-out forwards; }
+.bp-key { position: absolute; z-index: 1; padding: 0; border: 0; border-radius: 4px; background: transparent; cursor: pointer; }
+.bp-key:hover { background: rgba(255, 255, 255, 0.06); }
+.bp-key:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.bp .play-icon { transition: filter 0.2s; }
+.bp-stage.is-playing .bp .play-icon { filter: drop-shadow(0 0 4px var(--c)) drop-shadow(0 0 10px var(--c)); }
+/* the glass: over the screen and the bezel, a diagonal reflection from the top left, a faint sheen
+   band and the light on the glass's edge; --gx / --gy (0–1) move it with the pointer (jam.js) */
+.bp-glass { position: absolute; left: 19.3%; top: 15.067%; width: 61.2%; height: 48.667%; border-radius: 2.6% / 4.4%;
+  pointer-events: none; --gx: 0.3; --gy: 0.2;
+  background:
+    radial-gradient(120% 90% at calc(var(--gx) * 100%) calc(var(--gy) * 100%), rgba(255, 255, 255, 0.10), transparent 55%),
+    linear-gradient(118deg, transparent calc(30% + var(--gx) * 10%), rgba(255, 255, 255, 0.06) calc(36% + var(--gx) * 10%),
+      rgba(255, 255, 255, 0.015) calc(44% + var(--gx) * 10%), transparent calc(50% + var(--gx) * 10%)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 22%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.04), inset 0 -18px 30px rgba(0, 0, 0, 0.18);
+  opacity: 0; animation: bp-lit 0.5s ease-out forwards; transition: --gx 0.4s, --gy 0.4s; }
+@property --gx { syntax: "<number>"; inherits: false; initial-value: 0.3; }
+@property --gy { syntax: "<number>"; inherits: false; initial-value: 0.2; }
+/* a page key's screenshot, in the screen's place, over the jam */
+.bp-page { position: absolute; left: 23%; top: 17.333%; width: 53.9%; height: 44%; object-fit: fill; border-radius: 0.3%; }
+.bp-page[hidden] { display: none; }
+/* STOP: the screen goes dark under the glass (a filter: the opacity is the intro's animation) */
+.bp-video { transition: filter 0.3s ease-out; }
+.bp-stage.is-stopped .bp-video { filter: brightness(0); }
+.landing-glow { pointer-events: none; }   /* decoration: it reaches over the SOUND key */
+/* on the device's forehead, centred between the screws (y 57–113 of the drawing's 750) */
+.bp-sound { position: absolute; z-index: 2; left: 50%; top: 11.33%; transform: translate(-50%, -50%); margin: 0;
+  display: flex; width: max-content; background: #0b0c0e; }
+@media (max-width: 760px) { .bp-sound { padding: 4px 9px; gap: 6px; font-size: var(--t-micro); } }
+@media (max-width: 480px) { .bp-sound { padding: 2px 8px; gap: 5px; line-height: 1.2; } .bp-sound::before { width: 5px; height: 5px; } }
+.bp-sound[hidden] { display: none; }
+.bp-sound::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); }
+.bp-sound[aria-pressed="true"]::before { background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+.bp-sound .bp-sound-off, .bp-sound[aria-pressed="true"] .bp-sound-on { display: none; }
+.bp-sound[aria-pressed="true"] .bp-sound-off { display: inline; }
 @media (prefers-reduced-motion: reduce) {
   .bp .ln { stroke-dashoffset: 0; animation: none; }
   .bp text, .bp line.lamp, .bp .icon, .bp .step, .bp .hit { opacity: 1; animation: none; }
   .bp .playhead { display: none; }
+  .bp-video, .bp .bezel, .bp-glass { opacity: 1; animation: none; transition: none; }
+  .bp-sound { transition: none; }
 }
 .rack span b { font-weight: inherit; }
 .hl-text h3 b, .hero h1 b { font-weight: inherit; }
@@ -703,3 +929,26 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 .landing-news h2 { margin: 6px 0 8px; }
 @media (max-width: 720px) { .landing-packs { grid-template-columns: 1fr; } .landing-news { align-items: flex-start; } .landing-news .aru { width: 64px; height: 64px; } }
 .landing-copy .point-more, .landing-open .point-more { --cap-border: var(--cap-edge); --c: var(--orange); }
+
+/* the shortcuts' quick path (the audit's "first five"): the five moves before the full reference */
+/* the landing's five steps, a beat to a finished track */
+.landing-path { margin-top: clamp(40px, 6vw, 72px); display: grid; gap: 18px; }
+.path-steps { counter-reset: path; list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
+.path-steps li { counter-increment: path; min-width: 0; }
+.path-steps a { position: relative; display: grid; gap: 6px; height: 100%; box-sizing: border-box; padding: 40px 14px 14px;
+  border: 1px solid var(--hair); border-radius: 6px; color: var(--ink-2); text-decoration: none; font-size: var(--t-body); }
+.path-steps a::before { content: counter(path); position: absolute; left: 14px; top: 10px; font-family: var(--font-display);
+  font-size: var(--t-plate); color: var(--amber); }
+.path-steps b { color: var(--ink); font-family: var(--font-display); font-size: var(--t-plate); font-weight: 600; text-transform: uppercase; }
+.path-steps a:hover, .path-steps a:focus-visible { border-color: var(--amber); }
+.first-five { counter-reset: five; list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.first-five li { counter-increment: five; position: relative; padding: 12px 14px 12px 44px; border-radius: 6px;
+  background: var(--tint); border: 1px solid var(--hair-soft); color: var(--ink-2);
+  font-size: var(--t-label); line-height: var(--t-label-line); }
+.first-five li::before { content: counter(five); position: absolute; left: 14px; top: 10px; font-family: var(--font-display);
+  font-weight: 600; font-size: var(--t-heading); line-height: 1; color: var(--orange); }
+.first-five b { color: var(--ink); font-weight: 600; }
+.first-five-more { margin: 10px 0 0; font-size: var(--t-label); color: var(--ink-3); }
+
