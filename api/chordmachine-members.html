@@ -22,7 +22,7 @@
     }());
   </script>
   <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=25467c9c46" defer></script>
+  <script src="search.js?v=791df35233" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -76,6 +76,7 @@
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#StepsPerBar-var" translate="no">StepsPerBar</a></b></span> : const int</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#activeExpressions" translate="no">activeExpressions</a></b></span>() const : QVariantMap</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#activeSound-prop" translate="no">activeSound</a></b></span>() const : SoundControls *</li>
+<li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#adjustChords" translate="no">adjustChords</a></b></span>(const QVariantList &amp;, const QString &amp;, int)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#allPicks" translate="no">allPicks</a></b></span>(bool) const : QVariantList</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#applyHistoryState" translate="no">applyHistoryState</a></b></span>(const QVariantMap &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="historyparticipant.html#applyHistoryState" translate="no">applyHistoryState</a></b></span>(const QVariantMap &amp;)</li>
@@ -104,6 +105,7 @@
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#chordNotes" translate="no">chordNotes</a></b></span>(int) const : QList&lt;int&gt;</li>
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#chordSet-prop" translate="no">chordSet</a></b></span>() const : int</li>
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#chordSets-prop" translate="no">chordSets</a></b></span>() const : QStringList</li>
+<li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#chordSettings" translate="no">chordSettings</a></b></span>(const QVariantList &amp;) const : QVariantMap</li>
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#chordSlots-prop" translate="no">chordSlots</a></b></span>() const : QVariantList</li>
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#chords-prop" translate="no">chords</a></b></span>() const : QVariantList</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#clear" translate="no">clear</a></b></span>()</li>
@@ -154,6 +156,7 @@
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#moveNotes" translate="no">moveNotes</a></b></span>(const QVariantList &amp;, int, bool) : QVariantList</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#muted-prop" translate="no">muted</a></b></span>() const : bool</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#muted-prop" translate="no">mutedChanged</a></b></span>()</li>
+<li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#names-prop" translate="no">names</a></b></span>() const : QVariantList</li>
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#noteKey" translate="no">noteKey</a></b></span>(int) const : int</li>
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#noteKeyForNote" translate="no">noteKeyForNote</a></b></span>(int) const : int</li>
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#noteOfKey" translate="no">noteOfKey</a></b></span>(int) const : int</li>
@@ -165,8 +168,8 @@
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#pan-prop" translate="no">panChanged</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#paused-prop" translate="no">paused</a></b></span>() const : bool</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#paused-prop" translate="no">pausedChanged</a></b></span>()</li>
-<li class="fn" translate="no"><span class="name"><b><a href="machine.html#playLive" translate="no">playLive</a></b></span>(int, bool)</li>
 </ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><span class="name"><b><a href="machine.html#playLive" translate="no">playLive</a></b></span>(int, bool)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#playPosition-prop" translate="no">playPosition</a></b></span>() const : int</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#playPosition-prop" translate="no">playPositionChanged</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#playhead-prop" translate="no">playhead</a></b></span>() const : int</li>
@@ -242,6 +245,7 @@
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#soundSources-prop" translate="no">soundSourcesChanged</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#soundState" translate="no">soundState</a></b></span>() const : QVariantMap</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#soundTitle-prop" translate="no">soundTitle</a></b></span>() const : QString</li>
+<li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#starts-prop" translate="no">starts</a></b></span>() const : QVariantList</li>
 <li class="fn" translate="no"><span class="name"><b><a href="chordmachine.html#state" translate="no">state</a></b></span>() const : QVariantMap</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#state" translate="no">state</a></b></span>() const : QVariantMap</li>
 <li class="fn" translate="no"><span class="name"><b><a href="machine.html#stepCount-prop" translate="no">stepCount</a></b></span>() const : int</li>

@@ -22,7 +22,7 @@
     }());
   </script>
   <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=25467c9c46" defer></script>
+  <script src="search.js?v=791df35233" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -89,6 +89,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="keyspelling.html#chordName" translate="no">chordName</a></b>(const QList&lt;int&gt; &amp;<i>notes</i>, bool <i>flats</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="keyspelling.html#noteName" translate="no">noteName</a></b>(int <i>note</i>, bool <i>flats</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="keyspelling.html#usesFlats" translate="no">usesFlats</a></b>(int <i>root</i>, const QList&lt;int&gt; &amp;<i>scale</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="keyspelling.html#voicingName" translate="no">voicingName</a></b>(const QList&lt;int&gt; &amp;<i>notes</i>, bool <i>flats</i>, int <i>preferredRoot</i> = -1)</td></tr>
 </table></div>
 <!-- $$$KeySpelling-description -->
 <div class="descr">
@@ -115,6 +116,12 @@
 <h3 class="fn" translate="no" id="usesFlats"><code class="details extra" translate="no">[static]</code> <span class="type">bool</span> KeySpelling::<span class="name">usesFlats</span>(<span class="type">int</span> <i>root</i>, const <span class="type">QList</span>&lt;<span class="type">int</span>&gt; &amp;<i>scale</i>)</h3>
 <p>Returns whether the key of <i translate="no">root</i> and <i translate="no">scale</i> is spelled with flats, by its key signature: the major scale it is a mode of (F, B♭, E♭, A♭, D♭ and their modes; C minor is E♭ major's). A scale that is not a mode of the major (harmonic minor) goes by its third: minor as the relative major, major as its root.</p>
 <!-- @@@usesFlats -->
+</div>
+<div class="fnitem">
+<!-- $$$voicingName[overload1]$$$voicingNameconstQList<int>&boolint -->
+<h3 class="fn" translate="no" id="voicingName"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> KeySpelling::<span class="name">voicingName</span>(const <span class="type">QList</span>&lt;<span class="type">int</span>&gt; &amp;<i>notes</i>, <span class="type">bool</span> <i>flats</i>, <span class="type">int</span> <i>preferredRoot</i> = -1)</h3>
+<p>Returns the name of any set of MIDI <i translate="no">notes</i>, as a player would read a guitar shape or a spread voicing (&quot;Emaj9&quot;, &quot;Cmaj7/G&quot;, &quot;Asus4&quot;, &quot;Emaj9/D#&quot;), with <i translate="no">flats</i> or sharps. Every note is tried as the root, the one with a third and a fifth above it wins (the bass, then <i translate="no">preferredRoot</i>, a pitch class 0&ndash;11, break a tie), so a shape whose root is left out still names its chord when <i translate="no">preferredRoot</i> says which (&quot;Emaj9/D#&quot; for D# G# B F# under an E). The bass is added after a slash when it is not the root. Fewer than three notes: their names joined.</p>
+<!-- @@@voicingName -->
 </div>
 </div>
 </article>
