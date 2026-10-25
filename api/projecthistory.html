@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- projecthistory.cpp -->
+  <meta name="description" content="A project's timeline: the versions a long press on SAVE keeps (Projects::saveVersion()), to go back to, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;projects&lt;@op&gt;.&lt;/@op&gt;history.">
+  <meta name="keywords" content="class">
+  <title>ProjectHistory Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>ProjectHistory</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">ProjectHistory Class</h1>
+<!-- $$$ProjectHistory-brief -->
+<p>A project's timeline: the versions a long press on SAVE keeps (<a href="projects.html#saveVersion" translate="no">Projects::saveVersion</a>()), to go back to, published to QML as <code translate="no">studio.projects.history</code>. <a href="#details">More...</a></p>
+<!-- @@@ProjectHistory -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;projecthistory.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="projecthistory-members.html">List of all members, including inherited members</a></li>
+<li>ProjectHistory is part of <a href="ravving-studio.html">Studio and projects</a>.</li>
+</ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="projecthistory-limits.html" translate="no">Limits</a></b></td></tr>
+</table></div>
+<h2 id="properties">Properties</h2>
+<div class="table"><table class="propsummary" translate="no">
+<tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="projecthistory.html#available-prop" translate="no">available</a></b> : const bool</li>
+<li class="fn" translate="no"><b><a href="projecthistory.html#backend-prop" translate="no">backend</a></b> : const QString</li>
+<li class="fn" translate="no"><b><a href="projecthistory.html#busy-prop" translate="no">busy</a></b> : bool</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="projecthistory.html#count-prop" translate="no">count</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="projecthistory.html#enabled-prop" translate="no">enabled</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="projecthistory.html#entries-prop" translate="no">entries</a></b> : QVariantList</li>
+</ul>
+</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#ProjectHistory" translate="no">ProjectHistory</a></b>(const QString &amp;<i>dir</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#available-prop" translate="no">available</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#backend-prop" translate="no">backend</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#branch" translate="no">branch</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#busy-prop" translate="no">busy</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#carry" translate="no">carry</a></b>(const QString &amp;<i>to</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#count-prop" translate="no">count</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#enabled-prop" translate="no">enabled</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#entries-prop" translate="no">entries</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#holdHousekeeping" translate="no">holdHousekeeping</a></b>(bool <i>held</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#remove" translate="no">remove</a></b>(const QString &amp;<i>branch</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#rename" translate="no">rename</a></b>(const QString &amp;<i>from</i>, const QString &amp;<i>to</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#restart" translate="no">restart</a></b>(const QString &amp;<i>branch</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#setEnabled" translate="no">setEnabled</a></b>(bool <i>enabled</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#setLimits" translate="no">setLimits</a></b>(const ProjectHistory::Limits &amp;<i>limits</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#snapshot" translate="no">snapshot</a></b>(const QVariantMap &amp;<i>state</i>, const QString &amp;<i>kind</i>, const QStringList &amp;<i>changed</i>, const QString &amp;<i>title</i> = QString())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#stateAt" translate="no">stateAt</a></b>(const QString &amp;<i>id</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#sweep" translate="no">sweep</a></b>(const QStringList &amp;<i>keep</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#switchTo" translate="no">switchTo</a></b>(const QString &amp;<i>branch</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#tidy" translate="no">tidy</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#timeOf" translate="no">timeOf</a></b>(const QString &amp;<i>id</i>) const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#busy-prop" translate="no">busyChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#enabled-prop" translate="no">enabledChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#entries-prop" translate="no">entriesChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#housekept" translate="no">housekept</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#notify" translate="no">notify</a></b>(const QString &amp;<i>text</i>, const QString &amp;<i>color</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#snapshotted" translate="no">snapshotted</a></b>(const QVariantMap &amp;<i>entry</i>)</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#Shown-var" translate="no">Shown</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#branchFor" translate="no">branchFor</a></b>(const QString &amp;<i>id</i>, const QString &amp;<i>name</i>, bool <i>demo</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#changedKeys" translate="no">changedKeys</a></b>(const QVariantMap &amp;<i>before</i>, const QVariantMap &amp;<i>after</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#label" translate="no">label</a></b>(const QString &amp;<i>kind</i>, const QStringList &amp;<i>changed</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#tidyTitle" translate="no">tidyTitle</a></b>(const QString &amp;<i>title</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#unsavedBranch" translate="no">unsavedBranch</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#when" translate="no">when</a></b>(qint64 <i>time</i>)</td></tr>
+</table></div>
+<!-- $$$ProjectHistory-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The snapshots live in a <a href="snapshotstore.html" translate="no">SnapshotStore</a> in the projects folder (<code translate="no">.timeline</code>, a bare git repository whichever backend writes it), one branch per project (<a href="projecthistory.html#branchFor" translate="no">branchFor</a>(): by the project's id, or its name until it has one) and one for the session never saved (<a href="projecthistory.html#unsavedBranch" translate="no">unsavedBranch</a>()); each snapshot holds the project's JSON, so the folder can be read with git itself. Projects drives it: <a href="projecthistory.html#switchTo" translate="no">switchTo</a>() follows the project open, <a href="projecthistory.html#restart" translate="no">restart</a>() begins a trail afresh (NEW), <a href="projecthistory.html#snapshot" translate="no">snapshot</a>() adds a version (a SAVE's is kept even when unchanged), <a href="projecthistory.html#carry" translate="no">carry</a>() continues the trail under a new key (the first SAVE, SAVE AS NEW), <a href="projecthistory.html#rename" translate="no">rename</a>() and <a href="projecthistory.html#remove" translate="no">remove</a>() follow the project's file, <a href="projecthistory.html#sweep" translate="no">sweep</a>() drops the trails of files that are gone, <a href="projecthistory.html#tidy" translate="no">tidy</a>() holds a trail to its limit and packs the store. Going back is <a href="projects.html#restore" translate="no">Projects::restore</a>(): the state read by <a href="projecthistory.html#stateAt" translate="no">stateAt</a>() replaces the session. Older trails may hold snapshots of every change (kinds change, open, new, restore); they are listed and restored as the versions are.</p>
+<p>Every write runs on a worker thread, one after the other, with the store held under a lock; entries lists the branch's newest snapshots (Shown at most) and follows each write. Without a backend that can work here (<a href="snapshotstore.html#create" translate="no">SnapshotStore::create</a>()) nothing is kept: available is <code translate="no">false</code> and entries stays empty. <a href="projecthistory.html#stateAt" translate="no">stateAt</a>() and <a href="projecthistory.html#timeOf" translate="no">timeOf</a>() are read on the calling thread.</p>
+</div>
+<!-- @@@ProjectHistory -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$available-prop$$$available -->
+<h3 class="fn" translate="no" id="available-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">available</span> : const <span class="type">bool</span></h3>
+<p>This property holds whether a store could be opened, so snapshots are kept.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>available</b></span>() const</td></tr>
+</table></div>
+<!-- @@@available -->
+</div>
+<div class="fnitem">
+<!-- $$$backend-prop$$$backend -->
+<h3 class="fn" translate="no" id="backend-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">backend</span> : const <span class="type">QString</span></h3>
+<p>This property holds the store's backend in use (<code translate="no">libgit2</code> or <code translate="no">git</code>), empty when none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>backend</b></span>() const</td></tr>
+</table></div>
+<!-- @@@backend -->
+</div>
+<div class="fnitem">
+<!-- $$$busy-prop$$$busy$$$busyChanged -->
+<h3 class="fn" translate="no" id="busy-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">busy</span> : <span class="type">bool</span></h3>
+<p>This property holds whether a write or a listing is under way.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>busy</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>busyChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@busy -->
+</div>
+<div class="fnitem">
+<!-- $$$count-prop$$$count$$$entriesChanged -->
+<h3 class="fn" translate="no" id="count-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">count</span> : <span class="type">int</span></h3>
+<p>how many snapshots entries holds.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>count</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="projecthistory.html#entries-prop" translate="no">entriesChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@count -->
+</div>
+<div class="fnitem">
+<!-- $$$enabled-prop$$$enabled$$$enabledChanged -->
+<h3 class="fn" translate="no" id="enabled-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">enabled</span> : <span class="type">bool</span></h3>
+<p>This property holds whether snapshots are kept (SETTINGS → GENERAL → Timeline, <a href="userprofile.html#timeline-prop" translate="no">UserProfile::timeline</a>). Off, none is written and entries stays empty; the trails there are still follow a project saved under another name, renamed or deleted, and are listed again once it is back on.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>enabled</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>enabledChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@enabled -->
+</div>
+<div class="fnitem">
+<!-- $$$entries-prop$$$entries$$$entriesChanged -->
+<h3 class="fn" translate="no" id="entries-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">entries</span> : <span class="type">QVariantList</span></h3>
+<p>This property holds the current branch's snapshots, newest first: maps with <code translate="no">id</code> (the snapshot), <code translate="no">time</code> (seconds since the epoch), <code translate="no">when</code> (the time as text), <code translate="no">title</code> (the user's name for it, a named SAVE's; empty for most), <code translate="no">kind</code> (<code translate="no">change</code>, <code translate="no">save</code>, <code translate="no">open</code>, <code translate="no">new</code> or <code translate="no">restore</code>), <code translate="no">label</code> (what changed, translated) and <code translate="no">saved</code> (a SAVE's snapshot).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>entries</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>entriesChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@entries -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$ProjectHistory[overload1]$$$ProjectHistoryconstQString&QObject* -->
+<h3 class="fn" translate="no" id="ProjectHistory"><code class="details extra" translate="no">[explicit]</code> ProjectHistory::<span class="name">ProjectHistory</span>(const <span class="type">QString</span> &amp;<i>dir</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the timeline kept in the repository folder <i translate="no">dir</i> (made now, when there is none), with the given <i translate="no">parent</i>. The store is <a href="snapshotstore.html#create" translate="no">SnapshotStore::create</a>()'s: without one that opens, available is <code translate="no">false</code>.</p>
+<!-- @@@ProjectHistory -->
+</div>
+<div class="fnitem">
+<!-- $$$branch[overload1]$$$branch -->
+<h3 class="fn" translate="no" id="branch"><span class="type">QString</span> ProjectHistory::<span class="name">branch</span>() const</h3>
+<p>Returns the branch the snapshots go to: the project open's (<a href="projecthistory.html#branchFor" translate="no">branchFor</a>()), or <a href="projecthistory.html#unsavedBranch" translate="no">unsavedBranch</a>().</p>
+<!-- @@@branch -->
+</div>
+<div class="fnitem">
+<!-- $$$branchFor[overload1]$$$branchForconstQString&constQString&bool -->
+<h3 class="fn" translate="no" id="branchFor"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> ProjectHistory::<span class="name">branchFor</span>(const <span class="type">QString</span> &amp;<i>id</i>, const <span class="type">QString</span> &amp;<i>name</i>, <span class="type">bool</span> <i>demo</i>)</h3>
+<p>Returns the branch of a project: <code translate="no">d/&lt;name&gt;</code> for one of the shipped demos (<i translate="no">demo</i>), <code translate="no">p/&lt;id&gt;</code> for one with the id <i translate="no">id</i>, <code translate="no">n/&lt;name&gt;</code> for one named <i translate="no">name</i> without an id yet, and <a href="projecthistory.html#unsavedBranch" translate="no">unsavedBranch</a>() with neither. Names and ids are percent-encoded, so any is a valid branch.</p>
+<!-- @@@branchFor -->
+</div>
+<div class="fnitem">
+<!-- $$$carry[overload1]$$$carryconstQString& -->
+<h3 class="fn" translate="no" id="carry"><span class="type">void</span> ProjectHistory::<span class="name">carry</span>(const <span class="type">QString</span> &amp;<i>to</i>)</h3>
+<p>Continues the current trail under the branch <i translate="no">to</i> (which takes the current tip; a branch of that name is written over) and switches to it: the first SAVE of a session, SAVE AS NEW, a demo saved as the user's, the current project removed.</p>
+<!-- @@@carry -->
+</div>
+<div class="fnitem">
+<!-- $$$changedKeys[overload1]$$$changedKeysconstQVariantMap&constQVariantMap& -->
+<h3 class="fn" translate="no" id="changedKeys"><code class="details extra" translate="no">[static]</code> <span class="type">QStringList</span> ProjectHistory::<span class="name">changedKeys</span>(const <span class="type">QVariantMap</span> &amp;<i>before</i>, const <span class="type">QVariantMap</span> &amp;<i>after</i>)</h3>
+<p>Returns what differs between the states <i translate="no">before</i> and <i translate="no">after</i>, as keys for <a href="projecthistory.html#label" translate="no">label</a>(): each machine's key, then <code translate="no">tempo</code>, <code translate="no">swing</code>, <code translate="no">master</code>, <code translate="no">metronome</code>, <code translate="no">livefx</code>, <code translate="no">sends</code>, <code translate="no">sections</code>, <code translate="no">key</code> (the root or scale), <code translate="no">mix</code> (mutes and solos) and <code translate="no">other</code>; what only says what is on screen (the page, the machines shown, the LIVE FX bank, the section on screen) is no change.</p>
+<!-- @@@changedKeys -->
+</div>
+<div class="fnitem">
+<!-- $$$holdHousekeeping[overload1]$$$holdHousekeepingbool -->
+<h3 class="fn" translate="no" id="holdHousekeeping"><span class="type">void</span> ProjectHistory::<span class="name">holdHousekeeping</span>(<span class="type">bool</span> <i>held</i>)</h3>
+<p>Holds the housekeeping back while <i translate="no">held</i> (Studio holds it while the transport plays): a tidy asked for meanwhile (<a href="projecthistory.html#tidy" translate="no">tidy</a>()) runs once it is let go; one under way is not stopped.</p>
+<!-- @@@holdHousekeeping -->
+</div>
+<div class="fnitem">
+<!-- $$$housekept[overload1]$$$housekept -->
+<h3 class="fn" translate="no" id="housekept"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ProjectHistory::<span class="name">housekept</span>()</h3>
+<p>Emitted when a tidy ran: after a manual SAVE (<a href="projecthistory.html#tidy" translate="no">tidy</a>()), and at start after the sweep.</p>
+<!-- @@@housekept -->
+</div>
+<div class="fnitem">
+<!-- $$$label[overload1]$$$labelconstQString&constQStringList& -->
+<h3 class="fn" translate="no" id="label"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> ProjectHistory::<span class="name">label</span>(const <span class="type">QString</span> &amp;<i>kind</i>, const <span class="type">QStringList</span> &amp;<i>changed</i>)</h3>
+<p>Returns the text a snapshot is listed with, translated: for a <i translate="no">kind</i> <code translate="no">change</code>, what <i translate="no">changed</i> (the machines' names, TEMPO, SWING…, &quot; · &quot; between), SAVED (then what changed), OPENED, NEW PROJECT, or BACK TO and the time gone back to.</p>
+<!-- @@@label -->
+</div>
+<div class="fnitem">
+<!-- $$$notify[overload1]$$$notifyconstQString&constQString& -->
+<h3 class="fn" translate="no" id="notify"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ProjectHistory::<span class="name">notify</span>(const <span class="type">QString</span> &amp;<i>text</i>, const <span class="type">QString</span> &amp;<i>color</i>)</h3>
+<p>Emitted with a short translated status <i translate="no">text</i>, such as &quot;TIMELINE · KEEPING CHANGES AGAIN&quot; once snapshots are written again after a failure, and its <i translate="no">color</i> (a CSS colour). The failures themselves go to the issues center (<a href="issues.html#report" translate="no">Issues::report</a>()): <code translate="no">timeline</code> (the store did not open), <code translate="no">timeline-write</code> (a snapshot not written, cleared by the next one written), <code translate="no">timeline-trail</code> (a trail not carried or renamed with its project) and <code translate="no">timeline-tidy</code> (an old trail not removed, a notice).</p>
+<!-- @@@notify -->
+</div>
+<div class="fnitem">
+<!-- $$$remove[overload1]$$$removeconstQString& -->
+<h3 class="fn" translate="no" id="remove"><span class="type">void</span> ProjectHistory::<span class="name">remove</span>(const <span class="type">QString</span> &amp;<i>branch</i>)</h3>
+<p>Deletes the branch <i translate="no">branch</i> and its snapshots (a project deleted).</p>
+<!-- @@@remove -->
+</div>
+<div class="fnitem">
+<!-- $$$rename[overload1]$$$renameconstQString&constQString& -->
+<h3 class="fn" translate="no" id="rename"><span class="type">void</span> ProjectHistory::<span class="name">rename</span>(const <span class="type">QString</span> &amp;<i>from</i>, const <span class="type">QString</span> &amp;<i>to</i>)</h3>
+<p>Renames the branch <i translate="no">from</i> to <i translate="no">to</i> (RENAME); the current branch follows.</p>
+<!-- @@@rename -->
+</div>
+<div class="fnitem">
+<!-- $$$restart[overload1]$$$restartconstQString& -->
+<h3 class="fn" translate="no" id="restart"><span class="type">void</span> ProjectHistory::<span class="name">restart</span>(const <span class="type">QString</span> &amp;<i>branch</i>)</h3>
+<p>Makes <i translate="no">branch</i> the one snapshots go to, as a new trail: what it held is dropped (NEW).</p>
+<!-- @@@restart -->
+</div>
+<div class="fnitem">
+<!-- $$$setEnabled[overload1]$$$setEnabledbool -->
+<h3 class="fn" translate="no" id="setEnabled"><span class="type">void</span> ProjectHistory::<span class="name">setEnabled</span>(<span class="type">bool</span> <i>enabled</i>)</h3>
+<p>Switches the timeline on or off (<i translate="no">enabled</i>; main() follows <a href="userprofile.html#timeline-prop" translate="no">UserProfile::timeline</a>): off, entries empties and nothing is written; on again, the branch open is listed.</p>
+<p><b>See also </b><a href="projecthistory.html#enabled-prop" translate="no">enabled</a>().</p>
+<!-- @@@setEnabled -->
+</div>
+<div class="fnitem">
+<!-- $$$setLimits[overload1]$$$setLimitsconstProjectHistory::Limits& -->
+<h3 class="fn" translate="no" id="setLimits"><span class="type">void</span> ProjectHistory::<span class="name">setLimits</span>(const <span class="type"><a href="projecthistory-limits.html" translate="no">ProjectHistory::Limits</a></span> &amp;<i>limits</i>)</h3>
+<p>Sets the limits a tidy keeps to (<i translate="no">limits</i>; the defaults otherwise), for the tests.</p>
+<!-- @@@setLimits -->
+</div>
+<div class="fnitem">
+<!-- $$$snapshot[overload1]$$$snapshotconstQVariantMap&constQString&constQStringList&constQString& -->
+<h3 class="fn" translate="no" id="snapshot"><span class="type">void</span> ProjectHistory::<span class="name">snapshot</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>, const <span class="type">QString</span> &amp;<i>kind</i>, const <span class="type">QStringList</span> &amp;<i>changed</i>, const <span class="type">QString</span> &amp;<i>title</i> = QString())</h3>
+<p>Adds <i translate="no">state</i> as a snapshot of the current branch, of the <i translate="no">kind</i> <code translate="no">change</code> (what settled after an edit), <code translate="no">save</code>, <code translate="no">open</code>, <code translate="no">new</code> or <code translate="no">restore</code>, with <i translate="no">changed</i> naming what changed (<a href="projecthistory.html#changedKeys" translate="no">changedKeys</a>(); for a restore, the time gone back to in seconds since the epoch), and the user's <i translate="no">title</i> for it (a named SAVE; <a href="projecthistory.html#tidyTitle" translate="no">tidyTitle</a>()), kept as a line of its own in the message. A <code translate="no">change</code>, <code translate="no">open</code> or <code translate="no">new</code> whose state equals the last snapshot's is not written. Asynchronous: the snapshot reaches entries when written.</p>
+<!-- @@@snapshot -->
+</div>
+<div class="fnitem">
+<!-- $$$snapshotted[overload1]$$$snapshottedconstQVariantMap& -->
+<h3 class="fn" translate="no" id="snapshotted"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ProjectHistory::<span class="name">snapshotted</span>(const <span class="type">QVariantMap</span> &amp;<i>entry</i>)</h3>
+<p>Emitted when a snapshot was written, with its <i translate="no">entry</i> as entries carries it.</p>
+<!-- @@@snapshotted -->
+</div>
+<div class="fnitem">
+<!-- $$$stateAt[overload1]$$$stateAtconstQString& -->
+<h3 class="fn" translate="no" id="stateAt"><span class="type">QVariantMap</span> ProjectHistory::<span class="name">stateAt</span>(const <span class="type">QString</span> &amp;<i>id</i>) const</h3>
+<p>Returns the state the snapshot <i translate="no">id</i> holds, read now on the calling thread (it waits for a write under way); empty when there is no such snapshot.</p>
+<!-- @@@stateAt -->
+</div>
+<div class="fnitem">
+<!-- $$$sweep[overload1]$$$sweepconstQStringList& -->
+<h3 class="fn" translate="no" id="sweep"><span class="type">void</span> ProjectHistory::<span class="name">sweep</span>(const <span class="type">QStringList</span> &amp;<i>keep</i>)</h3>
+<p>Drops the trails of projects that are gone: every branch of a project (<code translate="no">p/</code> or <code translate="no">n/</code>) not among <i translate="no">keep</i> (the branches of the files there are, Projects' at start); the demos' and the unsaved session's stay. The store is tidied after a sweep that dropped something.</p>
+<!-- @@@sweep -->
+</div>
+<div class="fnitem">
+<!-- $$$switchTo[overload1]$$$switchToconstQString& -->
+<h3 class="fn" translate="no" id="switchTo"><span class="type">void</span> ProjectHistory::<span class="name">switchTo</span>(const <span class="type">QString</span> &amp;<i>branch</i>)</h3>
+<p>Makes <i translate="no">branch</i> the one snapshots go to, and lists its snapshots (entries follows, from the worker).</p>
+<!-- @@@switchTo -->
+</div>
+<div class="fnitem">
+<!-- $$$tidy[overload1]$$$tidy -->
+<h3 class="fn" translate="no" id="tidy"><span class="type">void</span> ProjectHistory::<span class="name">tidy</span>()</h3>
+<p>Tidies the current branch's trail after a manual SAVE (Projects): held to the limit (the newest Limits::kept snapshots, every SAVE and named one before them), and the store packed when it cut something or past Limits::loose loose objects, in process at idle priority. While the transport plays (<a href="projecthistory.html#holdHousekeeping" translate="no">holdHousekeeping</a>()) it waits for the stop.</p>
+<!-- @@@tidy -->
+</div>
+<div class="fnitem">
+<!-- $$$tidyTitle[overload1]$$$tidyTitleconstQString& -->
+<h3 class="fn" translate="no" id="tidyTitle"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> ProjectHistory::<span class="name">tidyTitle</span>(const <span class="type">QString</span> &amp;<i>title</i>)</h3>
+<p>Returns <i translate="no">title</i> as a snapshot keeps it: on one line, the spaces around it trimmed, at most 40 characters.</p>
+<!-- @@@tidyTitle -->
+</div>
+<div class="fnitem">
+<!-- $$$timeOf[overload1]$$$timeOfconstQString& -->
+<h3 class="fn" translate="no" id="timeOf"><code class="details extra" translate="no">[invokable]</code> <span class="type">qint64</span> ProjectHistory::<span class="name">timeOf</span>(const <span class="type">QString</span> &amp;<i>id</i>) const</h3>
+<p>Returns when the snapshot <i translate="no">id</i> among entries was taken (seconds since the epoch), or 0 when it is not listed.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@timeOf -->
+</div>
+<div class="fnitem">
+<!-- $$$unsavedBranch[overload1]$$$unsavedBranch -->
+<h3 class="fn" translate="no" id="unsavedBranch"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> ProjectHistory::<span class="name">unsavedBranch</span>()</h3>
+<p>Returns the branch of the session never saved.</p>
+<!-- @@@unsavedBranch -->
+</div>
+<div class="fnitem">
+<!-- $$$when[overload1]$$$whenqint64 -->
+<h3 class="fn" translate="no" id="when"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> ProjectHistory::<span class="name">when</span>(<span class="type">qint64</span> <i>time</i>)</h3>
+<p>Returns <i translate="no">time</i> (seconds since the epoch) as the timeline shows it: the time of day today (<code translate="no">hh:mm:ss</code>), the date before it on another day.</p>
+<!-- @@@when -->
+</div>
+</div>
+<div class="vars">
+<h2>Member Variable Documentation</h2>
+<div class="fnitem">
+<!-- $$$Shown -->
+<h3 class="fn" translate="no" id="Shown-var">const <span class="type">int</span> ProjectHistory::<span class="name">Shown</span></h3>
+<p>How many snapshots entries lists at most.</p>
+<!-- @@@Shown -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

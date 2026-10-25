@@ -10,8 +10,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Backend classes · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<link rel="stylesheet" href="../site.css?v=a306cbe289">
 <script src="../assets/theme.js?v=3307b56d38"></script>
+<script src="../assets/icons.js?v=d6def946c7" defer></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -43,18 +44,20 @@
     <nav aria-label="Documentation">
 <p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="machines.html">The machines</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
+<li><a href="play-it-live.html">Play it live</a></li>
 <li><a href="export-a-track.html">Export a track and play it back</a></li>
 <li><a href="film-a-session.html">Film your session</a></li>
 <li><a href="send-to-phone.html">Send a file to your phone</a></li>
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
-<li><a href="machines.html">The machines</a></li>
-<li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
 </ul>
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
+<li><a href="icon-packs.html">Make an icon pack</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -103,17 +106,22 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 <tbody>
 <tr>
 <td><code>Studio</code></td>
-<td>backend root (<code>studio</code> in QML): builds the machines from <code>data/kits.json</code>, transport (play/stop, tempo, swing, step), saves the sequence after edits; a preview clock on a desktop; the sampler's browser (<code>sampleFiles()</code>: kits.json <code>sampleFolders</code>, folders labelled short) and hold-to-hear previews (<code>previewSample()</code> / <code>stopPreview()</code>: a one-shot clip on SamplerSynth's global lane)</td>
+<td>backend root (<code>studio</code> in QML): builds the machines from <code>data/kits.json</code>, transport (play/stop, tempo, swing, step), saves the sequence after edits; a preview clock on a desktop; the sampler's browser (<code>sampleFiles()</code>: kits.json <code>sampleFolders</code>, folders labelled short) and hold-to-hear previews (<code>previewSample()</code> / <code>stopPreview()</code>: a one-shot clip on SamplerSynth's global lane); the engines as slots per machine (<code>Slot {engine, channel, kind}</code>, up to five, one per engine kind the project's and the sections' sounds need: <code>syncSlots()</code>, the first on the machine's own Zynthian channel, the rest from the jam's pool of <code>SynthChannels</code> (15) as they come; <code>freeSynthChannels</code>, <code>sectionSoundCost()</code> for the pickers); the sound heard lands with <code>landSound()</code> (FluidSynth's preset, the track's chained sound, an all-notes-off to the slot left), at once or, a section cued while playing, on the last sixteenth before its bar (<code>scheduleLanding()</code>); the imported soundfonts (<code>refreshImported()</code>, then <code>importedRefreshed</code>): the library's and the soundfont cache's fonts as kits (bank-128 presets, or a font whose sample names make it a kit) and sources (every other preset, banks 128 and 120 left out); <code>soundfontOffer(path, presets, wholeKit)</code> says what a stick's or the catalog's font would give, pathed where it will play from; a SAVE copies the cached fonts the project plays into the library (<code>Projects::Session::keep</code>), and the start clears the cache of the rest</td>
 <td>sketchpad song + transport glue</td>
 </tr>
 <tr>
 <td><code>Machine</code></td>
-<td>the base of every machine: track (level, pan, effects, mute, ❚❚, kick cuts), pattern (bars, view bar following the playing bar while playing: <code>follow</code>, off when a bar is picked mid-play, back on when stopped; playhead, STEP cursor), presets, LIVE play/record, UNDO / REDO of the pattern (<code>canUndo</code>, <code>undo()</code>, <code>canRedo</code>, <code>redo()</code>: every <code>edited</code> whose content differs is a step back, 50 deep, changes within 0.5 s of the last joining its step (a knob turned, a handle dragged); the mix, sound and effects are left out, and so are a subclass's <code>viewKeys()</code> such as the sampler's bank; <code>beginEditGroup()</code>/<code>endEditGroup()</code> make a take one step; a project open starts it afresh); subclasses give steps, sound and velocities; SECTIONS: <code>sectionContent()</code> (the pattern part less <code>soundState()</code>'s keys and the <code>viewKeys()</code>, plus ❚❚ and ONCE) and <code>applySectionContent()</code> (laid over the machine's own by <code>withSection()</code>, the history started over; an empty map empties the pattern), <code>sectionBars()</code> / <code>sectionSounds()</code>; the samplers keep their banks' hits, not their samples (<code>SamplerBanks</code>) Its own length (<code>bars</code>, <code>m_bars</code>) is kept apart from what its clip plays: <code>applyPlayLength()</code> is the one place that sets the clip's <code>patternLength</code> and <code>bankOffset</code>, from <code>playedBars()</code>: one bar under ⟲ (the bar on screen), the section's span under ONCE (<code>once</code>, <code>setSpan()</code> from the studio; the bars past its own emptied by <code>clearRest()</code>), else its own; while it rests the playhead hides and a live hit is not written.</td>
+<td>the base of every machine: track (level, pan, effects, mute, ❚❚, kick cuts), pattern (bars, view bar following the playing bar while playing: <code>follow</code>, off when a bar is picked mid-play, back on when stopped; playhead, STEP cursor), presets, LIVE play/record, UNDO / REDO of the pattern (<code>canUndo</code>, <code>undo()</code>, <code>canRedo</code>, <code>redo()</code>: every <code>edited</code> whose content differs is a step back, 100 deep (<code>History::Depth</code>), changes within 0.5 s of the last joining its step (a knob turned, a handle dragged); the sound chosen is kept (<code>soundChoice()</code>), the mix, the sound's knobs (MODS) and effects are left out, and so are a subclass's <code>viewKeys()</code> such as the sampler's bank; <code>beginEditGroup()</code>/<code>endEditGroup()</code> make a take one step; a project open starts it afresh); subclasses give steps, sound and velocities; SECTIONS: <code>sectionContent()</code> (the pattern part less <code>soundState()</code>'s keys and the <code>viewKeys()</code>, plus ❚❚ and ONCE) and <code>applySectionContent()</code> (laid over the machine's own by <code>withSection()</code>, the history started over; an empty map empties the pattern), <code>sectionBars()</code> / <code>sectionSounds()</code>; the samplers keep their banks' hits, not their samples (<code>SamplerBanks</code>) Its own length (<code>bars</code>, <code>m_bars</code>) is kept apart from what its clip plays: <code>applyPlayLength()</code> is the one place that sets the clip's <code>patternLength</code> and <code>bankOffset</code>, from <code>playedBars()</code>: one bar under ⟲ (the bar on screen), the section's span under ONCE (<code>once</code>, <code>setSpan()</code> from the studio; the bars past its own emptied by <code>clearRest()</code>), else its own; while it rests the playhead hides and a live hit is not written.; a sound per section: the project's sound (<code>projectSoundName</code>, <code>soundState()</code>) and the section on screen's own (<code>sectionSound()</code>, <code>hasSectionSound</code>, <code>chooseSectionSoundSource()</code> / <code>useProjectSound()</code>, carried in <code>sectionContent()</code> as <code>sectionSound</code> and in <code>soundChoice()</code> for undo); <code>soundSource</code> / <code>soundSourceName</code> / <code>engineConfig()</code> / <code>activeSound()</code> are the one playing; <code>engineKindFor()</code> / <code>engineConfigFor()</code> say what engine a sound needs (one FluidSynth for all soundfonts, a synth source's own)</td>
 <td>new</td>
 </tr>
 <tr>
 <td><code>MonoMachine</code></td>
 <td>a mono line (one note per step) with ACCENT and SLIDE (the note lasts 1.5 steps and a legato engine glides into the next): page 3's BASS (<code>bass</code>, DISTRHO Nekobi: accent velocity 127 vs 80, Nekobi accents above 90) and page 4's LEAD (<code>lead</code>, Calf Monosynth, legato + portamento); base note and velocities from kits.json; presets in scale degrees (<code>bass-presets.json</code>, <code>lead-presets.json</code>), RANDOM, octave; follows the header's key: a ROOT or SCALE change snaps every note to the nearest note of the new key (upwards on a tie), and the line's key is saved with it</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>SoundPreviews</code></td>
+<td>a sound picker's PREVIEW (on, a hold hears), as <code>soundPreviews</code>: <code>hold(machineKey, value)</code> plays a soundfont source's or a drum kit's phrase in C (a chord, a line, root–fifth–octave, a bar of kick, snare and hat on the kit's keys) and <code>release()</code> stops it. The machines' engines are never touched: FluidSynth renders the phrase offline once (<code>nice</code>, one core, only while the transport is stopped) into the cache's <code>previews/</code>, and the WAV plays as a sample preview (<code>Studio::previewSample</code>). <code>preparing</code>, <code>status</code></td>
 <td>new</td>
 </tr>
 <tr>
@@ -238,7 +246,7 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>Sections</code></td>
-<td>SECTIONS and the song (<code>studio.sections</code>): the sections (id, name, colour, length: its own 1–8 bars or the longest sounding pattern, which machines sound), the section on screen (<code>current</code>, edited live: <code>pick()</code> keeps the one left as edited and hands the machines the one picked), the song (entries of a section × repeats, <code>songBars</code>, each entry's <code>startBar</code>) and LOOP / SONG; <code>add()</code> (empty, after the current one), <code>duplicate()</code> (A → A′, same colour), <code>rename</code>, <code>remove</code> (the neighbour takes over; the last stays), <code>move</code>, <code>setBars</code>, the song's <code>appendToSong</code> / <code>insertIntoSong</code> / <code>removeFromSong</code> / <code>moveInSong</code> / <code>setRepeats</code>; at most 16 sections, 16 repeats. It knows no machine: <code>Sections::Host</code> (the studio) captures, applies and measures <code>Machine::sectionContent()</code> and hears the section's length (<code>applyMachines(machines, bars)</code> with a switch, cued with the clips; <code>setSpan(bars)</code> when the one on screen changes length in place: what ONCE plays), so it is unit-tested alone (tests/tst_sections.cpp). Saved in the project (<code>sections</code>); a project without it opens as one section, "A". <code>ravving.sections</code> logs the capture and switch times; SONG mode: <code>songStarting()</code> before the transport, <code>transportStarted/Stopped()</code>, <code>barStarted(bar)</code> (the studio's bar count) cue each entry's section as the previous entry's last bar begins and ask the Host to <code>stopAtBarEnd()</code> at the song's end; <code>playFrom(entry)</code>; <code>playingEntry</code>, <code>songBar</code>, <code>entryBar</code>; a QML type (uncreatable) for <code>Sections.Loop</code> / <code>Sections.Song</code>; the exporter's SONG puts the mode on for the take</td>
+<td>SECTIONS and the song (<code>studio.sections</code>): the sections (id, name, colour, length: its own 1–8 bars or the longest sounding pattern, which machines sound), the section on screen (<code>current</code>, edited live: <code>pick()</code> keeps the one left as edited and hands the machines the one picked), the song (entries of a section × repeats, <code>songBars</code>, each entry's <code>startBar</code>) and LOOP / SONG; <code>add()</code> (empty, after the current one), <code>duplicate()</code> (A → A′, same colour), <code>rename</code>, <code>remove</code> (the neighbour takes over; the last stays), <code>move</code>, <code>setBars</code>, the song's <code>appendToSong</code> / <code>insertIntoSong</code> / <code>removeFromSong</code> / <code>moveInSong</code> / <code>setRepeats</code>; at most 16 sections, 16 repeats. It knows no machine: <code>Sections::Host</code> (the studio) captures, applies and measures <code>Machine::sectionContent()</code> and hears the section's length (<code>applyMachines(machines, bars)</code> with a switch, cued with the clips; <code>setSpan(bars)</code> when the one on screen changes length in place: what ONCE plays), so it is unit-tested alone (tests/tst_sections.cpp). Saved in the project (<code>sections</code>); a project without it opens as one section, "A". <code>ravving.sections</code> logs the capture and switch times; SONG mode: <code>songStarting()</code> before the transport, <code>transportStarted/Stopped()</code>, <code>barStarted(bar)</code> (the studio's bar count) cue each entry's section as the previous entry's last bar begins and ask the Host to <code>stopAtBarEnd()</code> at the song's end; <code>playFrom(entry)</code>; <code>playingEntry</code>, <code>songBar</code>, <code>entryBar</code>; a QML type (uncreatable) for <code>Sections.Loop</code> / <code>Sections.Song</code>; the exporter's SONG puts the mode on for the take; <code>machineSounds(key)</code>: every section's own sound for a machine (what the studio keeps engines for), <code>sections</code> entries list the machines with a sound of their own (<code>ownSounds</code>)</td>
 <td>new</td>
 </tr>
 <tr>
@@ -248,7 +256,7 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>SketchpadTrack</code></td>
-<td>the track object a PatternModel reads (<code>zlChannel</code>): <code>trackType</code> ("synth", or "sample-trig" for the sampler), <code>chainedSounds</code>, <code>muted</code>, ten <code>samples</code> (null, or objects with <code>cppObjId</code> = a clip's id: <code>setSamples()</code>)…</td>
+<td>the track object a PatternModel reads (<code>zlChannel</code>): <code>trackType</code> ("synth", or "sample-trig" for the sampler), <code>chainedSounds</code>, <code>muted</code>, ten <code>samples</code> (null, or objects with <code>cppObjId</code> = a clip's id: <code>setSamples()</code>)…; <code>setSynth()</code> sets the one chained sound the track plays through (the studio switches it between a machine's engines)</td>
 <td><code>sketchpad_channel.py</code></td>
 </tr>
 <tr>
@@ -258,7 +266,7 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>SoundEngine</code>, <code>FluidSynthEngine</code></td>
-<td>an engine process with MIDI in and stereo out; FluidSynth runs a soundfont preset</td>
+<td>an engine process with MIDI in and stereo out; FluidSynth runs a soundfont preset; FluidSynth holds several soundfonts at once and switches preset without a restart (<code>selectPreset()</code>, <code>loadFont()</code>, <code>keepFonts()</code>; the fonts load again in order after a crash restart, so their ids are known)</td>
 <td><code>zynthian_engine(_fluidsynth).py</code></td>
 </tr>
 <tr>
@@ -298,7 +306,27 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>Projects</code></td>
-<td>SAVE and PROJECT ▾ (<code>studio.projects</code>): named JSON snapshots of the session (<code>Studio::projectState()</code>) in <code>Paths::projects()</code> (<code>/zynthian/zynthian-my-data/ravving/projects</code> on the device; "RAVE 001"… or the name typed: <code>saveAs</code> tidies it and keeps it unique); save / save as new / rename / open / new / remove; a project's <code>icon</code> (a glyph's name, <code>saveAs(name, icon)</code>, <code>rename(name, icon)</code>, <code>currentIcon</code>, <code>icons</code>, listed per project, read by a scan of the file cached by its time); the session through a <code>Session</code> of functions Studio hands it (<code>tst_projecticons</code>), <code>dirty</code> when the session differs from what was saved or opened (compact JSON without the page on screen, checked 300 ms after <code>Studio::modified</code>; at start the session file is what was saved); the current project and dirty flag survive restarts (<code>.current</code>)</td>
+<td>SAVE and PROJECT ▾ (<code>studio.projects</code>): named JSON snapshots of the session (<code>Studio::projectState()</code>) in <code>Paths::projects()</code> (<code>/zynthian/zynthian-my-data/ravving/projects</code> on the device; "RAVE 001"… or the name typed: <code>saveAs</code> tidies it and keeps it unique); save / save as new / rename / open / new / remove; a project's <code>icon</code> (a glyph's name, <code>saveAs(name, icon)</code>, <code>rename(name, icon)</code>, <code>currentIcon</code>, <code>icons</code>, listed per project, read by a scan of the file cached by its time); the session through a <code>Session</code> of functions Studio hands it (<code>tst_projecticons</code>), <code>dirty</code> when the session differs from what was saved or opened (compact JSON without the page on screen, checked 300 ms after <code>Studio::modified</code>; at start the session file is what was saved); the current project and dirty flag survive restarts (<code>.current</code>); the timeline (<code>history</code>, a <code>ProjectHistory</code>): a snapshot of the session each time a change settles, one on SAVE, open and NEW, <code>restore(id)</code> puts one back (the step kept too); the trail keyed by the project's id (<code>timelineId</code> in its file, <code>idOf()</code>, given by the first SAVE or RENAME and kept by <code>addProject</code> unless a project here has it: <code>idInUse()</code>), carried under the id from the unsaved or name-keyed trail, removed with the project (found by <code>idOwnedBy()</code>: the older of two files with one id owns the trail, the copy is name-keyed), NEW restarting the unsaved one; <code>adopt(file)</code> takes a downloaded project file in as <code>addProject</code> does (the store's plain projects, through <code>StoreTaker::adoptProject</code>; <code>removeProject</code> takes them out through <code>remove</code>)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>ProjectHistory</code></td>
+<td>PROJECT ▾ → TIMELINE (<code>studio.projects.history</code>): the project's snapshots in a <code>SnapshotStore</code> (<code>projects/.timeline</code>, a bare git repository; one branch per project, <code>p/&lt;id&gt;</code>, <code>n/&lt;name&gt;</code> for one without an id yet, <code>d/&lt;name&gt;</code> a demo's, <code>unsaved</code> the session never saved (<code>branchFor(id, name, demo)</code>), <code>restart()</code> dropping a trail; each snapshot the project's JSON as <code>project.json</code>, what changed in its message's first line, a hash of the state on a <code>key</code> line below), written on a worker thread, one after the other, the store under a lock; a snapshot equal to the last one is not written (a SAVE's or a restore's always is), a branch that moved under a write is read again and written once more; <code>sweep(keep)</code> dropping the <code>p/</code> and <code>n/</code> branches not among the files' (Projects, at start); <code>entries</code> the branch's newest 400 ({id, time, when, kind, label, saved}), <code>available</code> false without a store (then nothing is kept, the TIMELINE says so), <code>backend</code> its name, <code>busy</code>; <code>stateAt(id)</code> reads one back; <code>changedKeys()</code> names what differs between two states (each machine, tempo, swing, master, metronome, livefx, sends, sections, key, mix, other), <code>label()</code> translates them ("DRUMS 1 · TEMPO", "SAVED", "BACK TO 14:02:11"); <code>tst_projecttimeline</code> (run with each backend)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>SnapshotStore</code></td>
+<td>the timeline's storage as one interface, so the backend can change without ProjectHistory noticing: named branches of snapshots (<code>Snapshot</code>: id, time, message), <code>open()</code>, <code>tip()</code>, <code>list()</code>, <code>write(branch, content, message, parent, time)</code> (on top of the tip the caller saw: a branch elsewhere is not written over), <code>read(id)</code>, <code>point()</code>, <code>rename()</code>, <code>remove()</code>, <code>branches()</code>, <code>housekeep()</code>, <code>lastError()</code>; one thread at a time, a failing call leaves the store as it was; <code>create(dir, backend)</code> picks <code>LibGit2SnapshotStore</code> (the default when built with <code>RAVVING_LIBGIT2</code>) or <code>GitCommandSnapshotStore</code>, <code>RAVVING_SNAPSHOT_STORE=libgit2|git</code> overrides; both write the same repository (the test writes with each and reads with the other); <code>looseObjects()</code> counts the loose objects from the folder, <code>relink(branch, kept, tip)</code> makes a branch the chain of the snapshots kept (ProjectHistory's limit)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>LibGit2SnapshotStore</code></td>
+<td>the store through libgit2, in process, no child started: <code>git_blob_create_from_buffer</code> → <code>git_treebuilder</code> → <code>git_commit_create</code> (no reference touched) → <code>git_reference_create</code> (a new branch; fails if it exists) or <code>git_reference_create_matching</code> (the branch's expected id as the guard); <code>git_revwalk</code> lists, <code>git_revparse_single</code> reads an id or a prefix; every object in a freeing guard, libgit2's own message in <code>lastError()</code>; <code>housekeep()</code> packs in process (<code>git_packbuilder</code>: the reached loose objects into a new pack, then every loose object goes; past eight packs, everything reached into one), <code>relink()</code> links the kept commits over their own trees</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>GitCommandSnapshotStore</code></td>
+<td>the store through the <code>git</code> program, the fallback: <code>hash-object</code>, <code>mktree</code>, <code>commit-tree</code> (<code>@&lt;seconds&gt; +0000</code> stamps), <code>update-ref</code> with the old value as the guard, <code>log --format</code> with <code>\x1f</code>/<code>\x1e</code> separators, <code>cat-file -p &lt;id&gt;:project.json</code>; every child started without copying ravving (vfork), ravving as the author, the user's git configuration shut out; <code>housekeep()</code> is <code>gc --prune=now</code> under <code>nice -n 19 ionice -c 3</code>; <code>relink()</code> the generic one (each kept snapshot written again on a scratch branch)</td>
 <td>new</td>
 </tr>
 <tr>
@@ -358,7 +386,7 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>UsbLibrary</code></td>
-<td>the USB page's backend (<code>usb</code>): <code>scan()</code> mounts the stick and walks it in a worker (QtConcurrent), sorting files by kind (samples, soundfonts, projects, tracks under ravving/exports, MIDI files; hidden / System Volume Information / FOUND.* / $RECYCLE.BIN skipped, 20 000 files at most); <code>entries(kind)</code> with <code>onDevice</code>, <code>deviceEntries(kind)</code> with <code>onStick</code>; <code>importEntry</code> / <code>exportEntry</code> copy in a worker through a <code>.part</code> file with <code>progress</code> (fsync onto the stick), projects through the Exporter's bundle import / <code>exportProjectFile</code>; <code>finished(kind, name, ok, message)</code></td>
+<td>the USB page's backend (<code>usb</code>): <code>scan()</code> mounts the stick and walks it in a worker (QtConcurrent), sorting files by kind (samples, soundfonts, projects, tracks under ravving/exports, MIDI files; hidden / System Volume Information / FOUND.* / $RECYCLE.BIN skipped, 20 000 files at most); <code>entries(kind)</code> with <code>onDevice</code>, <code>deviceEntries(kind)</code> with <code>onStick</code>; <code>importEntry</code> / <code>exportEntry</code> copy in a worker (<code>cacheSoundfont(path)</code> the same into <code>Paths::soundfontCache()</code>, for a sound picker's USB source) through a <code>.part</code> file with <code>progress</code> (fsync onto the stick), projects through the Exporter's bundle import / <code>exportProjectFile</code>; <code>finished(kind, name, ok, message)</code></td>
 <td>new</td>
 </tr>
 <tr>
@@ -433,7 +461,7 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>JackWiring</code></td>
-<td>Zynthian channel → engine → SynthPassthrough → TrackPassthrough → AudioLevels → GlobalPlayback → speakers, retried until the ports exist; removes PipeWire's direct engine→speaker links; a synth's insert (DRIVE) goes in and out with <code>setInsertActive()</code>; a track's lane on request (<code>addTrackLane</code>), the sampler's slot outputs (<code>setSampleOutputs</code>), the input monitor into its track (<code>setInputMonitor</code>)</td>
+<td>Zynthian channel → engine → SynthPassthrough → TrackPassthrough → AudioLevels → GlobalPlayback → speakers, retried until the ports exist; removes PipeWire's direct engine→speaker links; a synth's insert (DRIVE) goes in and out with <code>setInsertActive()</code>; a track's lane on request (<code>addTrackLane</code>), the sampler's slot outputs (<code>setSampleOutputs</code>), the input monitor into its track (<code>setInputMonitor</code>); a machine's other engines (a section's sounds, on channels of their own) play through the machine's own passthrough (<code>addSynth(…, audioChannel)</code>), so one DRIVE and one sidechain source cover them</td>
 <td><code>zynthian_autoconnect.py</code> (synth subset)</td>
 </tr>
 <tr>
@@ -548,12 +576,16 @@ URL serves a test.</p>
 <td><code>SkinFiles::importSkin()</code></td>
 </tr>
 <tr>
+<td>icons</td>
+<td><code>IconPacks::importPack()</code></td>
+</tr>
+<tr>
 <td>pack (a stick's layout in a zip)</td>
 <td><code>ZipReader</code>, then the taker file by file</td>
 </tr>
 <tr>
 <td>soundfont</td>
-<td><code>Paths::soundfonts()</code>, then <code>Studio::refreshImported()</code></td>
+<td><code>Paths::soundfonts()</code>, then <code>Studio::refreshImported()</code>; picked in a sound picker (<code>cacheSoundfont(id)</code>), <code>Paths::soundfontCache()</code> instead, not recorded in <code>store.json</code></td>
 </tr>
 <tr>
 <td>project</td>
@@ -597,7 +629,7 @@ presets: listed, fetched, loaded again offline, a bad one dropped, one kept.</p>
     <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=7bcc475539" defer></script>
+<script src="../assets/aru.js?v=d4f4258295" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>HardwareEvent Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -96,6 +96,7 @@
 <li class="fn" translate="no"><b><a href="hardwareevent.html#accepted-prop" translate="no">accepted</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="hardwareevent.html#cuia-prop" translate="no">cuia</a></b> : const QString</li>
 <li class="fn" translate="no"><b><a href="hardwareevent.html#delta-prop" translate="no">delta</a></b> : const int</li>
+<li class="fn" translate="no"><b><a href="hardwareevent.html#heldMs-prop" translate="no">heldMs</a></b> : const int</li>
 </ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><b><a href="hardwareevent.html#index-prop" translate="no">index</a></b> : const int</li>
 <li class="fn" translate="no"><b><a href="hardwareevent.html#knob-prop" translate="no">knob</a></b> : const int</li>
@@ -109,10 +110,12 @@
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="hardwareevent.html#accepted-prop" translate="no">accepted</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="hardwareevent.html#cuia-prop" translate="no">cuia</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="hardwareevent.html#delta-prop" translate="no">delta</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="hardwareevent.html#heldMs-prop" translate="no">heldMs</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="hardwareevent.html#index-prop" translate="no">index</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> HardwareEvent::Kind </td><td class="memItemRight bottomAlign"><b><a href="hardwareevent.html#kind" translate="no">kind</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="hardwareevent.html#knob-prop" translate="no">knob</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="hardwareevent.html#accepted-prop" translate="no">setAccepted</a></b>(bool <i>accepted</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="hardwareevent.html#setHeldMs" translate="no">setHeldMs</a></b>(int <i>heldMs</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="hardwareevent.html#value-prop" translate="no">value</a></b>() const</td></tr>
 </table></div>
 <!-- $$$HardwareEvent-description -->
@@ -170,6 +173,16 @@
 <!-- @@@delta -->
 </div>
 <div class="fnitem">
+<!-- $$$heldMs-prop$$$heldMs -->
+<h3 class="fn" translate="no" id="heldMs-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">heldMs</span> : const <span class="type">int</span></h3>
+<p>how long the key was held down, in milliseconds, for a key's release (a handler acting on a long press compares it with Qt.styleHints.mousePressAndHoldInterval, as a touch does); 0 for a press, a knob, or a key that reports no press.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>heldMs</b></span>() const</td></tr>
+</table></div>
+<!-- @@@heldMs -->
+</div>
+<div class="fnitem">
 <!-- $$$index-prop$$$index -->
 <h3 class="fn" translate="no" id="index-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">index</span> : const <span class="type">int</span></h3>
 <p>This property holds the key of a step key (0 to 15) or number key (0 to 4) event; -1 otherwise.</p>
@@ -213,6 +226,13 @@
 <h3 class="fn" translate="no" id="kind"><span class="type"><a href="hardwareevent.html#Kind-enum" translate="no">HardwareEvent::Kind</a></span> HardwareEvent::<span class="name">kind</span>() const</h3>
 <p>Returns what produced the event.</p>
 <!-- @@@kind -->
+</div>
+<div class="fnitem">
+<!-- $$$setHeldMs[overload1]$$$setHeldMsint -->
+<h3 class="fn" translate="no" id="setHeldMs"><span class="type">void</span> HardwareEvent::<span class="name">setHeldMs</span>(<span class="type">int</span> <i>heldMs</i>)</h3>
+<p>Sets <a href="hardwareevent.html#heldMs-prop" translate="no">heldMs</a> to <i translate="no">heldMs</i> (Ravving, as a key is let go).</p>
+<p><b>See also </b><a href="hardwareevent.html#heldMs-prop" translate="no">heldMs</a>().</p>
+<!-- @@@setHeldMs -->
 </div>
 </div>
 </article>

@@ -10,8 +10,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Architecture · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<link rel="stylesheet" href="../site.css?v=a306cbe289">
 <script src="../assets/theme.js?v=3307b56d38"></script>
+<script src="../assets/icons.js?v=d6def946c7" defer></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -43,24 +44,26 @@
     <nav aria-label="Documentation">
 <p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="machines.html">The machines</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
+<li><a href="play-it-live.html">Play it live</a></li>
 <li><a href="export-a-track.html">Export a track and play it back</a></li>
 <li><a href="film-a-session.html">Film your session</a></li>
 <li><a href="send-to-phone.html">Send a file to your phone</a></li>
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
-<li><a href="machines.html">The machines</a></li>
-<li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
 </ul>
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
+<li><a href="icon-packs.html">Make an icon pack</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
 </ul>
 <p class="mono">Change ravving</p><ul>
-<li class="on"><a href="architecture.html" aria-current="page">Architecture</a><ul><li><a href="#layers">Layers</a></li><li><a href="#input-flow-the-hardware-attached-property">Input flow: the Hardware attached property</a></li><li><a href="#the-libzynthbox-bridge">The libzynthbox bridge</a></li><li><a href="#device-workflow">Device workflow</a></li><li><a href="#distribution">Distribution</a></li><li><a href="#the-look">The look</a></li><li><a href="#where-ravving-keeps-its-files">Where ravving keeps its files</a></li><li><a href="#a-projects-file">A project&#x27;s file</a></li><li><a href="#the-startup-splash">The startup splash</a></li><li><a href="#the-phone-share-and-the-help-page">The phone share and the help page</a></li><li><a href="#topics-with-their-own-page">Topics with their own page</a></li></ul></li>
+<li class="on"><a href="architecture.html" aria-current="page">Architecture</a><ul><li><a href="#layers">Layers</a></li><li><a href="#input-flow-the-hardware-attached-property">Input flow: the Hardware attached property</a></li><li><a href="#the-libzynthbox-bridge">The libzynthbox bridge</a></li><li><a href="#device-workflow">Device workflow</a></li><li><a href="#distribution">Distribution</a></li><li><a href="#the-look">The look</a></li><li><a href="#where-ravving-keeps-its-files">Where ravving keeps its files</a></li><li><a href="#a-projects-file">A project&#x27;s file</a></li><li><a href="#the-timeline">The timeline</a></li><li><a href="#the-startup-splash">The startup splash</a></li><li><a href="#the-phone-share-and-the-help-page">The phone share and the help page</a></li><li><a href="#topics-with-their-own-page">Topics with their own page</a></li></ul></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
 <li><a href="undo-history.html">The undo history</a></li>
@@ -397,12 +400,12 @@ written: ravving reads the device's sample library and writes only to its own pl
 <tr>
 <td>cache</td>
 <td><code>~/.cache/ravving</code></td>
-<td>rebuildable: reversed samples, raw takes, the LV2 port cache, GET MORE's catalog and downloads (<code>store/</code>)</td>
+<td>rebuildable: reversed samples, raw takes, the LV2 port cache, GET MORE's catalog and downloads (<code>store/</code>), the soundfonts a sound picker took from a stick or ONLINE (<code>soundfonts/</code>, until a project saved with them copies them into the library)</td>
 </tr>
 <tr>
 <td>library</td>
 <td><code>/zynthian/zynthian-my-data/ravving</code></td>
-<td>the user's work, kept across reinstalls: <code>projects/</code>, <code>templates/</code>, <code>presets/</code>, <code>skins/</code>, <code>soundfonts/</code>, <code>midi/</code>, <code>samples/</code> (takes in <code>samples/takes/</code>, the RECORDER's in <code>samples/recordings/</code>, imported bundles' samples in <code>samples/imported/</code>), <code>recordings/</code> (the master's and the RECORDER's TRACKS), <code>exports/</code>, <code>videos/</code>, and <code>store.json</code> (what GET MORE installed, by entry: its version and its presets or files, so UPDATE and REMOVE know them)</td>
+<td>the user's work, kept across reinstalls: <code>projects/</code>, <code>templates/</code>, <code>presets/</code>, <code>skins/</code>, <code>icons/</code> (the icon packs), <code>soundfonts/</code>, <code>midi/</code>, <code>samples/</code> (takes in <code>samples/takes/</code>, the RECORDER's in <code>samples/recordings/</code>, imported bundles' samples in <code>samples/imported/</code>), <code>recordings/</code> (the master's and the RECORDER's TRACKS), <code>exports/</code>, <code>videos/</code>, and <code>store.json</code> (what GET MORE installed, by entry: its version and its presets or files, so UPDATE and REMOVE know them)</td>
 </tr>
 </tbody>
 </table>
@@ -430,6 +433,10 @@ this one at start (<code>Paths::initialise()</code>), and the session's and proj
 <td><code>icon</code></td>
 <td>its icon, a built-in glyph's name (<code>b10-synth</code>); left out when it has none</td>
 </tr>
+<tr>
+<td><code>timelineId</code></td>
+<td>the key of its timeline, a UUID given by its first SAVE; a file without one is keyed by its name until then</td>
+</tr>
 </tbody>
 </table>
 <ul>
@@ -440,6 +447,100 @@ this one at start (<code>Paths::initialise()</code>), and the session's and proj
 <li><strong>A <code>.ravv</code> bundle</strong> keeps the icon in its <code>project.json</code> and its <code>metadata.json</code>, and an import
   keeps it when this build has that glyph. A track's or a bundle's cover wears it (<code>AlbumArt</code>).</li>
 <li>The icon is not an edit: changing it never marks the session unsaved.</li>
+</ul>
+<h2 id="the-timeline">The timeline</h2>
+<p><code>projects/.timeline</code> is a bare git repository holding the versions a long press on SAVE keeps
+(<code>ProjectHistory</code>, <code>Projects::saveVersion()</code>, PROJECT ▾ → TIMELINE); a change, a plain SAVE,
+OPEN or NEW writes nothing there. A worker thread writes it through a <code>SnapshotStore</code>,
+with no working tree. Without a store that can work nothing is kept.</p>
+<table>
+<thead>
+<tr>
+<th>Backend</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LibGit2SnapshotStore</code></td>
+<td>libgit2 in process; the default</td>
+</tr>
+<tr>
+<td><code>GitCommandSnapshotStore</code></td>
+<td>the <code>git</code> program at the lowest CPU and I/O priority; the fallback, or <code>RAVVING_SNAPSHOT_STORE=git</code></td>
+</tr>
+</tbody>
+</table>
+<p>Both write the same repository.</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a branch</td>
+<td>one project: <code>p/&lt;id&gt;</code> (its <code>timelineId</code>, a UUID its file carries from its first SAVE), <code>n/&lt;name&gt;</code> one without an id yet (a file from before ids, or made by hand), <code>d/&lt;name&gt;</code> a demo opened, <code>unsaved</code> the session never saved; names percent-encoded</td>
+</tr>
+<tr>
+<td>a commit</td>
+<td>one snapshot: the project's JSON as <code>project.json</code></td>
+</tr>
+<tr>
+<td>its message</td>
+<td>what changed (<code>change drums1 tempo</code>, <code>save</code>, <code>open</code>, <code>new</code>, <code>restore &lt;time&gt;</code>); in the body the user's name for it (<code>title Drop idea</code>, a long press on SAVE) and a hash of the state, so an unchanged state is not written twice</td>
+</tr>
+</tbody>
+</table>
+<h3 id="when-a-snapshot-is-taken">When a snapshot is taken</h3>
+<ul>
+<li><strong>A change settles</strong>: 300 ms after the last <code>Studio::modified</code>, with the dirty check.</li>
+<li><strong>SAVE</strong>, always, so the trail shows the saves. <strong>NEW</strong> too.</li>
+<li><strong>A project opened</strong> whose file differs from its trail's tip.</li>
+</ul>
+<h3 id="going-back-and-following-the-project">Going back, and following the project</h3>
+<ul>
+<li><strong>Going back</strong> (<code>Projects::restore(id)</code>) stops the transport and puts the snapshot's state
+  back as the session. The project stays the one open, unsaved if the state differs from its
+  file. The step back is itself a snapshot (<code>BACK TO &lt;time&gt;</code>): the trail only grows.</li>
+<li><strong>The first SAVE and SAVE AS NEW</strong> give the project an id and continue the current trail
+  under it (the branch takes the tip).</li>
+<li><strong>RENAME</strong> changes nothing in the timeline: the key is the id, so a file renamed by hand
+  keeps its trail too. <strong>NEW</strong> starts <code>unsaved</code> afresh.</li>
+<li><strong>Deleting a project</strong> deletes its branch; the open one's trail goes on as <code>unsaved</code>.</li>
+</ul>
+<h3 id="a-project-that-arrives-a-restart">A project that arrives, a restart</h3>
+<ul>
+<li><strong>A project that arrives</strong> (a bundle imported, a download the projects adopt) keeps the id it
+  brings, unless a project here has it: a copy of one of ours gets its own. Two projects never
+  share a trail. Its timeline starts when it is first opened; a file replaced by hand with
+  another project is another trail.</li>
+<li><strong>A copy made by hand</strong> (two files, one id) does not take the trail. The older file keeps it;
+  the copy is keyed by its name until a SAVE gives it an id of its own.</li>
+<li><strong>A restart</strong> continues the trail. The state the session comes back with becomes a snapshot
+  once it settles, unless it is the tip's: one snapshot when the autosave moved on while
+  ravving was down, nothing otherwise. The trails of files that are gone (deleted outside
+  ravving) are dropped at start.</li>
+</ul>
+<h3 id="housekeeping">Housekeeping</h3>
+<p>Git keeps each snapshot's objects as loose files until they are packed. Packing stores
+successive snapshots as small deltas of each other and drops what no branch reaches.</p>
+<ul>
+<li><strong>When</strong>: after a manual SAVE (<code>ProjectHistory::tidy()</code>), waiting for the stop while the
+  transport plays, and at start after the sweep. Never on its own while music plays.</li>
+<li><strong>The limit</strong>: a trail past 350 snapshots is cut back to its newest 300, every SAVE and named
+  one before them kept (<code>ProjectHistory::Limits</code>), relinked in place (same files, messages and
+  times; new commit ids).</li>
+<li><strong>The pack</strong>: when the limit cut something, a trail was swept, or past 1000 loose objects
+  (counted from the folder, not git's estimate). The libgit2 backend packs in process with
+  libgit2's pack builder at idle priority, no child started; the git-program backend runs
+  <code>git gc --prune=now</code>, started without copying ravving (vfork) under <code>nice -n 19 ionice -c 3</code>.</li>
+<li><strong>Snapshots are compact JSON</strong>: a project's indentation is most of its bytes, and a pack goes
+  through every byte.</li>
+<li><strong>By hand</strong>: <code>git --git-dir projects/.timeline log --oneline p/&lt;name&gt;</code> lists a trail,
+  <code>show &lt;commit&gt;:project.json</code> reads a snapshot.</li>
 </ul>
 <h2 id="the-startup-splash">The startup splash</h2>
 <p><code>StartupSplash</code> (qml/Splash.qml and SplashLook.qml) shows the logo from the moment libzynthbox
@@ -494,7 +595,7 @@ serves three things:</p>
     <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=7bcc475539" defer></script>
+<script src="../assets/aru.js?v=d4f4258295" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

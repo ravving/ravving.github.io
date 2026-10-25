@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>DrumMachine Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -111,6 +111,8 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#kitName-prop" translate="no">kitName</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#kitPath-prop" translate="no">kitPath</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#loadKit" translate="no">loadKit</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#loadSectionKit" translate="no">loadSectionKit</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#projectKitPath" translate="no">projectKitPath</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#resetKit" translate="no">resetKit</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#rowForNote" translate="no">rowForNote</a></b>(int <i>note</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#rowLevels-prop" translate="no">rowLevels</a></b>() const</td></tr>
@@ -129,9 +131,16 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#applySoundParts" translate="no">applySoundParts</a></b>(const QVariantMap &amp;<i>parts</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#checkSaved" translate="no">checkSaved</a></b>(const QVariantMap &amp;<i>state</i>) const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#engineConfig" translate="no">engineConfig</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#engineConfigFor" translate="no">engineConfigFor</a></b>(const QVariantMap &amp;<i>sound</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#engineKindFor" translate="no">engineKindFor</a></b>(const QVariantMap &amp;<i>sound</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#hasSectionSound" translate="no">hasSectionSound</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#hasSoundChoice" translate="no">hasSoundChoice</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#projectSound" translate="no">projectSound</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#sectionSound" translate="no">sectionSound</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#setSectionSound" translate="no">setSectionSound</a></b>(const QVariantMap &amp;<i>sound</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#soundState" translate="no">soundState</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#state" translate="no">state</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#useProjectSound" translate="no">useProjectSound</a></b>() override</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
@@ -288,7 +297,7 @@
 <!-- $$$checkSaved[overload1]$$$checkSavedconstQVariantMap& -->
 <h3 class="fn" translate="no" id="checkSaved"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> DrumMachine::<span class="name">checkSaved</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>) const</h3>
 <p>Reimplements: <a href="machine.html#checkSaved" translate="no">Machine::checkSaved</a>(const QVariantMap &amp;state) const.</p>
-<p>Adds the kit's soundfont to Machine's checks for <i translate="no">state</i>: when it is gone, the default kit plays.</p>
+<p>Adds the kit's soundfont to Machine's checks for <i translate="no">state</i>: when it is gone, the default kit plays. A cached soundfont kept in the library since (<a href="paths.html#relocated" translate="no">Paths::relocated</a>()) is not missing.</p>
 <!-- @@@checkSaved -->
 </div>
 <div class="fnitem">
@@ -297,6 +306,26 @@
 <p>Reimplements: <a href="machine.html#engineConfig" translate="no">Machine::engineConfig</a>() const.</p>
 <p>Returns the kits.json engine object with the current kit: <code translate="no">type</code>, <code translate="no">soundfont</code>, <code translate="no">bank</code> and <code translate="no">program</code>.</p>
 <!-- @@@engineConfig -->
+</div>
+<div class="fnitem">
+<!-- $$$engineConfigFor[overload1]$$$engineConfigForconstQVariantMap& -->
+<h3 class="fn" translate="no" id="engineConfigFor"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QVariantMap</span> DrumMachine::<span class="name">engineConfigFor</span>(const <span class="type">QVariantMap</span> &amp;<i>sound</i>) const</h3>
+<p>Reimplements: <a href="machine.html#engineConfigFor" translate="no">Machine::engineConfigFor</a>(const QVariantMap &amp;sound) const.</p>
+<p>The FluidSynth engine object of <i translate="no">sound</i>'s kit (<code translate="no">kit</code>; the project's without one): its soundfont file, bank and program.</p>
+<!-- @@@engineConfigFor -->
+</div>
+<div class="fnitem">
+<!-- $$$engineKindFor[overload1]$$$engineKindForconstQVariantMap& -->
+<h3 class="fn" translate="no" id="engineKindFor"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QString</span> DrumMachine::<span class="name">engineKindFor</span>(const <span class="type">QVariantMap</span> &amp;<i>sound</i>) const</h3>
+<p>Reimplements: <a href="machine.html#engineKindFor" translate="no">Machine::engineKindFor</a>(const QVariantMap &amp;sound) const.</p>
+<p>Every kit is a soundfont: <code translate="no">fluidsynth</code>.</p>
+<!-- @@@engineKindFor -->
+</div>
+<div class="fnitem">
+<!-- $$$hasSectionSound[overload1]$$$hasSectionSound -->
+<h3 class="fn" translate="no" id="hasSectionSound"><code class="details extra" translate="no">[override virtual]</code> <span class="type">bool</span> DrumMachine::<span class="name">hasSectionSound</span>() const</h3>
+<p>Reimplements: <a href="machine.html#hasSectionSound" translate="no">Machine::hasSectionSound</a>() const.</p>
+<!-- @@@hasSectionSound -->
 </div>
 <div class="fnitem">
 <!-- $$$hasSoundChoice[overload1]$$$hasSoundChoice -->
@@ -315,9 +344,29 @@
 <div class="fnitem">
 <!-- $$$loadKit[overload1]$$$loadKitconstQString& -->
 <h3 class="fn" translate="no" id="loadKit"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> DrumMachine::<span class="name">loadKit</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
-<p>Switches to the kit in the soundfont <i translate="no">path</i>; every hit moves to the new kit's note for its role, and the engine restarts with it.</p>
+<p>Switches to the kit in the soundfont <i translate="no">path</i> as the project's kit, what every section without a kit of its own plays: every hit moves to the new kit's note for its role, and the engine plays it. The section on screen gives up its own kit, so the choice is heard.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@loadKit -->
+</div>
+<div class="fnitem">
+<!-- $$$loadSectionKit[overload1]$$$loadSectionKitconstQString& -->
+<h3 class="fn" translate="no" id="loadSectionKit"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> DrumMachine::<span class="name">loadSectionKit</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Gives the section on screen the kit in the soundfont <i translate="no">path</i> as its own: it plays while the section is on screen, the other sections keep theirs (the project's, or their own).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@loadSectionKit -->
+</div>
+<div class="fnitem">
+<!-- $$$projectKitPath -->
+<h3 class="fn" translate="no" id="projectKitPath"><span class="type">QString</span> DrumMachine::<span class="name">projectKitPath</span>() const</h3>
+<p>Returns the project's kit, what a section without one of its own plays (<a href="drummachine.html#kitPath-prop" translate="no">kitPath</a> is the one playing).</p>
+<!-- @@@projectKitPath -->
+</div>
+<div class="fnitem">
+<!-- $$$projectSound[overload1]$$$projectSound -->
+<h3 class="fn" translate="no" id="projectSound"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QVariantMap</span> DrumMachine::<span class="name">projectSound</span>() const</h3>
+<p>Reimplements: <a href="machine.html#projectSound" translate="no">Machine::projectSound</a>() const.</p>
+<p>The project's kit (<code translate="no">kit</code>).</p>
+<!-- @@@projectSound -->
 </div>
 <div class="fnitem">
 <!-- $$$resetKit[overload1]$$$resetKit -->
@@ -339,6 +388,14 @@
 <p>Emitted when a row's level, mute or solo changed.</p>
 <div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="drummachine.html#rowLevels-prop" translate="no">rowLevels</a>, <a href="drummachine.html#rowMuted-prop" translate="no">rowMuted</a>, and <a href="drummachine.html#rowSoloed-prop" translate="no">rowSoloed</a>. </p>
 </div><!-- @@@rowMixChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$sectionSound[overload1]$$$sectionSound -->
+<h3 class="fn" translate="no" id="sectionSound"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QVariantMap</span> DrumMachine::<span class="name">sectionSound</span>() const</h3>
+<p>Reimplements: <a href="machine.html#sectionSound" translate="no">Machine::sectionSound</a>() const.</p>
+<p>The kit (<code translate="no">kit</code>) the section on screen plays as its own, if any.</p>
+<p><b>See also </b><a href="drummachine.html#setSectionSound" translate="no">setSectionSound</a>().</p>
+<!-- @@@sectionSound -->
 </div>
 <div class="fnitem">
 <!-- $$$setRowLevel[overload1]$$$setRowLevelintqreal -->
@@ -364,10 +421,18 @@
 <!-- @@@setRowSoloed -->
 </div>
 <div class="fnitem">
+<!-- $$$setSectionSound[overload1]$$$setSectionSoundconstQVariantMap& -->
+<h3 class="fn" translate="no" id="setSectionSound"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> DrumMachine::<span class="name">setSectionSound</span>(const <span class="type">QVariantMap</span> &amp;<i>sound</i>)</h3>
+<p>Reimplements: <a href="machine.html#setSectionSound" translate="no">Machine::setSectionSound</a>(const QVariantMap &amp;sound).</p>
+<p>Takes the kit (<code translate="no">kit</code>) of <i translate="no">sound</i> as the section's own, or goes back to the project's kit without one (or with one that is not on this device).</p>
+<p><b>See also </b><a href="drummachine.html#sectionSound" translate="no">sectionSound</a>().</p>
+<!-- @@@setSectionSound -->
+</div>
+<div class="fnitem">
 <!-- $$$soundState[overload1]$$$soundState -->
 <h3 class="fn" translate="no" id="soundState"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QVariantMap</span> DrumMachine::<span class="name">soundState</span>() const</h3>
 <p>Reimplements: <a href="machine.html#soundState" translate="no">Machine::soundState</a>() const.</p>
-<p>Adds the kit (<code translate="no">kit</code>): a drum machine's sound is its kit too.</p>
+<p>Adds the project's kit (<code translate="no">kit</code>): a drum machine's sound is its kit too.</p>
 <!-- @@@soundState -->
 </div>
 <div class="fnitem">
@@ -398,6 +463,14 @@
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggleStep -->
 </div>
+<div class="fnitem">
+<!-- $$$useProjectSound[overload1]$$$useProjectSound -->
+<h3 class="fn" translate="no" id="useProjectSound"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> DrumMachine::<span class="name">useProjectSound</span>()</h3>
+<p>Reimplements: <a href="machine.html#useProjectSound" translate="no">Machine::useProjectSound</a>().</p>
+<p>The section on screen plays the project's kit again.</p>
+<!-- @@@useProjectSound -->
+</div>
+</div>
 </article>
 </main>
 <footer class="api-footer">
@@ -407,4 +480,3 @@
 </footer>
 </body>
 </html>
-</div>

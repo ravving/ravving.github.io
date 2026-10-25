@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>StoreTaker Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -87,9 +87,11 @@
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="storetaker.html#dtor.StoreTaker" translate="no">~StoreTaker</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="storetaker.html#adoptProject" translate="no">adoptProject</a></b>(const QString &amp;<i>file</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="storetaker.html#importProject" translate="no">importProject</a></b>(const QString &amp;<i>file</i>) = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="storetaker.html#patternLibrary" translate="no">patternLibrary</a></b>(const QString &amp;<i>machineKey</i>) = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="storetaker.html#removePreset" translate="no">removePreset</a></b>(const QString &amp;<i>id</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="storetaker.html#removeProject" translate="no">removeProject</a></b>(const QString &amp;<i>path</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="storetaker.html#takePreset" translate="no">takePreset</a></b>(const QString &amp;<i>path</i>, QString *<i>error</i>) = 0</td></tr>
 </table></div>
 <!-- $$$StoreTaker-description -->
@@ -104,6 +106,12 @@
 <h3 class="fn" translate="no" id="dtor.StoreTaker"><code class="details extra" translate="no">[virtual constexpr noexcept <a href="https://en.cppreference.com/w/cpp/language/function#Defaulted_functions" translate="no">default</a>]</code> StoreTaker::<span class="name">~StoreTaker</span>()</h3>
 <p>Destroys the instance of <span translate="no">StoreTaker</span>. This destructor is virtual.</p>
 <!-- @@@~StoreTaker -->
+</div>
+<div class="fnitem">
+<!-- $$$adoptProject[overload1]$$$adoptProjectconstQString& -->
+<h3 class="fn" translate="no" id="adoptProject"><code class="details extra" translate="no">[virtual]</code> <span class="type">QString</span> StoreTaker::<span class="name">adoptProject</span>(const <span class="type">QString</span> &amp;<i>file</i>)</h3>
+<p>Takes the plain project file at <i translate="no">file</i> into the library as the projects keep them (<a href="projects.html#adopt" translate="no">Projects::adopt</a>(): its own name made unique, its own timeline). Returns the project's path, or an empty string when it is no project. The default takes none, and the store moves the file itself.</p>
+<!-- @@@adoptProject -->
 </div>
 <div class="fnitem">
 <!-- $$$importProject[overload1]$$$importProjectconstQString& -->
@@ -122,6 +130,12 @@
 <h3 class="fn" translate="no" id="removePreset"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">bool</span> StoreTaker::<span class="name">removePreset</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
 <p>Removes the preset <a href="presetexchange.html" translate="no">PresetExchange</a> knows as <i translate="no">id</i> (<code translate="no">pattern::&lt;library file&gt;::&lt;name&gt;</code>…); returns whether it was there.</p>
 <!-- @@@removePreset -->
+</div>
+<div class="fnitem">
+<!-- $$$removeProject[overload1]$$$removeProjectconstQString& -->
+<h3 class="fn" translate="no" id="removeProject"><code class="details extra" translate="no">[virtual]</code> <span class="type">bool</span> StoreTaker::<span class="name">removeProject</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Removes the project file at <i translate="no">path</i> as the projects do (<a href="projects.html#remove" translate="no">Projects::remove</a>(): its timeline with it). Returns whether it is gone. The default deletes the file.</p>
+<!-- @@@removeProject -->
 </div>
 <div class="fnitem">
 <!-- $$$takePreset[overload1]$$$takePresetconstQString&QString* -->

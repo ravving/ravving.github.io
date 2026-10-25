@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
 <!-- zynthboxbridge.cpp -->
-  <meta name="description" content="Loads libzyncoder and libzynthbox, starts the hardware pollers and forwards their events; published to QML as zynthbox.">
+  <meta name="description" content="Loads libzyncoder and libravving, starts the hardware pollers and forwards their events; published to QML as zynthbox.">
   <meta name="keywords" content="class">
   <title>ZynthboxBridge Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -77,7 +77,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">ZynthboxBridge Class</h1>
 <!-- $$$ZynthboxBridge-brief -->
-<p>Loads libzyncoder and libzynthbox, starts the hardware pollers and forwards their events; published to QML as <code translate="no">zynthbox</code>. <a href="#details">More...</a></p>
+<p>Loads libzyncoder and libravving, starts the hardware pollers and forwards their events; published to QML as <code translate="no">zynthbox</code>. <a href="#details">More...</a></p>
 <!-- @@@ZynthboxBridge -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;zynthboxbridge.h&gt;</code></td></tr>
@@ -95,18 +95,11 @@
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#ZynthboxBridge" translate="no">ZynthboxBridge</a></b>(QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#available-prop" translate="no">available</a></b>() const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#create" translate="no">create</a></b>(const QString &amp;<i>type</i>, QObject *<i>parent</i>) const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#createClip" translate="no">createClip</a></b>(const QString &amp;<i>file</i>, int <i>track</i>, int <i>slot</i>, int <i>row</i>, bool <i>polyphonic</i>) const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> quint64 </td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#currentFrame" translate="no">currentFrame</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int *</td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#engine" translate="no">engine</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#outputLevelMax" translate="no">outputLevelMax</a></b>() const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> quint64 </td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#playbackStartFrame" translate="no">playbackStartFrame</a></b>() const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#retireClip" translate="no">retireClip</a></b>(QObject *<i>clip</i>) const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#setMetronomeSounds" translate="no">setMetronomeSounds</a></b>(const QString &amp;<i>tickFile</i>, const QString &amp;<i>tockFile</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#setOutputLevel" translate="no">setOutputLevel</a></b>(int <i>step</i>) const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#singleton" translate="no">singleton</a></b>(const QString &amp;<i>name</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#start" translate="no">start</a></b>(QQmlEngine *<i>engine</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#status-prop" translate="no">status</a></b>() const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="zynthboxbridge.html#timerTickAtFrame" translate="no">timerTickAtFrame</a></b>(quint64 <i>frame</i>, quint64 *<i>tick</i>, quint64 *<i>remainder</i>) const</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
@@ -118,8 +111,8 @@
 <!-- $$$ZynthboxBridge-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p><a href="zynthboxbridge.html#start" translate="no">start</a>() initialises libzyncoder first (<code translate="no">init_zynlib()</code>, then the Z2's output amplifier raised to its maximum, which <code translate="no">init_zynlib()</code> leaves at 0), then libzynthbox's <code translate="no">Plugin::initialize()</code> and its QML types under <code translate="no">io.zynthbox.components</code>. It then starts <a href="hardwareswitches.html" translate="no">HardwareSwitches</a> (the buttons, through MidiRouter's CUIA queue) and <a href="hardwareknobs.html" translate="no">HardwareKnobs</a>, and forwards every <code translate="no">MidiRouter::cuiaEvent</code> as <a href="zynthboxbridge.html#cuiaEvent" translate="no">cuiaEvent</a>() and the knobs as <a href="zynthboxbridge.html#knobTurned" translate="no">knobTurned</a>() and <a href="zynthboxbridge.html#knobMoved" translate="no">knobMoved</a>().</p>
-<p>libzynthbox installs no headers (and they pull in all of JUCE), so both libraries are opened at run time with <code translate="no">RTLD_LOCAL</code> and only a few entry points are resolved by their mangled symbols: Plugin's three, ClipAudioSource's constructor (<a href="zynthboxbridge.html#createClip" translate="no">createClip</a>()), <code translate="no">SyncTimer::setMetronomeTicks()</code> and SyncTimer's JACK-frame lookups. Everything else goes through Qt's meta-object system (<a href="zynthboxbridge.html#singleton" translate="no">singleton</a>(), <a href="zynthboxbridge.html#create" translate="no">create</a>()). <code translate="no">RTLD_GLOBAL</code> is avoided because libzynthbox's bundled JUCE and tracktion symbols would interpose on libraries loaded later.</p>
+<p><a href="zynthboxbridge.html#start" translate="no">start</a>() initialises libzyncoder first (<code translate="no">init_zynlib()</code>, then the Z2's output amplifier raised to its maximum, which <code translate="no">init_zynlib()</code> leaves at 0), then opens libravving.so, takes its engine (libravving/engine.h, through the library's one entry point <code translate="no">libravving_engine</code>) and starts it with its QML types under <code translate="no">LibRavving</code>. It then starts <a href="hardwareswitches.html" translate="no">HardwareSwitches</a> (the buttons, through the router's CUIA queue) and <a href="hardwareknobs.html" translate="no">HardwareKnobs</a>, and forwards every CUIA command the router reports as <a href="zynthboxbridge.html#cuiaEvent" translate="no">cuiaEvent</a>() and the knobs as <a href="zynthboxbridge.html#knobTurned" translate="no">knobTurned</a>() and <a href="zynthboxbridge.html#knobMoved" translate="no">knobMoved</a>().</p>
+<p>Both libraries are opened at run time with <code translate="no">RTLD_LOCAL</code>, so ravving builds and runs (with no sound) where they are not installed, and the JUCE symbols libravving carries cannot interpose on libraries loaded later. libzynthbox is never opened: it stays zynthbox-qml's.</p>
 <p>GUI thread only.</p>
 </div>
 <!-- @@@ZynthboxBridge -->
@@ -128,7 +121,7 @@
 <div class="fnitem">
 <!-- $$$available-prop$$$available$$$availableChanged -->
 <h3 class="fn" translate="no" id="available-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">available</span> : <span class="type">bool</span></h3>
-<p>This property holds whether libzynthbox is loaded and initialised.</p>
+<p>This property holds whether libravving is loaded and its engine started.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>available</b></span>() const</td></tr>
@@ -142,7 +135,7 @@
 <div class="fnitem">
 <!-- $$$status-prop$$$status$$$availableChanged -->
 <h3 class="fn" translate="no" id="status-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">status</span> : <span class="type">QString</span></h3>
-<p>This property holds a readable state: &quot;libzynthbox ready&quot;, or why it is not.</p>
+<p>This property holds a readable state: &quot;libravving.so ready&quot;, or why it is not.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>status</b></span>() const</td></tr>
@@ -163,28 +156,16 @@
 <!-- @@@ZynthboxBridge -->
 </div>
 <div class="fnitem">
-<!-- $$$create[overload1]$$$createconstQString&QObject* -->
-<h3 class="fn" translate="no" id="create"><span class="type">QObject</span> *ZynthboxBridge::<span class="name">create</span>(const <span class="type">QString</span> &amp;<i>type</i>, <span class="type">QObject</span> *<i>parent</i>) const</h3>
-<p>Returns a new object of libzynthbox's creatable QML type <i translate="no">type</i> (such as <code translate="no">ProcessWrapper</code>), with C++ ownership, parented to <i translate="no">parent</i>; <code translate="no">nullptr</code> when libzynthbox is not available or the type cannot be created.</p>
-<!-- @@@create -->
-</div>
-<div class="fnitem">
-<!-- $$$createClip[overload1]$$$createClipconstQString&intintintbool -->
-<h3 class="fn" translate="no" id="createClip"><span class="type">QObject</span> *ZynthboxBridge::<span class="name">createClip</span>(const <span class="type">QString</span> &amp;<i>file</i>, <span class="type">int</span> <i>track</i>, <span class="type">int</span> <i>slot</i>, <span class="type">int</span> <i>row</i>, <span class="type">bool</span> <i>polyphonic</i>) const</h3>
-<p>Returns a new ClipAudioSource (a sample SamplerSynth plays) for <i translate="no">file</i> on sketchpad <i translate="no">track</i>'s sample slot <i translate="no">slot</i> (0 to 4) of <i translate="no">row</i> (0 or 1), registered for polyphonic playback when <i translate="no">polyphonic</i> is true (a sampler slot) and not otherwise (the metronome's clips, track -1). ClipAudioSource has no meta-object factory, so it is built through its exported constructor in a zeroed 256-byte block. The caller owns it and unloads it with <a href="zynthboxbridge.html#retireClip" translate="no">retireClip</a>(). Returns <code translate="no">nullptr</code> without libzynthbox, for a missing file, or for a format other than WAV, AIFF, FLAC and Ogg: SamplerSynth crashes the audio thread when a voice plays a file it cannot decode.</p>
-<!-- @@@createClip -->
-</div>
-<div class="fnitem">
 <!-- $$$cuiaEvent[overload1]$$$cuiaEventconstQString& -->
 <h3 class="fn" translate="no" id="cuiaEvent"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ZynthboxBridge::<span class="name">cuiaEvent</span>(const <span class="type">QString</span> &amp;<i>cuia</i>)</h3>
-<p>Emitted for every CUIA command <i translate="no">cuia</i> MidiRouter reports, from any source (the device's buttons, MIDI-mapped controllers).</p>
+<p>Emitted for every CUIA command <i translate="no">cuia</i> the router reports, from any source (the device's buttons, MIDI-mapped controllers).</p>
 <!-- @@@cuiaEvent -->
 </div>
 <div class="fnitem">
-<!-- $$$currentFrame[overload1]$$$currentFrame -->
-<h3 class="fn" translate="no" id="currentFrame"><span class="type">quint64</span> ZynthboxBridge::<span class="name">currentFrame</span>() const</h3>
-<p>Returns the JACK frame at the end of the most recent process cycle (<code translate="no">SyncTimer::jackPlayheadFrames</code>): &quot;now&quot; on the recording clock. 0 without libzynthbox.</p>
-<!-- @@@currentFrame -->
+<!-- $$$engine[overload1]$$$engine -->
+<h3 class="fn" translate="no" id="engine"><span class="type">int</span> *ZynthboxBridge::<span class="name">engine</span>() const</h3>
+<p>Returns libravving's engine, or <code translate="no">nullptr</code> before <a href="zynthboxbridge.html#start" translate="no">start</a>() or when it failed.</p>
+<!-- @@@engine -->
 </div>
 <div class="fnitem">
 <!-- $$$knobMoved[overload1]$$$knobMovedintqreal -->
@@ -205,46 +186,16 @@
 <!-- @@@outputLevelMax -->
 </div>
 <div class="fnitem">
-<!-- $$$playbackStartFrame[overload1]$$$playbackStartFrame -->
-<h3 class="fn" translate="no" id="playbackStartFrame"><span class="type">quint64</span> ZynthboxBridge::<span class="name">playbackStartFrame</span>() const</h3>
-<p>Returns the JACK frame the transport last started playing at (<code translate="no">SyncTimer::jackPlayheadAtStart</code>, the clock of AudioLevels' recording frames): where the first beat of a recording lands. 0 without libzynthbox or before the first start.</p>
-<!-- @@@playbackStartFrame -->
-</div>
-<div class="fnitem">
-<!-- $$$retireClip[overload1]$$$retireClipQObject* -->
-<h3 class="fn" translate="no" id="retireClip"><span class="type">void</span> ZynthboxBridge::<span class="name">retireClip</span>(<span class="type">QObject</span> *<i>clip</i>) const</h3>
-<p>Unloads <i translate="no">clip</i>, made by <a href="zynthboxbridge.html#createClip" translate="no">createClip</a>(), safely for the audio thread: its voices are told to stop, and the object is deleted once it has reported itself silent for 500 ms and a voice started just before could have ended (twice the clip's length, for a slice pitched an octave down, plus 5 s for the longest release); 60 s later it is deleted regardless. A ClipAudioSource deleted while a SamplerSynth voice still plays it crashes the audio thread: the voice writes its position into the freed clip when it stops. Callers release the notes that hold the clip's voices first. Does nothing for a null <i translate="no">clip</i>.</p>
-<!-- @@@retireClip -->
-</div>
-<div class="fnitem">
-<!-- $$$setMetronomeSounds[overload1]$$$setMetronomeSoundsconstQString&constQString& -->
-<h3 class="fn" translate="no" id="setMetronomeSounds"><span class="type">bool</span> ZynthboxBridge::<span class="name">setMetronomeSounds</span>(const <span class="type">QString</span> &amp;<i>tickFile</i>, const <span class="type">QString</span> &amp;<i>tockFile</i>)</h3>
-<p>Gives SyncTimer its metronome sounds: <i translate="no">tickFile</i> on each bar's first beat, <i translate="no">tockFile</i> on the other beats; without them SyncTimer's metronome and count-in are silent. The two clips live as long as the process. Returns <code translate="no">false</code> when a file or a symbol is missing.</p>
-<!-- @@@setMetronomeSounds -->
-</div>
-<div class="fnitem">
 <!-- $$$setOutputLevel[overload1]$$$setOutputLevelint -->
 <h3 class="fn" translate="no" id="setOutputLevel"><span class="type">void</span> ZynthboxBridge::<span class="name">setOutputLevel</span>(<span class="type">int</span> <i>step</i>) const</h3>
 <p>Sets the output amplifier to <i translate="no">step</i>, clamped to 0 (silent) .. <a href="zynthboxbridge.html#outputLevelMax" translate="no">outputLevelMax</a>(). Does nothing without libzyncoder.</p>
 <!-- @@@setOutputLevel -->
 </div>
 <div class="fnitem">
-<!-- $$$singleton[overload1]$$$singletonconstQString& -->
-<h3 class="fn" translate="no" id="singleton"><span class="type">QObject</span> *ZynthboxBridge::<span class="name">singleton</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
-<p>Returns libzynthbox's QML singleton <i translate="no">name</i> (<code translate="no">SyncTimer</code>, <code translate="no">PlayGridManager</code>, <code translate="no">Plugin</code>, <code translate="no">AudioLevels</code>, <code translate="no">JackConnectionHandler</code>, <code translate="no">MidiRouter...</code>), or <code translate="no">nullptr</code> before <a href="zynthboxbridge.html#start" translate="no">start</a>().</p>
-<!-- @@@singleton -->
-</div>
-<div class="fnitem">
 <!-- $$$start[overload1]$$$startQQmlEngine* -->
 <h3 class="fn" translate="no" id="start"><span class="type">bool</span> ZynthboxBridge::<span class="name">start</span>(<span class="type">QQmlEngine</span> *<i>engine</i>)</h3>
-<p>Loads and initialises libzyncoder and libzynthbox and registers libzynthbox's QML types in <i translate="no">engine</i>; see the class description. Returns <code translate="no">false</code> when libzynthbox, its entry points or its MidiRouter are missing: status then says why, and a &quot;No sound engine&quot; issue is reported. A missing libzyncoder is only logged (no device keys or knobs).</p>
+<p>Loads and initialises libzyncoder and libravving and registers libravving's QML types in <i translate="no">engine</i>; see the class description. Returns <code translate="no">false</code> when libravving or its entry point are missing or its engine does not start: status then says why, and a &quot;No sound engine&quot; issue is reported. A missing libzyncoder is only logged (no device keys or knobs).</p>
 <!-- @@@start -->
-</div>
-<div class="fnitem">
-<!-- $$$timerTickAtFrame[overload1]$$$timerTickAtFramequint64quint64*quint64* -->
-<h3 class="fn" translate="no" id="timerTickAtFrame"><span class="type">bool</span> ZynthboxBridge::<span class="name">timerTickAtFrame</span>(<span class="type">quint64</span> <i>frame</i>, <span class="type">quint64</span> *<i>tick</i>, <span class="type">quint64</span> *<i>remainder</i>) const</h3>
-<p>Finds where the transport was at JACK frame <i translate="no">frame</i> (on the <code translate="no">jack_frame_time()</code> clock): stores in <i translate="no">tick</i> the SyncTimer tick that played at or before it, counted from the playback start, and in <i translate="no">remainder</i> how many frames after that tick <i translate="no">frame</i> is. Sample accurate, since SyncTimer keeps the frame each tick played at. Returns <code translate="no">false</code> while the transport is stopped or without libzynthbox; the outputs are then untouched.</p>
-<!-- @@@timerTickAtFrame -->
 </div>
 </div>
 </article>

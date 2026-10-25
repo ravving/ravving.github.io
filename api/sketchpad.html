@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
 <!-- sketchpad.cpp -->
-  <meta name="description" content="The sketchpad object libzynthbox talks to: PlayGridManager's zlSketchpad.">
+  <meta name="description" content="Which clip each machine track plays, and when it changes: ravving's side of libravving's playfield (libravving::Sequencer).">
   <meta name="keywords" content="class">
   <title>Sketchpad Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -68,7 +68,7 @@
 <div class="toc">
 <h3 id="toc">Contents</h3>
 <ul>
-<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-types">Public Types</a></li>
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
 <li class="level1"><a href="#signals">Signals</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
@@ -77,7 +77,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">Sketchpad Class</h1>
 <!-- $$$Sketchpad-brief -->
-<p>The sketchpad object libzynthbox talks to: PlayGridManager's <code translate="no">zlSketchpad</code>. <a href="#details">More...</a></p>
+<p>Which clip each machine track plays, and when it changes: ravving's side of libravving's playfield (libravving::Sequencer). <a href="#details">More...</a></p>
 <!-- @@@Sketchpad -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;sketchpad.h&gt;</code></td></tr>
@@ -86,84 +86,38 @@
 <li><a href="sketchpad-members.html">List of all members, including inherited members</a></li>
 <li>Sketchpad is part of <a href="ravving-studio.html">Studio and projects</a>.</li>
 </ul>
-<h2 id="properties">Properties</h2>
-<ul>
-<li class="fn" translate="no"><b><a href="sketchpad.html#clipToRecord-prop" translate="no">clipToRecord</a></b> : QObject* const</li>
-<li class="fn" translate="no"><b><a href="sketchpad.html#isRecording-prop" translate="no">isRecording</a></b> : const bool</li>
-<li class="fn" translate="no"><b><a href="sketchpad.html#selectedTrackId-prop" translate="no">selectedTrackId</a></b> : int</li>
-</ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="sketchpad-trackcue.html" translate="no">TrackCue</a></b></td></tr>
+</table></div>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#Sketchpad" translate="no">Sketchpad</a></b>(QObject *<i>playfieldManager</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#Sketchpad" translate="no">Sketchpad</a></b>(int *<i>sequencer</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#clipPlaying" translate="no">clipPlaying</a></b>(int <i>track</i>, int <i>clip</i>) const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#clipToRecord-prop" translate="no">clipToRecord</a></b>() const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#cueTrackClip" translate="no">cueTrackClip</a></b>(int <i>track</i>, int <i>clip</i>, bool <i>paused</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#isRecording-prop" translate="no">isRecording</a></b>() const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#selectedTrackId-prop" translate="no">selectedTrackId</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#setPlayingTracks" translate="no">setPlayingTracks</a></b>(const QList&lt;int&gt; &amp;<i>tracks</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#setTrackPaused" translate="no">setTrackPaused</a></b>(int <i>track</i>, bool <i>paused</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#startPlayback" translate="no">startPlayback</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#stopAllAtNextBar" translate="no">stopAllAtNextBar</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#stopAllPlayback" translate="no">stopAllPlayback</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#stopRecording" translate="no">stopRecording</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#switchClips" translate="no">switchClips</a></b>(const QList&lt;Sketchpad::TrackCue&gt; &amp;<i>cues</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#trackClip" translate="no">trackClip</a></b>(int <i>track</i>) const</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#isLoadingChanged" translate="no">isLoadingChanged</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#selectedTrackId-prop" translate="no">selectedTrackIdChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#clipSwitchLanded" translate="no">clipSwitchLanded</a></b>(int <i>id</i>, qint64 <i>tick</i>)</td></tr>
 </table></div>
 <!-- $$$Sketchpad-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>SyncTimer calls into this object whenever the transport starts and stops (it reads <a href="sketchpad.html#clipToRecord-prop" translate="no">clipToRecord</a> and <a href="sketchpad.html#isRecording-prop" translate="no">isRecording</a>, and calls <a href="sketchpad.html#startPlayback" translate="no">startPlayback</a>(), <a href="sketchpad.html#stopAllPlayback" translate="no">stopAllPlayback</a>() and <a href="sketchpad.html#stopRecording" translate="no">stopRecording</a>()), and PlayGridManager follows <a href="sketchpad.html#selectedTrackId-prop" translate="no">selectedTrackId</a>. This class provides only the members libzynthbox uses.</p>
-<p>Starting playback resets every clip to stopped, so <a href="sketchpad.html#startPlayback" translate="no">startPlayback</a>() launches the clip each playing track uses (PlayfieldManager::setClipPlaystate()).</p>
-<p>A track plays clip a or clip b: Sections writes the coming section into the one that is not playing and has the two swap on the next bar (<a href="sketchpad.html#cueTrackClip" translate="no">cueTrackClip</a>()), which the playfield does on the bar's first tick, before any pattern schedules a note of it. The paused tracks and the tracks on clip b are kept in atomics, since <a href="sketchpad.html#startPlayback" translate="no">startPlayback</a>() reads them on the audio thread.</p>
+<p>Starting playback resets every clip to stopped, so <a href="sketchpad.html#startPlayback" translate="no">startPlayback</a>() launches the clip each playing track uses before the transport starts (<a href="studio.html#play" translate="no">Studio::play</a>()).</p>
+<p>A track plays clip a or clip b: Sections writes the coming section into the one that is not playing and has the two swap on the next bar (<a href="sketchpad.html#switchClips" translate="no">switchClips</a>()), which the playfield does on the bar's first tick, before any pattern schedules a note of it.</p>
 </div>
 <!-- @@@Sketchpad -->
-<div class="prop">
-<h2>Property Documentation</h2>
-<div class="fnitem">
-<!-- $$$clipToRecord-prop$$$clipToRecord -->
-<h3 class="fn" translate="no" id="clipToRecord-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">clipToRecord</span> : <span class="type">QObject</span>* const</h3>
-<p>This property holds a clip waiting to record when the transport starts; always null, ravving records no clip that way.</p>
-<p><b>Access functions:</b></p>
-<div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft topAlign rightAlign"> QObject *</td><td class="memItemRight bottomAlign"><span class="name"><b>clipToRecord</b></span>() const</td></tr>
-</table></div>
-<!-- @@@clipToRecord -->
-</div>
-<div class="fnitem">
-<!-- $$$isRecording-prop$$$isRecording -->
-<h3 class="fn" translate="no" id="isRecording-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">isRecording</span> : const <span class="type">bool</span></h3>
-<p>This property holds whether a clip recording is running; always <code translate="no">false</code>.</p>
-<p><b>Access functions:</b></p>
-<div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>isRecording</b></span>() const</td></tr>
-</table></div>
-<!-- @@@isRecording -->
-</div>
-<div class="fnitem">
-<!-- $$$selectedTrackId-prop$$$selectedTrackId$$$selectedTrackIdChanged -->
-<h3 class="fn" translate="no" id="selectedTrackId-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">selectedTrackId</span> : <span class="type">int</span></h3>
-<p>This property holds the track live MIDI input plays (PlayGridManager's current sketchpad track).</p>
-<p><b>Access functions:</b></p>
-<div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>selectedTrackId</b></span>() const</td></tr>
-</table></div>
-<p><b>Notifier signal:</b></p>
-<div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>selectedTrackIdChanged</b></span>()</td></tr>
-</table></div>
-<!-- @@@selectedTrackId -->
-</div>
-</div>
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$Sketchpad[overload1]$$$SketchpadQObject*QObject* -->
-<h3 class="fn" translate="no" id="Sketchpad"><code class="details extra" translate="no">[explicit]</code> Sketchpad::<span class="name">Sketchpad</span>(<span class="type">QObject</span> *<i>playfieldManager</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Constructs the sketchpad over libzynthbox's <i translate="no">playfieldManager</i>, which holds the clips' play states, with the given <i translate="no">parent</i>.</p>
+<!-- $$$Sketchpad[overload1]$$$Sketchpadint*QObject* -->
+<h3 class="fn" translate="no" id="Sketchpad"><code class="details extra" translate="no">[explicit]</code> Sketchpad::<span class="name">Sketchpad</span>(<span class="type">int</span> *<i>sequencer</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the sketchpad over libravving's <i translate="no">sequencer</i>, which holds the clips' play states, with the given <i translate="no">parent</i>.</p>
 <!-- @@@Sketchpad -->
 </div>
 <div class="fnitem">
@@ -173,16 +127,10 @@
 <!-- @@@clipPlaying -->
 </div>
 <div class="fnitem">
-<!-- $$$cueTrackClip[overload1]$$$cueTrackClipintintbool -->
-<h3 class="fn" translate="no" id="cueTrackClip"><span class="type">void</span> Sketchpad::<span class="name">cueTrackClip</span>(<span class="type">int</span> <i>track</i>, <span class="type">int</span> <i>clip</i>, <span class="type">bool</span> <i>paused</i>)</h3>
-<p>From the next bar <i translate="no">track</i> plays <i translate="no">clip</i> from its start (nothing when <i translate="no">paused</i> is true) and its other clip stops.</p>
-<!-- @@@cueTrackClip -->
-</div>
-<div class="fnitem">
-<!-- $$$isLoadingChanged[overload1]$$$isLoadingChanged -->
-<h3 class="fn" translate="no" id="isLoadingChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Sketchpad::<span class="name">isLoadingChanged</span>()</h3>
-<p>Emitted around project loads; PlayfieldManager listens.</p>
-<!-- @@@isLoadingChanged -->
+<!-- $$$clipSwitchLanded[overload1]$$$clipSwitchLandedintqint64 -->
+<h3 class="fn" translate="no" id="clipSwitchLanded"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Sketchpad::<span class="name">clipSwitchLanded</span>(<span class="type">int</span> <i>id</i>, <span class="type">qint64</span> <i>tick</i>)</h3>
+<p>Emitted when the <a href="sketchpad.html#switchClips" translate="no">switchClips</a>() set <i translate="no">id</i> landed on the bar line at clock <i translate="no">tick</i>.</p>
+<!-- @@@clipSwitchLanded -->
 </div>
 <div class="fnitem">
 <!-- $$$setPlayingTracks[overload1]$$$setPlayingTracksconstQList<int>& -->
@@ -198,10 +146,9 @@
 </div>
 <div class="fnitem">
 <!-- $$$startPlayback[overload1]$$$startPlayback -->
-<h3 class="fn" translate="no" id="startPlayback"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sketchpad::<span class="name">startPlayback</span>()</h3>
-<p>SyncTimer's start hook, called on the audio thread: launches the clip each playing track uses, unless the track is paused. Reads only atomics.</p>
-<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
-</div><!-- @@@startPlayback -->
+<h3 class="fn" translate="no" id="startPlayback"><span class="type">void</span> Sketchpad::<span class="name">startPlayback</span>()</h3>
+<p>Launches the clip each playing track uses from the first bar, unless the track is paused; called before the transport starts.</p>
+<!-- @@@startPlayback -->
 </div>
 <div class="fnitem">
 <!-- $$$stopAllAtNextBar[overload1]$$$stopAllAtNextBar -->
@@ -210,18 +157,10 @@
 <!-- @@@stopAllAtNextBar -->
 </div>
 <div class="fnitem">
-<!-- $$$stopAllPlayback[overload1]$$$stopAllPlayback -->
-<h3 class="fn" translate="no" id="stopAllPlayback"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sketchpad::<span class="name">stopAllPlayback</span>()</h3>
-<p>SyncTimer's stop hook.</p>
-<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
-</div><!-- @@@stopAllPlayback -->
-</div>
-<div class="fnitem">
-<!-- $$$stopRecording[overload1]$$$stopRecording -->
-<h3 class="fn" translate="no" id="stopRecording"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sketchpad::<span class="name">stopRecording</span>()</h3>
-<p>SyncTimer's hook for ending a clip recording; nothing to do.</p>
-<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
-</div><!-- @@@stopRecording -->
+<!-- $$$switchClips[overload1]$$$switchClipsconstQList<Sketchpad::TrackCue>& -->
+<h3 class="fn" translate="no" id="switchClips"><span class="type">int</span> Sketchpad::<span class="name">switchClips</span>(const <span class="type">QList</span>&lt;<span class="type"><a href="sketchpad-trackcue.html" translate="no">Sketchpad::TrackCue</a></span>&gt; &amp;<i>cues</i>)</h3>
+<p>Cues <i translate="no">cues</i> together: from the next bar each track plays its cue's clip (nothing when the cue is paused) and its other clip stops. The set is applied on the clock's own thread in one step, on the first bar line it has not processed yet, and <a href="sketchpad.html#clipSwitchLanded" translate="no">clipSwitchLanded</a>() reports it; the returned id names it (0 for an empty set).</p>
+<!-- @@@switchClips -->
 </div>
 <div class="fnitem">
 <!-- $$$trackClip[overload1]$$$trackClipint -->

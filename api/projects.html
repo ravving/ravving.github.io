@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>Projects Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -101,6 +101,7 @@
 <li class="fn" translate="no"><b><a href="projects.html#currentPath-prop" translate="no">currentPath</a></b> : QString</li>
 </ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><b><a href="projects.html#dirty-prop" translate="no">dirty</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="projects.html#history-prop" translate="no">history</a></b> : QObject* const</li>
 <li class="fn" translate="no"><b><a href="projects.html#icons-prop" translate="no">icons</a></b> : const QStringList</li>
 <li class="fn" translate="no"><b><a href="projects.html#list-prop" translate="no">list</a></b> : QVariantList</li>
 </ul>
@@ -110,11 +111,13 @@
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="projects.html#Projects" translate="no">Projects</a></b>(const Projects::Session &amp;<i>session</i>, const QString &amp;<i>dir</i>, const QString &amp;<i>demosDir</i> = QString(), QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#addProject" translate="no">addProject</a></b>(const QString &amp;<i>name</i>, const QVariantMap &amp;<i>state</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#adopt" translate="no">adopt</a></b>(const QString &amp;<i>file</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#current-prop" translate="no">current</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#currentIcon-prop" translate="no">currentIcon</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="projects.html#currentIsDemo-prop" translate="no">currentIsDemo</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#currentPath-prop" translate="no">currentPath</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="projects.html#dirty-prop" translate="no">dirty</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="projects.html#history-prop" translate="no">history</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="projects.html#icons-prop" translate="no">icons</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="projects.html#isDemo" translate="no">isDemo</a></b>(const QString &amp;<i>path</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="projects.html#list-prop" translate="no">list</a></b>() const</td></tr>
@@ -122,11 +125,14 @@
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="projects.html#open" translate="no">open</a></b>(const QString &amp;<i>path</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projects.html#remove" translate="no">remove</a></b>(const QString &amp;<i>path</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#rename" translate="no">rename</a></b>(const QString &amp;<i>wanted</i>, const QString &amp;<i>icon</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="projects.html#restore" translate="no">restore</a></b>(const QString &amp;<i>id</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#save" translate="no">save</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#saveAs" translate="no">saveAs</a></b>(const QString &amp;<i>wanted</i>, const QString &amp;<i>icon</i> = QString())</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#saveAsNew" translate="no">saveAsNew</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#saveVersion" translate="no">saveVersion</a></b>(const QString &amp;<i>title</i> = QString())</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projects.html#sessionModified" translate="no">sessionModified</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#suggestedName" translate="no">suggestedName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> ProjectHistory *</td><td class="memItemRight bottomAlign"><b><a href="projects.html#timeline" translate="no">timeline</a></b>() const</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
@@ -138,6 +144,7 @@
 <h2 id="static-public-members">Static Public Members</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#iconOf" translate="no">iconOf</a></b>(const QVariantMap &amp;<i>state</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#idOf" translate="no">idOf</a></b>(const QVariantMap &amp;<i>state</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projects.html#tidyName" translate="no">tidyName</a></b>(const QString &amp;<i>wanted</i>)</td></tr>
 </table></div>
 <!-- $$$Projects-description -->
@@ -148,6 +155,7 @@
 <p>A project may wear an icon: one of the built-in pixel glyphs (Glyphs), kept in its file by the glyph's name under the top-level key <code translate="no">icon</code>, and none by default. <a href="projects.html#saveAs" translate="no">saveAs</a>() and <a href="projects.html#rename" translate="no">rename</a>() set it; <a href="projects.html#currentIcon-prop" translate="no">currentIcon</a> is the current project's. A name that is not a built-in glyph (one a later version removed) reads as no icon.</p>
 <p>The session itself is the caller's (Studio's): a Session of functions reads, restores and replaces it, and <a href="projects.html#sessionModified" translate="no">sessionModified</a>() reports each change to it.</p>
 <p>The demos ravving ships (<code translate="no">data/demos/*.json</code>, installed read-only beside kits.json) are listed after the user's projects, in their own group. A demo opens like any project; <a href="projects.html#save" translate="no">save</a>() then keeps the changes as a new user project under the demo's name (the demo itself never changes), and a demo cannot be deleted. The current project and the dirty flag survive restarts (a small marker file in the folder). GUI thread only.</p>
+<p>The timeline (history, a <a href="projecthistory.html" translate="no">ProjectHistory</a>) keeps a snapshot of the session each time a change settles, under the project open (or the session never saved), with what changed; a SAVE, an open and NEW take one too. <a href="projects.html#restore" translate="no">restore</a>() puts a snapshot back as the session, which is then unsaved if it differs from the project's file, and keeps a snapshot of that too. The trail is keyed by the project's id, a UUID kept in its file under <code translate="no">timelineId</code> (<a href="projects.html#idOf" translate="no">idOf</a>()): a first SAVE or SAVE AS NEW gives the project one and continues the trail so far under it, RENAME keeps it (so does a file renamed by hand), a deleted project's trail is dropped (the open one's goes on as the unsaved session's), and NEW starts the unsaved trail afresh. A file without an id (from before them, or edited by hand) is keyed by its name until a SAVE or RENAME gives it one; an imported or adopted project keeps the id it brings unless a project here has it, and a copy made by hand (two files, one id) is keyed by its name while the older file keeps the trail, so two projects never share a trail. At start, the trails of files that are gone (deleted outside ravving) are dropped.</p>
 </div>
 <!-- @@@Projects -->
 <div class="prop">
@@ -223,6 +231,16 @@
 <!-- @@@dirty -->
 </div>
 <div class="fnitem">
+<!-- $$$history-prop$$$history -->
+<h3 class="fn" translate="no" id="history-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">history</span> : <span class="type">QObject</span>* const</h3>
+<p>This property holds the timeline of the project open: a <a href="projecthistory.html" translate="no">ProjectHistory</a>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QObject *</td><td class="memItemRight bottomAlign"><span class="name"><b>history</b></span>() const</td></tr>
+</table></div>
+<!-- @@@history -->
+</div>
+<div class="fnitem">
 <!-- $$$icons-prop$$$icons -->
 <h3 class="fn" translate="no" id="icons-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">icons</span> : const <span class="type">QStringList</span></h3>
 <p>This property holds the icons a project may wear: every built-in glyph's name, sorted (<a href="glyphs.html#names" translate="no">Glyphs::names</a>()).</p>
@@ -258,8 +276,14 @@
 <div class="fnitem">
 <!-- $$$addProject[overload1]$$$addProjectconstQString&constQVariantMap& -->
 <h3 class="fn" translate="no" id="addProject"><span class="type">QString</span> Projects::<span class="name">addProject</span>(const <span class="type">QString</span> &amp;<i>name</i>, const <span class="type">QVariantMap</span> &amp;<i>state</i>)</h3>
-<p>Adds a project file from <i translate="no">state</i>, made elsewhere (an imported <code translate="no">.ravv</code> bundle), under <i translate="no">name</i> (tidied, made unique); it is listed, not opened. Its <code translate="no">icon</code> is kept when it names a built-in glyph and dropped otherwise. Returns its path, or an empty string when it could not be written.</p>
+<p>Adds a project file from <i translate="no">state</i>, made elsewhere (an imported <code translate="no">.ravv</code> bundle), under <i translate="no">name</i> (tidied, made unique); it is listed, not opened. Its <code translate="no">icon</code> is kept when it names a built-in glyph and dropped otherwise; its <code translate="no">timelineId</code> is kept unless a project here has it (then it gets its own). Returns its path, or an empty string when it could not be written.</p>
 <!-- @@@addProject -->
+</div>
+<div class="fnitem">
+<!-- $$$adopt[overload1]$$$adoptconstQString& -->
+<h3 class="fn" translate="no" id="adopt"><span class="type">QString</span> Projects::<span class="name">adopt</span>(const <span class="type">QString</span> &amp;<i>file</i>)</h3>
+<p>Takes the plain project file <i translate="no">file</i> (downloaded, received) into the folder as <a href="projects.html#addProject" translate="no">addProject</a>() does: under its own <code translate="no">name</code> (else its file's name), made unique, with its icon and id kept as there, and the file removed from where it was. Returns the project's path, or an empty string when the file holds no project.</p>
+<!-- @@@adopt -->
 </div>
 <div class="fnitem">
 <!-- $$$created[overload1]$$$created -->
@@ -272,6 +296,12 @@
 <h3 class="fn" translate="no" id="iconOf"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Projects::<span class="name">iconOf</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>)</h3>
 <p>Returns the icon <i translate="no">state</i> keeps (a project's file, a bundle's project or metadata): its <code translate="no">icon</code> when that names a built-in glyph, else an empty string.</p>
 <!-- @@@iconOf -->
+</div>
+<div class="fnitem">
+<!-- $$$idOf[overload1]$$$idOfconstQVariantMap& -->
+<h3 class="fn" translate="no" id="idOf"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Projects::<span class="name">idOf</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>)</h3>
+<p>Returns the project id <i translate="no">state</i> (a project's file, a bundle's project) carries under <code translate="no">timelineId</code>, or an empty string.</p>
+<!-- @@@idOf -->
 </div>
 <div class="fnitem">
 <!-- $$$isDemo[overload1]$$$isDemoconstQString& -->
@@ -309,9 +339,16 @@
 </div><!-- @@@rename -->
 </div>
 <div class="fnitem">
+<!-- $$$restore[overload1]$$$restoreconstQString& -->
+<h3 class="fn" translate="no" id="restore"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Projects::<span class="name">restore</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
+<p>Puts the timeline's version <i translate="no">id</i> (an entry of <code translate="no">history.entries</code>) back as the session: the transport stops and the state replaces the session (the project open stays the one open, unsaved if the version differs from its file; SAVE keeps it). Returns <code translate="no">false</code> when there is no such version.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@restore -->
+</div>
+<div class="fnitem">
 <!-- $$$save[overload1]$$$save -->
 <h3 class="fn" translate="no" id="save"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Projects::<span class="name">save</span>()</h3>
-<p>Saves the session as the current project (a new one when there is none, a copy of the user's when it is a demo). Returns its name.</p>
+<p>Saves the session as the current project (a new one when there is none, a copy of the user's when it is a demo). Returns its name. The timeline is left as it is (<a href="projects.html#saveVersion" translate="no">saveVersion</a>() keeps a version).</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@save -->
 </div>
@@ -328,6 +365,13 @@
 <p>Saves the session as a new project, without an icon, which becomes the current one. Returns its name.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@saveAsNew -->
+</div>
+<div class="fnitem">
+<!-- $$$saveVersion[overload1]$$$saveVersionconstQString& -->
+<h3 class="fn" translate="no" id="saveVersion"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Projects::<span class="name">saveVersion</span>(const <span class="type">QString</span> &amp;<i>title</i> = QString())</h3>
+<p>Saves the session as <a href="projects.html#save" translate="no">save</a>() does, and keeps it as a version in the timeline named <i translate="no">title</i> (a long press on SAVE; empty: labelled with what changed since the last version), when the timeline is on. Returns the project's name.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@saveVersion -->
 </div>
 <div class="fnitem">
 <!-- $$$sessionModified[overload1]$$$sessionModified -->
@@ -347,6 +391,12 @@
 <h3 class="fn" translate="no" id="tidyName"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Projects::<span class="name">tidyName</span>(const <span class="type">QString</span> &amp;<i>wanted</i>)</h3>
 <p>Returns <i translate="no">wanted</i> as a project or export file can carry it: trimmed, without path characters (<code translate="no">\ / : * ? &quot; &lt; &gt; |</code> and control characters), with single spaces; empty when nothing is left. Inline, so Templates and the exporter name things the same way.</p>
 <!-- @@@tidyName -->
+</div>
+<div class="fnitem">
+<!-- $$$timeline[overload1]$$$timeline -->
+<h3 class="fn" translate="no" id="timeline"><span class="type"><a href="projecthistory.html" translate="no">ProjectHistory</a></span> *Projects::<span class="name">timeline</span>() const</h3>
+<p>Returns the timeline (history, typed).</p>
+<!-- @@@timeline -->
 </div>
 </div>
 </article>

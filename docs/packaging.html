@@ -10,8 +10,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Packaging · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<link rel="stylesheet" href="../site.css?v=a306cbe289">
 <script src="../assets/theme.js?v=3307b56d38"></script>
+<script src="../assets/icons.js?v=d6def946c7" defer></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -43,18 +44,20 @@
     <nav aria-label="Documentation">
 <p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="machines.html">The machines</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
+<li><a href="play-it-live.html">Play it live</a></li>
 <li><a href="export-a-track.html">Export a track and play it back</a></li>
 <li><a href="film-a-session.html">Film your session</a></li>
 <li><a href="send-to-phone.html">Send a file to your phone</a></li>
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
-<li><a href="machines.html">The machines</a></li>
-<li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
 </ul>
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
+<li><a href="icon-packs.html">Make an icon pack</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -98,8 +101,10 @@ installs any app:</p>
 <li>From then on, zynthbox-qml launches that AppDir's <code>AppRun</code> when the entry is tapped.</li>
 </ol>
 <p>The bundle is <strong>for the Zynthbox device only</strong>. It's built on the device, for its architecture,
-against the Qt, libzynthbox, zyncoder and Zynthbox QML modules the device already has. So it
-bundles no libraries at all: just ravving, the setup program and the data.</p>
+against the Qt, zyncoder and Zynthbox QML modules the device already has. It holds ravving, the
+setup program, the data, and one library: libravving.so, ravving's own sound library.</p>
+<p>libravving.so is built from <code>libravving/</code> beside ravving and installed as
+<code>/usr/lib/libravving.so</code>. zynthbox-qml's libzynthbox.so is not touched.</p>
 <p><a href="building.html">building.md</a>, "What ravving is made of", has the whole chain.</p>
 <p>What the AppImage starts isn't ravving but <strong>ravving-setup</strong> (<code>setup/</code>): a page over
 zynthbox-qml that installs ravving from the bundle and picks which UI the device runs.</p>
@@ -156,7 +161,7 @@ checks every requirement, and every library the bundle's ravving links to (<code
 </tr>
 <tr>
 <td>starting at all</td>
-<td>the libraries ravving links to: Qt 6, KF6 BluezQt and I18n, TagLib 2, libsndfile (with LAME, mpg123, Vorbis), JACK, zlib</td>
+<td>the libraries ravving links to: Qt 6, KF6 BluezQt and I18n, TagLib 2, libsndfile (with LAME, mpg123, Vorbis), JACK, zlib, libgit2</td>
 <td><code>libkf6bluezqt6</code>, <code>libtag2</code>, <code>libqt6multimedia6</code>, … (<code>requirements.json</code> "libraries", one package per library; INSTALL WHAT IS MISSING fetches them)</td>
 </tr>
 <tr>
@@ -180,9 +185,9 @@ checks every requirement, and every library the bundle's ravving links to (<code
 <td>the Zynthbox image's own packages</td>
 </tr>
 <tr>
-<td>SLOT SAMPLER one-shots</td>
-<td>libzynthbox's fix for notes cutting each other (exclusivity group −1)</td>
-<td>a libzynthbox patch not in a stock libzynthbox: there a one-shot is cut when the next starts; not detectable from ravving</td>
+<td>sound at all</td>
+<td>libravving.so, ravving's sound library</td>
+<td>in the bundle (<code>usr/lib</code>): <code>install</code> puts it in <code>/usr/lib</code></td>
 </tr>
 </tbody>
 </table>
@@ -625,7 +630,7 @@ speaker or headphones paging the device connect within a fraction of a second.</
     <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=7bcc475539" defer></script>
+<script src="../assets/aru.js?v=d4f4258295" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

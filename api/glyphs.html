@@ -7,7 +7,7 @@
   <meta name="keywords" content="namespace">
   <title>Glyphs Namespace | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -91,14 +91,21 @@
 <h2 id="functions">Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="glyphs.html#contains" translate="no">contains</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="glyphs.html#forgetIcons" translate="no">forgetIcons</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="glyphs.html#hasIcon" translate="no">hasIcon</a></b>(const QString &amp;<i>set</i>, const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QImage </td><td class="memItemRight bottomAlign"><b><a href="glyphs.html#icon" translate="no">icon</a></b>(const QString &amp;<i>set</i>, const QString &amp;<i>name</i>, const QColor &amp;<i>ink</i> = QColor(), int <i>pixels</i> = 0)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="glyphs.html#iconSets" translate="no">iconSets</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QImage </td><td class="memItemRight bottomAlign"><b><a href="glyphs.html#image" translate="no">image</a></b>(const QString &amp;<i>name</i>, const QColor &amp;<i>ink</i> = QColor(), int <i>scale</i> = 1)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="glyphs.html#names" translate="no">names</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="glyphs.html#packFolder" translate="no">packFolder</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="glyphs.html#setPackFolder" translate="no">setPackFolder</a></b>(const QString &amp;<i>folder</i>)</td></tr>
 </table></div>
 <!-- $$$Glyphs-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p>Each glyph is a 32 × 32 grid: an SVG with one path in <code translate="no">currentColor</code>, crisp-edged, on a transparent background. A glyph is known by its file's name without <code translate="no">.svg</code> (<code translate="no">b10-synth</code>); <a href="glyphs.html#names" translate="no">names</a>() lists them and <a href="glyphs.html#contains" translate="no">contains</a>() says whether a name is one of them, so a name saved by another version (a glyph since removed) can be told apart and ignored.</p>
 <p><a href="glyphs.html#image" translate="no">image</a>() draws one in an ink of the caller's, scaled by a whole number, without antialiasing: every grid pixel becomes an exact square of pixels. The outlines are read once and kept; the functions are thread-safe (the exporter draws album art from its worker thread). <a href="glyphprovider.html" translate="no">GlyphProvider</a> serves the same drawing to QML.</p>
+<p>The same drawing serves the UI icons (<code translate="no">assets/icons</code>): <a href="glyphs.html#iconSets" translate="no">iconSets</a>() lists the sets, <a href="glyphs.html#icon" translate="no">icon</a>() draws one on a square of any size, and <a href="iconprovider.html" translate="no">IconProvider</a> serves them to QML.</p>
 </div>
 <!-- @@@Glyphs -->
 <div class="vars">
@@ -119,6 +126,31 @@
 <!-- @@@contains -->
 </div>
 <div class="fnitem">
+<!-- $$$forgetIcons[overload1]$$$forgetIcons -->
+<h3 class="fn" translate="no" id="forgetIcons"><span class="type">void</span> Glyphs::<span class="name">forgetIcons</span>()</h3>
+<p>Forgets every icon read so far, built-in or a pack's, so the next one drawn is read again (<a href="iconpacks.html" translate="no">IconPacks</a>, once a pack changed).</p>
+<!-- @@@forgetIcons -->
+</div>
+<div class="fnitem">
+<!-- $$$hasIcon[overload1]$$$hasIconconstQString&constQString& -->
+<h3 class="fn" translate="no" id="hasIcon"><span class="type">bool</span> Glyphs::<span class="name">hasIcon</span>(const <span class="type">QString</span> &amp;<i>set</i>, const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Returns whether the icon set <i translate="no">set</i> (or, missing from it, the full set) has an icon <i translate="no">name</i>.</p>
+<!-- @@@hasIcon -->
+</div>
+<div class="fnitem">
+<!-- $$$icon[overload1]$$$iconconstQString&constQString&constQColor&int -->
+<h3 class="fn" translate="no" id="icon"><span class="type">QImage</span> Glyphs::<span class="name">icon</span>(const <span class="type">QString</span> &amp;<i>set</i>, const <span class="type">QString</span> &amp;<i>name</i>, const <span class="type">QColor</span> &amp;<i>ink</i> = QColor(), <span class="type">int</span> <i>pixels</i> = 0)</h3>
+<p>Returns the UI icon <i translate="no">name</i> of the set <i translate="no">set</i> (<code translate="no">candy</code>, <code translate="no">block</code>, <code translate="no">hairline</code>) drawn in <i translate="no">ink</i> (near-black when invalid) on a transparent square of <i translate="no">pixels</i>: the icon's grid at the largest whole scale that fits, centred on whole pixels, so it stays crisp at any size (at least one grid). An icon the set lacks is drawn from the full set (<code translate="no">candy</code>); a null image when neither has it.</p>
+<p>The sets live in <code translate="no">assets/icons/&lt;set&gt;/&lt;name&gt;.svg</code>: one path in <code translate="no">currentColor</code> on a square viewBox, whose side is the set's grid (12, 8 or 16); an icon pack's in its folder under <a href="glyphs.html#packFolder" translate="no">packFolder</a>(), the same way.</p>
+<!-- @@@icon -->
+</div>
+<div class="fnitem">
+<!-- $$$iconSets[overload1]$$$iconSets -->
+<h3 class="fn" translate="no" id="iconSets"><span class="type">QStringList</span> Glyphs::<span class="name">iconSets</span>()</h3>
+<p>Returns the UI icon sets: the built-in ones (the folders of <code translate="no">assets/icons</code>), sorted, then the icon packs' (<a href="glyphs.html#setPackFolder" translate="no">setPackFolder</a>()).</p>
+<!-- @@@iconSets -->
+</div>
+<div class="fnitem">
 <!-- $$$image[overload1]$$$imageconstQString&constQColor&int -->
 <h3 class="fn" translate="no" id="image"><span class="type">QImage</span> Glyphs::<span class="name">image</span>(const <span class="type">QString</span> &amp;<i>name</i>, const <span class="type">QColor</span> &amp;<i>ink</i> = QColor(), <span class="type">int</span> <i>scale</i> = 1)</h3>
 <p>Returns the glyph <i translate="no">name</i> drawn in <i translate="no">ink</i> (near-black when invalid) at <i translate="no">scale</i> times its 32-pixel grid (at least 1), on a transparent background, without antialiasing; a null image when there is no such glyph.</p>
@@ -129,6 +161,20 @@
 <h3 class="fn" translate="no" id="names"><span class="type">QStringList</span> Glyphs::<span class="name">names</span>()</h3>
 <p>Returns the names of the built-in glyphs, sorted (their files' names without <code translate="no">.svg</code>).</p>
 <!-- @@@names -->
+</div>
+<div class="fnitem">
+<!-- $$$packFolder[overload1]$$$packFolder -->
+<h3 class="fn" translate="no" id="packFolder"><span class="type">QString</span> Glyphs::<span class="name">packFolder</span>()</h3>
+<p>Returns the icon packs' folder (<a href="glyphs.html#setPackFolder" translate="no">setPackFolder</a>()), or an empty string.</p>
+<p><b>See also </b><a href="glyphs.html#setPackFolder" translate="no">setPackFolder</a>().</p>
+<!-- @@@packFolder -->
+</div>
+<div class="fnitem">
+<!-- $$$setPackFolder[overload1]$$$setPackFolderconstQString& -->
+<h3 class="fn" translate="no" id="setPackFolder"><span class="type">void</span> Glyphs::<span class="name">setPackFolder</span>(const <span class="type">QString</span> &amp;<i>folder</i>)</h3>
+<p>Sets the icon packs' <i translate="no">folder</i>: one folder per pack, one SVG per icon, as the built-in sets are (<a href="iconpacks.html" translate="no">IconPacks</a> writes them there). A pack is drawn by its folder's name; one named as a built-in set is never read.</p>
+<p><b>See also </b><a href="glyphs.html#packFolder" translate="no">packFolder</a>().</p>
+<!-- @@@setPackFolder -->
 </div>
 </div>
 </article>

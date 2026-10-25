@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>JackWiring Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -86,11 +86,11 @@
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#JackWiring" translate="no">JackWiring</a></b>(QObject *<i>plugin</i>, QObject *<i>connections</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#JackWiring" translate="no">JackWiring</a></b>(int *<i>mixer</i>, int *<i>connections</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#addEffectReturn" translate="no">addEffectReturn</a></b>(AudioInsert *<i>effect</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#addGlobalSamples" translate="no">addGlobalSamples</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#addSends" translate="no">addSends</a></b>(int <i>track</i>, const QStringList &amp;<i>fx1Inputs</i>, const QStringList &amp;<i>fx2Inputs</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#addSynth" translate="no">addSynth</a></b>(SoundEngine *<i>engine</i>, int <i>zynthianChannel</i>, int <i>track</i>, AudioInsert *<i>insert</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#addSynth" translate="no">addSynth</a></b>(SoundEngine *<i>engine</i>, int <i>zynthianChannel</i>, int <i>track</i>, AudioInsert *<i>insert</i> = nullptr, int <i>audioChannel</i> = -1)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#addTrackLane" translate="no">addTrackLane</a></b>(int <i>track</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#masterOutputPorts" translate="no">masterOutputPorts</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#removeSynth" translate="no">removeSynth</a></b>(SoundEngine *<i>engine</i>)</td></tr>
@@ -101,7 +101,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#setSampleOutputs" translate="no">setSampleOutputs</a></b>(int <i>track</i>, const QList&lt;int&gt; &amp;<i>samples</i>, int <i>laneTrack</i> = -1)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#setSpeakers" translate="no">setSpeakers</a></b>(const QStringList &amp;<i>ports</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#setSpeakersEnabled" translate="no">setSpeakersEnabled</a></b>(bool <i>enabled</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#trackLane" translate="no">trackLane</a></b>(int <i>track</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int *</td><td class="memItemRight bottomAlign"><b><a href="jackwiring.html#trackLane" translate="no">trackLane</a></b>(int <i>track</i>) const</td></tr>
 </table></div>
 <!-- $$$JackWiring-description -->
 <div class="descr">
@@ -119,9 +119,9 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$JackWiring[overload1]$$$JackWiringQObject*QObject*QObject* -->
-<h3 class="fn" translate="no" id="JackWiring">JackWiring::<span class="name">JackWiring</span>(<span class="type">QObject</span> *<i>plugin</i>, <span class="type">QObject</span> *<i>connections</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Constructs the wiring over libzynthbox's <i translate="no">plugin</i> and its JackConnectionHandler <i translate="no">connections</i>, with the given <i translate="no">parent</i>.</p>
+<!-- $$$JackWiring[overload1]$$$JackWiringint*int*QObject* -->
+<h3 class="fn" translate="no" id="JackWiring">JackWiring::<span class="name">JackWiring</span>(<span class="type">int</span> *<i>mixer</i>, <span class="type">int</span> *<i>connections</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the wiring over libravving's <i translate="no">mixer</i> (its strips' ports) and <i translate="no">connections</i>, with the given <i translate="no">parent</i>.</p>
 <!-- @@@JackWiring -->
 </div>
 <div class="fnitem">
@@ -143,9 +143,9 @@
 <!-- @@@addSends -->
 </div>
 <div class="fnitem">
-<!-- $$$addSynth[overload1]$$$addSynthSoundEngine*intintAudioInsert* -->
-<h3 class="fn" translate="no" id="addSynth"><span class="type">void</span> JackWiring::<span class="name">addSynth</span>(<span class="type"><a href="soundengine.html" translate="no">SoundEngine</a></span> *<i>engine</i>, <span class="type">int</span> <i>zynthianChannel</i>, <span class="type">int</span> <i>track</i>, <span class="type"><a href="audioinsert.html" translate="no">AudioInsert</a></span> *<i>insert</i> = nullptr)</h3>
-<p>Routes <i translate="no">engine</i> as the synth on Zynthian channel <i translate="no">zynthianChannel</i> of sketchpad <i translate="no">track</i>, with <i translate="no">insert</i> (or none) ready to go between it and the track (<a href="jackwiring.html#setInsertActive" translate="no">setInsertActive</a>()). The track's lane is wired to the master too.</p>
+<!-- $$$addSynth[overload1]$$$addSynthSoundEngine*intintAudioInsert*int -->
+<h3 class="fn" translate="no" id="addSynth"><span class="type">void</span> JackWiring::<span class="name">addSynth</span>(<span class="type"><a href="soundengine.html" translate="no">SoundEngine</a></span> *<i>engine</i>, <span class="type">int</span> <i>zynthianChannel</i>, <span class="type">int</span> <i>track</i>, <span class="type"><a href="audioinsert.html" translate="no">AudioInsert</a></span> *<i>insert</i> = nullptr, <span class="type">int</span> <i>audioChannel</i> = -1)</h3>
+<p>Routes <i translate="no">engine</i> as the synth on Zynthian channel <i translate="no">zynthianChannel</i> of sketchpad <i translate="no">track</i>, with <i translate="no">insert</i> (or none) ready to go between it and the track (<a href="jackwiring.html#setInsertActive" translate="no">setInsertActive</a>()). The track's lane is wired to the master too. Its sound goes through the synth passthrough of <i translate="no">audioChannel</i> when given (a machine's other engines, on channels of their own, play through its own passthrough: one DRIVE, one sidechain source for all of them), else through its own channel's.</p>
 <!-- @@@addSynth -->
 </div>
 <div class="fnitem">
@@ -187,7 +187,7 @@
 <div class="fnitem">
 <!-- $$$setMasterInserts[overload1]$$$setMasterInsertsconstQList<AudioInsert*>& -->
 <h3 class="fn" translate="no" id="setMasterInserts"><span class="type">void</span> JackWiring::<span class="name">setMasterInserts</span>(const <span class="type">QList</span>&lt;<span class="type"><a href="audioinsert.html" translate="no">AudioInsert</a></span> *&gt; &amp;<i>inserts</i>)</h3>
-<p>Runs the master through <i translate="no">inserts</i>, in order, before the speakers, instead of GlobalPlayback straight to them; the meter keeps reading GlobalPlayback.</p>
+<p>Runs the master through <i translate="no">inserts</i>, in order, before the speakers, instead of GlobalPlayback straight to them. AudioLevels' master channel (its meter, and the recording <a href="mixrecorder.html" translate="no">MixRecorder</a> and Exporter make) is fed from the last insert too, so a recording has what the speakers play.</p>
 <!-- @@@setMasterInserts -->
 </div>
 <div class="fnitem">
@@ -210,8 +210,8 @@
 </div>
 <div class="fnitem">
 <!-- $$$trackLane[overload1]$$$trackLaneint -->
-<h3 class="fn" translate="no" id="trackLane"><span class="type">QObject</span> *JackWiring::<span class="name">trackLane</span>(<span class="type">int</span> <i>track</i>) const</h3>
-<p>Returns the JackPassthrough a synth on sketchpad <i translate="no">track</i> plays through (its lane 1, where settings such as pan live), or <code translate="no">nullptr</code>.</p>
+<h3 class="fn" translate="no" id="trackLane"><span class="type">int</span> *JackWiring::<span class="name">trackLane</span>(<span class="type">int</span> <i>track</i>) const</h3>
+<p>Returns the strip a synth on sketchpad <i translate="no">track</i> plays through (its lane 1, where settings such as pan live), or <code translate="no">nullptr</code>.</p>
 <!-- @@@trackLane -->
 </div>
 </div>

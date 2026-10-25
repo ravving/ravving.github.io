@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>Paths Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -104,6 +104,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#relocated" translate="no">relocated</a></b>(const QString &amp;<i>path</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#reversedCache" translate="no">reversedCache</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#samples" translate="no">samples</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#soundfontCache" translate="no">soundfontCache</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#soundfonts" translate="no">soundfonts</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#state" translate="no">state</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#takes" translate="no">takes</a></b>()</td></tr>
@@ -221,7 +222,7 @@
 <div class="fnitem">
 <!-- $$$relocated[overload1]$$$relocatedconstQString& -->
 <h3 class="fn" translate="no" id="relocated"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">relocated</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
-<p>Returns where a sample a project names as <i translate="no">path</i> lives now: the path itself when it exists, else a take's place in <a href="paths.html#takes" translate="no">takes</a>(), else the path unchanged. Saved projects keep the paths they were saved with; this resolves them after the legacy layout's files moved.</p>
+<p>Returns where a sample a project names as <i translate="no">path</i> lives now: the path itself when it exists, else a take's place in <a href="paths.html#takes" translate="no">takes</a>(), else the path unchanged. Saved projects keep the paths they were saved with; this resolves them after the legacy layout's files moved. A soundfont of <a href="paths.html#soundfontCache" translate="no">soundfontCache</a>() that is gone is the library's copy (<a href="paths.html#soundfonts" translate="no">soundfonts</a>()) when it has one: saving a project copies the cached ones it plays into the library.</p>
 <!-- @@@relocated -->
 </div>
 <div class="fnitem">
@@ -235,6 +236,12 @@
 <h3 class="fn" translate="no" id="samples"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">samples</span>()</h3>
 <p>Returns the library's samples folder.</p>
 <!-- @@@samples -->
+</div>
+<div class="fnitem">
+<!-- $$$soundfontCache[overload1]$$$soundfontCache -->
+<h3 class="fn" translate="no" id="soundfontCache"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">soundfontCache</span>()</h3>
+<p>Returns where the soundfonts picked from a USB stick play from until a project saved with them copies them into <a href="paths.html#soundfonts" translate="no">soundfonts</a>(): <code translate="no">soundfonts</code> in the cache folder.</p>
+<!-- @@@soundfontCache -->
 </div>
 <div class="fnitem">
 <!-- $$$soundfonts[overload1]$$$soundfonts -->

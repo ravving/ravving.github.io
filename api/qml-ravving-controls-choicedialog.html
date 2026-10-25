@@ -7,7 +7,7 @@
   <meta name="keywords" content="qmltype">
   <title>ChoiceDialog QML Type | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -146,7 +146,7 @@
 <p>Optional <code translate="no">actions</code> add buttons to the header (SAVE, DELETE) or a band along the bottom (OPEN, EXPORT) that act on the highlighted item through <code translate="no">actionTriggered</code>.</p>
 <p>The device while open: the big knob or the arrows move the highlight, SELECT chooses it, BACK closes without choosing. Closing gives the focus back to whatever had it (Dialog).</p>
 <p>An owner that may want to ask first (opening a project over unsaved work) sets <code translate="no">closeOnChoose</code> false, closes it itself, and can show a line of <code translate="no">notice</code>. A grid with nothing in it says why with an <a href="qml-ravving-controls-emptynote.html" translate="no">EmptyNote</a> (<code translate="no">emptyText</code>). What waits for a confirming second press shows it as everywhere else in ravving: the <a href="qml-ravving-controls-armbar.html" translate="no">ArmBar</a> countdown inside that very button, the header action (<code translate="no">armedAction</code>) or the item (<code translate="no">armedValue</code>).</p>
-<p>With <code translate="no">previewable</code>, holding an item previews it (a sample is heard) until it is let go: <a href="qml-ravving-controls-choicedialog.html#previewStarted-signal" translate="no">previewStarted</a>(value) on the hold, <a href="qml-ravving-controls-choicedialog.html#previewStopped-signal" translate="no">previewStopped</a>() on the release or when the dialog closes.</p>
+<p>With <code translate="no">previewable</code>, holding an item previews it (a sample is heard) until it is let go: <a href="qml-ravving-controls-choicedialog.html#previewStarted-signal" translate="no">previewStarted</a>(value) on the hold, <a href="qml-ravving-controls-choicedialog.html#previewStopped-signal" translate="no">previewStopped</a>() on the release or when the dialog closes. An owner can turn <code translate="no">previewable</code> on and off (a PREVIEW toggle in its header); going off, the preview playing stops.</p>
 <p>A type built on it (the app's ChoicePopup: sources, groups, favourites) puts rows of its own between the header and the grid (<code translate="no">filters</code>), narrows or orders the list (<code translate="no">shownItems</code>), adds to the keys' hint (<code translate="no">extraHint</code>), draws a badge in each cell's corner (<code translate="no">cellBadge</code>, which reads its loader's <code translate="no">cellItem</code>), and takes the device's other inputs through the hooks below: <a href="qml-ravving-controls-choicedialog.html#itemHeld-method" translate="no">itemHeld</a>(), <a href="qml-ravving-controls-choicedialog.html#selectHandled-method" translate="no">selectHandled</a>(), <a href="qml-ravving-controls-choicedialog.html#knobTurned-method" translate="no">knobTurned</a>() and <a href="qml-ravving-controls-choicedialog.html#subtitleOf-method" translate="no">subtitleOf</a>().</p>
 <!-- @@@ChoiceDialog -->
 <h2>Property Documentation</h2>
@@ -159,7 +159,7 @@
 <div class="fnitem">
 <!-- $$$actions -->
 <h3 class="fn qml-member qml-property" translate="no" id="actions-prop"><span class="name">actions</span> : <span class="type">var</span></h3>
-<p>Header buttons: [{text, enabled}]; a tap emits <a href="qml-ravving-controls-choicedialog.html#actionTriggered-signal" translate="no">actionTriggered</a>(index). A <code translate="no">{separator: true}</code> entry draws a divider between groups of buttons (it keeps its index). An entry with <code translate="no">bottom: true</code> sits on a band along the dialog's bottom instead (the project dialog's OPEN and EXPORT), keeping its index too.</p>
+<p>Header buttons: [{text, enabled}]; a tap emits <a href="qml-ravving-controls-choicedialog.html#actionTriggered-signal" translate="no">actionTriggered</a>(index). A <code translate="no">{separator: true}</code> entry draws a divider between groups of buttons (it keeps its index). An entry with <code translate="no">toggle: true</code> is a state, drawn as a Chip, lit while its <code translate="no">checked</code> is true (the owner flips it on <a href="qml-ravving-controls-choicedialog.html#actionTriggered-signal" translate="no">actionTriggered</a>). An entry with <code translate="no">bottom: true</code> sits on a band along the dialog's bottom instead (the project dialog's OPEN and EXPORT), keeping its index too.</p>
 <!-- @@@actions -->
 </div>
 <div class="fnitem">
@@ -255,7 +255,7 @@
 <div class="fnitem">
 <!-- $$$hasBottomActions -->
 <h3 class="fn qml-member qml-property" translate="no" id="hasBottomActions-prop"><span class="name">hasBottomActions</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>Header buttons: [{text, enabled}]; a tap emits <a href="qml-ravving-controls-choicedialog.html#actionTriggered-signal" translate="no">actionTriggered</a>(index). A <code translate="no">{separator: true}</code> entry draws a divider between groups of buttons (it keeps its index). An entry with <code translate="no">bottom: true</code> sits on a band along the dialog's bottom instead (the project dialog's OPEN and EXPORT), keeping its index too.</p>
+<p>Header buttons: [{text, enabled}]; a tap emits <a href="qml-ravving-controls-choicedialog.html#actionTriggered-signal" translate="no">actionTriggered</a>(index). A <code translate="no">{separator: true}</code> entry draws a divider between groups of buttons (it keeps its index). An entry with <code translate="no">toggle: true</code> is a state, drawn as a Chip, lit while its <code translate="no">checked</code> is true (the owner flips it on <a href="qml-ravving-controls-choicedialog.html#actionTriggered-signal" translate="no">actionTriggered</a>). An entry with <code translate="no">bottom: true</code> sits on a band along the dialog's bottom instead (the project dialog's OPEN and EXPORT), keeping its index too.</p>
 <!-- @@@hasBottomActions -->
 </div>
 <div class="fnitem">

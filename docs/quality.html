@@ -10,8 +10,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Quality · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<link rel="stylesheet" href="../site.css?v=a306cbe289">
 <script src="../assets/theme.js?v=3307b56d38"></script>
+<script src="../assets/icons.js?v=d6def946c7" defer></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -43,18 +44,20 @@
     <nav aria-label="Documentation">
 <p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="machines.html">The machines</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
+<li><a href="play-it-live.html">Play it live</a></li>
 <li><a href="export-a-track.html">Export a track and play it back</a></li>
 <li><a href="film-a-session.html">Film your session</a></li>
 <li><a href="send-to-phone.html">Send a file to your phone</a></li>
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
-<li><a href="machines.html">The machines</a></li>
-<li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
 </ul>
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
+<li><a href="icon-packs.html">Make an icon pack</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -77,7 +80,7 @@
 <li><a href="packaging.html">Packaging</a></li>
 <li><a href="testing.html">Testing on the device</a></li>
 <li><a href="debugging.html">Debugging</a></li>
-<li class="on"><a href="quality.html" aria-current="page">Quality</a><ul><li><a href="#1-static-analysis-clang-tidy-and-clazy">1. Static analysis: clang-tidy and clazy</a></li><li><a href="#2-startup-time">2. Startup time</a></li><li><a href="#3-qml-profiling">3. QML profiling</a></li><li><a href="#4-visual-checks-the-screenshot-tour">4. Visual checks: the screenshot tour</a></li><li><a href="#5-making-ravving-the-devices-ui">5. Making ravving the device&#x27;s UI</a></li><li><a href="#6-the-store-appimage-the-release-check">6. The Store AppImage: the release check</a></li><li><a href="#7-soundfonts-and-engines-when-one-is-added">7. Soundfonts and engines: when one is added</a></li><li><a href="#8-the-audio-graph-routing-clocks-and-xruns">8. The audio graph: routing, clocks and xruns</a></li><li><a href="#9-what-the-rest-costs-the-sound">9. What the rest costs the sound</a></li><li><a href="#10-list-models">10. List models</a></li><li><a href="#11-phase-passes">11. Phase passes</a></li></ul></li>
+<li class="on"><a href="quality.html" aria-current="page">Quality</a><ul><li><a href="#1-static-analysis-clang-tidy-and-clazy">1. Static analysis: clang-tidy and clazy</a></li><li><a href="#2-startup-time">2. Startup time</a></li><li><a href="#3-qml-profiling">3. QML profiling</a></li><li><a href="#4-visual-checks-the-screenshot-tour">4. Visual checks: the screenshot tour</a></li><li><a href="#5-making-ravving-the-devices-ui">5. Making ravving the device&#x27;s UI</a></li><li><a href="#6-the-store-appimage-the-release-check">6. The Store AppImage: the release check</a></li><li><a href="#7-soundfonts-and-engines-when-one-is-added">7. Soundfonts and engines: when one is added</a></li><li><a href="#8-the-audio-graph-routing-clocks-and-xruns">8. The audio graph: routing, clocks and xruns</a></li><li><a href="#9-what-the-rest-costs-the-sound">9. What the rest costs the sound</a></li><li><a href="#10-list-models">10. List models</a></li><li><a href="#11-phase-passes">11. Phase passes</a></li><li><a href="#12-the-webpage-accessibility-and-the-three-languages">12. The webpage: accessibility and the three languages</a></li><li><a href="#13-before-a-release">13. Before a release</a></li></ul></li>
 </ul>
 <p class="mono">The code</p><ul>
 <li><a href="../api/index.html">API reference</a></li>
@@ -155,6 +158,16 @@ the device ones run against <code>root@milo.local</code> (<code>DEVICE=</code> f
 <td>before a release</td>
 <td><code>tools/boot-timing.sh reboot 3</code>, <code>tools/qml-profile.sh</code></td>
 <td>boot to first frame; what QML creates before it</td>
+</tr>
+<tr>
+<td>before a release</td>
+<td>the whole list in §13</td>
+<td>every gate passes, in order</td>
+</tr>
+<tr>
+<td>after the webpage's look or text changes (<code>site/</code>), and before a release</td>
+<td><code>node tools/check-site-a11y.mjs</code> (§12)</td>
+<td>0 failures: contrast in both themes, a focus ring on every stop, names, no sideways scroll, no endless motion, the same structure in en, es and ja</td>
 </tr>
 <tr>
 <td>after any UI, animation, poll or watcher change, and in every phase pass</td>
@@ -430,6 +443,10 @@ the tour with nothing to add. Beside the shots, the run writes:</p>
 <li>A reference is a tour of the previous commit, taken on the same machine. The laptop's Qt is
   newer than the device's, so compare laptop with laptop; the device's tour is the one that counts.</li>
 </ul>
+<h3 id="what-the-tour-cant-show">What the tour can't show</h3>
+<p>The tour runs without Zynthbox, so no engine is loaded and the machines' pages don't show the
+real sequencer. It finds QML trouble and visual regressions. The pictures for the site and the
+guide are taken from the running app on the device instead (<code>tools/device.sh shot</code>, site/README.md).</p>
 <h3 id="skin-sets-in-the-tour">Skin sets in the tour</h3>
 <ul>
 <li><code>SKIN=&lt;set&gt;</code> starts <code>tools/tour.sh</code> in another instruments' skin set (<code>jelly</code>, <code>ravving</code>, a skin file's
@@ -645,6 +662,150 @@ the journal on a crash. Turn gdb off again for the timing rows:</p>
 </tr>
 </tbody>
 </table>
+<h2 id="12-the-webpage-accessibility-and-the-three-languages">12. The webpage: accessibility and the three languages</h2>
+<pre><code class="language-sh">node tools/check-site-a11y.mjs [--pages index.html,features.html] [--langs en,es] [--verbose]
+ctest --test-dir build -C release-check -R site-a11y     # the same, as the release review's ctest
+</code></pre>
+<p>It serves <code>site/</code> over http and opens each page in headless Chromium (over the DevTools
+protocol, no extra packages). By default it checks the landing, the features page, the docs
+home, Your first beat and Play it live, each in English, Spanish and Japanese, which takes about
+five minutes. Exit status is the number of failures.</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>How</th>
+<th>Fails when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contrast</td>
+<td>every text in both themes, with reduced motion so every row is shown; its ground stacked from its ancestors' colours</td>
+<td>under 4.5:1, or 3:1 for large text (24 px, or 18.66 px bold)</td>
+</tr>
+<tr>
+<td>focus</td>
+<td>Tab through the page in both themes</td>
+<td>a stop has no ring (outline or shadow), or is hidden</td>
+</tr>
+<tr>
+<td>names</td>
+<td>every link, button and picture</td>
+<td>a link or button has no name (text, <code>aria-label</code>, <code>title</code>, an image's <code>alt</code>), an <code>&lt;img&gt;</code> has no <code>alt</code></td>
+</tr>
+<tr>
+<td>layout</td>
+<td>320, 360, 768 and 1280 px wide</td>
+<td>the page scrolls sideways</td>
+</tr>
+<tr>
+<td>motion</td>
+<td>reduced motion</td>
+<td>an animation still runs forever</td>
+</tr>
+<tr>
+<td>parity</td>
+<td>the es and ja pages against the English</td>
+<td>a heading, link, button or picture more or fewer</td>
+</tr>
+</tbody>
+</table>
+<p>What it doesn't measure:</p>
+<ul>
+<li id="text-over-a-picture-or-a-gradient"><strong>Text over a picture or a gradient.</strong> <code>--verbose</code> counts these per page ("over images"):
+  look at them in both themes.</li>
+<li id="a-screen-reader-a-real-phone-and-200-zoom"><strong>A screen reader, a real phone and 200 % zoom.</strong> These are tried by hand before a release.</li>
+</ul>
+<p>The skins' contrast figures (<code>check-skins.py</code>) and the design sheet's are the colours' own ratios.
+They don't certify a page: this check measures the text where it is drawn.</p>
+<h2 id="13-before-a-release">13. Before a release</h2>
+<p>Every gate, in the order to run them. Each one is described where it lives; this list only
+collects them. A release ships when every row passes.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Gate</th>
+<th>Run</th>
+<th>Passes when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>The checks</td>
+<td><code>ctest --test-dir build</code></td>
+<td>every test passes (translations-current, design-tokens, artworks and ui-rules among them)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>The webpage</td>
+<td><code>ctest --test-dir build -C release-check -R site-a11y</code> (§12)</td>
+<td>0 failures; text over pictures looked at in both themes</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Static analysis</td>
+<td><code>tools/static-analysis.sh</code> (§1)</td>
+<td>back to the accepted findings</td>
+</tr>
+<tr>
+<td>4</td>
+<td>The phase pass</td>
+<td>§11, with the suites under gdb on the device</td>
+<td>no crash, no new finding</td>
+</tr>
+<tr>
+<td>5</td>
+<td>The sound</td>
+<td><code>tools/audio-impact.sh</code> (§9)</td>
+<td>idle 0 frames/s, 0 xruns, 0 RT-thread faults from ravving's own code</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Start-up</td>
+<td><code>tools/boot-timing.sh reboot 3</code>, <code>tools/qml-profile.sh</code> (§2, §3)</td>
+<td>no slower than the last release</td>
+</tr>
+<tr>
+<td>7</td>
+<td>The AppImage</td>
+<td><code>tools/appimage-test.sh</code> (§6, <a href="packaging.html">packaging.md</a>)</td>
+<td>every choice of the setup page walked and passed</td>
+</tr>
+<tr>
+<td>8</td>
+<td>The art</td>
+<td><code>python3 tools/check-artworks.py</code> and notes/brand/artworks/manifest.json</td>
+<td>no picture <code>flagged</code>: each one fixed and <code>approved</code>, or <code>rejected</code> and out</td>
+</tr>
+<tr>
+<td>9</td>
+<td>The pictures</td>
+<td>the site's shots and the guide's images, retaken on the device in the default skin (site/README.md)</td>
+<td>every shot shows the UI that ships</td>
+</tr>
+<tr>
+<td>10</td>
+<td>The translations</td>
+<td>the review in <a href="translations.html">translations.md</a>, "Every release"</td>
+<td>someone who reads each language has read what changed; no fuzzy or untranslated text</td>
+</tr>
+<tr>
+<td>11</td>
+<td>By hand</td>
+<td>the webpage on a real phone and with a screen reader, at 200 % zoom</td>
+<td>nothing unreadable or unreachable</td>
+</tr>
+<tr>
+<td>12</td>
+<td>The links</td>
+<td>the landing's Store and download links</td>
+<td>each one opens for a visitor who isn't signed in</td>
+</tr>
+</tbody>
+</table>
   </article>
 </main>
 <footer>
@@ -652,7 +813,7 @@ the journal on a crash. Turn gdb off again for the timing rows:</p>
     <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=7bcc475539" defer></script>
+<script src="../assets/aru.js?v=d4f4258295" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

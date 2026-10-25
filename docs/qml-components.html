@@ -10,8 +10,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>QML components · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<link rel="stylesheet" href="../site.css?v=a306cbe289">
 <script src="../assets/theme.js?v=3307b56d38"></script>
+<script src="../assets/icons.js?v=d6def946c7" defer></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -43,18 +44,20 @@
     <nav aria-label="Documentation">
 <p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="machines.html">The machines</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
+<li><a href="play-it-live.html">Play it live</a></li>
 <li><a href="export-a-track.html">Export a track and play it back</a></li>
 <li><a href="film-a-session.html">Film your session</a></li>
 <li><a href="send-to-phone.html">Send a file to your phone</a></li>
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
-<li><a href="machines.html">The machines</a></li>
-<li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
 </ul>
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
+<li><a href="icon-packs.html">Make an icon pack</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -237,12 +240,12 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 <td>a drop-down (ROOT, SCALE, CHORD SETS) whose list opens as a dialog centred on the screen (the dialog card, a title, 48 px rows) that the device works while open: arrows / big knob move, SELECT picks and closes, BACK closes; the focus goes back where it was</td>
 </tr>
 <tr>
-<td><code>ControlCenter</code>, <code>ControlCard</code>, <code>LevelSlider</code>, <code>Glyph</code></td>
-<td>the menu drawer's control center: cards (a glyph, title, detail; toggle cards lamp-lit while on), the iOS-style pill slider (relative drag, a KnobGroup target), vector line icons</td>
+<td><code>ControlCenter</code>, <code>ControlCard</code>, <code>LevelSlider</code>, <code>Icon</code></td>
+<td>the menu drawer's control center: cards (a glyph, title, detail; toggle cards lamp-lit while on), the iOS-style pill slider (relative drag, a KnobGroup target), the pixel UI icons (assets/icons, Theme.iconSet)</td>
 </tr>
 <tr>
 <td><code>MachineStrip</code></td>
-<td>a machine's strip (nameplate, role, PAN, VOL, REC, ❚❚, MODS and FXs on a machine's page (<code>showMods</code>, <code>modsToggled</code>, <code>fxToggled</code>), STEP and a hairline on a machine's page (<code>showStepModes</code>, <code>stepModeEdited</code>), LIVE, S, M; a KnobGroup for PAN and VOL), the top of every MachineModule and the MIXER's rows; <code>level</code>/<code>pan</code>/<code>paused</code> come in, edits go out (<code>levelEdited</code>…)</td>
+<td>a machine's strip (nameplate, role, PAN, VOL, REC, ❚❚, MODS and FXs on a machine's page (<code>showMods</code>, <code>modsToggled</code>, <code>fxToggled</code>), STEP and a hairline on a machine's page (<code>showStepModes</code>, <code>stepModeEdited</code>), LIVE, Q after a hairline where the machine records live hits (<code>showQuantise</code>, <code>quantiseEdited</code>), S, M; a KnobGroup for PAN and VOL), the top of every MachineModule and the MIXER's rows; <code>level</code>/<code>pan</code>/<code>paused</code> come in, edits go out (<code>levelEdited</code>…)</td>
 </tr>
 <tr>
 <td><code>MixerPage</code></td>
@@ -305,7 +308,7 @@ switching, the chord cursor.</p>
 <li>the knob layer: <code>Knob</code> and its <code>DialFace</code>, <code>Fader</code>, <code>LevelSlider</code>, <code>KnobGroup</code>, <code>PickUp</code>,
     <code>KnobBadge</code>;</li>
 <li>readouts: <code>Meter</code>, <code>KeyCap</code>, <code>Nameplate</code>, <code>Plate</code>, <code>LedDisplay</code>, <code>Toast</code>, <code>EmptyNote</code>,
-    <code>ArmBar</code>, <code>Glyph</code>;</li>
+    <code>ArmBar</code>, <code>Icon</code>;</li>
 <li>dialogs and their parts: <code>Dialog</code>, <code>DialogHeader</code>, <code>ChoiceDialog</code>, <code>ComboBox</code>,
     <code>SectionHeader</code>, <code>Caption</code>;</li>
 <li><code>KeyedListModel</code> (C++), the list model the lists keep their rows with.</li>
@@ -319,7 +322,7 @@ switching, the chord cursor.</p>
     <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=7bcc475539" defer></script>
+<script src="../assets/aru.js?v=d4f4258295" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>BeatRepeat Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -107,7 +107,7 @@
 <!-- $$$BeatRepeat-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p><a href="beatrepeat.html#repeat" translate="no">repeat</a>() anchors at the start of the current 16th (SyncTimer's grid, sample accurate through <a href="zynthboxbridge.html#timerTickAtFrame" translate="no">ZynthboxBridge::timerTickAtFrame</a>()); that step plays out live, then the audio from the anchor repeats every <i>steps</i> 16ths until <a href="beatrepeat.html#stop" translate="no">stop</a>(). Calling <a href="beatrepeat.html#repeat" translate="no">repeat</a>() again while repeating changes only the length; the anchor stays. With the transport stopped it repeats the last <i>steps</i> of audio at once. Without a bridge the tempo is taken as 120 BPM.</p>
+<p><a href="beatrepeat.html#repeat" translate="no">repeat</a>() anchors at the start of the current 16th (SyncTimer's grid, sample accurate through ZynthboxBridge::timerTickAtFrame()); that step plays out live, then the audio from the anchor repeats every <i>steps</i> 16ths until <a href="beatrepeat.html#stop" translate="no">stop</a>(). Calling <a href="beatrepeat.html#repeat" translate="no">repeat</a>() again while repeating changes only the length; the anchor stays. With the transport stopped it repeats the last <i>steps</i> of audio at once. Without a bridge the tempo is taken as 120 BPM.</p>
 <p>The signal processing is a <a href="repeatcore.html" translate="no">RepeatCore</a> (the seams, the crossfades, the history and the slice), which the tests run without JACK. The audio thread reads only atomics and preallocated buffers. <a href="beatrepeat.html#debugState" translate="no">debugState</a>() reads what the GUI thread last asked for and what the audio thread last did, for a fifo call while a pad misbehaves; the <code translate="no">ravving.livefx</code> logging category traces the GUI thread's calls.</p>
 <p>After the repeat the same callback runs a <a href="livefxengine.html" translate="no">LiveFxEngine</a>, the punch-in effects on the mix: <a href="beatrepeat.html#setEffects" translate="no">setEffects</a>() switches them and <a href="beatrepeat.html#syncGrid" translate="no">syncGrid</a>() gives it the bar under way and the tempo, so its beat-synced ones land on the transport's grid.</p>
 <p>Being the first stage after the master, it also passes on only sound (<a href="repeatcore.html#MaxSample-var" translate="no">RepeatCore::MaxSample</a>): a sample that is not finite, or beyond 16 times full scale, is passed on as silence. libzynthbox's sampler can read past a one-shot's end (the metronome's tick ended on two samples near 10^12), and the LV2 inserts after this stage then blank the whole block, which cuts the sound with a click.</p>

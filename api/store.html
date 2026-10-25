@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>Store Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -108,6 +108,7 @@
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="store.html#Store" translate="no">Store</a></b>(const QString &amp;<i>appVersion</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="store.html#busy-prop" translate="no">busy</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="store.html#cacheSoundfont" translate="no">cacheSoundfont</a></b>(const QString &amp;<i>id</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="store.html#cancel" translate="no">cancel</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="store.html#catalogUrl-prop" translate="no">catalogUrl</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="store.html#entries-prop" translate="no">entries</a></b>() const</td></tr>
@@ -150,17 +151,19 @@
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p>The catalog is one file, <code translate="no">index.json</code>, built by the repository's workflow from every entry's <code translate="no">meta.json</code> and served from its GitHub Pages site (<code translate="no">catalogUrl</code>, or <code translate="no">RAVVING_STORE_URL</code> to point a test at a folder: <code translate="no">file:///…/index.json</code>). The device fetches it once per <a href="store.html#refresh" translate="no">refresh</a>() (a conditional GET with the ETag kept beside the cached copy under the cache's <code translate="no">store/</code>) and never calls GitHub's API, so no token is needed and the unauthenticated limits never bite; without a network the cached list shows with a notice.</p>
-<p>An entry is one of the <code translate="no">types</code> below, with the files the catalog names (each with its URL, size and SHA-256; a pack is one zip). <a href="store.html#install" translate="no">install</a>() downloads them in turn into <code translate="no">store/&lt;id&gt;/</code>, verifies each, then takes them in: a preset file through the <a href="storetaker.html" translate="no">StoreTaker</a> (<a href="presetexchange.html#take" translate="no">PresetExchange::take</a>(): a pattern, a sound, a template), a skin through <a href="skinfiles.html" translate="no">SkinFiles</a>, a soundfont into <a href="paths.html#soundfonts" translate="no">Paths::soundfonts</a>(), a project through the taker (a <code translate="no">.ravv</code> bundle) or into <a href="paths.html#projects" translate="no">Paths::projects</a>() (a plain project). What landed is written to the library's <code translate="no">store.json</code> by the entry's id, with its version and its items (<a href="presetexchange.html" translate="no">PresetExchange</a>'s ids, or paths), so SETTINGS can say &quot;update&quot; when the catalog's version moves on, and <a href="store.html#remove" translate="no">remove</a>() takes them back out. An update removes the old items first, so names stay as they were.</p>
+<p>An entry is one of the <code translate="no">types</code> below, with the files the catalog names (each with its URL, size and SHA-256; a pack is one zip). <a href="store.html#install" translate="no">install</a>() downloads them in turn into <code translate="no">store/&lt;id&gt;/</code>, verifies each, then takes them in: a preset file through the <a href="storetaker.html" translate="no">StoreTaker</a> (<a href="presetexchange.html#take" translate="no">PresetExchange::take</a>(): a pattern, a sound, a template), a skin through <a href="skinfiles.html" translate="no">SkinFiles</a>, an icon pack through <a href="iconpacks.html" translate="no">IconPacks</a>, a soundfont into <a href="paths.html#soundfonts" translate="no">Paths::soundfonts</a>() (or, picked in a sound picker, into <a href="paths.html#soundfontCache" translate="no">Paths::soundfontCache</a>() by <a href="store.html#cacheSoundfont" translate="no">cacheSoundfont</a>(), unrecorded), a project through the taker (a <code translate="no">.ravv</code> bundle, or a plain project file adopted by the projects; moved into <a href="paths.html#projects" translate="no">Paths::projects</a>() when the taker takes none). What landed is written to the library's <code translate="no">store.json</code> by the entry's id, with its version and its items (<a href="presetexchange.html" translate="no">PresetExchange</a>'s ids, or paths), so SETTINGS can say &quot;update&quot; when the catalog's version moves on, and <a href="store.html#remove" translate="no">remove</a>() takes them back out. An update removes the old items first, so names stay as they were.</p>
 <div class="table"><table class="generic">
  <thead><tr class="qt-style"><th >type</th><th >kind</th><th >the file</th><th >goes to</th></tr></thead>
 <tr valign="top" class="odd"><td ><code translate="no">pattern</code></td><td >PATTERNS</td><td >a pattern preset file</td><td >the machine's library</td></tr>
 <tr valign="top" class="even"><td ><code translate="no">sound</code></td><td >SOUNDS</td><td >a saved sound</td><td >the machine's sounds</td></tr>
 <tr valign="top" class="odd"><td ><code translate="no">template</code></td><td >TEMPLATES</td><td >a template</td><td >Templates</td></tr>
 <tr valign="top" class="even"><td ><code translate="no">skin</code></td><td >SKINS</td><td >a skin set</td><td >the library's <code translate="no">skins/</code></td></tr>
-<tr valign="top" class="odd"><td ><code translate="no">pack</code></td><td >PACKS</td><td >a zip in a stick's layout (<code translate="no">ravving/presets/…</code>)</td><td >every preset file in it</td></tr>
-<tr valign="top" class="even"><td ><code translate="no">soundfont</code></td><td >SOUNDFONTS</td><td >an <code translate="no">.sf2</code> or <code translate="no">.sf3</code></td><td >the library's <code translate="no">soundfonts/</code></td></tr>
-<tr valign="top" class="odd"><td ><code translate="no">project</code></td><td >PROJECTS</td><td >a <code translate="no">.ravv</code> bundle or a project file</td><td >PROJECT ▾</td></tr>
+<tr valign="top" class="odd"><td ><code translate="no">icons</code></td><td >ICON PACKS</td><td >an icon pack</td><td >the library's <code translate="no">icons/</code></td></tr>
+<tr valign="top" class="even"><td ><code translate="no">pack</code></td><td >PACKS</td><td >a zip in a stick's layout (<code translate="no">ravving/presets/…</code>)</td><td >every preset file in it</td></tr>
+<tr valign="top" class="odd"><td ><code translate="no">soundfont</code></td><td >SOUNDFONTS</td><td >an <code translate="no">.sf2</code> or <code translate="no">.sf3</code></td><td >the library's <code translate="no">soundfonts/</code></td></tr>
+<tr valign="top" class="even"><td ><code translate="no">project</code></td><td >PROJECTS</td><td >a <code translate="no">.ravv</code> bundle or a project file</td><td >PROJECT ▾</td></tr>
 </table></div>
+<p>A soundfont entry may list its <code translate="no">presets</code> (<code translate="no">name</code>, <code translate="no">bank</code>, <code translate="no">program</code>) and say <code translate="no">kit</code> when the whole font is a drum kit; its entry carries them as <code translate="no">fontPresets</code> and <code translate="no">wholeKit</code>, so the sound and kit pickers' ONLINE source offers its sounds before it is installed (<a href="studio.html#soundfontOffer" translate="no">Studio::soundfontOffer</a>()).</p>
 <p>One install at a time, async on the GUI thread (the network's replies), its progress and status under the list; <a href="store.html#finished" translate="no">finished</a>() ends it. GUI thread only.</p>
 <p>A pattern preset of the catalog also plays without being taken in (the ONLINE source of the presets picker): the catalog lists each preset of a pattern entry or a pack one by one (an entry's <code translate="no">presets</code>: name, genre, library, sound, and its single file's URL, size and SHA-256), and <a href="store.html#patternPresets" translate="no">patternPresets</a>() gives a machine's. <a href="store.html#fetchPreset" translate="no">fetchPreset</a>() downloads one file into the cache's <code translate="no">store/presets/</code> (the same download as an install's, checked the same way; a cached file whose checksum holds is used at once, offline too) and <a href="store.html#presetFetched" translate="no">presetFetched</a>() hands its path to the picker, which loads it as a stick's preset (<a href="usblibrary.html#loadPattern" translate="no">UsbLibrary::loadPattern</a>()). <a href="store.html#keepPreset" translate="no">keepPreset</a>() does the same and takes it into the machine's library; a single pattern entry is then recorded as an install would be.</p>
 </div>
@@ -313,6 +316,13 @@
 <!-- @@@Store -->
 </div>
 <div class="fnitem">
+<!-- $$$cacheSoundfont[overload1]$$$cacheSoundfontconstQString& -->
+<h3 class="fn" translate="no" id="cacheSoundfont"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Store::<span class="name">cacheSoundfont</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
+<p>Downloads the soundfont entry <i translate="no">id</i> into <a href="paths.html#soundfontCache" translate="no">Paths::soundfontCache</a>(), where a sound or kit picked from it plays until a project saved with it copies it into the library; it is not installed (GET MORE does that). <a href="store.html#installed" translate="no">installed</a>() and <a href="store.html#finished" translate="no">finished</a>() follow, as for <a href="store.html#install" translate="no">install</a>(). Returns <code translate="no">false</code> when an install is under way, the entry is unknown, is no soundfont or needs a newer ravving.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@cacheSoundfont -->
+</div>
+<div class="fnitem">
 <!-- $$$cancel[overload1]$$$cancel -->
 <h3 class="fn" translate="no" id="cancel"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Store::<span class="name">cancel</span>()</h3>
 <p>Stops the install under way; <a href="store.html#finished" translate="no">finished</a>() says so.</p>
@@ -356,7 +366,7 @@
 <div class="fnitem">
 <!-- $$$installed[overload1]$$$installedconstQString& -->
 <h3 class="fn" translate="no" id="installed"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Store::<span class="name">installed</span>(const <span class="type">QString</span> &amp;<i>kind</i>)</h3>
-<p>Emitted when something of <i translate="no">kind</i> landed in the library or left it (a soundfont: the studio reads its kits and sources again, <a href="studio.html#refreshImported" translate="no">Studio::refreshImported</a>()).</p>
+<p>Emitted when something of <i translate="no">kind</i> landed in the library or left it, or a soundfont landed in the soundfont cache (the studio reads its kits and sources again, <a href="studio.html#refreshImported" translate="no">Studio::refreshImported</a>()).</p>
 <!-- @@@installed -->
 </div>
 <div class="fnitem">

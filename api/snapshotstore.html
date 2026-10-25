@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- snapshotstore.cpp -->
+  <meta name="description" content="Where a timeline keeps its snapshots: the storage behind ProjectHistory, as one interface with interchangeable backends.">
+  <meta name="keywords" content="class">
+  <title>SnapshotStore Class | ravving C++ API 1.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>SnapshotStore</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">SnapshotStore Class</h1>
+<!-- $$$SnapshotStore-brief -->
+<p>Where a timeline keeps its snapshots: the storage behind <a href="projecthistory.html" translate="no">ProjectHistory</a>, as one interface with interchangeable backends. <a href="#details">More...</a></p>
+<!-- @@@SnapshotStore -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;snapshotstore.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="gitcommandsnapshotstore.html" translate="no">GitCommandSnapshotStore</a> and <a href="libgit2snapshotstore.html" translate="no">LibGit2SnapshotStore</a></p>
+</td></tr>
+</table></div>
+<ul>
+<li><a href="snapshotstore-members.html">List of all members, including inherited members</a></li>
+<li>SnapshotStore is part of <a href="ravving-studio.html">Studio and projects</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#dtor.SnapshotStore" translate="no">~SnapshotStore</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#backend" translate="no">backend</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#branches" translate="no">branches</a></b>() = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#directory" translate="no">directory</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#housekeep" translate="no">housekeep</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#lastError" translate="no">lastError</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QList&lt;Snapshot&gt; </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#list" translate="no">list</a></b>(const QString &amp;<i>branch</i>, int <i>limit</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#looseObjects" translate="no">looseObjects</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#open" translate="no">open</a></b>() = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#point" translate="no">point</a></b>(const QString &amp;<i>branch</i>, const QString &amp;<i>id</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QByteArray </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#read" translate="no">read</a></b>(const QString &amp;<i>id</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#relink" translate="no">relink</a></b>(const QString &amp;<i>branch</i>, const QList&lt;Snapshot&gt; &amp;<i>kept</i>, const QString &amp;<i>tip</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#remove" translate="no">remove</a></b>(const QString &amp;<i>branch</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#rename" translate="no">rename</a></b>(const QString &amp;<i>from</i>, const QString &amp;<i>to</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual std::optional&lt;Snapshot&gt; </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#tip" translate="no">tip</a></b>(const QString &amp;<i>branch</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual std::optional&lt;Snapshot&gt; </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#write" translate="no">write</a></b>(const QString &amp;<i>branch</i>, const QByteArray &amp;<i>content</i>, const QString &amp;<i>message</i>, const QString &amp;<i>parent</i>, qint64 <i>time</i>) = 0</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const QString </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#FileName-var" translate="no">FileName</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#backends" translate="no">backends</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> std::unique_ptr&lt;SnapshotStore&gt; </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#create" translate="no">create</a></b>(const QString &amp;<i>dir</i>, const QString &amp;<i>backend</i> = QString())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="snapshotstore.html#refName" translate="no">refName</a></b>(const QString &amp;<i>branch</i>)</td></tr>
+</table></div>
+<!-- $$$SnapshotStore-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>A store is a set of named branches, each a chain of snapshots; a snapshot is one file (<a href="snapshotstore.html#FileName-var" translate="no">FileName</a>, a project's JSON) with a message and a time, pointing at the snapshot before it. That is a git repository's shape, and both backends write one, in the same format, so the same folder is read by either and by git itself: <a href="libgit2snapshotstore.html" translate="no">LibGit2SnapshotStore</a> (through libgit2, the default when built in) and <a href="gitcommandsnapshotstore.html" translate="no">GitCommandSnapshotStore</a> (through git processes). <a href="snapshotstore.html#create" translate="no">create</a>() picks one; the variable <code translate="no">RAVVING_SNAPSHOT_STORE</code> (<code translate="no">libgit2</code> or <code translate="no">git</code>) overrides the choice.</p>
+<p>The contract every backend keeps:</p>
+<ul>
+<li><a href="snapshotstore.html#open" translate="no">open</a>() makes the store (an empty folder becomes a repository) or finds it; every other call needs it to have succeeded.</li>
+<li>Branch names are the caller's (<a href="projecthistory.html#branchFor" translate="no">ProjectHistory::branchFor</a>() keeps them valid); <a href="snapshotstore.html#refName" translate="no">refName</a>() is their full form.</li>
+<li><a href="snapshotstore.html#write" translate="no">write</a>() adds a snapshot on top of <i translate="no">parent</i> (the branch's tip as the caller last saw it, empty for a branch that does not exist yet) and moves the branch to it. When the branch is not where <i translate="no">parent</i> says, nothing is written and it fails: the caller reads the tip again. No other reference is touched.</li>
+<li><a href="snapshotstore.html#list" translate="no">list</a>() and <a href="snapshotstore.html#tip" translate="no">tip</a>() give the newest first; <a href="snapshotstore.html#read" translate="no">read</a>() gives the file of one snapshot by its id (a full id, or a unique prefix).</li>
+<li><a href="snapshotstore.html#point" translate="no">point</a>(), <a href="snapshotstore.html#rename" translate="no">rename</a>() and <a href="snapshotstore.html#remove" translate="no">remove</a>() move, rename and delete a branch; a branch that does not exist is a failure for <a href="snapshotstore.html#rename" translate="no">rename</a>(), nothing for <a href="snapshotstore.html#remove" translate="no">remove</a>(). <a href="snapshotstore.html#branches" translate="no">branches</a>() names them all.</li>
+<li>A store is used by one thread at a time; the caller serialises (<a href="projecthistory.html" translate="no">ProjectHistory</a>'s worker holds a lock around every call).</li>
+<li>A failing call leaves the store as it was and says why in <a href="snapshotstore.html#lastError" translate="no">lastError</a>(); nothing throws.</li>
+</ul>
+</div>
+<!-- @@@SnapshotStore -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$~SnapshotStore[overload1]$$$~SnapshotStore -->
+<h3 class="fn" translate="no" id="dtor.SnapshotStore"><code class="details extra" translate="no">[virtual noexcept <a href="https://en.cppreference.com/w/cpp/language/function#Defaulted_functions" translate="no">default</a>]</code> SnapshotStore::<span class="name">~SnapshotStore</span>()</h3>
+<p>Destroys the instance of <span translate="no">SnapshotStore</span>. This destructor is virtual.</p>
+<!-- @@@~SnapshotStore -->
+</div>
+<div class="fnitem">
+<!-- $$$backend[overload1]$$$backend -->
+<h3 class="fn" translate="no" id="backend"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">QString</span> SnapshotStore::<span class="name">backend</span>() const</h3>
+<p>Returns the backend's name: <code translate="no">libgit2</code> or <code translate="no">git</code>.</p>
+<!-- @@@backend -->
+</div>
+<div class="fnitem">
+<!-- $$$backends[overload1]$$$backends -->
+<h3 class="fn" translate="no" id="backends"><code class="details extra" translate="no">[static]</code> <span class="type">QStringList</span> SnapshotStore::<span class="name">backends</span>()</h3>
+<p>Returns the backends this build has, in the order <a href="snapshotstore.html#create" translate="no">create</a>() prefers them.</p>
+<!-- @@@backends -->
+</div>
+<div class="fnitem">
+<!-- $$$branches[overload1]$$$branches -->
+<h3 class="fn" translate="no" id="branches"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">QStringList</span> SnapshotStore::<span class="name">branches</span>()</h3>
+<p>Returns every branch's name (the short form, as the caller gave it), in no particular order.</p>
+<!-- @@@branches -->
+</div>
+<div class="fnitem">
+<!-- $$$create[overload1]$$$createconstQString&constQString& -->
+<h3 class="fn" translate="no" id="create"><code class="details extra" translate="no">[static]</code> <span class="type">std::unique_ptr</span>&lt;<span class="type"><a href="snapshotstore.html" translate="no">SnapshotStore</a></span>&gt; SnapshotStore::<span class="name">create</span>(const <span class="type">QString</span> &amp;<i>dir</i>, const <span class="type">QString</span> &amp;<i>backend</i> = QString())</h3>
+<p>Returns the store for the repository folder <i translate="no">dir</i>, with the backend named <i translate="no">backend</i> (<a href="snapshotstore.html#backends" translate="no">backends</a>()), else the one <code translate="no">RAVVING_SNAPSHOT_STORE</code> names, else the first of <a href="snapshotstore.html#backends" translate="no">backends</a>() that can work here (libgit2 when built in, git when the program is on the PATH). Not yet opened. Null when none can.</p>
+<!-- @@@create -->
+</div>
+<div class="fnitem">
+<!-- $$$directory[overload1]$$$directory -->
+<h3 class="fn" translate="no" id="directory"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">QString</span> SnapshotStore::<span class="name">directory</span>() const</h3>
+<p>Returns the repository folder.</p>
+<!-- @@@directory -->
+</div>
+<div class="fnitem">
+<!-- $$$housekeep[overload1]$$$housekeep -->
+<h3 class="fn" translate="no" id="housekeep"><code class="details extra" translate="no">[virtual]</code> <span class="type">void</span> SnapshotStore::<span class="name">housekeep</span>()</h3>
+<p>Tidies the store: packs what is loose, drops what no branch reaches. Nothing by default; a backend that can does. The caller decides when (<a href="projecthistory.html" translate="no">ProjectHistory</a>: past a number of loose objects, with the device quiet).</p>
+<!-- @@@housekeep -->
+</div>
+<div class="fnitem">
+<!-- $$$lastError[overload1]$$$lastError -->
+<h3 class="fn" translate="no" id="lastError"><span class="type">QString</span> SnapshotStore::<span class="name">lastError</span>() const</h3>
+<p>Returns why the last call failed; empty when it did not.</p>
+<!-- @@@lastError -->
+</div>
+<div class="fnitem">
+<!-- $$$list[overload1]$$$listconstQString&int -->
+<h3 class="fn" translate="no" id="list"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">QList</span>&lt;<span class="type"><a href="snapshot.html" translate="no">Snapshot</a></span>&gt; SnapshotStore::<span class="name">list</span>(const <span class="type">QString</span> &amp;<i>branch</i>, <span class="type">int</span> <i>limit</i>)</h3>
+<p>Returns the newest <i translate="no">limit</i> snapshots of <i translate="no">branch</i>, newest first; empty when the branch does not exist.</p>
+<!-- @@@list -->
+</div>
+<div class="fnitem">
+<!-- $$$looseObjects[overload1]$$$looseObjects -->
+<h3 class="fn" translate="no" id="looseObjects"><span class="type">int</span> SnapshotStore::<span class="name">looseObjects</span>() const</h3>
+<p>Returns how many objects lie loose in the repository (a file each under <code translate="no">objects/</code>), counted from the folder: exact, and no git run for it.</p>
+<!-- @@@looseObjects -->
+</div>
+<div class="fnitem">
+<!-- $$$open[overload1]$$$open -->
+<h3 class="fn" translate="no" id="open"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">bool</span> SnapshotStore::<span class="name">open</span>()</h3>
+<p>Opens the store, making it when the folder holds none. Returns whether it is usable.</p>
+<!-- @@@open -->
+</div>
+<div class="fnitem">
+<!-- $$$point[overload1]$$$pointconstQString&constQString& -->
+<h3 class="fn" translate="no" id="point"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">bool</span> SnapshotStore::<span class="name">point</span>(const <span class="type">QString</span> &amp;<i>branch</i>, const <span class="type">QString</span> &amp;<i>id</i>)</h3>
+<p>Makes <i translate="no">branch</i> point at the snapshot <i translate="no">id</i> (made or moved). Returns whether it did.</p>
+<!-- @@@point -->
+</div>
+<div class="fnitem">
+<!-- $$$read[overload1]$$$readconstQString& -->
+<h3 class="fn" translate="no" id="read"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">QByteArray</span> SnapshotStore::<span class="name">read</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
+<p>Returns the file the snapshot <i translate="no">id</i> holds; empty when there is no such snapshot.</p>
+<!-- @@@read -->
+</div>
+<div class="fnitem">
+<!-- $$$refName[overload1]$$$refNameconstQString& -->
+<h3 class="fn" translate="no" id="refName"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> SnapshotStore::<span class="name">refName</span>(const <span class="type">QString</span> &amp;<i>branch</i>)</h3>
+<p>Returns the full reference name of <i translate="no">branch</i> (<code translate="no">refs/heads/&lt;branch&gt;</code>).</p>
+<!-- @@@refName -->
+</div>
+<div class="fnitem">
+<!-- $$$relink[overload1]$$$relinkconstQString&constQList<Snapshot>&constQString& -->
+<h3 class="fn" translate="no" id="relink"><code class="details extra" translate="no">[virtual]</code> <span class="type">bool</span> SnapshotStore::<span class="name">relink</span>(const <span class="type">QString</span> &amp;<i>branch</i>, const <span class="type">QList</span>&lt;<span class="type"><a href="snapshot.html" translate="no">Snapshot</a></span>&gt; &amp;<i>kept</i>, const <span class="type">QString</span> &amp;<i>tip</i>)</h3>
+<p>Makes <i translate="no">branch</i> the chain of the snapshots <i translate="no">kept</i> (oldest first), each with its own file, message and time, the others left out (<a href="projecthistory.html" translate="no">ProjectHistory</a>'s limit), if the branch is still at <i translate="no">tip</i>. Returns whether it did; the snapshots left out reach nothing after, for <a href="snapshotstore.html#housekeep" translate="no">housekeep</a>() to drop. This one writes each kept snapshot again through <a href="snapshotstore.html#write" translate="no">write</a>() on a branch of its own, then points <i translate="no">branch</i> at the last; a backend that can link the snapshots as they are does so instead.</p>
+<!-- @@@relink -->
+</div>
+<div class="fnitem">
+<!-- $$$remove[overload1]$$$removeconstQString& -->
+<h3 class="fn" translate="no" id="remove"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">bool</span> SnapshotStore::<span class="name">remove</span>(const <span class="type">QString</span> &amp;<i>branch</i>)</h3>
+<p>Deletes <i translate="no">branch</i> (its snapshots stay in the store until housekeeping drops what no branch reaches). Returns whether it did, or the branch did not exist.</p>
+<!-- @@@remove -->
+</div>
+<div class="fnitem">
+<!-- $$$rename[overload1]$$$renameconstQString&constQString& -->
+<h3 class="fn" translate="no" id="rename"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">bool</span> SnapshotStore::<span class="name">rename</span>(const <span class="type">QString</span> &amp;<i>from</i>, const <span class="type">QString</span> &amp;<i>to</i>)</h3>
+<p>Renames the branch <i translate="no">from</i> to <i translate="no">to</i> (written over). Returns whether it did.</p>
+<!-- @@@rename -->
+</div>
+<div class="fnitem">
+<!-- $$$tip[overload1]$$$tipconstQString& -->
+<h3 class="fn" translate="no" id="tip"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">std::optional</span>&lt;<span class="type"><a href="snapshot.html" translate="no">Snapshot</a></span>&gt; SnapshotStore::<span class="name">tip</span>(const <span class="type">QString</span> &amp;<i>branch</i>)</h3>
+<p>Returns the newest snapshot of <i translate="no">branch</i>, or nothing when the branch does not exist.</p>
+<!-- @@@tip -->
+</div>
+<div class="fnitem">
+<!-- $$$write[overload1]$$$writeconstQString&constQByteArray&constQString&constQString&qint64 -->
+<h3 class="fn" translate="no" id="write"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">std::optional</span>&lt;<span class="type"><a href="snapshot.html" translate="no">Snapshot</a></span>&gt; SnapshotStore::<span class="name">write</span>(const <span class="type">QString</span> &amp;<i>branch</i>, const <span class="type">QByteArray</span> &amp;<i>content</i>, const <span class="type">QString</span> &amp;<i>message</i>, const <span class="type">QString</span> &amp;<i>parent</i>, <span class="type">qint64</span> <i>time</i>)</h3>
+<p>Writes <i translate="no">content</i> as a snapshot of <i translate="no">branch</i> at <i translate="no">time</i> (seconds since the epoch) with <i translate="no">message</i>, on top of <i translate="no">parent</i> (the branch's tip; empty when the branch does not exist yet), and moves the branch to it. Returns the snapshot written, or nothing when the branch was not at <i translate="no">parent</i> or the write failed (<a href="snapshotstore.html#lastError" translate="no">lastError</a>()).</p>
+<!-- @@@write -->
+</div>
+</div>
+<div class="vars">
+<h2>Member Variable Documentation</h2>
+<div class="fnitem">
+<!-- $$$FileName -->
+<h3 class="fn" translate="no" id="FileName-var">const <span class="type">QString</span> SnapshotStore::<span class="name">FileName</span></h3>
+<p>This variable holds the file each snapshot holds: <code translate="no">project.json</code>.</p>
+<!-- @@@FileName -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

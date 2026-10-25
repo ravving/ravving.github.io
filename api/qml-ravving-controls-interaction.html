@@ -7,7 +7,7 @@
   <meta name="keywords" content="qmltype">
   <title>Interaction QML Type | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -100,11 +100,15 @@
 </ul>
 <h2 id="methods">Methods</h2>
 <ul>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#icon-method" translate="no">icon</a></b>(<i>name</i>)</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#iconIn-method" translate="no">iconIn</a></b>(<i>name</i>, <i>ink</i>)</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#keyIcon-method" translate="no">keyIcon</a></b>(<i>key</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#overlayShown-method" translate="no">overlayShown</a></b>(<i>layer</i>, <i>shown</i>)</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#withIcons-method" translate="no">withIcons</a></b>(<i>text</i>, <i>ink</i>, <i>size</i>)</li>
 </ul>
 <!-- $$$Interaction-description -->
 <h2 id="details">Detailed Description</h2>
-<p>The modal layers up, and how the device's knobs work. No control reaches into the app's objects.</p>
+<p>The modal layers up, how the device's knobs work, and the UI icons' sources (<a href="qml-ravving-controls-interaction.html#icon-method" translate="no">icon</a>(), <a href="qml-ravving-controls-interaction.html#iconIn-method" translate="no">iconIn</a>(), <a href="qml-ravving-controls-interaction.html#withIcons-method" translate="no">withIcons</a>()). No control reaches into the app's objects.</p>
 <!-- @@@Interaction -->
 <h2>Property Documentation</h2>
 <div class="fnitem">
@@ -154,10 +158,34 @@
 <h2>Method Documentation</h2>
 </div>
 <div class="fnitem">
+<!-- $$$icon[overload1]$$$icon -->
+<h3 class="fn qml-member qml-method" translate="no" id="icon-method"><span class="name">icon</span>(<i>name</i>)</h3>
+<p>The source of the UI icon <i translate="no">name</i> in the icon set picked (Theme.iconSet), white: for a button's <code translate="no">icon.source</code> or an IconImage, which tint it. <a href="qml-ravving-controls-interaction.html#iconIn-method" translate="no">iconIn</a>() draws it in an ink (an Image, an <code translate="no">&lt;img&gt;</code> in a Text); Icon shows one on its own.</p>
+<!-- @@@icon -->
+</div>
+<div class="fnitem">
+<!-- $$$iconIn[overload1]$$$iconIn -->
+<h3 class="fn qml-member qml-method" translate="no" id="iconIn-method"><span class="name">iconIn</span>(<i>name</i>, <i>ink</i>)</h3>
+<p>The source of the UI icon <i translate="no">name</i> in the icon set picked, drawn in <i translate="no">ink</i>.</p>
+<!-- @@@iconIn -->
+</div>
+<div class="fnitem">
+<!-- $$$keyIcon[overload1]$$$keyIcon -->
+<h3 class="fn qml-member qml-method" translate="no" id="keyIcon-method"><span class="name">keyIcon</span>(<i>key</i>)</h3>
+<p>The icon <a href="qml-ravving-controls-interaction.html#withIcons-method" translate="no">withIcons</a>() draws for the character <i translate="no">key</i> (&quot;&quot; for none).</p>
+<!-- @@@keyIcon -->
+</div>
+<div class="fnitem">
 <!-- $$$overlayShown[overload1]$$$overlayShown -->
 <h3 class="fn qml-member qml-method" translate="no" id="overlayShown-method"><span class="name">overlayShown</span>(<i>layer</i>, <i>shown</i>)</h3>
 <p>A modal layer (<i translate="no">layer</i>) came up or went (<i translate="no">shown</i>).</p>
 <!-- @@@overlayShown -->
+</div>
+<div class="fnitem">
+<!-- $$$withIcons[overload1]$$$withIcons -->
+<h3 class="fn qml-member qml-method" translate="no" id="withIcons-method"><span class="name">withIcons</span>(<i>text</i>, <i>ink</i>, <i>size</i>)</h3>
+<p>The device's keys named in a hint or a notice (<i translate="no">text</i>: &quot;▲ ▼ pick · SELECT opens&quot;, &quot;FILES → SEND…&quot;, &quot;✓ ON DEVICE&quot;) as StyledText, each key's or mark's character drawn as its icon, <i translate="no">size</i> pixels square in <i translate="no">ink</i>. The strings keep the characters, so translations need no markup; the rest of the text is escaped. A Text showing it sets <code translate="no">textFormat: Text.StyledText</code>.</p>
+<!-- @@@withIcons -->
 </div>
 </article>
 </main>

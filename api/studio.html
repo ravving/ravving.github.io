@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>Studio Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -99,6 +99,7 @@
 <li class="fn" translate="no"><b><a href="studio.html#effectiveBpm-prop" translate="no">effectiveBpm</a></b> : qreal</li>
 <li class="fn" translate="no"><b><a href="studio.html#exporter-prop" translate="no">exporter</a></b> : QObject* const</li>
 <li class="fn" translate="no"><b><a href="studio.html#externalClock-prop" translate="no">externalClock</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="studio.html#freeSynthChannels-prop" translate="no">freeSynthChannels</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="studio.html#history-prop" translate="no">history</a></b> : QObject* const</li>
 <li class="fn" translate="no"><b><a href="studio.html#input-prop" translate="no">input</a></b> : QObject* const</li>
 <li class="fn" translate="no"><b><a href="studio.html#live-prop" translate="no">live</a></b> : const bool</li>
@@ -126,6 +127,7 @@
 <li class="fn" translate="no"><b><a href="studio.html#step-prop" translate="no">step</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="studio.html#swing-prop" translate="no">swing</a></b> : qreal</li>
 <li class="fn" translate="no"><b><a href="studio.html#swingEighths-prop" translate="no">swingEighths</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="studio.html#synthChannels-prop" translate="no">synthChannels</a></b> : const int</li>
 <li class="fn" translate="no"><b><a href="studio.html#take-prop" translate="no">take</a></b> : QObject* const</li>
 <li class="fn" translate="no"><b><a href="studio.html#templates-prop" translate="no">templates</a></b> : QObject* const</li>
 </ul>
@@ -145,6 +147,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="studio.html#effectiveBpm-prop" translate="no">effectiveBpm</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="studio.html#exporter-prop" translate="no">exporter</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="studio.html#externalClock-prop" translate="no">externalClock</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="studio.html#freeSynthChannels" translate="no">freeSynthChannels</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="studio.html#history-prop" translate="no">history</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="studio.html#input-prop" translate="no">input</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="studio.html#inputPortsCard" translate="no">inputPortsCard</a></b>() const</td></tr>
@@ -180,6 +183,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="studio.html#sampleFiles" translate="no">sampleFiles</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#saveNow" translate="no">saveNow</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="studio.html#savedSession" translate="no">savedSession</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="studio.html#sectionSoundCost" translate="no">sectionSoundCost</a></b>(const QString &amp;<i>machine</i>, const QString &amp;<i>sound</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="studio.html#sections-prop" translate="no">sections</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#bpm-prop" translate="no">setBpm</a></b>(int <i>bpm</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#master-prop" translate="no">setMaster</a></b>(qreal <i>master</i>)</td></tr>
@@ -189,11 +193,13 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#swing-prop" translate="no">setSwing</a></b>(qreal <i>swing</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#swingEighths-prop" translate="no">setSwingEighths</a></b>(bool <i>eighths</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#setUiValue" translate="no">setUiValue</a></b>(const QString &amp;<i>key</i>, const QVariant &amp;<i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="studio.html#soundfontOffer" translate="no">soundfontOffer</a></b>(const QString &amp;<i>path</i>, const QVariantList &amp;<i>presets</i> = {}, bool <i>wholeKit</i> = false) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="studio.html#step-prop" translate="no">step</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#stop" translate="no">stop</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#stopPreview" translate="no">stopPreview</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="studio.html#swing-prop" translate="no">swing</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="studio.html#swingEighths-prop" translate="no">swingEighths</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="studio.html#synthChannels-prop" translate="no">synthChannels</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="studio.html#take-prop" translate="no">take</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> Templates *</td><td class="memItemRight bottomAlign"><b><a href="studio.html#templateLibrary" translate="no">templateLibrary</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="studio.html#templates-prop" translate="no">templates</a></b>() const</td></tr>
@@ -205,6 +211,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#availableKits-prop" translate="no">availableKitsChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#bpm-prop" translate="no">bpmChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#effectiveBpm-prop" translate="no">clockChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#importedRefreshed" translate="no">importedRefreshed</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#loadingChanged" translate="no">loadingChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#master-prop" translate="no">masterChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#metronome-prop" translate="no">metronomeChanged</a></b>()</td></tr>
@@ -212,6 +219,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#playing-prop" translate="no">playingChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#previewPath-prop" translate="no">previewChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#recordAutomation-prop" translate="no">recordAutomationChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#freeSynthChannels-prop" translate="no">slotsChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#step-prop" translate="no">stepChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#swing-prop" translate="no">swingChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#uiRestored" translate="no">uiRestored</a></b>()</td></tr>
@@ -225,7 +233,7 @@
 <!-- $$$Studio-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>It builds every machine from <code translate="no">data/kits.json</code> (with the kit the project last chose for it, and its sound controls from <a href="engineprofiles.html" translate="no">EngineProfiles</a>) and gives each its sketchpad track (a <a href="sketchpadtrack.html" translate="no">SketchpadTrack</a>), its PatternModels (clips a and b of that track in libzynthbox's <code translate="no">global</code> sequence), its sound engine (<a href="soundengine.html" translate="no">SoundEngine</a>) and its wiring (<a href="jackwiring.html" translate="no">JackWiring</a>). It owns the objects QML reaches through it: the take recorder, the mix recorder, the input, the MIDI input, the live effects, the sections, the projects, the templates, the history, the exporter and the music player.</p>
+<p>It builds every machine from <code translate="no">data/kits.json</code> (with the kit the project last chose for it, and its sound controls from <a href="engineprofiles.html" translate="no">EngineProfiles</a>) and gives each its sketchpad track (its libravving::Track routing), its PatternModels (clips a and b of that track in libravving's sequence), its sound engine (<a href="soundengine.html" translate="no">SoundEngine</a>) and its wiring (<a href="jackwiring.html" translate="no">JackWiring</a>). It owns the objects QML reaches through it: the take recorder, the mix recorder, the input, the MIDI input, the live effects, the sections, the projects, the templates, the history, the exporter and the music player.</p>
 <p>The session is everything <a href="studio.html#projectState" translate="no">projectState</a>() returns: every machine's steps, sound, kit, effects and level, the send effects, tempo, swing, master, metronome, the live effects, the sections, and the UI's values (<a href="studio.html#uiValue" translate="no">uiValue</a>()). It is written to <code translate="no">session.json</code> in the project folder 1.5 s after the last change and restored at start. Projects saves and opens named copies of it.</p>
 <p>Transport: <a href="studio.html#play" translate="no">play</a>() and <a href="studio.html#stop" translate="no">stop</a>() drive libzynthbox's sequence (SyncTimer underneath); the tempo is SyncTimer's; swing is applied to every machine's pattern. The studio is the <a href="sections-host.html" translate="no">Sections::Host</a>: on the bar line it switches the machines' clips to the cued section. Without libzynthbox (a desktop run) a timer stands in for the clock, with no sound. GUI thread only.</p>
 </div>
@@ -328,6 +336,20 @@
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="studio.html#effectiveBpm-prop" translate="no">clockChanged</a></b></span>()</td></tr>
 </table></div>
 <!-- @@@externalClock -->
+</div>
+<div class="fnitem">
+<!-- $$$freeSynthChannels-prop$$$freeSynthChannels$$$slotsChanged -->
+<h3 class="fn" translate="no" id="freeSynthChannels-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">freeSynthChannels</span> : <span class="type">int</span></h3>
+<p>how many of the jam's synth channels no machine holds: what a section's own sound on another engine takes from (freeSynthChannels()).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="studio.html#freeSynthChannels" translate="no">freeSynthChannels</a></b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>slotsChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@freeSynthChannels -->
 </div>
 <div class="fnitem">
 <!-- $$$history-prop$$$history -->
@@ -647,6 +669,16 @@
 <!-- @@@swingEighths -->
 </div>
 <div class="fnitem">
+<!-- $$$synthChannels-prop$$$synthChannels -->
+<h3 class="fn" translate="no" id="synthChannels-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">synthChannels</span> : const <span class="type">int</span></h3>
+<p>This property holds the synth engines a jam can run, all machines together: libzynthbox's sixteen Zynthian channels less the master channel (SynthChannels).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>synthChannels</b></span>() const</td></tr>
+</table></div>
+<!-- @@@synthChannels -->
+</div>
+<div class="fnitem">
 <!-- $$$take-prop$$$take -->
 <h3 class="fn" translate="no" id="take-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">take</span> : <span class="type">QObject</span>* const</h3>
 <p>This property holds the <a href="takerecorder.html" translate="no">TakeRecorder</a> that records live notes into a machine's pattern.</p>
@@ -695,6 +727,19 @@
 <!-- @@@cleanProjectState -->
 </div>
 <div class="fnitem">
+<!-- $$$freeSynthChannels -->
+<h3 class="fn" translate="no" id="freeSynthChannels"><span class="type">int</span> Studio::<span class="name">freeSynthChannels</span>() const</h3>
+<p>Returns how many synth channels of the jam's SynthChannels no engine uses now: the pool a machine's further slots come from.</p>
+<div class="admonition note"><p><b>Note: </b>Getter function for property freeSynthChannels. </p>
+</div><!-- @@@freeSynthChannels -->
+</div>
+<div class="fnitem">
+<!-- $$$importedRefreshed[overload1]$$$importedRefreshed -->
+<h3 class="fn" translate="no" id="importedRefreshed"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Studio::<span class="name">importedRefreshed</span>()</h3>
+<p>Emitted when <a href="studio.html#refreshImported" translate="no">refreshImported</a>() has read the library's soundfonts again, after <a href="studio.html#availableKits-prop" translate="no">availableKits</a> and every machine's sources took them.</p>
+<!-- @@@importedRefreshed -->
+</div>
+<div class="fnitem">
 <!-- $$$inputPortsCard[overload1]$$$inputPortsCard -->
 <h3 class="fn" translate="no" id="inputPortsCard"><span class="type">QString</span> Studio::<span class="name">inputPortsCard</span>() const</h3>
 <p>Returns the sound card whose capture ports are the input jacks (kits.json's <code translate="no">input</code> <code translate="no">portsCard</code>, found by <a href="hardwareports.html#captureOf" translate="no">HardwarePorts::captureOf</a>()); empty without an input.</p>
@@ -728,7 +773,7 @@
 <div class="fnitem">
 <!-- $$$meters[overload1]$$$meters -->
 <h3 class="fn" translate="no" id="meters"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantMap</span> Studio::<span class="name">meters</span>() const</h3>
-<p>Returns the current peak meters: <code translate="no">tracks</code>, each sketchpad track's peak in dB (10 of them, -200 for silence), and <code translate="no">master</code>. Read on demand from libzynthbox's AudioLevels.</p>
+<p>Returns the current peak meters: <code translate="no">tracks</code>, each sketchpad track's peak in dB (10 of them, -200 for silence), and <code translate="no">master</code>. Read on demand from libravving's recorder.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@meters -->
 </div>
@@ -792,6 +837,13 @@
 <!-- @@@savedSession -->
 </div>
 <div class="fnitem">
+<!-- $$$sectionSoundCost[overload1]$$$sectionSoundCostconstQString&constQString& -->
+<h3 class="fn" translate="no" id="sectionSoundCost"><code class="details extra" translate="no">[invokable]</code> <span class="type">int</span> Studio::<span class="name">sectionSoundCost</span>(const <span class="type">QString</span> &amp;<i>machine</i>, const <span class="type">QString</span> &amp;<i>sound</i>) const</h3>
+<p>Returns what giving <i translate="no">machine</i> (by key) the sound <i translate="no">sound</i> as a section's own would cost: 0 when an engine it runs plays it (any soundfont on its FluidSynth, a synth source it has), 1 when it needs one more engine (a channel from the pool), −1 when it cannot have one (no channel free, or its five slots taken). Unknown machines and sounds cost −1.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@sectionSoundCost -->
+</div>
+<div class="fnitem">
 <!-- $$$setSpeakersEnabled[overload1]$$$setSpeakersEnabledbool -->
 <h3 class="fn" translate="no" id="setSpeakersEnabled"><span class="type">void</span> Studio::<span class="name">setSpeakersEnabled</span>(<span class="type">bool</span> <i>enabled</i>)</h3>
 <p>Keeps the master's links to the speakers when <i translate="no">enabled</i> is true, or removes them (<a href="jackwiring.html#setSpeakersEnabled" translate="no">JackWiring::setSpeakersEnabled</a>()), so <a href="audiooutputs.html" translate="no">AudioOutputs</a> can route the master to another sink.</p>
@@ -804,6 +856,13 @@
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><p><b>See also </b><a href="studio.html#uiValue" translate="no">uiValue</a>().</p>
 <!-- @@@setUiValue -->
+</div>
+<div class="fnitem">
+<!-- $$$soundfontOffer[overload1]$$$soundfontOfferconstQString&constQVariantList&bool -->
+<h3 class="fn" translate="no" id="soundfontOffer"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantMap</span> Studio::<span class="name">soundfontOffer</span>(const <span class="type">QString</span> &amp;<i>path</i>, const <span class="type">QVariantList</span> &amp;<i>presets</i> = {}, <span class="type">bool</span> <i>wholeKit</i> = false) const</h3>
+<p>Returns what the soundfont <i translate="no">path</i> (a USB stick's file, or the file name of a catalog soundfont) would give once on the device: <code translate="no">sources</code> (the machines' sounds) and <code translate="no">kits</code> (the drum kits), named and pathed as they will be there, and <code translate="no">onDevice</code> (the device has a file of its name). Unless the library has it, a picked soundfont plays from <a href="paths.html#soundfontCache" translate="no">Paths::soundfontCache</a>() (<a href="usblibrary.html#cacheSoundfont" translate="no">UsbLibrary::cacheSoundfont</a>(), <a href="store.html#cacheSoundfont" translate="no">Store::cacheSoundfont</a>()) until a project saved with it copies it into the library. A file on disk is read; for a catalog soundfont <i translate="no">presets</i> lists its presets (maps of <code translate="no">name</code>, <code translate="no">bank</code>, <code translate="no">program</code>) and <i translate="no">wholeKit</i> says whether the whole font is a drum kit.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@soundfontOffer -->
 </div>
 <div class="fnitem">
 <!-- $$$stop[overload1]$$$stop -->

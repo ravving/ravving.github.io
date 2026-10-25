@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
 <!-- Chip.qml -->
-  <meta name="description" content="A small pill toggle with an LED dot (FX chain, live FX pads, S/M, LIVE).">
+  <meta name="description" content="A latching switch (FX chain, live FX pads, S/M, LIVE, a set's choices).">
   <meta name="keywords" content="qmltype">
   <title>Chip QML Type | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -76,7 +76,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">Chip QML Type</h1>
 <!-- $$$Chip-brief -->
-<p>A small pill toggle with an LED dot (FX chain, live FX pads, S/M, LIVE). <a href="#details">More...</a></p>
+<p>A latching switch (FX chain, live FX pads, S/M, LIVE, a set's choices). <a href="#details">More...</a></p>
 <!-- @@@Chip -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> <code translate="no">import Ravving.Controls 1.0</code></td></tr>
@@ -90,14 +90,16 @@
 <ul>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#fontSize-prop" translate="no">fontSize</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#held-prop" translate="no">held</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#iconName-prop" translate="no">iconName</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#ink-prop" translate="no">ink</a></b> : color</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#knobBadge-prop" translate="no">knobBadge</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#lit-prop" translate="no">lit</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#minimumWidth-prop" translate="no">minimumWidth</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#navHighlighted-prop" translate="no">navHighlighted</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#navKnob-prop" translate="no">navKnob</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#navPosition-prop" translate="no">navPosition</a></b> : real</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#offFill-prop" translate="no">offFill</a></b> : color</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#onColor-prop" translate="no">onColor</a></b> : color</li>
-<li class="fn" translate="no"><b><a href="qml-ravving-controls-chip.html#showLed-prop" translate="no">showLed</a></b> : bool</li>
 </ul>
 <h2 id="methods">Methods</h2>
 <ul>
@@ -105,13 +107,13 @@
 </ul>
 <!-- $$$Chip-description -->
 <h2 id="details">Detailed Description</h2>
-<p>Lights in <code translate="no">onColor</code> when checked; dimmed while disabled (an option that doesn't apply now).</p>
+<p>Raised as a button is (its frame, the dark lip under its face, the thin highlight along the face's top) on its own translucent face. While checked or pressed it sits flush, backlit in <code translate="no">onColor</code> as the project plate is on the SONG page (<a href="qml-ravving-controls-rimglow.html" translate="no">RimGlow</a>: the rim lit, the light spilling round it, the face tinted). A button's size and corners; dimmed while disabled (an option that doesn't apply now).</p>
 <!-- @@@Chip -->
 <h2>Property Documentation</h2>
 <div class="fnitem">
 <!-- $$$fontSize -->
 <h3 class="fn qml-member qml-property" translate="no" id="fontSize-prop"><span class="name">fontSize</span> : <span class="type">int</span></h3>
-<p>Show the LED dot before the text.</p>
+<p>The label's size (the label step), or a caller's.</p>
 <!-- @@@fontSize -->
 </div>
 <div class="fnitem">
@@ -119,6 +121,12 @@
 <h3 class="fn qml-member qml-property" translate="no" id="held-prop"><span class="name">held</span> : <span class="type">bool</span></h3>
 <p>The device key this chip stands for is held (ravving.heldKeys): shown pressed.</p>
 <!-- @@@held -->
+</div>
+<div class="fnitem">
+<!-- $$$iconName -->
+<h3 class="fn qml-member qml-property" translate="no" id="iconName-prop"><span class="name">iconName</span> : <span class="type">string</span></h3>
+<p>The UI icon the chip wears (an Icon's name: &quot;loop&quot;, &quot;lock&quot;…), before its text when it has one, alone otherwise (the chip is then square, as for a glyph label; set <code translate="no">Accessible.name</code> for the screen reader). &quot;&quot; for none.</p>
+<!-- @@@iconName -->
 </div>
 <div class="fnitem">
 <!-- $$$ink -->
@@ -131,6 +139,18 @@
 <h3 class="fn qml-member qml-property" translate="no" id="knobBadge-prop"><span class="name">knobBadge</span> : <span class="type">int</span></h3>
 <p>The device knob driving this chip (0&ndash;2 small, 3 big), or -1: shows the <a href="qml-ravving-controls-knobbadge.html" translate="no">KnobBadge</a>.</p>
 <!-- @@@knobBadge -->
+</div>
+<div class="fnitem">
+<!-- $$$lit -->
+<h3 class="fn qml-member qml-property" translate="no" id="lit-prop"><span class="name">lit</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<p>Lit: on, or held down (a press lights it as it will be).</p>
+<!-- @@@lit -->
+</div>
+<div class="fnitem">
+<!-- $$$minimumWidth -->
+<h3 class="fn qml-member qml-property" translate="no" id="minimumWidth-prop"><span class="name">minimumWidth</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<p>Its smallest width, as an <a href="qml-ravving-controls-actionbutton.html" translate="no">ActionButton</a>'s (docs/ui-rules.md, &quot;Button sizes&quot;): square for a glyph (one or two characters: S, M, ★), Theme.actionMinWidth for a word; a longer label grows past it. A chip is a button's size: the standard height, these widths.</p>
+<!-- @@@minimumWidth -->
 </div>
 <div class="fnitem">
 <!-- $$$navHighlighted -->
@@ -153,20 +173,14 @@
 <div class="fnitem">
 <!-- $$$offFill -->
 <h3 class="fn qml-member qml-property" translate="no" id="offFill-prop"><span class="name">offFill</span> : <span class="type">color</span></h3>
-<p>Fill when unchecked.</p>
+<p>The face while unchecked: a faint light over the key's dark, so the lip under it reads darker and the face stays darker than a button's.</p>
 <!-- @@@offFill -->
 </div>
 <div class="fnitem">
 <!-- $$$onColor -->
 <h3 class="fn qml-member qml-property" translate="no" id="onColor-prop"><span class="name">onColor</span> : <span class="type">color</span></h3>
-<p>Fill when checked. With none given, the <a href="qml-ravving-theme-skin.html" translate="no">skin</a>'s accent, when there is one.</p>
+<p>Its light while checked (the rim, the glow, the tint). With none given, the <a href="qml-ravving-theme-skin.html" translate="no">skin</a>'s accent, when there is one.</p>
 <!-- @@@onColor -->
-</div>
-<div class="fnitem">
-<!-- $$$showLed -->
-<h3 class="fn qml-member qml-property" translate="no" id="showLed-prop"><span class="name">showLed</span> : <span class="type">bool</span></h3>
-<p>Show the LED dot before the text.</p>
-<!-- @@@showLed -->
 </div>
 <h2>Method Documentation</h2>
 <div class="fnitem">

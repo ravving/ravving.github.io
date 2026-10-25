@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
 <!-- consoleprocess.cpp -->
-  <meta name="description" content="A helper process ravving drives through its text console (FluidSynth's shell, jalv's command line), run by libzynthbox's ProcessWrapper.">
+  <meta name="description" content="A helper process ravving drives through its text console (FluidSynth's shell, jalv's command line), run by libravving's Process (its ProcessWrapper).">
   <meta name="keywords" content="class">
   <title>ConsoleProcess Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -76,7 +76,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">ConsoleProcess Class</h1>
 <!-- $$$ConsoleProcess-brief -->
-<p>A helper process ravving drives through its text console (FluidSynth's shell, jalv's command line), run by libzynthbox's ProcessWrapper. <a href="#details">More...</a></p>
+<p>A helper process ravving drives through its text console (FluidSynth's shell, jalv's command line), run by libravving's Process (its ProcessWrapper). <a href="#details">More...</a></p>
 <!-- @@@ConsoleProcess -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;consoleprocess.h&gt;</code></td></tr>
@@ -101,8 +101,8 @@
 <!-- $$$ConsoleProcess-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The process runs on a pseudo-terminal, so it dies with ravving (which leaves through <code translate="no">_exit()</code>); it is restarted when it crashes, with its startup commands sent again after every start; and every command is a transaction that ends at the prompt. This class gives that a typed C++ interface; ProcessWrapper is reached through Qt's meta-object system, like the rest of libzynthbox.</p>
-<p>Every <a href="consoleprocess.html#run" translate="no">run</a>() gets a ProcessWrapper of its own. ProcessWrapper's own restart in place stops the old process with a 0 ms timeout, so its pty process is deleted while still running, and keeps the old process's unfinished transactions queued in front of the new one's startup, which can crash ravving (a drum kit changed twice while playing). Instead the old process is stopped properly (SIGTERM, then SIGKILL) and its wrapper is discarded with whatever it still had queued. GUI thread only.</p>
+<p>The process runs on a pseudo-terminal, so it dies with ravving (which leaves through <code translate="no">_exit()</code>); it is restarted when it crashes, with its startup commands sent again after every start; and every command is a transaction that ends at the prompt.</p>
+<p>Every <a href="consoleprocess.html#run" translate="no">run</a>() gets a Process of its own. ProcessWrapper's own restart in place stops the old process with a 0 ms timeout, so its pty process is deleted while still running, and keeps the old process's unfinished transactions queued in front of the new one's startup, which can crash ravving (a drum kit changed twice while playing). Instead the old process is stopped properly (SIGTERM, then SIGKILL) and its wrapper is discarded with whatever it still had queued. GUI thread only.</p>
 </div>
 <!-- @@@ConsoleProcess -->
 <div class="func">
@@ -134,7 +134,7 @@
 <div class="fnitem">
 <!-- $$$setStartupCommands[overload1]$$$setStartupCommandsconstQStringList& -->
 <h3 class="fn" translate="no" id="setStartupCommands"><span class="type">void</span> ConsoleProcess::<span class="name">setStartupCommands</span>(const <span class="type">QStringList</span> &amp;<i>commands</i>)</h3>
-<p>Sets the <i translate="no">commands</i> sent after every start and restart, before any other.</p>
+<p>Sets the <i translate="no">commands</i> sent after every start and restart, before any other; a process running takes them for its next restart.</p>
 <!-- @@@setStartupCommands -->
 </div>
 <div class="fnitem">

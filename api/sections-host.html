@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>Sections::Host Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -92,6 +92,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#soundingIn" translate="no">soundingIn</a></b>(const QVariantMap &amp;<i>machines</i>) const = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#startPlayback" translate="no">startPlayback</a></b>() = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#stopAtBarEnd" translate="no">stopAtBarEnd</a></b>() = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#switchesReported" translate="no">switchesReported</a></b>() const</td></tr>
 </table></div>
 <!-- $$$Host-description -->
 <div class="descr">
@@ -147,6 +148,12 @@
 <h3 class="fn" translate="no" id="stopAtBarEnd"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">void</span> Host::<span class="name">stopAtBarEnd</span>()</h3>
 <p>Stops the transport at the end of the bar playing: every clip silent from the next bar, then the transport stopped.</p>
 <!-- @@@stopAtBarEnd -->
+</div>
+<div class="fnitem">
+<!-- $$$switchesReported[overload1]$$$switchesReported -->
+<h3 class="fn" translate="no" id="switchesReported"><code class="details extra" translate="no">[virtual]</code> <span class="type">bool</span> Host::<span class="name">switchesReported</span>() const</h3>
+<p>Returns whether <a href="sections.html#switchLanded" translate="no">switchLanded</a>() comes from the clock itself (libravving): a switch that reached it after a bar line lands a bar later and is reported then, so it gets a bar more before it is taken as landed. <code translate="no">false</code> by default.</p>
+<!-- @@@switchesReported -->
 </div>
 </div>
 </article>

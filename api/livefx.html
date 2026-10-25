@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>LiveFx Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -107,7 +107,7 @@
 </table></div>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#LiveFx" translate="no">LiveFx</a></b>(ZynthboxBridge *<i>bridge</i>, QObject *<i>globalPlayback</i>, const QList&lt;Machine *&gt; &amp;<i>machines</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#LiveFx" translate="no">LiveFx</a></b>(ZynthboxBridge *<i>bridge</i>, int *<i>master</i>, const QList&lt;Machine *&gt; &amp;<i>machines</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#active-prop" translate="no">active</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#allPads-prop" translate="no">allPads</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> quint64 </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#audioFrame" translate="no">audioFrame</a></b>() const</td></tr>
@@ -314,9 +314,9 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$LiveFx[overload1]$$$LiveFxZynthboxBridge*QObject*constQList<Machine*>&QObject* -->
-<h3 class="fn" translate="no" id="LiveFx">LiveFx::<span class="name">LiveFx</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>globalPlayback</i>, const <span class="type">QList</span>&lt;<span class="type"><a href="machine.html" translate="no">Machine</a></span> *&gt; &amp;<i>machines</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Constructs the live effects over <i translate="no">globalPlayback</i> (libzynthbox's GlobalPlayback passthrough, the master; null on a desktop run) and the studio's <i translate="no">machines</i> (kick cuts, echo sends), with the given <i translate="no">parent</i>. <i translate="no">bridge</i> runs the crusher and phaser and keeps the beat repeat and the engine on the transport's grid (null on a desktop run).</p>
+<!-- $$$LiveFx[overload1]$$$LiveFxZynthboxBridge*int*constQList<Machine*>&QObject* -->
+<h3 class="fn" translate="no" id="LiveFx">LiveFx::<span class="name">LiveFx</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">int</span> *<i>master</i>, const <span class="type">QList</span>&lt;<span class="type"><a href="machine.html" translate="no">Machine</a></span> *&gt; &amp;<i>machines</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the live effects over <i translate="no">master</i> (libravving's master strip, GlobalPlayback; null on a desktop run) and the studio's <i translate="no">machines</i> (kick cuts, echo sends), with the given <i translate="no">parent</i>. <i translate="no">bridge</i> runs the crusher and phaser and keeps the beat repeat and the engine on the transport's grid (null on a desktop run).</p>
 <!-- @@@LiveFx -->
 </div>
 <div class="fnitem">

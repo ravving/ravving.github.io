@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
 <!-- takerecorder.cpp -->
-  <meta name="description" content="Records what is played live on a machine into its pattern as a fresh take; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;take.">
+  <meta name="description" content="Records what is played live on a machine into its pattern; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;take.">
   <meta name="keywords" content="class">
   <title>TakeRecorder Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -78,7 +78,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">TakeRecorder Class</h1>
 <!-- $$$TakeRecorder-brief -->
-<p>Records what is played live on a machine into its pattern as a fresh take; published to QML as <code translate="no">studio.take</code>. <a href="#details">More...</a></p>
+<p>Records what is played live on a machine into its pattern; published to QML as <code translate="no">studio.take</code>. <a href="#details">More...</a></p>
 <!-- @@@TakeRecorder -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;takerecorder.h&gt;</code></td></tr>
@@ -106,6 +106,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#state-prop" translate="no">state</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#stop" translate="no">stop</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#toggle" translate="no">toggle</a></b>(QObject *<i>machine</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#toggleFresh" translate="no">toggleFresh</a></b>(QObject *<i>machine</i>)</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
@@ -114,12 +115,12 @@
 <!-- $$$TakeRecorder-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>One take at a time. Starting one:</p>
+<p>One take at a time, of two kinds: <a href="takerecorder.html#toggle" translate="no">toggle</a>() overdubs (the pattern's notes stay, the take adds to them), <a href="takerecorder.html#toggleFresh" translate="no">toggleFresh</a>() records a fresh take (the pattern is cleared first). Starting one:</p>
 <ul>
-<li>with the transport stopped, the pattern is cleared and the transport starts; its first bar is the count-in (the metronome ticks it), and the take records from that bar's last 16th, so a hit played just before the downbeat lands on it;</li>
-<li>with the transport playing, it waits for the machine's loop to come round, then clears the pattern and records from its first step.</li>
+<li>with the transport stopped, the transport starts; its first bar is the count-in (the metronome ticks it), and the take records from that bar's last 16th, so a hit played just before the downbeat lands on it; a fresh take clears the pattern first;</li>
+<li>with the transport playing, an overdub records at once; a fresh take waits for the machine's loop to come round, then clears the pattern and records from its first step.</li>
 </ul>
-<p>While recording, every live hit (<a href="takerecorder.html#hit" translate="no">hit</a>()) is written at the nearest step, loop after loop: the first pass is the fresh take, later passes overdub. <a href="takerecorder.html#toggle" translate="no">toggle</a>() again or <a href="takerecorder.html#stop" translate="no">stop</a>() ends it; the take is one undo step (<a href="machine.html#beginEditGroup" translate="no">Machine::beginEditGroup</a>()).</p>
+<p>While recording, every live hit (<a href="takerecorder.html#hit" translate="no">hit</a>()) is written at the nearest step, loop after loop. <a href="takerecorder.html#toggle" translate="no">toggle</a>() again or <a href="takerecorder.html#stop" translate="no">stop</a>() ends it; the take is one undo step (<a href="machine.html#beginEditGroup" translate="no">Machine::beginEditGroup</a>()).</p>
 <p>The metronome ticks through a take: switched on for it if it was off, and back off when the take ends, unless it was switched manually meanwhile. The take records notes, not audio. GUI thread only.</p>
 </div>
 <!-- @@@TakeRecorder -->
@@ -215,9 +216,16 @@
 <div class="fnitem">
 <!-- $$$toggle[overload1]$$$toggleQObject* -->
 <h3 class="fn" translate="no" id="toggle"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> TakeRecorder::<span class="name">toggle</span>(<span class="type">QObject</span> *<i>machine</i>)</h3>
-<p>Starts a take on <i translate="no">machine</i>, or ends its take when it has one. Another machine's take ends and this one starts.</p>
+<p>Starts an overdub on <i translate="no">machine</i> (its notes stay), or ends its take when it has one. Another machine's take ends and this one starts.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggle -->
+</div>
+<div class="fnitem">
+<!-- $$$toggleFresh[overload1]$$$toggleFreshQObject* -->
+<h3 class="fn" translate="no" id="toggleFresh"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> TakeRecorder::<span class="name">toggleFresh</span>(<span class="type">QObject</span> *<i>machine</i>)</h3>
+<p>Starts a fresh take on <i translate="no">machine</i> (its pattern cleared first), or ends its take when it has one. Another machine's take ends and this one starts.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@toggleFresh -->
 </div>
 </article>
 </main>

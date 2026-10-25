@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>UsbLibrary Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -108,6 +108,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#batchDone-prop" translate="no">batchDone</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#batchTotal-prop" translate="no">batchTotal</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#busy-prop" translate="no">busy</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#cacheSoundfont" translate="no">cacheSoundfont</a></b>(const QString &amp;<i>path</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#cancelBatch" translate="no">cancelBatch</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#device-prop" translate="no">device</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="usblibrary.html#deviceEntries" translate="no">deviceEntries</a></b>(const QString &amp;<i>kind</i>) const</td></tr>
@@ -151,7 +152,7 @@
 <tr valign="top" class="odd"><td >soundfonts</td><td >SF2 and SF3</td></tr>
 <tr valign="top" class="even"><td >projects</td><td ><code translate="no">.ravv</code> bundles</td></tr>
 <tr valign="top" class="odd"><td >midi</td><td ><code translate="no">.mid</code> and <code translate="no">.midi</code></td></tr>
-<tr valign="top" class="even"><td >presets</td><td >ravving preset files under <code translate="no">ravving/presets</code> (pattern presets, saved sounds and templates: <a href="presetexchange.html" translate="no">PresetExchange</a>, which also lists the device's)</td></tr>
+<tr valign="top" class="even"><td >presets</td><td >ravving preset files under <code translate="no">ravving/presets</code> (pattern presets, saved sounds, templates, skin sets and icon packs: <a href="presetexchange.html" translate="no">PresetExchange</a>, which also lists the device's)</td></tr>
 </table></div>
 <p>The kinds are one table in the <code translate="no">.cpp</code> (suffixes on each side, the stick folder, the library folders listed and imported into, how it moves): adding a kind is one row there.</p>
 <p>Files are found wherever they are, the stick's standard layout (<code translate="no">ravving/samples</code>, <code translate="no">ravving/soundfonts</code>, <code translate="no">ravving/projects</code>, <code translate="no">ravving/exports</code>, <code translate="no">ravving/midi</code>) first; hidden and system folders (System Volume Information, FOUND.000, $RECYCLE.BIN) are skipped, and the walk stops after 20000 files so a full disk cannot stall it.</p>
@@ -295,6 +296,13 @@
 <h3 class="fn" translate="no" id="UsbLibrary">UsbLibrary::<span class="name">UsbLibrary</span>(<span class="type"><a href="removabledrives.html" translate="no">RemovableDrives</a></span> *<i>drives</i>, <span class="type"><a href="exporter.html" translate="no">Exporter</a></span> *<i>exporter</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
 <p>Constructs the library over the sticks of <i translate="no">drives</i>, importing and exporting projects through <i translate="no">exporter</i>, with the given <i translate="no">parent</i>.</p>
 <!-- @@@UsbLibrary -->
+</div>
+<div class="fnitem">
+<!-- $$$cacheSoundfont[overload1]$$$cacheSoundfontconstQString& -->
+<h3 class="fn" translate="no" id="cacheSoundfont"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> UsbLibrary::<span class="name">cacheSoundfont</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Copies the stick's soundfont <i translate="no">path</i> into <a href="paths.html#soundfontCache" translate="no">Paths::soundfontCache</a>(), where a sound or kit picked from it plays until a project saved with it copies it into the library; <a href="usblibrary.html#finished" translate="no">finished</a>() follows (kind <code translate="no">soundfonts</code>). Returns <code translate="no">false</code> when a copy is already under way or no stick is open.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@cacheSoundfont -->
 </div>
 <div class="fnitem">
 <!-- $$$cancelBatch[overload1]$$$cancelBatch -->

@@ -10,8 +10,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UI rules · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<link rel="stylesheet" href="../site.css?v=a306cbe289">
 <script src="../assets/theme.js?v=3307b56d38"></script>
+<script src="../assets/icons.js?v=d6def946c7" defer></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -43,18 +44,20 @@
     <nav aria-label="Documentation">
 <p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="machines.html">The machines</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
+<li><a href="play-it-live.html">Play it live</a></li>
 <li><a href="export-a-track.html">Export a track and play it back</a></li>
 <li><a href="film-a-session.html">Film your session</a></li>
 <li><a href="send-to-phone.html">Send a file to your phone</a></li>
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
-<li><a href="machines.html">The machines</a></li>
-<li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
 </ul>
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
+<li><a href="icon-packs.html">Make an icon pack</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -69,7 +72,7 @@
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
-<li class="on"><a href="ui-rules.html" aria-current="page">UI rules</a><ul><li><a href="#where-a-control-lives">Where a control lives</a></li><li><a href="#shared-base-types">Shared base types</a></li><li><a href="#buttons-action-or-state">Buttons: action or state</a></li><li><a href="#button-sizes">Button sizes</a></li><li><a href="#controls-in-a-group-take-the-device-knobs">Controls in a group take the device knobs</a></li><li><a href="#rows-of-controls-sit-on-bands-dialogs-and-pages">Rows of controls sit on bands (dialogs and pages)</a></li><li><a href="#leaving">Leaving</a></li><li><a href="#pages">Pages</a></li><li><a href="#empty-views">Empty views</a></li><li><a href="#scrolling-views">Scrolling views</a></li><li><a href="#the-type-scale">The type scale</a></li><li><a href="#three-font-families">Three font families</a></li><li><a href="#palettes">Palettes</a></li><li><a href="#design-tokens">Design tokens</a></li><li><a href="#a-key-and-its-button">A key and its button</a></li><li><a href="#text-is-translatable-keys-are-not">Text is translatable, keys are not</a></li><li><a href="#adding-a-rule">Adding a rule</a></li></ul></li>
+<li class="on"><a href="ui-rules.html" aria-current="page">UI rules</a><ul><li><a href="#where-a-control-lives">Where a control lives</a></li><li><a href="#shared-base-types">Shared base types</a></li><li><a href="#buttons-action-or-state">Buttons: action or state</a></li><li><a href="#corners">Corners</a></li><li><a href="#groups">Groups</a></li><li><a href="#button-sizes">Button sizes</a></li><li><a href="#controls-in-a-group-take-the-device-knobs">Controls in a group take the device knobs</a></li><li><a href="#rows-of-controls-sit-on-bands-dialogs-and-pages">Rows of controls sit on bands (dialogs and pages)</a></li><li><a href="#leaving">Leaving</a></li><li><a href="#pages">Pages</a></li><li><a href="#empty-views">Empty views</a></li><li><a href="#scrolling-views">Scrolling views</a></li><li><a href="#the-type-scale">The type scale</a></li><li><a href="#icons">Icons</a></li><li><a href="#literal-sizes">Literal sizes</a></li><li><a href="#three-font-families">Three font families</a></li><li><a href="#palettes">Palettes</a></li><li><a href="#design-tokens">Design tokens</a></li><li><a href="#a-key-and-its-button">A key and its button</a></li><li><a href="#text-is-translatable-keys-are-not">Text is translatable, keys are not</a></li><li><a href="#adding-a-rule">Adding a rule</a></li></ul></li>
 <li><a href="extending.html">Extending</a></li>
 <li><a href="writing-the-guide.html">Writing the guide</a></li>
 <li><a href="writing-code-docs.html">Writing code documentation</a></li>
@@ -118,7 +121,7 @@ holds the rules and their exceptions, and is where a new rule goes.</p>
 <tr>
 <td><code>Ravving.Controls</code> (<code>controls/</code>)</td>
 <td>a control with properties or behaviour of its own, besides the look</td>
-<td><code>ActionButton</code>, <code>Chip</code>, <code>ConfirmButton</code>, <code>Knob</code>, <code>Fader</code>, <code>Meter</code>, <code>KeyCap</code>, <code>Nameplate</code></td>
+<td><code>ActionButton</code>, <code>Chip</code>, <code>ConfirmButton</code>, <code>Knob</code>, <code>Fader</code>, <code>Meter</code>, <code>KeyCap</code> (on <code>CapFace</code>, the grid's cap the SONG page's keys and blocks share), <code>Nameplate</code></td>
 </tr>
 <tr>
 <td>the app (<code>qml/</code>)</td>
@@ -129,6 +132,10 @@ holds the rules and their exceptions, and is where a new rule goes.</p>
 </table>
 <p>The style adds no properties to a control: only attached ones (<code>Skin</code>). A control that needs
 properties of its own goes into the kit.</p>
+<p>The kit can't reach the style's private parts, so two faces exist in both layers and change
+together. A <code>Chip</code>'s key (the dark key, the face 1 px in and 5 px short, its top highlight) is
+the style's <code>KeySurface</code>. <code>FocusRing</code> is the style's <code>ButtonFocus</code> ring. A change to one is
+made to the other.</p>
 <p>Both read <code>Ravving.Theme</code> (<code>theme/</code>), the tokens; the kit also answers the device's keys and
 knobs (<code>Ravving.Input</code>, <code>input/</code>). A screen uses the kit's control rather than redoing what it
 does.</p>
@@ -148,7 +155,7 @@ page-focus request (Main.qml wires those).</p>
 <tbody>
 <tr>
 <td>A page's body: the rails and the face in its skin (the chassis)</td>
-<td><code>QQC.Page</code> (a full page), <code>QQC.Pane</code> (a machine's module, less rounded)</td>
+<td><code>QQC.Page</code> (a full page), <code>QQC.Pane</code> (a machine's module)</td>
 <td>every page (<code>MachineModule</code> wears a Pane for the machines)</td>
 </tr>
 <tr>
@@ -162,6 +169,11 @@ page-focus request (Main.qml wires those).</p>
 <td>the project name, the track playing, the take</td>
 </tr>
 <tr>
+<td>A surface lit from behind: its rim's light inside it and spilling round it</td>
+<td><code>RimGlow</code></td>
+<td>the project plate on the SONG page, a Chip that is on</td>
+</tr>
+<tr>
 <td>A row of buttons on its grouping strip</td>
 <td><code>QQC.ToolBar</code> (any other position: a strip), its row in <code>contentItem: RowLayout {}</code>; <code>background: null</code> for a group on a header's deck</td>
 <td>the pattern toolbars, the SONG rows, the player's and the RECORDER's groups</td>
@@ -172,6 +184,11 @@ page-focus request (Main.qml wires those).</p>
 <td>the machine strip, the SONG rows</td>
 </tr>
 <tr>
+<td>The hairline between rows or sections</td>
+<td><code>QQC.ToolSeparator { orientation: Qt.Horizontal }</code> (fainter lying down)</td>
+<td>the control center, the input panel, the form rows, the drop-down lists</td>
+</tr>
+<tr>
 <td>A recessed panel for a work area (a well)</td>
 <td><code>QQC.Frame</code></td>
 <td>the RECORDER's input, tuner, effects, the lists, the dialogs' sections</td>
@@ -179,7 +196,7 @@ page-focus request (Main.qml wires those).</p>
 <tr>
 <td>An action</td>
 <td><code>ActionButton</code></td>
-<td>everywhere (squared, the standard height)</td>
+<td>everywhere (the standard height)</td>
 </tr>
 <tr>
 <td>An action that cannot be undone (asks twice)</td>
@@ -187,7 +204,7 @@ page-focus request (Main.qml wires those).</p>
 <td>DELETE, REMOVE, CLEAR SONG, FORMAT, EJECT</td>
 </tr>
 <tr>
-<td>A state (on/off with an LED, or one of a set)</td>
+<td>A state (on/off, or one of a set)</td>
 <td><code>Chip</code> / <code>StripButton</code></td>
 <td>modes, tabs, banks, sorts</td>
 </tr>
@@ -227,14 +244,44 @@ page-focus request (Main.qml wires those).</p>
 <td>FILES, USB, GET MORE</td>
 </tr>
 <tr>
+<td>A row of a list, or a cell of a grid of entries: the card (pressed, open, the current one's tint, the cursor's ring, <code>flat</code> for a drop-down)</td>
+<td><code>ListRow</code></td>
+<td>Bluetooth, Wi-Fi, ISSUES, the recordings, the music player's tracks, albums and queue, the drop-down lists</td>
+</tr>
+<tr>
 <td>A browsing dialog's row: a name, a line of detail, its actions (a folder opens)</td>
-<td><code>FileRow</code></td>
+<td><code>FileRow</code> (a <code>ListRow</code>)</td>
 <td>FILES, USB, GET MORE</td>
 </tr>
 <tr>
 <td>What is under way (its progress), else how the last thing went</td>
 <td><code>OutcomeLine</code></td>
 <td>FILES, USB, GET MORE</td>
+</tr>
+<tr>
+<td>How far something has come (a copy, an export, a hold, a track's position)</td>
+<td><code>QQC.ProgressBar</code> (its colour through <code>Skin.skin: ({ accent: … })</code>)</td>
+<td>Bluetooth's transfer, EXPORT, the tuner's hold, the music player, <code>OutcomeLine</code></td>
+</tr>
+<tr>
+<td>A round lamp whose colour is a state</td>
+<td><code>Led</code> (<code>glowing</code>, <code>rim</code>)</td>
+<td>the toasts, the issues' severity, the phone share, the input's level, <code>WaveCycler</code>'s switch</td>
+</tr>
+<tr>
+<td>An outline over a thing or round it: the device's cursor, a pick, a flash, a pad sounding</td>
+<td><code>FocusRing</code> (<code>inset</code>, <code>thickness</code>, <code>cornerRadius</code>)</td>
+<td>the header's icon, the choice dialogs, the form rows, the drum grid's picks, LOCK's flash, the pads</td>
+</tr>
+<tr>
+<td>A value stepped one at a time: caption, −, the value, its knob's badge, +</td>
+<td><code>Stepper</code> (<code>valueText</code>, <code>stepped</code>, <code>pulse()</code>)</td>
+<td>EXPORT's BARS / LOOPS / TAIL, the SONG page's LENGTH and REPEATS, the tuner's A4, the pattern toolbar's OCT</td>
+</tr>
+<tr>
+<td>Controls that belong together, on one well that takes no room</td>
+<td><code>ControlGroup</code> (its knob's badge on the corner)</td>
+<td>↶ ↷ (the header's, a pattern's), ‹ 1/1 ›, the bars' + −, MOVE ◀ ▶, every <code>Stepper</code></td>
 </tr>
 <tr>
 <td>The way a file leaves the device: a SEND… button opening the destinations (USB sticks, the computer, the phone by QR code)</td>
@@ -245,19 +292,49 @@ page-focus request (Main.qml wires those).</p>
 </table>
 <h2 id="buttons-action-or-state">Buttons: action or state</h2>
 <ul>
-<li><strong>Squared <code>ActionButton</code>: it does something once and leaves no state.</strong> LOAD, CLEAR, SAVE,
+<li><strong><code>ActionButton</code>: it does something once and leaves no state.</strong> LOAD, CLEAR, SAVE,
   RENAME, NEW, −/+, ◀ ▶, PLAY FROM HERE, TRIM, TO PADS, the transport keys, a picker showing its
   current value (it opens a list).</li>
 <li><strong>One <code>highlighted</code> action at most on a page:</strong> its main one, drawn as the webpage's flat
     orange face (design-system B22), as the setup page's TRY IT. Every other action keeps the key.</li>
-<li><strong>Rounded <code>Chip</code> / <code>StripButton</code>: a state you can see.</strong> It stays lit while the state is on,
+<li><strong><code>Chip</code> / <code>StripButton</code>: a state you can see.</strong> It stays lit while the state is on,
   so it always binds <code>checked</code>, or is checkable. <em>Checked:</em> <code>chip-shows-state</code>.</li>
-<li>An on/off toggle wears its LED: SET, STEP, LIVE, S/M, MONITOR, REPEAT.</li>
-<li>One choice out of a set wears none: BANK A–D, the views, SORT, the input tabs, KEEP TAKES IN.</li>
 <li><strong><code>ConfirmButton</code> for what cannot be undone:</strong> the first tap arms it (AGAIN? and a countdown
   bar), a second one within three seconds does it.</li>
 <li>All of them at the standard size (see Button sizes). <em>Checked:</em> <code>actions-are-actionbuttons</code>
   (no bare <code>QQC.Button</code>).</li>
+</ul>
+<h3 id="how-a-chip-looks">How a chip looks</h3>
+<p>A chip is told from a button by its face, never by its size or corners (the same, see Corners
+and Button sizes):</p>
+<ul>
+<li><strong>A button is a raised key</strong> (the style's face): a lighter top, a highlight, a dark lip.</li>
+<li><strong>A chip is a switch:</strong> raised as a button is (its frame, lip and top highlight) on its own
+  translucent face. On, or pressed, it sits flush and backlit as the project plate on the SONG
+  page (<code>RimGlow</code>): the rim lit, the light spilling round it, the face tinted.</li>
+<li>A toggle and a choice of a set look the same; what is on is lit. One shown as a glyph
+  (<code>Chip.iconName</code> alone: LOCK's padlock, closed or open) says its state with the glyph too.</li>
+</ul>
+<h2 id="corners">Corners</h2>
+<p>Two radii, from the theme, so everything that is alike looks alike:</p>
+<ul>
+<li><strong><code>Theme.radius</code> (4): every control.</strong> Buttons, chips, strip buttons, fields, the step keys,
+  pads and section keys, the cells of a grid. A layer drawn inside one (a hover, a focus ring,
+  an inner gloss) takes <code>Theme.radius - 1</code>.</li>
+<li><strong><code>Theme.surfaceRadius</code> (6): every surface.</strong> Pages, the machines' panes, plates and
+  nameplates, wells (<code>QQC.Frame</code>), strips, cards and list rows, toasts, and the dialogs (the
+  popup's card) the same as the panes.</li>
+<li><strong>Round things are drawn round</strong>, from their size: a dot or a knob <code>width / 2</code>, a progress
+  bar or a meter <code>height / 2</code>. A radius of 2 or less (a hairline, a tick) may stay a number.</li>
+</ul>
+<p><em>Checked:</em> <code>radius-from-theme</code> (no other number as a radius in QML).</p>
+<h2 id="groups">Groups</h2>
+<ul>
+<li><strong>Controls that belong together sit on one <code>ControlGroup</code>:</strong> − OCT +, ↶ ↷, ‹ 1/1 ›, a
+  section's or a part's ◀ ▶. Its well reaches 2 px past them, so the row keeps its size, and its
+  corners are the surfaces' (the controls' sit concentric inside).</li>
+<li><strong>A knob that drives a group wears its badge on the group's corner</strong>, never between its
+  controls. A caption names the group from outside its well (LENGTH, MOVE, REPEATS).</li>
 </ul>
 <h2 id="button-sizes">Button sizes</h2>
 <ul>
@@ -266,11 +343,11 @@ page-focus request (Main.qml wires those).</p>
 <li><strong>A smallest width:</strong> <code>Rave.controlWidth</code> (48 px, square) for a glyph (◀ ▶ − + ⟳ ✕), and
   <code>Rave.actionMinWidth</code> (88 px) for a word (LOAD, SCAN, SAVE). A short word is no smaller a
   target than a long one, and a longer label grows past it.</li>
-<li><code>ActionButton</code> applies both on its own (<code>minimumWidth</code>). A button may ask for more, never
-  less: the dialogs' main action, SAVE at 150, or SCAN at 130 so SCANNING… doesn't shift the
-  row.</li>
-<li>A row that wants bigger buttons sizes them all from one property (the SONG page's
-  <code>rowButtonHeight</code>, <code>wordButtonWidth</code>), never with numbers on each button.
+<li><code>ActionButton</code>, <code>Chip</code> and <code>StripButton</code> apply both on their own (<code>minimumWidth</code>): a chip
+  is exactly a button's size. A button may ask for more, never less: the dialogs' main action,
+  SAVE at 150, or SCAN at 130 so SCANNING… doesn't shift the row.</li>
+<li>A row that wants bigger buttons sizes them all from one property, never with numbers on each
+  button.
   <em>Checked:</em> <code>button-standard-size</code> (no number under the standard on a button's height or width).</li>
 </ul>
 <h2 id="controls-in-a-group-take-the-device-knobs">Controls in a group take the device knobs</h2>
@@ -338,7 +415,7 @@ above the words in the note's ink; <code>mascot: ""</code> leaves ARU out. <em>C
 whenever the content doesn't fit, faint at rest and brighter while it moves. A finger scrolls the
 view itself; the indicator only says there is more.</p>
 <h2 id="the-type-scale">The type scale</h2>
-<p>Every text takes one of ten steps from <code>Theme.type</code>, family, size, weight, tracking and case in
+<p>Every text takes one of eleven steps from <code>Theme.type</code>, family, size, weight, tracking and case in
 one: <code>font: Theme.type.label</code>. Set the whole font, not <code>font.pixelSize</code> beside it. The values
 come from theme/tokens.json <code>type.steps</code> (ctest design-tokens holds them equal).</p>
 <table>
@@ -358,10 +435,10 @@ come from theme/tokens.json <code>type.steps</code> (ctest design-tokens holds t
 <td>the splash, titles, a card's heading or a value bubble, nameplates and dialog titles</td>
 </tr>
 <tr>
-<td><code>lede</code>, <code>body</code>, <code>label</code></td>
+<td><code>lede</code>, <code>body</code>, <code>label</code>, <code>detail</code></td>
 <td>regular</td>
-<td>15, 13, 12</td>
-<td>a line under a title, running text, a control's caption</td>
+<td>15, 13, 12, 11</td>
+<td>a line under a title, running text, a control's caption, a secondary line under a title (who made it, a card's detail, a hint)</td>
 </tr>
 <tr>
 <td><code>caps</code>, <code>micro</code></td>
@@ -378,6 +455,34 @@ come from theme/tokens.json <code>type.steps</code> (ctest design-tokens holds t
 </tbody>
 </table>
 <p>A text with no step of its own takes the application font, <code>body</code>'s size.</p>
+<h3 id="controls-emphasis-and-symbols">Controls, emphasis and symbols</h3>
+<p>Buttons and combo boxes look alike: the style gives both the <code>label</code> step and the same button
+background, and so do the kit's ActionButton, Chip and StripButton. A control's caption doesn't
+set its own size; a long translation shrinks to fit instead.</p>
+<p>Setting one part of a control's font (<code>font.pixelSize</code>, <code>font.bold</code>) replaces the style's whole
+font and loses the step's weight. A control that needs another step sets the whole one:
+<code>font: Theme.type.caps</code>.</p>
+<p>Emphasis keeps the step: <code>font: Theme.type.strong(Theme.type.label)</code> is one weight bolder, and
+<code>Theme.type.italic(Theme.type.detail)</code> is slanted.</p>
+<h2 id="icons">Icons</h2>
+<p>A symbol is never a font character. Play, stop, record, undo, the arrows, close and the check
+are ravving's own pixel icons (<code>assets/icons</code>, written by <code>tools/icons/make-icons.py</code>).</p>
+<ul>
+<li><strong>The set:</strong> the one SETTINGS · LOOK · ICONS picks (<code>Theme.iconSet</code>: candy, block, hairline
+  or a user's icon pack, IconPacks; <a href="icon-packs.html">Make an icon pack</a>). A new icon's name goes
+  into <code>tools/icons/make-pack.py</code> and that page too (ctest <code>icons-current</code>).</li>
+<li><strong>On a button:</strong> <code>iconName</code> (ActionButton, ConfirmButton, Chip, StripButton) or
+  <code>icon.source: Interaction.icon(name)</code>. Anything else shows an <code>Icon</code>.</li>
+<li><strong>Sizes:</strong> 16 beside words and 24 on a key, so every set draws at a whole scale and no pixel
+  blurs.</li>
+<li><strong>In a hint or notice</strong> that names the device's keys, the string keeps the characters (▲ ▼ ◀ ▶
+  ■ ● ✱ → ✓) for its translators, and <code>Interaction.withIcons()</code> draws each one as its icon.</li>
+</ul>
+<h2 id="literal-sizes">Literal sizes</h2>
+<p>Drawings sized on purpose are the only exceptions: the big readout and the tuner's note. The
+files that still set a literal <code>pixelSize</code> (or a control's <code>fontSize</code>) are listed with how many they have. That number only
+goes down: a new literal fails, and so does a count left higher than the file needs.
+<em>Checked:</em> <code>font-sizes-are-steps</code>.</p>
 <h2 id="three-font-families">Three font families</h2>
 <p>ravving's text uses three families, all built in (the Fonts class), each with one job:</p>
 <table>
@@ -625,7 +730,7 @@ keep list in tools/ui-rules.json.</p>
     <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=7bcc475539" defer></script>
+<script src="../assets/aru.js?v=d4f4258295" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

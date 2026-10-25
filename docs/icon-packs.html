@@ -1,0 +1,558 @@
+<!doctype html>
+<!--
+  ravving: the documentation.
+  Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Rendered from docs/icon-packs.md by tools/build-site-docs.py: edit the markdown, not this file.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make an icon pack · ravving docs</title>
+<link rel="stylesheet" href="../site.css?v=a306cbe289">
+<script src="../assets/theme.js?v=3307b56d38"></script>
+<script src="../assets/icons.js?v=d6def946c7" defer></script>
+<link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
+</head>
+<body class="docs">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="index.html" aria-current="true">Docs</a>
+      <a href="../api/index.html">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Theme"><svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg></button>
+  </div>
+</header>
+<main class="wrap docs-wrap">
+  <details class="docs-side" open>
+    <summary><span class="mono">Docs</span></summary>
+    <form class="docs-search" role="search" onsubmit="return false">
+      <input type="search" id="docs-search" placeholder="Search the docs… live fx, soundfonts" aria-label="Search the documentation" autocomplete="off">
+      <ol id="docs-results" hidden></ol>
+    </form>
+    <nav aria-label="Documentation">
+<p class="mono">Play</p><ul>
+<li><a href="get-ravving.html">Get ravving</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="machines.html">The machines</a></li>
+<li><a href="load-a-preset.html">Load a preset</a></li>
+<li><a href="loop-to-song.html">Turn your loop into a song</a></li>
+<li><a href="play-it-live.html">Play it live</a></li>
+<li><a href="export-a-track.html">Export a track and play it back</a></li>
+<li><a href="film-a-session.html">Film your session</a></li>
+<li><a href="send-to-phone.html">Send a file to your phone</a></li>
+<li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
+<li><a href="manual.html">The manual</a></li>
+</ul>
+<p class="mono">Make your own</p><ul>
+<li><a href="skin-sets.html">Make a skin set</a></li>
+<li class="on"><a href="icon-packs.html" aria-current="page">Make an icon pack</a><ul><li><a href="#downloads">Downloads</a></li><li><a href="#how-ravving-draws-an-icon">How ravving draws an icon</a></li><li><a href="#the-file">The file</a></li><li><a href="#the-icons">The icons</a></li><li><a href="#draw-them">Draw them</a></li><li><a href="#build-and-check">Build and check</a></li><li><a href="#put-it-on-a-miko">Put it on a MIKO</a></li><li><a href="#share-it">Share it</a></li><li><a href="#checklist-for-a-new-pack">Checklist for a new pack</a></li></ul></li>
+</ul>
+<p class="mono">The pattern packs</p><ul>
+<li><a href="packs.html">The genre packs</a></li>
+</ul>
+<p class="mono">Change ravving</p><ul>
+<li><a href="architecture.html">Architecture</a></li>
+<li><a href="backend.html">Backend classes</a></li>
+<li><a href="qml-components.html">QML components</a></li>
+<li><a href="undo-history.html">The undo history</a></li>
+<li><a href="bluetooth.html">Bluetooth</a></li>
+<li><a href="live-recording.html">Live recordings</a></li>
+<li><a href="engines.html">The engines</a></li>
+<li><a href="routing.html">The audio graph</a></li>
+<li><a href="translations.html">Translations</a></li>
+<li><a href="ui-rules.html">UI rules</a></li>
+<li><a href="extending.html">Extending</a></li>
+<li><a href="writing-the-guide.html">Writing the guide</a></li>
+<li><a href="writing-code-docs.html">Writing code documentation</a></li>
+<li><a href="building.html">Building</a></li>
+<li><a href="packaging.html">Packaging</a></li>
+<li><a href="testing.html">Testing on the device</a></li>
+<li><a href="debugging.html">Debugging</a></li>
+<li><a href="quality.html">Quality</a></li>
+</ul>
+<p class="mono">The code</p><ul>
+<li><a href="../api/index.html">API reference</a></li>
+</ul>
+    </nav>
+  </details>
+  <article class="doc" id="doc">
+<p class="mono doc-kicker"><b>Make your own</b> <span>/</span> <b translate="no">docs/icon-packs.md</b></p>
+<h1>Make an icon pack</h1>
+<p class="doc-blurb">Your own drawings for every icon ravving shows: the names and where each one shows, the drawing rules, a tool to build and check a pack, and how to share it.</p>
+
+<p>An icon pack redraws the icons ravving shows: the transport, the arrows in hints, the settings,
+the pages. It is one JSON file. Drop it on the device and it shows up in SETTINGS → LOOK → ICONS
+by its name, beside CANDY, BLOCK and HAIRLINE, with no restart.</p>
+<p>This page is all you need to make one, with or without ravving's source. It lists every icon
+and where it shows, the drawing rules, and a tool that builds a pack from your drawings and
+checks it. Then it shows how to put the pack on a MIKO and share it.</p>
+<h2 id="downloads">Downloads</h2>
+<ul>
+<li><a href="../docs/icons/make-pack.py">make-pack.py</a>: the tool. Python 3, nothing to install.</li>
+<li>The built-in sets as packs to start from: <a href="../docs/icons/candy.json">candy.json</a>
+  (16-cell grid), <a href="../docs/icons/block.json">block.json</a> (8 cells) and
+  <a href="../docs/icons/hairline.json">hairline.json</a> (12 cells).</li>
+</ul>
+<h2 id="how-ravving-draws-an-icon">How ravving draws an icon</h2>
+<p>Every icon is a 1-bit pixel drawing: one shape, filled, on a square grid of cells. Its colour
+comes from what it sits on: a button's ink, a hint's colour, a lit key's. So a pack has no
+colours of its own.</p>
+<p>It is drawn at the largest whole scale that fits the space and centred, so a cell is always a
+whole number of pixels and never blurs. Icons show at 16 pixels in buttons, hints and lists, at
+24 in toolbars and larger on a few screens.</p>
+<p>A 12-cell icon at 16 pixels is drawn at its own size with a 2-pixel margin; at 24 pixels, at
+twice its size.</p>
+<p>An icon a pack leaves out is drawn from CANDY, the set that has them all. A pack can be small:
+redraw only the transport, and the rest stays as it was.</p>
+<h2 id="the-file">The file</h2>
+<pre><code class="language-json">{
+    &quot;ravving&quot;: &quot;preset&quot;,
+    &quot;type&quot;: &quot;icons&quot;,
+    &quot;pack&quot;: {
+        &quot;name&quot;: &quot;STENCIL&quot;,
+        &quot;about&quot;: &quot;cut-out shapes with a gap in every outline&quot;,
+        &quot;author&quot;: &quot;your name&quot;,
+        &quot;grid&quot;: 12,
+        &quot;icons&quot;: {
+            &quot;play&quot;: &quot;M3 2h1v1h1v1h1v1h1v1h-1v1h-1v1h-1v1h-1z&quot;,
+            &quot;stop&quot;: &quot;M2 2h8v8h-8z&quot;,
+            &quot;...&quot;: &quot;one entry per icon&quot;
+        }
+    }
+}
+</code></pre>
+<ul>
+<li><code>"ravving": "preset"</code> and <code>"type": "icons"</code> are required, or the file is ignored.</li>
+<li><code>name</code> is the button in ICONS (capitals read best); <code>about</code> is the line under it.</li>
+<li><code>grid</code> is the side of the square, in cells: a whole number from 4 to 16. Every icon of a pack
+  shares it. 8, 12 and 16 fit the sizes icons show at best.</li>
+<li><code>icons</code> maps an icon's name (the tables below) to its shape: an SVG path in grid cells.</li>
+<li>The file name, without <code>.json</code>, is the pack's key: lowercase letters, digits and dashes
+  (<code>stencil.json</code>). The built-in sets' names (<code>candy</code>, <code>block</code>, <code>hairline</code>) are taken. A file
+  named otherwise is not offered: rename it.</li>
+</ul>
+<h3 id="the-shape">The shape</h3>
+<p>A shape is the <code>d</code> of an SVG path, filled with the non-zero rule. ravving draws straight lines
+only: <code>M</code>, <code>L</code>, <code>H</code>, <code>V</code> and <code>Z</code>, in capitals (absolute) or small letters (relative). A curve,
+an arc or a name ravving has no icon for is left out, and the checker says so.</p>
+<p>Keep every point on whole cells, inside the grid. A run of cells is easiest written as one
+rectangle per row: <code>M2 3h4v1h-4z</code> fills four cells of the fourth row, from the third column. The
+tool writes them that way from a drawing.</p>
+<h2 id="the-icons">The icons</h2>
+<p>Every name, and where it shows. ravving's own hints use some as marks in text: "▲ ▼ pick ·
+SELECT opens" draws <code>caret-up</code> and <code>caret-down</code> in the words' colour.</p>
+<h3 id="transport-and-editing">Transport and editing</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Where it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>play</code></td>
+<td>PLAY, on the header and the players</td>
+</tr>
+<tr>
+<td><code>pause</code></td>
+<td>PAUSE, while playing</td>
+</tr>
+<tr>
+<td><code>stop</code></td>
+<td>STOP, and the ■ key in hints</td>
+</tr>
+<tr>
+<td><code>record</code></td>
+<td>RECORD, LIVE REC, the RECORDER, the ● key in hints</td>
+</tr>
+<tr>
+<td><code>skip-back</code>, <code>skip-next</code></td>
+<td>the music player's previous and next track</td>
+</tr>
+<tr>
+<td><code>metronome</code>, <code>metronome-tock</code></td>
+<td>the metronome: drawn in turn on the beat, so draw them as a pair (a pendulum left and right)</td>
+</tr>
+<tr>
+<td><code>loop</code></td>
+<td>a loop, the ⟲ mark in hints</td>
+</tr>
+<tr>
+<td><code>follow</code></td>
+<td>follow the playhead, the ↻ mark in hints</td>
+</tr>
+<tr>
+<td><code>undo</code>, <code>redo</code></td>
+<td>UNDO and REDO</td>
+</tr>
+<tr>
+<td><code>plus</code>, <code>minus</code></td>
+<td>add and remove, one more and one less, octave up and down</td>
+</tr>
+<tr>
+<td><code>close</code></td>
+<td>the ✕ that closes a dialog or a page</td>
+</tr>
+<tr>
+<td><code>clear</code></td>
+<td>a text field's clear button</td>
+</tr>
+<tr>
+<td><code>check</code></td>
+<td>done, picked, the ✓ mark in notices</td>
+</tr>
+<tr>
+<td><code>refresh</code></td>
+<td>read again: a list, a scan</td>
+</tr>
+<tr>
+<td><code>more</code></td>
+<td>a menu of more actions</td>
+</tr>
+<tr>
+<td><code>favourite</code></td>
+<td>a favourite, the ★ mark</td>
+</tr>
+<tr>
+<td><code>dot</code></td>
+<td>a small mark beside a name</td>
+</tr>
+<tr>
+<td><code>radio</code></td>
+<td>the picked entry of a drop-down list</td>
+</tr>
+<tr>
+<td><code>alert</code></td>
+<td>a warning, an issue, the ⚠ mark</td>
+</tr>
+</tbody>
+</table>
+<h3 id="arrows-carets-and-marks">Arrows, carets and marks</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Where it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chevron-left</code>, <code>chevron-right</code></td>
+<td>back and forward, a list's previous and next page</td>
+</tr>
+<tr>
+<td><code>caret-up</code>, <code>caret-down</code>, <code>caret-left</code>, <code>caret-right</code></td>
+<td>the device's ▲ ▼ ◀ ▶ keys in hints; <code>caret-down</code> is also a drop-down button's caret, <code>caret-right</code> the ▸ mark</td>
+</tr>
+<tr>
+<td><code>dropdown</code></td>
+<td>the ▾ mark of a button that opens a list</td>
+</tr>
+<tr>
+<td><code>arrow-up</code>, <code>arrow-down</code>, <code>arrow-left</code>, <code>arrow-right</code></td>
+<td>↑ ↓ ← → in hints, a step to the next screen</td>
+</tr>
+<tr>
+<td><code>key-star</code></td>
+<td>the device's ✱ key in hints</td>
+</tr>
+<tr>
+<td><code>note</code>, <code>note-on</code></td>
+<td>a note (♪), a note that sounds (♩)</td>
+</tr>
+</tbody>
+</table>
+<p>The carets are the device's keys: keep the four the same shape, turned.</p>
+<h3 id="waves-and-busy">Waves and busy</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Where it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>wave-saw</code>, <code>wave-square</code>, <code>wave-triangle</code>, <code>wave-sine</code></td>
+<td>a synth's oscillator shapes</td>
+</tr>
+<tr>
+<td><code>busy-1</code>, <code>busy-2</code>, <code>busy-3</code>, <code>busy-4</code></td>
+<td>busy: the four frames are drawn in turn, so they must loop smoothly</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-system">The system</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Where it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>wifi</code>, <code>bluetooth</code>, <code>usb</code>, <code>midi</code></td>
+<td>Wi-Fi, Bluetooth, a USB stick, MIDI</td>
+</tr>
+<tr>
+<td><code>brightness</code>, <code>volume</code></td>
+<td>the screen's brightness, the volume and the master</td>
+</tr>
+<tr>
+<td><code>mixer</code>, <code>cpu</code></td>
+<td>the mixer, the CPU's load</td>
+</tr>
+<tr>
+<td><code>lock</code>, <code>unlock</code></td>
+<td>locked and unlocked: draw them as a pair</td>
+</tr>
+<tr>
+<td><code>eye</code></td>
+<td>the LOOK settings, show a password</td>
+</tr>
+<tr>
+<td><code>get-more</code></td>
+<td>GET MORE, free things to download</td>
+</tr>
+<tr>
+<td><code>settings</code>, <code>info</code>, <code>power</code></td>
+<td>SETTINGS, ABOUT and more about something, power off and restart</td>
+</tr>
+<tr>
+<td><code>video</code>, <code>mic</code>, <code>headphones</code></td>
+<td>LIVE REC's video, a microphone or the input, the output</td>
+</tr>
+<tr>
+<td><code>folder</code></td>
+<td>a folder, FILES</td>
+</tr>
+<tr>
+<td><code>computer</code>, <code>phone</code></td>
+<td>the computer link, the phone share, Bluetooth devices</td>
+</tr>
+<tr>
+<td><code>fx</code></td>
+<td>the LIVE FX</td>
+</tr>
+<tr>
+<td><code>keys</code></td>
+<td>a keyboard, the KEYS settings</td>
+</tr>
+<tr>
+<td><code>profile</code></td>
+<td>the PROFILE settings: who uses the device</td>
+</tr>
+</tbody>
+</table>
+<h3 id="actions-and-pages">Actions and pages</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Where it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>delete</code>, <code>save</code>, <code>rename</code></td>
+<td>DELETE, SAVE, RENAME</td>
+</tr>
+<tr>
+<td><code>send</code></td>
+<td>SEND to a phone or a computer</td>
+</tr>
+<tr>
+<td><code>import</code>, <code>export</code></td>
+<td>take in from a stick or a download; EXPORT a track or a project</td>
+</tr>
+<tr>
+<td><code>drums</code>, <code>chords</code>, <code>bass</code>, <code>lead</code>, <code>sampler</code></td>
+<td>the instrument pages</td>
+</tr>
+<tr>
+<td><code>song</code>, <code>player</code></td>
+<td>the SONG page, the music player</td>
+</tr>
+<tr>
+<td><code>menu</code></td>
+<td>MENU</td>
+</tr>
+<tr>
+<td><code>sun</code>, <code>moon</code></td>
+<td>light and dark, day and night</td>
+</tr>
+<tr>
+<td><code>globe</code></td>
+<td>the language, the internet</td>
+</tr>
+<tr>
+<td><code>heart</code></td>
+<td>a like, thanks</td>
+</tr>
+</tbody>
+</table>
+<h2 id="draw-them">Draw them</h2>
+<ul>
+<li id="read-at-16-pixels"><strong>Read at 16 pixels.</strong> That is the size most icons show at. Look at every one there before
+  anything else; a detail that needs 48 pixels is noise.</li>
+<li id="one-weight"><strong>One weight.</strong> Pick a line width (one cell, two cells, solid) and keep it in every icon, so
+  the pack reads as one family.</li>
+<li id="leave-a-margin"><strong>Leave a margin.</strong> Icons sit beside text and inside buttons. A one-cell margin on every side
+  keeps them from touching the edge. Centre the shape; an odd-sized shape on an even grid sits
+  half a cell off, so pick the grid for your shapes.</li>
+<li id="pairs-stay-pairs"><strong>Pairs stay pairs.</strong> <code>undo</code> and <code>redo</code>, <code>lock</code> and <code>unlock</code>, the carets, the arrows and the
+  chevrons are mirrors or turns of each other. Draw one, then flip it.</li>
+<li id="shapes-not-letters"><strong>Shapes, not letters.</strong> The icons show in Spanish and Japanese too; a letter only reads in one
+  language.</li>
+<li id="no-holes-by-accident"><strong>No holes by accident.</strong> A shape is filled with the non-zero rule: a hole needs its outline
+  drawn the other way round. From a pixel drawing, the tool gets this right for you.</li>
+</ul>
+<h2 id="build-and-check">Build and check</h2>
+<p>Draw each icon as its own file, named after it: <code>play.svg</code> or <code>play.png</code>, in one folder.</p>
+<ul>
+<li><strong>SVG</strong>, from any vector editor: a square <code>viewBox="0 0 12 12"</code> (your grid), <code>&lt;path&gt;</code> and
+  <code>&lt;rect&gt;</code> elements in straight lines, no transforms. Snap to a 1-unit grid and convert shapes to
+  paths before saving.</li>
+<li><strong>PNG</strong>, from any pixel editor: square, one pixel a cell (12 × 12 for a 12-cell grid). Every
+  pixel more than half opaque is ink; in a picture without transparency, dark pixels are.</li>
+</ul>
+<pre><code class="language-sh">python3 make-pack.py start stencil --from block.json   # a folder with names.txt and BLOCK's icons
+# draw, replace, delete what you don't redraw
+python3 make-pack.py build stencil --name STENCIL --about &quot;cut-out shapes&quot; --author &quot;you&quot;
+python3 make-pack.py check stencil.json
+python3 make-pack.py sheet stencil.json -o stencil.html
+</code></pre>
+<p><code>build</code> writes <code>stencil.json</code> and says what it left out and why. <code>check</code> prints <code>ok</code> or each
+problem, and exits 1 on one.</p>
+<p><code>sheet</code> writes a page of every icon at 16, 24 and 48 pixels on a
+dark and a light background: open it in a browser and compare the icons side by side.
+<code>unpack PACK.json FOLDER</code> turns any pack back into SVG files.</p>
+<h2 id="put-it-on-a-miko">Put it on a MIKO</h2>
+<ol>
+<li><strong>From a USB stick:</strong> copy the file into <code>ravving/presets/icons/</code> on the stick. On the MIKO,
+   MENU → the stick's tile opens the USB page; it copies presets both ways, icon packs among them.</li>
+<li><strong>Over the network</strong> (developers): copy it to <code>/zynthian/zynthian-my-data/ravving/icons/</code> on
+   the device, for example with <code>scp stencil.json root@&lt;device&gt;:/zynthian/zynthian-my-data/ravving/icons/</code>.
+   Write the file in one go (copy to another name, then rename), so ravving never reads it half
+   written.</li>
+<li>SETTINGS → LOOK → ICONS: the pack is there by its <code>name</code>. Tap it: every icon changes at once,
+   and the pick stays after a restart.</li>
+</ol>
+<p>While the pack is picked, copying a new version of the file over it redraws the icons on screen.
+So you can keep the device on and copy after every change. Delete the file and the icons go back
+to CANDY.</p>
+<h2 id="share-it">Share it</h2>
+<p>Share the file: a friend copies it the same way. Packs in GET MORE (SETTINGS → LOOK → More icons)
+come from ravving's catalog. To offer yours there, hand over the file, the checker's output and
+the sheet.</p>
+<h2 id="checklist-for-a-new-pack">Checklist for a new pack</h2>
+<ol>
+<li>Pick a grid (8, 12 or 16), a line weight and a <code>name</code>.</li>
+<li>Draw the transport and the carets first: they show the most.</li>
+<li>Draw the rest, or leave out what CANDY already draws well enough for your pack.</li>
+<li>Run <code>check</code> until it prints <code>ok</code>.</li>
+<li>Open the <code>sheet</code> and look at every icon at 16 pixels, on dark and light.</li>
+<li>Put it on a MIKO and look at a page of each kind: an instrument page, SETTINGS, a dialog
+   with hints, the SONG page and the music player.</li>
+</ol>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
+  </div>
+</footer>
+<script src="../assets/aru.js?v=d4f4258295" defer></script>
+<script>document.documentElement.classList.remove("no-js");
+if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
+(function () {
+  var box = document.getElementById("docs-search"), list = document.getElementById("docs-results");
+  if (!box || !list) return;
+  var index = null, timer = 0;
+  // a translated page (site/<lang>/docs/) reads the English docs' index and links to their pages
+  var base = document.documentElement.getAttribute("data-docs-base") || "";
+  function load(done) {
+    if (index) return done();
+    fetch(base + "search.json").then(function (r) { return r.json(); }).then(function (data) { index = data; done(); })
+      .catch(function () { list.hidden = false; list.innerHTML = '<li class="none">the index could not be loaded</li>'; });
+  }
+  function escapeHtml(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, words) {
+    var low = text.toLowerCase(), at = -1;
+    for (var i = 0; i < words.length && at < 0; i++) at = low.indexOf(words[i]);
+    var start = Math.max(0, at - 70), end = Math.min(text.length, (at < 0 ? 0 : at) + 110);
+    var piece = (start > 0 ? "… " : "") + text.slice(start, end) + (end < text.length ? " …" : "");
+    var out = escapeHtml(piece);
+    words.forEach(function (w) { out = out.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi"), "<mark>$1</mark>"); });
+    return out;
+  }
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    if (q.length < 2) { list.hidden = true; list.innerHTML = ""; return; }
+    load(function () {
+      var words = q.split(/\s+/).filter(Boolean), hits = [];
+      index.forEach(function (s) {
+        var head = s.h.toLowerCase(), text = s.t.toLowerCase(), score = 0;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i], inHead = head.indexOf(w) >= 0, n = text.split(w).length - 1;
+          if (!inHead && n === 0) return;
+          // the hits, and how dense they are: a short section about the word beats a long one that mentions it
+          score += (inHead ? 20 : 0) + Math.min(n, 10) + Math.min(20, Math.round(2000 * n / Math.max(text.length, 200))) + (s.p.toLowerCase().indexOf(w) >= 0 ? 5 : 0);
+        }
+        // the words together, as typed, weigh most: in the heading, then in the text
+        if (words.length > 1) { if (head.indexOf(q) >= 0) score += 40; else if (text.indexOf(q) >= 0) score += 15; }
+        hits.push({ s: s, score: score });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      list.hidden = false;
+      if (!hits.length) { list.innerHTML = '<li class="none">nothing for “' + escapeHtml(q) + '”</li>'; return; }
+      list.innerHTML = hits.slice(0, 20).map(function (h) {
+        return '<li><a href="' + base + h.s.u + '"><b>' + escapeHtml(h.s.h) + '</b><span class="mono">' + escapeHtml(h.s.p) + '</span><em>' + snippet(h.s.t, words) + '</em></a></li>';
+      }).join("") + (hits.length > 20 ? '<li class="none">' + (hits.length - 20) + ' more: say more words</li>' : "");
+    });
+  }
+  box.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 120); });
+  box.addEventListener("focus", function () { load(function () {}); });
+  box.addEventListener("keydown", function (e) { if (e.key === "Escape") { box.value = ""; run(); } });
+  var q = new URLSearchParams(location.search).get("q");
+  if (q) { box.value = q; run(); }
+})();
+(function () {
+  var NOTES = {
+    es: ["Esta página solo está en inglés.", "Documentación en español"],
+    ja: ["このページは英語のみです。", "日本語のドキュメント"]
+  };
+  var lang = document.documentElement.lang || "en";
+  var want;
+  try {
+    if (document.querySelector("nav.langs")) { localStorage.setItem("ravving-lang", lang); return; }
+    want = localStorage.getItem("ravving-lang");
+  } catch (e) { return; }
+  var note = NOTES[want];
+  if (!note) return;
+  var p = document.createElement("p");
+  p.className = "doc-langnote";
+  p.lang = want;
+  var a = document.createElement("a");
+  a.href = "../" + want + "/docs/index.html";
+  a.textContent = "← " + note[1];
+  p.append(note[0] + " ", a);
+  var doc = document.getElementById("doc");
+  doc.insertBefore(p, doc.firstChild);
+})();</script>
+</body>
+</html>

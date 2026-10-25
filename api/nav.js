@@ -98,10 +98,6 @@ window.ravNav = [
     "href": "wsledstrip.html"
    },
    {
-    "title": "zb",
-    "href": "zb.html"
-   },
-   {
     "title": "ZynthboxBridge",
     "href": "zynthboxbridge.html"
    }
@@ -111,6 +107,10 @@ window.ravNav = [
   "label": "Studio and projects",
   "href": "ravving-studio.html",
   "pages": [
+   {
+    "title": "GitCommandSnapshotStore",
+    "href": "gitcommandsnapshotstore.html"
+   },
    {
     "title": "GlyphProvider",
     "href": "glyphprovider.html"
@@ -128,8 +128,16 @@ window.ravNav = [
     "href": "historyparticipant.html"
    },
    {
+    "title": "IconProvider",
+    "href": "iconprovider.html"
+   },
+   {
     "title": "KeySpelling",
     "href": "keyspelling.html"
+   },
+   {
+    "title": "LibGit2SnapshotStore",
+    "href": "libgit2snapshotstore.html"
    },
    {
     "title": "Localization",
@@ -138,6 +146,10 @@ window.ravNav = [
    {
     "title": "NamedStore",
     "href": "namedstore.html"
+   },
+   {
+    "title": "PatternClip",
+    "href": "patternclip.html"
    },
    {
     "title": "PresetExchange",
@@ -152,12 +164,20 @@ window.ravNav = [
     "href": "projectcheck.html"
    },
    {
+    "title": "ProjectHistory",
+    "href": "projecthistory.html"
+   },
+   {
     "title": "Projects",
     "href": "projects.html"
    },
    {
     "title": "Projects::Session",
     "href": "projects-session.html"
+   },
+   {
+    "title": "RoleNames",
+    "href": "rolenames.html"
    },
    {
     "title": "Sections",
@@ -172,8 +192,16 @@ window.ravNav = [
     "href": "sketchpad.html"
    },
    {
-    "title": "SketchpadTrack",
-    "href": "sketchpadtrack.html"
+    "title": "Snapshot",
+    "href": "snapshot.html"
+   },
+   {
+    "title": "SnapshotStore",
+    "href": "snapshotstore.html"
+   },
+   {
+    "title": "SoundPreviews",
+    "href": "soundpreviews.html"
    },
    {
     "title": "Studio",
@@ -591,6 +619,18 @@ window.ravNav = [
   "label": "Other",
   "pages": [
    {
+    "title": "IconPacks",
+    "href": "iconpacks.html"
+   },
+   {
+    "title": "ProjectHistory::Limits",
+    "href": "projecthistory-limits.html"
+   },
+   {
+    "title": "Sketchpad::TrackCue",
+    "href": "sketchpad-trackcue.html"
+   },
+   {
     "title": "Skin",
     "href": "skin.html"
    },
@@ -633,6 +673,10 @@ window.ravNav = [
     "href": "qml-ravving-controls-browselist.html"
    },
    {
+    "title": "CapFace",
+    "href": "qml-ravving-controls-capface.html"
+   },
+   {
     "title": "Caption",
     "href": "qml-ravving-controls-caption.html"
    },
@@ -655,6 +699,10 @@ window.ravNav = [
    {
     "title": "ConfirmButton",
     "href": "qml-ravving-controls-confirmbutton.html"
+   },
+   {
+    "title": "ControlGroup",
+    "href": "qml-ravving-controls-controlgroup.html"
    },
    {
     "title": "DialFace",
@@ -681,12 +729,16 @@ window.ravNav = [
     "href": "qml-ravving-controls-filerow.html"
    },
    {
+    "title": "FocusRing",
+    "href": "qml-ravving-controls-focusring.html"
+   },
+   {
     "title": "FormRow",
     "href": "qml-ravving-controls-formrow.html"
    },
    {
-    "title": "Glyph",
-    "href": "qml-ravving-controls-glyph.html"
+    "title": "Icon",
+    "href": "qml-ravving-controls-icon.html"
    },
    {
     "title": "Interaction",
@@ -713,12 +765,20 @@ window.ravNav = [
     "href": "qml-ravving-controls-knobgroup.html"
    },
    {
+    "title": "Led",
+    "href": "qml-ravving-controls-led.html"
+   },
+   {
     "title": "LedDisplay",
     "href": "qml-ravving-controls-leddisplay.html"
    },
    {
     "title": "LevelSlider",
     "href": "qml-ravving-controls-levelslider.html"
+   },
+   {
+    "title": "ListRow",
+    "href": "qml-ravving-controls-listrow.html"
    },
    {
     "title": "Meter",
@@ -749,6 +809,10 @@ window.ravNav = [
     "href": "qml-ravving-controls-plate.html"
    },
    {
+    "title": "RimGlow",
+    "href": "qml-ravving-controls-rimglow.html"
+   },
+   {
     "title": "SecondPress",
     "href": "qml-ravving-controls-secondpress.html"
    },
@@ -759,6 +823,10 @@ window.ravNav = [
    {
     "title": "SideBarItem",
     "href": "qml-ravving-controls-sidebaritem.html"
+   },
+   {
+    "title": "Stepper",
+    "href": "qml-ravving-controls-stepper.html"
    },
    {
     "title": "StripButton",

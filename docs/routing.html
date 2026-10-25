@@ -10,8 +10,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The audio graph · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<link rel="stylesheet" href="../site.css?v=a306cbe289">
 <script src="../assets/theme.js?v=3307b56d38"></script>
+<script src="../assets/icons.js?v=d6def946c7" defer></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -43,18 +44,20 @@
     <nav aria-label="Documentation">
 <p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="machines.html">The machines</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
+<li><a href="play-it-live.html">Play it live</a></li>
 <li><a href="export-a-track.html">Export a track and play it back</a></li>
 <li><a href="film-a-session.html">Film your session</a></li>
 <li><a href="send-to-phone.html">Send a file to your phone</a></li>
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
-<li><a href="machines.html">The machines</a></li>
-<li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
 </ul>
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
+<li><a href="icon-packs.html">Make an icon pack</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -98,8 +101,10 @@ graph …</code>) does the checks below in one go.</p>
 link and retries until the ports exist (engines and passthroughs make their ports a moment
 after they are requested). Per machine (z: its Zynthian channel, t: its sketchpad track):</p>
 <pre><code>ZLRouter:Zynthian-Channel{z} ─MIDI─&gt; ravving-&lt;key&gt;-midi:midi_00          (FluidSynth)
+ZLRouter:Zynthian-Channel{n} ─MIDI─&gt; ravving-&lt;key&gt;-ch{n}-midi:midi_00    (a section's other engine, channel n from the pool)
                                       ravving-&lt;key&gt;:&lt;lv2 midi in&gt;         (jalv)
 ravving-&lt;key&gt;:output_FL/FR ──&gt; [DRIVE insert] ──&gt; SynthPassthrough:Synth{z+1}-input{L,R}
+ravving-&lt;key&gt;-ch{n}:output_FL/FR ──&gt; SynthPassthrough:Synth{z+1}-input   (every engine of a machine into its own passthrough)
 SynthPassthrough:Synth{z+1}-dryOut ──&gt; TrackPassthrough:Channel{t+1}-lane1-input
 TrackPassthrough lane dryOut ──&gt; AudioLevels:Channel{t+1} ──&gt; GlobalPlayback:input
 TrackPassthrough lane wetOutFx1 ──&gt; ravving-reverb ──&gt; GlobalPlayback:input   (send 1)
@@ -109,6 +114,7 @@ SamplerSynth:global-sketch1 ──&gt; GlobalPlayback:input (the metronome's tic
 GlobalPlayback:dryOut ──&gt; ravving-repeat ──&gt; ravving-crush ──&gt; ravving-phaser (the master
     inserts: LIVE FX) ──&gt; system:playback_1/2   (or ravving-out, a loopback, when the sound
     goes to Bluetooth / HDMI: [architecture.md](bluetooth.md))
+    and ──&gt; AudioLevels:SystemPlayback (the master meter, ALT + ● and EXPORT's recording)
 jacks 4/5 (the HiFiBerry's capture, HardwarePorts) ──&gt; [input inserts] ──&gt; a track's lane (monitor) and / or
     AudioLevels:SystemRecorder (record); AudioLevels:SystemCapture meters the input
 </code></pre>
@@ -296,6 +302,16 @@ alone can point the input at the silent Dummy.</p>
 <li><strong>Audio round trip:</strong> <code>pw-jack jack_iodelay</code>, with a cable from an output jack into input
     jack 4 or 5.</li>
 </ul>
+<h3 id="several-engines-on-one-machine">Several engines on one machine</h3>
+<ul>
+<li>A machine with more than one engine (a section's own sound) plays through one at a time.
+  Its track's chained sound is the engine heard (<code>SketchpadTrack::setSynth()</code>). It switches on
+  the last sixteenth before the bar a section lands on.</li>
+<li>The engine left gets an all-notes-off (<code>MidiRouter::sendMidiMessageToZynthianSynth</code>), and
+  the idle engines get no notes at all.</li>
+<li>The jam has 16 Zynthian channels, one of them the master channel: 15 engines at most
+  (<code>Studio::SynthChannels</code>).</li>
+</ul>
 <h3 id="who-drives-the-graph">Who drives the graph</h3>
 <p>The sound card's playback node is the driver (<code>priority.driver</code> 10000 from
 <code>/etc/wireplumber/wireplumber.conf.d/99-default-soundcard.conf</code>). It stays the driver whatever
@@ -310,7 +326,7 @@ clock: the card's capture, or the Bluetooth transport.</p>
     <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=7bcc475539" defer></script>
+<script src="../assets/aru.js?v=d4f4258295" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

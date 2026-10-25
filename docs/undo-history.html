@@ -10,8 +10,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The undo history · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=a7e09cb14c">
+<link rel="stylesheet" href="../site.css?v=a306cbe289">
 <script src="../assets/theme.js?v=3307b56d38"></script>
+<script src="../assets/icons.js?v=d6def946c7" defer></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -43,18 +44,20 @@
     <nav aria-label="Documentation">
 <p class="mono">Play</p><ul>
 <li><a href="get-ravving.html">Get ravving</a></li>
+<li><a href="first-beat.html">Your first beat</a></li>
+<li><a href="machines.html">The machines</a></li>
 <li><a href="load-a-preset.html">Load a preset</a></li>
 <li><a href="loop-to-song.html">Turn your loop into a song</a></li>
+<li><a href="play-it-live.html">Play it live</a></li>
 <li><a href="export-a-track.html">Export a track and play it back</a></li>
 <li><a href="film-a-session.html">Film your session</a></li>
 <li><a href="send-to-phone.html">Send a file to your phone</a></li>
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
-<li><a href="machines.html">The machines</a></li>
-<li><a href="first-beat.html">Your first beat</a></li>
 <li><a href="manual.html">The manual</a></li>
 </ul>
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
+<li><a href="icon-packs.html">Make an icon pack</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
@@ -95,9 +98,11 @@ to QML as <code>studio.history</code>. Everything that can be undone goes throug
 undo stack of its own.</p>
 <h2 id="what-is-undone">What is undone</h2>
 <p>The <strong>patterns</strong>: every machine's notes, steps, chords, slots, accents, slides, lengths,
-automation, live timing and its preset's name (<code>Machine::historyState()</code>). Not the sound
-(source, factory sound, MODS), the mix (level, pan, mute), the effects or the project's
-settings (tempo, swing, key). Anything can join by becoming a participant (below).</p>
+automation, live timing and its preset's name (<code>Machine::historyState()</code>).</p>
+<p>The <strong>sound chosen</strong> (<code>Machine::soundChoice()</code>): the source, the factory sound, a drum kit and a
+section's own sound. A preset loaded with its sound is undone in one step.</p>
+<p>Not the sound's knobs (MODS), the mix (level, pan, mute), the effects or the project's settings
+(tempo, swing, key). Anything can join by becoming a participant (below).</p>
 <p>And the <strong>arrangement</strong> (<code>Sections::historyState()</code>, "SECTIONS"): which sections there are,
 their order, names, colours and lengths, and the song.</p>
 <ul>
@@ -221,7 +226,8 @@ The history keeps <code>History::Depth</code> (100) steps.</p>
 <h2 id="notes">Notes</h2>
 <ul>
 <li><code>historyState()</code> is computed after every change, so keep it cheap (a map of the content);
-  the machines' is their <code>contentState()</code> less the sound and the view.</li>
+  the machines' is their <code>contentState()</code> less the sound's knobs and the view, plus the sound
+  chosen.</li>
 <li>One machine's undo clears the timeline's redo, since what it would redo doesn't match what's there.</li>
 <li>A timeline undo of a step a machine was part of can be redone by that machine's ↷ too: it
   falls back to the timeline's redo.</li>
@@ -233,7 +239,7 @@ The history keeps <code>History::Depth</code> (100) steps.</p>
     <p>ravving is by Camilo Higuita, GPL‑3.0‑only; these pages are rendered from the repository's markdown by tools/build-site-docs.py.</p>
   </div>
 </footer>
-<script src="../assets/aru.js?v=7bcc475539" defer></script>
+<script src="../assets/aru.js?v=d4f4258295" defer></script>
 <script>document.documentElement.classList.remove("no-js");
 if (matchMedia("(max-width: 900px)").matches) document.querySelector(".docs-side").open = false;
 (function () {

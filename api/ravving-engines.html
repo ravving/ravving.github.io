@@ -6,7 +6,7 @@
   <meta name="description" content="The sound engines, the LV2 inserts and the effect chains.">
   <title>Engines and effects | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -20,8 +20,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -69,11 +69,11 @@
 <div class="table"><table class="annotated">
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audioinsert.html">AudioInsert</a></p></td><td class="tblDescr"><p>Something audio goes through on the JACK graph, with stereo or mono inputs and outputs</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="beatrepeat.html">BeatRepeat</a></p></td><td class="tblDescr"><p>A beat repeat on the master for LiveFx's STUTTER and LOOP pads: ravving's own JACK client (ravving-repeat, stereo in and out), the first of the master inserts</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="consoleprocess.html">ConsoleProcess</a></p></td><td class="tblDescr"><p>A helper process ravving drives through its text console (FluidSynth's shell, jalv's command line), run by libzynthbox's ProcessWrapper</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="consoleprocess.html">ConsoleProcess</a></p></td><td class="tblDescr"><p>A helper process ravving drives through its text console (FluidSynth's shell, jalv's command line), run by libravving's Process (its ProcessWrapper)</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="effectchain.html">EffectChain</a></p></td><td class="tblDescr"><p>Effects chain every machine has, in signal order: DRIVE, COMPRESSOR, REVERB, EQ, PAN, SIDECHAIN, DELAY, each with its knobs</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="effectchain-effect.html">EffectChain::Effect</a></p></td><td class="tblDescr"><p>An effect of the chain: its name and its knobs, in order</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="effectchain-knob.html">EffectChain::Knob</a></p></td><td class="tblDescr"><p>A knob of an effect: its name, its defaultValue (0..1) and whether it is shared by every machine</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="fluidsynthengine.html">FluidSynthEngine</a></p></td><td class="tblDescr"><p>A FluidSynth process playing one soundfont preset (SF2 or SF3), such as a drum machine's kit or a soundfont sound source</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="fluidsynthengine.html">FluidSynthEngine</a></p></td><td class="tblDescr"><p>A FluidSynth process playing a soundfont preset (SF2 or SF3) per clip of its track, such as a drum machine's kit or a soundfont sound source, out of the soundfonts it holds</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="globaleffects.html">GlobalEffects</a></p></td><td class="tblDescr"><p>Studio's two send effects: one reverb and one delay that every machine sends into, their returns mixed into the master</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="jalvengine.html">JalvEngine</a></p></td><td class="tblDescr"><p>An LV2 instrument as a machine's sound engine, run by jalv (a JalvPlugin)</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="jalvplugin.html">JalvPlugin</a></p></td><td class="tblDescr"><p>One LV2 plugin running in its own jalv process on the JACK graph: an effect (a reverb, a delay..., audio in and out) or an instrument (MIDI in, audio out; JalvEngine)</p></td></tr>
@@ -92,11 +92,11 @@
 <div class="table"><table class="annotated">
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="audioinsert.html">AudioInsert</a></p></td><td class="tblDescr"><p>Something audio goes through on the JACK graph, with stereo or mono inputs and outputs</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="beatrepeat.html">BeatRepeat</a></p></td><td class="tblDescr"><p>A beat repeat on the master for LiveFx's STUTTER and LOOP pads: ravving's own JACK client (ravving-repeat, stereo in and out), the first of the master inserts</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="consoleprocess.html">ConsoleProcess</a></p></td><td class="tblDescr"><p>A helper process ravving drives through its text console (FluidSynth's shell, jalv's command line), run by libzynthbox's ProcessWrapper</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="consoleprocess.html">ConsoleProcess</a></p></td><td class="tblDescr"><p>A helper process ravving drives through its text console (FluidSynth's shell, jalv's command line), run by libravving's Process (its ProcessWrapper)</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="effectchain.html">EffectChain</a></p></td><td class="tblDescr"><p>Effects chain every machine has, in signal order: DRIVE, COMPRESSOR, REVERB, EQ, PAN, SIDECHAIN, DELAY, each with its knobs</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="effectchain-effect.html">EffectChain::Effect</a></p></td><td class="tblDescr"><p>An effect of the chain: its name and its knobs, in order</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="effectchain-knob.html">EffectChain::Knob</a></p></td><td class="tblDescr"><p>A knob of an effect: its name, its defaultValue (0..1) and whether it is shared by every machine</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="fluidsynthengine.html">FluidSynthEngine</a></p></td><td class="tblDescr"><p>A FluidSynth process playing one soundfont preset (SF2 or SF3), such as a drum machine's kit or a soundfont sound source</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="fluidsynthengine.html">FluidSynthEngine</a></p></td><td class="tblDescr"><p>A FluidSynth process playing a soundfont preset (SF2 or SF3) per clip of its track, such as a drum machine's kit or a soundfont sound source, out of the soundfonts it holds</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="globaleffects.html">GlobalEffects</a></p></td><td class="tblDescr"><p>Studio's two send effects: one reverb and one delay that every machine sends into, their returns mixed into the master</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="jalvengine.html">JalvEngine</a></p></td><td class="tblDescr"><p>An LV2 instrument as a machine's sound engine, run by jalv (a JalvPlugin)</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="jalvplugin.html">JalvPlugin</a></p></td><td class="tblDescr"><p>One LV2 plugin running in its own jalv process on the JACK graph: an effect (a reverb, a delay..., audio in and out) or an instrument (MIDI in, audio out; JalvEngine)</p></td></tr>

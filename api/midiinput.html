@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>MidiInput Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -92,7 +92,7 @@
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#MidiInput" translate="no">MidiInput</a></b>(QObject *<i>midiRouter</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#MidiInput" translate="no">MidiInput</a></b>(int *<i>router</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#devices-prop" translate="no">devices</a></b>() const</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
@@ -106,8 +106,8 @@
 <!-- $$$MidiInput-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>libzynthbox's MidiRouter receives every connected controller. Left alone it would play a controller's raw notes on its current sketchpad track, straight into that track's engine; ravving points that at a track it does not use, so the notes reach no engine and arrive only here (<code translate="no">MidiRouter::midiMessage</code>, from its hardware input port).</p>
-<p>A device can also send its channels to tracks of their own, and libzynthbox loads saved per-device settings incorrectly (MidiRouterDevice turns each saved track into a bool, so every channel lands on track 1). So every controller's channels are set back to the current track at start and whenever one is plugged in.</p>
+<p>libravving's router receives every connected controller. Left alone it would play a controller's raw notes on its current sketchpad track, straight into that track's engine; ravving points that at a track it does not use, so the notes reach no engine and arrive only here (libravving::Router::onControllerMidi).</p>
+<p>A device can also send its channels to tracks of their own, and the library loads saved per-device settings incorrectly (MidiRouterDevice turns each saved track into a bool, so every channel lands on track 1). So every controller's channels are set back to the current track at start and whenever one is plugged in.</p>
 <p>A controller seen through two bridges (ALSA's a2j and PipeWire's Midi-Bridge) delivers each message twice; a copy arriving within a few milliseconds is dropped. Enable <code translate="no">QT_LOGGING_RULES=&quot;ravving.midi.debug=true&quot;</code> to log the messages. GUI thread only.</p>
 </div>
 <!-- @@@MidiInput -->
@@ -131,9 +131,9 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$MidiInput[overload1]$$$MidiInputQObject*QObject* -->
-<h3 class="fn" translate="no" id="MidiInput"><code class="details extra" translate="no">[explicit]</code> MidiInput::<span class="name">MidiInput</span>(<span class="type">QObject</span> *<i>midiRouter</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Listens to <i translate="no">midiRouter</i>, libzynthbox's MidiRouter (null on a desktop: no input), and points every connected controller's channels at the current track, with the given <i translate="no">parent</i>.</p>
+<!-- $$$MidiInput[overload1]$$$MidiInputint*QObject* -->
+<h3 class="fn" translate="no" id="MidiInput"><code class="details extra" translate="no">[explicit]</code> MidiInput::<span class="name">MidiInput</span>(<span class="type">int</span> *<i>router</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Listens to libravving's <i translate="no">router</i> (null on a desktop: no input), and points every connected controller's channels at the current track, with the given <i translate="no">parent</i>.</p>
 <!-- @@@MidiInput -->
 </div>
 <div class="fnitem">

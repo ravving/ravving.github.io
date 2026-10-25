@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>SamplerMachine Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -161,7 +161,7 @@
 <!-- $$$SamplerMachine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The current bank is the one that plays. Each loaded slot is one ClipAudioSource on the machine's sketchpad track (slot <i>i</i> on sample slot <i>i</i> % 5, row <i>i</i> / 5), set up on its root slice: its key zone and root note are the slot's note (kits.json's <code translate="no">baseNote</code> + <i>i</i>), so a pattern note or a live key plays exactly that sample, untransposed. It plays one-shot (a retrigger cuts the previous voice); the slot's pitch is the slice's pitch (±12 semitones); the trim (start as a fraction of the file, length as a fraction of what follows the start) is its start and length; reverse plays a reversed copy of the file, rendered once on a worker thread into the cache folder. The track is <code translate="no">sample-trig</code>, so its PatternModel sends its notes to SamplerSynth for the clips the track publishes (<a href="sketchpadtrack.html#setSamples" translate="no">SketchpadTrack::setSamples</a>()).</p>
+<p>The current bank is the one that plays. Each loaded slot is one ClipAudioSource on the machine's sketchpad track (slot <i>i</i> on sample slot <i>i</i> % 5, row <i>i</i> / 5), set up on its root slice: its key zone and root note are the slot's note (kits.json's <code translate="no">baseNote</code> + <i>i</i>), so a pattern note or a live key plays exactly that sample, untransposed. It plays one-shot (a retrigger cuts the previous voice); the slot's pitch is the slice's pitch (±12 semitones); the trim (start as a fraction of the file, length as a fraction of what follows the start) is its start and length; reverse plays a reversed copy of the file, rendered once on a worker thread into the cache folder. The track is <code translate="no">sample-trig</code>, so its PatternModel sends its notes to SamplerSynth for the clips the track publishes (libravving::Track::setSamples()).</p>
 <p>The step pattern follows <a href="drummachine.html" translate="no">DrumMachine</a>'s interface: a row per slot, an accent row, and per-row level, mute and solo applied as velocities. Presets (<code translate="no">sampler-presets.json</code>) are rhythms over the slots: keys &quot;1&quot; to &quot;8&quot; a row each, &quot;x&quot; a hit and &quot;X&quot; an accented one. The current bank is view state, outside the undo history, and a section keeps the banks' hits, not their samples.</p>
 </div>
 <!-- @@@SamplerMachine -->

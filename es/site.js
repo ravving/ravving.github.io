@@ -3,11 +3,12 @@
  * Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Four small interactions, nothing else: a shortcut row shows its screenshot in the card's
+ * Five small interactions, nothing else: a shortcut row shows its screenshot in the card's
  * figure (with a frame around what to look at), hovering or focusing a card's rows lights the matching
- * region on the device artwork, a feature row slides in as it scrolls into view, and a
- * feature group opens and closes on its heading. The page reads fine with JavaScript off:
- * the figures are then empty, the rows all shown, the groups all open (html.no-js).
+ * region on the device artwork, a feature row slides in as it scrolls into view, a feature
+ * group opens and closes on its heading, and the mixtape's tracks play a snippet on a tap. The
+ * page reads fine with JavaScript off: the figures are then empty, the rows all shown, the
+ * groups all open, the tracks hidden (html.no-js).
  */
 (function () {
   "use strict";
@@ -228,4 +229,42 @@
   }
   window.addEventListener("hashchange", openTarget);
   openTarget();
+
+  /* ---- the mixtape's tracks: a tap plays a track's snippet, a second tap pauses it, another
+     track takes over; nothing loads before the first tap ---- */
+  var tracks = document.querySelectorAll(".track");
+  if (tracks.length) {
+    var player = new Audio();
+    player.preload = "none";
+    var playing = null;
+    function setPlaying(btn) {
+      if (playing && playing !== btn) {
+        playing.setAttribute("aria-pressed", "false");
+        playing.style.removeProperty("--p");
+      }
+      playing = btn;
+      if (btn) btn.setAttribute("aria-pressed", "true");
+    }
+    tracks.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (playing === btn && !player.paused) {
+          player.pause();
+          btn.setAttribute("aria-pressed", "false");
+          return;
+        }
+        if (playing !== btn) player.src = btn.dataset.src;
+        setPlaying(btn);
+        player.play().catch(function () { setPlaying(null); btn.setAttribute("aria-pressed", "false"); });
+      });
+    });
+    player.addEventListener("timeupdate", function () {
+      if (playing && player.duration) playing.style.setProperty("--p", player.currentTime / player.duration);
+    });
+    player.addEventListener("ended", function () {
+      if (!playing) return;
+      playing.setAttribute("aria-pressed", "false");
+      playing.style.removeProperty("--p");
+      playing = null;
+    });
+  }
 })();

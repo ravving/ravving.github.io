@@ -7,7 +7,7 @@
   <meta name="keywords" content="class">
   <title>InputRecorder Class | ravving C++ API 1.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1270f0d170">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1bc6ffb8e9" defer></script>
-  <script src="search.js?v=791df35233" defer></script>
+  <script src="nav.js?v=a5dc7cd98d" defer></script>
+  <script src="search.js?v=38b3c0cac3" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -122,7 +122,7 @@
 </table></div>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#InputRecorder" translate="no">InputRecorder</a></b>(const QVariantMap &amp;<i>config</i>, QObject *<i>audioLevels</i>, JackWiring *<i>wiring</i>, InputEffects *<i>effects</i>, Tuner *<i>tuner</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#InputRecorder" translate="no">InputRecorder</a></b>(const QVariantMap &amp;<i>config</i>, int *<i>soundEngine</i>, JackWiring *<i>wiring</i>, InputEffects *<i>effects</i>, Tuner *<i>tuner</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#activeJack-prop" translate="no">activeJack</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#armed-prop" translate="no">armed</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="inputrecorder.html#autoStop-prop" translate="no">autoStop</a></b>() const</td></tr>
@@ -546,9 +546,9 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$InputRecorder[overload1]$$$InputRecorderconstQVariantMap&QObject*JackWiring*InputEffects*Tuner*QObject* -->
-<h3 class="fn" translate="no" id="InputRecorder">InputRecorder::<span class="name">InputRecorder</span>(const <span class="type">QVariantMap</span> &amp;<i>config</i>, <span class="type">QObject</span> *<i>audioLevels</i>, <span class="type"><a href="jackwiring.html" translate="no">JackWiring</a></span> *<i>wiring</i>, <span class="type"><a href="inputeffects.html" translate="no">InputEffects</a></span> *<i>effects</i>, <span class="type"><a href="tuner.html" translate="no">Tuner</a></span> *<i>tuner</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Constructs the input from <i translate="no">config</i>, kits.json's <code translate="no">input</code> object: <code translate="no">card</code> (the ALSA card), <code translate="no">portsCard</code> (the PipeWire port alias its capture ports are found by, <a href="hardwareports.html" translate="no">HardwarePorts</a>), <code translate="no">left</code> and <code translate="no">right</code> (the JACK names to fall back on) and <code translate="no">track</code> (the monitor's sketchpad track). <i translate="no">audioLevels</i> is libzynthbox's AudioLevels (null on a desktop), <i translate="no">wiring</i> wires the monitor (null on a desktop), <i translate="no">effects</i> and <i translate="no">tuner</i> are owned by the caller. With an empty config or no AudioLevels the input is not available. <i translate="no">parent</i> is the QObject parent.</p>
+<!-- $$$InputRecorder[overload1]$$$InputRecorderconstQVariantMap&int*JackWiring*InputEffects*Tuner*QObject* -->
+<h3 class="fn" translate="no" id="InputRecorder">InputRecorder::<span class="name">InputRecorder</span>(const <span class="type">QVariantMap</span> &amp;<i>config</i>, <span class="type">int</span> *<i>soundEngine</i>, <span class="type"><a href="jackwiring.html" translate="no">JackWiring</a></span> *<i>wiring</i>, <span class="type"><a href="inputeffects.html" translate="no">InputEffects</a></span> *<i>effects</i>, <span class="type"><a href="tuner.html" translate="no">Tuner</a></span> *<i>tuner</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the input from <i translate="no">config</i>, kits.json's <code translate="no">input</code> object: <code translate="no">card</code> (the ALSA card), <code translate="no">portsCard</code> (the PipeWire port alias its capture ports are found by, <a href="hardwareports.html" translate="no">HardwarePorts</a>), <code translate="no">left</code> and <code translate="no">right</code> (the JACK names to fall back on) and <code translate="no">track</code> (the monitor's sketchpad track). <i translate="no">soundEngine</i> records and meters it and sets the monitor's level (null on a desktop), <i translate="no">wiring</i> wires the monitor (null on a desktop), <i translate="no">effects</i> and <i translate="no">tuner</i> are owned by the caller. With an empty config or no engine the input is not available. <i translate="no">parent</i> is the QObject parent.</p>
 <!-- @@@InputRecorder -->
 </div>
 <div class="fnitem">
