@@ -3,12 +3,13 @@
  * Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Five small interactions, nothing else: a shortcut row shows its screenshot in the card's
+ * Six small interactions, nothing else: a shortcut card opens and closes on its heading (a
+ * link to it, from the map, opens it), a shortcut row shows its screenshot in the card's
  * figure (with a frame around what to look at), hovering or focusing a card's rows lights the matching
  * region on the device artwork, a feature row slides in as it scrolls into view, a feature
  * group opens and closes on its heading, and the mixtape's tracks play a snippet on a tap. The
- * page reads fine with JavaScript off: the figures are then empty, the rows all shown, the
- * groups all open, the tracks hidden (html.no-js).
+ * page reads fine with JavaScript off: the figures are then empty, the cards and their rows all
+ * shown, the groups all open, the tracks hidden (html.no-js).
  */
 (function () {
   "use strict";
@@ -41,45 +42,45 @@
   /* Frames over a screenshot, in percent of its width and height: [x, y, w, h, label].
      Several frames may share a name; the rest of the picture is dimmed. */
   var MARKS = {
-    "bigknob-fader": [[15.2, 20.5, 21.8, 6.5, "VOL wears the big-knob badge"]],
+    "bigknob-fader": [[15, 21.5, 5.2, 8.5, "VOL wears the big-knob badge"]],
     "master": [[94, 6.3, 5.5, 10, "MASTER"]],
     "header-group": [[1, 6.3, 10.5, 10, "the focused group"]],
-    "fx-sends": [[44.7, 6.5, 12.3, 9.5, "FX SENDS 1 2 3"]],
-    "note-readout": [[75.8, 35.5, 22, 5.5, "LENGTH · VELOCITY · NUDGE"], [5.6, 79, 6, 4.2, "picked"]],
-    "strip": [[10, 20, 27, 7.5, "PAN · VOL on knobs 1 and 2"]],
-    "mixer-strip": [[0.6, 19, 98.8, 10, "the strip picked"]],
-    "menu-sliders": [[1.4, 70.5, 42.5, 16.5, "OUTPUT 2 · BRIGHTNESS 1"]],
-    "recorder-gain": [[1.5, 28.5, 50, 5.5, "GAIN"]],
-    "mods-group": [[2.5, 9.2, 23.3, 18.8, "knobs 1 2 3 on the lit group"]],
+    "fx-sends": [[44.7, 6.5, 13.5, 10, "FX SENDS 1 2 3"]],
+    "note-readout": [[67, 40, 31, 5.5, "LENGTH · VELOCITY · NUDGE"], [5.8, 77.5, 11.8, 5, "picked"]],
+    "strip": [[10.5, 21.5, 10, 9.5, "PAN · VOL on knobs 1 and 2"]],
+    "mixer-strip": [[13.8, 21.5, 11.9, 77.5, "the strip picked"]],
+    "menu-sliders": [[1.2, 69, 43, 20, "OUTPUT 2 · BRIGHTNESS 1"]],
+    "recorder-gain": [[2.3, 29.4, 65.3, 12.5, "GAIN"]],
+    "mods-group": [[16.2, 32, 40.6, 14.2, "knobs 1 2 3 on the lit group"]],
     "menu-drawer": [[0, 0, 45, 100, "the control center"]],
-    "nameplate": [[2, 20, 7.5, 7.5, "the nameplate"]],
+    "nameplate": [[2, 22.5, 7.8, 7.5, "the nameplate"]],
     "mixer": [[0.6, 19, 98.8, 80, "the MIXER"]],
-    "mode-lamp": [[76.5, 20.5, 13, 6, "STEP · LIVE"]],
+    "mode-lamp": [[69.8, 22, 14.6, 6.5, "STEP · LIVE"]],
     "header-deck": [[12, 6.5, 32, 9.5, "the section keys"]],
-    "recorder-tabs": [[4.8, 6.7, 24, 4, "INPUT"], [1.5, 15, 66, 40, "the panels"]],
-    "grid": [[1.5, 35.5, 97, 57, "the grid"]],
-    "livefx": [[12, 6.5, 32, 9.5, "LIVE FX, numbered"]],
+    "recorder-tabs": [[5.4, 8.3, 24.6, 4.4, "INPUT"], [1.9, 15, 66, 37.5, "the panels"]],
+    "grid": [[1.5, 39.5, 97, 57, "the grid"]],
+    "livefx": [[12, 6.5, 32, 9.5, "LIVE FX 1–8"], [58.6, 6.5, 35.2, 10, "9–16"]],
     "sections": [[12, 6.5, 32, 9.5, "SECTIONS"]],
-    "pads": [[1.9, 29.5, 24.6, 43, "the pads"]],
-    "cursor": [[76.5, 20.5, 5.5, 6, "STEP"], [5.6, 35.5, 6, 57, "a step"]],
-    "transport": [[0.8, 0.9, 16, 4.2, "● ▶ metronome ■"]],
-    "playing": [[0.8, 0.9, 8, 4.2, "playing"], [2.2, 29, 6.5, 4.6, "LOCK"], [32, 35.5, 5, 57, "the playhead"]],
-    "strip-rec": [[37.5, 20.5, 4.5, 6, "the strip's ●"]],
-    "header-rec": [[9, 0.9, 3.6, 4.2, "the header's ●"]],
-    "video-card": [[30, 16, 13.8, 9, "RECORD VIDEO"]],
-    "metronome": [[13, 0.9, 3.8, 4.2, "metronome"]],
+    "pads": [[2.5, 33, 24.5, 49.5, "the pads"]],
+    "cursor": [[69.8, 22, 6.8, 6.5, "STEP"], [5.9, 38.5, 5.9, 54, "a step"]],
+    "transport": [[36.5, 1.5, 28.5, 5.5, "the plate: LOOP while playing"]],
+    "playing": [[58.8, 1.5, 3.4, 5.5, "LOOP"], [3.2, 32.5, 3.2, 5, "LOCK"], [17.6, 38.5, 5.9, 54, "the playhead"]],
+    "strip-rec": [[20.5, 22, 3.2, 6.5, "the strip's ●"]],
+    "header-rec": [[36.5, 1.5, 28.5, 5.5, "● REC and its time show here"]],
+    "video-card": [[33.2, 15.5, 11, 9.5, "LIVE REC"]],
+    "metronome": [[62.5, 1.5, 2.3, 5.5, "metronome"]],
     "recorder-rec": [[1.2, 1, 3.3, 4, "● REC"], [69.5, 17, 29, 40, "RECORDINGS"]],
-    "walk": [[1.5, 19.3, 97, 9, "the strip"], [1.5, 35.5, 97, 57, "the editor"]],
-    "side-keys": [[2.3, 34.5, 24, 4.5, "the views"]],
-    "undo": [[63.4, 1, 6.5, 4.2, "the project's ↶ ↷"], [83.3, 29, 8, 4.8, "the machine's ↶ ↷"]],
-    "picked": [[5.6, 79, 6, 4.2, "picked"], [38.3, 29, 7, 4.8, "SELECT"]],
-    "fx-bar": [[1, 93.5, 98, 5, "SOUND EFFECTS"]],
-    "song": [[1.9, 31, 49, 15, "the section keys"], [2, 59, 47, 8.5, "the song's blocks"]],
-    "picker": [[2, 20, 7.5, 7.5, "the nameplate opens the picker"]],
-    "strip-solo": [[89.5, 20.5, 4, 6, "S"]],
-    "select-btn": [[38.3, 29, 7, 4.8, "SELECT"]],
-    "plate": [[43, 1, 19, 4.2, "the project plate"]],
-    "auto": [[76.8, 29, 6, 4.8, "AUTO"]]
+    "walk": [[1.2, 21.5, 97.6, 8, "the strip"], [1.2, 38.5, 97.6, 54, "the editor"]],
+    "side-keys": [[50, 33, 13.3, 5, "‹ the bar pages ›"]],
+    "undo": [[70.4, 1.5, 6.6, 5, "the project's ↶ ↷"], [83.4, 33, 6.6, 5, "the machine's ↶ ↷"]],
+    "picked": [[5.8, 77.5, 11.8, 5, "picked"], [34.5, 33, 7.6, 5, "SELECT"]],
+    "fx-bar": [[37, 23.5, 14.5, 5.8, "MODS · FXs"]],
+    "song": [[3.4, 41, 58.5, 16.5, "the section keys"], [3.6, 70.5, 93, 8.5, "the song's blocks"]],
+    "picker": [[2, 22.5, 7.8, 7.5, "the nameplate opens the picker"]],
+    "strip-solo": [[90.2, 22, 3.6, 6.5, "S"]],
+    "select-btn": [[34.5, 33, 7.6, 5, "SELECT"]],
+    "plate": [[36.5, 1.5, 28.5, 5.5, "the project plate"]],
+    "auto": [[76.4, 33, 6.6, 5, "AUTO"]]
   };
 
   var SVG = "http://www.w3.org/2000/svg";
@@ -173,6 +174,32 @@
     });
   }
 
+  /* ---- shortcuts: a card is folded to its heading, which opens and closes it; a link to the
+     card (a region of the map) opens it too; without JavaScript every card is open ---- */
+  function setCardOpen(card, on) {
+    card.classList.toggle("open", on);
+    var btn = card.querySelector(".card-btn");
+    if (btn) btn.setAttribute("aria-expanded", on ? "true" : "false");
+  }
+  document.querySelectorAll(".card").forEach(function (card) {
+    var title = card.querySelector(".card-head h3");
+    var rowsList = card.querySelector(".rows");
+    if (!title || !rowsList) return;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "card-btn";
+    btn.setAttribute("aria-expanded", "false");
+    rowsList.id = rowsList.id || "rows-" + card.id;
+    btn.setAttribute("aria-controls", rowsList.id);
+    while (title.firstChild) btn.appendChild(title.firstChild);
+    title.appendChild(btn);
+    var chev = document.createElement("span");
+    chev.className = "chev";
+    chev.setAttribute("aria-hidden", "true");
+    card.querySelector(".card-head").appendChild(chev);
+    btn.addEventListener("click", function () { setCardOpen(card, !card.classList.contains("open")); });
+  });
+
   document.querySelectorAll(".card").forEach(function (card) {
     var rows = card.querySelectorAll(".row[data-shot]");
     if (!rows.length) return;
@@ -193,6 +220,21 @@
       card.addEventListener("focusin", function () { light(region, true); });
       card.addEventListener("focusout", function (e) { if (!card.contains(e.relatedTarget)) light(region, false); });
     }
+  });
+
+  /* ---- features: a picture not taken yet says so, as a card's figure does ---- */
+  document.querySelectorAll(".screen img").forEach(function (img) {
+    var pending = function () {
+      var figure = img.parentNode;
+      if (figure.querySelector(".missing")) return;
+      img.style.visibility = "hidden";
+      var note = document.createElement("div");
+      note.className = "missing";
+      note.textContent = "screenshot pending: " + img.getAttribute("src").replace(/^.*\//, "").replace(/\.[a-z]+$/, "");
+      figure.appendChild(note);
+    };
+    img.addEventListener("error", pending);
+    if (img.complete && !img.naturalWidth && img.getAttribute("src")) pending();
   });
 
   /* ---- features: a row slides in once as it scrolls into view ---- */
@@ -222,14 +264,21 @@
     if (!btn) return;
     btn.addEventListener("click", function () { setOpen(group, !group.classList.contains("open")); });
   });
-  function openTarget() {
-    var id = location.hash.slice(1);
-    if (!id) return;
-    var target = document.getElementById(id);
-    var group = target && target.closest(".group");
-    if (group) setOpen(group, true);
+  function openId(id) {
+    var target = id && document.getElementById(id);
+    if (!target) return;
+    var group = target.closest(".group");
+    if (group && group.querySelector(".group-btn")) setOpen(group, true);
+    var card = target.closest(".card");
+    if (card) setCardOpen(card, true);
   }
+  function openTarget() { openId(location.hash.slice(1)); }
   window.addEventListener("hashchange", openTarget);
+  // a link to where the page already is fires no hashchange: open its target all the same
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href^='#']");
+    if (a) openId(a.getAttribute("href").slice(1));
+  });
   openTarget();
 
   /* ---- the mixtape's tracks: a tap plays a track's snippet, a second tap pauses it, another

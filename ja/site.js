@@ -3,12 +3,13 @@
  * Copyright (C) 2026 Camilo Higuita <milo.h@aol.com>
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Five small interactions, nothing else: a shortcut row shows its screenshot in the card's
+ * Six small interactions, nothing else: a shortcut card opens and closes on its heading (a
+ * link to it, from the map, opens it), a shortcut row shows its screenshot in the card's
  * figure (with a frame around what to look at), hovering or focusing a card's rows lights the matching
  * region on the device artwork, a feature row slides in as it scrolls into view, a feature
  * group opens and closes on its heading, and the mixtape's tracks play a snippet on a tap. The
- * page reads fine with JavaScript off: the figures are then empty, the rows all shown, the
- * groups all open, the tracks hidden (html.no-js).
+ * page reads fine with JavaScript off: the figures are then empty, the cards and their rows all
+ * shown, the groups all open, the tracks hidden (html.no-js).
  */
 (function () {
   "use strict";
@@ -34,52 +35,52 @@
     "strip-knobs": { caption: "ストリップをタップ：ノブ 1 と 2 で パン と 音量" },
     "recorder": { caption: "MENU → レコーダー" },
     "mods": { caption: "MODS を押したまま：ALL MODS" },
-    "再生中": { caption: "PLAY：ロック オン、再生位置が進行" },
+    "playing": { caption: "PLAY：ロック オン、再生位置が進行" },
     "song": { caption: "ソングページ" }
   };
 
   /* Frames over a screenshot, in percent of its width and height: [x, y, w, h, label].
      Several frames may share a name; the rest of the picture is dimmed. */
   var MARKS = {
-    "bigknob-fader": [[15.2, 20.5, 21.8, 6.5, "音量 に大ノブのバッジ"]],
+    "bigknob-fader": [[15, 21.5, 5.2, 8.5, "音量 に大ノブのバッジ"]],
     "master": [[94, 6.3, 5.5, 10, "マスター"]],
     "header-group": [[1, 6.3, 10.5, 10, "フォーカス中のグループ"]],
-    "fx-sends": [[44.7, 6.5, 12.3, 9.5, "FX センド 1 2 3"]],
-    "note-readout": [[75.8, 35.5, 22, 5.5, "長さ · ベロシティ · ナッジ"], [5.6, 79, 6, 4.2, "選択中"]],
-    "strip": [[10, 20, 27, 7.5, "ノブ 1 と 2 で パン · 音量"]],
-    "mixer-strip": [[0.6, 19, 98.8, 10, "選んだストリップ"]],
-    "menu-sliders": [[1.4, 70.5, 42.5, 16.5, "出力 2 · 明るさ 1"]],
-    "recorder-gain": [[1.5, 28.5, 50, 5.5, "ゲイン"]],
-    "mods-group": [[2.5, 9.2, 23.3, 18.8, "点灯したグループのノブ 1 2 3"]],
+    "fx-sends": [[44.7, 6.5, 13.5, 10, "FX センド 1 2 3"]],
+    "note-readout": [[67, 40, 31, 5.5, "長さ · ベロシティ · ナッジ"], [5.8, 77.5, 11.8, 5, "選択中"]],
+    "strip": [[10.5, 21.5, 10, 9.5, "ノブ 1 と 2 で パン · 音量"]],
+    "mixer-strip": [[13.8, 21.5, 11.9, 77.5, "選んだストリップ"]],
+    "menu-sliders": [[1.2, 69, 43, 20, "出力 2 · 明るさ 1"]],
+    "recorder-gain": [[2.3, 29.4, 65.3, 12.5, "ゲイン"]],
+    "mods-group": [[16.2, 32, 40.6, 14.2, "点灯したグループのノブ 1 2 3"]],
     "menu-drawer": [[0, 0, 45, 100, "コントロールセンター"]],
-    "nameplate": [[2, 20, 7.5, 7.5, "ネームプレート"]],
+    "nameplate": [[2, 22.5, 7.8, 7.5, "ネームプレート"]],
     "mixer": [[0.6, 19, 98.8, 80, "ミキサー"]],
-    "mode-lamp": [[76.5, 20.5, 13, 6, "ステップ · ライブ"]],
+    "mode-lamp": [[69.8, 22, 14.6, 6.5, "ステップ · ライブ"]],
     "header-deck": [[12, 6.5, 32, 9.5, "セクションキー"]],
-    "recorder-tabs": [[4.8, 6.7, 24, 4, "入力"], [1.5, 15, 66, 40, "パネル"]],
-    "grid": [[1.5, 35.5, 97, 57, "グリッド"]],
-    "livefx": [[12, 6.5, 32, 9.5, "番号付きの LIVE FX"]],
+    "recorder-tabs": [[5.4, 8.3, 24.6, 4.4, "入力"], [1.9, 15, 66, 37.5, "パネル"]],
+    "grid": [[1.5, 39.5, 97, 57, "グリッド"]],
+    "livefx": [[12, 6.5, 32, 9.5, "LIVE FX 1–8"], [58.6, 6.5, 35.2, 10, "9–16"]],
     "sections": [[12, 6.5, 32, 9.5, "セクション"]],
-    "pads": [[1.9, 29.5, 24.6, 43, "パッド"]],
-    "cursor": [[76.5, 20.5, 5.5, 6, "ステップ"], [5.6, 35.5, 6, 57, "ステップ"]],
-    "transport": [[0.8, 0.9, 16, 4.2, "● ▶ メトロノーム ■"]],
-    "再生中": [[0.8, 0.9, 8, 4.2, "再生中"], [2.2, 29, 6.5, 4.6, "ロック"], [32, 35.5, 5, 57, "再生位置"]],
-    "strip-rec": [[37.5, 20.5, 4.5, 6, "ストリップの ●"]],
-    "header-rec": [[9, 0.9, 3.6, 4.2, "ヘッダーの ●"]],
-    "video-card": [[30, 16, 13.8, 9, "ビデオを録画"]],
-    "メトロノーム": [[13, 0.9, 3.8, 4.2, "メトロノーム"]],
+    "pads": [[2.5, 33, 24.5, 49.5, "パッド"]],
+    "cursor": [[69.8, 22, 6.8, 6.5, "ステップ"], [5.9, 38.5, 5.9, 54, "ステップ"]],
+    "transport": [[36.5, 1.5, 28.5, 5.5, "プレート：再生中は LOOP"]],
+    "playing": [[58.8, 1.5, 3.4, 5.5, "LOOP"], [3.2, 32.5, 3.2, 5, "ロック"], [17.6, 38.5, 5.9, 54, "再生位置"]],
+    "strip-rec": [[20.5, 22, 3.2, 6.5, "ストリップの ●"]],
+    "header-rec": [[36.5, 1.5, 28.5, 5.5, "ここに ● REC と経過時間"]],
+    "video-card": [[33.2, 15.5, 11, 9.5, "LIVE REC"]],
+    "メトロノーム": [[62.5, 1.5, 2.3, 5.5, "メトロノーム"]],
     "recorder-rec": [[1.2, 1, 3.3, 4, "● REC"], [69.5, 17, 29, 40, "録音"]],
-    "walk": [[1.5, 19.3, 97, 9, "ストリップ"], [1.5, 35.5, 97, 57, "エディター"]],
-    "side-keys": [[2.3, 34.5, 24, 4.5, "ビュー"]],
-    "undo": [[63.4, 1, 6.5, 4.2, "プロジェクトの ↶ ↷"], [83.3, 29, 8, 4.8, "マシンの ↶ ↷"]],
-    "選択中": [[5.6, 79, 6, 4.2, "選択中"], [38.3, 29, 7, 4.8, "選択"]],
-    "fx-bar": [[1, 93.5, 98, 5, "サウンドエフェクト"]],
-    "song": [[1.9, 31, 49, 15, "セクションキー"], [2, 59, 47, 8.5, "ソングのブロック"]],
-    "picker": [[2, 20, 7.5, 7.5, "ネームプレートで選択画面を開く"]],
-    "strip-solo": [[89.5, 20.5, 4, 6, "S"]],
-    "select-btn": [[38.3, 29, 7, 4.8, "選択"]],
-    "plate": [[43, 1, 19, 4.2, "プロジェクトのプレート"]],
-    "auto": [[76.8, 29, 6, 4.8, "オートメ"]]
+    "walk": [[1.2, 21.5, 97.6, 8, "ストリップ"], [1.2, 38.5, 97.6, 54, "エディター"]],
+    "side-keys": [[50, 33, 13.3, 5, "‹ 小節ページ ›"]],
+    "undo": [[70.4, 1.5, 6.6, 5, "プロジェクトの ↶ ↷"], [83.4, 33, 6.6, 5, "マシンの ↶ ↷"]],
+    "選択中": [[5.8, 77.5, 11.8, 5, "選択中"], [34.5, 33, 7.6, 5, "選択"]],
+    "fx-bar": [[37, 23.5, 14.5, 5.8, "MODS · FXs"]],
+    "song": [[3.4, 41, 58.5, 16.5, "セクションキー"], [3.6, 70.5, 93, 8.5, "ソングのブロック"]],
+    "picker": [[2, 22.5, 7.8, 7.5, "ネームプレートで選択画面を開く"]],
+    "strip-solo": [[90.2, 22, 3.6, 6.5, "S"]],
+    "select-btn": [[34.5, 33, 7.6, 5, "選択"]],
+    "plate": [[36.5, 1.5, 28.5, 5.5, "プロジェクトのプレート"]],
+    "auto": [[76.4, 33, 6.6, 5, "オートメ"]]
   };
 
   var SVG = "http://www.w3.org/2000/svg";
@@ -173,6 +174,32 @@
     });
   }
 
+  /* ---- shortcuts: a card is folded to its heading, which opens and closes it; a link to the
+     card (a region of the map) opens it too; without JavaScript every card is open ---- */
+  function setCardOpen(card, on) {
+    card.classList.toggle("open", on);
+    var btn = card.querySelector(".card-btn");
+    if (btn) btn.setAttribute("aria-expanded", on ? "true" : "false");
+  }
+  document.querySelectorAll(".card").forEach(function (card) {
+    var title = card.querySelector(".card-head h3");
+    var rowsList = card.querySelector(".rows");
+    if (!title || !rowsList) return;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "card-btn";
+    btn.setAttribute("aria-expanded", "false");
+    rowsList.id = rowsList.id || "rows-" + card.id;
+    btn.setAttribute("aria-controls", rowsList.id);
+    while (title.firstChild) btn.appendChild(title.firstChild);
+    title.appendChild(btn);
+    var chev = document.createElement("span");
+    chev.className = "chev";
+    chev.setAttribute("aria-hidden", "true");
+    card.querySelector(".card-head").appendChild(chev);
+    btn.addEventListener("click", function () { setCardOpen(card, !card.classList.contains("open")); });
+  });
+
   document.querySelectorAll(".card").forEach(function (card) {
     var rows = card.querySelectorAll(".row[data-shot]");
     if (!rows.length) return;
@@ -193,6 +220,21 @@
       card.addEventListener("focusin", function () { light(region, true); });
       card.addEventListener("focusout", function (e) { if (!card.contains(e.relatedTarget)) light(region, false); });
     }
+  });
+
+  /* ---- features: a picture not taken yet says so, as a card's figure does ---- */
+  document.querySelectorAll(".screen img").forEach(function (img) {
+    var pending = function () {
+      var figure = img.parentNode;
+      if (figure.querySelector(".missing")) return;
+      img.style.visibility = "hidden";
+      var note = document.createElement("div");
+      note.className = "missing";
+      note.textContent = "スクリーンショット準備中：" + img.getAttribute("src").replace(/^.*\//, "").replace(/\.[a-z]+$/, "");
+      figure.appendChild(note);
+    };
+    img.addEventListener("error", pending);
+    if (img.complete && !img.naturalWidth && img.getAttribute("src")) pending();
   });
 
   /* ---- features: a row slides in once as it scrolls into view ---- */
@@ -222,14 +264,21 @@
     if (!btn) return;
     btn.addEventListener("click", function () { setOpen(group, !group.classList.contains("open")); });
   });
-  function openTarget() {
-    var id = location.hash.slice(1);
-    if (!id) return;
-    var target = document.getElementById(id);
-    var group = target && target.closest(".group");
-    if (group) setOpen(group, true);
+  function openId(id) {
+    var target = id && document.getElementById(id);
+    if (!target) return;
+    var group = target.closest(".group");
+    if (group && group.querySelector(".group-btn")) setOpen(group, true);
+    var card = target.closest(".card");
+    if (card) setCardOpen(card, true);
   }
+  function openTarget() { openId(location.hash.slice(1)); }
   window.addEventListener("hashchange", openTarget);
+  // a link to where the page already is fires no hashchange: open its target all the same
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href^='#']");
+    if (a) openId(a.getAttribute("href").slice(1));
+  });
   openTarget();
 
   /* ---- the mixtape's tracks: a tap plays a track's snippet, a second tap pauses it, another

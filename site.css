@@ -51,7 +51,7 @@
   --t-figure: 13px;
   --t-figure-line: 1.2;
   /* end of the type scale */
-  /* the UI icons drawn in place of the key characters (theme/tokens.json icons.default, B29; assets/icons.js) */
+  /* the UI icons drawn in place of the key characters (theme/tokens.json icons.default, B30; assets/icons.js) */
   --icon-set: candy;
   color-scheme: dark;
   /* MIKO brand: the dark field promoted to the ground */
@@ -382,6 +382,19 @@ html[lang="en"] .nav nav.langs a[lang="en"], html[lang="es"] .nav nav.langs a[la
 .card-head .n.ico { background: transparent; border: 1.5px solid oklch(from var(--c) var(--c-l) var(--c-c) h); color: oklch(from var(--c) var(--c-l) var(--c-c) h); }
 .card-head h3 { font-size: var(--t-heading); text-transform: uppercase; letter-spacing: 0.02em; }
 .card-head small { margin-left: auto; font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); text-align: right; }
+/* a card folds to its heading (site.js): the heading's button opens it, and its hit area
+   covers the whole head; without JavaScript every card is open */
+.card-head { position: relative; }
+.card-btn { all: unset; cursor: pointer; font: inherit; color: inherit; border-radius: var(--radius); }
+.card-btn::after { content: ""; position: absolute; inset: -8px; }
+.card-btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
+.card-head .chev { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--hair); display: grid; place-items: center; color: var(--ink-2); transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), background 0.2s; }
+.card-head .chev::before { content: ""; width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); }
+.card.open .card-head .chev { transform: rotate(180deg); background: color-mix(in srgb, var(--c) 18%, transparent); border-color: oklch(from var(--c) var(--c-l) var(--c-c) h); color: oklch(from var(--c) var(--c-l) var(--c-c) h); }
+html:not(.no-js) .cards { gap: 12px; }
+html:not(.no-js) .card:not(.open) { padding-bottom: 18px; }
+html:not(.no-js) .card:not(.open):hover { background: var(--tint); }
+html:not(.no-js) .card:not(.open) > .rows, html:not(.no-js) .card:not(.open) > .media { display: none; }
 .media { align-self: stretch; min-width: 0; }
 .media-in { position: sticky; top: 72px; }
 @media (max-width: 760px) {
@@ -467,11 +480,13 @@ kbd.ui.dot { color: oklch(from #ff3d5c var(--c-l) var(--c-c) h); border-color: c
 }
 .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .shot svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.shot .missing {
+.shot .missing, .screen .missing {
   position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 18px;
   color: var(--ink-3); font-family: var(--font-mono); font-size: var(--t-caps); letter-spacing: 0.12em; text-transform: uppercase;
   background: repeating-linear-gradient(135deg, #141516 0 10px, #181a1b 10px 20px);
 }
+.screen .missing { inset: 10px; border-radius: var(--radius); }
+.group-body .screen .missing { inset: 6px; }
 .shot .mark { fill: none; stroke: var(--c); stroke-width: 2.4; vector-effect: non-scaling-stroke; rx: 1.2; filter: drop-shadow(0 0 4px var(--c)); }
 .shot .dim { fill: rgba(0, 0, 0, 0.55); }
 .shot .arrow { stroke: var(--c); stroke-width: 2.4; fill: none; vector-effect: non-scaling-stroke; stroke-linecap: round; }
@@ -572,21 +587,12 @@ a.plate:hover, a.plate:focus-visible { transform: translateY(-2px); border-color
   0%, 10%, 100% { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 2px 6px rgba(0, 0, 0, 0.5); }
   5% { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 22px color-mix(in srgb, var(--pc) 55%, transparent); }
 }
-/* the engines: a rack of chips, the plugin and what it plays */
-.rack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
-.rack span { display: inline-flex; align-items: baseline; gap: 6px; padding: 6px 10px; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--hair-soft); font-size: var(--t-label); color: var(--ink); }
-.rack span small { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
-.rack span.fs { border-color: color-mix(in srgb, oklch(from var(--c) var(--c-l) var(--c-c) h) 40%, transparent); }
-/* the packs: a strip of genres with their keys and tempos, scrolling slowly under the pointer's reach */
-.packs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
-.packs span { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); padding: 5px 8px; border-radius: var(--radius); border: 1px solid var(--hair-soft); }
-.packs span b { color: oklch(from var(--c) var(--c-l) var(--c-c) h); font-weight: 500; margin-right: 6px; }
 /* the reveal: a row sits a little low and fades in when it scrolls into view */
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .reveal.is-in, .no-js .reveal { opacity: 1; transform: none; }
 .hl .screen-wrap { transition-delay: 0.12s; }
 @media (max-width: 860px) {
-  .hl { grid-template-columns: 1fr; gap: 18px; }
+  .hl { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .hl .hl-text, .hl.flip .hl-text { order: 2; }
   .hl-text h3 { max-width: none; }
   .plates { grid-template-columns: repeat(2, 1fr); }
@@ -630,7 +636,7 @@ a.plate:hover, a.plate:focus-visible { transform: translateY(-2px); border-color
 .feats li.wide { grid-column: 1 / -1; }
 @media (max-width: 860px) {
   .group-body { grid-template-columns: 1fr; padding-left: 8px; }
-  .group-body .screen { position: static; order: -1; }
+  .group-body .screen { position: relative; top: auto; order: -1; }
   .feats { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
@@ -718,7 +724,7 @@ footer .miko-peek { position: absolute; right: var(--gutter); bottom: 0; width: 
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .region, .row, .screen, .group-panel, .group-btn .chev, .art-stack img, .doc-card { transition: none; }
+  .region, .row, .screen, .group-panel, .group-btn .chev, .card-head .chev, .art-stack img, .doc-card { transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .plate { animation: none; }
 }

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UI rules · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=a306cbe289">
+<link rel="stylesheet" href="../site.css?v=981f9550ab">
 <script src="../assets/theme.js?v=3307b56d38"></script>
 <script src="../assets/icons.js?v=d6def946c7" defer></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -663,7 +663,7 @@ declares. With no skin set, a control keeps its own default.</p>
 dialog card or a dark band on a light page, keeps the accent and sets its own ink with
 <code>Skin.overrides</code>. The dialog card sets its own well too (<code>Theme.colors.wellSurface</code>). <em>Checked:</em> qml-health's <code>skin</code> family.</p>
 <h2 id="design-tokens">Design tokens</h2>
-<p><code>theme/tokens.json</code> holds every shared colour, family and shape in one place. Its groups:</p>
+<p><code>theme/tokens.json</code> holds every shared colour, family, shape, size and duration in one place. Its groups:</p>
 <table>
 <thead>
 <tr>
@@ -678,11 +678,19 @@ dialog card or a dark band on a light page, keeps the accent and sets its own in
 </tr>
 <tr>
 <td><code>site</code></td>
-<td>the webpage's own tones, and its light set (<code>site.light</code>: the paper colours, what the art keeps, the contrast pairs checked)</td>
+<td>the webpage's own tones, its measures (<code>site.layout</code>) and other <code>:root</code> values (<code>site.page</code>), and its light set (<code>site.light</code>: the paper colours, what the art keeps, the contrast pairs checked)</td>
 </tr>
 <tr>
 <td><code>fonts</code></td>
 <td>the three families</td>
+</tr>
+<tr>
+<td><code>shape</code></td>
+<td><code>Theme</code>'s sizes: the two corners (<code>radius</code>, <code>surfaceRadius</code>), the spacing, the grid unit, the standard control's height and smallest widths, the style's button height</td>
+</tr>
+<tr>
+<td><code>motion</code></td>
+<td><code>Theme</code>'s durations, the confirming second press's window and a toast's stay</td>
 </tr>
 <tr>
 <td><code>skins</code></td>
@@ -693,8 +701,24 @@ dialog card or a dark band on a light page, keeps the accent and sets its own in
 <td>the mascot's colours</td>
 </tr>
 <tr>
+<td><code>icons</code></td>
+<td>the UI icon sets, their sizes (<code>Icon</code>, <code>ActionButton</code>) and <code>Theme.iconSizes</code></td>
+</tr>
+<tr>
+<td><code>kit</code></td>
+<td>the shared parts' look when no skin gives a colour: the kit's colours (the cursor's blue, ok, error, warning, the caption grey, the paper ink) and the key, chip, RimGlow, Led, FocusRing, ProgressBar, ToolSeparator, ControlGroup, ListRow, Stepper and Caption's measures, each with the file and text it is written in</td>
+</tr>
+<tr>
+<td><code>sections</code></td>
+<td>the sections' eight colours and the effects' own (Rave.qml)</td>
+</tr>
+<tr>
 <td><code>art</code></td>
 <td>the cover art's palette: the skins' accents through the covers' fade</td>
+</tr>
+<tr>
+<td><code>logo</code></td>
+<td>the logo family's marks, inks and sizes</td>
 </tr>
 <tr>
 <td><code>type</code></td>
@@ -702,10 +726,13 @@ dialog card or a dark band on a light page, keeps the accent and sets its own in
 </tr>
 </tbody>
 </table>
-<p>A colour changes there first, then in the file it names: theme/theme.h,
-site/site.css, Rave.qml or data/branding/make-aru.py. <code>python3 tools/design-tokens.py --write</code>
-recomputes the cover art's palette after a skin changes and writes the type scale into both stylesheets; <code>--sheet OUT.html</code> renders the
-tokens as a page. <em>Checked:</em> <code>design-tokens</code>.</p>
+<p>A value changes there first, then in the file it names: theme/theme.h, the kit's or the style's
+QML, site/site.css, doc/global/style/ravving.css, Rave.qml or data/branding/make-aru.py.</p>
+<p><code>python3 tools/design-tokens.py --write</code> recomputes the cover art's palette after a skin changes
+and writes the type scale into both stylesheets; <code>--sheet OUT.html</code> renders the tokens as a
+page.</p>
+<p><em>Checked:</em> <code>design-tokens</code>: every value against its code, and a <code>Theme</code> getter or a
+site.css <code>:root</code> property with no token fails too.</p>
 <h2 id="a-key-and-its-button">A key and its button</h2>
 <p>A device key that does what an on-screen button does shows that button pressed while it is held,
 as PLAY does the header's ▶ and BACK the toolbar's ↶ on a grid (<code>down: pressed ||
