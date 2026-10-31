@@ -136,6 +136,14 @@ window.ravNav = [
     "href": "keyspelling.html"
    },
    {
+    "title": "LegacySequence",
+    "href": "legacysequence.html"
+   },
+   {
+    "title": "LegacySequence::Clip",
+    "href": "legacysequence-clip.html"
+   },
+   {
     "title": "LibGit2SnapshotStore",
     "href": "libgit2snapshotstore.html"
    },
@@ -284,6 +292,14 @@ window.ravNav = [
    {
     "title": "SoundControls::Knob",
     "href": "soundcontrols-knob.html"
+   },
+   {
+    "title": "SoundControls::Page",
+    "href": "soundcontrols-page.html"
+   },
+   {
+    "title": "SoundControls::Readout",
+    "href": "soundcontrols-readout.html"
    }
   ]
  },
@@ -765,6 +781,10 @@ window.ravNav = [
     "href": "qml-ravving-controls-knobgroup.html"
    },
    {
+    "title": "KnobSwitch",
+    "href": "qml-ravving-controls-knobswitch.html"
+   },
+   {
     "title": "Led",
     "href": "qml-ravving-controls-led.html"
    },
@@ -815,10 +835,6 @@ window.ravNav = [
    {
     "title": "SecondPress",
     "href": "qml-ravving-controls-secondpress.html"
-   },
-   {
-    "title": "SectionHeader",
-    "href": "qml-ravving-controls-sectionheader.html"
    },
    {
     "title": "SideBarItem",

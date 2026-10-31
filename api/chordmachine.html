@@ -5,7 +5,7 @@
 <!-- chordmachine.cpp -->
   <meta name="description" content="A Machine playing chords on a polyphonic engine.">
   <meta name="keywords" content="class">
-  <title>ChordMachine Class | ravving C++ API 1.0</title>
+  <title>ChordMachine Class | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=a5dc7cd98d" defer></script>
-  <script src="search.js?v=38b3c0cac3" defer></script>
+  <script src="nav.js?v=1a5dfeadeb" defer></script>
+  <script src="search.js?v=4917e215d8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -99,9 +99,10 @@
 <li class="fn" translate="no"><b><a href="chordmachine.html#chordSlots-prop" translate="no">chordSlots</a></b> : QVariantList</li>
 <li class="fn" translate="no"><b><a href="chordmachine.html#chords-prop" translate="no">chords</a></b> : QVariantList</li>
 <li class="fn" translate="no"><b><a href="chordmachine.html#custom-prop" translate="no">custom</a></b> : QVariantList</li>
-</ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><b><a href="chordmachine.html#names-prop" translate="no">names</a></b> : QVariantList</li>
+</ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><b><a href="chordmachine.html#noteSets-prop" translate="no">noteSets</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="chordmachine.html#noteTails-prop" translate="no">noteTails</a></b> : QVariantList</li>
 <li class="fn" translate="no"><b><a href="chordmachine.html#octave-prop" translate="no">octave</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="chordmachine.html#root-prop" translate="no">root</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="chordmachine.html#scale-prop" translate="no">scale</a></b> : QVariantList</li>
@@ -115,6 +116,7 @@
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#ChordMachine" translate="no">ChordMachine</a></b>(const QVariantMap &amp;<i>config</i>, const QVariantMap &amp;<i>state</i>, PresetLibrary *<i>presets</i>, GlobalEffects *<i>globalEffects</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#adjustChords" translate="no">adjustChords</a></b>(const QVariantList &amp;<i>picked</i>, const QString &amp;<i>setting</i>, int <i>delta</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#adjustNotes" translate="no">adjustNotes</a></b>(const QVariantList &amp;<i>picked</i>, const QString &amp;<i>setting</i>, int <i>delta</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#allPicks" translate="no">allPicks</a></b>(bool <i>notes</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#armedSlot-prop" translate="no">armedSlot</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#assignSlot" translate="no">assignSlot</a></b>(int <i>slot</i>, int <i>degree</i>)</td></tr>
@@ -134,6 +136,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#degreeForNote" translate="no">degreeForNote</a></b>(int <i>note</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#deleteChords" translate="no">deleteChords</a></b>(const QVariantList &amp;<i>picked</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#deleteNotes" translate="no">deleteNotes</a></b>(const QVariantList &amp;<i>picked</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#holdNoteTo" translate="no">holdNoteTo</a></b>(int <i>step</i>, int <i>note</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#moveChords" translate="no">moveChords</a></b>(const QVariantList &amp;<i>picked</i>, int <i>steps</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#moveNotes" translate="no">moveNotes</a></b>(const QVariantList &amp;<i>picked</i>, int <i>steps</i>, bool <i>chromatic</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#names-prop" translate="no">names</a></b>() const</td></tr>
@@ -141,6 +144,8 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#noteKeyForNote" translate="no">noteKeyForNote</a></b>(int <i>note</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#noteOfKey" translate="no">noteOfKey</a></b>(int <i>key</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#noteSets-prop" translate="no">noteSets</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#noteSettings" translate="no">noteSettings</a></b>(const QVariantList &amp;<i>picked</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#noteTails-prop" translate="no">noteTails</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#octave-prop" translate="no">octave</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#root-prop" translate="no">root</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#scale-prop" translate="no">scale</a></b>() const</td></tr>
@@ -174,7 +179,7 @@
 <!-- $$$ChordMachine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Each step holds at most one voicing; a run of steps holding the same voicing is one chord held for the whole run, so a bar of &quot;I&quot; is one long chord and &quot;I . I .&quot; two short ones.</p>
+<p>Each step holds at most one voicing; a run of steps holding the same voicing is one chord held for the whole run, so a bar of &quot;I&quot; is one long chord and &quot;I . I .&quot; two short ones. A note can also be held on its own through steps whose other notes change (a tie): a melody note held under moving chords, a note stretched on NOTES (<a href="chordmachine.html#holdNoteTo" translate="no">holdNoteTo</a>(), <a href="chordmachine.html#adjustNotes" translate="no">adjustNotes</a>()), a key held during a take. Where nothing is tied, every note of a step is struck with its chord.</p>
 <p>A voicing is either a diatonic chord, a scale degree (I to VII) stacked in thirds from the scale with three or four notes as the chord set defines per degree (Classic, Triads, Sevenths), or a custom set of notes (scale degrees, or semitones from the chord base for a note outside the key). Voicings are stored as scale degrees from kits.json's <code translate="no">baseNote</code> (48, C3, by default) plus the key's root, shifted by octave, so a change of key (root, scale), chord set or octave revoices every chord at once.</p>
 <p>Three interfaces edit the same steps:</p>
 <ul>
@@ -326,6 +331,20 @@
 <!-- @@@noteSets -->
 </div>
 <div class="fnitem">
+<!-- $$$noteTails-prop$$$noteTails$$$stepsChanged -->
+<h3 class="fn" translate="no" id="noteTails-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">noteTails</span> : <span class="type">QVariantList</span></h3>
+<p>per step of the viewed bar: the MIDI notes held on from the step before (not struck there).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>noteTails</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="chordmachine.html#stepsChanged" translate="no">stepsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@noteTails -->
+</div>
+<div class="fnitem">
 <!-- $$$octave-prop$$$octave$$$setOctaveint$$$voicingChanged -->
 <h3 class="fn" translate="no" id="octave-prop"><span class="name">octave</span> : <span class="type">int</span></h3>
 <p>This property holds the octave shift of every chord, -2 to +2.</p>
@@ -429,9 +448,16 @@
 </div><!-- @@@adjustChords -->
 </div>
 <div class="fnitem">
+<!-- $$$adjustNotes[overload1]$$$adjustNotesconstQVariantList&constQString&int -->
+<h3 class="fn" translate="no" id="adjustNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ChordMachine::<span class="name">adjustNotes</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>, const <span class="type">QString</span> &amp;<i>setting</i>, <span class="type">int</span> <i>delta</i>)</h3>
+<p>Changes the <i translate="no">picked</i> notes' (a list of [position, note] pairs, any step of a held note) <i translate="no">setting</i> by <i translate="no">delta</i> knob detents: <code translate="no">length</code>, a step a detent, from one step to four bars, held through whatever else the steps play. One undo step.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@adjustNotes -->
+</div>
+<div class="fnitem">
 <!-- $$$allPicks[overload1]$$$allPicksbool -->
 <h3 class="fn" translate="no" id="allPicks"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> ChordMachine::<span class="name">allPicks</span>(<span class="type">bool</span> <i>notes</i>) const</h3>
-<p>Returns every chord of the pattern, in all its bars, as picks for <a href="chordmachine.html#moveChords" translate="no">moveChords</a>() and <a href="chordmachine.html#shiftChords" translate="no">shiftChords</a>(): the position each held chord starts at; or, with <i translate="no">notes</i>, picks for <a href="chordmachine.html#moveNotes" translate="no">moveNotes</a>() and <a href="chordmachine.html#shiftNotes" translate="no">shiftNotes</a>(): [position, note] pairs, each note of a held chord once, where it starts.</p>
+<p>Returns every chord of the pattern, in all its bars, as picks for <a href="chordmachine.html#moveChords" translate="no">moveChords</a>() and <a href="chordmachine.html#shiftChords" translate="no">shiftChords</a>(): the position each held chord starts at; or, with <i translate="no">notes</i>, picks for <a href="chordmachine.html#moveNotes" translate="no">moveNotes</a>() and <a href="chordmachine.html#shiftNotes" translate="no">shiftNotes</a>(): [position, note] pairs, each held note once, where it is struck.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@allPicks -->
 </div>
@@ -501,9 +527,16 @@
 <div class="fnitem">
 <!-- $$$deleteNotes[overload1]$$$deleteNotesconstQVariantList& -->
 <h3 class="fn" translate="no" id="deleteNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ChordMachine::<span class="name">deleteNotes</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>)</h3>
-<p>Removes the <i translate="no">picked</i> notes (a list of [position, note] pairs) from the whole held chord each is in; a chord left without notes empties its steps. One undo step.</p>
+<p>Removes the <i translate="no">picked</i> notes (a list of [position, note] pairs), each over the whole span it is held for; a step left without notes is empty. One undo step.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@deleteNotes -->
+</div>
+<div class="fnitem">
+<!-- $$$holdNoteTo[overload1]$$$holdNoteTointint -->
+<h3 class="fn" translate="no" id="holdNoteTo"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> ChordMachine::<span class="name">holdNoteTo</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>note</i>)</h3>
+<p>Makes the MIDI <i translate="no">note</i> that sounds on or before <i translate="no">step</i> of the viewed bar last up to that step, held through whatever else the steps play; the same note further on lets go there. On the note's first step it goes back to one step. Returns whether a note's length changed.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@holdNoteTo -->
 </div>
 <div class="fnitem">
 <!-- $$$keyChanged -->
@@ -522,7 +555,7 @@
 <div class="fnitem">
 <!-- $$$moveNotes[overload1]$$$moveNotesconstQVariantList&intbool -->
 <h3 class="fn" translate="no" id="moveNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> ChordMachine::<span class="name">moveNotes</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>, <span class="type">int</span> <i>steps</i>, <span class="type">bool</span> <i>chromatic</i>)</h3>
-<p>Moves the <i translate="no">picked</i> notes (a list of [position, note] pairs) <i translate="no">steps</i> notes of the key up or down (semitones when <i translate="no">chromatic</i> is true), across the whole held chord each is in (a run of the same voicing moves together). Returns the picks as they are after the move.</p>
+<p>Moves the <i translate="no">picked</i> notes (a list of [position, note] pairs) <i translate="no">steps</i> notes of the key up or down (semitones when <i translate="no">chromatic</i> is true), each across the whole span it is held for. Returns the picks as they are after the move.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@moveNotes -->
 </div>
@@ -548,6 +581,13 @@
 </div><!-- @@@noteOfKey -->
 </div>
 <div class="fnitem">
+<!-- $$$noteSettings[overload1]$$$noteSettingsconstQVariantList& -->
+<h3 class="fn" translate="no" id="noteSettings"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantMap</span> ChordMachine::<span class="name">noteSettings</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>) const</h3>
+<p>Returns the settings of the first of the <i translate="no">picked</i> notes ([position, note] pairs) still there: a map with <code translate="no">length</code> (steps) and <code translate="no">count</code> (the notes picked); an empty map when none is left.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@noteSettings -->
+</div>
+<div class="fnitem">
 <!-- $$$setChord[overload1]$$$setChordintint -->
 <h3 class="fn" translate="no" id="setChord"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ChordMachine::<span class="name">setChord</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>degree</i>)</h3>
 <p>Puts <i translate="no">degree</i>'s chord (0 to 6) on <i translate="no">step</i> of the viewed bar and sounds it, or clears the step when it already holds that chord.</p>
@@ -571,7 +611,7 @@
 <div class="fnitem">
 <!-- $$$shiftNotes[overload1]$$$shiftNotesconstQVariantList&int -->
 <h3 class="fn" translate="no" id="shiftNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> ChordMachine::<span class="name">shiftNotes</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>, <span class="type">int</span> <i>steps</i>)</h3>
-<p>Moves the <i translate="no">picked</i> notes (a list of [position, note] pairs, across the held chord each is in) <i translate="no">steps</i> steps later or earlier; a note joins the notes already on the step it lands on, and a note that would leave the pattern stays. Returns the picks.</p>
+<p>Moves the <i translate="no">picked</i> notes (a list of [position, note] pairs, each across the span it is held for) <i translate="no">steps</i> steps later or earlier; a note joins the notes already on the step it lands on, and a note that would leave the pattern stays. Returns the picks.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@shiftNotes -->
 </div>
@@ -593,7 +633,7 @@
 <!-- $$$stepsChanged -->
 <h3 class="fn" translate="no" id="stepsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ChordMachine::<span class="name">stepsChanged</span>()</h3>
 <p>Emitted when chords, custom or <a href="chordmachine.html#noteSets-prop" translate="no">noteSets</a> change.</p>
-<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="chordmachine.html#chords-prop" translate="no">chords</a>, <a href="chordmachine.html#custom-prop" translate="no">custom</a>, <a href="chordmachine.html#names-prop" translate="no">names</a>, <a href="chordmachine.html#noteSets-prop" translate="no">noteSets</a>, and <a href="chordmachine.html#starts-prop" translate="no">starts</a>. </p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="chordmachine.html#chords-prop" translate="no">chords</a>, <a href="chordmachine.html#custom-prop" translate="no">custom</a>, <a href="chordmachine.html#names-prop" translate="no">names</a>, <a href="chordmachine.html#noteSets-prop" translate="no">noteSets</a>, <a href="chordmachine.html#noteTails-prop" translate="no">noteTails</a>, and <a href="chordmachine.html#starts-prop" translate="no">starts</a>. </p>
 </div><!-- @@@stepsChanged -->
 </div>
 <div class="fnitem">
@@ -628,7 +668,7 @@
 </main>
 <footer class="api-footer">
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
   </div>
 </footer>
 </body>

@@ -5,7 +5,7 @@
 <!-- takerecorder.cpp -->
   <meta name="description" content="Records what is played live on a machine into its pattern; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;take.">
   <meta name="keywords" content="class">
-  <title>TakeRecorder Class | ravving C++ API 1.0</title>
+  <title>TakeRecorder Class | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=a5dc7cd98d" defer></script>
-  <script src="search.js?v=38b3c0cac3" defer></script>
+  <script src="nav.js?v=1a5dfeadeb" defer></script>
+  <script src="search.js?v=4917e215d8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -103,6 +103,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#countInBeat-prop" translate="no">countInBeat</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#hit" translate="no">hit</a></b>(QObject *<i>machine</i>, int <i>row</i>, bool <i>accented</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#machine-prop" translate="no">machine</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#release" translate="no">release</a></b>(QObject *<i>machine</i>, int <i>row</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#state-prop" translate="no">state</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#stop" translate="no">stop</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#toggle" translate="no">toggle</a></b>(QObject *<i>machine</i>)</td></tr>
@@ -207,6 +208,13 @@
 </div><!-- @@@hit -->
 </div>
 <div class="fnitem">
+<!-- $$$release[overload1]$$$releaseQObject*int -->
+<h3 class="fn" translate="no" id="release"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> TakeRecorder::<span class="name">release</span>(<span class="type">QObject</span> *<i>machine</i>, <span class="type">int</span> <i>row</i>)</h3>
+<p>Ends the live hit on <i translate="no">machine</i>'s <i translate="no">row</i> in the take, when that machine is recording one: the note or chord is held for as long as the key was.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@release -->
+</div>
+<div class="fnitem">
 <!-- $$$stop[overload1]$$$stop -->
 <h3 class="fn" translate="no" id="stop"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> TakeRecorder::<span class="name">stop</span>()</h3>
 <p>Ends the take, keeping what was recorded.</p>
@@ -231,7 +239,7 @@
 </main>
 <footer class="api-footer">
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
   </div>
 </footer>
 </body>

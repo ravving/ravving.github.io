@@ -58,9 +58,11 @@
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
 <li><a href="icon-packs.html">Make an icon pack</a></li>
+<li><a href="https://github.com/ravving/ravving_repo/blob/main/CONTRIBUTING.md">Share your own</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
+<li><a href="https://ravving.github.io/ravving_repo/">The catalog</a></li>
 </ul>
 <p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
@@ -209,7 +211,15 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 </tr>
 <tr>
 <td><code>tools/section-sounds-test.sh</code></td>
-<td>a sound per section: CHORDS on its own synth in A and on a soundfont in B, switched while the master records, <code>tools/section-switches-test.py</code> checks the sound changes only where a bar begins (on a grid of beats, the two sounds told apart by their spectra); the engine channels counted as sounds are chosen (a soundfont costs none, a synth one), given back when the section goes; a kit per section on DRUMS 1; a project saved and opened again with its section sounds</td>
+<td>a sound per section: CHORDS on its own synth in A and on a soundfont in B, switched while the master records, <code>tools/section-switches-test.py</code> checks the sound changes only where a bar begins (on a grid of beats, the two sounds told apart by their spectra); the engine channels counted as sounds are chosen (a soundfont costs none, a synth one), given back when the section goes; a kit per section on DRUMS 1; each section's MODS on its own sound (B's soundfont CUTOFF apart from C's on the same FluidSynth); a project saved and opened again with its section sounds and MODS</td>
+</tr>
+<tr>
+<td><code>tools/section-switches-test.sh</code></td>
+<td>every kind of sound switch between two sections, heard: one machine plays a note on every beat, A on one sound and B on another, picked at random moments while the master records; <code>tools/section-switches-test.py</code> tells the two sounds apart and checks every change lands on a bar line. Engine switches on CHORDS, BASS and LEAD (a synth ↔ a soundfont, two synths), a soundfont switch inside one FluidSynth, a kit switch on DRUMS 1</td>
+</tr>
+<tr>
+<td><code>tools/audit-fixes-test.sh</code></td>
+<td>the second libravving audit's fixes (<code>notes/design/audit-2-fixes.md</code>): an export's WAV whole the moment it is done, sections picked over and over while stopped and the last one heard from the first bar, the bars counted in time over a long play, no sequencer queue overflow or ring-full warning from the audio threads, the transport with one sequencer (playing on play, the 16ths told, off on stop; step 9, <code>notes/design/step-9.md</code>), and ravving's wakeups at rest</td>
 </tr>
 <tr>
 <td><code>tools/sections-queue-test.sh</code></td>
@@ -233,7 +243,7 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 </tr>
 <tr>
 <td><code>tools/chords-test.sh</code></td>
-<td>the CHORDS page suite (54 checks: 50 on the device, 4 timing checks on the laptop): the key and chord sets (names follow ROOT and the set), the CHORDS view (chords, runs, undo / redo, clear), NOTES (toggle, a step's notes, custom voicings), SLOTS (arm, fill, bars, clear, the steps rebuilt), the octave, the sound source (a soundfont, back to TAL), heard (mute, pause, LIVE keys, a hit recorded), presets, every SOUND EFFECT with EQ / PAN / DRIVE heard, and <code>hits-timing.py</code> on two bars of piano stabs (every 8th within 20 ms)</td>
+<td>the CHORDS page suite (85 checks: 81 on the device, 4 timing checks on the laptop): the key and chord sets (names follow ROOT and the set), the CHORDS view (chords, runs, undo / redo, clear), NOTES (toggle, a step's notes, custom voicings, a note added to a chord and taken off leaves the chord and its run whole), held notes (a long press's hold and its undo, a chord struck under a held note and a note held under a chord, SELECT's move / shift / LENGTH / delete on a held note, the key and chord set changed, saved as a preset with <code>TIES</code> and loaded back, a shipped preset's runs, a key held during a take, the hold heard longer on the lane), SLOTS (arm, fill, bars, clear, the steps rebuilt), the octave, the sound source (a soundfont, back to TAL), heard (mute, pause, LIVE keys, a hit recorded), presets, every SOUND EFFECT with EQ / PAN / DRIVE heard, and <code>hits-timing.py</code> on two bars of piano stabs (every 8th within 20 ms)</td>
 </tr>
 <tr>
 <td><code>tools/video-test.sh</code></td>

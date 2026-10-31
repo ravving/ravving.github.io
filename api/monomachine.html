@@ -5,7 +5,7 @@
 <!-- monomachine.cpp -->
   <meta name="description" content="A Machine playing a monophonic line; kits.json configures the bass and the lead as two instances.">
   <meta name="keywords" content="class">
-  <title>MonoMachine Class | ravving C++ API 1.0</title>
+  <title>MonoMachine Class | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=a5dc7cd98d" defer></script>
-  <script src="search.js?v=38b3c0cac3" defer></script>
+  <script src="nav.js?v=1a5dfeadeb" defer></script>
+  <script src="search.js?v=4917e215d8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -95,12 +95,17 @@
 <li class="fn" translate="no"><b><a href="monomachine.html#baseNote-prop" translate="no">baseNote</a></b> : const int</li>
 <li class="fn" translate="no"><b><a href="monomachine.html#holds-prop" translate="no">holds</a></b> : QVariantList</li>
 <li class="fn" translate="no"><b><a href="monomachine.html#lengths-prop" translate="no">lengths</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="monomachine.html#noteSets-prop" translate="no">noteSets</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="monomachine.html#noteTails-prop" translate="no">noteTails</a></b> : QVariantList</li>
 <li class="fn" translate="no"><b><a href="monomachine.html#notes-prop" translate="no">notes</a></b> : QVariantList</li>
-</ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><b><a href="monomachine.html#octave-prop" translate="no">octave</a></b> : int</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="monomachine.html#poly-prop" translate="no">poly</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="monomachine.html#polyOn-prop" translate="no">polyOn</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="monomachine.html#root-prop" translate="no">root</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="monomachine.html#scale-prop" translate="no">scale</a></b> : QVariantList</li>
 <li class="fn" translate="no"><b><a href="monomachine.html#slides-prop" translate="no">slides</a></b> : QVariantList</li>
+<li class="fn" translate="no"><b><a href="monomachine.html#stacked-prop" translate="no">stacked</a></b> : QVariantList</li>
 <li class="fn" translate="no"><b><a href="monomachine.html#velocities-prop" translate="no">velocities</a></b> : QVariantList</li>
 </ul>
 </td></tr>
@@ -110,28 +115,36 @@
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#MonoMachine" translate="no">MonoMachine</a></b>(const QVariantMap &amp;<i>config</i>, const QVariantMap &amp;<i>state</i>, PresetLibrary *<i>presets</i>, GlobalEffects *<i>globalEffects</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#accents-prop" translate="no">accents</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#adjustNotes" translate="no">adjustNotes</a></b>(const QVariantList &amp;<i>picked</i>, const QString &amp;<i>setting</i>, int <i>delta</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#allPicks" translate="no">allPicks</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#allPicks" translate="no">allPicks</a></b>(bool <i>stacked</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#audition" translate="no">audition</a></b>(int <i>note</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#baseNote-prop" translate="no">baseNote</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#degreeNote" translate="no">degreeNote</a></b>(int <i>degree</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#deleteNotes" translate="no">deleteNotes</a></b>(const QVariantList &amp;<i>picked</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#holdNoteTo" translate="no">holdNoteTo</a></b>(int <i>step</i>, int <i>note</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#holds-prop" translate="no">holds</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#lengths-prop" translate="no">lengths</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#moveNotes" translate="no">moveNotes</a></b>(const QVariantList &amp;<i>picked</i>, int <i>steps</i>, bool <i>chromatic</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#noteSets-prop" translate="no">noteSets</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#noteSettings" translate="no">noteSettings</a></b>(const QVariantList &amp;<i>picked</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#noteTails-prop" translate="no">noteTails</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#notes-prop" translate="no">notes</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#octave-prop" translate="no">octave</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#poly-prop" translate="no">poly</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#polyOn-prop" translate="no">polyOn</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#randomize" translate="no">randomize</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#root-prop" translate="no">root</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#scale-prop" translate="no">scale</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#setNote" translate="no">setNote</a></b>(int <i>step</i>, int <i>note</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#setNoteLength" translate="no">setNoteLength</a></b>(int <i>step</i>, int <i>steps</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#setNoteLength" translate="no">setNoteLength</a></b>(int <i>step</i>, int <i>steps</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#octave-prop" translate="no">setOctave</a></b>(int <i>octave</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#poly-prop" translate="no">setPoly</a></b>(bool <i>poly</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#root-prop" translate="no">setRoot</a></b>(int <i>root</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#scale-prop" translate="no">setScale</a></b>(const QVariantList &amp;<i>scale</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#shiftNotes" translate="no">shiftNotes</a></b>(const QVariantList &amp;<i>picked</i>, int <i>steps</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#slides-prop" translate="no">slides</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#stacked-prop" translate="no">stacked</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#toggleAccent" translate="no">toggleAccent</a></b>(int <i>step</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#toggleNote" translate="no">toggleNote</a></b>(int <i>step</i>, int <i>note</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#toggleSlide" translate="no">toggleSlide</a></b>(int <i>step</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#velocities-prop" translate="no">velocities</a></b>() const</td></tr>
 </table></div>
@@ -143,17 +156,19 @@
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#keyChanged" translate="no">keyChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#octaveChanged" translate="no">octaveChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#polyChanged" translate="no">polyChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#stepsChanged" translate="no">stepsChanged</a></b>()</td></tr>
 </table></div>
 <!-- $$$MonoMachine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Each step holds at most one note, with two step flags:</p>
+<p>Each step holds one note, the line's, with two step flags:</p>
 <ul>
 <li>accent: the note plays at the accent velocity (kits.json <code translate="no">velocities</code>; 127 by default) instead of the plain one (80 by default);</li>
 <li>slide: the note lasts half a step longer, so it overlaps the next one, which a mono engine in legato mode glides into;</li>
 </ul>
-<p>and a length in steps (1 unless set). A note may also have its own velocity (1 to 127, overriding the plain or accent one; toggling the accent clears it) and a nudge (Machine's per-note timing offset); <a href="monomachine.html#adjustNotes" translate="no">adjustNotes</a>() sets the three. The line is the machine's own data (saved with it); the PatternModel is written from it, one subnote per note. A live key is a MIDI note (<a href="monomachine.html#degreeNote" translate="no">degreeNote</a>() turns scale degrees into notes). <a href="machine.html#KickMode-enum" translate="no">Machine::OnlyKick</a> silences it.</p>
+<p>and a length in steps (1 unless set). A note may also have its own velocity (1 to 127, overriding the plain or accent one; toggling the accent clears it) and a nudge (Machine's per-note timing offset); <a href="monomachine.html#adjustNotes" translate="no">adjustNotes</a>() sets the three.</p>
+<p>With <a href="monomachine.html#poly-prop" translate="no">poly</a> on, a step may play more notes, stacked on the line's, each with its own length, velocity and nudge (the step's flags are all its notes'). They play only while the sound has several voices (<a href="machine.html#polyphonic-prop" translate="no">Machine::polyphonic</a>): on Nekobi or Calf Monosynth the stack is kept but silent (<a href="monomachine.html#polyOn-prop" translate="no">polyOn</a> is false), and edits go to the line alone. A step whose line note goes takes its lowest stacked note as the line's (settle()). The line is the machine's own data (saved with it); its clip's pattern is written from it, one subnote per note. A live key is a MIDI note (<a href="monomachine.html#degreeNote" translate="no">degreeNote</a>() turns scale degrees into notes). <a href="machine.html#KickMode-enum" translate="no">Machine::OnlyKick</a> silences it.</p>
 <p>The key (root and scale) places the presets, which are written in scale degrees from kits.json's <code translate="no">baseNote</code> plus the root: <code translate="no">bass-presets.json</code> and <code translate="no">lead-presets.json</code> chart NOTES &quot;1&quot; to &quot;7&quot; or &quot;.&quot;, OCTAVE &quot;+&quot; or &quot;-&quot;, ACCENT and SLIDE &quot;x&quot;, and when needed HOLD &quot;x&quot; on the steps a long note lasts through and ALTER, the semitones a note outside the key sits above its degree. The key also places <a href="monomachine.html#degreeNote" translate="no">degreeNote</a>() and <a href="monomachine.html#randomize" translate="no">randomize</a>(). octave shifts <a href="monomachine.html#degreeNote" translate="no">degreeNote</a>(), not the notes already written.</p>
 <p>The QML piano roll uses notes, accents, slides, lengths, holds, velocities, octave, <a href="monomachine.html#setNote" translate="no">setNote</a>(), <a href="monomachine.html#toggleAccent" translate="no">toggleAccent</a>(), <a href="monomachine.html#toggleSlide" translate="no">toggleSlide</a>() and <a href="monomachine.html#audition" translate="no">audition</a>(), with Machine's playhead, cursor, bars and presets.</p>
 </div>
@@ -213,6 +228,34 @@
 <!-- @@@lengths -->
 </div>
 <div class="fnitem">
+<!-- $$$noteSets-prop$$$noteSets$$$stepsChanged -->
+<h3 class="fn" translate="no" id="noteSets-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">noteSets</span> : <span class="type">QVariantList</span></h3>
+<p>while <a href="monomachine.html#polyOn-prop" translate="no">polyOn</a>: per step of the viewed bar, the MIDI notes sounding on it (struck there or held on from before); else empty.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>noteSets</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="monomachine.html#stepsChanged" translate="no">stepsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@noteSets -->
+</div>
+<div class="fnitem">
+<!-- $$$noteTails-prop$$$noteTails$$$stepsChanged -->
+<h3 class="fn" translate="no" id="noteTails-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">noteTails</span> : <span class="type">QVariantList</span></h3>
+<p>while <a href="monomachine.html#polyOn-prop" translate="no">polyOn</a>: per step of the viewed bar, the MIDI notes held on from the step before (not struck there); else empty.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>noteTails</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="monomachine.html#stepsChanged" translate="no">stepsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@noteTails -->
+</div>
+<div class="fnitem">
 <!-- $$$notes-prop$$$notes$$$stepsChanged -->
 <h3 class="fn" translate="no" id="notes-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">notes</span> : <span class="type">QVariantList</span></h3>
 <p>per step of the viewed bar: the MIDI note that starts there, or -1.</p>
@@ -240,6 +283,35 @@
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="monomachine.html#octaveChanged" translate="no">octaveChanged</a></b></span>()</td></tr>
 </table></div>
 <!-- @@@octave -->
+</div>
+<div class="fnitem">
+<!-- $$$poly-prop$$$poly$$$setPolybool$$$polyChanged -->
+<h3 class="fn" translate="no" id="poly-prop"><span class="name">poly</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the pattern may stack notes on a step. It is set only while the sound is polyphonic; turning it off drops the stacked notes (an undoable edit). Saved with the pattern and its presets.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>poly</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setPoly</b></span>(bool <i>poly</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="monomachine.html#polyChanged" translate="no">polyChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@poly -->
+</div>
+<div class="fnitem">
+<!-- $$$polyOn-prop$$$polyOn$$$polyChanged -->
+<h3 class="fn" translate="no" id="polyOn-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">polyOn</span> : <span class="type">bool</span></h3>
+<p>This property holds whether stacked notes play and are edited: <a href="monomachine.html#poly-prop" translate="no">poly</a> is on and the sound playing is polyphonic. The piano roll edits per note (<a href="monomachine.html#noteSets-prop" translate="no">noteSets</a>, <a href="monomachine.html#toggleNote" translate="no">toggleNote</a>()) while it is true.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>polyOn</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="monomachine.html#polyChanged" translate="no">polyChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@polyOn -->
 </div>
 <div class="fnitem">
 <!-- $$$root-prop$$$root$$$setRootint$$$keyChanged -->
@@ -286,6 +358,20 @@
 <!-- @@@slides -->
 </div>
 <div class="fnitem">
+<!-- $$$stacked-prop$$$stacked$$$stepsChanged -->
+<h3 class="fn" translate="no" id="stacked-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">stacked</span> : <span class="type">QVariantList</span></h3>
+<p>per step of the viewed bar: the stacked notes (POLY) struck there besides the line's.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>stacked</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="monomachine.html#stepsChanged" translate="no">stepsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@stacked -->
+</div>
+<div class="fnitem">
 <!-- $$$velocities-prop$$$velocities$$$stepsChanged -->
 <h3 class="fn" translate="no" id="velocities-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">velocities</span> : <span class="type">QVariantList</span></h3>
 <p>per step of the viewed bar: the velocity the note starting there plays at (its own, else the plain or accent one); -1 where no note starts.</p>
@@ -316,9 +402,9 @@
 </div><!-- @@@adjustNotes -->
 </div>
 <div class="fnitem">
-<!-- $$$allPicks[overload1]$$$allPicks -->
-<h3 class="fn" translate="no" id="allPicks"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> MonoMachine::<span class="name">allPicks</span>() const</h3>
-<p>Returns every note of the pattern, in all its bars, as [position, note] picks in order.</p>
+<!-- $$$allPicks[overload1]$$$allPicksbool -->
+<h3 class="fn" translate="no" id="allPicks"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> MonoMachine::<span class="name">allPicks</span>(<span class="type">bool</span> <i>stacked</i>) const</h3>
+<p>Returns every note of the pattern, in all its bars, as [position, note] picks in order: the line's, and with <i translate="no">stacked</i> the stacked ones too (lowest first on a step), as the piano roll shows them with POLY.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@allPicks -->
 </div>
@@ -342,6 +428,13 @@
 <p>Removes the <i translate="no">picked</i> notes (a list of [position, note] pairs, absolute positions), as a tap on each would; a pick whose note is gone already is skipped. One undo step.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@deleteNotes -->
+</div>
+<div class="fnitem">
+<!-- $$$holdNoteTo[overload1]$$$holdNoteTointint -->
+<h3 class="fn" translate="no" id="holdNoteTo"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> MonoMachine::<span class="name">holdNoteTo</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>note</i>)</h3>
+<p>POLY: makes the MIDI <i translate="no">note</i> that sounds on or before <i translate="no">step</i> of the viewed bar last up to that step, whatever else the steps play; on the note's first step it goes back to one step. Returns whether a note's length changed.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@holdNoteTo -->
 </div>
 <div class="fnitem">
 <!-- $$$keyChanged -->
@@ -372,6 +465,13 @@
 </div><!-- @@@octaveChanged -->
 </div>
 <div class="fnitem">
+<!-- $$$polyChanged -->
+<h3 class="fn" translate="no" id="polyChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MonoMachine::<span class="name">polyChanged</span>()</h3>
+<p>Emitted when poly or <a href="monomachine.html#polyOn-prop" translate="no">polyOn</a> changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="monomachine.html#poly-prop" translate="no">poly</a> and <a href="monomachine.html#polyOn-prop" translate="no">polyOn</a>. </p>
+</div><!-- @@@polyChanged -->
+</div>
+<div class="fnitem">
 <!-- $$$randomize[overload1]$$$randomize -->
 <h3 class="fn" translate="no" id="randomize"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MonoMachine::<span class="name">randomize</span>()</h3>
 <p>Writes a fresh in-key line over the whole pattern, leaning on the root: most steps play, about a third of them on the root, some accented, a few sliding.</p>
@@ -387,15 +487,15 @@
 </div>
 <div class="fnitem">
 <!-- $$$setNoteLength[overload1]$$$setNoteLengthintint -->
-<h3 class="fn" translate="no" id="setNoteLength"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MonoMachine::<span class="name">setNoteLength</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>steps</i>)</h3>
-<p>Sets how many <i translate="no">steps</i> the note on <i translate="no">step</i> of the viewed bar lasts (1 to 64; it may reach into the next bars); does nothing on a step without a note.</p>
+<h3 class="fn" translate="no" id="setNoteLength"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> MonoMachine::<span class="name">setNoteLength</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>steps</i>)</h3>
+<p>Sets how many <i translate="no">steps</i> the note on <i translate="no">step</i> of the viewed bar lasts (1 to 64; it may reach into the next bars); does nothing on a step without a note. Returns whether the length changed.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setNoteLength -->
 </div>
 <div class="fnitem">
 <!-- $$$shiftNotes[overload1]$$$shiftNotesconstQVariantList&int -->
 <h3 class="fn" translate="no" id="shiftNotes"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> MonoMachine::<span class="name">shiftNotes</span>(const <span class="type">QVariantList</span> &amp;<i>picked</i>, <span class="type">int</span> <i>steps</i>)</h3>
-<p>Moves the <i translate="no">picked</i> notes <i translate="no">steps</i> steps later (positive) or earlier, with their length, accent and slide. A step holds one note, so a note landing on another replaces it, and a note that would leave the pattern stays. Returns the picks as they are after the move. One undo step.</p>
+<p>Moves the <i translate="no">picked</i> notes <i translate="no">steps</i> steps later (positive) or earlier, with their length, velocity and nudge; a step they all leave gives them its accent and slide. Without POLY playing a step holds one note, so a note landing on another replaces it, flags too; with it, it stacks there. A note that would leave the pattern stays. Returns the picks as they are after the move. One undo step.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@shiftNotes -->
 </div>
@@ -410,7 +510,7 @@
 <!-- $$$stepsChanged -->
 <h3 class="fn" translate="no" id="stepsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MonoMachine::<span class="name">stepsChanged</span>()</h3>
 <p>Emitted when any of the per-step lists of the viewed bar change.</p>
-<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="monomachine.html#accents-prop" translate="no">accents</a>, <a href="monomachine.html#holds-prop" translate="no">holds</a>, <a href="monomachine.html#lengths-prop" translate="no">lengths</a>, <a href="monomachine.html#notes-prop" translate="no">notes</a>, <a href="monomachine.html#slides-prop" translate="no">slides</a>, and <a href="monomachine.html#velocities-prop" translate="no">velocities</a>. </p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="monomachine.html#accents-prop" translate="no">accents</a>, <a href="monomachine.html#holds-prop" translate="no">holds</a>, <a href="monomachine.html#lengths-prop" translate="no">lengths</a>, <a href="monomachine.html#noteSets-prop" translate="no">noteSets</a>, <a href="monomachine.html#noteTails-prop" translate="no">noteTails</a>, <a href="monomachine.html#notes-prop" translate="no">notes</a>, <a href="monomachine.html#slides-prop" translate="no">slides</a>, <a href="monomachine.html#stacked-prop" translate="no">stacked</a>, and <a href="monomachine.html#velocities-prop" translate="no">velocities</a>. </p>
 </div><!-- @@@stepsChanged -->
 </div>
 <div class="fnitem">
@@ -419,6 +519,13 @@
 <p>Toggles the accent of <i translate="no">step</i> of the viewed bar.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggleAccent -->
+</div>
+<div class="fnitem">
+<!-- $$$toggleNote[overload1]$$$toggleNoteintint -->
+<h3 class="fn" translate="no" id="toggleNote"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MonoMachine::<span class="name">toggleNote</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>note</i>)</h3>
+<p>POLY: adds <i translate="no">note</i> to <i translate="no">step</i> of the viewed bar (stacked on the step's other notes) and sounds it, or takes it out when the step plays it already. Without POLY playing, as <a href="monomachine.html#setNote" translate="no">setNote</a>().</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@toggleNote -->
 </div>
 <div class="fnitem">
 <!-- $$$toggleSlide[overload1]$$$toggleSlideint -->
@@ -431,7 +538,7 @@
 </main>
 <footer class="api-footer">
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
   </div>
 </footer>
 </body>

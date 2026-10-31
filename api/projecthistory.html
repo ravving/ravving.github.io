@@ -5,7 +5,7 @@
 <!-- projecthistory.cpp -->
   <meta name="description" content="A project's timeline: the versions a long press on SAVE keeps (Projects::saveVersion()), to go back to, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;projects&lt;@op&gt;.&lt;/@op&gt;history.">
   <meta name="keywords" content="class">
-  <title>ProjectHistory Class | ravving C++ API 1.0</title>
+  <title>ProjectHistory Class | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=a5dc7cd98d" defer></script>
-  <script src="search.js?v=38b3c0cac3" defer></script>
+  <script src="nav.js?v=1a5dfeadeb" defer></script>
+  <script src="search.js?v=4917e215d8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -114,12 +114,15 @@
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#busy-prop" translate="no">busy</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#carry" translate="no">carry</a></b>(const QString &amp;<i>to</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#count-prop" translate="no">count</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#dropSeed" translate="no">dropSeed</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#enabled-prop" translate="no">enabled</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#entries-prop" translate="no">entries</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#holdHousekeeping" translate="no">holdHousekeeping</a></b>(bool <i>held</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#housekeepNow" translate="no">housekeepNow</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#remove" translate="no">remove</a></b>(const QString &amp;<i>branch</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#rename" translate="no">rename</a></b>(const QString &amp;<i>from</i>, const QString &amp;<i>to</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#restart" translate="no">restart</a></b>(const QString &amp;<i>branch</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#seed" translate="no">seed</a></b>(const QVariantMap &amp;<i>state</i>, int <i>count</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#setEnabled" translate="no">setEnabled</a></b>(bool <i>enabled</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#setLimits" translate="no">setLimits</a></b>(const ProjectHistory::Limits &amp;<i>limits</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#snapshot" translate="no">snapshot</a></b>(const QVariantMap &amp;<i>state</i>, const QString &amp;<i>kind</i>, const QStringList &amp;<i>changed</i>, const QString &amp;<i>title</i> = QString())</td></tr>
@@ -267,10 +270,24 @@
 <!-- @@@changedKeys -->
 </div>
 <div class="fnitem">
+<!-- $$$dropSeed[overload1]$$$dropSeed -->
+<h3 class="fn" translate="no" id="dropSeed"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ProjectHistory::<span class="name">dropSeed</span>()</h3>
+<p>Removes the branch <a href="projecthistory.html#seed" translate="no">seed</a>() wrote; the next pack drops its objects.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@dropSeed -->
+</div>
+<div class="fnitem">
 <!-- $$$holdHousekeeping[overload1]$$$holdHousekeepingbool -->
 <h3 class="fn" translate="no" id="holdHousekeeping"><span class="type">void</span> ProjectHistory::<span class="name">holdHousekeeping</span>(<span class="type">bool</span> <i>held</i>)</h3>
 <p>Holds the housekeeping back while <i translate="no">held</i> (Studio holds it while the transport plays): a tidy asked for meanwhile (<a href="projecthistory.html#tidy" translate="no">tidy</a>()) runs once it is let go; one under way is not stopped.</p>
 <!-- @@@holdHousekeeping -->
+</div>
+<div class="fnitem">
+<!-- $$$housekeepNow[overload1]$$$housekeepNow -->
+<h3 class="fn" translate="no" id="housekeepNow"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ProjectHistory::<span class="name">housekeepNow</span>()</h3>
+<p>For measuring on the device (<code translate="no">tools/timeline-impact.sh</code>): packs the store now, whatever the loose objects, at idle priority, and logs how long it took. Refused while the transport plays (<a href="projecthistory.html#holdHousekeeping" translate="no">holdHousekeeping</a>()), as a tidy waits then: a pack costs the CPU and the disk.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@housekeepNow -->
 </div>
 <div class="fnitem">
 <!-- $$$housekept[overload1]$$$housekept -->
@@ -307,6 +324,12 @@
 <h3 class="fn" translate="no" id="restart"><span class="type">void</span> ProjectHistory::<span class="name">restart</span>(const <span class="type">QString</span> &amp;<i>branch</i>)</h3>
 <p>Makes <i translate="no">branch</i> the one snapshots go to, as a new trail: what it held is dropped (NEW).</p>
 <!-- @@@restart -->
+</div>
+<div class="fnitem">
+<!-- $$$seed[overload1]$$$seedconstQVariantMap&int -->
+<h3 class="fn" translate="no" id="seed"><span class="type">void</span> ProjectHistory::<span class="name">seed</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>, <span class="type">int</span> <i>count</i>)</h3>
+<p>For measuring on the device: writes <i translate="no">count</i> versions of <i translate="no">state</i> (the tempo moved in each) on the throwaway branch <code translate="no">d/seed</code>, so a pack weighs what a long real trail's does. <a href="projecthistory.html#dropSeed" translate="no">dropSeed</a>() removes it.</p>
+<!-- @@@seed -->
 </div>
 <div class="fnitem">
 <!-- $$$setEnabled[overload1]$$$setEnabledbool -->
@@ -396,7 +419,7 @@
 </main>
 <footer class="api-footer">
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
   </div>
 </footer>
 </body>

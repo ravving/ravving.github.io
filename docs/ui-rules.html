@@ -58,9 +58,11 @@
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
 <li><a href="icon-packs.html">Make an icon pack</a></li>
+<li><a href="https://github.com/ravving/ravving_repo/blob/main/CONTRIBUTING.md">Share your own</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
+<li><a href="https://ravving.github.io/ravving_repo/">The catalog</a></li>
 </ul>
 <p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
@@ -121,7 +123,7 @@ holds the rules and their exceptions, and is where a new rule goes.</p>
 <tr>
 <td><code>Ravving.Controls</code> (<code>controls/</code>)</td>
 <td>a control with properties or behaviour of its own, besides the look</td>
-<td><code>ActionButton</code>, <code>Chip</code>, <code>ConfirmButton</code>, <code>Knob</code>, <code>Fader</code>, <code>Meter</code>, <code>KeyCap</code> (on <code>CapFace</code>, the grid's cap the SONG page's keys and blocks share), <code>Nameplate</code></td>
+<td><code>ActionButton</code>, <code>Chip</code>, <code>ConfirmButton</code>, <code>Knob</code>, <code>Fader</code>, <code>KnobSwitch</code>, <code>Meter</code>, <code>KeyCap</code> (on <code>CapFace</code>, the grid's cap the SONG page's keys and blocks share), <code>Nameplate</code></td>
 </tr>
 <tr>
 <td>the app (<code>qml/</code>)</td>
@@ -372,16 +374,24 @@ and Button sizes):</p>
 <li><strong>One row, one continuous band</strong>, never split into a band per group.</li>
 <li>The groups in it (a Caption first, then its chips) are told apart by the space between
     them, as the toolbar's are.</li>
-<li>In the presets and sounds dialogs (ChoicePopup), SOURCE at the left and LOAD at the right
-    share their row's band. GROUP and SORT share theirs: the groups wrap in what SORT leaves
-    them, and SORT keeps the top right.</li>
-<li>A row of one group hugs it: SAVE PATTERN AS's KEEP, NamePopup's <code>options</code> under
+<li>The presets and sounds dialogs: their sources and options share one band (below).</li>
+<li>A row of one group hugs it: a save's QUICK words, NamePopup's <code>options</code> under
     <code>optionsLabel</code>.</li>
 <li>A page's toolbar rows too: the SONG page's top bar (its title, SWITCH, PLAYS), its section
     and song rows, the pattern toolbars.</li>
 <li>So a dialog reads in rows and groups at a glance, as a page does, and a wrapping row never
   leaves a lone chip on a line of its own. <em>Checked:</em> <code>dialog-groups-on-bands</code> (a Caption in a
   *Popup.qml outside a strip); one band per row is the reviewer's to see.</li>
+</ul>
+<h3 id="the-presets-and-sounds-dialogs">The presets and sounds dialogs</h3>
+<ul>
+<li>In ChoicePopup, the sources at the left and the owner's options (the presets' WITH ITS
+  SOUND / MODS / BARS) at the right share their row's band. They have no captions: the chips
+  say what they are.</li>
+<li>GROUP and SORT go down the dialog's left as a sidebar of <code>SideBarItem</code> rows (ChoiceDialog's
+  <code>sideEntries</code>). The groups scroll and SORT stays at the sidebar's foot, so however many
+  groups there are, the grid keeps its height.</li>
+<li>With the sidebar, the dialog takes nearly the screen's width.</li>
 </ul>
 <h2 id="leaving">Leaving</h2>
 <ul>

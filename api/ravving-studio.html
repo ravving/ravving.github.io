@@ -4,7 +4,7 @@
   <meta charset="utf-8">
 <!-- index.qdoc -->
   <meta name="description" content="The studio, the song's sections, the undo history, projects, templates and presets.">
-  <title>Studio and projects | ravving C++ API 1.0</title>
+  <title>Studio and projects | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -20,8 +20,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=a5dc7cd98d" defer></script>
-  <script src="search.js?v=38b3c0cac3" defer></script>
+  <script src="nav.js?v=1a5dfeadeb" defer></script>
+  <script src="search.js?v=4917e215d8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -74,6 +74,8 @@
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="historyparticipant.html">HistoryParticipant</a></p></td><td class="tblDescr"><p>Interface of an object whose changes History can undo</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="iconprovider.html">IconProvider</a></p></td><td class="tblDescr"><p>Serves the UI icons (Glyphs::icon()) to QML as image://icon/&lt;set&gt;/&lt;name&gt; or image://icon/&lt;set&gt;/&lt;name&gt;/&lt;rrggbb&gt;</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="keyspelling.html">KeySpelling</a></p></td><td class="tblDescr"><p>How the notes and chords of a key are written: with flats in a flat key (C minor's E♭, A♭maj7, B♭), with sharps otherwise</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="legacysequence.html">LegacySequence</a></p></td><td class="tblDescr"><p>An older project's sequence, read from the pattern files libzynthbox's sequence kept in the project folder (sequences/global/patterns/partNx.pattern.json)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="legacysequence-clip.html">LegacySequence::Clip</a></p></td><td class="tblDescr"><p>One clip of an older project's sequence, as its pattern file held it</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="libgit2snapshotstore.html">LibGit2SnapshotStore</a></p></td><td class="tblDescr"><p>A SnapshotStore through libgit2: a bare repository written in process, no child started</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="localization.html">Localization</a></p></td><td class="tblDescr"><p>Interface's language (KI18n), published to QML as localization</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="namedstore.html">NamedStore</a></p></td><td class="tblDescr"><p>User's own named entries of one kind, kept in a JSON file of their own ({&quot;presets&quot;: [{&quot;name&quot;: ..., ...}, ...]})</p></td></tr>
@@ -106,6 +108,8 @@
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="historyparticipant.html">HistoryParticipant</a></p></td><td class="tblDescr"><p>Interface of an object whose changes History can undo</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="iconprovider.html">IconProvider</a></p></td><td class="tblDescr"><p>Serves the UI icons (Glyphs::icon()) to QML as image://icon/&lt;set&gt;/&lt;name&gt; or image://icon/&lt;set&gt;/&lt;name&gt;/&lt;rrggbb&gt;</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="keyspelling.html">KeySpelling</a></p></td><td class="tblDescr"><p>How the notes and chords of a key are written: with flats in a flat key (C minor's E♭, A♭maj7, B♭), with sharps otherwise</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="legacysequence.html">LegacySequence</a></p></td><td class="tblDescr"><p>An older project's sequence, read from the pattern files libzynthbox's sequence kept in the project folder (sequences/global/patterns/partNx.pattern.json)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="legacysequence-clip.html">LegacySequence::Clip</a></p></td><td class="tblDescr"><p>One clip of an older project's sequence, as its pattern file held it</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="libgit2snapshotstore.html">LibGit2SnapshotStore</a></p></td><td class="tblDescr"><p>A SnapshotStore through libgit2: a bare repository written in process, no child started</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="localization.html">Localization</a></p></td><td class="tblDescr"><p>Interface's language (KI18n), published to QML as localization</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="namedstore.html">NamedStore</a></p></td><td class="tblDescr"><p>User's own named entries of one kind, kept in a JSON file of their own ({&quot;presets&quot;: [{&quot;name&quot;: ..., ...}, ...]})</p></td></tr>
@@ -132,7 +136,7 @@
 </main>
 <footer class="api-footer">
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
   </div>
 </footer>
 </body>

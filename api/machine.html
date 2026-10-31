@@ -5,7 +5,7 @@
 <!-- machine.cpp -->
   <meta name="description" content="The base class of the studio's instruments: one sketchpad track playing a pattern of steps from its clips (PatternClip, published to libravving's sequencer) through a sound engine.">
   <meta name="keywords" content="class">
-  <title>Machine Class | ravving C++ API 1.0</title>
+  <title>Machine Class | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=a5dc7cd98d" defer></script>
-  <script src="search.js?v=38b3c0cac3" defer></script>
+  <script src="nav.js?v=1a5dfeadeb" defer></script>
+  <script src="search.js?v=4917e215d8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -100,6 +100,7 @@
 <h2 id="properties">Properties</h2>
 <div class="table"><table class="propsummary" translate="no">
 <tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="machine.html#activeEngineName-prop" translate="no">activeEngineName</a></b> : QString</li>
 <li class="fn" translate="no"><b><a href="machine.html#activeSound-prop" translate="no">activeSound</a></b> : SoundControls*</li>
 <li class="fn" translate="no"><b><a href="machine.html#automationOn-prop" translate="no">automationOn</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="machine.html#bars-prop" translate="no">bars</a></b> : int</li>
@@ -123,6 +124,7 @@
 </ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><b><a href="machine.html#playPosition-prop" translate="no">playPosition</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="machine.html#playhead-prop" translate="no">playhead</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="machine.html#polyphonic-prop" translate="no">polyphonic</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="machine.html#presetEdited-prop" translate="no">presetEdited</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="machine.html#presetName-prop" translate="no">presetName</a></b> : QString</li>
 <li class="fn" translate="no"><b><a href="machine.html#presets-prop" translate="no">presets</a></b> : QVariantList</li>
@@ -147,6 +149,7 @@
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="machine.html#Machine" translate="no">Machine</a></b>(const QVariantMap &amp;<i>config</i>, const QVariantMap &amp;<i>state</i>, PresetLibrary *<i>presets</i>, GlobalEffects *<i>globalEffects</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#activeEngineName-prop" translate="no">activeEngineName</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#activeExpressions" translate="no">activeExpressions</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> SoundControls *</td><td class="memItemRight bottomAlign"><b><a href="machine.html#activeSound-prop" translate="no">activeSound</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#adjustShapes" translate="no">adjustShapes</a></b>(const QVariantList &amp;<i>picks</i>, const QString &amp;<i>setting</i>, int <i>delta</i>)</td></tr>
@@ -169,8 +172,10 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#clear" translate="no">clear</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#clearAutomation" translate="no">clearAutomation</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#clip" translate="no">clip</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="machine.html#copyHits" translate="no">copyHits</a></b>(const QVariantList &amp;<i>picks</i>, const QVariantList &amp;<i>targets</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#cueSectionContent" translate="no">cueSectionContent</a></b>(const QVariantMap &amp;<i>content</i>, int <i>span</i>, bool <i>intoSpare</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#cursor-prop" translate="no">cursor</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#deleteHits" translate="no">deleteHits</a></b>(const QVariantList &amp;<i>picks</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#editStep-prop" translate="no">editStep</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> TrackEffects *</td><td class="memItemRight bottomAlign"><b><a href="machine.html#effects-prop" translate="no">effects</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#endEditGroup" translate="no">endEditGroup</a></b>()</td></tr>
@@ -184,8 +189,10 @@
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#hasAutomation-prop" translate="no">hasAutomation</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#hasSectionSound" translate="no">hasSectionSound</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#hasSoundChoice" translate="no">hasSoundChoice</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="machine.html#hitsOf" translate="no">hitsOf</a></b>(const QVariantList &amp;<i>notes</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#importUserSound" translate="no">importUserSound</a></b>(const QVariantMap &amp;<i>entry</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#key-prop" translate="no">key</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#landSectionMods" translate="no">landSectionMods</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="machine.html#level-prop" translate="no">level</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="machine.html#levelDb-prop" translate="no">levelDb</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#liveClip" translate="no">liveClip</a></b>() const</td></tr>
@@ -193,6 +200,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#loadSound" translate="no">loadSound</a></b>(const QString &amp;<i>name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#loadSoundPreset" translate="no">loadSoundPreset</a></b>(const QString &amp;<i>name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#loopBar-prop" translate="no">loopBar</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="machine.html#moveHits" translate="no">moveHits</a></b>(const QVariantList &amp;<i>picks</i>, const QVariantList &amp;<i>targets</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#muted-prop" translate="no">muted</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#once-prop" translate="no">once</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="machine.html#pan-prop" translate="no">pan</a></b>() const</td></tr>
@@ -200,8 +208,10 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#playLive" translate="no">playLive</a></b>(int <i>key</i>, bool <i>accented</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#playPosition-prop" translate="no">playPosition</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#playhead-prop" translate="no">playhead</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#playingSound" translate="no">playingSound</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#polyphonic-prop" translate="no">polyphonic</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#presetEdited-prop" translate="no">presetEdited</a></b>() const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#presetEntry" translate="no">presetEntry</a></b>(const QString &amp;<i>name</i>, bool <i>withSound</i>, bool <i>withMods</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#presetEntry" translate="no">presetEntry</a></b>(const QString &amp;<i>name</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> PresetLibrary *</td><td class="memItemRight bottomAlign"><b><a href="machine.html#presetLibrary" translate="no">presetLibrary</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#presetName-prop" translate="no">presetName</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="machine.html#presets-prop" translate="no">presets</a></b>() const</td></tr>
@@ -211,15 +221,18 @@
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#quantise-prop" translate="no">quantise</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#recordLive" translate="no">recordLive</a></b>(int <i>key</i>, bool <i>accented</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#redo" translate="no">redo</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#releaseLive" translate="no">releaseLive</a></b>(int <i>key</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#removeBar" translate="no">removeBar</a></b>(int <i>bar</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#removePreset" translate="no">removePreset</a></b>(const QString &amp;<i>name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#removeSound" translate="no">removeSound</a></b>(const QString &amp;<i>name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#restore" translate="no">restore</a></b>(const QVariantMap &amp;<i>state</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#rowNote" translate="no">rowNote</a></b>(int <i>row</i>) const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#saveAsPreset" translate="no">saveAsPreset</a></b>(const QString &amp;<i>name</i> = QString(), bool <i>withSound</i> = true, bool <i>withMods</i> = true)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#saveAsPreset" translate="no">saveAsPreset</a></b>(const QString &amp;<i>name</i> = QString())</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#saveSound" translate="no">saveSound</a></b>(const QString &amp;<i>name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#sectionBars" translate="no">sectionBars</a></b>(const QVariantMap &amp;<i>content</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#sectionChanges" translate="no">sectionChanges</a></b>(const QVariantMap &amp;<i>content</i>, int <i>span</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#sectionContent" translate="no">sectionContent</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#sectionMods" translate="no">sectionMods</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#sectionSound" translate="no">sectionSound</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#sectionSounds" translate="no">sectionSounds</a></b>(const QVariantMap &amp;<i>content</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#automationOn-prop" translate="no">setAutomationOn</a></b>(bool <i>on</i>)</td></tr>
@@ -241,6 +254,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#setPreviewStep" translate="no">setPreviewStep</a></b>(int <i>step</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#quantise-prop" translate="no">setQuantise</a></b>(bool <i>quantise</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#setRecordingAutomation" translate="no">setRecordingAutomation</a></b>(bool <i>recording</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#setSectionMods" translate="no">setSectionMods</a></b>(const QVariantMap &amp;<i>mods</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#setSectionSound" translate="no">setSectionSound</a></b>(const QVariantMap &amp;<i>sound</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#setSeveralSections" translate="no">setSeveralSections</a></b>(bool <i>several</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#setShapes" translate="no">setShapes</a></b>(const QVariantList &amp;<i>picks</i>, const QString &amp;<i>setting</i>, int <i>value</i>)</td></tr>
@@ -258,6 +272,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="machine.html#soundKeys" translate="no">soundKeys</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#soundPreset-prop" translate="no">soundPreset</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#soundPresetControls" translate="no">soundPresetControls</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="machine.html#soundPresetControlsOf" translate="no">soundPresetControlsOf</a></b>(const QString &amp;<i>name</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="machine.html#soundPresets-prop" translate="no">soundPresets</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#soundSource-prop" translate="no">soundSource</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="machine.html#soundSourceName-prop" translate="no">soundSourceName</a></b>() const</td></tr>
@@ -332,6 +347,9 @@
 <h2 id="protected-functions">Protected Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> virtual PatternClip *</td><td class="memItemRight bottomAlign"><b><a href="machine.html#clipForNote" translate="no">clipForNote</a></b>(int <i>note</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#gridRows" translate="no">gridRows</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="machine.html#nudgesHits" translate="no">nudgesHits</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="machine.html#putGridHits" translate="no">putGridHits</a></b>(const QList&lt;Machine::GridHit&gt; &amp;<i>clear</i>, const QList&lt;Machine::GridHit&gt; &amp;<i>set</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="machine.html#shapeBank" translate="no">shapeBank</a></b>() const</td></tr>
 </table></div>
 <!-- $$$Machine-description -->
@@ -366,6 +384,20 @@
 </div>
 <div class="prop">
 <h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$activeEngineName-prop$$$activeEngineName$$$soundSourceChanged -->
+<h3 class="fn" translate="no" id="activeEngineName-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">activeEngineName</span> : <span class="type">QString</span></h3>
+<p>This property holds the name of the engine the playing source runs on, as its profile in engines.json names it; empty for an engine without a profile.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>activeEngineName</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="machine.html#soundSource-prop" translate="no">soundSourceChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@activeEngineName -->
+</div>
 <div class="fnitem">
 <!-- $$$activeSound-prop$$$activeSound$$$soundSourceChanged -->
 <h3 class="fn" translate="no" id="activeSound-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">activeSound</span> : <span class="type"><a href="soundcontrols.html" translate="no">SoundControls</a></span>*</h3>
@@ -673,6 +705,20 @@
 <!-- @@@playhead -->
 </div>
 <div class="fnitem">
+<!-- $$$polyphonic-prop$$$polyphonic$$$soundSourceChanged -->
+<h3 class="fn" translate="no" id="polyphonic-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">polyphonic</span> : <span class="type">bool</span></h3>
+<p>This property holds whether the engine the playing source runs on plays several notes at once (its profile in engines.json says <code translate="no">polyphonic</code>); false for an engine without a profile.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>polyphonic</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="machine.html#soundSource-prop" translate="no">soundSourceChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@polyphonic -->
+</div>
+<div class="fnitem">
 <!-- $$$presetEdited-prop$$$presetEdited$$$presetChanged -->
 <h3 class="fn" translate="no" id="presetEdited-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">presetEdited</span> : <span class="type">bool</span></h3>
 <p>This property holds whether the pattern changed since <a href="machine.html#presetName-prop" translate="no">presetName</a> was loaded or saved.</p>
@@ -732,7 +778,7 @@
 <div class="fnitem">
 <!-- $$$shapes-prop$$$shapes$$$shapesChanged -->
 <h3 class="fn" translate="no" id="shapes-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">shapes</span> : <span class="type">QVariantMap</span></h3>
-<p>This property holds the hits that do not simply play every time: <code translate="no">&quot;position:note&quot;</code> (an absolute step and a MIDI note) → <code translate="no">chance</code> (%), <code translate="no">ratchets</code>, <code translate="no">decay</code> (%) and <code translate="no">playOn</code> (<a href="machine.html#playOnNames" translate="no">playOnNames</a>()).</p>
+<p>This property holds the hits that do not simply play every time, or at their row's velocity: <code translate="no">&quot;position:note&quot;</code> (an absolute step and a MIDI note) → <code translate="no">chance</code> (%), <code translate="no">ratchets</code>, <code translate="no">decay</code> (%), <code translate="no">playOn</code> (<a href="machine.html#playOnNames" translate="no">playOnNames</a>()) and <code translate="no">velocity</code> (% of the row's).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>shapes</b></span>() const</td></tr>
@@ -949,7 +995,7 @@
 <div class="fnitem">
 <!-- $$$applySectionContent[overload1]$$$applySectionContentconstQVariantMap& -->
 <h3 class="fn" translate="no" id="applySectionContent"><span class="type">void</span> Machine::<span class="name">applySectionContent</span>(const <span class="type">QVariantMap</span> &amp;<i>content</i>)</h3>
-<p>Applies a section's <i translate="no">content</i>: the pattern becomes it, the sound is the section's own or the project's (<a href="machine.html#setSectionSound" translate="no">setSectionSound</a>(), before the pattern: a drum chart maps to the kit), and the history is cleared. An empty map (no content for this machine yet) empties the pattern.</p>
+<p>Applies a section's <i translate="no">content</i>: the pattern becomes it, the sound is the section's own or the project's (<a href="machine.html#setSectionSound" translate="no">setSectionSound</a>(), before the pattern: a drum chart maps to the kit) with its MODS (<a href="machine.html#setSectionMods" translate="no">setSectionMods</a>()), and the history is cleared. An empty map (no content for this machine yet) empties the pattern.</p>
 <!-- @@@applySectionContent -->
 </div>
 <div class="fnitem">
@@ -1036,10 +1082,24 @@
 <!-- @@@clipForNote -->
 </div>
 <div class="fnitem">
+<!-- $$$copyHits[overload1]$$$copyHitsconstQVariantList&constQVariantList& -->
+<h3 class="fn" translate="no" id="copyHits"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> Machine::<span class="name">copyHits</span>(const <span class="type">QVariantList</span> &amp;<i>picks</i>, const <span class="type">QVariantList</span> &amp;<i>targets</i>)</h3>
+<p>Puts a copy of the step grid's hits in <i translate="no">picks</i> at <i translate="no">targets</i>, as <a href="machine.html#moveHits" translate="no">moveHits</a>() moves them, the originals kept: SELECT's ALT + ◀ ▶ on a drum or sampler grid. Returns the copies, as picks. An undoable edit.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@copyHits -->
+</div>
+<div class="fnitem">
 <!-- $$$cueSectionContent[overload1]$$$cueSectionContentconstQVariantMap&intbool -->
 <h3 class="fn" translate="no" id="cueSectionContent"><span class="type">void</span> Machine::<span class="name">cueSectionContent</span>(const <span class="type">QVariantMap</span> &amp;<i>content</i>, <span class="type">int</span> <i>span</i>, <span class="type">bool</span> <i>intoSpare</i>)</h3>
 <p>Takes a section's <i translate="no">content</i>, <i translate="no">span</i> bars long, while the transport plays. With <i translate="no">intoSpare</i> the content is written into the clip that is not playing and the two clips swap, so nothing in the playing clip drops or doubles; otherwise it is written into the clip already waiting. The machine's state changes at once; the studio switches the clips, and the pause, on the next bar. Turns <a href="machine.html#loopBar-prop" translate="no">loopBar</a> off.</p>
 <!-- @@@cueSectionContent -->
+</div>
+<div class="fnitem">
+<!-- $$$deleteHits[overload1]$$$deleteHitsconstQVariantList& -->
+<h3 class="fn" translate="no" id="deleteHits"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Machine::<span class="name">deleteHits</span>(const <span class="type">QVariantList</span> &amp;<i>picks</i>)</h3>
+<p>Removes the step grid's hits in <i translate="no">picks</i> (each <code translate="no">[position, note]</code>), their shapes and nudges: SELECT's DELETE on a drum or sampler grid. An undoable edit.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@deleteHits -->
 </div>
 <div class="fnitem">
 <!-- $$$edited[overload1]$$$edited -->
@@ -1090,6 +1150,12 @@
 <!-- @@@expressionsOf -->
 </div>
 <div class="fnitem">
+<!-- $$$gridRows[overload1]$$$gridRows -->
+<h3 class="fn" translate="no" id="gridRows"><code class="details extra" translate="no">[virtual protected]</code> <span class="type">int</span> Machine::<span class="name">gridRows</span>() const</h3>
+<p>Returns the step grid's row count; 0 for a machine without a step grid (the default).</p>
+<!-- @@@gridRows -->
+</div>
+<div class="fnitem">
 <!-- $$$hasSectionSound -->
 <h3 class="fn" translate="no" id="hasSectionSound"><code class="details extra" translate="no">[virtual]</code> <span class="type">bool</span> Machine::<span class="name">hasSectionSound</span>() const</h3>
 <p>Returns whether the section on screen plays a sound of its own on this machine (one known here: a soundfont that went away leaves the project's sound playing).</p>
@@ -1131,10 +1197,23 @@
 <!-- @@@historyState -->
 </div>
 <div class="fnitem">
+<!-- $$$hitsOf[overload1]$$$hitsOfconstQVariantList& -->
+<h3 class="fn" translate="no" id="hitsOf"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> Machine::<span class="name">hitsOf</span>(const <span class="type">QVariantList</span> &amp;<i>notes</i>) const</h3>
+<p>Returns every hit of the MIDI <i translate="no">notes</i> (a step grid's rows) in all the pattern's bars, as picks (<code translate="no">[position, note]</code>), in order: SELECT held on a drum or sampler grid.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@hitsOf -->
+</div>
+<div class="fnitem">
 <!-- $$$importUserSound[overload1]$$$importUserSoundconstQVariantMap& -->
 <h3 class="fn" translate="no" id="importUserSound"><span class="type">QString</span> Machine::<span class="name">importUserSound</span>(const <span class="type">QVariantMap</span> &amp;<i>entry</i>)</h3>
 <p>Takes in a shared sound <i translate="no">entry</i> (a map with <code translate="no">name</code> and <code translate="no">state</code>) under its own name made unique, and returns that name; empty for an entry without a state.</p>
 <!-- @@@importUserSound -->
+</div>
+<div class="fnitem">
+<!-- $$$landSectionMods[overload1]$$$landSectionMods -->
+<h3 class="fn" translate="no" id="landSectionMods"><span class="type">void</span> Machine::<span class="name">landSectionMods</span>()</h3>
+<p>Puts a cued section's MODS on the knobs (<a href="machine.html#setSectionMods" translate="no">setSectionMods</a>()), as its clip lands (Studio).</p>
+<!-- @@@landSectionMods -->
 </div>
 <div class="fnitem">
 <!-- $$$liveClip[overload1]$$$liveClip -->
@@ -1171,6 +1250,19 @@
 <!-- @@@loopRestarted -->
 </div>
 <div class="fnitem">
+<!-- $$$moveHits[overload1]$$$moveHitsconstQVariantList&constQVariantList& -->
+<h3 class="fn" translate="no" id="moveHits"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantList</span> Machine::<span class="name">moveHits</span>(const <span class="type">QVariantList</span> &amp;<i>picks</i>, const <span class="type">QVariantList</span> &amp;<i>targets</i>)</h3>
+<p>Moves the step grid's hits in <i translate="no">picks</i> (each <code translate="no">[position, note]</code>) to <i translate="no">targets</i>, the place for each pick (<code translate="no">[position, note]</code>: a later step, another row's note), with their shapes and nudges: SELECT's moves on a drum or sampler grid. A pick that is no hit, or whose target is off the grid, stays where it is; a hit landing on another becomes one, with the moved one's shape and nudge. Returns the picks where they went. An undoable edit.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@moveHits -->
+</div>
+<div class="fnitem">
+<!-- $$$nudgesHits[overload1]$$$nudgesHits -->
+<h3 class="fn" translate="no" id="nudgesHits"><code class="details extra" translate="no">[virtual protected]</code> <span class="type">bool</span> Machine::<span class="name">nudgesHits</span>() const</h3>
+<p>Returns whether SELECT's NUDGE reaches this machine's hits; true unless a subclass writes them outside the pattern's subnotes.</p>
+<!-- @@@nudgesHits -->
+</div>
+<div class="fnitem">
 <!-- $$$playLive[overload1]$$$playLiveintbool -->
 <h3 class="fn" translate="no" id="playLive"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Machine::<span class="name">playLive</span>(<span class="type">int</span> <i>key</i>, <span class="type">bool</span> <i>accented</i>)</h3>
 <p>Starts the sound of the live <i translate="no">key</i> now, accented when <i translate="no">accented</i> is true; silenced keys stay silent.</p>
@@ -1184,9 +1276,15 @@
 <!-- @@@playOnNames -->
 </div>
 <div class="fnitem">
-<!-- $$$presetEntry[overload1]$$$presetEntryconstQString&boolbool -->
-<h3 class="fn" translate="no" id="presetEntry"><span class="type">QVariantMap</span> Machine::<span class="name">presetEntry</span>(const <span class="type">QString</span> &amp;<i>name</i>, <span class="type">bool</span> <i>withSound</i>, <span class="type">bool</span> <i>withMods</i>) const</h3>
-<p>Returns the whole pattern as a preset entry called <i translate="no">name</i>, not stored anywhere (<a href="presetlibrary.html#entryOf" translate="no">PresetLibrary::entryOf</a>()): its sound kept as <a href="machine.html#saveAsPreset" translate="no">saveAsPreset</a>() keeps it with <i translate="no">withSound</i> and <i translate="no">withMods</i>. A preset written to a USB stick is made from it.</p>
+<!-- $$$playingSound[overload1]$$$playingSound -->
+<h3 class="fn" translate="no" id="playingSound"><span class="type">QVariantMap</span> Machine::<span class="name">playingSound</span>() const</h3>
+<p>Returns the sound heard, as <a href="machine.html#soundState" translate="no">soundState</a>() gives the project's: with a section's own sound on screen, its source (or kit) and its MODS in place of the project's (<a href="machine.html#sectionSound" translate="no">sectionSound</a>(), <a href="machine.html#sectionMods" translate="no">sectionMods</a>()). What a preset or a saved sound keeps.</p>
+<!-- @@@playingSound -->
+</div>
+<div class="fnitem">
+<!-- $$$presetEntry[overload1]$$$presetEntryconstQString& -->
+<h3 class="fn" translate="no" id="presetEntry"><span class="type">QVariantMap</span> Machine::<span class="name">presetEntry</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
+<p>Returns the whole pattern as a preset entry called <i translate="no">name</i>, not stored anywhere (<a href="presetlibrary.html#entryOf" translate="no">PresetLibrary::entryOf</a>()), with the sound heard (<a href="machine.html#playingSound" translate="no">playingSound</a>()) as <a href="machine.html#saveAsPreset" translate="no">saveAsPreset</a>() keeps it. A preset written to a USB stick is made from it.</p>
 <!-- @@@presetEntry -->
 </div>
 <div class="fnitem">
@@ -1214,6 +1312,12 @@
 <!-- @@@projectSource -->
 </div>
 <div class="fnitem">
+<!-- $$$putGridHits[overload1]$$$putGridHitsconstQList<Machine::GridHit>&constQList<Machine::GridHit>& -->
+<h3 class="fn" translate="no" id="putGridHits"><code class="details extra" translate="no">[virtual protected]</code> <span class="type">void</span> Machine::<span class="name">putGridHits</span>(const <span class="type">QList</span>&lt;<span class="type">Machine::GridHit</span>&gt; &amp;<i>clear</i>, const <span class="type">QList</span>&lt;<span class="type">Machine::GridHit</span>&gt; &amp;<i>set</i>)</h3>
+<p>Clears the <i translate="no">clear</i> hits of a step grid, then sets the <i translate="no">set</i> ones; the default (no step grid) does nothing.</p>
+<!-- @@@putGridHits -->
+</div>
+<div class="fnitem">
 <!-- $$$recordLive[overload1]$$$recordLiveintbool -->
 <h3 class="fn" translate="no" id="recordLive"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Machine::<span class="name">recordLive</span>(<span class="type">int</span> <i>key</i>, <span class="type">bool</span> <i>accented</i>)</h3>
 <p>Plays the live <i translate="no">key</i>, accented when <i translate="no">accented</i> is true, and records it at the step nearest the transport's position; does nothing while stopped. With quantise off the hit keeps its offset from that step. The hit is written once the playhead has left its step, so the sequencer does not play it a second time.</p>
@@ -1226,6 +1330,20 @@
 <p>Goes forward again one change of this machine's pattern (<a href="history.html#redoIn" translate="no">History::redoIn</a>()).</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@redo -->
+</div>
+<div class="fnitem">
+<!-- $$$releaseLive[overload1]$$$releaseLiveint -->
+<h3 class="fn" translate="no" id="releaseLive"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Machine::<span class="name">releaseLive</span>(<span class="type">int</span> <i>key</i>)</h3>
+<p>Ends the live <i translate="no">key</i> <a href="machine.html#recordLive" translate="no">recordLive</a>() wrote: the note or chord is held for as many steps as the key was (rounded to the nearest step, as the hit was), up to the pattern's length. A key let go within its step stays one step long.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@releaseLive -->
+</div>
+<div class="fnitem">
+<!-- $$$removeBar[overload1]$$$removeBarint -->
+<h3 class="fn" translate="no" id="removeBar"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Machine::<span class="name">removeBar</span>(<span class="type">int</span> <i>bar</i>)</h3>
+<p>Drops bar <i translate="no">bar</i> (0 to <a href="machine.html#bars-prop" translate="no">bars</a>() − 1) of the pattern: its steps go, the bars after it move up one (their notes, accents, shapes, offsets and automation with them) and the pattern is a bar shorter. Nothing with one bar. One undo step.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@removeBar -->
 </div>
 <div class="fnitem">
 <!-- $$$removePreset[overload1]$$$removePresetconstQString& -->
@@ -1255,16 +1373,16 @@
 </div><!-- @@@rowNote -->
 </div>
 <div class="fnitem">
-<!-- $$$saveAsPreset[overload1]$$$saveAsPresetconstQString&boolbool -->
-<h3 class="fn" translate="no" id="saveAsPreset"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Machine::<span class="name">saveAsPreset</span>(const <span class="type">QString</span> &amp;<i>name</i> = QString(), <span class="type">bool</span> <i>withSound</i> = true, <span class="type">bool</span> <i>withMods</i> = true)</h3>
-<p>Saves the whole pattern as a new user preset named <i translate="no">name</i> (<a href="machine.html#suggestedPresetName" translate="no">suggestedPresetName</a>() when empty) and returns the name used. When <a href="machine.html#hasSoundChoice" translate="no">hasSoundChoice</a>() is true, <i translate="no">withSound</i> keeps its source or kit and factory sound with it and <i translate="no">withMods</i> the sound-control values that are set (<a href="presetlibrary.html#setParts" translate="no">PresetLibrary::setParts</a>()).</p>
+<!-- $$$saveAsPreset[overload1]$$$saveAsPresetconstQString& -->
+<h3 class="fn" translate="no" id="saveAsPreset"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Machine::<span class="name">saveAsPreset</span>(const <span class="type">QString</span> &amp;<i>name</i> = QString())</h3>
+<p>Saves the whole pattern as a new user preset named <i translate="no">name</i> (<a href="machine.html#suggestedPresetName" translate="no">suggestedPresetName</a>() when empty) and returns the name used. When <a href="machine.html#hasSoundChoice" translate="no">hasSoundChoice</a>() is true, it keeps the sound heard (<a href="machine.html#playingSound" translate="no">playingSound</a>(): a section's own, when it has one) with it: its source or kit, its factory sound and the MODS that are set (<a href="presetlibrary.html#setParts" translate="no">PresetLibrary::setParts</a>()). A load picks which of them come back (<a href="machine.html#loadPreset" translate="no">loadPreset</a>()).</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@saveAsPreset -->
 </div>
 <div class="fnitem">
 <!-- $$$saveSound[overload1]$$$saveSoundconstQString& -->
 <h3 class="fn" translate="no" id="saveSound"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Machine::<span class="name">saveSound</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
-<p>Saves the current sound (<a href="machine.html#soundState" translate="no">soundState</a>()) under <i translate="no">name</i>, made unique (&quot;Warm Keys 2&quot;), and returns the name used.</p>
+<p>Saves the sound heard (<a href="machine.html#playingSound" translate="no">playingSound</a>()) under <i translate="no">name</i>, made unique (&quot;Warm Keys 2&quot;), and returns the name used.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@saveSound -->
 </div>
@@ -1283,8 +1401,15 @@
 <div class="fnitem">
 <!-- $$$sectionContent[overload1]$$$sectionContent -->
 <h3 class="fn" translate="no" id="sectionContent"><span class="type">QVariantMap</span> Machine::<span class="name">sectionContent</span>() const</h3>
-<p>Returns what a section keeps of the machine (Sections): the pattern part of <a href="machine.html#state" translate="no">state</a>() plus <code translate="no">paused</code> and <code translate="no">once</code>, without the project's sound (<a href="machine.html#soundState" translate="no">soundState</a>()'s keys) and without view state (viewKeys(), such as a sampler's bank); plus the section's own sound (<code translate="no">sectionSound</code>, <a href="machine.html#sectionSound" translate="no">sectionSound</a>()) when it has one.</p>
+<p>Returns what a section keeps of the machine (Sections): the pattern part of <a href="machine.html#state" translate="no">state</a>() plus <code translate="no">paused</code> and <code translate="no">once</code>, without the project's sound (<a href="machine.html#soundState" translate="no">soundState</a>()'s keys) and without view state (viewKeys(), such as a sampler's bank); plus the section's own sound (<code translate="no">sectionSound</code>, <a href="machine.html#sectionSound" translate="no">sectionSound</a>()) and its MODS (<code translate="no">sectionMods</code>, <a href="machine.html#sectionMods" translate="no">sectionMods</a>()) when it has one.</p>
 <!-- @@@sectionContent -->
+</div>
+<div class="fnitem">
+<!-- $$$sectionMods[overload1]$$$sectionMods -->
+<h3 class="fn" translate="no" id="sectionMods"><span class="type">QVariantMap</span> Machine::<span class="name">sectionMods</span>() const</h3>
+<p>Returns the section on screen's own MODS: the values of the knobs its own sound plays (<a href="machine.html#sectionSound" translate="no">sectionSound</a>()), empty without a sound of its own. What a section's content carries beside its sound (<a href="machine.html#sectionContent" translate="no">sectionContent</a>()).</p>
+<p><b>See also </b><a href="machine.html#setSectionMods" translate="no">setSectionMods</a>().</p>
+<!-- @@@sectionMods -->
 </div>
 <div class="fnitem">
 <!-- $$$sectionSound[overload1]$$$sectionSound -->
@@ -1302,7 +1427,7 @@
 <div class="fnitem">
 <!-- $$$setEighthSwing[overload1]$$$setEighthSwingint -->
 <h3 class="fn" translate="no" id="setEighthSwing"><span class="type">void</span> Machine::<span class="name">setEighthSwing</span>(<span class="type">int</span> <i>swing</i>)</h3>
-<p>Sets the swing of the 8ths, <i translate="no">swing</i> percent as jazz counts it (50 straight, 67 triplets, 75 dotted): the off-beat 8th (a beat's third 16th) moves to <i translate="no">swing</i> percent of the beat and the 16ths around it along, through each note's <code translate="no">delay</code> (PatternModel swings 16ths only).</p>
+<p>Sets the swing of the 8ths, <i translate="no">swing</i> percent as jazz counts it (50 straight, 67 triplets, 75 dotted): the off-beat 8th (a beat's third 16th) moves to <i translate="no">swing</i> percent of the beat and the 16ths around it along, through each note's <code translate="no">delay</code> (the sequencer swings 16ths only).</p>
 <!-- @@@setEighthSwing -->
 </div>
 <div class="fnitem">
@@ -1357,6 +1482,13 @@
 <!-- @@@setRecordingAutomation -->
 </div>
 <div class="fnitem">
+<!-- $$$setSectionMods[overload1]$$$setSectionModsconstQVariantMap& -->
+<h3 class="fn" translate="no" id="setSectionMods"><span class="type">void</span> Machine::<span class="name">setSectionMods</span>(const <span class="type">QVariantMap</span> &amp;<i>mods</i>)</h3>
+<p>Gives the section on screen its own <i translate="no">mods</i> (<a href="machine.html#sectionMods" translate="no">sectionMods</a>()), set on the knobs of its own sound; the project's values of those knobs come back when it leaves them. Empty <i translate="no">mods</i>, or a section playing the project's sound, leave the project's values. A cued section's wait for its bar (<a href="machine.html#landSectionMods" translate="no">landSectionMods</a>()): the knobs may be the ones playing until then.</p>
+<p><b>See also </b><a href="machine.html#sectionMods" translate="no">sectionMods</a>().</p>
+<!-- @@@setSectionMods -->
+</div>
+<div class="fnitem">
 <!-- $$$setSectionSound[overload1]$$$setSectionSoundconstQVariantMap& -->
 <h3 class="fn" translate="no" id="setSectionSound"><code class="details extra" translate="no">[virtual]</code> <span class="type">void</span> Machine::<span class="name">setSectionSound</span>(const <span class="type">QVariantMap</span> &amp;<i>sound</i>)</h3>
 <p>Gives the section on screen its own <i translate="no">sound</i> (<a href="machine.html#sectionSound" translate="no">sectionSound</a>()), or none (an empty map: the project's plays). The subclass takes its part (<a href="drummachine.html" translate="no">DrumMachine</a>: the kit). <a href="machine.html#soundSource-prop" translate="no">soundSourceChanged</a>() follows when what plays changed; the studio lands it on the bar while playing.</p>
@@ -1372,7 +1504,7 @@
 <div class="fnitem">
 <!-- $$$setShapes[overload1]$$$setShapesconstQVariantList&constQString&int -->
 <h3 class="fn" translate="no" id="setShapes"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Machine::<span class="name">setShapes</span>(const <span class="type">QVariantList</span> &amp;<i>picks</i>, const <span class="type">QString</span> &amp;<i>setting</i>, <span class="type">int</span> <i>value</i>)</h3>
-<p>Sets <i translate="no">setting</i> of every hit in <i translate="no">picks</i> to <i translate="no">value</i>: <code translate="no">chance</code> 5 to 100 (%), <code translate="no">ratchets</code> 1 to 4, <code translate="no">decay</code> 0 to 90 (%), <code translate="no">playOn</code> an index into <a href="machine.html#playOnNames" translate="no">playOnNames</a>().</p>
+<p>Sets <i translate="no">setting</i> of every hit in <i translate="no">picks</i> to <i translate="no">value</i>: <code translate="no">chance</code> 5 to 100 (%), <code translate="no">ratchets</code> 1 to 4, <code translate="no">decay</code> 0 to 90 (%), <code translate="no">playOn</code> an index into <a href="machine.html#playOnNames" translate="no">playOnNames</a>(), <code translate="no">velocity</code> 5 to 100 (% of what the hit's row and accent give it), <code translate="no">nudge</code> -50 to 50 (% of a step; where <a href="machine.html#nudgesHits" translate="no">nudgesHits</a>()).</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><p><b>See also </b><a href="machine.html#shapes-prop" translate="no">shapes</a>().</p>
 <!-- @@@setShapes -->
@@ -1394,7 +1526,7 @@
 <div class="fnitem">
 <!-- $$$setSwing[overload1]$$$setSwingint -->
 <h3 class="fn" translate="no" id="setSwing"><code class="details extra" translate="no">[virtual]</code> <span class="type">void</span> Machine::<span class="name">setSwing</span>(<span class="type">int</span> <i>swing</i>)</h3>
-<p>Sets the pattern's swing in PatternModel's terms, <i translate="no">swing</i> percent (50 is straight): it delays the odd 16ths.</p>
+<p>Sets the pattern's swing in the sequencer's terms, <i translate="no">swing</i> percent (50 is straight): it delays the odd 16ths.</p>
 <!-- @@@setSwing -->
 </div>
 <div class="fnitem">
@@ -1406,7 +1538,7 @@
 <div class="fnitem">
 <!-- $$$shapeSettings[overload1]$$$shapeSettingsconstQVariantList& -->
 <h3 class="fn" translate="no" id="shapeSettings"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantMap</span> Machine::<span class="name">shapeSettings</span>(const <span class="type">QVariantList</span> &amp;<i>picks</i>) const</h3>
-<p>Returns the shape of the first of <i translate="no">picks</i> (each <code translate="no">[position, note]</code>, a hit) and how many of them are hits: <code translate="no">count</code>, <code translate="no">chance</code>, <code translate="no">ratchets</code>, <code translate="no">decay</code>, <code translate="no">playOn</code> (its name) and <code translate="no">playOnIndex</code>. <code translate="no">count</code> is 0 when none is.</p>
+<p>Returns the shape of the first of <i translate="no">picks</i> (each <code translate="no">[position, note]</code>, a hit) and how many of them are hits: <code translate="no">count</code>, <code translate="no">chance</code>, <code translate="no">ratchets</code>, <code translate="no">decay</code>, <code translate="no">playOn</code> (its name) and <code translate="no">playOnIndex</code>, <code translate="no">velocity</code> (in percent of what its row and accent give it) and, where <a href="machine.html#nudgesHits" translate="no">nudgesHits</a>(), <code translate="no">nudge</code> (in percent of a step, from where the swing has it). <code translate="no">count</code> is 0 when none is.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@shapeSettings -->
 </div>
@@ -1437,7 +1569,7 @@
 <div class="fnitem">
 <!-- $$$soundKeys[overload1]$$$soundKeys -->
 <h3 class="fn" translate="no" id="soundKeys"><span class="type">QStringList</span> Machine::<span class="name">soundKeys</span>() const</h3>
-<p>Returns the keys of the sound in <a href="machine.html#state" translate="no">state</a>(): <a href="machine.html#soundState" translate="no">soundState</a>()'s and the section's own (<code translate="no">sectionSound</code>), what a section's content and the history keep apart from the pattern.</p>
+<p>Returns the keys of the sound in <a href="machine.html#state" translate="no">state</a>(): <a href="machine.html#soundState" translate="no">soundState</a>()'s and the section's own (<code translate="no">sectionSound</code>, <code translate="no">sectionMods</code>), what a section's content and the history keep apart from the pattern.</p>
 <!-- @@@soundKeys -->
 </div>
 <div class="fnitem">
@@ -1447,9 +1579,15 @@
 <!-- @@@soundPresetControls -->
 </div>
 <div class="fnitem">
+<!-- $$$soundPresetControlsOf[overload1]$$$soundPresetControlsOfconstQString& -->
+<h3 class="fn" translate="no" id="soundPresetControlsOf"><span class="type">QVariantMap</span> Machine::<span class="name">soundPresetControlsOf</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
+<p>Returns the ports the factory sound <i translate="no">name</i> sets, less those the machine keeps (kits.json <code translate="no">soundPresets.keep</code>) and those that are no sound; empty for an unknown or empty <i translate="no">name</i>.</p>
+<!-- @@@soundPresetControlsOf -->
+</div>
+<div class="fnitem">
 <!-- $$$soundState[overload1]$$$soundState -->
 <h3 class="fn" translate="no" id="soundState"><code class="details extra" translate="no">[virtual]</code> <span class="type">QVariantMap</span> Machine::<span class="name">soundState</span>() const</h3>
-<p>Returns the machine's sound as one map: the project's source (<code translate="no">soundSource</code>, by name), the factory sound (<code translate="no">soundPreset</code>) and the sound-control states (<code translate="no">sound</code>, <code translate="no">sourceSound</code>, <code translate="no">sourceSounds</code>); <a href="drummachine.html" translate="no">DrumMachine</a> adds its kit (<code translate="no">kit</code>). A section's own sound is not part of it (<a href="machine.html#sectionSound" translate="no">sectionSound</a>()).</p>
+<p>Returns the machine's sound as one map: the project's source (<code translate="no">soundSource</code>, by name), the factory sound (<code translate="no">soundPreset</code>) and the sound-control states (<code translate="no">sound</code>, <code translate="no">sourceSound</code>, <code translate="no">sourceSounds</code>), the project's values even while a section's own MODS are on the knobs; <a href="drummachine.html" translate="no">DrumMachine</a> adds its kit (<code translate="no">kit</code>). A section's own sound is not part of it (<a href="machine.html#sectionSound" translate="no">sectionSound</a>(), <a href="machine.html#sectionMods" translate="no">sectionMods</a>()).</p>
 <!-- @@@soundState -->
 </div>
 <div class="fnitem">
@@ -1550,7 +1688,7 @@
 <div class="fnitem">
 <!-- $$$SilentVelocity -->
 <h3 class="fn" translate="no" id="SilentVelocity-var">const <span class="type">int</span> Machine::<span class="name">SilentVelocity</span></h3>
-<p>PatternModel's velocity for a subnote that must not play: -1.</p>
+<p>This variable holds the velocity of a subnote that must not play: -1 (the clip sends it as a silent note).</p>
 <!-- @@@SilentVelocity -->
 </div>
 <div class="fnitem">
@@ -1564,7 +1702,7 @@
 </main>
 <footer class="api-footer">
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
   </div>
 </footer>
 </body>

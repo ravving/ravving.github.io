@@ -5,7 +5,7 @@
 <!-- engineprofiles.cpp -->
   <meta name="description" content="The engine profiles of data&lt;@op&gt;/&lt;/@op&gt;engines&lt;@op&gt;.&lt;/@op&gt;json, one per engine: which controls of an engine are exposed.">
   <meta name="keywords" content="class">
-  <title>EngineProfiles Class | ravving C++ API 1.0</title>
+  <title>EngineProfiles Class | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=a5dc7cd98d" defer></script>
-  <script src="search.js?v=38b3c0cac3" defer></script>
+  <script src="nav.js?v=1a5dfeadeb" defer></script>
+  <script src="search.js?v=4917e215d8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -117,7 +117,7 @@
 <div class="fnitem">
 <!-- $$$load[overload1]$$$loadconstQString& -->
 <h3 class="fn" translate="no" id="load"><span class="type">bool</span> EngineProfiles::<span class="name">load</span>(const <span class="type">QString</span> &amp;<i>file</i>)</h3>
-<p>Reads the profiles from <i translate="no">file</i>. Returns <code translate="no">false</code>, leaving no profiles, when it cannot be read.</p>
+<p>Reads the profiles from <i translate="no">file</i>, and the readouts' helper functions it defines (<code translate="no">functions</code>, <a href="soundcontrols.html#defineFunctions" translate="no">SoundControls::defineFunctions</a>()). Returns <code translate="no">false</code>, leaving no profiles, when it cannot be read.</p>
 <!-- @@@load -->
 </div>
 <div class="fnitem">
@@ -129,13 +129,13 @@
 <div class="fnitem">
 <!-- $$$resolve[overload1]$$$resolveQVariantMap -->
 <h3 class="fn" translate="no" id="resolve"><span class="type">QVariantMap</span> EngineProfiles::<span class="name">resolve</span>(<span class="type">QVariantMap</span> <i>machine</i>) const</h3>
-<p>Returns the kits.json config <i translate="no">machine</i> with its profiles filled in: the own engine's <code translate="no">sound</code> and <code translate="no">expressions</code>, every other jalv source's on that source, and the soundfont sources' as <code translate="no">sourceSound</code> and <code translate="no">sourceExpressions</code>. What the config brings itself stays.</p>
+<p>Returns the kits.json config <i translate="no">machine</i> with its profiles filled in: the own engine's <code translate="no">engineName</code>, <code translate="no">polyphonic</code>, <code translate="no">sound</code>, <code translate="no">pages</code> and <code translate="no">expressions</code>, every other jalv source's on that source, and the soundfont sources' as <code translate="no">sourceEngineName</code>, <code translate="no">sourcePolyphonic</code>, <code translate="no">sourceSound</code>, <code translate="no">sourcePages</code> and <code translate="no">sourceExpressions</code>. What the config brings itself stays.</p>
 <!-- @@@resolve -->
 </div>
 <div class="fnitem">
 <!-- $$$resolveKit[overload1]$$$resolveKitQVariantMap -->
 <h3 class="fn" translate="no" id="resolveKit"><span class="type">QVariantMap</span> EngineProfiles::<span class="name">resolveKit</span>(<span class="type">QVariantMap</span> <i>machine</i>) const</h3>
-<p>Returns a drum machine's kits.json config <i translate="no">machine</i> with its engine profile's <code translate="no">kitSound</code> as its <code translate="no">sound</code> (a kit is one soundfont on one channel, so its sound controls act on the whole kit); a <code translate="no">sound</code> it brings itself stays.</p>
+<p>Returns a drum machine's kits.json config <i translate="no">machine</i> with its engine profile's <code translate="no">name</code> as its <code translate="no">engineName</code>, <code translate="no">kitSound</code> as its <code translate="no">sound</code> and <code translate="no">kitPages</code> as its <code translate="no">pages</code> (a kit is one soundfont on one channel, so its sound controls act on the whole kit); a <code translate="no">sound</code> it brings itself stays.</p>
 <!-- @@@resolveKit -->
 </div>
 <div class="fnitem">
@@ -149,7 +149,7 @@
 </main>
 <footer class="api-footer">
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
   </div>
 </footer>
 </body>

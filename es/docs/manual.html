@@ -58,10 +58,12 @@
 </ul>
 <p class="mono">Haz el tuyo</p><ul>
 <li><a href="../../docs/skin-sets.html">Crea un set de skins</a></li>
-<li><a href="../../docs/icon-packs.html">Make an icon pack</a></li>
+<li><a href="../../docs/icon-packs.html">Crea un pack de iconos</a></li>
+<li><a href="https://github.com/ravving/ravving_repo/blob/main/CONTRIBUTING.md">Share your own</a></li>
 </ul>
 <p class="mono">Los packs de patrones</p><ul>
 <li><a href="packs.html">Los packs de géneros</a></li>
+<li><a href="https://ravving.github.io/ravving_repo/">The catalog</a></li>
 </ul>
 <p class="mono">Cambiar ravving</p><ul>
 <li><a href="../../docs/architecture.html">Arquitectura</a></li>
@@ -140,7 +142,15 @@
 <li>sus FXs, una cadena SOUND EFFECTS;</li>
 <li>su editor de patrones.</li>
 </ul>
-<p>MODS y FXs en la tira abren sus perillas debajo, de uno en uno: abrir uno cierra el otro.</p>
+<p>MODS y FXs en la tira abren sus perillas debajo, de uno en uno: abrir uno cierra el otro. BACK cierra el que esté abierto.</p>
+<h3 id="every-control-of-the-sound">Todos los controles del sonido</h3>
+<p>Mantén MODS en la tira y toda la ventana pasa a ser los controles del sonido: cada perilla del motor que vale la pena girar, en grupos de tres. Arriba se nombran el motor, el sonido y el instrumento. Cada uno se lee en su propia unidad: Hz, ms, dB o semitonos.</p>
+<ul>
+<li><strong>Las tres perillas</strong> giran el grupo iluminado; toca un grupo para iluminarlo.</li>
+<li><strong>◀ ▶ o la perilla grande</strong> pasan al grupo anterior o siguiente, <strong>▲ ▼</strong> al de arriba o abajo.</li>
+<li><strong>BACK o ✕</strong> te devuelven a la máquina. La música sigue sonando mientras tanto.</li>
+</ul>
+<p>Los grupos tienen diales, deslizadores, interruptores y opciones (el tipo de un filtro, la onda de un LFO). Un control que nunca tocaste se queda donde lo puso el sonido. Tu proyecto y tus presets guardan lo que giraste, igual que los MODS.</p>
 <p>Una canción está hecha de SECCIONES que cambian al final del compás, y toda tu sesión se guarda en un proyecto.</p>
 <h2 id="installing">Instalación</h2>
 <p>ravving llega desde la categoría Apps de la Zynthbox Store como AppImage. La AppImage abre una página de instalación sobre Zynthbox con cuatro opciones: TRY IT, MAKE IT THE DEFAULT, ZYNTHBOX AT BOOT AGAIN, REMOVE RAVVING. Los proyectos, las tomas y las grabaciones se quedan al quitar ravving.</p>
@@ -187,7 +197,7 @@ IT THE DEFAULT a su lado; las dos vueltas a Zynthbox están al pie.</p>
 </tr>
 <tr>
 <td>BACK en una cuadrícula</td>
-<td>Deshacer el último cambio de esa máquina (ALT + BACK deja la cuadrícula)</td>
+<td>Deshace el último cambio de esa máquina (ALT + BACK deja la cuadrícula); con MODS o FXs abiertos, primero los cierra</td>
 </tr>
 <tr>
 <td>2, en la página de acordes</td>
@@ -226,13 +236,13 @@ IT THE DEFAULT a su lado; las dos vueltas a Zynthbox están al pie.</p>
 </ul>
 <p>El puntero solo aparece con un ratón conectado.</p>
 <h3 id="bars">Compases</h3>
-<p>El + de la barra añade un compás, hasta ocho. Su − quita el último: al momento si está vacío, o con un segundo toque si tiene notas (muestra ? mientras espera). ‹ › pasan por los compases, y también ◀ ▶ en la cuadrícula.</p>
+<p>El + de la barra añade un compás, hasta ocho. Su − quita el compás en pantalla con un segundo toque (muestra ? mientras espera). Los compases siguientes suben un lugar, y deshacer lo trae de vuelta. ‹ › pasan los compases, igual que ◀ ▶ en la cuadrícula.</p>
 <h3 id="save-and-open-projects">Guardar y abrir proyectos</h3>
 <ul>
 <li><strong>El primer SAVE</strong> pide el nombre del proyecto y aparece el teclado en pantalla.
   Toca donde debe ir el cursor, mantén pulsada una palabra para seleccionarla (arrastra los puntos naranjas para cambiar la selección) y toca ✕ para vaciar el campo. La ventana sube por encima del teclado.</li>
 <li><strong>Los siguientes guardados</strong> escriben encima. Pulsa SAVE dos veces en tres segundos (pregunta AGAIN?).</li>
-<li><strong>SAVED</strong> quiere decir que nada ha cambiado desde entonces; el botón se despierta con tu siguiente edición.</li>
+<li><strong>GUARDADO</strong> significa que nada ha cambiado desde entonces. Mantén SAVE para guardar una versión (La línea de tiempo).</li>
 <li><strong>SAVE AS NEW</strong> pide un nombre nuevo.</li>
 <li><strong>RENOMBRAR</strong> cambia el nombre y el icono del proyecto abierto. Los cambios sin guardar siguen sin guardar.</li>
 </ul>
@@ -240,20 +250,14 @@ IT THE DEFAULT a su lado; las dos vueltas a Zynthbox están al pie.</p>
 <p>La fila de abajo siempre actúa sobre el proyecto que tienes abierto: NUEVO, PLANTILLAS e IMPORTAR,
 luego GUARDAR COMO NUEVO, RENOMBRAR y LÍNEA DE TIEMPO, luego EXPORTAR.</p>
 <h3 id="the-timeline">La línea de tiempo</h3>
-<p>Hold SAVE to keep a version of your project as it is now. PROJECT ▾ → TIMELINE lists the
-versions, newest first, each with its name or what changed since the one before (SAVED · DRUMS 1
-· TEMPO) and when. Changes, a tap on SAVE, opening and NEW keep nothing there.</p>
+<p>Mantén SAVE para guardar una versión de tu proyecto tal como está ahora. PROYECTO ▾ → LÍNEA DE TIEMPO lista las versiones, de la más nueva a la más vieja, cada una con su nombre o con lo que cambió desde la anterior (GUARDADO · BATERÍA 1 · TEMPO) y cuándo. Los cambios, un toque en SAVE, abrir y NEW no guardan nada ahí.</p>
 <ul>
-<li><strong>Name it</strong> in NAME THIS SAVE, which a long press opens: tap a quick word or type one (Drop
-  idea); left empty, what changed names it. The name comes first in the list, as you typed it.</li>
-<li><strong>Tap a version</strong> to go back to it. If you have unsaved changes, tap it a second time to
-  confirm. The project stays open; SAVE keeps what you went back to.</li>
-<li><strong>The versions follow the project</strong>: SAVE AS takes them along (the original keeps its own),
-  RENAME keeps them, and a deleted project takes its timeline with it.</li>
-<li><strong>A long project keeps its newest 300 versions</strong>, and every named one.</li>
-<li>If a version can't be written (a full device, say), a WARNING says so and the ISSUES card
-  keeps it; the project still saves. The next one says TIMELINE · KEEPING CHANGES AGAIN.</li>
-<li><strong>Switch it off</strong> in MENU → SETTINGS → GENERAL → PROJECTS: holding SAVE then only saves.</li>
+<li><strong>Ponle nombre</strong> en NAME THIS SAVE, que se abre con una pulsación larga: toca una palabra rápida o escribe una (Drop idea); si lo dejas vacío, lo que cambió le da el nombre. El nombre va primero en la lista, tal como lo escribiste.</li>
+<li><strong>Toca una versión</strong> para volver a ella. Si tienes cambios sin guardar, tócala una segunda vez para confirmar. El proyecto sigue abierto; SAVE guarda aquello a lo que volviste.</li>
+<li><strong>Las versiones siguen al proyecto</strong>: SAVE AS se las lleva (el original conserva las suyas), RENAME las mantiene, y un proyecto borrado se lleva su línea de tiempo con él.</li>
+<li><strong>Un proyecto largo conserva sus 300 versiones más nuevas</strong>, y todas las que tienen nombre.</li>
+<li>Si una versión no se puede escribir (el equipo está lleno, por ejemplo), un WARNING lo dice y la tarjeta ISSUES lo guarda; el proyecto se guarda igual. La siguiente dice TIMELINE · KEEPING CHANGES AGAIN.</li>
+<li><strong>Desactívala</strong> en MENU → AJUSTES → GENERAL → PROJECTS: entonces mantener SAVE solo guarda.</li>
 </ul>
 <h3 id="a-projects-icon">El icono de un proyecto</h3>
 <p>Un proyecto puede llevar un pequeño icono de píxeles, junto a su nombre en PROYECTO ▾. No tiene ninguno hasta que eliges uno.</p>
@@ -277,10 +281,7 @@ versions, newest first, each with its name or what changed since the one before 
 </ul>
 <p>Lo que no: las perillas del sonido (MODS), la mezcla, los efectos y los ajustes del proyecto. Elegir una sección tampoco es un paso. Más en <a href="#undo-and-redo">Deshacer y rehacer</a>.</p>
 <h3 id="lock-keep-a-stray-tap-from-changing-what-plays">LOCK: que un toque perdido no cambie lo que suena</h3>
-<p>LOCK is the padlock, the first button of every pattern toolbar: closed and lit while it's on,
-open while it's off. While it's on, the note grids don't write
-anything. Taps on cells, step keys, STEP entry, SELECT's moves and the note knobs are all
-refused, and LOCK flashes to tell you why. You can still scroll, page and listen.</p>
+<p>LOCK es el candado, el primer botón de cada barra del patrón: cerrado y encendido cuando está activo, abierto cuando no. Mientras está activo, las rejillas de notas no escriben nada. Se rechazan los toques en las celdas, las teclas de paso, la entrada PASO, los movimientos de SELECT y las perillas de nota, y LOCK destella para decirte por qué. Aún puedes desplazarte, cambiar de página y escuchar.</p>
 <ul>
 <li><strong>PLAY</strong> activa LOCK. <strong>STOP</strong> lo vuelve a quitar.</li>
 <li><strong>Toca LOCK mientras suena</strong> para editar igualmente. Después sigue desbloqueado al parar.</li>
@@ -296,6 +297,20 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 <li><strong>En la página de acordes,</strong> la vista CHORDS elige acordes y los mueve un grado. La vista NOTES elige notas sueltas. Un acorde sostenido siempre se mueve entero.</li>
 <li><strong>Una pulsación larga en SELECT</strong> elige todas las notas (o acordes) de todos los compases, para mover todo el patrón de una vez.</li>
 <li><strong>Al quitar SELECT</strong> se sueltan las elecciones.</li>
+</ul>
+<h4 id="select-on-the-drum-grids">SELECT en las rejillas de batería</h4>
+<p>Las cajas de ritmos, el SLOT SAMPLER y el PAD SAMPLER también tienen SELECT en su barra del patrón. Un toque en un paso encendido elige ese golpe.</p>
+<ul>
+<li><strong>◀ ▶</strong> mueven los golpes elegidos un paso. <strong>▲ ▼</strong> los mueven a la fila de sonido de arriba o de abajo.</li>
+<li><strong>ALT + ◀ ▶</strong> ponen una copia de los golpes elegidos justo antes o después de ellos, y la selección pasa a la copia. Pulsa otra vez para repetir la figura.</li>
+<li><strong>DELETE</strong> quita los golpes elegidos. <strong>Una pulsación larga en SELECT</strong> elige todos los golpes.</li>
+<li>Un movimiento o una copia que se saldría del patrón no hace nada.</li>
+</ul>
+<h4 id="pick-a-group-or-one-note">Elige un grupo, o una nota</h4>
+<ul>
+<li><strong>Encierra un grupo:</strong> con el transporte parado, mantén pulsado un sitio vacío de cualquier rejilla y arrastra. Un marco sigue tu dedo. Suelta, y cada nota que toca queda elegida, con SELECT activado.</li>
+<li><strong>Una pulsación larga en una nota</strong> (un acorde, un golpe de batería) la elige y activa SELECT. Para cambiar la duración de una nota, usa la perilla 1 con SELECT activado.</li>
+<li><strong>Un toque en un sitio vacío</strong> con SELECT activado suelta la selección y desactiva SELECT.</li>
 </ul>
 <h3 id="shape-a-single-note">Da forma a una sola nota</h3>
 <p>En el bajo y el lead, elige notas con SELECT y gira las perillas 1–3 para cambiarlas juntas. Un indicador arriba a la derecha de la cuadrícula muestra los valores de la primera nota elegida, con las insignias de las perillas.</p>
@@ -330,13 +345,32 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 </tbody>
 </table>
 <ul>
-<li>Una pulsación larga en una celda también ajusta la duración de una nota.</li>
 <li>La celda del carril ACCENT se llena según la velocidad, en rojo brillante si lleva acento. Un toque ahí sigue cambiando el acento: completo, o de vuelta a la velocidad normal.</li>
 <li>Una toma LIVE con Q desactivado graba un nudge por cada golpe. <strong>Q</strong> está en la tira de la máquina, tras
   LIVE: activado, los golpes en vivo caen en la rejilla; desactivado, se guardan como los tocaste.</li>
 <li>Estos ajustes se mueven con la nota, cada clic es un paso de deshacer, y se guardan con el proyecto y en un preset de patrón guardado.</li>
 </ul>
 <p>La perilla grande sigue siendo el volumen, y un grupo de diales con el foco conserva sus propias perillas.</p>
+<h3 id="hold-a-note-longer">Sostener una nota más tiempo</h3>
+<p>En el bajo, el lead y la vista NOTES de los acordes:</p>
+<ul>
+<li><strong>Una pulsación larga en una celda</strong> hace que la nota anterior de esa fila dure hasta la celda. Se sostiene por encima de lo que toquen los pasos de en medio.</li>
+<li><strong>Una pulsación larga en la propia nota</strong> la devuelve a un paso.</li>
+<li><strong>Con SELECT activado,</strong> la perilla 1 ajusta del mismo modo la LENGTH de las notas elegidas.</li>
+<li><strong>Una toma LIVE (●)</strong> guarda cuánto mantienes cada tecla, desde los pads o un teclado MIDI. En el bajo y el lead esa es la duración de la nota. En los acordes es el acorde o la nota sostenidos sobre los pasos, debajo de lo que toques mientras tanto.</li>
+<li>Una tecla soltada dentro de su paso dura un paso.</li>
+<li>Las notas de un acorde sostenido se ven como las del bajo: una celda sólida donde empieza una nota, otras más claras mientras dura.</li>
+</ul>
+<h3 id="poly-more-than-one-note-on-a-step">POLY: más de una nota en un paso</h3>
+<p>En el bajo y el lead, <strong>POLY</strong> en la barra del patrón deja que un paso toque varias notas, cada una con su propia duración. Toca celdas para añadir o quitar notas, y haz una pulsación larga más allá de una nota para estirarla, como en la vista NOTES de los acordes. Las notas pueden solaparse, y SELECT, las perillas y las tomas LIVE funcionan nota a nota.</p>
+<ul>
+<li>POLY necesita un sonido que toque varias notas a la vez: un instrumento soundfont. El sinte propio del bajo y Calf Monosynth tocan una nota cada vez, así que con ellos POLY se queda desactivado.</li>
+<li>Cambia a uno de esos con POLY activado, y la barra dice <strong>ONE VOICE</strong>. Las notas extra se quedan, tenues y en silencio, y vuelven a sonar con un soundfont.</li>
+<li>Borra la primera nota de un paso, y la más grave de sus otras notas ocupa su lugar.</li>
+<li>Desactivar POLY quita las notas extra y deja una por paso. Deshacer las devuelve.</li>
+<li>En el lead, la cinta acepta dos dedos mientras suena POLY: dos notas a la vez, y una toma LIVE graba las dos. El vibrato es uno para el sonido, del dedo levantado más alto.</li>
+<li>POLY y sus notas se guardan con el proyecto y en un preset de patrón guardado.</li>
+</ul>
 <h3 id="shape-a-chord-length-velocity-nudge-strum">Dar forma a un acorde: duración, velocidad, nudge, rasgueo</h3>
 <p>En la vista CHORDS de los acordes, elige acordes con SELECT (un acorde sostenido es una sola selección). Las perillas 1–3 y
 la perilla grande los cambian juntos, y la misma lectura muestra los valores del primero.</p>
@@ -386,6 +420,60 @@ la perilla grande los cambian juntos, y la misma lectura muestra los valores del
   nombre del acorde elegido.</li>
 <li>Se guardan con el proyecto y en un preset de patrón guardado.</li>
 </ul>
+<h3 id="shape-a-drum-hit">Dar forma a un golpe de batería</h3>
+<p>En las cajas de ritmos y en ambos samplers, elige golpes con SELECT y gira las perillas para cambiarlos a la vez. El indicador arriba a la derecha de la rejilla muestra los valores del primer golpe elegido. Tócalo para cambiar entre sus dos páginas.</p>
+<table>
+<thead>
+<tr>
+<th>Página</th>
+<th>Perilla</th>
+<th>Ajuste</th>
+<th>Rango</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1/2</td>
+<td>1</td>
+<td><strong>CHANCE</strong>, la probabilidad de que el golpe suene cada vez</td>
+<td>5–100 %</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>2</td>
+<td><strong>RATCHET</strong>, repeticiones dentro de su paso</td>
+<td>1–4</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>3</td>
+<td><strong>PLAY ON</strong>, en qué pasadas suena</td>
+<td>ALL, FIRST, 1:2 … 4:4</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>grande</td>
+<td><strong>DECAY</strong>, cuánto más suave es cada repetición</td>
+<td>0–90 %</td>
+</tr>
+<tr>
+<td>2/2</td>
+<td>1</td>
+<td><strong>VELOCITY</strong>, sobre lo que le dan la fila y el acento</td>
+<td>5–100 %</td>
+</tr>
+<tr>
+<td>2/2</td>
+<td>2</td>
+<td><strong>NUDGE</strong>, antes o después</td>
+<td>medio paso a cada lado</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>El PAD SAMPLER no tiene NUDGE.</li>
+<li>Los ajustes se mueven y se copian con el golpe, y se guardan con el proyecto.</li>
+</ul>
 <h3 id="slots-write-with-whole-chords">SLOTS: escribe con acordes enteros</h3>
 <p>En la página de acordes, SLOTS te deja componer acorde por acorde:</p>
 <ol>
@@ -419,10 +507,8 @@ momento.</p>
 <h3 id="live-fx">LIVE FX</h3>
 <p>Treinta pads que cambian toda la mezcla mientras tocas, en dos bancos: MAIN y MORE.</p>
 <ul>
-<li><strong>The pads:</strong> the header shows the section keys at first; long-press the project plate (or
-  ALT + MODE) to bring the pads there. Then a bank's first eight sit in the header, and the other
-  eight take the instruments' place while you hold ALT, with the banks' names beside them.</li>
-<li><strong>On the SONG page</strong> all sixteen show by themselves while the music plays.</li>
+<li><strong>Los pads:</strong> al principio la cabecera muestra las teclas de sección; haz una pulsación larga en la placa del proyecto (o ALT + MODE) para llevar ahí los pads. Entonces los primeros ocho de un banco están en la cabecera, y los otros ocho ocupan el lugar de los instrumentos mientras mantienes ALT, con los nombres de los bancos al lado.</li>
+<li><strong>En la página CANCIÓN</strong> los dieciséis se muestran solos mientras suena la música.</li>
 <li><strong>El banco:</strong> mantén ALT y toca su nombre, o pulsa ALT + ▼ para el siguiente.</li>
 <li><strong>Las teclas:</strong> mantén ALT y pulsa una tecla de paso, 1–8 para los pads de la cabecera, 9–16 para los otros ocho. Un pad se ve pulsado mientras su tecla está abajo.</li>
 <li><strong>Tu propio MAIN:</strong> MENU → SETTINGS → LIVE FX elige qué pads forman MAIN: los ocho de la barra superior y los ocho que aparecen con ALT. Los que quedan fuera están en MORE.</li>
@@ -555,6 +641,54 @@ momento.</p>
 <h3 id="record-the-whole-mix">Grabar la mezcla completa</h3>
 <p><strong>ALT + ●</strong> graba todo lo que suena por los altavoces, desde cualquier página, como un WAV entre tus grabaciones. La luz de RECORD se pone roja. Pulsa <strong>ALT + ●</strong> otra vez para parar. Encontrarás el archivo en el reproductor de música.</p>
 <p>Solo puede haber una grabación a la vez: mientras esta graba, la GRABADORA no puede grabar tomas.</p>
+<p>Qué grabación usar:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Qué graba</th>
+<th>LIVE FX</th>
+<th>Tu micro</th>
+<th>Empezar y parar</th>
+<th>Adónde va</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ALT + ●</strong></td>
+<td>todo lo que tocan los altavoces, mientras tocas</td>
+<td>sí</td>
+<td>solo mientras el MONITOR de la GRABADORA lo reproduce</td>
+<td>ALT + ●, otra vez para parar</td>
+<td>tus grabaciones, en el reproductor</td>
+</tr>
+<tr>
+<td><strong>EXPORT</strong></td>
+<td>el proyecto desde su primer tiempo, durante los compases que elijas</td>
+<td>sí, si pulsas un pad mientras suena</td>
+<td>solo mientras el MONITOR de la GRABADORA lo reproduce</td>
+<td>EXPORT TRACK; se para solo</td>
+<td>las exportaciones, con portada</td>
+</tr>
+<tr>
+<td><strong>REC EN VIVO, AUDIO ONLY</strong></td>
+<td>todo lo que tocan los altavoces, mientras tocas</td>
+<td>sí</td>
+<td>si pones el MIC</td>
+<td>REC EN VIVO → START, STOP para parar</td>
+<td>las exportaciones, entre tus PISTAS</td>
+</tr>
+<tr>
+<td><strong>La GRABADORA</strong></td>
+<td>solo la entrada: un micro, una guitarra o una línea</td>
+<td>no</td>
+<td>es el micro</td>
+<td>● REC</td>
+<td>SAMPLES o PISTAS (KEEP TAKES IN)</td>
+</tr>
+</tbody>
+</table>
+<p>Para guardar un directo con los pads que tocaste, usa ALT + ● o REC EN VIVO. REC EN VIVO es la que puede añadir tu voz.</p>
 <h3 id="the-mixer">El MEZCLADOR</h3>
 <p><strong>✱</strong> abre el MIXER: todos los instrumentos a la vez, uno al lado del otro, cada uno de pie en su propia tira.
 Pulsa ✱ o BACK para volver, o una tecla de número para esa página. Cada tira tiene, de arriba abajo:</p>
@@ -722,7 +856,7 @@ FILTER, ENVELOPE y MOTION. Tu elección se guarda con el proyecto.</p>
 <p>El selector de kits de las cajas de ritmos también tiene un grupo ACOUSTIC. Son kits General MIDI del soundfont FluidR3: <strong>Jazz</strong> y <strong>Brush</strong> (con el ride y el pedal de hi-hat en sus filas, o con el crash), <strong>Standard</strong> y <strong>Room</strong>.</p>
 <p>Dos cosas más ayudan a que el jazz suene bien:</p>
 <ul>
-<li>Una nota de bajo o de lead puede durar más que un paso. Mantén pulsada una celda para estirar hasta ella la nota de la fila.</li>
+<li>Una nota del bajo o del lead puede durar más que un paso. Haz una pulsación larga en una celda vacía para estirar hasta ahí la nota anterior de la fila, o elige la nota y gira la perilla 1.</li>
 <li>Toca el rótulo de swing de la cabecera para hacer swing en las corcheas (SWING 8) o en las semicorcheas (SWING 16).</li>
 </ul>
 <h3 id="pads-and-textures-on-chords">Pads y texturas en CHORDS</h3>
@@ -733,7 +867,14 @@ FILTER, ENVELOPE y MOTION. Tu elección se guarda con el proyecto.</p>
 <li><strong>Alien,</strong> de los soundfonts "Ambients &amp; Drones": The Thing, Strange voices, Crystal voice, Glassy, Winds, Chaos, The Pulse.</li>
 </ul>
 <p>Encajan en una máquina sostenida y polifónica: los acordes se mantienen mientras dura la voz, y la tonalidad los mantiene afinados con el bajo y el lead.</p>
-<p>Los selectores de sonidos agrupan sus listas con chips GROUP, ★ para tus favoritos (la estrella, o ALT + SELECT) y SORT, como en la lista o A–Z. Recuerdan el grupo y el orden por instrumento.</p>
+<p>Los selectores de sonidos listan sus grupos a la izquierda, cada uno con cuántos sonidos tiene:</p>
+<ul>
+<li>ALL, luego ★ FAVOURITES (la estrella, o ALT + SELECT), luego una fila por grupo, con desplazamiento cuando hay muchos.</li>
+<li>SORT, como está en la lista o A–Z, se queda al pie de esa columna.</li>
+<li>La cuadrícula de sonidos ocupa el resto del diálogo.</li>
+</ul>
+<p>Recuerdan el grupo y el orden de cada instrumento.</p>
+<p>Con las teclas: <strong>◀</strong> en la primera columna de la cuadrícula pasa a los grupos, <strong>▲ ▼</strong> o la perilla grande los recorren, <strong>SELECT</strong> muestra el que está marcado, <strong>▶</strong> vuelve a los sonidos. La perilla 1 sigue recorriendo los grupos y la perilla 2 el orden desde cualquier parte del diálogo.</p>
 <h3 id="hear-a-sound-before-you-choose-it">Oye un sonido antes de elegirlo</h3>
 <p><strong>PREVIEW</strong>, al final de la fila superior de un selector de sonido, te deja oír antes de elegir:</p>
 <ul>
@@ -745,20 +886,16 @@ FILTER, ENVELOPE y MOTION. Tu elección se guarda con el proyecto.</p>
 <li><strong>Los sonidos propios del sintetizador</strong> y MY SOUNDS se oyen eligiéndolos.</li>
 <li>PREVIEW se queda como lo dejes.</li>
 </ul>
-<p>Las filas de chips se pliegan bajo su encabezado FILTERS, lo que deja sitio a la lista. Plegado, el encabezado muestra cómo están puestas, y el selector recuerda si estaban abiertas.</p>
 <h3 id="soundfonts-from-a-usb-stick-or-online">Soundfonts desde un pendrive USB o en línea</h3>
-<p>The sound pickers and the drums' kit picker have a <strong>SOURCE</strong> row, as the presets dialog does:</p>
+<p>Los selectores de sonidos y el selector de kits de la batería tienen una fila <strong>SOURCE</strong>, como el diálogo de presets:</p>
 <ul>
-<li><strong>DEVICE:</strong> the sounds and kits the device has.</li>
-<li><strong>ONLINE:</strong> the GET MORE catalog's soundfonts.</li>
+<li><strong>DEVICE:</strong> los sonidos y kits que tiene el equipo.</li>
+<li><strong>ONLINE:</strong> los soundfonts del catálogo de GET MORE.</li>
 <li>
-<p><strong>USB:</strong> one for each stick plugged in, with the .sf2 and .sf3 files in its
-  <code>ravving/soundfonts</code> folder.</p>
+<p><strong>USB:</strong> uno por cada memoria conectada, con los archivos .sf2 y .sf3 de su carpeta <code>ravving/soundfonts</code>.</p>
 </li>
 <li>
-<p><strong>Off the device</strong> the list shows what each soundfont holds, grouped by its name: its sounds in
-  the CHORDS, BASS and LEAD pickers, its drum kits in the kit picker. A font that is a kit as a
-  whole, or a General MIDI font's drum kits, show only as kits.</p>
+<p><strong>Fuera del dispositivo</strong> la lista muestra lo que contiene cada soundfont, agrupado por su nombre: sus sonidos en los selectores de CHORDS, BASS y LEAD, sus kits de batería en el selector de kits. Una fuente que es un kit entero, o los kits de batería de una fuente General MIDI, solo aparecen como kits.</p>
 </li>
 <li><strong>Elige uno</strong> y primero se lee del pendrive (o se descarga). El selector indica cuánto lleva; luego el sonido suena y el selector se cierra. Uno que el dispositivo ya tiene se toma al momento.</li>
 <li id="it-doesnt-fill-your-library"><strong>No llena tu biblioteca.</strong> Una soundfont elegida así suena desde una caché. Guarda con SAVE un proyecto que la use y se copia a tu biblioteca, así el proyecto la conserva. Una que solo probaste se borra en el siguiente arranque.</li>
@@ -767,12 +904,7 @@ FILTER, ENVELOPE y MOTION. Tu elección se guarda con el proyecto.</p>
 <h3 id="pattern-presets-with-their-sound">Presets de patrón, con su sonido</h3>
 <p>Abre PRESET en una barra de patrón. SAVE CURRENT AS NEW guarda el patrón junto con el sonido de la máquina: su fuente o sonido de fábrica, y sus MODS. En la batería guarda el kit y los MODS del kit.</p>
 <aside class="aru-tip"><span class="aru" data-mood="hiphop" data-species="octopus"></span><p>Cada pack trae su propio groove, y el sonido para el que se escribió.</p></aside>
-<p>Al guardar, dos interruptores deciden qué entra. Los dos están activados cada vez que se abre el diálogo:</p>
-<ul>
-<li><strong>WITH ITS SOUND:</strong> la fuente o el kit que está sonando.</li>
-<li><strong>WITH ITS MODS:</strong> los MODS que has ajustado. Una perilla que nadie tocó se queda fuera.</li>
-</ul>
-<p>Con los dos desactivados, solo se guarda el patrón.</p>
+<p>Guarda el sonido que oyes: en una sección con sonido propio, es el sonido de la sección y sus MODS. Una perilla que nadie giró queda fuera. Al cargar el preset, eliges qué vuelve con el patrón.</p>
 <p>Un preset que lleva un sonido muestra ♪ y el nombre del sonido bajo su género, más "+ MODS" cuando guarda MODS.</p>
 <h3 id="loading-a-preset">Cargar un preset</h3>
 <p>El botón de preset en la barra de una máquina muestra el preset cargado, con • cuando lo has cambiado,
@@ -783,16 +915,17 @@ o NO PRESET ▾ cuando no hay ninguno. Tócalo para ver la lista.</p>
 <li><strong>WITH ITS MODS</strong> (desactivado por defecto) ajusta los MODS del preset, solo las partes que nombra. Un preset sin MODS deja los tuyos como están.</li>
 <li><strong>WITH ITS BARS</strong> (activado por defecto) trae el número de compases del preset. Desactivado, el preset se coloca sobre tus compases desde el primero: un preset más corto se repite, uno más largo se corta.</li>
 </ul>
-<p>Al activar SOUND también se activa MODS, porque un sonido se oye con sus MODS. Después puedes volver a apagar MODS. MODS solo trae los MODS de un preset al sonido que ya suena. Con todos desactivados, solo se carga el patrón. Tus elecciones se recuerdan.</p>
+<p>Con todos apagados, solo se carga el patrón. Tus elecciones se recuerdan.</p>
+<h3 id="sound-and-mods-together">Sonido y MODS juntos</h3>
+<p>Los MODS solo vienen con el sonido en el que se ajustaron: encender MODS enciende SOUND, y apagar SOUND apaga MODS. Encender SOUND también enciende MODS, ya que un sonido se oye con sus MODS. Vuelve a apagar MODS para conservar los MODS que tienes.</p>
 <p>SOUND y MODS siguen al preset resaltado: uno sin sonido atenúa WITH ITS SOUND, y uno sin MODS atenúa WITH ITS MODS. Vuelven a encenderse en un preset que los tenga.</p>
 <h3 id="what-a-presets-sound-keeps">Qué guarda el sonido de un preset</h3>
 <p>Si el aparato no tiene la fuente o el kit de un preset, esa parte del sonido se queda como está. Los presets de los samplers no guardan sonido, porque su sonido está en sus bancos. Los presets que vienen con ravving tampoco guardan sonido. Un preset copiado a una memoria lleva su sonido en su archivo.</p>
 <h3 id="finding-presets">Encontrar presets</h3>
 <p>El diálogo de presets funciona como los selectores de sonidos:</p>
 <ul>
-<li><strong>Un chip GROUP por género</strong>, y SORT: como en la lista o A–Z.</li>
+<li><strong>Un grupo por género</strong> a la izquierda, con SORT (como en la lista o A–Z) al pie. Las fuentes y lo que trae un preset quedan en la fila sobre los presets.</li>
 <li><strong>★ favoritos:</strong> mantén pulsado un preset, toca la ★ de su esquina o pulsa ALT + SELECT. Los favoritos se guardan por instrumento según el nombre del preset, así que un preset de una memoria y el mismo copiado al aparato comparten su ★.</li>
-<li><strong>FILTERS</strong> pliega las filas SOURCE, LOAD, GROUP y SORT, como en los selectores de sonido.</li>
 <li><strong>En una memoria,</strong> SAVE CURRENT AS NEW escribe el patrón allí, DELETE borra el archivo de la memoria (tócalo dos veces), y SEND… también ofrece THIS DEVICE, que copia el preset al equipo.</li>
 <li><strong>GET MORE…</strong> abre el catálogo en PATTERNS, primero los de este instrumento (mira GET MORE más abajo).</li>
 </ul>
@@ -879,8 +1012,8 @@ GET en una entrada: se descarga, se comprueba y llega donde el equipo guarda lo 
 </tr>
 <tr>
 <td>ICON PACKS</td>
-<td>a drawing for every icon ravving shows</td>
-<td>SETTINGS → LOOK → ICONS</td>
+<td>un dibujo para cada icono que muestra ravving</td>
+<td>AJUSTES → LOOK → ICONS</td>
 </tr>
 <tr>
 <td>SOUNDFONTS</td>
@@ -904,9 +1037,10 @@ GET en una entrada: se descarga, se comprueba y llega donde el equipo guarda lo 
   botón GET MORE… que abre el catálogo en su tipo.</li>
 <li>La lista se obtiene al abrir el diálogo y se guarda en el equipo. Sin red se muestra la
   última lista, con una nota; REFRESH la obtiene de nuevo.</li>
-<li>Todo viene de <a href="https://github.com/ravving/ravving_repo" rel="noopener" target="_blank">ravving_repo</a> en GitHub,
-  donde cualquiera puede contribuir. El equipo solo descarga de allí.</li>
+<li>Para verlo en un móvil o un ordenador, abre la <a href="https://ravving.github.io/ravving_repo/" rel="noopener" target="_blank">página del catálogo</a>: también tiene FIND, y una descarga para cada entrada.</li>
 </ul>
+<h4 id="where-it-comes-from">De dónde viene</h4>
+<p>Todo viene de <a href="https://github.com/ravving/ravving_repo" rel="noopener" target="_blank">ravving_repo</a> en GitHub, donde cualquiera puede contribuir: su <a href="https://github.com/ravving/ravving_repo/blob/main/CONTRIBUTING.md" rel="noopener" target="_blank">guía para colaboradores</a> tiene los pasos. El dispositivo solo descarga de ahí.</p>
 <p>Con las teclas del equipo: ◀ ▶ los tipos, ▲ ▼ las entradas, SELECT obtiene o actualiza una (en una que
 ya tienes, un segundo SELECT la quita), BACK cierra.</p>
 <h2 id="sections-and-the-song">Las secciones y la canción</h2>
@@ -933,10 +1067,10 @@ cuerdas en el estribillo; la 909 en el drop, la Linn en todo lo demás.</p>
 </ul>
 <h3 id="when-a-sections-sound-is-heard">Cuándo se oye el sonido de una sección</h3>
 <ul>
+<li><strong>El cambio</strong> cae en la línea de compás junto con el resto de la sección. Una nota del sonido anterior que aún suena termina su release; una sostenida a través del compás termina ahí.</li>
+<li><strong>Lo que tocas en vivo</strong> toma el nuevo sonido desde la última semicorchea antes del compás, y los MODS de la sección cambian ahí también.</li>
 <li>
-<p><strong>El cambio</strong> entra en la línea de compás con el resto de la sección. Una nota que aún suena
-  con el sonido anterior termina su release; una sostenida a través del compás termina ahí. Nada se
-  detiene ni arranca: el motor que necesita una sección se inicia cuando eliges su sonido.</p>
+<p><strong>Nada se detiene ni arranca:</strong> el motor que necesita una sección se inicia cuando eliges su sonido.</p>
 </li>
 <li>
 <p><strong>Un preset cargado WITH ITS SOUND</strong> da su sonido a la sección en pantalla cuando el
@@ -945,8 +1079,11 @@ cuerdas en el estribillo; la 909 en el drop, la Linn en todo lo demás.</p>
 </li>
 </ul>
 <h3 id="what-a-sections-sound-can-be">Lo que puede ser el sonido de una sección</h3>
-<p>Un instrumento de soundfont, el sintetizador propio de la máquina o, en la batería, un kit. El sonido de fábrica del sintetizador y cada juego de MODS siguen siendo del proyecto, iguales en
-todas las secciones, y el sonido de una sección se deshace como cualquier otra elección.</p>
+<p>Un instrumento soundfont, el propio sinte de la máquina o, en la batería, un kit. El sonido de una sección se deshace como cualquier otra elección.</p>
+<ul>
+<li id="its-mods-come-with-it"><strong>Sus MODS vienen con él.</strong> Gira los MODS mientras en pantalla hay una sección con sonido propio y serán de esa sección: el Rhodes puede ser oscuro en la estrofa y brillante en el puente. Un sonido propio nuevo parte de los MODS del proyecto.</li>
+<li><strong>El resto sigue siendo del proyecto:</strong> las secciones con el sonido del proyecto comparten sus MODS, y el sonido de fábrica del sinte es el mismo en todas las secciones.</li>
+</ul>
 <h3 id="engine-channels">Canales de motor</h3>
 <p>Una jam tiene 15 canales de motor, y el motor de cada máquina ocupa uno desde el principio, así que quedan
 9 libres.</p>
@@ -1004,13 +1141,13 @@ mientras mantienes ALT; MODE solo sigue cambiando el modo de entrada.</p>
 <li><strong>＋</strong> se queda fijo al final de la tira.</li>
 <li><strong>ALT + una tecla de paso</strong> elige la sección 1–16 mientras las teclas de sección están ahí. Mantener ALT deja los instrumentos en su sitio: los pads de LIVE FX 9–16 solo aparecen con los pads en la barra superior.</li>
 </ul>
-<h3 id="the-song-page-while-it-plays">The SONG page while it plays</h3>
-<p>The page has the sections already, so the header shows all the LIVE FX pads instead:</p>
+<h3 id="the-song-page-while-it-plays">La página CANCIÓN mientras suena</h3>
+<p>La página ya tiene las secciones, así que la cabecera muestra en su lugar todos los pads de LIVE FX:</p>
 <ul>
-<li><strong>The first eight</strong> sit where the section keys were.</li>
-<li><strong>The other eight</strong> and the banks take the instruments' place, without ALT.</li>
-<li><strong>ALT + step keys</strong> play the pads.</li>
-<li><strong>Stop the music</strong> or leave the page, and the section keys come back.</li>
+<li><strong>Los ocho primeros</strong> ocupan el lugar de las teclas de sección.</li>
+<li><strong>Los otros ocho</strong> y los bancos ocupan el lugar de los instrumentos, sin ALT.</li>
+<li><strong>ALT + teclas de paso</strong> tocan los pads.</li>
+<li><strong>Detén la música</strong> o sal de la página, y vuelven las teclas de sección.</li>
 </ul>
 <p>Con las teclas en la cabecera, ALT + 1–16 eligen las secciones 1–16. Mientras el grupo de secciones de la cabecera tiene el foco (◀ ▶ hasta él), las teclas de paso solas las eligen.</p>
 <h3 id="the-song-page">La página CANCIÓN</h3>
@@ -1019,10 +1156,10 @@ mientras mantienes ALT; MODE solo sigue cambiando el modo de entrada.</p>
 <ul>
 <li><strong>Un toque</strong> elige una sección, <strong>doble toque</strong> le cambia el nombre, <strong>mantener y arrastrar</strong> la mueve.</li>
 <li><strong>×</strong> la borra, tras un segundo toque.</li>
-<li><strong>＋</strong> copia la sección en pantalla (A pasa a ser A′).</li>
+<li><strong>＋</strong> copia la sección en pantalla, numerada a partir de ella (A pasa a A 2, luego A 3).</li>
 </ul>
-<p>Una sección nueva, vacía (NEW) o copiada (＋), se une al final de la canción y pasa a ser la que está en pantalla.</p>
-<p>La fila sobre las secciones tiene RENAME, NEW (una sección vacía), COLOUR, LENGTH (1–8 compases, o AUTO para el patrón más largo), MOVE y ADD TO SONG.</p>
+<p>Una sección nueva (＋, copia de la que está en pantalla) se suma al final de la canción y pasa a ser la que está en pantalla.</p>
+<p>La fila sobre las secciones tiene RENAME, COLOUR, LENGTH (1–8 compases, o AUTO para el patrón más largo), MOVE y ADD TO SONG.</p>
 <p><strong>La canción</strong> es una tira de bloques, cada uno tan ancho como sus compases por sus repeticiones. Elige un bloque para moverlo, ajustar sus repeticiones (×1 a ×16) o quitarlo.</p>
 <table>
 <thead>
@@ -1083,7 +1220,7 @@ mientras mantienes ALT; MODE solo sigue cambiando el modo de entrada.</p>
 <tbody>
 <tr>
 <td>GENERAL</td>
-<td>The LANGUAGE, the STARTUP look and the projects' TIMELINE (on or off)</td>
+<td>LANGUAGE, el aspecto de STARTUP y el TIMELINE de los proyectos (encendida o apagada)</td>
 </tr>
 <tr>
 <td>KEYS</td>
@@ -1091,7 +1228,7 @@ mientras mantienes ALT; MODE solo sigue cambiando el modo de entrada.</p>
 </tr>
 <tr>
 <td>LOOK</td>
-<td>The instruments' SKINS, the ICONS, and GET MORE… for more of each</td>
+<td>Los SKINS de los instrumentos, los ICONS y GET MORE… para conseguir más de cada uno</td>
 </tr>
 <tr>
 <td>LIVE FX</td>
@@ -1177,16 +1314,12 @@ con luces pastel, es con el que arranca.</p>
   al momento, y REMOVE allí lo vuelve a quitar.</li>
 <li><strong>Qué contiene un archivo:</strong> los colores de cada máquina, de <code>drums1</code> a <code>pads</code>. Una máquina o un color que no incluya conserva los de ravving. Empieza a partir de uno de los de ravving (<code>data/skins/</code> en el código).</li>
 </ul>
-<h3 id="icons">Icons</h3>
-<p>SETTINGS → LOOK → ICONS draws every icon on screen one way: CANDY, rounded solid pixels with a
-glint (the one ravving starts in); BLOCK, chunky blocks; HAIRLINE, thin lines. The icon packs
-you add show after them. The pick changes the icons at once and stays after a restart.</p>
+<h3 id="icons">Iconos</h3>
+<p>AJUSTES → LOOK → ICONS dibuja todos los iconos de la pantalla de una manera: CANDY, píxeles sólidos redondeados con un brillo (con el que arranca ravving); BLOCK, bloques gruesos; HAIRLINE, líneas finas. Los packs de iconos que añadas aparecen después. La elección cambia los iconos al instante y se mantiene tras reiniciar.</p>
 <ul>
-<li><strong>Where they live:</strong> the library's <code>icons/</code> folder, one <code>.json</code> file each, and on a stick
-  <code>ravving/presets/icons/</code>. The USB page copies them both ways with your other presets.</li>
-<li><strong>More packs:</strong> GET MORE… under ICONS opens the catalog on its icon packs.</li>
-<li><strong>Make your own:</strong> <a href="../../docs/icon-packs.html">Make an icon pack</a> lists every icon, how to draw it and a
-  tool that builds the file. An icon a pack leaves out is drawn as CANDY draws it.</li>
+<li><strong>Dónde están:</strong> la carpeta <code>icons/</code> de la biblioteca, un archivo <code>.json</code> cada uno, y en un pendrive <code>ravving/presets/icons/</code>. La página USB los copia en ambos sentidos con tus otros presets.</li>
+<li><strong>Más packs:</strong> GET MORE… bajo ICONS abre el catálogo en sus packs de iconos.</li>
+<li><strong>Haz el tuyo:</strong> <a href="../../docs/icon-packs.html">Crea un pack de iconos</a> enumera cada icono, cómo dibujarlo y una herramienta que construye el archivo. Un icono que un pack omite se dibuja como lo dibuja CANDY.</li>
 </ul>
 <h3 id="your-live-fx-pads">Tus pads de LIVE FX</h3>
 <p>SETTINGS → LIVE FX muestra dieciséis ranuras: la fila HEADER, los pads de la barra superior, y la fila ALT, los pads que aparecen mientras mantienes ALT. Debajo están todos los pads.</p>

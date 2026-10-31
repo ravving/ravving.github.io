@@ -58,9 +58,11 @@
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
 <li><a href="icon-packs.html">Make an icon pack</a></li>
+<li><a href="https://github.com/ravving/ravving_repo/blob/main/CONTRIBUTING.md">Share your own</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
+<li><a href="https://ravving.github.io/ravving_repo/">The catalog</a></li>
 </ul>
 <p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
@@ -304,11 +306,19 @@ alone can point the input at the silent Dummy.</p>
 </ul>
 <h3 id="several-engines-on-one-machine">Several engines on one machine</h3>
 <ul>
-<li>A machine with more than one engine (a section's own sound) plays through one at a time.
-  Its track's chained sound is the engine heard (<code>SketchpadTrack::setSynth()</code>). It switches on
-  the last sixteenth before the bar a section lands on.</li>
-<li>The engine left gets an all-notes-off (<code>MidiRouter::sendMidiMessageToZynthianSynth</code>), and
-  the idle engines get no notes at all.</li>
+<li>A machine's track picks its sound by clip (<code>libravving::Track::SamePicking</code>). Clip a's notes
+  go out on MIDI channel 0 to sound slot 0, clip b's on channel 1 to slot 1
+  (<code>Track::setClipSynth()</code>).</li>
+<li>The router sends each note to its clip's slot (<code>Router::setClipRouting()</code>, on for every
+  machine's track), so a note-off reaches the engine its note-on did.</li>
+<li>A section cued while playing goes into the clip not playing, with its sound in that clip's
+  slot (<code>Studio::placeSound()</code>), so the engine changes with the clip, on the bar.</li>
+<li>When a clip leaves an engine the other clip doesn't play, that engine gets an all-notes-off
+  on the clip's channel (<code>Router::sendToEngine()</code>, CC 123): held notes end, their release rings.</li>
+<li>Live notes play on the clip heard (<code>Machine::liveClip()</code>, <code>Router::setCurrentClip()</code>), which
+  switches on the last sixteenth before the bar (<code>Studio::landSound()</code>).</li>
+<li>A FluidSynth takes the clips' channels as they come, a preset each; a synth gets every note
+  on channel 0. The idle engines get no notes at all.</li>
 <li>The jam has 16 Zynthian channels, one of them the master channel: 15 engines at most
   (<code>Studio::SynthChannels</code>).</li>
 </ul>

@@ -33,6 +33,7 @@
     "bass-select": { caption: "BASS with SELECT on: the note readout" },
     "strip-knobs": { caption: "The strip tapped: knobs 1 and 2 on PAN and VOL" },
     "recorder": { caption: "MENU → RECORDER" },
+    "mods": { caption: "MODS held: ALL MODS" },
     "playing": { caption: "PLAY: LOCK on, the playhead running" },
     "song": { caption: "The SONG page" }
   };
@@ -49,6 +50,7 @@
     "mixer-strip": [[0.6, 19, 98.8, 10, "the strip picked"]],
     "menu-sliders": [[1.4, 70.5, 42.5, 16.5, "OUTPUT 2 · BRIGHTNESS 1"]],
     "recorder-gain": [[1.5, 28.5, 50, 5.5, "GAIN"]],
+    "mods-group": [[2.5, 9.2, 23.3, 18.8, "knobs 1 2 3 on the lit group"]],
     "menu-drawer": [[0, 0, 45, 100, "the control center"]],
     "nameplate": [[2, 20, 7.5, 7.5, "the nameplate"]],
     "mixer": [[0.6, 19, 98.8, 80, "the MIXER"]],

@@ -5,7 +5,7 @@
 <!-- ChoiceDialog.qml -->
   <meta name="description" content="A dialog to pick one item from a list, laid out as a grid of buttons (a drum kit, a preset, a sound, a project, a destination).">
   <meta name="keywords" content="qmltype">
-  <title>ChoiceDialog QML Type | ravving C++ API 1.0</title>
+  <title>ChoiceDialog QML Type | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=a5dc7cd98d" defer></script>
-  <script src="search.js?v=38b3c0cac3" defer></script>
+  <script src="nav.js?v=1a5dfeadeb" defer></script>
+  <script src="search.js?v=4917e215d8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -103,10 +103,9 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#emptyText-prop" translate="no">emptyText</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#extraHint-prop" translate="no">extraHint</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#filters-prop" translate="no">filters</a></b> : alias</li>
-<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#filtersOpen-prop" translate="no">filtersOpen</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#filtersShown-prop" translate="no">filtersShown</a></b> : bool</li>
-<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#filtersSummary-prop" translate="no">filtersSummary</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#hasBottomActions-prop" translate="no">hasBottomActions</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#hasSidebar-prop" translate="no">hasSidebar</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#highlighted-prop" translate="no">highlighted</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#highlightedItem-prop" translate="no">highlightedItem</a></b> : var</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#iconRole-prop" translate="no">iconRole</a></b> : string</li>
@@ -116,6 +115,11 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#previewable-prop" translate="no">previewable</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#previewing-prop" translate="no">previewing</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#shownItems-prop" translate="no">shownItems</a></b> : var</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#sideEntries-prop" translate="no">sideEntries</a></b> : list&lt;var&gt;</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#sideFocused-prop" translate="no">sideFocused</a></b> : bool</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#sideHighlighted-prop" translate="no">sideHighlighted</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#sideRows-prop" translate="no">sideRows</a></b> : list&lt;var&gt;</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#sideScrolling-prop" translate="no">sideScrolling</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#subtitleRole-prop" translate="no">subtitleRole</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#tapPicks-prop" translate="no">tapPicks</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#title-prop" translate="no">title</a></b> : string</li>
@@ -127,17 +131,23 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#chosen-signal" translate="no">chosen</a></b>(var <i>value</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#previewStarted-signal" translate="no">previewStarted</a></b>(var <i>value</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#previewStopped-signal" translate="no">previewStopped</a></b>()</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#sideTriggered-signal" translate="no">sideTriggered</a></b>(int <i>index</i>)</li>
 </ul>
 <h2 id="methods">Methods</h2>
 <ul>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#choose-method" translate="no">choose</a></b>(<i>index</i>)</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#enterSidebar-method" translate="no">enterSidebar</a></b>()</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#highlightCurrent-method" translate="no">highlightCurrent</a></b>()</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#itemHeld-method" translate="no">itemHeld</a></b>(<i>index</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#knobTurned-method" translate="no">knobTurned</a></b>(<i>knob</i>, <i>delta</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#moveHighlight-method" translate="no">moveHighlight</a></b>(<i>delta</i>)</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#moveSide-method" translate="no">moveSide</a></b>(<i>delta</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#selectHandled-method" translate="no">selectHandled</a></b>()</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#stepLeft-method" translate="no">stepLeft</a></b>()</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#stepRight-method" translate="no">stepRight</a></b>()</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#stopPreview-method" translate="no">stopPreview</a></b>()</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#subtitleOf-method" translate="no">subtitleOf</a></b>(<i>item</i>)</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#takeSide-method" translate="no">takeSide</a></b>(<i>index</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#tap-method" translate="no">tap</a></b>(<i>index</i>)</li>
 </ul>
 <!-- $$$ChoiceDialog-description -->
@@ -145,9 +155,10 @@
 <p>The current item is marked, the highlighted one follows the device, and choosing one closes the dialog.</p>
 <p>Optional <code translate="no">actions</code> add buttons to the header (SAVE, DELETE) or a band along the bottom (OPEN, EXPORT) that act on the highlighted item through <code translate="no">actionTriggered</code>.</p>
 <p>The device while open: the big knob or the arrows move the highlight, SELECT chooses it, BACK closes without choosing. Closing gives the focus back to whatever had it (Dialog).</p>
+<p>A dialog with <code translate="no">sideEntries</code> (the app's groups and sort) shows them down its left, a <a href="qml-ravving-controls-sidebaritem.html" translate="no">SideBarItem</a> each, scrolling when they outgrow it; the grid takes the rest of the room. ◀ on the grid's first column moves the keys onto the sidebar: there ▲ ▼ and the big knob walk the entries, SELECT takes the one ringed (<a href="qml-ravving-controls-choicedialog.html#sideTriggered-signal" translate="no">sideTriggered</a>()), ▶ goes back to the grid and BACK still closes. A tap on an entry takes it at once.</p>
 <p>An owner that may want to ask first (opening a project over unsaved work) sets <code translate="no">closeOnChoose</code> false, closes it itself, and can show a line of <code translate="no">notice</code>. A grid with nothing in it says why with an <a href="qml-ravving-controls-emptynote.html" translate="no">EmptyNote</a> (<code translate="no">emptyText</code>). What waits for a confirming second press shows it as everywhere else in ravving: the <a href="qml-ravving-controls-armbar.html" translate="no">ArmBar</a> countdown inside that very button, the header action (<code translate="no">armedAction</code>) or the item (<code translate="no">armedValue</code>).</p>
 <p>With <code translate="no">previewable</code>, holding an item previews it (a sample is heard) until it is let go: <a href="qml-ravving-controls-choicedialog.html#previewStarted-signal" translate="no">previewStarted</a>(value) on the hold, <a href="qml-ravving-controls-choicedialog.html#previewStopped-signal" translate="no">previewStopped</a>() on the release or when the dialog closes. An owner can turn <code translate="no">previewable</code> on and off (a PREVIEW toggle in its header); going off, the preview playing stops.</p>
-<p>A type built on it (the app's ChoicePopup: sources, groups, favourites) puts rows of its own between the header and the grid (<code translate="no">filters</code>), narrows or orders the list (<code translate="no">shownItems</code>), adds to the keys' hint (<code translate="no">extraHint</code>), draws a badge in each cell's corner (<code translate="no">cellBadge</code>, which reads its loader's <code translate="no">cellItem</code>), and takes the device's other inputs through the hooks below: <a href="qml-ravving-controls-choicedialog.html#itemHeld-method" translate="no">itemHeld</a>(), <a href="qml-ravving-controls-choicedialog.html#selectHandled-method" translate="no">selectHandled</a>(), <a href="qml-ravving-controls-choicedialog.html#knobTurned-method" translate="no">knobTurned</a>() and <a href="qml-ravving-controls-choicedialog.html#subtitleOf-method" translate="no">subtitleOf</a>().</p>
+<p>A type built on it (the app's ChoicePopup: sources, groups, favourites) puts rows of its own between the header and the grid (<code translate="no">filters</code>: the sources), its groups and sort on the sidebar (<code translate="no">sideEntries</code>), narrows or orders the list (<code translate="no">shownItems</code>), adds to the keys' hint (<code translate="no">extraHint</code>), draws a badge in each cell's corner (<code translate="no">cellBadge</code>, which reads its loader's <code translate="no">cellItem</code>), and takes the device's other inputs through the hooks below: <a href="qml-ravving-controls-choicedialog.html#itemHeld-method" translate="no">itemHeld</a>(), <a href="qml-ravving-controls-choicedialog.html#selectHandled-method" translate="no">selectHandled</a>(), <a href="qml-ravving-controls-choicedialog.html#knobTurned-method" translate="no">knobTurned</a>() and <a href="qml-ravving-controls-choicedialog.html#subtitleOf-method" translate="no">subtitleOf</a>().</p>
 <!-- @@@ChoiceDialog -->
 <h2>Property Documentation</h2>
 <div class="fnitem">
@@ -231,14 +242,8 @@
 <div class="fnitem">
 <!-- $$$filters -->
 <h3 class="fn qml-member qml-property" translate="no" id="filters-prop"><span class="name">filters</span> : <span class="type">alias</span></h3>
-<p>Rows between the header and the grid (a type built on this: sources, groups), set as a list (<code translate="no">filters: [ToolBar { … }]</code>): the dialog's children stay its own.</p>
+<p>Rows between the header and the grid (a type built on this: the sources), set as a list (<code translate="no">filters: [ToolBar { … }]</code>): the dialog's children stay its own.</p>
 <!-- @@@filters -->
-</div>
-<div class="fnitem">
-<!-- $$$filtersOpen -->
-<h3 class="fn qml-member qml-property" translate="no" id="filtersOpen-prop"><span class="name">filtersOpen</span> : <span class="type">bool</span></h3>
-<p>Whether those rows are open: a FILTERS heading above them folds them away (the list gets the room) and back; a type keeps the state where it likes (the app's profile). Folded, <code translate="no">filtersSummary</code> says what they are set to (&quot;USB · RAVVING · ROCK · A&ndash;Z&quot;), so a list narrowed by them never looks merely short.</p>
-<!-- @@@filtersOpen -->
 </div>
 <div class="fnitem">
 <!-- $$$filtersShown -->
@@ -247,16 +252,16 @@
 <!-- @@@filtersShown -->
 </div>
 <div class="fnitem">
-<!-- $$$filtersSummary -->
-<h3 class="fn qml-member qml-property" translate="no" id="filtersSummary-prop"><span class="name">filtersSummary</span> : <span class="type">string</span></h3>
-<p>Whether those rows are open: a FILTERS heading above them folds them away (the list gets the room) and back; a type keeps the state where it likes (the app's profile). Folded, <code translate="no">filtersSummary</code> says what they are set to (&quot;USB · RAVVING · ROCK · A&ndash;Z&quot;), so a list narrowed by them never looks merely short.</p>
-<!-- @@@filtersSummary -->
-</div>
-<div class="fnitem">
 <!-- $$$hasBottomActions -->
 <h3 class="fn qml-member qml-property" translate="no" id="hasBottomActions-prop"><span class="name">hasBottomActions</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
 <p>Header buttons: [{text, enabled}]; a tap emits <a href="qml-ravving-controls-choicedialog.html#actionTriggered-signal" translate="no">actionTriggered</a>(index). A <code translate="no">{separator: true}</code> entry draws a divider between groups of buttons (it keeps its index). An entry with <code translate="no">toggle: true</code> is a state, drawn as a Chip, lit while its <code translate="no">checked</code> is true (the owner flips it on <a href="qml-ravving-controls-choicedialog.html#actionTriggered-signal" translate="no">actionTriggered</a>). An entry with <code translate="no">bottom: true</code> sits on a band along the dialog's bottom instead (the project dialog's OPEN and EXPORT), keeping its index too.</p>
 <!-- @@@hasBottomActions -->
+</div>
+<div class="fnitem">
+<!-- $$$hasSidebar -->
+<h3 class="fn qml-member qml-property" translate="no" id="hasSidebar-prop"><span class="name">hasSidebar</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<p>The sidebar's rows, down the dialog's left beside the grid (a type built on this: the groups and the sort): [{key, text, glyph, detail, checked, section, pinned}]. <code translate="no">key</code> tells a row apart (unique; a row keeps its place by it), <code translate="no">text</code> is the row's name, <code translate="no">glyph</code> its Icon (&quot;&quot; none), <code translate="no">detail</code> a count at its right, <code translate="no">checked</code> marks the row in force, and <code translate="no">section</code> is the Caption over the first row of a run that shares it. Rows with <code translate="no">pinned: true</code> come last and stay at the sidebar's foot while the others scroll. None (the default): no sidebar, the grid takes the dialog's width.</p>
+<!-- @@@hasSidebar -->
 </div>
 <div class="fnitem">
 <!-- $$$highlighted -->
@@ -313,6 +318,36 @@
 <!-- @@@shownItems -->
 </div>
 <div class="fnitem">
+<!-- $$$sideEntries -->
+<h3 class="fn qml-member qml-property" translate="no" id="sideEntries-prop"><span class="name">sideEntries</span> : <span class="type">list</span>&lt;<span class="type">var</span>&gt;</h3>
+<p>The sidebar's rows, down the dialog's left beside the grid (a type built on this: the groups and the sort): [{key, text, glyph, detail, checked, section, pinned}]. <code translate="no">key</code> tells a row apart (unique; a row keeps its place by it), <code translate="no">text</code> is the row's name, <code translate="no">glyph</code> its Icon (&quot;&quot; none), <code translate="no">detail</code> a count at its right, <code translate="no">checked</code> marks the row in force, and <code translate="no">section</code> is the Caption over the first row of a run that shares it. Rows with <code translate="no">pinned: true</code> come last and stay at the sidebar's foot while the others scroll. None (the default): no sidebar, the grid takes the dialog's width.</p>
+<!-- @@@sideEntries -->
+</div>
+<div class="fnitem">
+<!-- $$$sideFocused -->
+<h3 class="fn qml-member qml-property" translate="no" id="sideFocused-prop"><span class="name">sideFocused</span> : <span class="type">bool</span></h3>
+<p>Whether the device's keys are on the sidebar, and the row they ring there.</p>
+<!-- @@@sideFocused -->
+</div>
+<div class="fnitem">
+<!-- $$$sideHighlighted -->
+<h3 class="fn qml-member qml-property" translate="no" id="sideHighlighted-prop"><span class="name">sideHighlighted</span> : <span class="type">int</span></h3>
+<p>Whether the device's keys are on the sidebar, and the row they ring there.</p>
+<!-- @@@sideHighlighted -->
+</div>
+<div class="fnitem">
+<!-- $$$sideRows -->
+<h3 class="fn qml-member qml-property" translate="no" id="sideRows-prop"><span class="name">sideRows</span> : <span class="type">list</span>&lt;<span class="type">var</span>&gt; <code class="details extra" translate="no">[read-only]</code></h3>
+<p>The sidebar's rows as its views list them: every field there (an empty one when not given), its place in <a href="qml-ravving-controls-choicedialog.html#sideEntries-prop" translate="no">sideEntries</a>, and whether its section's Caption goes over it.</p>
+<!-- @@@sideRows -->
+</div>
+<div class="fnitem">
+<!-- $$$sideScrolling -->
+<h3 class="fn qml-member qml-property" translate="no" id="sideScrolling-prop"><span class="name">sideScrolling</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<p>How many of the sidebar's rows scroll (those not pinned at its foot).</p>
+<!-- @@@sideScrolling -->
+</div>
+<div class="fnitem">
 <!-- $$$subtitleRole -->
 <h3 class="fn qml-member qml-property" translate="no" id="subtitleRole-prop"><span class="name">subtitleRole</span> : <span class="type">string</span></h3>
 <p>The items: [{name, &lt;<a href="qml-ravving-controls-choicedialog.html#valueRole-prop" translate="no">valueRole</a>&gt;…}]; <code translate="no">name</code> is shown, <a href="qml-ravving-controls-choicedialog.html#valueRole-prop" translate="no">valueRole</a> identifies an item, and subtitleRole (if set) is shown small under the name.</p>
@@ -364,6 +399,13 @@
 <p>The item held to preview it was let go, or the dialog closed.</p>
 <div class="admonition note"><p><b>Note: </b>The corresponding handler is <code translate="no">onPreviewStopped</code>.</p>
 </div><!-- @@@previewStopped -->
+</div>
+<div class="fnitem">
+<!-- $$$sideTriggered[overload1]$$$sideTriggeredint -->
+<h3 class="fn qml-member qml-method" translate="no" id="sideTriggered-signal"><span class="name">sideTriggered</span>(<span class="type">int</span> <i>index</i>)</h3>
+<p>A sidebar row was taken (a tap, or SELECT on it): <i translate="no">index</i> is its place in <code translate="no">sideEntries</code>.</p>
+<div class="admonition note"><p><b>Note: </b>The corresponding handler is <code translate="no">onSideTriggered</code>.</p>
+</div><!-- @@@sideTriggered -->
 <h2>Method Documentation</h2>
 </div>
 <div class="fnitem">
@@ -371,6 +413,12 @@
 <h3 class="fn qml-member qml-method" translate="no" id="choose-method"><span class="name">choose</span>(<i>index</i>)</h3>
 <p>Chooses the item at <i translate="no">index</i> in <a href="qml-ravving-controls-choicedialog.html#shownItems-prop" translate="no">shownItems</a> (<a href="qml-ravving-controls-choicedialog.html#chosen-signal" translate="no">chosen</a>()), and closes the dialog unless <a href="qml-ravving-controls-choicedialog.html#closeOnChoose-prop" translate="no">closeOnChoose</a> is off; an item listed as not enabled is not chosen.</p>
 <!-- @@@choose -->
+</div>
+<div class="fnitem">
+<!-- $$$enterSidebar[overload1]$$$enterSidebar -->
+<h3 class="fn qml-member qml-method" translate="no" id="enterSidebar-method"><span class="name">enterSidebar</span>()</h3>
+<p>The keys onto the sidebar, ringing the first row in force.</p>
+<!-- @@@enterSidebar -->
 </div>
 <div class="fnitem">
 <!-- $$$highlightCurrent[overload1]$$$highlightCurrent -->
@@ -397,10 +445,28 @@
 <!-- @@@moveHighlight -->
 </div>
 <div class="fnitem">
+<!-- $$$moveSide[overload1]$$$moveSide -->
+<h3 class="fn qml-member qml-method" translate="no" id="moveSide-method"><span class="name">moveSide</span>(<i>delta</i>)</h3>
+<p>Move the sidebar's ring by <i translate="no">delta</i> rows, staying inside them, scrolled into view.</p>
+<!-- @@@moveSide -->
+</div>
+<div class="fnitem">
 <!-- $$$selectHandled[overload1]$$$selectHandled -->
 <h3 class="fn qml-member qml-method" translate="no" id="selectHandled-method"><span class="name">selectHandled</span>()</h3>
 <p>SELECT on the highlighted item: true when the type took it (ALT + SELECT).</p>
 <!-- @@@selectHandled -->
+</div>
+<div class="fnitem">
+<!-- $$$stepLeft[overload1]$$$stepLeft -->
+<h3 class="fn qml-member qml-method" translate="no" id="stepLeft-method"><span class="name">stepLeft</span>()</h3>
+<p>◀: the highlight one item back, or onto the sidebar from the grid's first column (or from an empty grid).</p>
+<!-- @@@stepLeft -->
+</div>
+<div class="fnitem">
+<!-- $$$stepRight[overload1]$$$stepRight -->
+<h3 class="fn qml-member qml-method" translate="no" id="stepRight-method"><span class="name">stepRight</span>()</h3>
+<p>▶: the highlight one item on, or from the sidebar back to the grid (its cursor shown).</p>
+<!-- @@@stepRight -->
 </div>
 <div class="fnitem">
 <!-- $$$stopPreview[overload1]$$$stopPreview -->
@@ -415,16 +481,22 @@
 <!-- @@@subtitleOf -->
 </div>
 <div class="fnitem">
+<!-- $$$takeSide[overload1]$$$takeSide -->
+<h3 class="fn qml-member qml-method" translate="no" id="takeSide-method"><span class="name">takeSide</span>(<i>index</i>)</h3>
+<p>Takes sidebar row <i translate="no">index</i> (<a href="qml-ravving-controls-choicedialog.html#sideTriggered-signal" translate="no">sideTriggered</a>()), ringing it.</p>
+<!-- @@@takeSide -->
+</div>
+<div class="fnitem">
 <!-- $$$tap[overload1]$$$tap -->
 <h3 class="fn qml-member qml-method" translate="no" id="tap-method"><span class="name">tap</span>(<i>index</i>)</h3>
-<p>A tap on cell <i translate="no">index</i>: picks it (<a href="qml-ravving-controls-choicedialog.html#tapPicks-prop" translate="no">tapPicks</a>, the first time), else chooses it.</p>
+<p>A tap on cell <i translate="no">index</i>: picks it (<a href="qml-ravving-controls-choicedialog.html#tapPicks-prop" translate="no">tapPicks</a>, the first time), else chooses it. The device's keys go back to the grid, where the finger was.</p>
 <!-- @@@tap -->
 </div>
 </article>
 </main>
 <footer class="api-footer">
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
   </div>
 </footer>
 </body>

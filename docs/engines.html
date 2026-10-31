@@ -58,9 +58,11 @@
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
 <li><a href="icon-packs.html">Make an icon pack</a></li>
+<li><a href="https://github.com/ravving/ravving_repo/blob/main/CONTRIBUTING.md">Share your own</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
+<li><a href="https://ravving.github.io/ravving_repo/">The catalog</a></li>
 </ul>
 <p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
@@ -100,7 +102,7 @@ MODS profile in <code>data/engines.json</code>.</p>
 <p>What a page lets you tweak of an engine belongs to the <strong>engine</strong>, not the machine. That's its
 SOUND MODIFIERS, the MODS cards, and its expressions, such as the lead ribbon's vibrato.</p>
 <p>There's one profile per engine in <code>data/engines.json</code>, found by the engine itself: its <code>type</code>,
-and for jalv the plugin <code>uri</code> (<code>EngineProfiles</code>). Every source that plays an engine shows its
+and for jalv the plugin <code>uri</code> (<code>EngineProfiles</code>). Its <code>name</code> heads the full MODS page. Every source that plays an engine shows its
 knobs, on any machine:</p>
 <table>
 <thead>
@@ -133,6 +135,42 @@ knobs, on any machine:</p>
 </tr>
 </tbody>
 </table>
+<h3 id="how-many-notes-an-engine-plays">How many notes an engine plays</h3>
+<p>A profile with <code>"polyphonic": true</code> plays several notes at once. Only then does the bass's or
+lead's POLY stack notes on a step (<code>Machine::polyphonic</code>, <code>MonoMachine::poly</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Profile</th>
+<th>Voices</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fluidsynth</code>, <code>tal-noisemaker</code></td>
+<td>many</td>
+<td><code>"polyphonic": true</code></td>
+</tr>
+<tr>
+<td><code>nekobi</code></td>
+<td>one</td>
+<td>no voice or polyphony port: a single 303 voice</td>
+</tr>
+<tr>
+<td><code>calf-monosynth</code></td>
+<td>one</td>
+<td>each new note takes the one voice over (its <em>Legato Mode</em> picks how)</td>
+</tr>
+<tr>
+<td>any other</td>
+<td>one</td>
+<td>nobody checked it yet</td>
+</tr>
+</tbody>
+</table>
+<p>With a one-voice engine playing, POLY can't be turned on. A pattern that has it keeps its
+stacked notes silent until a polyphonic sound plays again.</p>
 <h3 id="how-the-knobs-behave">How the knobs behave</h3>
 <ul>
 <li><strong>A source starts its knobs where its own <code>engine.controls</code> put those ports</strong>, so loading a
@@ -143,11 +181,78 @@ knobs, on any machine:</p>
   <code>sound/…</code>, <code>source/…</code> and <code>sources/&lt;source&gt;/…</code>.</li>
 <li id="an-engine-with-no-profile-shows-no-mods"><strong>An engine with no profile shows no MODS.</strong> A machine or a source that brings its own <code>sound</code>
   in kits.json keeps it (a special case; the profile is the rule).</li>
+<li><strong>Each knob reads in the engine's unit:</strong> Hz, ms, dB, semitones, cents, or a percent of its
+  travel when it has no readout. The readout follows the engine's own law, so a TAL CUTOFF
+  shows the frequency the filter really sits at.</li>
+</ul>
+<h3 id="a-knobs-fields">A knob's fields</h3>
+<p>A knob is stored as 0..1; its fields say what that sets on the engine and how it reads.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>symbol</code>, <code>min</code>, <code>max</code></td>
+<td>the port, and the engine values at 0 and 1 (<code>max</code> under <code>min</code> runs the port backwards)</td>
+</tr>
+<tr>
+<td><code>default</code></td>
+<td>where the knob starts, 0..1; <code>start</code> says the same in engine units</td>
+</tr>
+<tr>
+<td><code>curve</code></td>
+<td><code>"log"</code> (an even ratio per turn) or <code>"pow"</code> with <code>power</code> (k^power); linear without it</td>
+</tr>
+<tr>
+<td><code>map</code>, <code>unmap</code></td>
+<td>an expression of <code>k</code> (0..1) giving the engine value, and its inverse of <code>v</code>, for a law no curve fits</td>
+</tr>
+<tr>
+<td><code>step</code></td>
+<td>the engine value lands on whole steps (a TUNE in semitones)</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td><code>"dial"</code> (the default), <code>"slider"</code>, or <code>"switch"</code> (OFF at <code>min</code>, ON at <code>max</code>)</td>
+</tr>
+<tr>
+<td><code>choices</code></td>
+<td>named positions, each <code>{label, value}</code> or <code>{label, controls}</code></td>
+</tr>
+<tr>
+<td><code>readout</code></td>
+<td><code>{unit, value, decimals, signed}</code>: <code>value</code> turns the engine value <code>v</code> into the unit's</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Readouts are formatted alike:</strong> Hz and ms switch to kHz and s at 1000; percents, cents
+  and degrees are whole numbers. A signed readout shows "+" and "−".</li>
+<li><strong>Shared formulas</strong> live in the top-level <code>functions</code> (TAL's envelope and cutoff laws,
+  Nekobi's decay). Every expression can call them.</li>
+</ul>
+<h3 id="the-full-mods-page">The full MODS page</h3>
+<p>A profile's <code>pages</code> (<code>sourcePages</code> for soundfont sources, <code>kitPages</code> for a drum kit) lists the
+groups of the full page. Each group holds up to three knobs, which the device's three knobs
+turn.</p>
+<ul>
+<li><strong>A group's knob</strong> is a reference to a MODS knob, <code>{"ref": "CARD/KNOB"}</code>, or a knob of its
+  own with the fields above.</li>
+<li><strong>A group's own knob drives a port no MODS knob or expression drives</strong> (TAL's WAVE sets its
+  oscillators' levels, so the page shows WAVE, not those levels). Its title is its own, apart
+  from the MODS cards' (<code>tools/check-engines.py</code> checks both).</li>
+<li id="a-pages-own-knob-is-sent-only-once-its-set"><strong>A page's own knob is sent only once it's set.</strong> Until then the engine keeps what the
+  sound put there. A project without it sends its <code>start</code> again, so the next sound starts
+  clean.</li>
 </ul>
 <h3 id="checked-against-the-engines-real-ports-twice">Checked against the engines' real ports, twice</h3>
 <ul>
 <li><strong>On the laptop,</strong> <code>tools/check-engines.py</code> (<code>ctest -R engines</code>) checks every knob, choice,
-  expression and kits.json control against the plugins' ports, ranges included, from
+  expression, page and kits.json control against the plugins' ports, ranges included, from
   <code>tests/data/lv2-ports.json</code>. After adding an engine or upgrading plugins, run
   <code>tools/check-engines.py --refresh</code> to read them again from the device's <code>lv2info</code>.</li>
 <li><strong>On the device,</strong> <code>SoundEngine::hasControl()</code> checks the playing source's MODS when an
@@ -156,8 +261,9 @@ knobs, on any machine:</p>
 </ul>
 <p><strong>Adding an engine's MODS:</strong></p>
 <ol>
-<li>Add its profile to <code>data/engines.json</code>. The cards are as SoundControls reads them: <code>symbol</code>,
-   <code>min</code>, <code>max</code>, <code>default</code> 0..1, <code>"curve": "log"</code>, or <code>choices</code> for a switch.</li>
+<li>Add its profile to <code>data/engines.json</code>, its knobs with the fields above. Give each a
+   <code>readout</code> in the engine's unit, checked against the engine's source.</li>
+<li>Add its full page's groups (<code>pages</code>).</li>
 <li>Refresh the ports if it's a new plugin, and run <code>tools/check-engines.py</code>.</li>
 <li>Hear each knob on the device: <code>device.sh call &lt;machine&gt;.activeSound setValue CARD KNOB 0..1</code>.</li>
 </ol>
@@ -177,7 +283,7 @@ knobs, on any machine:</p>
 </tr>
 <tr>
 <td><code>decay</code> is a <strong>rate</strong>: higher % = shorter (τ 2.3 s at 0 %, 42 ms at 100 %)</td>
-<td>DECAY runs 100 → 0, so turning it up lengthens notes</td>
+<td>DECAY turns evenly through the time τ (a log of it), so turning it up lengthens notes; it reads τ in ms</td>
 </tr>
 <tr>
 <td>accent is velocity <strong>&gt; 90</strong> (forced short decay, filter "wow" from resonance)</td>
@@ -217,7 +323,7 @@ knobs, on any machine:</p>
 </tr>
 <tr>
 <td><code>lfo1amount</code> is bipolar and cubic: <code>(2(v − 0.5))³</code>, 0.5 = none</td>
-<td>LFO knob spans 0.5 … 1</td>
+<td>LFO knob spans 0.5 … 1 on a cube root, so the depth grows evenly; it reads the depth in %</td>
 </tr>
 <tr>
 <td><code>lfo1rate</code> = <code>(e^(0.2 + 3v·ln20) − 1) / 19</code> Hz</td>
@@ -261,8 +367,8 @@ knobs, on any machine:</p>
 <td>LENGTH drives <code>adsr2_r</code>; <code>adsr2_s</code> 1 (a held note sustains); ENV is <code>env2cutoff</code> 0 … 4800 cents</td>
 </tr>
 <tr>
-<td>logarithmic ports: cutoff, every EG time, portamento, LFO rates</td>
-<td>CUTOFF 300 … 9000 Hz, GLIDE 1 … 400 ms, LENGTH 10 … 3000 ms with <code>"curve": "log"</code></td>
+<td>cutoff, the EG times, portamento and the LFO rates span decades (the plugin sets no log flag on them)</td>
+<td>CUTOFF 300 … 9000 Hz, GLIDE 1 … 400 ms, LENGTH 10 … 3000 ms with <code>"curve": "log"</code>; RESO 0.7 … 8 on a log curve, read in dB</td>
 </tr>
 <tr>
 <td><code>o1_wave</code> 16 waves: 0 Sawtooth, 1 Square, 3 Sine, 4 Triangle…</td>
@@ -287,8 +393,13 @@ knobs, on any machine:</p>
 one per melodic machine that plays a soundfont source. Research: <code>fluidsynth2_mod</code>.</p>
 <h3 id="several-soundfonts-in-one-process">Several soundfonts in one process</h3>
 <p>One FluidSynth holds every soundfont the machine's project sound and its sections' sounds use
-(<code>load</code>). It switches preset with <code>select</code> on the bar and never restarts. So a kit change or a
-section's soundfont sound costs no engine and no gap (FluidSynthEngine::selectPreset()).</p>
+(<code>load</code>). It keeps a preset per MIDI channel (<code>select</code>): channel 0 plays clip a's sound,
+channel 1 clip b's.</p>
+<ul>
+<li>A section's preset starts with its clip, on the bar, and the process never restarts.</li>
+<li>A kit change or a section's soundfont sound costs no engine and no gap
+  (FluidSynthEngine::selectPreset()).</li>
+</ul>
 <h3 id="what-the-facts-say">What the facts say</h3>
 <table>
 <thead>
@@ -309,6 +420,10 @@ section's soundfont sound costs no engine and no gap (FluidSynthEngine::selectPr
 <tr>
 <td>started like zynthbox-qml: <code>-g 1</code>, <code>synth.polyphony=64</code>, MMA bank select</td>
 <td>the same command line</td>
+</tr>
+<tr>
+<td>a generator's NRPN value is scaled: ×2 for the cutoff, the pitch depths and the envelope times, ×4 for the LFO rates (FluidSynth's <code>nrpn_scale</code>)</td>
+<td>each knob sends its offset divided by its generator's scale (<code>FluidSynthEngine</code>)</td>
 </tr>
 </tbody>
 </table>

@@ -58,10 +58,12 @@
 </ul>
 <p class="mono">自分で作る</p><ul>
 <li><a href="../../docs/skin-sets.html">スキンセットを作る</a></li>
-<li><a href="../../docs/icon-packs.html">Make an icon pack</a></li>
+<li><a href="../../docs/icon-packs.html">アイコンパックを作る</a></li>
+<li><a href="https://github.com/ravving/ravving_repo/blob/main/CONTRIBUTING.md">Share your own</a></li>
 </ul>
 <p class="mono">パターンパック</p><ul>
 <li><a href="packs.html">ジャンルパック</a></li>
+<li><a href="https://ravving.github.io/ravving_repo/">The catalog</a></li>
 </ul>
 <p class="mono">ravving を改造する</p><ul>
 <li><a href="../../docs/architecture.html">アーキテクチャ</a></li>
@@ -140,7 +142,15 @@
 <li>FXs、SOUND EFFECTS のチェーン;</li>
 <li>パターンエディター。</li>
 </ul>
-<p>ストリップの MODS と FXs は、その下にノブを 1 つずつ開きます:片方を開くともう片方は閉じます。</p>
+<p>ストリップの MODS と FXs は、その下にノブを開きます。一度に 1 つだけで、片方を開くともう片方は閉じます。BACK で開いている方を閉じます。</p>
+<h3 id="every-control-of-the-sound">音のすべてのコントロール</h3>
+<p>ストリップの MODS を長押しすると、ウィンドウ全体が音のコントロールになります：エンジンの回す価値のあるノブすべてが、3 つずつのグループで。上部にエンジン、音色、楽器の名前が出ます。それぞれ自分の単位（Hz、ms、dB、半音）で表示されます。</p>
+<ul>
+<li><strong>3 つのノブ</strong>で点灯中のグループを操作します。グループをタップすると点灯します。</li>
+<li><strong>◀ ▶ か大ノブ</strong>で前後のグループへ、<strong>▲ ▼</strong>で上下のグループへ移ります。</li>
+<li><strong>BACK か ✕</strong> でマシンに戻ります。その間も音楽は鳴り続けます。</li>
+</ul>
+<p>グループにはダイヤル、スライダー、スイッチ、選択肢（フィルターのタイプ、LFO の波形）があります。触っていないコントロールは音色が決めた位置のままです。回したものはプロジェクトとプリセットに MODS と同じように残ります。</p>
 <p>ソングは小節の頭で切り替わるセクションでできていて、セッション全体はプロジェクトに保存されます。</p>
 <h2 id="installing">インストール</h2>
 <p>ravving は Zynthbox Store の Apps カテゴリーから AppImage として入手します。AppImage は Zynthbox の上にセットアップページを開き、4 つの選択肢を出します：TRY IT、MAKE IT THE DEFAULT、ZYNTHBOX AT BOOT AGAIN、REMOVE RAVVING。ravving を削除しても、プロジェクト、テイク、録音は残ります。</p>
@@ -187,7 +197,7 @@
 </tr>
 <tr>
 <td>グリッドで BACK</td>
-<td>そのマシンの最後の変更を取り消す（ALT + BACK でグリッドを離れる）</td>
+<td>そのマシンの最後の変更を取り消す（ALT + BACK でグリッドを離れる）。MODS や FXs が開いていれば先に閉じる</td>
 </tr>
 <tr>
 <td>コードのページで 2</td>
@@ -226,13 +236,13 @@
 </ul>
 <p>ポインターはマウスをつないでいるときだけ表示されます。</p>
 <h3 id="bars">小節</h3>
-<p>ツールバーの + で小節を追加します（8 小節まで）。− は最後の小節を削除します。空ならすぐに、ノートがあればもう一度タップしたときに（待っている間は ? と表示）。‹ › で小節をめくれます。グリッドの ◀ ▶ でも同じです。</p>
+<p>ツールバーの + で小節を追加します（最大 8）。− は 2 回目のタップで表示中の小節を削除します（待っている間は ? と表示）。後ろの小節が繰り上がり、取り消せば戻ります。‹ › で小節をめくれます。グリッド上の ◀ ▶ でも同じです。</p>
 <h3 id="save-and-open-projects">プロジェクトの保存と読み込み</h3>
 <ul>
 <li><strong>最初の SAVE</strong> ではプロジェクト名を尋ね、画面キーボードが表示されます。
   カーソルを置きたい場所をタップし、単語を長押しすると選択できます (オレンジの点をドラッグして選択範囲を変更)。✕ をタップすると入力欄が空になります。ウィンドウはキーボードの上に移動します。</li>
 <li><strong>2 回目以降の保存</strong>は上書きです。3 秒以内に SAVE を 2 回押します（AGAIN? と確認します）。</li>
-<li><strong>SAVED</strong> は保存後に変更がないという意味で、次に編集するとボタンが戻ります。</li>
+<li><strong>保存済み</strong>は、それ以降何も変わっていないという意味です。SAVE を長押しするとバージョンを残せます（タイムライン）。</li>
 <li><strong>SAVE AS NEW</strong> は新しい名前を尋ねます。</li>
 <li><strong>名前変更</strong> で開いているプロジェクトの名前とアイコンを変えます。保存していない変更は保存されないままです。</li>
 </ul>
@@ -240,20 +250,14 @@
 <p>下の列はいつも開いているプロジェクトに働きます：新規、テンプレート、インポート、
 次に新規として保存、名前の変更、タイムライン、そして書き出しです。</p>
 <h3 id="the-timeline">タイムライン</h3>
-<p>Hold SAVE to keep a version of your project as it is now. PROJECT ▾ → TIMELINE lists the
-versions, newest first, each with its name or what changed since the one before (SAVED · DRUMS 1
-· TEMPO) and when. Changes, a tap on SAVE, opening and NEW keep nothing there.</p>
+<p>SAVE を長押しすると、今のプロジェクトのバージョンを残せます。プロジェクト ▾ → タイムラインに新しい順でバージョンが並び、それぞれ名前か前のバージョンから変わったこと（保存済み · ドラム 1 · テンポ）と日時が表示されます。変更、SAVE のタップ、開くこと、NEW では何も残りません。</p>
 <ul>
-<li><strong>Name it</strong> in NAME THIS SAVE, which a long press opens: tap a quick word or type one (Drop
-  idea); left empty, what changed names it. The name comes first in the list, as you typed it.</li>
-<li><strong>Tap a version</strong> to go back to it. If you have unsaved changes, tap it a second time to
-  confirm. The project stays open; SAVE keeps what you went back to.</li>
-<li><strong>The versions follow the project</strong>: SAVE AS takes them along (the original keeps its own),
-  RENAME keeps them, and a deleted project takes its timeline with it.</li>
-<li><strong>A long project keeps its newest 300 versions</strong>, and every named one.</li>
-<li>If a version can't be written (a full device, say), a WARNING says so and the ISSUES card
-  keeps it; the project still saves. The next one says TIMELINE · KEEPING CHANGES AGAIN.</li>
-<li><strong>Switch it off</strong> in MENU → SETTINGS → GENERAL → PROJECTS: holding SAVE then only saves.</li>
+<li>長押しで開く NAME THIS SAVE で<strong>名前を付けます</strong>。クイックワードをタップするか、自分で入力します（Drop idea）。空のままなら、変わった内容が名前になります。名前は入力したとおり、リストの先頭に表示されます。</li>
+<li><strong>バージョンをタップ</strong>するとそこに戻ります。保存していない変更があるときは、もう一度タップして確定します。プロジェクトは開いたままで、SAVE で戻った状態を保存します。</li>
+<li><strong>バージョンはプロジェクトについていきます</strong>。SAVE AS ではそのまま持っていき（元のプロジェクトも自分の分を残します）、RENAME でも残り、プロジェクトを削除するとそのタイムラインも一緒に消えます。</li>
+<li><strong>長いプロジェクトでは最新の 300 バージョン</strong>と、名前を付けたものすべてが残ります。</li>
+<li>バージョンを書き込めないとき（本体の空きがないなど）は WARNING で知らせ、ISSUES カードに残ります。プロジェクト自体は保存されます。次のバージョンでは TIMELINE · KEEPING CHANGES AGAIN と表示されます。</li>
+<li>MENU → 設定 → GENERAL → PROJECTS で<strong>オフにします</strong>。そのあとは SAVE を長押ししても保存するだけです。</li>
 </ul>
 <h3 id="a-projects-icon">プロジェクトのアイコン</h3>
 <p>プロジェクトには小さなピクセルアイコンを付けられ、プロジェクト ▾ の名前の横に表示されます。選ぶまではアイコンはありません。</p>
@@ -277,10 +281,7 @@ versions, newest first, each with its name or what changed since the one before 
 </ul>
 <p>戻らないもの：音色のノブ（MODS）、ミックス、エフェクト、プロジェクトの設定。セクションを選ぶことも 1 ステップにはなりません。詳しくは <a href="#undo-and-redo">取り消しとやり直し</a>。</p>
 <h3 id="lock-keep-a-stray-tap-from-changing-what-plays">LOCK：うっかりタップで演奏中の内容を変えない</h3>
-<p>LOCK is the padlock, the first button of every pattern toolbar: closed and lit while it's on,
-open while it's off. While it's on, the note grids don't write
-anything. Taps on cells, step keys, STEP entry, SELECT's moves and the note knobs are all
-refused, and LOCK flashes to tell you why. You can still scroll, page and listen.</p>
+<p>LOCK は南京錠のボタンで、どのパターンのツールバーでも最初にあります。オンのときは閉じて点灯し、オフのときは開いています。オンの間、ノートのグリッドには何も書き込まれません。セルのタップ、ステップキー、ステップ入力、SELECT での移動、ノートのノブはすべて受け付けられず、LOCK が光って理由を知らせます。スクロール、ページ送り、試聴はそのままできます。</p>
 <ul>
 <li><strong>PLAY</strong> で LOCK がオンになり、<strong>STOP</strong> でオフに戻ります。</li>
 <li><strong>再生中に LOCK をタップ</strong>すると編集できます。停止後もロック解除のままです。</li>
@@ -296,6 +297,20 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 <li><strong>コードのページでは</strong>、CHORDS ビューでコードを選んで 1 度ずつ動かします。NOTES ビューでは単音を選びます。伸ばしたコードは常にまとめて動きます。</li>
 <li><strong>SELECT を長押し</strong>すると全小節の音符（またはコード）をすべて選び、パターン全体を一度に動かせます。</li>
 <li><strong>SELECT をオフにする</strong>と選択が解除されます。</li>
+</ul>
+<h4 id="select-on-the-drum-grids">ドラムのグリッドで SELECT</h4>
+<p>ドラムマシン、SLOT SAMPLER、PAD SAMPLER のパターンのツールバーにも SELECT があります。点灯しているステップをタップすると、そのヒットを選びます。</p>
+<ul>
+<li><strong>◀ ▶</strong> で選んだヒットを 1 ステップ移動します。<strong>▲ ▼</strong> で上または下のサウンドの行へ移動します。</li>
+<li><strong>ALT + ◀ ▶</strong> で選んだヒットのコピーをすぐ前または後ろに置き、選択はコピーに移ります。もう一度押すとフレーズを繰り返します。</li>
+<li><strong>DELETE</strong> で選んだヒットを消します。<strong>SELECT を長押し</strong>するとすべてのヒットを選びます。</li>
+<li>パターンからはみ出す移動やコピーは何もしません。</li>
+</ul>
+<h4 id="pick-a-group-or-one-note">グループか、ノートを 1 つ選ぶ</h4>
+<ul>
+<li><strong>グループを囲む：</strong>トランスポートを止めた状態で、どのグリッドでも空いている場所を長押しして、そのままドラッグします。指に合わせて枠が広がります。指を離すと、枠に触れたノートがすべて選ばれ、SELECT がオンになります。</li>
+<li><strong>ノートを長押し</strong>すると（コードでもドラムのヒットでも）それを選び、SELECT がオンになります。ノートの長さを変えるには、SELECT がオンの状態でノブ 1 を使います。</li>
+<li>SELECT がオンのとき、<strong>空いている場所をタップ</strong>すると選択を外し、SELECT がオフになります。</li>
 </ul>
 <h3 id="shape-a-single-note">1 つの音符を形づくる</h3>
 <p>ベースとリードでは SELECT で音符を選び、ノブ 1–3 を回してまとめて変えます。グリッド右上の表示に、最初に選んだ音符の値がノブのバッジ付きで出ます。</p>
@@ -330,12 +345,31 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 </tbody>
 </table>
 <ul>
-<li>セルの長押しでも音符の長さを設定できます。</li>
 <li>ACCENT レーンのセルはベロシティに応じて塗られ、アクセント付きは明るい赤になります。そこをタップすると今までどおりアクセントが切り替わります：フル、または通常のベロシティに戻る。</li>
 <li>Q をオフにした LIVE テイクは、ヒットごとにナッジを記録します。<strong>Q</strong> はマシンのストリップの LIVE の後ろにあります。オンならライブのヒットはグリッドに揃い、オフなら弾いたとおりに残ります。</li>
 <li>これらの設定は音符と一緒に動き、1 クリックが元に戻す 1 ステップで、プロジェクトと保存したパターンプリセットに残ります。</li>
 </ul>
 <p>大ノブは音量のままで、フォーカスのあるダイヤルのグループは自分のノブを持ち続けます。</p>
+<h3 id="hold-a-note-longer">ノートを長く伸ばす</h3>
+<p>ベース、リード、コードの NOTES ビューでは：</p>
+<ul>
+<li><strong>セルを長押し</strong>すると、その行で手前にあるノートがそのセルまで伸びます。間のステップで何が鳴っていても伸ばしたままです。</li>
+<li><strong>ノートそのものを長押し</strong>すると、1 ステップの長さに戻ります。</li>
+<li><strong>SELECT がオンなら、</strong>ノブ 1 で選んだノートの LENGTH を同じように設定します。</li>
+<li><strong>LIVE のテイク（●）</strong>では、パッドや MIDI キーボードで各キーを押さえていた長さが残ります。ベースとリードではそれがノートの長さになります。コードでは、その間に弾いたほかの音の下で、コードやノートがステップをまたいで伸びます。</li>
+<li>ステップ内で離したキーは 1 ステップの長さのままです。</li>
+<li>伸ばしたコードのノートはベースと同じように表示されます。ノートの始まりは塗りつぶしのセル、続いている間は薄いセルです。</li>
+</ul>
+<h3 id="poly-more-than-one-note-on-a-step">POLY：1 ステップに複数のノート</h3>
+<p>ベースとリードでは、パターンのツールバーの <strong>POLY</strong> で 1 つのステップに複数のノートを、それぞれ別の長さで鳴らせます。セルをタップしてノートを足したり消したりし、ノートの先を長押しすると伸ばせます。コードの NOTES ビューと同じです。ノートは重なってもよく、SELECT、ノブ、LIVE のテイクはノートごとに働きます。</p>
+<ul>
+<li>POLY には同時に複数の音を鳴らせるサウンド、つまりサウンドフォントの楽器が必要です。ベース自身のシンセと Calf Monosynth は一度に 1 音しか鳴らないので、それらでは POLY はオフのままです。</li>
+<li>POLY がオンのままそれらに切り替えると、ツールバーに <strong>ONE VOICE</strong> と表示されます。追加のノートは薄く無音のまま残り、サウンドフォントに戻すとまた鳴ります。</li>
+<li>ステップの最初のノートを消すと、残りのノートのうち一番低いものがその代わりになります。</li>
+<li>POLY をオフにすると追加のノートが消え、1 ステップに 1 つになります。元に戻すで復活します。</li>
+<li>リードでは、POLY で鳴らしている間リボンを 2 本の指で弾けます。2 音同時に鳴り、LIVE のテイクは両方を録音します。ビブラートはサウンドに 1 つだけで、一番上まで動かした指のものになります。</li>
+<li>POLY とそのノートは、プロジェクトにも保存したパターンのプリセットにも残ります。</li>
+</ul>
 <h3 id="shape-a-chord-length-velocity-nudge-strum">コードを形づくる:長さ、ベロシティ、ナッジ、ストラム</h3>
 <p>コードの CHORDS ビューで SELECT を使ってコードを選びます(伸ばしたコードは 1 つとして選ばれます)。ノブ 1–3 と
 大ノブでまとめて変えられ、同じ表示に最初のコードの値が出ます。</p>
@@ -385,6 +419,60 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
   名前から始まります。</li>
 <li>プロジェクトと、保存したパターンプリセットに残ります。</li>
 </ul>
+<h3 id="shape-a-drum-hit">ドラムのヒットを作り込む</h3>
+<p>ドラムマシンと 2 つのサンプラーでは、SELECT でヒットを選び、ノブを回してまとめて変えます。グリッド右上の表示に、最初に選んだヒットの値が出ます。タップすると 2 つのページを切り替えます。</p>
+<table>
+<thead>
+<tr>
+<th>ページ</th>
+<th>ノブ</th>
+<th>設定</th>
+<th>範囲</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1/2</td>
+<td>1</td>
+<td><strong>CHANCE</strong>、ヒットが毎回鳴る確率</td>
+<td>5–100 %</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>2</td>
+<td><strong>RATCHET</strong>、ステップ内の繰り返し</td>
+<td>1–4</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>3</td>
+<td><strong>PLAY ON</strong>、何周目で鳴るか</td>
+<td>ALL、FIRST、1:2 … 4:4</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>大</td>
+<td><strong>DECAY</strong>、繰り返すごとにどれだけ弱くなるか</td>
+<td>0–90 %</td>
+</tr>
+<tr>
+<td>2/2</td>
+<td>1</td>
+<td><strong>VELOCITY</strong>、行とアクセントで決まる強さに対する割合</td>
+<td>5–100 %</td>
+</tr>
+<tr>
+<td>2/2</td>
+<td>2</td>
+<td><strong>NUDGE</strong>、前か後ろへのずれ</td>
+<td>前後に半ステップ</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>PAD SAMPLER には NUDGE はありません。</li>
+<li>設定はヒットと一緒に移動・コピーされ、プロジェクトに保存されます。</li>
+</ul>
 <h3 id="slots-write-with-whole-chords">SLOTS：コード単位で書く</h3>
 <p>コードのページでは、SLOTS でコードを 1 つずつ組み立てられます：</p>
 <ol>
@@ -417,10 +505,8 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 <h3 id="live-fx">LIVE FX</h3>
 <p>演奏中にミックス全体を変える 30 個のパッドで、2 つのバンク：MAIN と MORE。</p>
 <ul>
-<li><strong>The pads:</strong> the header shows the section keys at first; long-press the project plate (or
-  ALT + MODE) to bring the pads there. Then a bank's first eight sit in the header, and the other
-  eight take the instruments' place while you hold ALT, with the banks' names beside them.</li>
-<li><strong>On the SONG page</strong> all sixteen show by themselves while the music plays.</li>
+<li><strong>パッド：</strong>最初はヘッダーにセクションキーが表示されます。プロジェクトのプレートを長押し（または ALT + MODE）すると、そこにパッドが出ます。するとバンクの最初の 8 つがヘッダーに並び、ALT を押している間は残りの 8 つが楽器の位置に、バンク名と一緒に表示されます。</li>
+<li><strong>ソング ページ</strong>では、音楽が鳴っている間 16 個すべてが自動で表示されます。</li>
 <li><strong>バンク：</strong>ALT を押しながら名前をタップするか、ALT + ▼ で次のバンクへ。</li>
 <li><strong>キー：</strong>ALT を押しながらステップキーを押します。1–8 はヘッダーのパッド、9–16 は残りの 8 個。キーを押している間そのパッドは押された表示になります。</li>
 <li><strong>自分だけの MAIN：</strong>MENU → SETTINGS → LIVE FX で MAIN に入るパッドを選べます。ヘッダーの 8 つと、ALT で出る 8 つです。外したパッドはすべて MORE に入ります。</li>
@@ -553,6 +639,54 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 <h3 id="record-the-whole-mix">ミックス全体を録音</h3>
 <p><strong>ALT + ●</strong> で、どのページからでもスピーカーから出ている音をすべて WAV として録音に保存します。RECORD のライトが赤くなります。もう一度 <strong>ALT + ●</strong> で停止。ファイルはミュージックプレーヤーにあります。</p>
 <p>録音は一度に 1 つだけです。これが動いている間、レコーダーではテイクを録れません。</p>
+<p>どの録音を使うか：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>録音するもの</th>
+<th>LIVE FX</th>
+<th>マイク</th>
+<th>開始と停止</th>
+<th>保存先</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ALT + ●</strong></td>
+<td>スピーカーから鳴る音すべてを、演奏しながら</td>
+<td>あり</td>
+<td>レコーダーの MONITOR で鳴らしているときだけ</td>
+<td>ALT + ●、もう一度で停止</td>
+<td>自分の録音として、ミュージックプレーヤーに</td>
+</tr>
+<tr>
+<td><strong>EXPORT</strong></td>
+<td>プロジェクトを最初の拍から、選んだ小節数だけ</td>
+<td>あり（再生中にパッドを押した場合）</td>
+<td>レコーダーの MONITOR で鳴らしているときだけ</td>
+<td>EXPORT TRACK。自動で止まります</td>
+<td>書き出しとして、ジャケット付きで</td>
+</tr>
+<tr>
+<td><strong>ライブ録音、AUDIO ONLY</strong></td>
+<td>スピーカーから鳴る音すべてを、演奏しながら</td>
+<td>あり</td>
+<td>MIC を入れた場合</td>
+<td>ライブ録音 → START、STOP で停止</td>
+<td>書き出しとして、トラック の中に</td>
+</tr>
+<tr>
+<td><strong>レコーダー</strong></td>
+<td>入力だけ：マイク、ギター、ライン</td>
+<td>なし</td>
+<td>マイクそのもの</td>
+<td>● REC</td>
+<td>SAMPLES または トラック（KEEP TAKES IN）</td>
+</tr>
+</tbody>
+</table>
+<p>演奏したパッドごとライブセットを残すなら、ALT + ● かライブ録音を使います。声も入れられるのはライブ録音です。</p>
 <h3 id="the-mixer">ミキサー</h3>
 <p><strong>✱</strong> で MIXER が開きます:すべての楽器が横並びに、それぞれ縦のストリップで。
 ✱ か BACK で戻り、数字キーでそのページへ。各ストリップは上から:</p>
@@ -716,7 +850,7 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 <p>ドラムマシンのキット選択には ACOUSTIC グループもあります。FluidR3 サウンドフォントの General MIDI キットです：<strong>Jazz</strong> と <strong>Brush</strong>（ライドとハイハットのフットを行に入れたもの、またはクラッシュ入り）、<strong>Standard</strong>、<strong>Room</strong>。</p>
 <p>ジャズらしく聴かせるコツがあと 2 つ：</p>
 <ul>
-<li>ベースやリードの音符は 1 ステップより長くできます。セルを長押しすると、その行の音符がそこまで伸びます。</li>
+<li>ベースやリードのノートは 1 ステップより長くできます。空いているセルを長押しすると、その行で手前にあるノートがそこまで伸びます。ノートを選んでノブ 1 を回しても変えられます。</li>
 <li>ヘッダーのスウィングのラベルをタップすると、8 分（SWING 8）と 16 分（SWING 16）を切り替えます。</li>
 </ul>
 <h3 id="pads-and-textures-on-chords">CHORDS のパッドとテクスチャ</h3>
@@ -727,7 +861,14 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 <li><strong>Alien</strong>（「Ambients &amp; Drones」のフォントから）：The Thing、Strange voices、Crystal voice、Glassy、Winds、Chaos、The Pulse。</li>
 </ul>
 <p>伸ばして重ねるポリフォニックなマシンに合います：ボイシングが続く間コードが鳴り続け、キーがベースやリードと音程をそろえます。</p>
-<p>音色の選択画面は GROUP チップでリストをまとめ、★ でお気に入り（星か ALT + SELECT）、SORT で一覧順か A–Z。グループと並び順は楽器ごとに記憶されます。</p>
+<p>サウンドの選択画面では、左側にグループが並び、それぞれにいくつのサウンドがあるかが表示されます：</p>
+<ul>
+<li>ALL、次に ★ FAVOURITES（星印か ALT + SELECT）、そのあとにグループごとの行。多いときはスクロールします。</li>
+<li>SORT（リスト順か A–Z）は、その列の一番下にあります。</li>
+<li>残りのスペースはサウンドのグリッドです。</li>
+</ul>
+<p>グループと並び順は楽器ごとに記憶されます。</p>
+<p>キーでは：グリッドの最初の列で <strong>◀</strong> を押すとグループへ移り、<strong>▲ ▼</strong> か大ノブで移動し、<strong>SELECT</strong> で枠の付いたグループを表示し、<strong>▶</strong> でサウンドに戻ります。ダイアログのどこにいても、ノブ 1 でグループ、ノブ 2 で並び順を変えられます。</p>
 <h3 id="hear-a-sound-before-you-choose-it">選ぶ前に音色を聴く</h3>
 <p>サウンド選択画面の上の列の最後にある <strong>PREVIEW</strong> で、選ぶ前に聴けます:</p>
 <ul>
@@ -739,20 +880,16 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 <li><strong>シンセ自身の音色</strong>と MY SOUNDS は選ぶと聴けます。</li>
 <li>PREVIEW は最後の状態のままです。</li>
 </ul>
-<p>チップの行は FILTERS 見出しの下にたためて、リストが広く使えます。たたむと見出しに今の設定が表示され、開いていたかどうかを覚えています。</p>
 <h3 id="soundfonts-from-a-usb-stick-or-online">USB メモリやオンラインのサウンドフォント</h3>
-<p>The sound pickers and the drums' kit picker have a <strong>SOURCE</strong> row, as the presets dialog does:</p>
+<p>サウンドの選択画面とドラムのキット選択には、プリセットダイアログと同じく <strong>SOURCE</strong> の行があります：</p>
 <ul>
-<li><strong>DEVICE:</strong> the sounds and kits the device has.</li>
-<li><strong>ONLINE:</strong> the GET MORE catalog's soundfonts.</li>
+<li><strong>DEVICE：</strong>本体にあるサウンドとキット。</li>
+<li><strong>ONLINE：</strong>GET MORE のカタログにあるサウンドフォント。</li>
 <li>
-<p><strong>USB:</strong> one for each stick plugged in, with the .sf2 and .sf3 files in its
-  <code>ravving/soundfonts</code> folder.</p>
+<p><strong>USB：</strong>挿したメモリーごとに 1 つ。その <code>ravving/soundfonts</code> フォルダーにある .sf2 と .sf3 ファイルが並びます。</p>
 </li>
 <li>
-<p><strong>Off the device</strong> the list shows what each soundfont holds, grouped by its name: its sounds in
-  the CHORDS, BASS and LEAD pickers, its drum kits in the kit picker. A font that is a kit as a
-  whole, or a General MIDI font's drum kits, show only as kits.</p>
+<p><strong>デバイス以外のソース</strong>では、各サウンドフォントの中身が名前ごとにまとまって表示されます：音色は CHORDS・BASS・LEAD の選択画面に、ドラムキットはキット選択画面に。フォント全体がキットのものや、General MIDI フォントのドラムキットは、キットとしてだけ表示されます。</p>
 </li>
 <li><strong>ひとつ選ぶ</strong>と、まず USB メモリから読み込まれ（またはダウンロードされ）ます。選択画面に進み具合が表示され、終わると音が鳴って選択画面が閉じます。デバイスにすでにあるものはすぐに選ばれます。</li>
 <li id="it-doesnt-fill-your-library"><strong>ライブラリは増えません。</strong>こうして選んだサウンドフォントはキャッシュから鳴ります。それを使うプロジェクトを SAVE すると、ライブラリにコピーされ、プロジェクトに残ります。試しただけのものは次の起動時に消えます。</li>
@@ -761,12 +898,7 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 <h3 id="pattern-presets-with-their-sound">音色付きのパターンプリセット</h3>
 <p>パターンツールバーの PRESET を開きます。SAVE CURRENT AS NEW は、パターンとマシンの音色（ソースまたはファクトリーサウンドと MODS）を一緒に保存します。ドラムではキットとキットの MODS を保存します。</p>
 <aside class="aru-tip"><span class="aru" data-mood="hiphop" data-species="octopus"></span><p>パックごとに独自のグルーヴと、そのために作られた音色が付いてくる。</p></aside>
-<p>保存するときは 2 つのスイッチで中身を決めます。ダイアログを開くたびに両方オンになっています：</p>
-<ul>
-<li><strong>WITH ITS SOUND：</strong>鳴っているソースまたはキット。</li>
-<li><strong>WITH ITS MODS：</strong>設定した MODS。誰も回していないノブは含まれません。</li>
-</ul>
-<p>両方オフなら、パターンだけを保存します。</p>
+<p>今聞こえているサウンドを保存します。独自のサウンドを持つセクションでは、そのセクションのサウンドと MODS です。誰も回していないノブは含まれません。プリセットを読み込むとき、パターンと一緒に何を戻すかを選べます。</p>
 <p>音色付きのプリセットは、ジャンルの下に ♪ と音色名が、MODS があれば「+ MODS」が表示されます。</p>
 <h3 id="loading-a-preset">プリセットを読み込む</h3>
 <p>マシンのツールバーのプリセットボタンには、読み込んだプリセットが表示されます。変更すると •、
@@ -777,16 +909,17 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 <li><strong>WITH ITS MODS</strong>（初期値はオフ）は、プリセットの MODS のうち指定された部分だけを設定します。MODS のないプリセットはあなたの設定をそのままにします。</li>
 <li><strong>WITH ITS BARS</strong>（初期値はオン）は、プリセット自身の小節数を持ち込みます。オフなら、プリセットを最初の小節からいまの小節数に重ねます：短いプリセットは繰り返し、長いものは切ります。</li>
 </ul>
-<p>SOUND をオンにすると MODS もオンになります。音色は MODS と一緒に聴くものだからです。そのあと MODS だけをオフにもできます。MODS だけオンなら、プリセットの MODS をいま鳴っている音色に適用します。すべてオフならパターンだけを読み込みます。選択は記憶されます。</p>
+<p>すべてオフにすると、パターンだけが読み込まれます。選んだ内容は記憶されます。</p>
+<h3 id="sound-and-mods-together">サウンドと MODS はセットで</h3>
+<p>MODS は、それを設定したサウンドと一緒にしか読み込まれません。MODS をオンにすると SOUND もオンになり、SOUND をオフにすると MODS もオフになります。サウンドは MODS と一緒に鳴るものなので、SOUND をオンにすると MODS もオンになります。今の MODS を残すには、MODS をもう一度オフにします。</p>
 <p>SOUND と MODS はハイライトされたプリセットに従います：音色のないプリセットでは WITH ITS SOUND が、MODS のないプリセットでは WITH ITS MODS が薄くなり、それを持つプリセットでまた点灯します。</p>
 <h3 id="what-a-presets-sound-keeps">プリセットの音色に含まれるもの</h3>
 <p>本体にプリセットのソースやキットがなければ、音色のその部分はそのままです。サンプラーのプリセットは音色を持ちません。音はバンクの中にあるからです。ravving 付属のプリセットも音色を持ちません。USB メモリーにコピーしたプリセットは、ファイルの中に音色を持っています。</p>
 <h3 id="finding-presets">プリセットを探す</h3>
 <p>プリセットダイアログは音色の選択画面と同じように使えます：</p>
 <ul>
-<li><strong>ジャンルごとの GROUP チップ</strong>と、SORT：一覧順か A–Z。</li>
+<li>左側に<strong>ジャンルごとのグループ</strong>が並び、その下に SORT （掲載順か A–Z）があります。ソースとプリセットが持ち込む内容は、プリセットの上の行に残ります。</li>
 <li><strong>★ お気に入り：</strong>プリセットを長押しするか、角の ★ をタップするか、ALT + SELECT。お気に入りは楽器ごとにプリセット名で記憶されるので、USB メモリーのプリセットと本体にコピーした同じプリセットは ★ を共有します。</li>
-<li><strong>FILTERS</strong> で SOURCE、LOAD、GROUP、SORT の行をたためます。サウンドの選択と同じです。</li>
 <li><strong>USB メモリーでは、</strong>SAVE CURRENT AS NEW でパターンをそこに書き込み、DELETE でメモリーのファイルを削除（2 回タップ）、SEND… では THIS DEVICE も選べ、プリセットを本体にコピーします。</li>
 <li><strong>GET MORE…</strong> でカタログが PATTERNS で開き、この楽器のものが先頭に(下の GET MORE を参照)。</li>
 </ul>
@@ -873,8 +1006,8 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 </tr>
 <tr>
 <td>ICON PACKS</td>
-<td>a drawing for every icon ravving shows</td>
-<td>SETTINGS → LOOK → ICONS</td>
+<td>ravving が表示するすべてのアイコンの絵</td>
+<td>設定 → LOOK → ICONS</td>
 </tr>
 <tr>
 <td>SOUNDFONTS</td>
@@ -898,9 +1031,10 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
   それぞれ GET MORE… ボタンがあり、その種類でカタログが開きます。</li>
 <li>リストはダイアログを開いたときに取得され、本体に保存されます。ネットワークがないときは
   前回のリストが注記付きで表示されます。REFRESH で取得し直します。</li>
-<li>すべて GitHub の <a href="https://github.com/ravving/ravving_repo" rel="noopener" target="_blank">ravving_repo</a> から届きます。
-  誰でも投稿できます。本体はそこからしかダウンロードしません。</li>
+<li>スマートフォンやパソコンで見るには、<a href="https://ravving.github.io/ravving_repo/" rel="noopener" target="_blank">カタログのページ</a>を開きます。こちらにも FIND があり、各項目をダウンロードできます。</li>
 </ul>
+<h4 id="where-it-comes-from">提供元</h4>
+<p>すべては GitHub の <a href="https://github.com/ravving/ravving_repo" rel="noopener" target="_blank">ravving_repo</a> から届きます。誰でも参加でき、手順は<a href="https://github.com/ravving/ravving_repo/blob/main/CONTRIBUTING.md" rel="noopener" target="_blank">コントリビューターガイド</a>にあります。本体がダウンロードするのはそこからだけです。</p>
 <p>本体のキーで:◀ ▶ で種類、▲ ▼ で項目、SELECT で入手または更新(持っている項目では、
 もう一度 SELECT で削除)、BACK で閉じます。</p>
 <h2 id="sections-and-the-song">セクションとソング</h2>
@@ -916,15 +1050,21 @@ refused, and LOCK flashes to tell you why. You can still scroll, page and listen
 </ul>
 <h3 id="when-a-sections-sound-is-heard">セクションの音が鳴るタイミング</h3>
 <ul>
+<li><strong>切り替え</strong>は、セクションのほかの部分と一緒に小節線で起こります。前のサウンドでまだ鳴っている音はリリースまで鳴り切り、小節をまたいで押さえている音はそこで止まります。</li>
+<li><strong>ライブで弾く音</strong>は小節の直前の 16 分音符から新しいサウンドになり、セクションの MODS もそこで切り替わります。</li>
 <li>
-<p><strong>切り替え</strong>はセクションのほかの部分と一緒に小節線で起こります。前の音でまだ鳴っている音はリリースまで鳴り、小節線をまたいで押さえている音はそこで終わります。止まったり起動したりするものはありません。セクションに必要なエンジンは音を選んだ時点で起動します。</p>
+<p><strong>止まって再開することはありません：</strong>セクションに必要なエンジンは、そのサウンドを選んだ時点で起動します。</p>
 </li>
 <li>
 <p><strong>WITH ITS SOUND で読み込んだプリセット</strong>は、プロジェクトにセクションが 2 つ以上あれば、その音を表示中のセクションに付けます。パターンもそのセクションのものだからです。ほかのセクションはそれぞれの音のままです。セクションが 1 つならプロジェクトの音になります。</p>
 </li>
 </ul>
 <h3 id="what-a-sections-sound-can-be">セクションの音にできるもの</h3>
-<p>サウンドフォントの楽器、マシン自身のシンセ、ドラムではキット。シンセのファクトリーサウンドと MODS はすべてプロジェクトのもので、どのセクションでも同じです。セクションの音もほかの選択と同じように取り消せます。</p>
+<p>サウンドフォント楽器、マシン自身のシンセ、ドラムならキット。セクションのサウンドも、ほかの選択と同じように元に戻せます。</p>
+<ul>
+<li id="its-mods-come-with-it"><strong>MODS も一緒です。</strong>独自のサウンドを持つセクションが画面にある間に MODS を回すと、それはそのセクションの MODS になります。Rhodes をヴァースでは暗く、ブリッジでは明るくできます。新しく独自のサウンドを付けると、プロジェクトの MODS から始まります。</li>
+<li><strong>それ以外はプロジェクトのまま：</strong>プロジェクトのサウンドを使うセクションはその MODS を共有し、シンセのファクトリーサウンドはどのセクションでも同じです。</li>
+</ul>
 <h3 id="engine-channels">エンジンチャンネル</h3>
 <p>ジャムには 15 のエンジンチャンネルがあり、各マシンのエンジンが最初から 1 つずつ使うので、空きは 9 つです。</p>
 <ul>
@@ -977,13 +1117,13 @@ MODE 単独では今まで通り入力モードを切り替えます。</p>
 <li><strong>＋</strong> はストリップの最後に固定されています。</li>
 <li>セクションキーが出ている間は、<strong>ALT + ステップキー</strong> でセクション 1〜16 を選びます。ALT を押しても楽器はそのままです。LIVE FX のパッド 9〜16 は、ヘッダーにパッドがあるときだけ出ます。</li>
 </ul>
-<h3 id="the-song-page-while-it-plays">The SONG page while it plays</h3>
-<p>The page has the sections already, so the header shows all the LIVE FX pads instead:</p>
+<h3 id="the-song-page-while-it-plays">再生中の ソング ページ</h3>
+<p>このページにはすでにセクションがあるので、ヘッダーには代わりに LIVE FX のパッドがすべて表示されます：</p>
 <ul>
-<li><strong>The first eight</strong> sit where the section keys were.</li>
-<li><strong>The other eight</strong> and the banks take the instruments' place, without ALT.</li>
-<li><strong>ALT + step keys</strong> play the pads.</li>
-<li><strong>Stop the music</strong> or leave the page, and the section keys come back.</li>
+<li><strong>最初の 8 つ</strong>は、セクションキーがあった場所に並びます。</li>
+<li><strong>残りの 8 つ</strong>とバンクは、ALT なしで楽器の場所に入ります。</li>
+<li><strong>ALT + ステップキー</strong>でパッドを鳴らします。</li>
+<li><strong>音楽を止める</strong>かページを離れると、セクションキーが戻ります。</li>
 </ul>
 <p>キーがヘッダーにあるときは ALT + 1–16 でセクション 1–16 を選びます。ヘッダーのセクショングループにフォーカスがある間（◀ ▶ で移動）は、ステップキーだけで選べます。</p>
 <h3 id="the-song-page">ソングページ</h3>
@@ -992,10 +1132,10 @@ MODE 単独では今まで通り入力モードを切り替えます。</p>
 <ul>
 <li><strong>タップ</strong>でセクションを選び、<strong>ダブルタップ</strong>で名前を変え、<strong>長押ししてドラッグ</strong>で移動。</li>
 <li><strong>×</strong> は 2 回目のタップで削除します。</li>
-<li><strong>＋</strong> で画面のセクションをコピー（A が A′ になります）。</li>
+<li><strong>＋</strong>で画面のセクションをコピーし、続きの番号を付けます（A は A 2、次に A 3）。</li>
 </ul>
-<p>新しいセクションは、空（NEW）でもコピー（＋）でも、ソングの最後に加わり画面に表示されます。</p>
-<p>セクションの上の列には RENAME、NEW（空のセクション）、COLOUR、LENGTH（1–8 小節、または最長パターンに合わせる AUTO）、MOVE、ADD TO SONG があります。</p>
+<p>新しいセクション（＋、画面のセクションのコピー）はソングの最後に加わり、画面に表示されます。</p>
+<p>セクションの上の行には RENAME、COLOUR、LENGTH（1–8 小節、または最長のパターンに合わせる AUTO）、MOVE、ADD TO SONG があります。</p>
 <p><strong>ソング</strong>はブロックの列で、各ブロックの幅は小節数×リピート数です。ブロックを選んで移動、リピート（×1〜×16）の設定、削除ができます。</p>
 <table>
 <thead>
@@ -1056,7 +1196,7 @@ MODE 単独では今まで通り入力モードを切り替えます。</p>
 <tbody>
 <tr>
 <td>GENERAL</td>
-<td>The LANGUAGE, the STARTUP look and the projects' TIMELINE (on or off)</td>
+<td>LANGUAGE、STARTUP 時の見た目、プロジェクトの TIMELINE（オン／オフ）</td>
 </tr>
 <tr>
 <td>KEYS</td>
@@ -1064,7 +1204,7 @@ MODE 単独では今まで通り入力モードを切り替えます。</p>
 </tr>
 <tr>
 <td>LOOK</td>
-<td>The instruments' SKINS, the ICONS, and GET MORE… for more of each</td>
+<td>楽器の SKINS、ICONS、それぞれをさらに増やす GET MORE…</td>
 </tr>
 <tr>
 <td>LIVE FX</td>
@@ -1149,16 +1289,12 @@ SETTINGS → LOOK → SKINS でほかのものをすぐ試せ、選択は再起�
   そこで REMOVE すると取り除かれます。</li>
 <li><strong>ファイルの中身:</strong> 各マシンの色、<code>drums1</code> から <code>pads</code> まで。書いていないマシンや色は ravving のものになります。ravving のもの(ソースの <code>data/skins/</code>)から始めてください。</li>
 </ul>
-<h3 id="icons">Icons</h3>
-<p>SETTINGS → LOOK → ICONS draws every icon on screen one way: CANDY, rounded solid pixels with a
-glint (the one ravving starts in); BLOCK, chunky blocks; HAIRLINE, thin lines. The icon packs
-you add show after them. The pick changes the icons at once and stays after a restart.</p>
+<h3 id="icons">アイコン</h3>
+<p>設定 → LOOK → ICONS で、画面のアイコンすべてを一つのスタイルで描きます。CANDY は光沢のある丸みを帯びた塗りのピクセル（ravving の初期設定）、BLOCK は太いブロック、HAIRLINE は細い線。追加したアイコンパックはその後に並びます。選ぶとすぐにアイコンが変わり、再起動後もそのままです。</p>
 <ul>
-<li><strong>Where they live:</strong> the library's <code>icons/</code> folder, one <code>.json</code> file each, and on a stick
-  <code>ravving/presets/icons/</code>. The USB page copies them both ways with your other presets.</li>
-<li><strong>More packs:</strong> GET MORE… under ICONS opens the catalog on its icon packs.</li>
-<li><strong>Make your own:</strong> <a href="../../docs/icon-packs.html">Make an icon pack</a> lists every icon, how to draw it and a
-  tool that builds the file. An icon a pack leaves out is drawn as CANDY draws it.</li>
+<li><strong>保存場所：</strong>ライブラリの <code>icons/</code> フォルダーに 1 つずつ <code>.json</code> ファイルとして、USB メモリでは <code>ravving/presets/icons/</code>。USB ページでほかのプリセットと一緒に双方向にコピーできます。</li>
+<li><strong>ほかのパック：</strong>ICONS の下の GET MORE… で、カタログのアイコンパックが開きます。</li>
+<li><strong>自作する：</strong><a href="../../docs/icon-packs.html">アイコンパックを作る</a>に、すべてのアイコンとその描き方、ファイルを組み立てるツールがあります。パックにないアイコンは CANDY の絵で描かれます。</li>
 </ul>
 <h3 id="your-live-fx-pads">自分の LIVE FX パッド</h3>
 <p>SETTINGS → LIVE FX には 16 のスロットが並びます。HEADER の列はヘッダーのパッド、ALT の列は ALT を押している間に出るパッドです。その下に全パッドがあります。</p>

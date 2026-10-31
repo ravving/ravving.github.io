@@ -5,7 +5,7 @@
 <!-- soundcontrols.cpp -->
   <meta name="description" content="A machine's sound controls: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's cc: and gen: controls, by symbol).">
   <meta name="keywords" content="auto-generated">
-  <title>List of All Members for SoundControls | ravving C++ API 1.0</title>
+  <title>List of All Members for SoundControls | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=e71cef1afb">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=a5dc7cd98d" defer></script>
-  <script src="search.js?v=38b3c0cac3" defer></script>
+  <script src="nav.js?v=1a5dfeadeb" defer></script>
+  <script src="search.js?v=4917e215d8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -72,18 +72,26 @@
 <li class="fn" translate="no">struct <span class="name"><b><a href="soundcontrols-card.html" translate="no">Card</a></b></span></li>
 <li class="fn" translate="no">struct <span class="name"><b><a href="soundcontrols-choice.html" translate="no">Choice</a></b></span></li>
 <li class="fn" translate="no">struct <span class="name"><b><a href="soundcontrols-knob.html" translate="no">Knob</a></b></span></li>
-<li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#SoundControls" translate="no">SoundControls</a></b></span>(const QVariantList &amp;, const QVariantMap &amp;, QObject *)</li>
+<li class="fn" translate="no">struct <span class="name"><b><a href="soundcontrols-page.html" translate="no">Page</a></b></span></li>
+<li class="fn" translate="no">struct <span class="name"><b><a href="soundcontrols-readout.html" translate="no">Readout</a></b></span></li>
+<li class="fn" translate="no">enum class <span class="name"><b><a href="soundcontrols.html#Kind-enum" translate="no">Kind</a></b></span></li>
+<li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#SoundControls" translate="no">SoundControls</a></b></span>(const QVariantList &amp;, const QVariantMap &amp;, QObject *, const QVariantList &amp;, const QVariantMap &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#adopt" translate="no">adopt</a></b></span>(const QVariantMap &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#cards-prop" translate="no">cards</a></b></span>() const : QVariantList</li>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#values-prop" translate="no">changed</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#controlChanged" translate="no">controlChanged</a></b></span>(const QString &amp;, double)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#defineFunctions" translate="no">defineFunctions</a></b></span>(const QString &amp;)</li>
 </ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#engineControls" translate="no">engineControls</a></b></span>() const : QVariantMap</li>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#has" translate="no">has</a></b></span>(const QString &amp;) const : bool</li>
+<li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#pages-prop" translate="no">pages</a></b></span>() const : QVariantList</li>
+<li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#readout" translate="no">readout</a></b></span>(const QString &amp;) const : QString</li>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#restore" translate="no">restore</a></b></span>(const QVariantMap &amp;) : QStringList</li>
+<li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#setKnob" translate="no">setKnob</a></b></span>(const QString &amp;, double)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#setValue" translate="no">setValue</a></b></span>(const QString &amp;, const QString &amp;, double)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#state" translate="no">state</a></b></span>() const : QVariantMap</li>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#symbols" translate="no">symbols</a></b></span>() const : QStringList</li>
+<li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#value" translate="no">value</a></b></span>(const QString &amp;) const : double</li>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#valueSet" translate="no">valueSet</a></b></span>(const QString &amp;, const QString &amp;, double)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="soundcontrols.html#values-prop" translate="no">values</a></b></span>() const : QVariantMap</li>
 </ul>
@@ -93,7 +101,7 @@
 </main>
 <footer class="api-footer">
   <div class="wrap">
-    <p>ravving is by Camilo Higuita, GPL-3.0-or-later. This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
   </div>
 </footer>
 </body>

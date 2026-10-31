@@ -58,9 +58,11 @@
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
 <li><a href="icon-packs.html">Make an icon pack</a></li>
+<li><a href="https://github.com/ravving/ravving_repo/blob/main/CONTRIBUTING.md">Share your own</a></li>
 </ul>
 <p class="mono">The pattern packs</p><ul>
 <li><a href="packs.html">The genre packs</a></li>
+<li><a href="https://ravving.github.io/ravving_repo/">The catalog</a></li>
 </ul>
 <p class="mono">Change ravving</p><ul>
 <li><a href="architecture.html">Architecture</a></li>
@@ -108,7 +110,8 @@ header hand-off and an external keyboard to its <code>panel</code>. <code>BassPa
 <li><strong>STEP on:</strong> ▲ ▼ walk the rows, each one heard (<code>previewSelection</code>), and SELECT writes the row
   (<code>writeSelection</code> / <code>selectionKey</code>, shared in <code>MachinePanel</code>).</li>
 <li><strong>The lead's <code>Ribbon</code></strong> (<code>showRibbon</code>): its notes take the same LIVE path. A slide starts the
-  next note before ending the last, so the engine glides, and dragging up adds vibrato.</li>
+  next note before ending the last, so the engine glides, and dragging up adds vibrato. While
+  POLY plays (<code>polyOn</code>) it takes two fingers (<code>voices</code>), each held as a key of its own.</li>
 </ul>
 <h3 id="chordmachinepanel">ChordMachinePanel</h3>
 <ul>
@@ -157,11 +160,11 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 </tr>
 <tr>
 <td><code>Session</code> (singleton)</td>
-<td>global state: key, scale, tempo, swing, transport clock, live FX, mute/solo; the views instead of the page (<code>mixView</code>, <code>songView</code>, <code>playerView</code>, one at a time); <code>sectionWaiting</code> / <code>sectionBlink</code> for a section waiting for its bar; the modal layers up (<code>overlays</code>, <code>inputBlocked</code>)</td>
+<td>global state: key, scale, tempo, swing, transport clock, live FX, mute/solo; the views instead of the page (<code>mixView</code>, <code>songView</code>, <code>playerView</code>, <code>recorderView</code>, <code>settingsView</code>, <code>modsView</code>, one at a time); <code>sectionWaiting</code> / <code>sectionBlink</code> for a section waiting for its bar; the modal layers up (<code>overlays</code>, <code>inputBlocked</code>)</td>
 </tr>
 <tr>
 <td><code>RaveHeader</code></td>
-<td>the top bar shared by all pages; the ROOT and SCALE pickers without captions; the project's name on an engraved plate between SCALE and EDIT (200 px at most, a long name loses its middle; "•" while unsaved); a faint vertical meter of the master's level beside the MASTER dial (always drawn, so the dial never moves); SAVE asks the project's name the first time (<code>NamePopup</code>) and otherwise wants a second press within three seconds (SAVE AGAIN), SAVE AS NEW always asks; PROJECT ▾ has NEW, SAVE AS NEW, EXPORT (<code>exportRequested</code> → Main.qml's <code>ExportPopup</code>), IMPORT (a <code>ChoicePopup</code> of the .ravv bundles found: <code>studio.exporter.importable()</code>, imported and opened unless the session is unsaved) and DELETE</td>
+<td>the top bar shared by all pages; the ROOT and SCALE pickers without captions; the project's name on an engraved plate between SCALE and EDIT (200 px at most, a long name loses its middle; "•" while unsaved); a faint vertical meter of the master's level beside the MASTER dial (always drawn, so the dial never moves); SAVE asks the project's name the first time (<code>NamePopup</code>) and otherwise wants a second press within three seconds (AGAIN?), held it keeps a version in the timeline (NAME THIS SAVE, when the timeline can), SAVE AS NEW always asks; PROJECT ▾ has NEW, SAVE AS NEW, EXPORT (<code>exportRequested</code> → Main.qml's <code>ExportPopup</code>), IMPORT (a <code>ChoicePopup</code> of the .ravv bundles found: <code>studio.exporter.importable()</code>, imported and opened unless the session is unsaved) and DELETE</td>
 </tr>
 <tr>
 <td><code>NamePopup</code></td>
@@ -173,7 +176,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 </tr>
 <tr>
 <td><code>WindowPage</code>, <code>HeaderPlate</code></td>
-<td>the base of a page that takes the whole window over the dashboard (the MUSIC PLAYER, the RECORDER, SETTINGS): what Main.qml asks of a page (no module or step keys), <code>closeRequested</code> / <code>menuRequested</code>, MENU and ✱ handled, a tap nothing takes stopped there; the plate in its header band saying in one line what is on</td>
+<td>the base of a page that takes the whole window over the dashboard (the MUSIC PLAYER, the RECORDER, SETTINGS, ALL MODS): what Main.qml asks of a page (no module or step keys), <code>closeRequested</code> / <code>menuRequested</code>, MENU and ✱ handled, a tap nothing takes stopped there; the plate in its header band saying in one line what is on</td>
 </tr>
 <tr>
 <td><code>SettingsPage</code></td>
@@ -212,6 +215,10 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 <td>notes × 16 steps, mono (a MonoMachine: bass, lead) or poly (a ChordMachine's NOTES view: <code>noteSets</code>, <code>toggleNote</code>), ACCENT/SLIDE lanes. Two fingers pinch to zoom (rows kept 18–56 px tall, so the range follows the scale and the height) and drag to scroll; a scroll past an octave shifts the owner's octave (<code>octaveScrolled</code>), so OCT − / + shows what is on screen. ▲ ▼ select a note row (<code>currentNote</code>; a tap or a note played live selects too) and a step key writes that note. <code>heldNotes</code> lights the rows played live; a held note without a row shows as an edge marker ("▲ G4" / "▼ E2") or, outside the scale, a lit line between its neighbours with its name Gestures: a one-finger drag scrolls the rows (DragHandler, the gesture locked to its first axis; past 8 semitones <code>octaveScrolled</code> shifts the owner's octave) or pages the bars sideways (one bar per 120 px, the content following the finger), two fingers pinch to zoom and scroll; a tap toggles a cell. The row count is set by the zoom (<code>rowCount</code>), so scrolling never resizes the rows or the ACC / SLIDE lanes (fixed 20 px)</td>
 </tr>
 <tr>
+<td><code>ModsPage</code>, <code>ModsGroup</code></td>
+<td>the full MODS page (<code>Session.modsView</code>, a long press on a machine's MODS), headed by the engine (<code>Machine.activeEngineName</code>), the sound the nameplate shows and the instrument: the sound's <code>SoundControls.pages</code> as a grid of groups of up to three, each a <code>KnobGroup</code> of dials (<code>Knob</code>), sliders (<code>Fader</code>), on/off switches (<code>KnobSwitch</code>) and choices (<code>WaveCycler</code>) reading <code>readout()</code> in the engine's units. The three knobs drive the lit group; ◀ ▶ and the big knob the group before or after, ▲ ▼ the row above or below, BACK leaves</td>
+</tr>
+<tr>
 <td><code>WaveCycler</code></td>
 <td>the wave switch: LEDs per choice, the waveform drawn (SAW SQR TRI SIN), its name; tap = next, one knob detent = one choice</td>
 </tr>
@@ -225,7 +232,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 </tr>
 <tr>
 <td><code>Ribbon</code></td>
-<td>touch ribbon over two octaves from the lead's base note, snapped to the scale; <code>note</code> and <code>vibrato</code> (drag up)</td>
+<td>touch ribbon over two octaves from the lead's base note, snapped to the scale; <code>note</code> and <code>secondNote</code> (a second finger with <code>voices</code> 2: POLY playing) and <code>vibrato</code> (drag up, the higher lift)</td>
 </tr>
 <tr>
 <td><code>KeyCap</code>, <code>Chip</code>, <code>Knob</code></td>
@@ -253,7 +260,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 </tr>
 <tr>
 <td><code>SongPage</code></td>
-<td>SONG (<code>studio.sections</code>): the StackLayout's seventh view, under the header as the MIXER (<code>Session.songView</code>, the project plate opens and closes it). SECTIONS at a finger's size: square keys wearing their number, their name under, a dot per sounding machine, the one on screen filled in its colour (blinking while it waits for the bar: <code>Session.sectionBlink</code>, its timer running only then), eight a row (the first row is ALT + step keys 9–16), ＋ a copy of the one on screen; tap picks, double tap renames (NamePopup), hold and drag moves, × deletes (second tap). A row for the section on screen: RENAME, NEW, COLOUR, LENGTH (AUTO), MOVE, ADD TO SONG. The SONG as a strip of blocks as wide as bars × repeats, a row for the block picked: MOVE, REPEATS, REMOVE. Keys: ◀ ▶ walk, ▲ ▼ between, SELECT picks, step keys pick, ALT + ◀ ▶ move, knob 1 the length, knob 2 the repeats. Idle, it draws nothing</td>
+<td>SONG (<code>studio.sections</code>): the StackLayout's seventh view, under the header as the MIXER (<code>Session.songView</code>, the project plate opens and closes it). SECTIONS at a finger's size: square keys wearing their number, their name under, a dot per sounding machine, the one on screen filled in its colour (blinking while it waits for the bar: <code>Session.sectionBlink</code>, its timer running only then), eight a row (the first row is ALT + step keys 9–16), ＋ a copy of the one on screen; tap picks, double tap renames (NamePopup), hold and drag moves, × deletes (second tap). A row for the section on screen: RENAME, COLOUR, LENGTH (AUTO), MOVE, ADD TO SONG. The SONG as a strip of blocks as wide as bars × repeats, a row for the block picked: MOVE, REPEATS, REMOVE. Keys: ◀ ▶ walk, ▲ ▼ between, SELECT picks, step keys pick, ALT + ◀ ▶ move, knob 1 the length, knob 2 the repeats. Idle, it draws nothing</td>
 </tr>
 <tr>
 <td><code>Dialog</code>, <code>DialogHeader</code></td>
@@ -261,7 +268,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 </tr>
 <tr>
 <td><code>ChoicePopup</code></td>
-<td>ravving's picker (kits, presets, samples, projects) on the kit's <code>ChoiceDialog</code> (the grid, the device's cursor, the actions, hold to preview, an <code>EmptyNote</code> for an empty grid through <code>emptyText</code>): names wrap to two lines, subtitles elide in the middle; it adds SOURCE (the presets dialog: DEVICE, ONLINE and the USB sticks), the owner's options and the organised form (groups, sort, ★ favourites kept in the profile)</td>
+<td>ravving's picker (kits, presets, samples, projects) on the kit's <code>ChoiceDialog</code> (the grid, the device's cursor, the actions, hold to preview, an <code>EmptyNote</code> for an empty grid through <code>emptyText</code>): names wrap to two lines, subtitles elide in the middle; it adds SOURCE (the presets dialog: DEVICE, ONLINE and the USB sticks) and the owner's options on a row under the header, and the organised form: GROUP (ALL, ★ FAVOURITES, each group with its count) and SORT on a sidebar down the left (ChoiceDialog's <code>sideEntries</code>: <code>SideBarItem</code> rows, the groups scrolling, SORT pinned at the foot; ◀ from the grid's first column onto it, ▲ ▼ / the big knob walk it, SELECT shows a group, ▶ back), ★ favourites kept in the profile</td>
 </tr>
 <tr>
 <td><code>StorePopup</code></td>
@@ -305,12 +312,12 @@ switching, the chord cursor.</p>
 <li><strong>The base types with behaviour of their own</strong> come from <code>Ravving.Controls</code> (<code>controls/</code>).</li>
 <li>buttons: <code>ActionButton</code>, <code>Chip</code>, <code>StripButton</code>, <code>ConfirmButton</code> and <code>SecondPress</code>,
     <code>CloseButton</code>;</li>
-<li>the knob layer: <code>Knob</code> and its <code>DialFace</code>, <code>Fader</code>, <code>LevelSlider</code>, <code>KnobGroup</code>, <code>PickUp</code>,
-    <code>KnobBadge</code>;</li>
+<li>the knob layer: <code>Knob</code> and its <code>DialFace</code>, <code>Fader</code>, <code>KnobSwitch</code>, <code>LevelSlider</code>,
+    <code>KnobGroup</code>, <code>PickUp</code>, <code>KnobBadge</code>;</li>
 <li>readouts: <code>Meter</code>, <code>KeyCap</code>, <code>Nameplate</code>, <code>Plate</code>, <code>LedDisplay</code>, <code>Toast</code>, <code>EmptyNote</code>,
     <code>ArmBar</code>, <code>Icon</code>;</li>
 <li>dialogs and their parts: <code>Dialog</code>, <code>DialogHeader</code>, <code>ChoiceDialog</code>, <code>ComboBox</code>,
-    <code>SectionHeader</code>, <code>Caption</code>;</li>
+    <code>SideBarItem</code> (a sidebar row: SETTINGS, ChoiceDialog's groups), <code>Caption</code>;</li>
 <li><code>KeyedListModel</code> (C++), the list model the lists keep their rows with.</li>
 <li><strong>The machine parts</strong> (key caps, nameplates, grids) are drawn in QML from each machine's
   skin in <code>Rave.machineSkins</code>.</li>

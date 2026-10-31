@@ -33,6 +33,7 @@
     "bass-select": { caption: "BAJO con SELECCIONAR activo: la lectura de la nota" },
     "strip-knobs": { caption: "La tira tocada: perillas 1 y 2 en PANEO y VOL" },
     "recorder": { caption: "MENU → GRABADORA" },
+    "mods": { caption: "MODS mantenido: ALL MODS" },
     "sonando": { caption: "PLAY: BLOQUEO activo, el cursor de reproducción en marcha" },
     "song": { caption: "La página CANCIÓN" }
   };
@@ -49,6 +50,7 @@
     "mixer-strip": [[0.6, 19, 98.8, 10, "la tira elegida"]],
     "menu-sliders": [[1.4, 70.5, 42.5, 16.5, "SALIDA 2 · BRILLO 1"]],
     "recorder-gain": [[1.5, 28.5, 50, 5.5, "GANANCIA"]],
+    "mods-group": [[2.5, 9.2, 23.3, 18.8, "perillas 1 2 3 en el grupo iluminado"]],
     "menu-drawer": [[0, 0, 45, 100, "el centro de control"]],
     "nameplate": [[2, 20, 7.5, 7.5, "la placa"]],
     "mixer": [[0.6, 19, 98.8, 80, "el MEZCLADOR"]],
