@@ -95,11 +95,11 @@
 <p class="doc-blurb">What ravving wires in PipeWire&#x27;s JACK graph and the tools to look at it.</p>
 
 <p>What ravving wires, how to look at it and how to measure it. The
-graph is PipeWire's, seen by libzynthbox and the engines through PipeWire's JACK library
+graph is PipeWire's, seen by libravving and the engines through PipeWire's JACK library
 (<code>pw-jack</code>), as zynthbox-qml also uses it. <code>tools/graph-check.py</code> (run with <code>tools/device.sh
 graph …</code>) does the checks below in one go.</p>
 <h2 id="the-graph-ravving-makes">The graph ravving makes</h2>
-<p><code>JackWiring</code> (src/backend/jackwiring.*) asks libzynthbox's JackConnectionHandler for every
+<p><code>JackWiring</code> (src/backend/jackwiring.*) asks libravving's JackConnectionHandler for every
 link and retries until the ports exist (engines and passthroughs make their ports a moment
 after they are requested). Per machine (z: its Zynthian channel, t: its sketchpad track):</p>
 <pre><code>ZLRouter:Zynthian-Channel{z} ─MIDI─&gt; ravving-&lt;key&gt;-midi:midi_00          (FluidSynth)
@@ -122,7 +122,7 @@ jacks 4/5 (the HiFiBerry's capture, HardwarePorts) ──&gt; [input inserts] �
 </code></pre>
 <p>The link PipeWire makes on its own from every new engine to the speakers is removed, as
 zynthbox-qml's autoconnect does, so all sound goes through its track (level, mute, FX).</p>
-<p>Clock: every JACK client (libzynthbox's nodes, jalv) runs at the graph's rate and period,
+<p>Clock: every JACK client (libravving's nodes, jalv) runs at the graph's rate and period,
 48000 / 256 on a Zynthbox. FluidSynth's audio goes through its PipeWire driver, a stream whose
 node can run on its own clock. So ravving tells it the graph's rate and period (<code>AudioGraph</code>,
 read once through a throwaway JACK client), and it isn't resampled.</p>
@@ -180,7 +180,7 @@ alone can point the input at the silent Dummy.</p>
 <tr>
 <td><code>pw-jack jack_lsp -c</code> / <code>-l</code></td>
 <td>JACK names with connections / latency ranges</td>
-<td>ravving's and libzynthbox's names</td>
+<td>ravving's and libravving's names (libzynthbox's own, which it keeps)</td>
 </tr>
 <tr>
 <td><code>pw-mon</code></td>
@@ -261,7 +261,7 @@ alone can point the input at the silent Dummy.</p>
 <tbody>
 <tr>
 <td>PipeWire's data loops</td>
-<td>FIFO 88 (the daemon), 83 (the clients: libzynthbox's, jalv's, FluidSynth's)</td>
+<td>FIFO 88 (the daemon), 83 (the clients: libravving's, jalv's, FluidSynth's)</td>
 </tr>
 <tr>
 <td>FluidSynth's render thread (<code>fluid_pipewire</code>)</td>
@@ -272,7 +272,7 @@ alone can point the input at the silent Dummy.</p>
 <td>not realtime: it does no audio work</td>
 </tr>
 <tr>
-<td>libzynthbox's SyncTimerThread</td>
+<td>libravving's SyncTimerThread</td>
 <td>FIFO 99, once the transport has run</td>
 </tr>
 </tbody>
@@ -289,7 +289,7 @@ alone can point the input at the silent Dummy.</p>
 </ul>
 <h2 id="midi">MIDI</h2>
 <ul>
-<li>Sequenced notes: libzynthbox's SyncTimer schedules them on the JACK frame clock and
+<li>Sequenced notes: libravving's SyncTimer schedules them on the JACK frame clock and
   ZLRouter puts each machine's on <code>ZLRouter:Zynthian-Channel{z}</code>, linked to the engine's
   MIDI input (above). <code>tools/mididump.py PORT SECONDS</code> prints what a port carries.</li>
 <li>External keyboards: MidiRouter's hardware pass-through (<code>MidiInput</code>, port 3) feeds the

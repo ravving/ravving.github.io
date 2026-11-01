@@ -22,7 +22,7 @@
     }());
   </script>
   <script src="nav.js?v=1a5dfeadeb" defer></script>
-  <script src="search.js?v=4917e215d8" defer></script>
+  <script src="search.js?v=95a912bcd2" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -184,7 +184,7 @@
 <h2 id="details">Detailed Description</h2>
 <ul>
 <li>Mode: <code translate="no">mic</code>, <code translate="no">guitar</code> or <code translate="no">line</code>. Each mode sets the input card's gain (the ADC's PGA, -12 to +40 dB, kept per mode) and its mic bias (on for <code translate="no">mic</code>). <code translate="no">mic</code> and <code translate="no">guitar</code> are mono, taken from whichever input jack carries the signal (<a href="inputrecorder.html#activeJack-prop" translate="no">activeJack</a>: jack 4 is the left channel, jack 5 the right) and sent to both sides; the jack is switched while nothing records, when one is 10 dB louder than the other and above -45 dBFS. <code translate="no">line</code> is stereo. The mode is a device setting, stored in QSettings, not in the project.</li>
-<li>Level: while armed, the input feeds libzynthbox's port recorder (AudioLevels' SystemRecorder), whose meter gives level.</li>
+<li>Level: while armed, the input feeds libravving's port recorder (AudioLevels' SystemRecorder), whose meter gives level.</li>
 <li>Monitor: the input heard through the master. It goes through a sketchpad track of its own (kits.json's <code translate="no">input</code> <code translate="no">track</code>, one no machine uses), whose level is <a href="inputrecorder.html#monitorLevel-prop" translate="no">monitorLevel</a>. It starts off.</li>
 <li>Effects: the input effects (effects, an <a href="inputeffects.html" translate="no">InputEffects</a>) sit between the input and both the monitor and the take, so what is heard is what is recorded.</li>
 <li>Takes: <a href="inputrecorder.html#record" translate="no">record</a>() starts the port recorder on the input, after its effects (a 16-bit WAV in the cache); <a href="inputrecorder.html#stop" translate="no">stop</a>() or <a href="inputrecorder.html#autoStop-prop" translate="no">autoStop</a> ends it. A sampler take is then processed on a worker thread (<a href="audiofile.html#processTake" translate="no">AudioFile::processTake</a>()), written to the samples folder and announced with <a href="inputrecorder.html#takeReady" translate="no">takeReady</a>(), with its last burst of sound as the trim. An as-played take (record(true)) is kept unprocessed (<a href="liverecordings.html" translate="no">LiveRecordings</a>) and announced with <a href="inputrecorder.html#recordingReady" translate="no">recordingReady</a>().</li>

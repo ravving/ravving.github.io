@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- jackwiring.cpp -->
-  <meta name="description" content="Keeps the JACK graph wired for ravving's tracks, with the topology libzynthbox's tracks expect (the one zynthbox-qml's autoconnect produces for a synth on a sketchpad track).">
+  <meta name="description" content="Keeps the JACK graph wired for ravving's tracks, with the topology libravving's tracks expect (the one zynthbox-qml's autoconnect produces for a synth on a sketchpad track).">
   <meta name="keywords" content="class">
   <title>JackWiring Class | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,7 +22,7 @@
     }());
   </script>
   <script src="nav.js?v=1a5dfeadeb" defer></script>
-  <script src="search.js?v=4917e215d8" defer></script>
+  <script src="search.js?v=95a912bcd2" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -75,7 +75,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">JackWiring Class</h1>
 <!-- $$$JackWiring-brief -->
-<p>Keeps the JACK graph wired for ravving's tracks, with the topology libzynthbox's tracks expect (the one zynthbox-qml's autoconnect produces for a synth on a sketchpad track). <a href="#details">More...</a></p>
+<p>Keeps the JACK graph wired for ravving's tracks, with the topology libravving's tracks expect (the one zynthbox-qml's autoconnect produces for a synth on a sketchpad track). <a href="#details">More...</a></p>
 <!-- @@@JackWiring -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;jackwiring.h&gt;</code></td></tr>
@@ -113,7 +113,7 @@
 </code></pre>
 <p>Here <i>z</i> is the Zynthian channel and <i>t</i> the sketchpad track. PipeWire also links every new engine straight to the speakers; those links are removed, so all sound goes through the track (level, mute, effects).</p>
 <p>A synth can have an insert (<a href="trackeffects.html" translate="no">TrackEffects</a>' DRIVE): while active it sits between the engine and its SynthPassthrough, otherwise the engine connects straight to it. The master can run through inserts before the speakers (<a href="jackwiring.html#setMasterInserts" translate="no">setMasterInserts</a>(), <a href="livefx.html#masterInserts" translate="no">LiveFx::masterInserts</a>()), and the device input through its own chain (<a href="jackwiring.html#setInputChain" translate="no">setInputChain</a>()).</p>
-<p>The wiring is declarative: every wanted and unwanted port pair is kept, and each change requests them all through libzynthbox's JackConnectionHandler, retried until every port exists, since engines and passthrough ports appear a moment after they are requested (the startup mark <code translate="no">wired</code> is set once everything is connected). GUI thread only.</p>
+<p>The wiring is declarative: every wanted and unwanted port pair is kept, and each change requests them all through libravving's JackConnectionHandler, retried until every port exists, since engines and passthrough ports appear a moment after they are requested (the startup mark <code translate="no">wired</code> is set once everything is connected). GUI thread only.</p>
 </div>
 <!-- @@@JackWiring -->
 <div class="func">
@@ -169,7 +169,7 @@
 <div class="fnitem">
 <!-- $$$setCaptureMeter[overload1]$$$setCaptureMeterconstQStringList& -->
 <h3 class="fn" translate="no" id="setCaptureMeter"><span class="type">void</span> JackWiring::<span class="name">setCaptureMeter</span>(const <span class="type">QStringList</span> &amp;<i>inputs</i>)</h3>
-<p>Feeds AudioLevels' capture meter (captureA and captureB) from the device's real <i translate="no">inputs</i>; libzynthbox connects it to the first <code translate="no">system</code>: outputs, which under PipeWire are the speakers' monitor.</p>
+<p>Feeds AudioLevels' capture meter (captureA and captureB) from the device's real <i translate="no">inputs</i>; libravving connects it to the first <code translate="no">system</code>: outputs, which under PipeWire are the speakers' monitor.</p>
 <!-- @@@setCaptureMeter -->
 </div>
 <div class="fnitem">

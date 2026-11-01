@@ -95,7 +95,7 @@
 <p class="doc-blurb">Static analysis, startup timing, QML profiling, the screenshot tour, what the rest costs the sound.</p>
 
 <p>The checks to run on ravving every so often (and before a release) and what each tool is for.
-All the tools live in <code>tools/</code>; the laptop ones need no libzynthbox (ravving builds without it),
+All the tools live in <code>tools/</code>; the laptop ones need no libravving (ravving builds without it),
 the device ones run against <code>root@milo.local</code> (<code>DEVICE=</code> for another).</p>
 <table>
 <thead>
@@ -343,7 +343,7 @@ today's counts, as the QML baseline does.</p>
 <p><code>main()</code> writes the phases of a start to the journal (<code>src/startuptimer.h</code>):</p>
 <pre><code>ravving: startup main 0 ms           process up (after startx, X and the binary loading)
 ravving: startup application 18 ms   QGuiApplication
-ravving: startup libzynthbox 649 ms  libzynthbox's singletons and engines
+ravving: startup libzynthbox 649 ms  the sound engine, libravving
 ravving: startup studio 2922 ms      machines, effects, the session (Studio)
 ravving: startup backends …          the rest of the backends (outputs, Bluetooth, USB, sharing…)
 ravving: startup qml 3681 ms         Main.qml created
@@ -585,7 +585,7 @@ tools/device.sh animations          # what keeps the window drawing, item by ite
 <tr>
 <td>RT page faults / 20 s</td>
 <td>0–2 (PipeWire's own data loops)</td>
-<td>some in libzynthbox's SyncTimerThread, none in ravving's code</td>
+<td>some in libravving's SyncTimerThread, none in ravving's code</td>
 </tr>
 <tr>
 <td>xruns</td>

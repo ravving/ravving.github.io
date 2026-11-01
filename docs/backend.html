@@ -95,8 +95,8 @@
 <p class="doc-blurb">Every class of the backend library and how the others use it.</p>
 
 <p>Every class of the backend library (<code>src/backend/</code>), what it does and how the others use it. Each class has its full reference in the API reference.</p>
-<p>The drums play through libzynthbox's sketchpad tracks, patterns and synth slots, with
-ravving's C++ objects in the places where libzynthbox calls back into its host:</p>
+<p>The machines play through libravving's tracks, patterns and synth slots, reached through the
+typed API in <code>libravving/include/libravving/engine.h</code> (<a href="architecture.html">architecture.md</a>):</p>
 <table>
 <thead>
 <tr>
@@ -273,7 +273,7 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>ConsoleProcess</code></td>
-<td>a helper process with a text console, run by libzynthbox's ProcessWrapper (created through the bridge's QML engine): pty, dies with ravving, crash restarts, startup commands, prompt-ended transactions</td>
+<td>a helper process with a text console, run by libravving's ProcessWrapper (the API's <code>Process</code>): pty, dies with ravving, crash restarts, startup commands, prompt-ended transactions</td>
 <td><code>zynthian_engine.py</code>'s process handling</td>
 </tr>
 <tr>
@@ -418,7 +418,7 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 </tr>
 <tr>
 <td><code>MusicPlayer</code></td>
-<td>the player (<code>studio.music</code>): a queue of tracks played through Qt Multimedia (QMediaPlayer + QAudioOutput; the FFmpeg backend decodes WAV, FLAC, OGG, MP3; the sound goes out through PipeWire's default output beside the studio's graph, so the master dial does not apply to it); playNow (in after the one playing), enqueue, playAt, next / previous, pause / resume, seek, stop, <code>repeat</code>, <code>volume</code> (the output's, remembered); a track that ends starts the next; the transport pauses it when it starts, the exporter stops it. It never touches libzynthbox: its sampler cannot read MP3 and playing such a clip crashes the audio thread, so <code>ZynthboxBridge::createClip</code> refuses anything but wav / aif / aiff / flac / ogg</td>
+<td>the player (<code>studio.music</code>): a queue of tracks played through Qt Multimedia (QMediaPlayer + QAudioOutput; the FFmpeg backend decodes WAV, FLAC, OGG, MP3; the sound goes out through PipeWire's default output beside the studio's graph, so the master dial does not apply to it); playNow (in after the one playing), enqueue, playAt, next / previous, pause / resume, seek, stop, <code>repeat</code>, <code>volume</code> (the output's, remembered); a track that ends starts the next; the transport pauses it when it starts, the exporter stops it. It never touches libravving: its sampler cannot read MP3 and playing such a clip crashes the audio thread, so <code>Sampler::createClip</code> refuses anything but wav / aif / aiff / flac / ogg</td>
 <td></td>
 </tr>
 <tr>
@@ -466,15 +466,10 @@ ravving's C++ objects in the places where libzynthbox calls back into its host:<
 <td>Zynthian channel → engine → SynthPassthrough → TrackPassthrough → AudioLevels → GlobalPlayback → speakers, retried until the ports exist; removes PipeWire's direct engine→speaker links; a synth's insert (DRIVE) goes in and out with <code>setInsertActive()</code>; a track's lane on request (<code>addTrackLane</code>), the sampler's slot outputs (<code>setSampleOutputs</code>), the input monitor into its track (<code>setInputMonitor</code>); a machine's other engines (a section's sounds, on channels of their own) play through the machine's own passthrough (<code>addSynth(…, audioChannel)</code>), so one DRIVE and one sidechain source cover them</td>
 <td><code>zynthian_autoconnect.py</code> (synth subset)</td>
 </tr>
-<tr>
-<td><code>zbcall.h</code></td>
-<td>one-line meta-calls into libzynthbox objects, including enum-typed parameters</td>
-<td>—</td>
-</tr>
 </tbody>
 </table>
-<h3 id="libzynthboxs-contracts">libzynthbox's contracts</h3>
-<p>Break one and libzynthbox crashes or stays silent:</p>
+<h3 id="libravvings-contracts">libravving's contracts</h3>
+<p>Break one and libravving crashes or stays silent:</p>
 <ul>
 <li>SamplerSynth makes a track's <code>channel_N-sampleM</code> ports only while a clip is registered on
   that slot: wire exactly the loaded ones, again whenever they change.</li>
@@ -531,8 +526,7 @@ the hits' velocities:</p>
 </ul>
 <p>The machine keeps the accents and saves them in the session with the row mix. They're never
 read back from velocities.</p>
-<p>The session lives in <code>Paths::state()</code> (<code>~/.local/state/ravving</code>; an explicit path: libzynthbox's
-MidiRouter renames the application to "zynthbox-qml" while it initialises).</p>
+<p>The session lives in <code>Paths::state()</code> (<code>~/.local/state/ravving</code>).</p>
 <p id="the-pattern-interface"><strong>The pattern interface.</strong> <code>StepGrid</code> and <code>PatternToolbar</code> only draw and forward to a
 <code>pattern</code> object: <code>rows, stepCount, steps, accents, playhead, bars, viewBar, presets,
 presetName, presetEdited, canSavePresets, rowLevels, rowMuted, rowSoloed, toggleStep(),

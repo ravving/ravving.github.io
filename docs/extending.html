@@ -109,7 +109,7 @@ layers; this is the how-to. The code rules hold throughout:</p>
 <p>In <code>src/backend/machine.h</code>. It inherits the pattern, bars, presets, level, pan, pause, mute,
 effects, LIVE play and STEP entry. Implement:</p>
 <ul>
-<li><code>onAttached()</code>: write the machine's own state into its libzynthbox pattern;</li>
+<li><code>onAttached()</code>: write the machine's own state into its libravving pattern;</li>
 <li><code>refresh()</code>: publish the bar on screen to QML (its own Q_PROPERTYs + <code>stepsChanged</code>);</li>
 <li><code>revoice()</code>: rewrite every step's velocity (mute/solo/kick modes changed);</li>
 <li><code>clearOwnSteps()</code>, <code>applyChart(chart)</code>, <code>chart()</code>: its preset format (a chart is a
@@ -172,7 +172,7 @@ kits.json <code>engine</code> object:</p>
 <li><code>"fluidsynth"</code> (<code>FluidSynthEngine</code>): soundfonts (the drum kits).</li>
 </ul>
 <p>A new kind (setBfree, sfizz, a sampler…) is one more subclass run through <code>ConsoleProcess</code>
-(libzynthbox's ProcessWrapper: restarted on a crash, startup commands, a console prompt)
+(libravving's ProcessWrapper: restarted on a crash, startup commands, a console prompt)
 and one more <code>type</code> in <code>createEngine()</code>. Choose an engine by measuring it first
 (<a href="debugging.html">debugging.md</a>: synthprobe/analyse): velocity response, glide, CPU (<code>top</code>), level.</p>
 <h2 id="sound-modifiers-an-engines-own-controls">SOUND MODIFIERS: an engine's own controls</h2>

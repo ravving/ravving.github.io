@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- padsamplermachine.cpp -->
-  <meta name="description" content="A Machine playing 16 sample pads on libzynthbox's SamplerSynth, in four banks (A to D) of 16 pads and steps each.">
+  <meta name="description" content="A Machine playing 16 sample pads on libravving's SamplerSynth, in four banks (A to D) of 16 pads and steps each.">
   <meta name="keywords" content="class">
   <title>PadSamplerMachine Class | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,7 +22,7 @@
     }());
   </script>
   <script src="nav.js?v=1a5dfeadeb" defer></script>
-  <script src="search.js?v=4917e215d8" defer></script>
+  <script src="search.js?v=95a912bcd2" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -80,7 +80,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">PadSamplerMachine Class</h1>
 <!-- $$$PadSamplerMachine-brief -->
-<p>A Machine playing 16 sample pads on libzynthbox's SamplerSynth, in four banks (A to D) of 16 pads and steps each. <a href="#details">More...</a></p>
+<p>A Machine playing 16 sample pads on libravving's SamplerSynth, in four banks (A to D) of 16 pads and steps each. <a href="#details">More...</a></p>
 <!-- @@@PadSamplerMachine -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;padsamplermachine.h&gt;</code></td></tr>
@@ -231,7 +231,7 @@
 <h2 id="details">Detailed Description</h2>
 <p>The current bank is the one that plays. Each loaded pad is one ClipAudioSource set up on its root slice from the pad's parameters; its key zone and root note are the pad's note (kits.json <code translate="no">baseNote</code> + pad, note 36 for pad 1 by default), so a pattern note or a live key plays exactly that pad. A sketchpad track has ten sample slots and its pattern reads only those, so pads 1 to 10 live on the machine's track and pads 11 to 16 on a second one (kits.json <code translate="no">secondTrack</code>). The machine keeps the second track's pattern in step with its own (length, loop, swing, the hits of pads 11 to 16) and sends those pads' live notes on that track. Both tracks' sample outputs are wired into the first track's lane, so the kit has one level, one pan and one effects chain (<a href="jackwiring.html#setSampleOutputs" translate="no">JackWiring::setSampleOutputs</a>()).</p>
 <p>A pad's parameters are stored by tab and knob, each 0..1 (see tabs), and mapped to the slice: TRIM (start, end, loop point), MIX (volume as velocity, pan), AMP ENV (attack, decay or release), TUNE (semitones, fine), PLAY (mono or poly, mute group as an exclusivity group) and FILTER. AMP ENV's VEL SENS, TUNE's WARP, PLAY's OFFSET and the FLT ENV tab are stored but not applied. The pad flags (<a href="padsamplermachine.html#setFlag" translate="no">setFlag</a>()): <code translate="no">noteOn</code> (plays while held) or one-shot, <code translate="no">looping</code> (from the loop point), <code translate="no">reverse</code> (plays a reversed copy of the file, rendered once into the cache folder), <code translate="no">muted</code>, <code translate="no">soloed</code> and <code translate="no">sixteenLevels</code>.</p>
-<p>FILTER puts one equaliser band (two for the 4-pole types) of the chosen type (OFF, CLASSIC, LPF2, LPF4, HPF2, HPF4, BPF2, BPF4) on the pad's clip at the cutoff, with the resonance as its Q; it takes effect as far as libzynthbox applies a clip's equaliser to its voices.</p>
+<p>FILTER puts one equaliser band (two for the 4-pole types) of the chosen type (OFF, CLASSIC, LPF2, LPF4, HPF2, HPF4, BPF2, BPF4) on the pad's clip at the cutoff, with the resonance as its Q; it takes effect as far as libravving applies a clip's equaliser to its voices.</p>
 <p><a href="padsamplermachine.html#audition" translate="no">audition</a>() plays a pad once. <a href="padsamplermachine.html#setLatched" translate="no">setLatched</a>() latches a pad: it switches to looping and its note is held until unlatched; <a href="padsamplermachine.html#stopAll" translate="no">stopAll</a>() unlatches every pad. A latched pad ignores <a href="padsamplermachine.html#stopLive" translate="no">stopLive</a>().</p>
 <p>The kit controls (kit, a <a href="padkitcontrols.html" translate="no">PadKitControls</a>): KIT volume (the machine's level), SEMI and FINE added to every pad's tune, and 16 LEVELS. With 16 LEVELS on (<a href="padsamplermachine.html#sixteenLevels-prop" translate="no">setSixteenLevels</a>()), the sixteen keys all play the source pad, by type: VELOCITY (pad 1 softest, 16 hardest), TUNE (a semitone per pad, the original pitch on pad 4) or SCALE (steps of root and scale from pad 4). TUNE and SCALE use sixteen extra slices on the source pad's clip, each on its own note (<a href="padsamplermachine.html#LevelNoteBase-var" translate="no">LevelNoteBase</a> + pad) with its pitch. Hits written while the mode is on are the bank's level hits, stored apart from the pads' own and exposed as steps meanwhile.</p>
 <p>The pad effects (<a href="padsamplermachine.html#heldFx-prop" translate="no">heldFx</a>, active while held) act on the clip of <a href="padsamplermachine.html#fxPad-prop" translate="no">fxPad</a>, so they affect every voice of that pad:</p>

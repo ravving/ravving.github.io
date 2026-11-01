@@ -65,7 +65,7 @@
 <li><a href="https://ravving.github.io/ravving_repo/">The catalog</a></li>
 </ul>
 <p class="mono">Change ravving</p><ul>
-<li class="on"><a href="architecture.html" aria-current="page">Architecture</a><ul><li><a href="#layers">Layers</a></li><li><a href="#input-flow-the-hardware-attached-property">Input flow: the Hardware attached property</a></li><li><a href="#the-libzynthbox-bridge">The libzynthbox bridge</a></li><li><a href="#device-workflow">Device workflow</a></li><li><a href="#distribution">Distribution</a></li><li><a href="#the-look">The look</a></li><li><a href="#where-ravving-keeps-its-files">Where ravving keeps its files</a></li><li><a href="#a-projects-file">A project&#x27;s file</a></li><li><a href="#the-timeline">The timeline</a></li><li><a href="#the-startup-splash">The startup splash</a></li><li><a href="#the-phone-share-and-the-help-page">The phone share and the help page</a></li><li><a href="#topics-with-their-own-page">Topics with their own page</a></li></ul></li>
+<li class="on"><a href="architecture.html" aria-current="page">Architecture</a><ul><li><a href="#layers">Layers</a></li><li><a href="#input-flow-the-hardware-attached-property">Input flow: the Hardware attached property</a></li><li><a href="#the-libravving-bridge">The libravving bridge</a></li><li><a href="#device-workflow">Device workflow</a></li><li><a href="#distribution">Distribution</a></li><li><a href="#the-look">The look</a></li><li><a href="#where-ravving-keeps-its-files">Where ravving keeps its files</a></li><li><a href="#a-projects-file">A project&#x27;s file</a></li><li><a href="#the-timeline">The timeline</a></li><li><a href="#the-startup-splash">The startup splash</a></li><li><a href="#the-phone-share-and-the-help-page">The phone share and the help page</a></li><li><a href="#topics-with-their-own-page">Topics with their own page</a></li></ul></li>
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
 <li><a href="undo-history.html">The undo history</a></li>
@@ -92,7 +92,7 @@
   <article class="doc" id="doc">
 <p class="mono doc-kicker"><b>Change ravving</b> <span>/</span> <b translate="no">docs/architecture.md</b></p>
 <h1>Architecture</h1>
-<p class="doc-blurb">The layers, the hardware input flow and the focus model, the libzynthbox bridge, files, the theme.</p>
+<p class="doc-blurb">The layers, the hardware input flow and the focus model, the libravving bridge, files, the theme.</p>
 
 <h2 id="layers">Layers</h2>
 <pre><code> ┌──────────────── QML (qml/: the Ravving module, compiled in) ────────┐
@@ -106,14 +106,14 @@
  │ Ravving         page state, hardware → HardwareEvent   &quot;ravving&quot;    │
  │ Hardware        the `Hardware.on…` attached property  import Ravving│
  │ Fonts           the built-in typefaces                 &quot;fonts&quot;      │
- │ ZynthboxBridge  loads libzyncoder + libzynthbox        &quot;zynthbox&quot;   │
+ │ ZynthboxBridge  loads libzyncoder + libravving         &quot;zynthbox&quot;   │
  │ HardwareSwitches  polls the buttons → MidiRouter's CUIA queue        │
  │ HardwareKnobs   polls the 4 knobs (turns / pot positions)            │
  │ UnixSignals     SIGTERM → LEDs off, then _exit (as zynthbox-qml)     │
  └───────────────▲─────────────────────────────────────────────────────┘
-                 │ dlopen + meta-object calls (headers are not installed yet)
+                 │ dlopen + one entry point, the typed API (libravving/include/libravving/engine.h)
  ┌───────────────┴──────────── libraries ──────────────────────────────┐
- │ libzynthbox (sequencer, sampler, mixer, MIDI router, engines)        │
+ │ libravving (clock, sequencer, sampler, mixer, MIDI router, engines)  │
  │ libzyncoder (buttons, knobs)                                         │
  └─────────────────────────────────────────────────────────────────────┘
 </code></pre>
@@ -188,10 +188,9 @@ still not accepted. A handler that runs accepts the event unless it sets
   beat, …, then ■.</li>
 <li>RECORD with the header focused, or ALT + RECORD anywhere, is the global recording: the
   header's ●, and a red RECORD LED.</li>
-<li>The metronome is libzynthbox's (SyncTimer <code>audibleMetronome</code>), with zynthbox-qml's tick/tock
-  wavs. <code>ZynthboxBridge::setMetronomeSounds()</code> builds the two ClipAudioSources through the
-  exported constructor, since no meta-object factory exists. SamplerSynth's <code>global-sketch1</code>
-  outputs are wired to the master.</li>
+<li>The metronome is libravving's (the API's <code>Clock</code>), with zynthbox-qml's tick/tock wavs, which
+  <code>Studio</code> hands to <code>Clock::setMetronomeSounds()</code>. SamplerSynth's <code>global-sketch1</code> outputs are
+  wired to the master.</li>
 </ul>
 <h3 id="an-external-midi-controller">An external MIDI controller</h3>
 <p>It plays the machine on screen, on every page, through the same path as the step keys, so REC
@@ -322,7 +321,7 @@ dialog takes the keys while open, and gives the focus back.</p>
     cursor (<code>writeAtCursor</code>).</li>
 <li>The LEDs show the pads (rows in the machine's colour, key 9 red, white while held) and drop
     the playhead (<code>RavePage.stepKeysArePads</code>).</li>
-<li>libzynthbox's own live recorder isn't used: it only hears controller ports, and pads sent
+<li>libravving's own live recorder isn't used: it only hears controller ports, and pads sent
     through SyncTimer arrive as sequencer traffic.</li>
 </ul>
 <h3 id="timing-and-the-bar-loop">Timing and the bar loop</h3>
@@ -335,19 +334,32 @@ dialog takes the keys while open, and gives the focus back.</p>
   it (<code>bankOffset</code> = that bar, <code>patternLength</code> = one bar), while <code>bars</code> keeps the real length.
   Paging with ‹ › moves the loop. It isn't saved; attach and restore put the window back.</li>
 </ul>
-<h2 id="the-libzynthbox-bridge">The libzynthbox bridge</h2>
-<p>libzynthbox doesn't install headers, and its headers pull in all of JUCE. So
-<code>ZynthboxBridge</code>:</p>
+<h2 id="the-libravving-bridge">The libravving bridge</h2>
+<p>libravving is ravving's own copy of libzynthbox, kept in <code>libravving/</code> and trimmed to what
+ravving plays through (libravving/README.md). It is installed as <code>/usr/lib/libravving.so</code>, beside
+zynthbox-qml's <code>libzynthbox.so</code>, and bundled in the AppImage.</p>
+<p>Its whole contract with ravving is one header, <code>libravving/include/libravving/engine.h</code>:</p>
+<ul>
+<li>abstract interfaces over Qt Core only: Engine, Clock, Sequencer, Track, Live, Sampler and
+  Clip, Mixer, Strip, Gain, Connections, Recorder, Router, Process;</li>
+<li>plain values, and callbacks (the <code>on…</code> members) instead of signals;</li>
+<li>every call on the application's thread, unless a function says otherwise.</li>
+</ul>
+<h3 id="loading-it">Loading it</h3>
+<p><code>ZynthboxBridge</code>:</p>
 <ol>
-<li><code>dlopen</code>s <code>libzyncoder.so</code> and calls <code>init_zynlib()</code>. libzynthbox needs zyncoder's MIDI
-   router first, the same order as zynthbox-qml.</li>
-<li><code>dlopen</code>s <code>libzynthbox.so</code> and resolves three symbols: <code>Plugin::instance()</code>,
-   <code>Plugin::initialize()</code> and <code>Plugin::registerTypes()</code>.</li>
-<li>Gets the <code>MidiRouter</code> QML singleton and connects to <code>cuiaEvent</code> through the meta-object
-   system.</li>
+<li><code>dlopen</code>s <code>libzyncoder.so</code> and calls <code>init_zynlib()</code>: the engine needs zyncoder's MIDI router
+   first, the same order as zynthbox-qml. Without zyncoder there are no device keys or knobs.</li>
+<li><code>dlopen</code>s <code>libravving.so</code> and calls its one C entry point, <code>libravving_engine(ApiVersion)</code>,
+   which returns the <code>libravving::Engine</code>, or nothing when the library was built against another
+   <code>ApiVersion</code> (bumped on every change to the header).</li>
+<li>Starts the engine with the QML engine: it registers its QML types (such as <code>WaveFormItem</code>)
+   under the <code>LibRavving</code> URI. The device keys' CUIA events come back through its <code>Router</code>.</li>
 </ol>
-<p>Both libraries are opened with <code>RTLD_LOCAL</code>. <code>RTLD_GLOBAL</code> lets libzynthbox's bundled
-JUCE/tracktion symbols interpose on libraries loaded later, which then crash.</p>
+<p>Without libravving.so (a laptop, or <code>RAVVING_NO_ZYNTHBOX=1</code>) ravving still builds and runs,
+silent; SETTINGS → ABOUT's SOUND ENGINE line says which. Both libraries are opened with
+<code>RTLD_LOCAL</code>: with <code>RTLD_GLOBAL</code>, the JUCE symbols libravving bundles would interpose on libraries
+loaded after it.</p>
 <h2 id="device-workflow">Device workflow</h2>
 <p>See <a href="building.html">building.md</a>, <a href="testing.html">testing.md</a> and <a href="debugging.html">debugging.md</a>
 (tools/: deploy, keys, screenshots, MIDI, measuring, logging) and <a href="extending.html">extending.md</a>
@@ -545,7 +557,7 @@ successive snapshots as small deltas of each other and drops what no branch reac
   <code>show &lt;commit&gt;:project.json</code> reads a snapshot.</li>
 </ul>
 <h2 id="the-startup-splash">The startup splash</h2>
-<p><code>StartupSplash</code> (qml/Splash.qml and SplashLook.qml) shows the logo from the moment libzynthbox
+<p><code>StartupSplash</code> (qml/Splash.qml and SplashLook.qml) shows the logo from the moment libravving
 is up until the page is ready, then plays a short show into the page. MENU → SETTINGS → STARTUP
 picks the look, from the next start: ANIME, GLOW, STILL, ZOOM, ARU or OFF.</p>
 <ul>

@@ -22,7 +22,7 @@
     }());
   </script>
   <script src="nav.js?v=1a5dfeadeb" defer></script>
-  <script src="search.js?v=4917e215d8" defer></script>
+  <script src="search.js?v=95a912bcd2" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -151,7 +151,7 @@
 <!-- $$$DrumMachine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p><code translate="no">data/kits.json</code> gives it its track, Zynthian channel, engine and default preset; its presets are the drum <a href="presetlibrary.html" translate="no">PresetLibrary</a> the drum machines share, written per role so any preset plays on any kit. Its rows come from its kit, a soundfont read by <a href="drumkit.html" translate="no">DrumKit</a>: eight roles (KICK to PERC), each with the kit's note for it. <a href="drummachine.html#loadKit" translate="no">loadKit</a>() switches kits and moves every hit to the new kit's note for the same role, so a pattern survives any kit change. A hit is a subnote with the row's note on that step; without libzynthbox (a desktop run) the steps are kept in memory.</p>
+<p><code translate="no">data/kits.json</code> gives it its track, Zynthian channel, engine and default preset; its presets are the drum <a href="presetlibrary.html" translate="no">PresetLibrary</a> the drum machines share, written per role so any preset plays on any kit. Its rows come from its kit, a soundfont read by <a href="drumkit.html" translate="no">DrumKit</a>: eight roles (KICK to PERC), each with the kit's note for it. <a href="drummachine.html#loadKit" translate="no">loadKit</a>() switches kits and moves every hit to the new kit's note for the same role, so a pattern survives any kit change. A hit is a subnote with the row's note on that step; without libravving (a desktop run) the steps are kept in memory.</p>
 <p>Each row has a level, a mute and a solo, kept per role so they survive kit changes. They are applied through the hits' velocities: a row's level and a step's accent give the velocity every hit of that row is written with, and -1 (<a href="machine.html#SilentVelocity-var" translate="no">Machine::SilentVelocity</a>, &quot;do not play&quot;) marks a muted row, an unsoloed one while any row is soloed, or one the kick cut silences (<a href="machine.html#setKickMode" translate="no">Machine::setKickMode</a>()). Accents are kept by the machine, not read back from velocities. A live key is a row.</p>
 <p>The QML step grid uses rows, steps, accents, the per-row mix, <a href="drummachine.html#toggleStep" translate="no">toggleStep</a>(), <a href="drummachine.html#toggleAccent" translate="no">toggleAccent</a>(), <a href="drummachine.html#setRowLevel" translate="no">setRowLevel</a>(), <a href="drummachine.html#setRowMuted" translate="no">setRowMuted</a>(), <a href="drummachine.html#setRowSoloed" translate="no">setRowSoloed</a>() and <a href="drummachine.html#audition" translate="no">audition</a>(), with Machine's playhead, bars, presets and <a href="machine.html#clear" translate="no">clear</a>().</p>
 </div>

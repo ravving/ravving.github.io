@@ -113,10 +113,14 @@
 <li><strong>Its fonts</strong>, IBM Plex Sans, IBM Plex Mono and Chakra Petch (<code>data/fonts</code>, the Fonts class).</li>
 </ul>
 <h3 id="the-engine-and-the-build-order">The engine and the build order</h3>
-<p>The audio engine comes from <strong>libzynthbox</strong> (<code>io.zynthbox.components</code>) and <strong>zyncoder</strong>, both
-loaded at run time. So the order is: libzynthbox + zyncoder, then ravving.</p>
-<p>On a stock Zynthbox, these are the installed <code>libzynthbox</code> and zyncoder; a rebuilt libzynthbox must
-be installed before ravving is tried.</p>
+<p>The audio engine is <strong>libravving</strong>, ravving's own copy of libzynthbox in <code>libravving/</code>, and the
+keys and knobs come from <strong>zyncoder</strong>; both are loaded at run time. So the order is: libravving,
+then ravving. zyncoder is the one installed on a stock Zynthbox.</p>
+<p>libravving builds on the device from its folder (<code>./install.sh</code>: Ninja into <code>build/</code>, installed
+as <code>/usr/lib/libravving.so</code>); it needs its JUCE submodule first
+(<code>git submodule update --init --depth 1 libravving/JUCE</code>). zynthbox-qml's libzynthbox stays
+installed and untouched. A changed <code>engine.h</code> means rebuilding both sides: the library refuses a
+ravving built against another <code>ApiVersion</code>.</p>
 <h3 id="the-player-and-the-exports">The player and the exports</h3>
 <ul>
 <li><strong>The music player</strong> plays through <strong>Qt Multimedia</strong>: <code>qt6-multimedia-dev</code> to build, and
@@ -185,7 +189,7 @@ at run time, and nothing bundles them:</p>
 </table>
 <p>Everything else ravving needs, it finds at run time on a stock Zynthbox:</p>
 <ul>
-<li>libzynthbox and zyncoder;</li>
+<li>zyncoder (libravving is built with ravving, or bundled in the AppImage);</li>
 <li><code>libqt6multimedia6</code>, with its FFmpeg plugin;</li>
 <li>PipeWire, with <code>pipewire-jack</code> (<code>pw-jack</code>), <code>pipewire-bin</code> (<code>pw-loopback</code>, <code>pw-link</code>,
   <code>pw-dump</code>, <code>pw-top</code>) and <code>pipewire-pulse</code> (left off by the image; ravving's service wants it);</li>
@@ -278,7 +282,7 @@ QML warnings.</p>
 </tr>
 <tr>
 <td><code>RAVVING_NO_ZYNTHBOX=1</code></td>
-<td>skip libzynthbox (UI only)</td>
+<td>skip libravving (UI only, silent)</td>
 </tr>
 <tr>
 <td><code>RAVVING_STYLE</code></td>

@@ -22,7 +22,7 @@
     }());
   </script>
   <script src="nav.js?v=1a5dfeadeb" defer></script>
-  <script src="search.js?v=4917e215d8" defer></script>
+  <script src="search.js?v=95a912bcd2" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -91,7 +91,7 @@
 <!-- $$$StderrWatch-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Libraries ravving loads (zyncoder, libzynthbox, JUCE) and the engines it starts print their errors there and nowhere else. Constructed once in main() before those libraries load: from then on file descriptor 2 is the write end of a pipe (inherited by the engines' processes) that a thread of this object reads. Every byte is written on to the original stderr; each complete line is matched against known patterns and reported with <a href="issues.html#report" translate="no">Issues::report</a>(): zyncoder's &quot;Error while processing GPIO events&quot; (the device's keys stopped responding), FluidSynth errors and failures to open a JACK client. Lines over 16 kB are dropped unread.</p>
+<p>Libraries ravving loads (zyncoder, libravving, JUCE) and the engines it starts print their errors there and nowhere else. Constructed once in main() before those libraries load: from then on file descriptor 2 is the write end of a pipe (inherited by the engines' processes) that a thread of this object reads. Every byte is written on to the original stderr; each complete line is matched against known patterns and reported with <a href="issues.html#report" translate="no">Issues::report</a>(): zyncoder's &quot;Error while processing GPIO events&quot; (the device's keys stopped responding), FluidSynth errors and failures to open a JACK client. Lines over 16 kB are dropped unread.</p>
 <p>The reader thread retries reads interrupted by a signal; when the pipe fails it restores the original stderr so no write ever blocks. Destroying the object restores file descriptor 2 and joins the thread.</p>
 </div>
 <!-- @@@StderrWatch -->
