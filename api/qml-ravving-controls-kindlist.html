@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- KindList.qml -->
-  <meta name="description" content="The kinds down a browsing dialog's left (FILES, USB, GET MORE): a row per kind with its name and how many it holds, the one shown on a tint with the accent's edge.">
+  <meta name="description" content="The kinds down a browsing dialog's left (FILES, USB, GET MORE): a SideBarItem per kind with its name and how many it holds, the one shown on the accent's tint.">
   <meta name="keywords" content="qmltype">
   <title>KindList QML Type | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1a5dfeadeb" defer></script>
-  <script src="search.js?v=95a912bcd2" defer></script>
+  <script src="nav.js?v=51d83a22d5" defer></script>
+  <script src="search.js?v=574e5ff2ac" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -76,7 +76,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">KindList QML Type</h1>
 <!-- $$$KindList-brief -->
-<p>The kinds down a browsing dialog's left (FILES, USB, GET MORE): a row per kind with its name and how many it holds, the one shown on a tint with the accent's edge. <a href="#details">More...</a></p>
+<p>The kinds down a browsing dialog's left (FILES, USB, GET MORE): a <a href="qml-ravving-controls-sidebaritem.html" translate="no">SideBarItem</a> per kind with its name and how many it holds, the one shown on the accent's tint. <a href="#details">More...</a></p>
 <!-- @@@KindList -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> <code translate="no">import Ravving.Controls 1.0</code></td></tr>
@@ -88,9 +88,7 @@
 <ul>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-kindlist.html#accent-prop" translate="no">accent</a></b> : color</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-kindlist.html#current-prop" translate="no">current</a></b> : string</li>
-<li class="fn" translate="no"><b><a href="qml-ravving-controls-kindlist.html#dim-prop" translate="no">dim</a></b> : color</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-kindlist.html#foot-prop" translate="no">foot</a></b> : alias</li>
-<li class="fn" translate="no"><b><a href="qml-ravving-controls-kindlist.html#ink-prop" translate="no">ink</a></b> : color</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-kindlist.html#model-prop" translate="no">model</a></b> : list&lt;var&gt;</li>
 </ul>
 <h2 id="signals">Signals</h2>
@@ -99,13 +97,13 @@
 </ul>
 <!-- $$$KindList-description -->
 <h2 id="details">Detailed Description</h2>
-<p><code translate="no">model</code> lists the kinds (maps with <code translate="no">key</code>, <code translate="no">label</code> and <code translate="no">count</code>, as the browsers' backends publish them), <code translate="no">current</code> the key shown; a tap says <code translate="no">picked</code>. The column keeps its width (240 px) beside the dialog's list; what is put inside it (a line on the list's age, what waits) goes under the kinds, at the foot.</p>
+<p><code translate="no">model</code> lists the kinds (maps with <code translate="no">key</code>, <code translate="no">label</code> and <code translate="no">count</code>, as the browsers' backends publish them), <code translate="no">current</code> the key shown; a tap says <code translate="no">picked</code>. The column keeps its width (240 px) beside the dialog's list; what is put inside it (a line on the list's age, what waits) goes under the kinds, at the foot. The rows are the same as a list dialog's groups (<a href="qml-ravving-controls-choicedialog.html" translate="no">ChoiceDialog</a>) and a page's categories (SETTINGS): one row for every sidebar.</p>
 <!-- @@@KindList -->
 <h2>Property Documentation</h2>
 <div class="fnitem">
 <!-- $$$accent -->
 <h3 class="fn qml-member qml-property" translate="no" id="accent-prop"><span class="name">accent</span> : <span class="type">color</span></h3>
-<p>The picked row's edge and a count above zero; the names; a count of zero.</p>
+<p>The picked row's tint and a count above zero.</p>
 <!-- @@@accent -->
 </div>
 <div class="fnitem">
@@ -115,22 +113,10 @@
 <!-- @@@current -->
 </div>
 <div class="fnitem">
-<!-- $$$dim -->
-<h3 class="fn qml-member qml-property" translate="no" id="dim-prop"><span class="name">dim</span> : <span class="type">color</span></h3>
-<p>The picked row's edge and a count above zero; the names; a count of zero.</p>
-<!-- @@@dim -->
-</div>
-<div class="fnitem">
 <!-- $$$foot -->
 <h3 class="fn qml-member qml-property" translate="no" id="foot-prop"><span class="name">foot</span> : <span class="type">alias</span> <code class="details extra" translate="no">[default]</code></h3>
 <p>What goes under the kinds, at the column's foot.</p>
 <!-- @@@foot -->
-</div>
-<div class="fnitem">
-<!-- $$$ink -->
-<h3 class="fn qml-member qml-property" translate="no" id="ink-prop"><span class="name">ink</span> : <span class="type">color</span></h3>
-<p>The picked row's edge and a count above zero; the names; a count of zero.</p>
-<!-- @@@ink -->
 </div>
 <div class="fnitem">
 <!-- $$$model -->

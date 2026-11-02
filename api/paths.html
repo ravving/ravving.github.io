@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1a5dfeadeb" defer></script>
-  <script src="search.js?v=95a912bcd2" defer></script>
+  <script src="nav.js?v=51d83a22d5" defer></script>
+  <script src="search.js?v=574e5ff2ac" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -91,6 +91,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#dataPartition" translate="no">dataPartition</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="paths.html#describe" translate="no">describe</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#exports" translate="no">exports</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="paths.html#forgetSoundfonts" translate="no">forgetSoundfonts</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#importedSamples" translate="no">importedSamples</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="paths.html#initialise" translate="no">initialise</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#library" translate="no">library</a></b>()</td></tr>
@@ -105,6 +106,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#reversedCache" translate="no">reversedCache</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#samples" translate="no">samples</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#soundfontCache" translate="no">soundfontCache</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#soundfontNamed" translate="no">soundfontNamed</a></b>(const QString &amp;<i>fileName</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#soundfonts" translate="no">soundfonts</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#state" translate="no">state</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#takes" translate="no">takes</a></b>()</td></tr>
@@ -158,6 +160,12 @@
 <h3 class="fn" translate="no" id="exports"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">exports</span>()</h3>
 <p>Returns the exports folder: tracks and <code translate="no">.ravv</code> bundles.</p>
 <!-- @@@exports -->
+</div>
+<div class="fnitem">
+<!-- $$$forgetSoundfonts[overload1]$$$forgetSoundfonts -->
+<h3 class="fn" translate="no" id="forgetSoundfonts"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> Paths::<span class="name">forgetSoundfonts</span>()</h3>
+<p>Forgets what <a href="paths.html#soundfontNamed" translate="no">soundfontNamed</a>() read: the library's and the cache's folders are read again at the next lookup. Called by whatever puts a soundfont in them or takes one out.</p>
+<!-- @@@forgetSoundfonts -->
 </div>
 <div class="fnitem">
 <!-- $$$importedSamples[overload1]$$$importedSamples -->
@@ -222,7 +230,7 @@
 <div class="fnitem">
 <!-- $$$relocated[overload1]$$$relocatedconstQString& -->
 <h3 class="fn" translate="no" id="relocated"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">relocated</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
-<p>Returns where a sample a project names as <i translate="no">path</i> lives now: the path itself when it exists, else a take's place in <a href="paths.html#takes" translate="no">takes</a>(), else the path unchanged. Saved projects keep the paths they were saved with; this resolves them after the legacy layout's files moved. A soundfont of <a href="paths.html#soundfontCache" translate="no">soundfontCache</a>() that is gone is the library's copy (<a href="paths.html#soundfonts" translate="no">soundfonts</a>()) when it has one: saving a project copies the cached ones it plays into the library.</p>
+<p>Returns where a sample a project names as <i translate="no">path</i> lives now: the path itself when it exists, else a take's place in <a href="paths.html#takes" translate="no">takes</a>(), else the path unchanged. Saved projects keep the paths they were saved with; this resolves them after the legacy layout's files moved. A soundfont of <a href="paths.html#soundfonts" translate="no">soundfonts</a>() or <a href="paths.html#soundfontCache" translate="no">soundfontCache</a>() that is gone is the file of its name wherever it is now (<a href="paths.html#soundfontNamed" translate="no">soundfontNamed</a>()): a cached font the library kept when a project was saved with it, or a font moved into a genre folder.</p>
 <!-- @@@relocated -->
 </div>
 <div class="fnitem">
@@ -242,6 +250,12 @@
 <h3 class="fn" translate="no" id="soundfontCache"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">soundfontCache</span>()</h3>
 <p>Returns where the soundfonts picked from a USB stick play from until a project saved with them copies them into <a href="paths.html#soundfonts" translate="no">soundfonts</a>(): <code translate="no">soundfonts</code> in the cache folder.</p>
 <!-- @@@soundfontCache -->
+</div>
+<div class="fnitem">
+<!-- $$$soundfontNamed[overload1]$$$soundfontNamedconstQString& -->
+<h3 class="fn" translate="no" id="soundfontNamed"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">soundfontNamed</span>(const <span class="type">QString</span> &amp;<i>fileName</i>)</h3>
+<p>Returns the soundfont called <i translate="no">fileName</i> (any case) in the library (<a href="paths.html#soundfonts" translate="no">soundfonts</a>(), any family folder), else in the cache (<a href="paths.html#soundfontCache" translate="no">soundfontCache</a>()), else empty. A font is one file by its name across both. The folders are read once and the answer kept; whatever adds or removes a soundfont calls <a href="paths.html#forgetSoundfonts" translate="no">forgetSoundfonts</a>().</p>
+<!-- @@@soundfontNamed -->
 </div>
 <div class="fnitem">
 <!-- $$$soundfonts[overload1]$$$soundfonts -->

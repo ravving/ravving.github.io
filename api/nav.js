@@ -655,6 +655,14 @@ window.ravNav = [
     "href": "skinfiles.html"
    },
    {
+    "title": "SoundfontTags",
+    "href": "soundfonttags.html"
+   },
+   {
+    "title": "SoundfontTags::Tags",
+    "href": "soundfonttags-tags.html"
+   },
+   {
     "title": "Theme",
     "href": "theme.html"
    },

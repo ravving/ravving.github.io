@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1a5dfeadeb" defer></script>
-  <script src="search.js?v=95a912bcd2" defer></script>
+  <script src="nav.js?v=51d83a22d5" defer></script>
+  <script src="search.js?v=574e5ff2ac" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -119,7 +119,6 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#sideFocused-prop" translate="no">sideFocused</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#sideHighlighted-prop" translate="no">sideHighlighted</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#sideRows-prop" translate="no">sideRows</a></b> : list&lt;var&gt;</li>
-<li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#sideScrolling-prop" translate="no">sideScrolling</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#subtitleRole-prop" translate="no">subtitleRole</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#tapPicks-prop" translate="no">tapPicks</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-choicedialog.html#title-prop" translate="no">title</a></b> : string</li>
@@ -155,7 +154,7 @@
 <p>The current item is marked, the highlighted one follows the device, and choosing one closes the dialog.</p>
 <p>Optional <code translate="no">actions</code> add buttons to the header (SAVE, DELETE) or a band along the bottom (OPEN, EXPORT) that act on the highlighted item through <code translate="no">actionTriggered</code>.</p>
 <p>The device while open: the big knob or the arrows move the highlight, SELECT chooses it, BACK closes without choosing. Closing gives the focus back to whatever had it (Dialog).</p>
-<p>A dialog with <code translate="no">sideEntries</code> (the app's groups and sort) shows them down its left, a <a href="qml-ravving-controls-sidebaritem.html" translate="no">SideBarItem</a> each, scrolling when they outgrow it; the grid takes the rest of the room. ◀ on the grid's first column moves the keys onto the sidebar: there ▲ ▼ and the big knob walk the entries, SELECT takes the one ringed (<a href="qml-ravving-controls-choicedialog.html#sideTriggered-signal" translate="no">sideTriggered</a>()), ▶ goes back to the grid and BACK still closes. A tap on an entry takes it at once.</p>
+<p>A dialog with <code translate="no">sideEntries</code> (the app's groups) shows them down its left, a <a href="qml-ravving-controls-sidebaritem.html" translate="no">SideBarItem</a> each, scrolling when they outgrow it; the grid takes the rest of the room. ◀ on the grid's first column moves the keys onto the sidebar: there ▲ ▼ and the big knob walk the entries, SELECT takes the one ringed (<a href="qml-ravving-controls-choicedialog.html#sideTriggered-signal" translate="no">sideTriggered</a>()), ▶ goes back to the grid and BACK still closes. A tap on an entry takes it at once.</p>
 <p>An owner that may want to ask first (opening a project over unsaved work) sets <code translate="no">closeOnChoose</code> false, closes it itself, and can show a line of <code translate="no">notice</code>. A grid with nothing in it says why with an <a href="qml-ravving-controls-emptynote.html" translate="no">EmptyNote</a> (<code translate="no">emptyText</code>). What waits for a confirming second press shows it as everywhere else in ravving: the <a href="qml-ravving-controls-armbar.html" translate="no">ArmBar</a> countdown inside that very button, the header action (<code translate="no">armedAction</code>) or the item (<code translate="no">armedValue</code>).</p>
 <p>With <code translate="no">previewable</code>, holding an item previews it (a sample is heard) until it is let go: <a href="qml-ravving-controls-choicedialog.html#previewStarted-signal" translate="no">previewStarted</a>(value) on the hold, <a href="qml-ravving-controls-choicedialog.html#previewStopped-signal" translate="no">previewStopped</a>() on the release or when the dialog closes. An owner can turn <code translate="no">previewable</code> on and off (a PREVIEW toggle in its header); going off, the preview playing stops.</p>
 <p>A type built on it (the app's ChoicePopup: sources, groups, favourites) puts rows of its own between the header and the grid (<code translate="no">filters</code>: the sources), its groups and sort on the sidebar (<code translate="no">sideEntries</code>), narrows or orders the list (<code translate="no">shownItems</code>), adds to the keys' hint (<code translate="no">extraHint</code>), draws a badge in each cell's corner (<code translate="no">cellBadge</code>, which reads its loader's <code translate="no">cellItem</code>), and takes the device's other inputs through the hooks below: <a href="qml-ravving-controls-choicedialog.html#itemHeld-method" translate="no">itemHeld</a>(), <a href="qml-ravving-controls-choicedialog.html#selectHandled-method" translate="no">selectHandled</a>(), <a href="qml-ravving-controls-choicedialog.html#knobTurned-method" translate="no">knobTurned</a>() and <a href="qml-ravving-controls-choicedialog.html#subtitleOf-method" translate="no">subtitleOf</a>().</p>
@@ -260,7 +259,7 @@
 <div class="fnitem">
 <!-- $$$hasSidebar -->
 <h3 class="fn qml-member qml-property" translate="no" id="hasSidebar-prop"><span class="name">hasSidebar</span> : <span class="type">bool</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>The sidebar's rows, down the dialog's left beside the grid (a type built on this: the groups and the sort): [{key, text, glyph, detail, checked, section, pinned}]. <code translate="no">key</code> tells a row apart (unique; a row keeps its place by it), <code translate="no">text</code> is the row's name, <code translate="no">glyph</code> its Icon (&quot;&quot; none), <code translate="no">detail</code> a count at its right, <code translate="no">checked</code> marks the row in force, and <code translate="no">section</code> is the Caption over the first row of a run that shares it. Rows with <code translate="no">pinned: true</code> come last and stay at the sidebar's foot while the others scroll. None (the default): no sidebar, the grid takes the dialog's width.</p>
+<p>The sidebar's rows, down the dialog's left beside the grid (a type built on this: the groups): [{key, text, glyph, detail, indent, checked, section}]. <code translate="no">key</code> tells a row apart (unique; a row keeps its place by it), <code translate="no">text</code> is the row's name, <code translate="no">glyph</code> its Icon (&quot;&quot; none), <code translate="no">detail</code> a count at its right, <code translate="no">indent</code> how far the name is set in (a folder's row under its group's; 0 by default), <code translate="no">checked</code> marks the row in force, and <code translate="no">section</code> is the Caption over the first row of a run that shares it. None (the default): no sidebar, the grid takes the dialog's width.</p>
 <!-- @@@hasSidebar -->
 </div>
 <div class="fnitem">
@@ -320,7 +319,7 @@
 <div class="fnitem">
 <!-- $$$sideEntries -->
 <h3 class="fn qml-member qml-property" translate="no" id="sideEntries-prop"><span class="name">sideEntries</span> : <span class="type">list</span>&lt;<span class="type">var</span>&gt;</h3>
-<p>The sidebar's rows, down the dialog's left beside the grid (a type built on this: the groups and the sort): [{key, text, glyph, detail, checked, section, pinned}]. <code translate="no">key</code> tells a row apart (unique; a row keeps its place by it), <code translate="no">text</code> is the row's name, <code translate="no">glyph</code> its Icon (&quot;&quot; none), <code translate="no">detail</code> a count at its right, <code translate="no">checked</code> marks the row in force, and <code translate="no">section</code> is the Caption over the first row of a run that shares it. Rows with <code translate="no">pinned: true</code> come last and stay at the sidebar's foot while the others scroll. None (the default): no sidebar, the grid takes the dialog's width.</p>
+<p>The sidebar's rows, down the dialog's left beside the grid (a type built on this: the groups): [{key, text, glyph, detail, indent, checked, section}]. <code translate="no">key</code> tells a row apart (unique; a row keeps its place by it), <code translate="no">text</code> is the row's name, <code translate="no">glyph</code> its Icon (&quot;&quot; none), <code translate="no">detail</code> a count at its right, <code translate="no">indent</code> how far the name is set in (a folder's row under its group's; 0 by default), <code translate="no">checked</code> marks the row in force, and <code translate="no">section</code> is the Caption over the first row of a run that shares it. None (the default): no sidebar, the grid takes the dialog's width.</p>
 <!-- @@@sideEntries -->
 </div>
 <div class="fnitem">
@@ -340,12 +339,6 @@
 <h3 class="fn qml-member qml-property" translate="no" id="sideRows-prop"><span class="name">sideRows</span> : <span class="type">list</span>&lt;<span class="type">var</span>&gt; <code class="details extra" translate="no">[read-only]</code></h3>
 <p>The sidebar's rows as its views list them: every field there (an empty one when not given), its place in <a href="qml-ravving-controls-choicedialog.html#sideEntries-prop" translate="no">sideEntries</a>, and whether its section's Caption goes over it.</p>
 <!-- @@@sideRows -->
-</div>
-<div class="fnitem">
-<!-- $$$sideScrolling -->
-<h3 class="fn qml-member qml-property" translate="no" id="sideScrolling-prop"><span class="name">sideScrolling</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
-<p>How many of the sidebar's rows scroll (those not pinned at its foot).</p>
-<!-- @@@sideScrolling -->
 </div>
 <div class="fnitem">
 <!-- $$$subtitleRole -->

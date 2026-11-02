@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Packaging · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=981f9550ab">
+<link rel="stylesheet" href="../site.css?v=a5a0ead125">
 <script src="../assets/theme.js?v=3307b56d38"></script>
 <script src="../assets/icons.js?v=d6def946c7" defer></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -55,6 +55,9 @@
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
 <li><a href="manual.html">The manual</a></li>
 </ul>
+<p class="mono">What&#x27;s new</p><ul>
+<li><a href="news.html">What&#x27;s new</a></li>
+</ul>
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
 <li><a href="icon-packs.html">Make an icon pack</a></li>
@@ -79,7 +82,7 @@
 <li><a href="writing-the-guide.html">Writing the guide</a></li>
 <li><a href="writing-code-docs.html">Writing code documentation</a></li>
 <li><a href="building.html">Building</a></li>
-<li class="on"><a href="packaging.html" aria-current="page">Packaging</a><ul><li><a href="#what-the-device-needs">What the device needs</a></li><li><a href="#what-is-in-the-bundle">What is in the bundle</a></li><li><a href="#the-setup-page">The setup page</a></li><li><a href="#building-the-appimage">Building the AppImage</a></li><li><a href="#the-store-pages-assets">The Store page&#x27;s assets</a></li><li><a href="#before-a-release-the-translations">Before a release: the translations</a></li><li><a href="#the-release-check-toolsappimage-testsh">The release check: tools/appimage-test.sh</a></li><li><a href="#testing-an-appimage-without-the-store">Testing an AppImage without the Store</a></li><li><a href="#bluetooth-on-a-fresh-device">Bluetooth on a fresh device</a></li></ul></li>
+<li class="on"><a href="packaging.html" aria-current="page">Packaging</a><ul><li><a href="#what-the-device-needs">What the device needs</a></li><li><a href="#what-is-in-the-bundle">What is in the bundle</a></li><li><a href="#the-setup-page">The setup page</a></li><li><a href="#building-the-appimage">Building the AppImage</a></li><li><a href="#the-store-pages-assets">The Store page&#x27;s assets</a></li><li><a href="#before-a-release-the-news">Before a release: the news</a></li><li><a href="#before-a-release-the-translations">Before a release: the translations</a></li><li><a href="#the-release-check-toolsappimage-testsh">The release check: tools/appimage-test.sh</a></li><li><a href="#testing-an-appimage-without-the-store">Testing an AppImage without the Store</a></li><li><a href="#bluetooth-on-a-fresh-device">Bluetooth on a fresh device</a></li></ul></li>
 <li><a href="testing.html">Testing on the device</a></li>
 <li><a href="debugging.html">Debugging</a></li>
 <li><a href="quality.html">Quality</a></li>
@@ -412,6 +415,18 @@ git checkout into a venv). Then it runs <code>tools/build-appimage.sh</code> the
   the number keys) into the Store packages folder's <code>gallery/</code>; pick three for the page.
   Load a project worth showing first: the shots are of whatever is on screen.</li>
 </ul>
+<h2 id="before-a-release-the-news">Before a release: the news</h2>
+<p>Every release gets its section at the top of <a href="news.html">What's new</a> (the site's
+<code>docs/news.html</code>), written for players:</p>
+<ul>
+<li><code>## ravving X.Y</code>, an ARU line, the date and one sentence on what the release is about;</li>
+<li><code>### New</code>: each feature in a line or two, its on-screen names in capitals, linked to the
+  manual's or the guide's section that explains it;</li>
+<li><code>### Fixed</code>: what a player notices working now, linked where a page covers it.</li>
+</ul>
+<p>The landing page's news block (site/index.html, <code>landing-news</code>) then gets the new version, a
+headline and two sentences, its READ MORE pointing at the new section (<code>docs/news.html#ravving-XY</code>).
+Render the pages and translate the new texts as for any page change.</p>
 <h2 id="before-a-release-the-translations">Before a release: the translations</h2>
 <p>Every release has its translations reviewed:</p>
 <ul>

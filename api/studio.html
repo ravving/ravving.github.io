@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1a5dfeadeb" defer></script>
-  <script src="search.js?v=95a912bcd2" defer></script>
+  <script src="nav.js?v=51d83a22d5" defer></script>
+  <script src="search.js?v=574e5ff2ac" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -145,6 +145,8 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="studio.html#drumPresets-prop" translate="no">drumPresets</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="studio.html#effectChain-prop" translate="no">effectChain</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="studio.html#effectiveBpm-prop" translate="no">effectiveBpm</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="studio.html#engineOutput" translate="no">engineOutput</a></b>(const QString &amp;<i>machineKey</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#engineQuery" translate="no">engineQuery</a></b>(const QString &amp;<i>machineKey</i>, const QString &amp;<i>command</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="studio.html#exporter-prop" translate="no">exporter</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="studio.html#externalClock-prop" translate="no">externalClock</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="studio.html#freeSynthChannels" translate="no">freeSynthChannels</a></b>() const</td></tr>
@@ -193,7 +195,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#swing-prop" translate="no">setSwing</a></b>(qreal <i>swing</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#swingEighths-prop" translate="no">setSwingEighths</a></b>(bool <i>eighths</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#setUiValue" translate="no">setUiValue</a></b>(const QString &amp;<i>key</i>, const QVariant &amp;<i>value</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="studio.html#soundfontOffer" translate="no">soundfontOffer</a></b>(const QString &amp;<i>path</i>, const QVariantList &amp;<i>presets</i> = {}, bool <i>wholeKit</i> = false) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="studio.html#soundfontOffer" translate="no">soundfontOffer</a></b>(const QString &amp;<i>path</i>, const QVariantList &amp;<i>presets</i> = {}, bool <i>wholeKit</i> = false, const QString &amp;<i>family</i> = QString()) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="studio.html#step-prop" translate="no">step</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#stop" translate="no">stop</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="studio.html#stopPreview" translate="no">stopPreview</a></b>()</td></tr>
@@ -229,6 +231,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="studio.html#DefaultBpm-var" translate="no">DefaultBpm</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="studio.html#MaxBpm-var" translate="no">MaxBpm</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="studio.html#MinBpm-var" translate="no">MinBpm</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="studio.html#cachePathFor" translate="no">cachePathFor</a></b>(const QString &amp;<i>path</i>, const QString &amp;<i>family</i> = QString())</td></tr>
 </table></div>
 <!-- $$$Studio-description -->
 <div class="descr">
@@ -721,10 +724,30 @@
 <!-- @@@applyProjectState -->
 </div>
 <div class="fnitem">
+<!-- $$$cachePathFor[overload1]$$$cachePathForconstQString&constQString& -->
+<h3 class="fn" translate="no" id="cachePathFor"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Studio::<span class="name">cachePathFor</span>(const <span class="type">QString</span> &amp;<i>path</i>, const <span class="type">QString</span> &amp;<i>family</i> = QString())</h3>
+<p>Returns where a soundfont picked off the device as <i translate="no">path</i> (a stick's file, or a catalog file's name) is kept under the cache's or the library's root: in the folder of its family (<i translate="no">family</i> when the catalog says one; else the stick's family folder, else the table's; none for a font nobody knows) and the stick's folders below it, by its file name (<a href="soundfonttags.html#placeOf" translate="no">SoundfontTags::placeOf</a>()).</p>
+<!-- @@@cachePathFor -->
+</div>
+<div class="fnitem">
 <!-- $$$cleanProjectState[overload1]$$$cleanProjectStateconstQVariantMap& -->
 <h3 class="fn" translate="no" id="cleanProjectState"><span class="type">QVariantMap</span> Studio::<span class="name">cleanProjectState</span>(const <span class="type">QVariantMap</span> &amp;<i>settings</i>) const</h3>
 <p>Returns the state of a new project: <i translate="no">settings</i> (a template's tempo, swing, key, live effects, sections and sounds, or nothing) with every machine marked <code translate="no">clean</code>, so each starts with an empty pattern and the default mix and effects, and its own engine and the default sound unless the template names one.</p>
 <!-- @@@cleanProjectState -->
+</div>
+<div class="fnitem">
+<!-- $$$engineOutput[overload1]$$$engineOutputconstQString& -->
+<h3 class="fn" translate="no" id="engineOutput"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> Studio::<span class="name">engineOutput</span>(const <span class="type">QString</span> &amp;<i>machineKey</i>)</h3>
+<p>Returns the last of what the FluidSynth of the machine <i translate="no">machineKey</i> printed (the replies to <a href="studio.html#engineQuery" translate="no">engineQuery</a>() and to every command ravving sent), logged too. Empty for a machine without a FluidSynth.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@engineOutput -->
+</div>
+<div class="fnitem">
+<!-- $$$engineQuery[overload1]$$$engineQueryconstQString&constQString& -->
+<h3 class="fn" translate="no" id="engineQuery"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Studio::<span class="name">engineQuery</span>(const <span class="type">QString</span> &amp;<i>machineKey</i>, const <span class="type">QString</span> &amp;<i>command</i>)</h3>
+<p>Sends <i translate="no">command</i> to the FluidSynth of the machine <i translate="no">machineKey</i> (&quot;drums1&quot;) as a diagnostic (<code translate="no">call|studio|engineQuery|drums1|channels</code> over the fifo): <code translate="no">fonts</code> and <code translate="no">channels</code> say what the engine really holds and plays, against what ravving believes it told it. The reply is read with <a href="studio.html#engineOutput" translate="no">engineOutput</a>() a moment later. Nothing for a machine without a FluidSynth.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@engineQuery -->
 </div>
 <div class="fnitem">
 <!-- $$$freeSynthChannels -->
@@ -858,9 +881,9 @@
 <!-- @@@setUiValue -->
 </div>
 <div class="fnitem">
-<!-- $$$soundfontOffer[overload1]$$$soundfontOfferconstQString&constQVariantList&bool -->
-<h3 class="fn" translate="no" id="soundfontOffer"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantMap</span> Studio::<span class="name">soundfontOffer</span>(const <span class="type">QString</span> &amp;<i>path</i>, const <span class="type">QVariantList</span> &amp;<i>presets</i> = {}, <span class="type">bool</span> <i>wholeKit</i> = false) const</h3>
-<p>Returns what the soundfont <i translate="no">path</i> (a USB stick's file, or the file name of a catalog soundfont) would give once on the device: <code translate="no">sources</code> (the machines' sounds) and <code translate="no">kits</code> (the drum kits), named and pathed as they will be there, and <code translate="no">onDevice</code> (the device has a file of its name). Unless the library has it, a picked soundfont plays from <a href="paths.html#soundfontCache" translate="no">Paths::soundfontCache</a>() (<a href="usblibrary.html#cacheSoundfont" translate="no">UsbLibrary::cacheSoundfont</a>(), <a href="store.html#cacheSoundfont" translate="no">Store::cacheSoundfont</a>()) until a project saved with it copies it into the library. A file on disk is read; for a catalog soundfont <i translate="no">presets</i> lists its presets (maps of <code translate="no">name</code>, <code translate="no">bank</code>, <code translate="no">program</code>) and <i translate="no">wholeKit</i> says whether the whole font is a drum kit.</p>
+<!-- $$$soundfontOffer[overload1]$$$soundfontOfferconstQString&constQVariantList&boolconstQString& -->
+<h3 class="fn" translate="no" id="soundfontOffer"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantMap</span> Studio::<span class="name">soundfontOffer</span>(const <span class="type">QString</span> &amp;<i>path</i>, const <span class="type">QVariantList</span> &amp;<i>presets</i> = {}, <span class="type">bool</span> <i>wholeKit</i> = false, const <span class="type">QString</span> &amp;<i>family</i> = QString()) const</h3>
+<p>Returns what the soundfont <i translate="no">path</i> (a USB stick's file, or the file name of a catalog soundfont) would give once on the device: <code translate="no">sources</code> (the machines' sounds) and <code translate="no">kits</code> (the drum kits), named and pathed as they will be there, and <code translate="no">onDevice</code> (the device has a file of its name). Unless the library has it, a picked soundfont plays from <a href="paths.html#soundfontCache" translate="no">Paths::soundfontCache</a>() (<a href="usblibrary.html#cacheSoundfont" translate="no">UsbLibrary::cacheSoundfont</a>(), <a href="store.html#cacheSoundfont" translate="no">Store::cacheSoundfont</a>()) until a project saved with it copies it into the library. A file on disk is read; for a catalog soundfont <i translate="no">presets</i> lists its presets (maps of <code translate="no">name</code>, <code translate="no">bank</code>, <code translate="no">program</code>), <i translate="no">wholeKit</i> says whether the whole font is a drum kit and <i translate="no">family</i> what the catalog files it as (the folder the Store lands it in).</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@soundfontOffer -->
 </div>

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Testing on the device · ravving docs</title>
-<link rel="stylesheet" href="../site.css?v=981f9550ab">
+<link rel="stylesheet" href="../site.css?v=a5a0ead125">
 <script src="../assets/theme.js?v=3307b56d38"></script>
 <script src="../assets/icons.js?v=d6def946c7" defer></script>
 <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -54,6 +54,9 @@
 <li><a href="send-to-phone.html">Send a file to your phone</a></li>
 <li><a href="troubleshooting.html">When something&#x27;s wrong</a></li>
 <li><a href="manual.html">The manual</a></li>
+</ul>
+<p class="mono">What&#x27;s new</p><ul>
+<li><a href="news.html">What&#x27;s new</a></li>
 </ul>
 <p class="mono">Make your own</p><ul>
 <li><a href="skin-sets.html">Make a skin set</a></li>
@@ -188,6 +191,14 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 <tr>
 <td><code>tools/soundfont.py presets · ranges · render · categorise FILE…</code></td>
 <td>look inside an SF2 / SF3 before making it a kits.json sound source (<code>categorise --json</code> proposes the entries, a category from the name and folder: Strings, Organ, Keys, Bass, Guitar, Winds, Voices, Synth, Alien for the drones, Drums, Other; mute fonts left out): its presets (bank:program), the key and velocity ranges of its zones (a <code>velRange 0–0</code> font is mute everywhere: SynStrings, LaString, MelloString, Organ on the image), and an offline render of one chord through fluidsynth with the level every quarter second</td>
+</tr>
+<tr>
+<td><code>call studio engineQuery MACHINE COMMAND</code>, then <code>call studio engineOutput MACHINE</code></td>
+<td>a machine's FluidSynth asked in its own shell (<code>fonts</code>, <code>channels</code>, <code>inst N</code>, <code>echo MARK</code>): its replies, then what ravving believes (each font's id, each channel's preset); the two must agree</td>
+</tr>
+<tr>
+<td><code>python3 tools/kit-match.py RECORDING.npy KIT.sf2 …</code> (laptop)</td>
+<td>which kit a recording of the drums' output was played with: each kit's own samples matched in it (1.00: that kit; 0.2–0.3: another)</td>
 </tr>
 <tr>
 <td><code>tools/mididump.py PORT SECONDS</code> (on the device, <code>pw-jack python3</code>)</td>

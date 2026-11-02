@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1a5dfeadeb" defer></script>
-  <script src="search.js?v=95a912bcd2" defer></script>
+  <script src="nav.js?v=51d83a22d5" defer></script>
+  <script src="search.js?v=574e5ff2ac" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -136,6 +136,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#degreeForNote" translate="no">degreeForNote</a></b>(int <i>note</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#deleteChords" translate="no">deleteChords</a></b>(const QVariantList &amp;<i>picked</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#deleteNotes" translate="no">deleteNotes</a></b>(const QVariantList &amp;<i>picked</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#holdChordTo" translate="no">holdChordTo</a></b>(int <i>step</i>, int <i>degree</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#holdNoteTo" translate="no">holdNoteTo</a></b>(int <i>step</i>, int <i>note</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#moveChords" translate="no">moveChords</a></b>(const QVariantList &amp;<i>picked</i>, int <i>steps</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="chordmachine.html#moveNotes" translate="no">moveNotes</a></b>(const QVariantList &amp;<i>picked</i>, int <i>steps</i>, bool <i>chromatic</i>)</td></tr>
@@ -532,6 +533,13 @@
 </div><!-- @@@deleteNotes -->
 </div>
 <div class="fnitem">
+<!-- $$$holdChordTo[overload1]$$$holdChordTointint -->
+<h3 class="fn" translate="no" id="holdChordTo"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> ChordMachine::<span class="name">holdChordTo</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>degree</i>)</h3>
+<p>Makes the chord on <i translate="no">degree</i>'s row (a custom voicing on its row too) that comes before <i translate="no">step</i> of the viewed bar last up to that step, one chord held for the whole span; the same chord on the step after stays a chord of its own. The steps it reaches over take it, as taps there would (a step holds one chord). Nothing changes when none of the row's is before the step in this bar. Returns whether a chord's length changed.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@holdChordTo -->
+</div>
+<div class="fnitem">
 <!-- $$$holdNoteTo[overload1]$$$holdNoteTointint -->
 <h3 class="fn" translate="no" id="holdNoteTo"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> ChordMachine::<span class="name">holdNoteTo</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>note</i>)</h3>
 <p>Makes the MIDI <i translate="no">note</i> that sounds on or before <i translate="no">step</i> of the viewed bar last up to that step, held through whatever else the steps play; the same note further on lets go there. On the note's first step it goes back to one step. Returns whether a note's length changed.</p>
@@ -590,7 +598,7 @@
 <div class="fnitem">
 <!-- $$$setChord[overload1]$$$setChordintint -->
 <h3 class="fn" translate="no" id="setChord"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ChordMachine::<span class="name">setChord</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>degree</i>)</h3>
-<p>Puts <i translate="no">degree</i>'s chord (0 to 6) on <i translate="no">step</i> of the viewed bar and sounds it, or clears the step when it already holds that chord.</p>
+<p>Puts <i translate="no">degree</i>'s chord (0 to 6) on <i translate="no">step</i> of the viewed bar and sounds it, or clears the step when it already holds that chord. The chord lasts the one step and is struck there, as a chord of its own beside the same chord on the steps around it; <a href="chordmachine.html#holdChordTo" translate="no">holdChordTo</a>() makes one last longer.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setChord -->
 </div>

@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=1a5dfeadeb" defer></script>
-  <script src="search.js?v=95a912bcd2" defer></script>
+  <script src="nav.js?v=51d83a22d5" defer></script>
+  <script src="search.js?v=574e5ff2ac" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -89,14 +89,17 @@
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="consoleprocess.html#ConsoleProcess" translate="no">ConsoleProcess</a></b>(const QString &amp;<i>prompt</i>, ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="consoleprocess.html#isRunning" translate="no">isRunning</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="consoleprocess.html#output" translate="no">output</a></b>(int <i>bytes</i> = 4000) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="consoleprocess.html#run" translate="no">run</a></b>(const QString &amp;<i>program</i>, const QStringList &amp;<i>arguments</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="consoleprocess.html#send" translate="no">send</a></b>(const QString &amp;<i>line</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="consoleprocess.html#send-1" translate="no">send</a></b>(const QString &amp;<i>line</i>, std::function&lt;void (const QString &amp;)&gt; <i>onReply</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="consoleprocess.html#setStartupCommands" translate="no">setStartupCommands</a></b>(const QStringList &amp;<i>commands</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="consoleprocess.html#stop" translate="no">stop</a></b>()</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="consoleprocess.html#started" translate="no">started</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="consoleprocess.html#stopped" translate="no">stopped</a></b>()</td></tr>
 </table></div>
 <!-- $$$ConsoleProcess-description -->
 <div class="descr">
@@ -120,6 +123,12 @@
 <!-- @@@isRunning -->
 </div>
 <div class="fnitem">
+<!-- $$$output[overload1]$$$outputint -->
+<h3 class="fn" translate="no" id="output"><span class="type">QString</span> ConsoleProcess::<span class="name">output</span>(<span class="type">int</span> <i>bytes</i> = 4000) const</h3>
+<p>Returns the last <i translate="no">bytes</i> the console printed (its replies and prompts): what it made of the commands sent, for a diagnostic. Empty while no process runs.</p>
+<!-- @@@output -->
+</div>
+<div class="fnitem">
 <!-- $$$run[overload1]$$$runconstQString&constQStringList& -->
 <h3 class="fn" translate="no" id="run"><span class="type">void</span> ConsoleProcess::<span class="name">run</span>(const <span class="type">QString</span> &amp;<i>program</i>, const <span class="type">QStringList</span> &amp;<i>arguments</i>)</h3>
 <p>Runs <i translate="no">program</i> with <i translate="no">arguments</i>; a process already running is stopped and the program started again with them.</p>
@@ -129,6 +138,12 @@
 <!-- $$$send[overload1]$$$sendconstQString& -->
 <h3 class="fn" translate="no" id="send"><span class="type">void</span> ConsoleProcess::<span class="name">send</span>(const <span class="type">QString</span> &amp;<i>line</i>)</h3>
 <p>Sends the command <i translate="no">line</i> to the console; ignored while the process is not running.</p>
+<!-- @@@send -->
+</div>
+<div class="fnitem">
+<!-- $$$send$$$sendconstQString&std::function<void(constQString&)> -->
+<h3 class="fn" translate="no" id="send-1"><span class="type">void</span> ConsoleProcess::<span class="name">send</span>(const <span class="type">QString</span> &amp;<i>line</i>, <span class="type">std::function</span>&lt;<span class="type">void</span> (const <span class="type">QString</span> &amp;)&gt; <i>onReply</i>)</h3>
+<p>Sends the command <i translate="no">line</i> and calls <i translate="no">onReply</i> with the console's answer (up to its prompt) once it is in, on this object's thread; ignored while the process is not running.</p>
 <!-- @@@send -->
 </div>
 <div class="fnitem">
@@ -148,6 +163,12 @@
 <h3 class="fn" translate="no" id="stop"><span class="type">void</span> ConsoleProcess::<span class="name">stop</span>()</h3>
 <p>Stops the process for good (an engine being replaced). The destructor does the same, so no process outlives the object.</p>
 <!-- @@@stop -->
+</div>
+<div class="fnitem">
+<!-- $$$stopped[overload1]$$$stopped -->
+<h3 class="fn" translate="no" id="stopped"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ConsoleProcess::<span class="name">stopped</span>()</h3>
+<p>Emitted when a running process is gone (it ended, it crashed, or another takes its place): what it held is gone with it.</p>
+<!-- @@@stopped -->
 </div>
 </div>
 </article>
