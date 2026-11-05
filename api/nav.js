@@ -442,6 +442,38 @@ window.ravNav = [
     "href": "audiotap.html"
    },
    {
+    "title": "ControllerCapability",
+    "href": "controllercapability.html"
+   },
+   {
+    "title": "ControllerDriver",
+    "href": "controllerdriver.html"
+   },
+   {
+    "title": "ControllerDrivers",
+    "href": "controllerdrivers.html"
+   },
+   {
+    "title": "ControllerHub",
+    "href": "controllerhub.html"
+   },
+   {
+    "title": "ControllerOctave",
+    "href": "controlleroctave.html"
+   },
+   {
+    "title": "ControllerOctaves",
+    "href": "controlleroctaves.html"
+   },
+   {
+    "title": "ControllerScale",
+    "href": "controllerscale.html"
+   },
+   {
+    "title": "ControllerScales",
+    "href": "controllerscales.html"
+   },
+   {
     "title": "Exporter",
     "href": "exporter.html"
    },
@@ -482,10 +514,6 @@ window.ravNav = [
     "href": "midiinput.html"
    },
    {
-    "title": "MixRecorder",
-    "href": "mixrecorder.html"
-   },
-   {
     "title": "MusicLibrary",
     "href": "musiclibrary.html"
    },
@@ -500,6 +528,10 @@ window.ravNav = [
    {
     "title": "PitchDetector",
     "href": "pitchdetector.html"
+   },
+   {
+    "title": "RoliBlocks",
+    "href": "roliblocks.html"
    },
    {
     "title": "Tuner",
@@ -727,6 +759,10 @@ window.ravNav = [
    {
     "title": "ControlGroup",
     "href": "qml-ravving-controls-controlgroup.html"
+   },
+   {
+    "title": "ControlWell",
+    "href": "qml-ravving-controls-controlwell.html"
    },
    {
     "title": "DialFace",

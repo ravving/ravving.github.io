@@ -289,6 +289,11 @@ page-focus request (Main.qml wires those).</p>
 <td>↶ ↷ (the header's, a pattern's), ‹ 1/1 ›, the bars' + −, MOVE ◀ ▶, every <code>Stepper</code></td>
 </tr>
 <tr>
+<td>The well itself, 2 px past what it backs</td>
+<td><code>ControlWell</code></td>
+<td><code>ControlGroup</code>'s row, a <code>FormRow</code> of two or more buttons, <code>SettingsChoices</code>, the LIVE FX slots</td>
+</tr>
+<tr>
 <td>The way a file leaves the device: a SEND… button opening the destinations (USB sticks, the computer, the phone by QR code)</td>
 <td><code>SendPopup</code> (<code>QrPopup</code> for the phone)</td>
 <td>the FILES browser (every kind), VIDEO SAVED, the music player's tracks, the presets dialog, the sound picker</td>
@@ -338,6 +343,9 @@ and Button sizes):</p>
 <li><strong>Controls that belong together sit on one <code>ControlGroup</code>:</strong> − OCT +, ↶ ↷, ‹ 1/1 ›, a
   section's or a part's ◀ ▶. Its well reaches 2 px past them, so the row keeps its size, and its
   corners are the surfaces' (the controls' sit concentric inside).</li>
+<li><strong>A settings row of two or more buttons is a group too:</strong> <code>FormRow</code> puts its buttons on a
+  <code>ControlWell</code> when every control it shows is a button, and <code>SettingsChoices</code> keeps its
+  choices on one. A row that mixes a knob or a meter with buttons has no well.</li>
 <li><strong>A knob that drives a group wears its badge on the group's corner</strong>, never between its
   controls. A caption names the group from outside its well (LENGTH, MOVE, REPEATS).</li>
 </ul>

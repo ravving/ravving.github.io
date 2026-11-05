@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- roliblocks.cpp -->
+  <meta name="description" content="ravving as the host of ROLI's BLOCKS (a Lightpad, with the control blocks on its DNA connectors): the handshake and keep-alive they need, the project's key and the current machine's octave set on their note grid, their octave buttons back, a Live Block's SCALE and octave buttons on the grid, and their buttons as the MIDI they sent before.">
+  <meta name="keywords" content="class">
+  <title>RoliBlocks Class | ravving C++ API 0.6.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=fd733103c9" defer></script>
+  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>RoliBlocks</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">RoliBlocks Class</h1>
+<!-- $$$RoliBlocks-brief -->
+<p>ravving as the host of ROLI's BLOCKS (a Lightpad, with the control blocks on its DNA connectors): the handshake and keep-alive they need, the project's key and the current machine's octave set on their note grid, their octave buttons back, a Live Block's SCALE and octave buttons on the grid, and their buttons as the MIDI they sent before. <a href="#details">More...</a></p>
+<!-- @@@RoliBlocks -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;roliblocks.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="controllerdriver.html" translate="no">ControllerDriver</a>, <a href="controlleroctave.html" translate="no">ControllerOctave</a>, and <a href="controllerscale.html" translate="no">ControllerScale</a></td></tr>
+</table></div>
+<ul>
+<li><a href="roliblocks-members.html">List of all members, including inherited members</a></li>
+<li>RoliBlocks is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#RoliBlocks" translate="no">RoliBlocks</a></b>(const QString &amp;<i>name</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#setOctave" translate="no">setOctave</a></b>(int <i>octave</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#setTimings" translate="no">setTimings</a></b>(int <i>probeMs</i>, int <i>retryMs</i>)</td></tr>
+</table></div>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#controllerName" translate="no">controllerName</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#followKey" translate="no">followKey</a></b>(int <i>root</i>, const QList&lt;int&gt; &amp;<i>steps</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#followOctave" translate="no">followOctave</a></b>(int <i>octave</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#start" translate="no">start</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#stop" translate="no">stop</a></b>() override</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#checksum" translate="no">checksum</a></b>(const QByteArray &amp;<i>payload</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#packet" translate="no">packet</a></b>(int <i>index</i>, const QByteArray &amp;<i>payload</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#scaleId" translate="no">scaleId</a></b>(const QList&lt;int&gt; &amp;<i>steps</i>)</td></tr>
+</table></div>
+<!-- $$$RoliBlocks-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The BLOCKS protocol: System Exclusive, <code translate="no">00 21 10 77</code> then the block's topology index (bit 6 set on the way back), a 7-bit packed bit stream of messages (each a 7-bit type then its fields, low bits first) and a checksum. The host probes the blocks (<code translate="no">00 21 10 78 3F</code>, answered with a serial dump; without it the blocks answer nothing), asks for the topology (the blocks' serials, indices, batteries, firmware), puts each block in API mode and pings the master every 400 ms (the others every 1.7 s); without the pings a block leaves API mode after five seconds, searches for a host and, in time, powers off. In API mode the blocks report their buttons and config changes as messages. The note grid's root is config item 5 (transpose), its scale 22, its octave 4. A Live Block's SCALE (button 2) steps the grid through the project's scale, its pentatonic and chromatic, the project's key unchanged; its − and + (8 and 9) ask for the octave below or above. The octave is a <a href="controlleroctave.html" translate="no">ControllerOctave</a>: linked to ravving's, or (unlinked) the blocks' own.</p>
+<p>Facts: each block's serial, type, battery and firmware. State: <code translate="no">connecting</code> (the topology asked, four times at most), <code translate="no">ready</code> (the master acknowledged), <code translate="no">lost</code> (no answer).</p>
+</div>
+<!-- @@@RoliBlocks -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$RoliBlocks[overload1]$$$RoliBlocksconstQString&QObject* -->
+<h3 class="fn" translate="no" id="RoliBlocks"><code class="details extra" translate="no">[explicit]</code> RoliBlocks::<span class="name">RoliBlocks</span>(const <span class="type">QString</span> &amp;<i>name</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>The host of the blocks on the controller <i translate="no">name</i> (the Lightpad's port), with <i translate="no">parent</i>.</p>
+<!-- @@@RoliBlocks -->
+</div>
+<div class="fnitem">
+<!-- $$$checksum[overload1]$$$checksumconstQByteArray& -->
+<h3 class="fn" translate="no" id="checksum"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> RoliBlocks::<span class="name">checksum</span>(const <span class="type">QByteArray</span> &amp;<i>payload</i>)</h3>
+<p>Returns the blocks' checksum of <i translate="no">payload</i>.</p>
+<!-- @@@checksum -->
+</div>
+<div class="fnitem">
+<!-- $$$controllerName[overload1]$$$controllerName -->
+<h3 class="fn" translate="no" id="controllerName"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QString</span> RoliBlocks::<span class="name">controllerName</span>() const</h3>
+<p>Reimplements: <a href="controllercapability.html#controllerName" translate="no">ControllerCapability::controllerName</a>() const.</p>
+<p>Returns the controller's name: its settings are kept by it.</p>
+<!-- @@@controllerName -->
+</div>
+<div class="fnitem">
+<!-- $$$followKey[overload1]$$$followKeyintconstQList<int>& -->
+<h3 class="fn" translate="no" id="followKey"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> RoliBlocks::<span class="name">followKey</span>(<span class="type">int</span> <i>root</i>, const <span class="type">QList</span>&lt;<span class="type">int</span>&gt; &amp;<i>steps</i>)</h3>
+<p>Reimplements: <a href="controllerscale.html#followKey" translate="no">ControllerScale::followKey</a>(int root, const QList&lt;int&gt; &amp;steps).</p>
+<p>The note grid's root is <i translate="no">root</i> and its scale the one with <i translate="no">steps</i> (chromatic when the blocks know none like it).</p>
+<!-- @@@followKey -->
+</div>
+<div class="fnitem">
+<!-- $$$followOctave[overload1]$$$followOctaveint -->
+<h3 class="fn" translate="no" id="followOctave"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> RoliBlocks::<span class="name">followOctave</span>(<span class="type">int</span> <i>octave</i>)</h3>
+<p>Reimplements: <a href="controlleroctave.html#followOctave" translate="no">ControllerOctave::followOctave</a>(int octave).</p>
+<p>ravving's <i translate="no">octave</i> on the note grid (<a href="roliblocks.html#setOctave" translate="no">setOctave</a>()).</p>
+<!-- @@@followOctave -->
+</div>
+<div class="fnitem">
+<!-- $$$packet[overload1]$$$packetintconstQByteArray& -->
+<h3 class="fn" translate="no" id="packet"><code class="details extra" translate="no">[static]</code> <span class="type">QByteArray</span> RoliBlocks::<span class="name">packet</span>(<span class="type">int</span> <i>index</i>, const <span class="type">QByteArray</span> &amp;<i>payload</i>)</h3>
+<p>Returns the message for the block at <i translate="no">index</i> (63: all) carrying <i translate="no">payload</i> (the packed messages), with the header and the checksum, without 0xF0 and 0xF7.</p>
+<!-- @@@packet -->
+</div>
+<div class="fnitem">
+<!-- $$$scaleId[overload1]$$$scaleIdconstQList<int>& -->
+<h3 class="fn" translate="no" id="scaleId"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> RoliBlocks::<span class="name">scaleId</span>(const <span class="type">QList</span>&lt;<span class="type">int</span>&gt; &amp;<i>steps</i>)</h3>
+<p>Returns the note grid's scale id for a scale with <i translate="no">steps</i> (semitones from the root): ROLI's list, 18 (chromatic) for one it has not got.</p>
+<!-- @@@scaleId -->
+</div>
+<div class="fnitem">
+<!-- $$$setOctave[overload1]$$$setOctaveint -->
+<h3 class="fn" translate="no" id="setOctave"><span class="type">void</span> RoliBlocks::<span class="name">setOctave</span>(<span class="type">int</span> <i>octave</i>)</h3>
+<p>The note grid's octave is <i translate="no">octave</i>.</p>
+<!-- @@@setOctave -->
+</div>
+<div class="fnitem">
+<!-- $$$setTimings[overload1]$$$setTimingsintint -->
+<h3 class="fn" translate="no" id="setTimings"><span class="type">void</span> RoliBlocks::<span class="name">setTimings</span>(<span class="type">int</span> <i>probeMs</i>, <span class="type">int</span> <i>retryMs</i>)</h3>
+<p>How long the probe waits for its answer (<i translate="no">probeMs</i>) and the topology requests are apart (<i translate="no">retryMs</i>): the blocks' pace by default, shorter in a test.</p>
+<!-- @@@setTimings -->
+</div>
+<div class="fnitem">
+<!-- $$$start[overload1]$$$start -->
+<h3 class="fn" translate="no" id="start"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> RoliBlocks::<span class="name">start</span>()</h3>
+<p>Reimplements: <a href="controllerdriver.html#start" translate="no">ControllerDriver::start</a>().</p>
+<p>Probes the blocks (their serial dump), then asks for their topology (four times at most, a second apart).</p>
+<!-- @@@start -->
+</div>
+<div class="fnitem">
+<!-- $$$stop[overload1]$$$stop -->
+<h3 class="fn" translate="no" id="stop"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> RoliBlocks::<span class="name">stop</span>()</h3>
+<p>Reimplements: <a href="controllerdriver.html#stop" translate="no">ControllerDriver::stop</a>().</p>
+<p>Lets the blocks go: each leaves API mode (its own program runs alone again), the pings end.</p>
+<!-- @@@stop -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

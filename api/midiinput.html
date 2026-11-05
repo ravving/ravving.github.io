@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- midiinput.cpp -->
-  <meta name="description" content="External MIDI controllers (keyboards, pads) as a note input, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;midiIn.">
+  <meta name="description" content="External MIDI controllers (keyboards, pads, grooveboxes) as a note input and as the device's keys and knobs, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;midiIn.">
   <meta name="keywords" content="class">
   <title>MidiInput Class | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=51d83a22d5" defer></script>
-  <script src="search.js?v=574e5ff2ac" defer></script>
+  <script src="nav.js?v=fd733103c9" defer></script>
+  <script src="search.js?v=131a6217f4" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -77,7 +77,7 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">MidiInput Class</h1>
 <!-- $$$MidiInput-brief -->
-<p>External MIDI controllers (keyboards, pads) as a note input, published to QML as <code translate="no">studio.midiIn</code>. <a href="#details">More...</a></p>
+<p>External MIDI controllers (keyboards, pads, grooveboxes) as a note input and as the device's keys and knobs, published to QML as <code translate="no">studio.midiIn</code>. <a href="#details">More...</a></p>
 <!-- @@@MidiInput -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;midiinput.h&gt;</code></td></tr>
@@ -88,31 +88,68 @@
 </ul>
 <h2 id="properties">Properties</h2>
 <ul>
+<li class="fn" translate="no"><b><a href="midiinput.html#controls-prop" translate="no">controls</a></b> : const QVariantList</li>
 <li class="fn" translate="no"><b><a href="midiinput.html#devices-prop" translate="no">devices</a></b> : QStringList</li>
+<li class="fn" translate="no"><b><a href="midiinput.html#learning-prop" translate="no">learning</a></b> : QString</li>
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#MidiInput" translate="no">MidiInput</a></b>(int *<i>router</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#MidiInput" translate="no">MidiInput</a></b>(int *<i>router</i>, const QString &amp;<i>profilesFile</i> = QString(), QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#clearControl" translate="no">clearControl</a></b>(const QString &amp;<i>device</i>, const QString &amp;<i>control</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#clearHits" translate="no">clearHits</a></b>(const QString &amp;<i>device</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#controls-prop" translate="no">controls</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#describe" translate="no">describe</a></b>(const QString &amp;<i>message</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#devices-prop" translate="no">devices</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#forget" translate="no">forget</a></b>(const QString &amp;<i>device</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#learn" translate="no">learn</a></b>(const QString &amp;<i>device</i>, const QString &amp;<i>what</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#learning-prop" translate="no">learning</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#noteName" translate="no">noteName</a></b>(int <i>note</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#receive" translate="no">receive</a></b>(const QString &amp;<i>device</i>, int <i>size</i>, quint8 <i>byte0</i>, quint8 <i>byte1</i>, quint8 <i>byte2</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#setControl" translate="no">setControl</a></b>(const QString &amp;<i>device</i>, const QString &amp;<i>message</i>, const QString &amp;<i>control</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#setHit" translate="no">setHit</a></b>(const QString &amp;<i>device</i>, int <i>note</i>, int <i>slot</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#setOption" translate="no">setOption</a></b>(const QString &amp;<i>device</i>, const QString &amp;<i>option</i>, int <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#setSoundCardsDir" translate="no">setSoundCardsDir</a></b>(const QString &amp;<i>dir</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#settings" translate="no">settings</a></b>(const QString &amp;<i>device</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#stopLearning" translate="no">stopLearning</a></b>()</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#cuia" translate="no">cuia</a></b>(const QString &amp;<i>cuia</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#deviceAdded" translate="no">deviceAdded</a></b>(const QString &amp;<i>name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#deviceRemoved" translate="no">deviceRemoved</a></b>(const QString &amp;<i>name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#devices-prop" translate="no">devicesChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#expression" translate="no">expression</a></b>(int <i>status</i>, int <i>data1</i>, int <i>data2</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#knobMoved" translate="no">knobMoved</a></b>(int <i>knob</i>, qreal <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#knobTurned" translate="no">knobTurned</a></b>(int <i>knob</i>, int <i>delta</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#learned" translate="no">learned</a></b>(const QString &amp;<i>device</i>, const QString &amp;<i>message</i>, int <i>note</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#learning-prop" translate="no">learningChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#noteOff" translate="no">noteOff</a></b>(int <i>note</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#noteOn" translate="no">noteOn</a></b>(int <i>note</i>, int <i>velocity</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#noteOn" translate="no">noteOn</a></b>(int <i>note</i>, int <i>velocity</i>, int <i>slot</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="midiinput.html#settingsChanged" translate="no">settingsChanged</a></b>(const QString &amp;<i>device</i>)</td></tr>
 </table></div>
 <!-- $$$MidiInput-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p>libravving's router receives every connected controller. Left alone it would play a controller's raw notes on its current sketchpad track, straight into that track's engine; ravving points that at a track it does not use, so the notes reach no engine and arrive only here (libravving::Router::onControllerMidi).</p>
 <p>A device can also send its channels to tracks of their own, and the library loads saved per-device settings incorrectly (MidiRouterDevice turns each saved track into a bool, so every channel lands on track 1). So every controller's channels are set back to the current track at start and whenever one is plugged in.</p>
+<p>A controller's settings start from the known defaults for its name in <code translate="no">data/midi-devices.json</code> (<code translate="no">devices</code>: <code translate="no">match</code>, a part of the name, and/or <code translate="no">usb</code>, the USB id of its sound card (&quot;vendor:product&quot;, for a controller whose name many devices share), with <code translate="no">label</code>, the name to show it by, and any of the settings below, <code translate="no">hits</code> as a note to a slot and <code translate="no">controls</code> as a control id to a message), the MIDI standard's otherwise; a controller that says its own pitch bend range (RPN 0, as the MPE specification has an MPE controller do on connecting) sets it. Each controller has settings of its own, kept by its name in the <code translate="no">ravving/midi</code> settings: the channel it is heard on (0: all sixteen), a transpose in semitones, a fixed velocity (0: as the device sends it) and a velocity curve (0 as sent, 1 soft, 2 softer: light touches louder, for pads that send most taps under 10), whether its expression is played and the pitch bend range it sends in, the drum keys (a note to a drum row or a pad, learned) and the controls (a note or a CC to one of the device's keys or knobs, learned). <a href="midiinput.html#learn" translate="no">learn</a>() takes the next message from a controller as what is learned instead of playing it.</p>
+<p>A learned key presses on a note-on (or a CC at 64 or more) and lets go on its note-off (or the CC under 64); it reaches the app as the device's own key would (<a href="midiinput.html#cuia" translate="no">cuia</a>()). A learned CC on knob 1 to 3 is a fixed knob at the CC's position (<a href="midiinput.html#knobMoved" translate="no">knobMoved</a>()); on the big knob it turns it by the CC's change (<a href="midiinput.html#knobTurned" translate="no">knobTurned</a>()), a relative encoder's 1 / 65 (up) and 127 / 63 (down) included.</p>
+<p>A controller's expression (pitch bend, channel pressure, and the control changes no control is learned as: the mod wheel, sustain, an MPE slide's CC 74) goes to the machine played as <a href="midiinput.html#expression" translate="no">expression</a>(), from the channel of the note pressed last only: an MPE controller (a Lightpad) plays each note on a channel of its own and bends each, while a machine plays one channel. The bend is scaled from the controller's range to the engines' ±2 semitones, and centred again when the last note is let go.</p>
 <p>A controller seen through two bridges (ALSA's a2j and PipeWire's Midi-Bridge) delivers each message twice; a copy arriving within a few milliseconds is dropped. Enable <code translate="no">QT_LOGGING_RULES=&quot;ravving.midi.debug=true&quot;</code> to log the messages. GUI thread only.</p>
 </div>
 <!-- @@@MidiInput -->
 <div class="prop">
 <h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$controls-prop$$$controls -->
+<h3 class="fn" translate="no" id="controls-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">controls</span> : const <span class="type">QVariantList</span></h3>
+<p>This property holds the device's keys and knobs a controller's notes and CCs can be learned as: a list of maps with <code translate="no">id</code> (<code translate="no">PLAY</code>, <code translate="no">STEP1</code>, <code translate="no">KNOB1</code>, <code translate="no">BIGKNOB…</code>), <code translate="no">label</code>, and <code translate="no">knob</code> (true for a knob, which a CC drives).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>controls</b></span>() const</td></tr>
+</table></div>
+<!-- @@@controls -->
+</div>
 <div class="fnitem">
 <!-- $$$devices-prop$$$devices$$$devicesChanged -->
 <h3 class="fn" translate="no" id="devices-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">devices</span> : <span class="type">QStringList</span></h3>
@@ -127,14 +164,55 @@
 </table></div>
 <!-- @@@devices -->
 </div>
+<div class="fnitem">
+<!-- $$$learning-prop$$$learning$$$learningChanged -->
+<h3 class="fn" translate="no" id="learning-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">learning</span> : <span class="type">QString</span></h3>
+<p>what the next controller message is taken as: <code translate="no">hit</code> (a drum key), <code translate="no">control</code> (a key or a knob), or empty while nothing is learned.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>learning</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>learningChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@learning -->
+</div>
 </div>
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$MidiInput[overload1]$$$MidiInputint*QObject* -->
-<h3 class="fn" translate="no" id="MidiInput"><code class="details extra" translate="no">[explicit]</code> MidiInput::<span class="name">MidiInput</span>(<span class="type">int</span> *<i>router</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Listens to libravving's <i translate="no">router</i> (null on a desktop: no input), and points every connected controller's channels at the current track, with the given <i translate="no">parent</i>.</p>
+<!-- $$$MidiInput[overload1]$$$MidiInputint*constQString&QObject* -->
+<h3 class="fn" translate="no" id="MidiInput"><code class="details extra" translate="no">[explicit]</code> MidiInput::<span class="name">MidiInput</span>(<span class="type">int</span> *<i>router</i>, const <span class="type">QString</span> &amp;<i>profilesFile</i> = QString(), <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Listens to libravving's <i translate="no">router</i> (null on a desktop: no input), and points every connected controller's channels at the current track, with the given <i translate="no">parent</i>; <i translate="no">profilesFile</i> is the known controllers' defaults (data/midi-devices.json).</p>
 <!-- @@@MidiInput -->
+</div>
+<div class="fnitem">
+<!-- $$$clearControl[overload1]$$$clearControlconstQString&constQString& -->
+<h3 class="fn" translate="no" id="clearControl"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MidiInput::<span class="name">clearControl</span>(const <span class="type">QString</span> &amp;<i>device</i>, const <span class="type">QString</span> &amp;<i>control</i>)</h3>
+<p>Forgets what works <i translate="no">control</i> from <i translate="no">device</i>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@clearControl -->
+</div>
+<div class="fnitem">
+<!-- $$$clearHits[overload1]$$$clearHitsconstQString& -->
+<h3 class="fn" translate="no" id="clearHits"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MidiInput::<span class="name">clearHits</span>(const <span class="type">QString</span> &amp;<i>device</i>)</h3>
+<p>Forgets <i translate="no">device</i>'s drum keys: its notes play the drum rows of their General MIDI drums again.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@clearHits -->
+</div>
+<div class="fnitem">
+<!-- $$$cuia[overload1]$$$cuiaconstQString& -->
+<h3 class="fn" translate="no" id="cuia"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MidiInput::<span class="name">cuia</span>(const <span class="type">QString</span> &amp;<i>cuia</i>)</h3>
+<p>Emitted when a learned key went down or came up: <i translate="no">cuia</i> is the device key's own command (<code translate="no">SWITCH_PLAY_PRESSED…</code>).</p>
+<!-- @@@cuia -->
+</div>
+<div class="fnitem">
+<!-- $$$describe[overload1]$$$describeconstQString& -->
+<h3 class="fn" translate="no" id="describe"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> MidiInput::<span class="name">describe</span>(const <span class="type">QString</span> &amp;<i>message</i>) const</h3>
+<p>Returns <i translate="no">message</i> (<code translate="no">&quot;note 1 60&quot;</code>, <code translate="no">&quot;cc 2 74&quot;</code>) as the user reads it: &quot;C4 · CH 1&quot;, &quot;CC 74 · CH 2&quot;.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@describe -->
 </div>
 <div class="fnitem">
 <!-- $$$deviceAdded[overload1]$$$deviceAddedconstQString& -->
@@ -149,17 +227,114 @@
 <!-- @@@deviceRemoved -->
 </div>
 <div class="fnitem">
+<!-- $$$expression[overload1]$$$expressionintintint -->
+<h3 class="fn" translate="no" id="expression"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MidiInput::<span class="name">expression</span>(<span class="type">int</span> <i>status</i>, <span class="type">int</span> <i>data1</i>, <span class="type">int</span> <i>data2</i>)</h3>
+<p>Emitted for a controller's expression while it plays: <i translate="no">status</i> is <code translate="no">0xE0</code> (pitch bend, <i translate="no">data1</i> and <i translate="no">data2</i> its low and high 7 bits, scaled), <code translate="no">0xD0</code> (pressure, <i translate="no">data1</i>) or <code translate="no">0xB0</code> (control change <i translate="no">data1</i> at <i translate="no">data2</i>), with no channel (<a href="machine.html#sendLive" translate="no">Machine::sendLive</a>()).</p>
+<!-- @@@expression -->
+</div>
+<div class="fnitem">
+<!-- $$$forget[overload1]$$$forgetconstQString& -->
+<h3 class="fn" translate="no" id="forget"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MidiInput::<span class="name">forget</span>(const <span class="type">QString</span> &amp;<i>device</i>)</h3>
+<p>Forgets all of <i translate="no">device</i>'s settings: it starts again from the known defaults.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@forget -->
+</div>
+<div class="fnitem">
+<!-- $$$knobMoved[overload1]$$$knobMovedintqreal -->
+<h3 class="fn" translate="no" id="knobMoved"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MidiInput::<span class="name">knobMoved</span>(<span class="type">int</span> <i>knob</i>, <span class="type">qreal</span> <i>value</i>)</h3>
+<p>Emitted when a learned CC moved <i translate="no">knob</i> (0 to 2) to <i translate="no">value</i>, 0 to 1.</p>
+<!-- @@@knobMoved -->
+</div>
+<div class="fnitem">
+<!-- $$$knobTurned[overload1]$$$knobTurnedintint -->
+<h3 class="fn" translate="no" id="knobTurned"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MidiInput::<span class="name">knobTurned</span>(<span class="type">int</span> <i>knob</i>, <span class="type">int</span> <i>delta</i>)</h3>
+<p>Emitted when a learned CC turned <i translate="no">knob</i> (3: the big knob) by <i translate="no">delta</i> detents.</p>
+<!-- @@@knobTurned -->
+</div>
+<div class="fnitem">
+<!-- $$$learn[overload1]$$$learnconstQString&constQString& -->
+<h3 class="fn" translate="no" id="learn"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MidiInput::<span class="name">learn</span>(const <span class="type">QString</span> &amp;<i>device</i>, const <span class="type">QString</span> &amp;<i>what</i>)</h3>
+<p>Takes the next note or CC from <i translate="no">device</i> (any controller, when empty) as what is learned (<i translate="no">what</i>: <code translate="no">hit</code> or <code translate="no">control</code>), reported by <a href="midiinput.html#learned" translate="no">learned</a>() instead of played; learning goes on until <a href="midiinput.html#stopLearning" translate="no">stopLearning</a>().</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@learn -->
+</div>
+<div class="fnitem">
+<!-- $$$learned[overload1]$$$learnedconstQString&constQString&int -->
+<h3 class="fn" translate="no" id="learned"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MidiInput::<span class="name">learned</span>(const <span class="type">QString</span> &amp;<i>device</i>, const <span class="type">QString</span> &amp;<i>message</i>, <span class="type">int</span> <i>note</i>)</h3>
+<p>Emitted while learning, for the <i translate="no">message</i> <i translate="no">device</i> sent (<code translate="no">&quot;note CH N&quot;</code> or <code translate="no">&quot;cc CH N&quot;</code>, the channel 1 to 16); <i translate="no">note</i> is the note played, -1 for a CC. Nothing is stored: the asker stores it (<a href="midiinput.html#setHit" translate="no">setHit</a>(), <a href="midiinput.html#setControl" translate="no">setControl</a>()).</p>
+<!-- @@@learned -->
+</div>
+<div class="fnitem">
+<!-- $$$noteName[overload1]$$$noteNameint -->
+<h3 class="fn" translate="no" id="noteName"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> MidiInput::<span class="name">noteName</span>(<span class="type">int</span> <i>note</i>) const</h3>
+<p>Returns MIDI <i translate="no">note</i>'s name, &quot;C4&quot; for 60.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@noteName -->
+</div>
+<div class="fnitem">
 <!-- $$$noteOff[overload1]$$$noteOffint -->
 <h3 class="fn" translate="no" id="noteOff"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MidiInput::<span class="name">noteOff</span>(<span class="type">int</span> <i>note</i>)</h3>
-<p>Emitted when a key <i translate="no">note</i> came up on any connected controller (a note-on with velocity 0 included).</p>
+<p>Emitted when a key <i translate="no">note</i> came up on a connected controller (a note-on with velocity 0 included), the note <a href="midiinput.html#noteOn" translate="no">noteOn</a>() gave.</p>
 <!-- @@@noteOff -->
 </div>
 <div class="fnitem">
-<!-- $$$noteOn[overload1]$$$noteOnintint -->
-<h3 class="fn" translate="no" id="noteOn"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MidiInput::<span class="name">noteOn</span>(<span class="type">int</span> <i>note</i>, <span class="type">int</span> <i>velocity</i>)</h3>
-<p>Emitted when a key <i translate="no">note</i> went down on any connected controller, with <i translate="no">velocity</i> 1 to 127.</p>
+<!-- $$$noteOn[overload1]$$$noteOnintintint -->
+<h3 class="fn" translate="no" id="noteOn"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MidiInput::<span class="name">noteOn</span>(<span class="type">int</span> <i>note</i>, <span class="type">int</span> <i>velocity</i>, <span class="type">int</span> <i>slot</i>)</h3>
+<p>Emitted when a key <i translate="no">note</i> went down on a connected controller, with <i translate="no">velocity</i> 1 to 127, after the controller's channel, transpose and velocity settings; <i translate="no">slot</i> is the drum row or pad it was learned as, -1 without one.</p>
 <!-- @@@noteOn -->
 </div>
+<div class="fnitem">
+<!-- $$$receive[overload1]$$$receiveconstQString&intquint8quint8quint8 -->
+<h3 class="fn" translate="no" id="receive"><span class="type">void</span> MidiInput::<span class="name">receive</span>(const <span class="type">QString</span> &amp;<i>device</i>, <span class="type">int</span> <i>size</i>, <span class="type">quint8</span> <i>byte0</i>, <span class="type">quint8</span> <i>byte1</i>, <span class="type">quint8</span> <i>byte2</i>)</h3>
+<p>Handles the message of <i translate="no">size</i> bytes <i translate="no">byte0</i> <i translate="no">byte1</i> <i translate="no">byte2</i> from the controller <i translate="no">device</i>: learns it, works the control it is learned as, or plays it.</p>
+<!-- @@@receive -->
+</div>
+<div class="fnitem">
+<!-- $$$setControl[overload1]$$$setControlconstQString&constQString&constQString& -->
+<h3 class="fn" translate="no" id="setControl"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MidiInput::<span class="name">setControl</span>(const <span class="type">QString</span> &amp;<i>device</i>, const <span class="type">QString</span> &amp;<i>message</i>, const <span class="type">QString</span> &amp;<i>control</i>)</h3>
+<p>Has <i translate="no">device</i>'s <i translate="no">message</i> (from <a href="midiinput.html#learned" translate="no">learned</a>()) work <i translate="no">control</i> (an id of <a href="midiinput.html#controls-prop" translate="no">controls</a>()). A message works one control, and a control is worked by one message.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setControl -->
+</div>
+<div class="fnitem">
+<!-- $$$setHit[overload1]$$$setHitconstQString&intint -->
+<h3 class="fn" translate="no" id="setHit"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MidiInput::<span class="name">setHit</span>(const <span class="type">QString</span> &amp;<i>device</i>, <span class="type">int</span> <i>note</i>, <span class="type">int</span> <i>slot</i>)</h3>
+<p>Has <i translate="no">device</i>'s <i translate="no">note</i> play drum row (or pad) <i translate="no">slot</i>; a slot under 0 forgets the note. A note plays one slot, and a slot is played by one note.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setHit -->
+</div>
+<div class="fnitem">
+<!-- $$$setOption[overload1]$$$setOptionconstQString&constQString&int -->
+<h3 class="fn" translate="no" id="setOption"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MidiInput::<span class="name">setOption</span>(const <span class="type">QString</span> &amp;<i>device</i>, const <span class="type">QString</span> &amp;<i>option</i>, <span class="type">int</span> <i>value</i>)</h3>
+<p>Sets <i translate="no">device</i>'s <i translate="no">option</i> to <i translate="no">value</i>: <code translate="no">channel</code> (1 to 16, 0 all), <code translate="no">transpose</code> (semitones, −48 to 48), <code translate="no">velocity</code> (1 to 127, 0 as sent), <code translate="no">curve</code> (0 as sent, 1 soft, 2 softer), <code translate="no">pressure</code> (0 as sent, 1 firm, 2 firmer: light presses send less, for a surface that reaches its top halfway), <code translate="no">bendRange</code> (the semitones its full bend is, 1 to 96) or <code translate="no">expression</code> (0 off, 1 on).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setOption -->
+</div>
+<div class="fnitem">
+<!-- $$$setSoundCardsDir[overload1]$$$setSoundCardsDirconstQString& -->
+<h3 class="fn" translate="no" id="setSoundCardsDir"><span class="type">void</span> MidiInput::<span class="name">setSoundCardsDir</span>(const <span class="type">QString</span> &amp;<i>dir</i>)</h3>
+<p>Reads the sound cards (their names and USB ids, for the known defaults' <code translate="no">usb</code>) from <i translate="no">dir</i> instead of <code translate="no">/proc/asound</code>.</p>
+<!-- @@@setSoundCardsDir -->
+</div>
+<div class="fnitem">
+<!-- $$$settings[overload1]$$$settingsconstQString& -->
+<h3 class="fn" translate="no" id="settings"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantMap</span> MidiInput::<span class="name">settings</span>(const <span class="type">QString</span> &amp;<i>device</i>) const</h3>
+<p>Returns <i translate="no">device</i>'s settings: <code translate="no">channel</code> (0 all), <code translate="no">transpose</code>, <code translate="no">velocity</code> (0 as sent), <code translate="no">curve</code>, <code translate="no">pressure</code>, <code translate="no">bendRange</code>, <code translate="no">expression</code> (a bool), <code translate="no">hits</code> (a note, as text, to its drum row or pad) and <code translate="no">controls</code> (a control id to its message).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@settings -->
+</div>
+<div class="fnitem">
+<!-- $$$settingsChanged[overload1]$$$settingsChangedconstQString& -->
+<h3 class="fn" translate="no" id="settingsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> MidiInput::<span class="name">settingsChanged</span>(const <span class="type">QString</span> &amp;<i>device</i>)</h3>
+<p>Emitted when <i translate="no">device</i>'s settings changed.</p>
+<!-- @@@settingsChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$stopLearning[overload1]$$$stopLearning -->
+<h3 class="fn" translate="no" id="stopLearning"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MidiInput::<span class="name">stopLearning</span>()</h3>
+<p>Plays the controllers' messages again.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@stopLearning -->
 </div>
 </article>
 </main>
@@ -170,3 +345,4 @@
 </footer>
 </body>
 </html>
+</div>

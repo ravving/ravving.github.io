@@ -161,8 +161,33 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 </tr>
 <tr>
 <td><code>MidiInput</code></td>
-<td>external controllers (<code>studio.midiIn</code>; <code>devices</code>: the connected ones' names): notes from MidiRouter's hardware port (raw controller notes parked on unused track 9; every device's channels reset to the current track; bridge duplicates dropped), plug-in/out notices</td>
+<td>external controllers (<code>studio.midiIn</code>; <code>devices</code>: the connected ones' names): notes from MidiRouter's hardware port (raw controller notes parked on unused track 9; every device's channels reset to the current track; bridge duplicates dropped), per-controller settings by name (channel, transpose, velocity curve, bend range, expression; <code>data/midi-devices.json</code> defaults, RPN 0 bend range), MIDI learn (drum keys to rows and pads; notes and CCs as the device's keys and knobs, fed to <code>Ravving::handleCuia</code> / knob handlers), expression to the machine on screen, plug-in/out notices</td>
 <td>zynthbox-qml's MIDI controller handling (subset)</td>
+</tr>
+<tr>
+<td><code>ControllerDriver</code>, <code>ControllerDrivers</code></td>
+<td>a controller ravving talks to over System Exclusive (the base: transport, request / reply, keep-alive, 7-bit packing) and the registry of them all (<code>studio.drivers</code>: a driver per controller name, on/off per controller, each running driver offered to the capability hubs)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ControllerCapability</code>, <code>ControllerHub</code></td>
+<td>what a controller can do beside its notes: the interface a driver inherits (with the controller's name) and the hub that keeps every driver having it</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ControllerOctave</code>, <code>ControllerOctaves</code></td>
+<td>a controller's octave, linked to the machine on screen's or unlinked per controller (<code>studio.octaves</code>: the links, the controllers' own octaves, RESET TO 0)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ControllerScale</code>, <code>ControllerScales</code></td>
+<td>the project's key and scale sent to the controllers that follow it (<code>studio.scales</code>)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>RoliBlocks</code></td>
+<td>ROLI BLOCKS as hosted by ravving (a ControllerOctave and a ControllerScale): the probe, the topology, API mode, pings, the note grid's root / scale / octave from the project, the blocks' buttons as the CCs they sent before</td>
+<td>—</td>
 </tr>
 <tr>
 <td><code>VideoRecorder</code></td>
@@ -192,11 +217,6 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 <tr>
 <td><code>FileShare</code></td>
 <td>a file offered to a phone (<code>share</code>, SEND… → PHONE · QR CODE): a one-file HTTP server on QTcpServer (GET / HEAD at <code>/d/&lt;128 random bits&gt;/&lt;name&gt;</code>, Content-Disposition attachment, <code>Range</code> → 206, 64 kB chunks as the socket drains, 404 for anything else, port 8098 or the next free one) bound on every interface, the URL on the Wi-Fi address; <code>offer(path)</code> → the URL, <code>stop()</code>, 15 minutes at most; statuses idle / waiting / sending / done, <code>sent</code>, <code>downloads</code>, <code>downloaded(name)</code>; the QR code is drawn by <code>QrCodeItem</code> (src/, Nayuki's qrcodegen vendored in src/backend/thirdparty) in <code>QrPopup.qml</code>. The same server carries the ravving page: <code>setHelpFolder(dir)</code> (the installed <code>site/</code>) keeps it listening for good and serves <code>GET /help/&lt;file&gt;</code> from that folder (index.html for <code>/help/</code>, no path above it, text types with a charset, pages no-cache and the rest cached 10 minutes), <code>helpUrl</code> = <code>http://&lt;address&gt;:&lt;port&gt;/help/</code>, what <code>HelpPopup.qml</code> (SETTINGS → HELP) draws as a QR code; and the library for a phone (<code>openBrowse()</code> → <code>browseUrl</code>, <code>/b/&lt;32 hex&gt;/</code>, 15 minutes after the phone's last request, <code>closeBrowse()</code>): the FileBrowser's kinds and entries as small self-styled pages (<code>respondBrowse</code>), a file served as an attachment from the path the browser lists, looked up by kind and name, never from the URL</td>
-<td>new</td>
-</tr>
-<tr>
-<td><code>MixRecorder</code></td>
-<td>the global recording (<code>studio.mix</code>): the master (GlobalPlayback) to <code>recordings/ravving-&lt;date&gt;.wav</code> through AudioLevels (refused while a sampler take records: AudioLevels runs one recording at a time); the music player lists these under "Recordings"</td>
 <td>new</td>
 </tr>
 <tr>

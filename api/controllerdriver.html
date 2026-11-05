@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- controllerdriver.cpp -->
+  <meta name="description" content="A controller ravving knows how to talk to: the base of each driver (RoliBlocks), with the System Exclusive transport, request / reply pairing, a keep-alive and the 7-bit packing the drivers share.">
+  <meta name="keywords" content="class">
+  <title>ControllerDriver Class | ravving C++ API 0.6.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=fd733103c9" defer></script>
+  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>ControllerDriver</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#protected-functions">Protected Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">ControllerDriver Class</h1>
+<!-- $$$ControllerDriver-brief -->
+<p>A controller ravving knows how to talk to: the base of each driver (<a href="roliblocks.html" translate="no">RoliBlocks</a>), with the System Exclusive transport, request / reply pairing, a keep-alive and the 7-bit packing the drivers share. <a href="#details">More...</a></p>
+<!-- @@@ControllerDriver -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;controllerdriver.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="roliblocks.html" translate="no">RoliBlocks</a></p>
+</td></tr>
+</table></div>
+<ul>
+<li><a href="controllerdriver-members.html">List of all members, including inherited members</a></li>
+<li>ControllerDriver is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="controllerdriver.html#facts-prop" translate="no">facts</a></b> : QVariantMap</li>
+<li class="fn" translate="no"><b><a href="controllerdriver.html#name-prop" translate="no">name</a></b> : const QString</li>
+<li class="fn" translate="no"><b><a href="controllerdriver.html#protocol-prop" translate="no">protocol</a></b> : const QString</li>
+<li class="fn" translate="no"><b><a href="controllerdriver.html#state-prop" translate="no">state</a></b> : QString</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#ControllerDriver" translate="no">ControllerDriver</a></b>(const QString &amp;<i>name</i>, const QString &amp;<i>protocol</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#facts-prop" translate="no">facts</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#name-prop" translate="no">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#protocol-prop" translate="no">protocol</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#receiveSysex" translate="no">receiveSysex</a></b>(const QByteArray &amp;<i>bytes</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#setSender" translate="no">setSender</a></b>(const ControllerDriver::Sender &amp;<i>sender</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#start" translate="no">start</a></b>() = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#state-prop" translate="no">state</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#stop" translate="no">stop</a></b>()</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#facts-prop" translate="no">factsChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#midiEmulated" translate="no">midiEmulated</a></b>(int <i>status</i>, int <i>data1</i>, int <i>data2</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#state-prop" translate="no">stateChanged</a></b>()</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#pack7" translate="no">pack7</a></b>(const QByteArray &amp;<i>bytes</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#unpack7" translate="no">unpack7</a></b>(const QByteArray &amp;<i>bytes</i>)</td></tr>
+</table></div>
+<h2 id="protected-functions">Protected Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#handle" translate="no">handle</a></b>(const QByteArray &amp;<i>bytes</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#keepAlive" translate="no">keepAlive</a></b>(int <i>intervalMs</i>, const std::function&lt;void ()&gt; &amp;<i>every</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#request" translate="no">request</a></b>(const QByteArray &amp;<i>bytes</i>, const ControllerDriver::Matcher &amp;<i>matches</i>, const ControllerDriver::Reply &amp;<i>onReply</i>, int <i>timeoutMs</i>, const std::function&lt;void ()&gt; &amp;<i>onTimeout</i> = {})</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdriver.html#send" translate="no">send</a></b>(const QByteArray &amp;<i>bytes</i>)</td></tr>
+</table></div>
+<!-- $$$ControllerDriver-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p><a href="controllerdrivers.html" translate="no">ControllerDrivers</a> makes one per controller a driver fits, gives it its sender (libravving::Router::sendSysex) and hands it what the controller sends (<a href="controllerdriver.html#receiveSysex" translate="no">receiveSysex</a>()). A driver implements <a href="controllerdriver.html#start" translate="no">start</a>() (its handshake) and <a href="controllerdriver.html#handle" translate="no">handle</a>() (every message in). What the controller can do is a capability interface the driver also implements (<a href="controlleroctave.html" translate="no">ControllerOctave</a>, <a href="controllerscale.html" translate="no">ControllerScale</a>), which <a href="controllerdrivers.html" translate="no">ControllerDrivers</a> offers its hub (a <a href="controllerhub.html" translate="no">ControllerHub</a>) while the driver runs: the app talks to the hubs, never to a driver.</p>
+<p>State: <code translate="no">idle</code>, then whatever the protocol sets (<code translate="no">connecting</code>, <code translate="no">ready</code>, <code translate="no">lost…</code>); facts (its serial, firmware, battery…) for whoever shows them. GUI thread only.</p>
+</div>
+<!-- @@@ControllerDriver -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$facts-prop$$$facts$$$factsChanged -->
+<h3 class="fn" translate="no" id="facts-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">facts</span> : <span class="type">QVariantMap</span></h3>
+<p>what the controller said about itself (a serial, a version, a battery level…), for whoever shows them.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>facts</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>factsChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@facts -->
+</div>
+<div class="fnitem">
+<!-- $$$name-prop$$$name -->
+<h3 class="fn" translate="no" id="name-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">name</span> : const <span class="type">QString</span></h3>
+<p>This property holds the controller's name, as <a href="midiinput.html" translate="no">MidiInput</a> and the router's list have it.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>name</b></span>() const</td></tr>
+</table></div>
+<!-- @@@name -->
+</div>
+<div class="fnitem">
+<!-- $$$protocol-prop$$$protocol -->
+<h3 class="fn" translate="no" id="protocol-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">protocol</span> : const <span class="type">QString</span></h3>
+<p>This property holds the driver's id (<code translate="no">roli</code>).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>protocol</b></span>() const</td></tr>
+</table></div>
+<!-- @@@protocol -->
+</div>
+<div class="fnitem">
+<!-- $$$state-prop$$$state$$$stateChanged -->
+<h3 class="fn" translate="no" id="state-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">state</span> : <span class="type">QString</span></h3>
+<p>where the conversation stands: <code translate="no">idle</code> before <a href="controllerdriver.html#start" translate="no">start</a>(), then the protocol's words (<code translate="no">connecting</code>, <code translate="no">ready</code>, <code translate="no">lost</code>).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>state</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>stateChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@state -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$ControllerDriver[overload1]$$$ControllerDriverconstQString&constQString&QObject* -->
+<h3 class="fn" translate="no" id="ControllerDriver">ControllerDriver::<span class="name">ControllerDriver</span>(const <span class="type">QString</span> &amp;<i>name</i>, const <span class="type">QString</span> &amp;<i>protocol</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>A device named <i translate="no">name</i> speaking <i translate="no">protocol</i>, with <i translate="no">parent</i>.</p>
+<!-- @@@ControllerDriver -->
+</div>
+<div class="fnitem">
+<!-- $$$handle[overload1]$$$handleconstQByteArray& -->
+<h3 class="fn" translate="no" id="handle"><code class="details extra" translate="no">[pure virtual protected]</code> <span class="type">void</span> ControllerDriver::<span class="name">handle</span>(const <span class="type">QByteArray</span> &amp;<i>bytes</i>)</h3>
+<p>The message <i translate="no">bytes</i> (without 0xF0 and 0xF7) that no request was waiting for: the protocol reads it.</p>
+<!-- @@@handle -->
+</div>
+<div class="fnitem">
+<!-- $$$keepAlive[overload1]$$$keepAliveintconststd::function<void()>& -->
+<h3 class="fn" translate="no" id="keepAlive"><code class="details extra" translate="no">[protected]</code> <span class="type">void</span> ControllerDriver::<span class="name">keepAlive</span>(<span class="type">int</span> <i>intervalMs</i>, const <span class="type">std::function</span>&lt;<span class="type">void</span> ()&gt; &amp;<i>every</i>)</h3>
+<p>Runs <i translate="no">every</i> each <i translate="no">intervalMs</i> while the conversation lasts (0: no more).</p>
+<!-- @@@keepAlive -->
+</div>
+<div class="fnitem">
+<!-- $$$midiEmulated[overload1]$$$midiEmulatedintintint -->
+<h3 class="fn" translate="no" id="midiEmulated"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ControllerDriver::<span class="name">midiEmulated</span>(<span class="type">int</span> <i>status</i>, <span class="type">int</span> <i>data1</i>, <span class="type">int</span> <i>data2</i>)</h3>
+<p>Emitted for a plain MIDI message the protocol stands in for: a block's buttons reach the host as its own messages once hosted, so the CCs they sent before are made here (<i translate="no">status</i> with its channel, <i translate="no">data1</i>, <i translate="no">data2</i>), for <a href="midiinput.html" translate="no">MidiInput</a>'s learned controls.</p>
+<!-- @@@midiEmulated -->
+</div>
+<div class="fnitem">
+<!-- $$$pack7[overload1]$$$pack7constQByteArray& -->
+<h3 class="fn" translate="no" id="pack7"><code class="details extra" translate="no">[static]</code> <span class="type">QByteArray</span> ControllerDriver::<span class="name">pack7</span>(const <span class="type">QByteArray</span> &amp;<i>bytes</i>)</h3>
+<p>Returns <i translate="no">bytes</i> as 7-bit MIDI data bytes: every 7 bytes become 8, the first holding the high bits of the 7 that follow (the way the MIDI sample dump and many editors pack).</p>
+<!-- @@@pack7 -->
+</div>
+<div class="fnitem">
+<!-- $$$receiveSysex[overload1]$$$receiveSysexconstQByteArray& -->
+<h3 class="fn" translate="no" id="receiveSysex"><span class="type">void</span> ControllerDriver::<span class="name">receiveSysex</span>(const <span class="type">QByteArray</span> &amp;<i>bytes</i>)</h3>
+<p>A message <i translate="no">bytes</i> (without 0xF0 and 0xF7) came from the controller: the request waiting for it gets it, else the protocol's <a href="controllerdriver.html#handle" translate="no">handle</a>().</p>
+<!-- @@@receiveSysex -->
+</div>
+<div class="fnitem">
+<!-- $$$request[overload1]$$$requestconstQByteArray&constControllerDriver::Matcher&constControllerDriver::Reply&intconststd::function<void()>& -->
+<h3 class="fn" translate="no" id="request"><code class="details extra" translate="no">[protected]</code> <span class="type">void</span> ControllerDriver::<span class="name">request</span>(const <span class="type">QByteArray</span> &amp;<i>bytes</i>, const <span class="type">ControllerDriver::Matcher</span> &amp;<i>matches</i>, const <span class="type">ControllerDriver::Reply</span> &amp;<i>onReply</i>, <span class="type">int</span> <i>timeoutMs</i>, const <span class="type">std::function</span>&lt;<span class="type">void</span> ()&gt; &amp;<i>onTimeout</i> = {})</h3>
+<p>Sends <i translate="no">bytes</i> and waits <i translate="no">timeoutMs</i> for the message <i translate="no">matches</i> accepts, handed to <i translate="no">onReply</i>; past the time, <i translate="no">onTimeout</i> (when given). Other messages meanwhile go to <a href="controllerdriver.html#handle" translate="no">handle</a>() as usual.</p>
+<!-- @@@request -->
+</div>
+<div class="fnitem">
+<!-- $$$send[overload1]$$$sendconstQByteArray& -->
+<h3 class="fn" translate="no" id="send"><code class="details extra" translate="no">[protected]</code> <span class="type">void</span> ControllerDriver::<span class="name">send</span>(const <span class="type">QByteArray</span> &amp;<i>bytes</i>)</h3>
+<p>Sends <i translate="no">bytes</i> (without 0xF0 and 0xF7) to the controller.</p>
+<!-- @@@send -->
+</div>
+<div class="fnitem">
+<!-- $$$setSender[overload1]$$$setSenderconstControllerDriver::Sender& -->
+<h3 class="fn" translate="no" id="setSender"><span class="type">void</span> ControllerDriver::<span class="name">setSender</span>(const <span class="type">ControllerDriver::Sender</span> &amp;<i>sender</i>)</h3>
+<p>Sets <i translate="no">sender</i>, what <a href="controllerdriver.html#send" translate="no">send</a>() hands a message's bytes (without 0xF0 and 0xF7) to.</p>
+<!-- @@@setSender -->
+</div>
+<div class="fnitem">
+<!-- $$$start[overload1]$$$start -->
+<h3 class="fn" translate="no" id="start"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">void</span> ControllerDriver::<span class="name">start</span>()</h3>
+<p>Starts the conversation: the protocol's handshake. The state says how it goes.</p>
+<!-- @@@start -->
+</div>
+<div class="fnitem">
+<!-- $$$stop[overload1]$$$stop -->
+<h3 class="fn" translate="no" id="stop"><code class="details extra" translate="no">[virtual]</code> <span class="type">void</span> ControllerDriver::<span class="name">stop</span>()</h3>
+<p>Ends the conversation: pending requests and the keep-alive are dropped, the state is <code translate="no">idle</code> again. A protocol doing more (a goodbye) calls this last.</p>
+<!-- @@@stop -->
+</div>
+<div class="fnitem">
+<!-- $$$unpack7[overload1]$$$unpack7constQByteArray& -->
+<h3 class="fn" translate="no" id="unpack7"><code class="details extra" translate="no">[static]</code> <span class="type">QByteArray</span> ControllerDriver::<span class="name">unpack7</span>(const <span class="type">QByteArray</span> &amp;<i>bytes</i>)</h3>
+<p>Returns the bytes <a href="controllerdriver.html#pack7" translate="no">pack7</a>() made of <i translate="no">bytes</i>: the other way round.</p>
+<!-- @@@unpack7 -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

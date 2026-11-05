@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=51d83a22d5" defer></script>
-  <script src="search.js?v=574e5ff2ac" defer></script>
+  <script src="nav.js?v=fd733103c9" defer></script>
+  <script src="search.js?v=131a6217f4" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -124,7 +124,7 @@
 <tr valign="top" class="odd"><td >cache</td><td ><code translate="no">$XDG_CACHE_HOME/ravving</code></td><td >what can be rebuilt: reversed samples, raw takes, <code translate="no">lv2-ports.json</code></td></tr>
 <tr valign="top" class="even"><td >library</td><td ><code translate="no">/zynthian/zynthian-my-data/ravving</code> on the device (the data partition every Zynthbox has), <code translate="no">$XDG_DATA_HOME/ravving</code> on a desktop</td><td >the user's own work, kept across reinstalls and shared over webconf</td></tr>
 </table></div>
-<p>The library holds <code translate="no">projects/</code> (named projects), <code translate="no">templates/</code> (Templates), <code translate="no">presets/</code> (the user's pattern presets, <code translate="no">&lt;machine&gt;-presets.json</code>), <code translate="no">samples/</code> (with <code translate="no">takes/</code>, <code translate="no">recordings/</code> and <code translate="no">imported/</code>), <code translate="no">soundfonts/</code>, <code translate="no">midi/</code>, <code translate="no">recordings/</code> (the master's, <a href="mixrecorder.html" translate="no">MixRecorder</a>), <code translate="no">videos/</code> and <code translate="no">exports/</code> (tracks with their covers and sidecars, and <code translate="no">.ravv</code> bundles).</p>
+<p>The library holds <code translate="no">projects/</code> (named projects), <code translate="no">templates/</code> (Templates), <code translate="no">presets/</code> (the user's pattern presets, <code translate="no">&lt;machine&gt;-presets.json</code>), <code translate="no">samples/</code> (with <code translate="no">takes/</code>, <code translate="no">recordings/</code> and <code translate="no">imported/</code>), <code translate="no">soundfonts/</code>, <code translate="no">midi/</code>, <code translate="no">recordings/</code> (the RECORDER's tracks), <code translate="no">videos/</code> and <code translate="no">exports/</code> (tracks with their covers and sidecars, and <code translate="no">.ravv</code> bundles).</p>
 <p>For development and tests, <code translate="no">RAVVING_HOME</code> puts all four roots under one folder and <code translate="no">RAVVING_LIBRARY</code> moves the library alone; <code translate="no">RAVVING_PROJECT_DIR</code> (the session folder) and <code translate="no">RAVVING_PROJECTS_DIR</code> are honoured too.</p>
 <p><a href="paths.html#initialise" translate="no">initialise</a>() reads the environment once, before QGuiApplication reads the XDG variables (main() points them at the bundled theme after it), moves files found in the legacy layout (<code translate="no">~/.local/share/ravving</code>'s project, presets and caches; takes in zynthbox-qml's samples folder; recordings in its capture folder) into these folders, rewriting the paths the session and the projects refer to, and makes the folders. The getters only read what <a href="paths.html#initialise" translate="no">initialise</a>() decided and are thread-safe after it.</p>
 </div>

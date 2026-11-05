@@ -240,6 +240,29 @@ IT THE DEFAULT a su lado; las dos vueltas a Zynthbox están al pie.</p>
 <p>El puntero solo aparece con un ratón conectado.</p>
 <h3 id="bars">Compases</h3>
 <p>El + de la barra añade un compás, hasta ocho. Su − quita el compás en pantalla con un segundo toque (muestra ? mientras espera). Los compases siguientes suben un lugar, y deshacer lo trae de vuelta. ‹ › pasan los compases, igual que ◀ ▶ en la cuadrícula.</p>
+<h3 id="record-a-take">Record a take</h3>
+<p>Press <strong>RECORD</strong> on an instrument's page and play: the keys, the pads or a MIDI keyboard. What you
+play is written into the pattern.</p>
+<ul>
+<li><strong>A tap</strong> adds to what's there (an overdub). <strong>A hold</strong> clears the pattern first.</li>
+<li><strong>With the music stopped,</strong> you get one bar of count-in, with the metronome.</li>
+<li><strong>RECORD again</strong> ends the take. One undo takes the whole take back.</li>
+</ul>
+<h3 id="auto-knob-moves-and-takes-that-grow">AUTO: knob moves, and takes that grow</h3>
+<p>The grid's toolbar has an <strong>AUTO</strong> switch. It does two things for that instrument:</p>
+<ul>
+<li id="it-plays-your-knob-moves-back"><strong>It plays your knob moves back.</strong> Turn on AUTO in the header, play, and turn the MODS or FXs
+  knobs: each move is written at the step it was made on. The grid's AUTO lights up by itself,
+  and shows AUTO • while there are moves. Every loop then turns those knobs the same way.</li>
+<li id="it-makes-a-take-grow"><strong>It makes a take grow.</strong> With AUTO on, a take doesn't loop round on the bars you have. When
+  the music reaches the last bar, a new empty bar is added after it, and the grid follows. Keep
+  playing, up to eight bars. At eight, a message says so and the take loops from there.</li>
+<li><strong>When the take ends,</strong> the empty bars it added at the end are taken off again.</li>
+</ul>
+<p>Switch the grid's AUTO off to play the pattern without the knob moves, or to record a take that
+loops on its bars. Your moves stay saved. A long press on AUTO clears them.</p>
+<p>While AUTO plays your moves, those knobs follow them. A knob you turn by hand jumps back at the
+next recorded move.</p>
 <h3 id="save-and-open-projects">Guardar y abrir proyectos</h3>
 <ul>
 <li><strong>El primer SAVE</strong> pide el nombre del proyecto y aparece el teclado en pantalla.
@@ -361,6 +384,9 @@ luego GUARDAR COMO NUEVO, RENOMBRAR y LÍNEA DE TIEMPO, luego EXPORTAR.</p>
 <li><strong>Una pulsación larga en la propia nota</strong> la devuelve a un paso.</li>
 <li><strong>Con SELECT activado,</strong> la perilla 1 ajusta del mismo modo la LENGTH de las notas elegidas.</li>
 <li><strong>Una toma LIVE (●)</strong> guarda cuánto mantienes cada tecla, desde los pads o un teclado MIDI. En el bajo y el lead esa es la duración de la nota. En los acordes es el acorde o la nota sostenidos sobre los pasos, debajo de lo que toques mientras tanto.</li>
+<li id="what-your-fingers-do-on-a-note-is-kept-too"><strong>What your fingers do on a note is kept too.</strong> On the bass and lead, a take keeps a
+  controller's bend, pressure and slide (a Seaboard, an MPE keyboard) in the note held. It plays
+  back with it: a glide, a vibrato, a swell. A new take over the note replaces it.</li>
 <li>Una tecla soltada dentro de su paso dura un paso.</li>
 <li>Las notas de un acorde sostenido se ven como las del bajo: una celda sólida donde empieza una nota, otras más claras mientras dura.</li>
 </ul>
@@ -642,8 +668,15 @@ momento.</p>
 </ul>
 <p>PHASER, ECHO y HEAVY están junto a los pads. Mantén ALT y gira las perillas 1–3 para ajustarlos desde cualquier lugar. Cada uno muestra su ajuste debajo: qué tan profundo va el phaser, el envío del eco en dB y la relación de compresión de HEAVY.</p>
 <h3 id="record-the-whole-mix">Grabar la mezcla completa</h3>
-<p><strong>ALT + ●</strong> graba todo lo que suena por los altavoces, desde cualquier página, como un WAV entre tus grabaciones. La luz de RECORD se pone roja. Pulsa <strong>ALT + ●</strong> otra vez para parar. Encontrarás el archivo en el reproductor de música.</p>
-<p>Solo puede haber una grabación a la vez: mientras esta graba, la GRABADORA no puede grabar tomas.</p>
+<p><strong>ALT + ●</strong> opens LIVE REC from any page (<a href="#start-a-recording">Start a recording</a>):</p>
+<ul>
+<li>Pick <strong>AUDIO ONLY</strong> to record everything the speakers play as a WAV, or VIDEO to film it.</li>
+<li>Put the MIC in if you want your voice, and tap START.</li>
+<li>The RECORD light breathes red, and the header shows ● REC with the time.</li>
+<li><strong>STOP</strong> ends the recording and the music. With LIVE REC already on, ALT + ● starts the next
+  recording straight away.</li>
+<li>The WAV goes among your TRACKS in the exports folder, and the music player has it.</li>
+</ul>
 <p>Qué grabación usar:</p>
 <table>
 <thead>
@@ -658,14 +691,6 @@ momento.</p>
 </thead>
 <tbody>
 <tr>
-<td><strong>ALT + ●</strong></td>
-<td>todo lo que tocan los altavoces, mientras tocas</td>
-<td>sí</td>
-<td>solo mientras el MONITOR de la GRABADORA lo reproduce</td>
-<td>ALT + ●, otra vez para parar</td>
-<td>tus grabaciones, en el reproductor</td>
-</tr>
-<tr>
 <td><strong>EXPORT</strong></td>
 <td>el proyecto desde su primer tiempo, durante los compases que elijas</td>
 <td>sí, si pulsas un pad mientras suena</td>
@@ -674,11 +699,11 @@ momento.</p>
 <td>las exportaciones, con portada</td>
 </tr>
 <tr>
-<td><strong>REC EN VIVO, AUDIO ONLY</strong></td>
+<td><strong>LIVE REC, AUDIO ONLY</strong> (ALT + ●)</td>
 <td>todo lo que tocan los altavoces, mientras tocas</td>
 <td>sí</td>
 <td>si pones el MIC</td>
-<td>REC EN VIVO → START, STOP para parar</td>
+<td>ALT + ● or LIVE REC → START, STOP to stop (the music too)</td>
 <td>las exportaciones, entre tus PISTAS</td>
 </tr>
 <tr>
@@ -691,7 +716,8 @@ momento.</p>
 </tr>
 </tbody>
 </table>
-<p>Para guardar un directo con los pads que tocaste, usa ALT + ● o REC EN VIVO. REC EN VIVO es la que puede añadir tu voz.</p>
+<p>To keep a live set with the pads you played, use LIVE REC (ALT + ●). It's also the one that can
+add your voice.</p>
 <h3 id="the-mixer">El MEZCLADOR</h3>
 <p><strong>✱</strong> abre el MIXER: todos los instrumentos a la vez, uno al lado del otro, cada uno de pie en su propia tira.
 Pulsa ✱ o BACK para volver, o una tecla de número para esa página. Cada tira tiene, de arriba abajo:</p>
@@ -1256,6 +1282,10 @@ mientras mantienes ALT; MODE solo sigue cambiando el modo de entrada.</p>
 <td>SBC‑XQ para Bluetooth, tus COMPUTERS y la red</td>
 </tr>
 <tr>
+<td>MIDI</td>
+<td>Each MIDI controller plugged in: its channel, velocity, expression, and LEARN for its drum keys and its buttons and knobs</td>
+</tr>
+<tr>
 <td>PROFILE</td>
 <td>Tu nombre de USER y el AUTHOR que firma tus exportaciones</td>
 </tr>
@@ -1341,6 +1371,74 @@ con luces pastel, es con el que arranca.</p>
 <li>Toca un pad para ponerlo ahí. Un pad que ya está en otra ranura cambia de lugar con él.</li>
 </ol>
 <p>Con las teclas del equipo, SELECT sobre una ranura la pasa al siguiente pad que no está en ninguna ranura. DEFAULT PADS vuelve a poner los dieciséis primeros.</p>
+<h3 id="midi-controllers">MIDI controllers</h3>
+<p>Plug a MIDI keyboard, a pad controller or a groovebox into USB, or pair it over Bluetooth,
+and it plays the machine on screen, into a take too. The drums play by their General MIDI
+notes (36 the kick, 38 the snare…), the bass, chords and lead by pitch, the PAD SAMPLER's pads
+by number.</p>
+<p>MENU → MIDI (or SETTINGS → MIDI) lists the controllers plugged in, with what each has
+learned. SET UP (or SELECT) opens one; ◀ ALL CONTROLLERS (or BACK) goes back to the list. A
+controller's settings are saved by its name, so they're there again next time it's plugged in:</p>
+<table>
+<thead>
+<tr>
+<th>Ajuste</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CHANNEL</td>
+<td>Hear it on every channel (the default: an MPE controller plays each note on its own) or on one</td>
+</tr>
+<tr>
+<td>TRANSPOSE</td>
+<td>Move its notes up or down, in semitones</td>
+</tr>
+<tr>
+<td>VELOCITY</td>
+<td>AS SENT; SOFT or SOFTER for pads whose light taps come out too quiet; FIXED for a controller that sends none</td>
+</tr>
+<tr>
+<td>EXPRESSION</td>
+<td>Its pitch bend, pressure, mod wheel and slide reach the synth it plays, from the key you pressed last</td>
+</tr>
+<tr>
+<td>BEND RANGE</td>
+<td>What its bend wheel or glide covers at full: ±2 for most keyboards, ±48 for an MPE controller. A controller that says its own sets this</td>
+</tr>
+<tr>
+<td>DRUM KEYS · LEARN DRUMS</td>
+<td>Hit the key you want for each drum row, in turn: it sounds as it learns, and the next row is up. The same keys play the PAD SAMPLER's pads. CLEAR (on the row) goes back to the GM notes</td>
+</tr>
+<tr>
+<td>CONTROLS · LEARN A CONTROL</td>
+<td>The device's keys and knobs (PLAY, STOP, a page key, a step key, KNOB 1…), one ringed: press the button or move the knob on the controller that will be it, and the next is up. REMOVE takes one back</td>
+</tr>
+</tbody>
+</table>
+<p>In both dialogs ▲ ▼ (or a tap) pick the row or control, SKIP leaves one as it is, UNDO (or ◀)
+takes the last learn back, and CLEAR forgets what the ringed one holds.</p>
+<h4 id="hosted-blocks">Hosted blocks</h4>
+<p>A Lightpad, Seaboard or Lumi Keys block (and the control blocks on its sides) gets a HOST
+section too. Hosted, the block's note grid follows the project:</p>
+<ul>
+<li>change the key or the scale in the header and the grid lays itself out in it, root notes
+  marked;</li>
+<li>OCT on the bass or lead page moves the grid's octave, and the block's own octave buttons
+  move OCT;</li>
+<li>the control blocks' buttons keep doing what you learned for them.</li>
+</ul>
+<p>Turn HOST THIS CONTROLLER off and the block runs on its own again.</p>
+<h4 id="octave">OCTAVE</h4>
+<p>A controller with octave buttons of its own gets an OCTAVE section.</p>
+<ul>
+<li><strong>Octave follows ravving</strong> on: its buttons move the octave of the instrument on screen, and
+  it follows OCT.</li>
+<li>Off: they only shift its own notes. The section shows where it is ("Its octave: −1").</li>
+<li><strong>RESET TO 0</strong> puts it back, for when a sound goes quiet because the controller sits far
+  from it.</li>
+</ul>
 <h2 id="languages">Idiomas</h2>
 <p>ravving habla inglés, español y japonés, con las palabras que usan los músicos en cada uno: BATERÍA, BOMBO, COMPÁS; ドラム, キック, 小節.</p>
 <p>Elige uno en MENU → SETTINGS → GENERAL → LANGUAGE. SYSTEM, por defecto, sigue el idioma del propio equipo.

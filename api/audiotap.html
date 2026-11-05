@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=51d83a22d5" defer></script>
-  <script src="search.js?v=574e5ff2ac" defer></script>
+  <script src="nav.js?v=fd733103c9" defer></script>
+  <script src="search.js?v=131a6217f4" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -115,7 +115,7 @@
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p>The client (<code translate="no">ravving-video</code>, stereo inputs, no outputs) copies its inputs into a ring of 2^20 frames (about 21 s at 48 kHz) on the audio thread; a plain thread of its own drains the ring into a named pipe that ffmpeg reads as raw audio (32-bit float, interleaved stereo, the graph's rate). What the ring cannot hold is counted (<a href="audiotap.html#droppedFrames" translate="no">droppedFrames</a>()) and reported, never lost silently.</p>
-<p>It does not use AudioLevels because libravving runs one AudioLevels recording at a time, which must stay free for <a href="mixrecorder.html" translate="no">MixRecorder</a> and <a href="inputrecorder.html" translate="no">InputRecorder</a>; nor ffmpeg's own JACK input, whose small ring a stall of the encoder or the storage would overrun.</p>
+<p>It does not use AudioLevels because libravving runs one AudioLevels recording at a time, which must stay free for Exporter and <a href="inputrecorder.html" translate="no">InputRecorder</a>; nor ffmpeg's own JACK input, whose small ring a stall of the encoder or the storage would overrun.</p>
 <p>The audio thread touches atomics and the preallocated ring only. The drain thread wakes every few milliseconds, writes what is there, and polls the pipe before each write, so an ffmpeg that stopped reading cannot hang <a href="audiotap.html#stopCapture" translate="no">stopCapture</a>().</p>
 <p>A microphone can be mixed in: two more inputs (<code translate="no">mic_l</code>, <code translate="no">mic_r</code>, <a href="audiotap.html#micPorts" translate="no">micPorts</a>()) that the live recording's input path feeds (<a href="liverecmic.html#setListener" translate="no">LiveRecMic::setListener</a>()) while <a href="audiotap.html#setMic" translate="no">setMic</a>(true). The audio thread adds them to the captured sound only; the speakers never get it. While the mic is in, the audio thread also meters it (<a href="audiotap.html#takeMicPeak" translate="no">takeMicPeak</a>()) and reports whether the voice-over is ducking the music (<a href="audiotap.html#voiceActive" translate="no">voiceActive</a>()).</p>
 <p>Time: the first captured sample's wall-clock moment (<a href="audiotap.html#startRealtimeUs" translate="no">startRealtimeUs</a>(), CLOCK_REALTIME in microseconds) is taken on the audio thread from the cycle's start time (<code translate="no">jack_get_cycle_times()</code>), so the recorder can tell ffmpeg where the audio sits against the video frames, which x11grab and v4l2 stamp with the same clock.</p>

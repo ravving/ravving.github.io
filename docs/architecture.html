@@ -189,21 +189,148 @@ still not accepted. A handler that runs accepts the event unless it sets
 <ul>
 <li>RECORD on an instrument page records that machine's take: the strip's ● shows ●, the count-in
   beat, …, then ■.</li>
-<li>RECORD with the header focused, or ALT + RECORD anywhere, is the global recording: the
-  header's ●, and a red RECORD LED.</li>
+<li>RECORD anywhere else (the header focused, a view over the pages) is the open instrument's
+  take too: <code>Main.qml</code> hands it to the page's <code>recordKey()</code>.</li>
+<li>ALT + RECORD anywhere is the global recording, LIVE REC. Off, it opens LIVE REC's dialog
+  (<code>Session.liveRecAsked</code>; the dialog is Main's). On, it starts the next recording, and
+  ■ ends it. The plate shows ● REC, and the RECORD LED is red.</li>
 <li>The metronome is libravving's (the API's <code>Clock</code>), with zynthbox-qml's tick/tock wavs, which
   <code>Studio</code> hands to <code>Clock::setMetronomeSounds()</code>. SamplerSynth's <code>global-sketch1</code> outputs are
   wired to the master.</li>
 </ul>
 <h3 id="an-external-midi-controller">An external MIDI controller</h3>
-<p>It plays the machine on screen, on every page, through the same path as the step keys, so REC
-records it. LIVE, which may be left on another machine, is the step keys' only.</p>
+<p><code>MidiInput</code> (<code>studio.midiIn</code>) takes every controller libravving's router sees (USB, Bluetooth).
+A controller plays the machine on screen, on every page, through the same path as the step keys,
+so REC records it. LIVE, which may be left on another machine, is the step keys' only.</p>
+<h4 id="its-settings">Its settings</h4>
 <ul>
-<li>GM drum notes 35–59 map by role (<code>DrumKit::roleForGmNote</code>). Any other note cycles through the
-  rows from C2.</li>
-<li>A velocity of 100 or more is an accent.</li>
-<li>Plugging one in or out shows a <code>Toast</code>: a dark pill, bottom centre.</li>
+<li>Each controller has settings of its own, by its name: <code>ravving/midi</code> in QSettings, a readable
+  INI with the drum keys as <code>note=slot</code> and the controls as <code>CONTROL=message</code>. SETTINGS · MIDI
+  (<code>MidiSettings</code>) lists the controllers and opens one at a time.</li>
+<li>The settings:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>channel</td>
+<td>the one it is heard on; all by default (an MPE controller plays each note on a channel of its own)</td>
+</tr>
+<tr>
+<td>transpose</td>
+<td>semitones</td>
+</tr>
+<tr>
+<td>velocity</td>
+<td>as sent, through a SOFT or SOFTER curve (pads that tap under 10), or FIXED</td>
+</tr>
+<tr>
+<td>expression</td>
+<td>whether its bend, pressure and CCs play</td>
+</tr>
+<tr>
+<td>bend range</td>
+<td>the semitones its full bend is</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>A controller starts from the known defaults in <code>data/midi-devices.json</code>, matched by a part of
+  its name (a Lightpad's ±48 bend and softer curve), until the user changes one. A controller
+  that says its own bend range (RPN 0, as the MPE specification has one do on connecting) sets
+  it. FORGET goes back to the defaults.</li>
+</ul>
+<h4 id="what-it-plays">What it plays</h4>
+<ul>
+<li>Drum keys: a note plays the drum row (and PAD SAMPLER pad) it was learned as. LEARN DRUMS
+  takes one key per row, each heard as it learns (<code>MidiLearnPopup</code>, with SKIP, UNDO and
+  CLEAR). Otherwise GM drum notes 35–59 map by role (<code>DrumKit::roleForGmNote</code>) and any other
+  note cycles through the rows from C2.</li>
+<li>Velocity scales the hit: <code>Machine::playLive(key, accented, touch)</code>, where 100 plays the row's
+  level as it is. 100 or more records an accent.</li>
+<li>Expression goes to the machine on screen (<code>Machine::sendLive</code>). That is pitch bend, scaled
+  from the controller's range to the engines' ±2; channel pressure; and the CCs no control is
+  learned as (the mod wheel, sustain, an MPE slide's CC 74).</li>
+<li>It follows the channel of the key pressed last, and the bend is centred again when the last
+  key is let go. The drum pages take none.</li>
+</ul>
+<h4 id="its-expression-in-a-take">Its expression in a take</h4>
+<ul>
+<li>During a take (<code>TakeRecorder::expression</code>) the expression is also recorded into the note
+  held. <code>Machine::recordExpression</code> keeps a curve per key from its press.</li>
+<li>A curve has one point a sequencer tick at most (bend, pressure, slide), and a repeated value
+  is dropped. A hit over a note replaces its curve.</li>
+<li>The curves are saved as the pattern's <code>expression</code> (by step and note), only when there are
+  any.</li>
+<li><code>PatternClip::setExpression</code> hands them to libravving's sequencer. It plays them between the
+  note's on and off, and recentres the bend and pressure at the note's end.</li>
+</ul>
+<h4 id="its-keys-and-knobs-as-the-devices">Its keys and knobs as the device's</h4>
+<ul>
+<li>A note or CC learned as one of the device's keys or knobs (LEARN A CONTROL) is fed to
+  <code>Ravving::handleCuia</code> / <code>handleKnobTurn</code> / <code>handleKnobMove</code>, so it does what the key does
+  wherever the focus is. A learned note is not played.</li>
+<li>A note, or a CC at 64 or more, presses; its note-off, or the CC under 64, lets go.</li>
+<li>A CC on KNOB 1–3 is a fixed knob at its position. On the BIG KNOB it is a turn by its change;
+  a relative encoder's 1 / 65 and 127 / 63 count too.</li>
+<li>Plugging one in or out shows a <code>Toast</code>: a dark pill, bottom centre. The control center's MIDI
+  card lists them and opens SETTINGS · MIDI.</li>
 <li>Debug: <code>QT_LOGGING_RULES="ravving.midi.debug=true"</code>.</li>
+</ul>
+<h3 id="controller-drivers-and-their-capabilities">Controller drivers and their capabilities</h3>
+<p><code>ControllerDrivers</code> (<code>studio.drivers</code>) runs a <code>ControllerDriver</code> for each connected controller
+whose protocol ravving knows. A driver is picked by a part of the controller's name
+(<code>addDriver(id, namePart, factory)</code>); one can be turned off per controller (SETTINGS · MIDI,
+HOST).</p>
+<ul>
+<li>The base, <code>ControllerDriver</code>: the transport (libravving's <code>Router::sendSysex</code> / <code>onSysex</code>,
+  over its own <code>SysexHelper</code> copies), request / reply pairing with timeouts, a keep-alive, 7-bit
+  packing; <code>receiveSysex()</code> gets the controller's messages.</li>
+<li>The way out: a controller's messages go on its ALSA sequencer port, whole. PipeWire's JACK
+  bridge hands a long one to USB in pieces, which a block drops. The way in: the bridge's
+  chunks are put back together in <code>SysexHelper</code>.</li>
+</ul>
+<h4 id="capabilities">Capabilities</h4>
+<p>What a controller can do beside its notes is a capability:</p>
+<ul>
+<li>an interface a driver also inherits (<code>ControllerCapability</code>, with the controller's name);</li>
+<li>a hub that keeps every driver that has it (<code>ControllerHub</code>: <code>attach</code> / <code>detach</code>).</li>
+</ul>
+<p><code>ControllerDrivers::addHub()</code> offers each running driver to every hub. A new capability is a
+new interface and hub, with no change to the drivers' registry; a new driver only inherits the
+interfaces it has.</p>
+<ul>
+<li><code>ControllerOctave</code>, hub <code>ControllerOctaves</code> (<code>studio.octaves</code>): the controller's octave.
+  Linked, it follows the machine on screen's (<code>followOctave</code>), and its own buttons come back
+  as <code>octaveRequested</code>. Unlinking is per controller (<code>setLinked</code>, kept by its name). Unlinked,
+  the hub still shows the controller's own octave (<code>octaves</code>), and <code>resetOctave</code> puts it back
+  to 0 (SETTINGS · MIDI, OCTAVE).</li>
+<li><code>ControllerScale</code>, hub <code>ControllerScales</code> (<code>studio.scales</code>): the project's key and scale
+  (<code>followKey(root, steps)</code>), for a controller that lights or limits its notes by them.</li>
+<li><code>Main.qml</code> pushes the machine on screen's octave to <code>studio.octaves.setOctave</code> and the key to
+  <code>studio.scales.setKey</code>.</li>
+</ul>
+<h4 id="the-blocks-host">The BLOCKS host</h4>
+<ul>
+<li><code>RoliBlocks</code> (" BLOCK"), the BLOCKS protocol's host, in order:</li>
+<li>the probe (<code>00 21 10 78 3F</code>), answered with a serial dump that names the block on USB;</li>
+<li>the topology: every block's serial, index, battery and firmware (the settings' facts);</li>
+<li>API mode on each block, then pings: the master every 400 ms, the others every 1.7 s
+    (without them a block leaves API mode in 5 s and, in time, powers off);</li>
+<li>the note grid's root (config item 5), scale (22) and octave (4): a <code>ControllerScale</code> and a
+    <code>ControllerOctave</code>. Linked, the octave is set on connect; unlinked, the block is queried, so the
+    block's own value shows.</li>
+<li>The blocks' buttons arrive as BLOCKS messages in API mode. <code>RoliBlocks</code> emits the CCs they
+  sent before (<code>midiEmulated</code>, CC 102 + the button's index), so MidiInput's learned controls
+  keep working.</li>
+<li>ravving's scales map to the grid's by their steps (<code>RoliBlocks::scaleId</code>); one the grid has
+  not got leaves it chromatic, and SETTINGS · KEYS decides about the notes outside the key.</li>
+<li>Debug: <code>QT_LOGGING_RULES="ravving.sysex*.debug=true"</code> logs every message both ways.</li>
 </ul>
 <h3 id="the-key-lights">The key lights</h3>
 <p><code>Main.qml</code>'s <code>ledColors</code>:</p>
@@ -233,7 +360,7 @@ records it. LIVE, which may be left on another machine, is the step keys' only.<
 </tr>
 <tr>
 <td>RECORD</td>
-<td>dim red when ready, red while recording (global, or a sampler take), a machine's colour during its take</td>
+<td>dim red when ready, red while recording (global, or a sampler take), a machine's colour during its take; it blinks while a take counts in or waits for the loop, and breathes slowly while anything records (<code>Main.recordPulse</code>)</td>
 </tr>
 </tbody>
 </table>
@@ -291,8 +418,10 @@ page. In it:</p>
   MODIFIERS or SOUND EFFECTS knob turned is written into its machine's pattern at the step
   playing.</li>
 <li>These are <code>Machine</code> automation lanes, step → value: undoable, and saved.</li>
-<li>The toolbar's AUTO plays them back. It's lit, with "•" while there are some, and a long press
-    clears them.</li>
+<li>The toolbar's AUTO (<code>Machine.automationOn</code>, on with the first lane) plays them back, and a
+    long press clears them.</li>
+<li>It also makes a take grow (<code>TakeRecorder</code>). The last bar adds one, up to
+    <code>Machine::MaxBars</code>. The take's end drops the empty bars it added.</li>
 <li><strong>Where:</strong> FXs on the strip opens the SOUND EFFECTS under it, where the SOUND MODIFIERS open,
   and closes the MODS (one section at a time).</li>
 <li><strong>The cards:</strong> SELECT switches the focused card's effect on or off, ▲ goes to the switches,

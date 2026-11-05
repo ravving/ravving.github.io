@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- controlleroctave.cpp -->
+  <meta name="description" content="The controllers with an octave of their own (studio&lt;@op&gt;.&lt;/@op&gt;octaves), linked to the current machine's octave: setOctave() goes to each linked one, and their own changes come back as octaveRequested(). Each controller can be unlinked by name (setLinked(), kept in the ravving&lt;@op&gt;/&lt;/@op&gt;midi settings beside MidiInput's); unlinked, its octave buttons shift its own notes only. ControllerDrivers attaches each driver while it runs (a ControllerHub); add() links any other ControllerOctave. GUI thread only.">
+  <meta name="keywords" content="class">
+  <title>ControllerOctaves Class | ravving C++ API 0.6.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=fd733103c9" defer></script>
+  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>ControllerOctaves</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">ControllerOctaves Class</h1>
+<!-- $$$ControllerOctaves-brief -->
+<p>The controllers with an octave of their own (<code translate="no">studio.octaves</code>), linked to the current machine's octave: <a href="controlleroctaves.html#setOctave" translate="no">setOctave</a>() goes to each linked one, and their own changes come back as <a href="controlleroctaves.html#octaveRequested" translate="no">octaveRequested</a>(). Each controller can be unlinked by name (<a href="controlleroctaves.html#setLinked" translate="no">setLinked</a>(), kept in the <code translate="no">ravving/midi</code> settings beside <a href="midiinput.html" translate="no">MidiInput</a>'s); unlinked, its octave buttons shift its own notes only. <a href="controllerdrivers.html" translate="no">ControllerDrivers</a> attaches each driver while it runs (a <a href="controllerhub.html" translate="no">ControllerHub</a>); <a href="controlleroctaves.html#add" translate="no">add</a>() links any other <a href="controlleroctave.html" translate="no">ControllerOctave</a>. GUI thread only. <a href="#details">More...</a></p>
+<!-- @@@ControllerOctaves -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;controlleroctave.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="controllerhub.html" translate="no">ControllerHub</a> and </td></tr>
+</table></div>
+<ul>
+<li><a href="controlleroctaves-members.html">List of all members, including inherited members</a></li>
+<li>ControllerOctaves is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="controlleroctaves.html#controllers-prop" translate="no">controllers</a></b> : QStringList</li>
+<li class="fn" translate="no"><b><a href="controlleroctaves.html#octaves-prop" translate="no">octaves</a></b> : QVariantMap</li>
+<li class="fn" translate="no"><b><a href="controlleroctaves.html#unlinked-prop" translate="no">unlinked</a></b> : QStringList</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#ControllerOctaves" translate="no">ControllerOctaves</a></b>(QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#add" translate="no">add</a></b>(ControllerOctave *<i>controller</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#controllers-prop" translate="no">controllers</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#linked" translate="no">linked</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#octaves-prop" translate="no">octaves</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#remove" translate="no">remove</a></b>(ControllerOctave *<i>controller</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#resetOctave" translate="no">resetOctave</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#setLinked" translate="no">setLinked</a></b>(const QString &amp;<i>name</i>, bool <i>linked</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#setOctave" translate="no">setOctave</a></b>(int <i>octave</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#unlinked-prop" translate="no">unlinked</a></b>() const</td></tr>
+</table></div>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#attach" translate="no">attach</a></b>(QObject *<i>driver</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#detach" translate="no">detach</a></b>(QObject *<i>driver</i>) override</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#controllers-prop" translate="no">controllersChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#octaveRequested" translate="no">octaveRequested</a></b>(int <i>octave</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controlleroctaves.html#octaves-prop" translate="no">octavesChanged</a></b>()</td></tr>
+</table></div>
+<!-- $$$ControllerOctaves-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+</div>
+<!-- @@@ControllerOctaves -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$controllers-prop$$$controllers$$$controllersChanged -->
+<h3 class="fn" translate="no" id="controllers-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">controllers</span> : <span class="type">QStringList</span></h3>
+<p>This property holds the names of the controllers with an octave, connected now.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>controllers</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>controllersChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@controllers -->
+</div>
+<div class="fnitem">
+<!-- $$$octaves-prop$$$octaves$$$octavesChanged -->
+<h3 class="fn" translate="no" id="octaves-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">octaves</span> : <span class="type">QVariantMap</span></h3>
+<p>This property holds the octave each controller plays in now, by name: what an unlinked one shows.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>octaves</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>octavesChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@octaves -->
+</div>
+<div class="fnitem">
+<!-- $$$unlinked-prop$$$unlinked$$$controllersChanged -->
+<h3 class="fn" translate="no" id="unlinked-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">unlinked</span> : <span class="type">QStringList</span></h3>
+<p>This property holds the names among controllers whose octave is not linked to ravving's.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>unlinked</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="controlleroctaves.html#controllers-prop" translate="no">controllersChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@unlinked -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$ControllerOctaves[overload1]$$$ControllerOctavesQObject* -->
+<h3 class="fn" translate="no" id="ControllerOctaves"><code class="details extra" translate="no">[explicit]</code> ControllerOctaves::<span class="name">ControllerOctaves</span>(<span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the links, with <i translate="no">parent</i>.</p>
+<!-- @@@ControllerOctaves -->
+</div>
+<div class="fnitem">
+<!-- $$$add[overload1]$$$addControllerOctave* -->
+<h3 class="fn" translate="no" id="add"><span class="type">void</span> ControllerOctaves::<span class="name">add</span>(<span class="type"><a href="controlleroctave.html" translate="no">ControllerOctave</a></span> *<i>controller</i>)</h3>
+<p>Links <i translate="no">controller</i> (linked or not as its name was last set) and gives it ravving's octave when linked. The caller keeps it alive until <a href="controlleroctaves.html#remove" translate="no">remove</a>().</p>
+<!-- @@@add -->
+</div>
+<div class="fnitem">
+<!-- $$$attach[overload1]$$$attachQObject* -->
+<h3 class="fn" translate="no" id="attach"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> ControllerOctaves::<span class="name">attach</span>(<span class="type">QObject</span> *<i>driver</i>)</h3>
+<p>Reimplements: <a href="controllerhub.html#attach" translate="no">ControllerHub::attach</a>(QObject *driver).</p>
+<p>Links <i translate="no">driver</i> if it has an octave of its own (<a href="controlleroctaves.html#add" translate="no">add</a>()).</p>
+<!-- @@@attach -->
+</div>
+<div class="fnitem">
+<!-- $$$detach[overload1]$$$detachQObject* -->
+<h3 class="fn" translate="no" id="detach"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> ControllerOctaves::<span class="name">detach</span>(<span class="type">QObject</span> *<i>driver</i>)</h3>
+<p>Reimplements: <a href="controllerhub.html#detach" translate="no">ControllerHub::detach</a>(QObject *driver).</p>
+<p>Lets <i translate="no">driver</i> go, if it was linked (<a href="controlleroctaves.html#remove" translate="no">remove</a>()).</p>
+<!-- @@@detach -->
+</div>
+<div class="fnitem">
+<!-- $$$linked[overload1]$$$linkedconstQString& -->
+<h3 class="fn" translate="no" id="linked"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> ControllerOctaves::<span class="name">linked</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
+<p>Returns whether the octave of the controller <i translate="no">name</i> is linked to ravving's (yes unless unlinked).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><p><b>See also </b><a href="controlleroctaves.html#setLinked" translate="no">setLinked</a>().</p>
+<!-- @@@linked -->
+</div>
+<div class="fnitem">
+<!-- $$$octaveRequested[overload1]$$$octaveRequestedint -->
+<h3 class="fn" translate="no" id="octaveRequested"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ControllerOctaves::<span class="name">octaveRequested</span>(<span class="type">int</span> <i>octave</i>)</h3>
+<p>Emitted when a linked controller moved its own octave: <i translate="no">octave</i> for the current machine.</p>
+<!-- @@@octaveRequested -->
+</div>
+<div class="fnitem">
+<!-- $$$remove[overload1]$$$removeControllerOctave* -->
+<h3 class="fn" translate="no" id="remove"><span class="type">void</span> ControllerOctaves::<span class="name">remove</span>(<span class="type"><a href="controlleroctave.html" translate="no">ControllerOctave</a></span> *<i>controller</i>)</h3>
+<p>Lets <i translate="no">controller</i> go: nothing goes to it, nothing comes from it.</p>
+<!-- @@@remove -->
+</div>
+<div class="fnitem">
+<!-- $$$resetOctave[overload1]$$$resetOctaveconstQString& -->
+<h3 class="fn" translate="no" id="resetOctave"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ControllerOctaves::<span class="name">resetOctave</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Puts the octave of the controller <i translate="no">name</i> back to 0 (one that is unlinked; a linked one follows ravving's anyway).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@resetOctave -->
+</div>
+<div class="fnitem">
+<!-- $$$setLinked[overload1]$$$setLinkedconstQString&bool -->
+<h3 class="fn" translate="no" id="setLinked"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ControllerOctaves::<span class="name">setLinked</span>(const <span class="type">QString</span> &amp;<i>name</i>, <span class="type">bool</span> <i>linked</i>)</h3>
+<p>Links the octave of the controller <i translate="no">name</i> to ravving's (<i translate="no">linked</i>) or unlinks it; kept for the next time it is plugged in. Linked again, it takes ravving's octave.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><p><b>See also </b><a href="controlleroctaves.html#linked" translate="no">linked</a>().</p>
+<!-- @@@setLinked -->
+</div>
+<div class="fnitem">
+<!-- $$$setOctave[overload1]$$$setOctaveint -->
+<h3 class="fn" translate="no" id="setOctave"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ControllerOctaves::<span class="name">setOctave</span>(<span class="type">int</span> <i>octave</i>)</h3>
+<p>The machine on screen's <i translate="no">octave</i>, for every linked controller.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setOctave -->
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>
+</div>

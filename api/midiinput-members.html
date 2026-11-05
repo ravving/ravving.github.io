@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 <!-- midiinput.cpp -->
-  <meta name="description" content="External MIDI controllers (keyboards, pads) as a note input, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;midiIn.">
+  <meta name="description" content="External MIDI controllers (keyboards, pads, grooveboxes) as a note input and as the device's keys and knobs, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;midiIn.">
   <meta name="keywords" content="auto-generated">
   <title>List of All Members for MidiInput | ravving C++ API 0.6.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=51d83a22d5" defer></script>
-  <script src="search.js?v=574e5ff2ac" defer></script>
+  <script src="nav.js?v=fd733103c9" defer></script>
+  <script src="search.js?v=131a6217f4" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -67,15 +67,41 @@
 <div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">List of All Members for MidiInput</h1>
 <p>This is the complete list of members for <a href="midiinput.html">MidiInput</a>, including inherited members.</p>
-<ul>
-<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#MidiInput" translate="no">MidiInput</a></b></span>(int *, QObject *)</li>
+<div class="table"><table class="propsummary" translate="no">
+<tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#MidiInput" translate="no">MidiInput</a></b></span>(int *, const QString &amp;, QObject *)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#clearControl" translate="no">clearControl</a></b></span>(const QString &amp;, const QString &amp;)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#clearHits" translate="no">clearHits</a></b></span>(const QString &amp;)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#controls-prop" translate="no">controls</a></b></span>() const : QVariantList</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#cuia" translate="no">cuia</a></b></span>(const QString &amp;)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#describe" translate="no">describe</a></b></span>(const QString &amp;) const : QString</li>
 <li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#deviceAdded" translate="no">deviceAdded</a></b></span>(const QString &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#deviceRemoved" translate="no">deviceRemoved</a></b></span>(const QString &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#devices-prop" translate="no">devices</a></b></span>() const : QStringList</li>
 <li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#devices-prop" translate="no">devicesChanged</a></b></span>()</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#expression" translate="no">expression</a></b></span>(int, int, int)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#forget" translate="no">forget</a></b></span>(const QString &amp;)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#knobMoved" translate="no">knobMoved</a></b></span>(int, qreal)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#knobTurned" translate="no">knobTurned</a></b></span>(int, int)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#learn" translate="no">learn</a></b></span>(const QString &amp;, const QString &amp;)</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#learned" translate="no">learned</a></b></span>(const QString &amp;, const QString &amp;, int)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#learning-prop" translate="no">learning</a></b></span>() const : QString</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#learning-prop" translate="no">learningChanged</a></b></span>()</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#noteName" translate="no">noteName</a></b></span>(int) const : QString</li>
 <li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#noteOff" translate="no">noteOff</a></b></span>(int)</li>
-<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#noteOn" translate="no">noteOn</a></b></span>(int, int)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#noteOn" translate="no">noteOn</a></b></span>(int, int, int)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#receive" translate="no">receive</a></b></span>(const QString &amp;, int, quint8, quint8, quint8)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#setControl" translate="no">setControl</a></b></span>(const QString &amp;, const QString &amp;, const QString &amp;)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#setHit" translate="no">setHit</a></b></span>(const QString &amp;, int, int)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#setOption" translate="no">setOption</a></b></span>(const QString &amp;, const QString &amp;, int)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#setSoundCardsDir" translate="no">setSoundCardsDir</a></b></span>(const QString &amp;)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#settings" translate="no">settings</a></b></span>(const QString &amp;) const : QVariantMap</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#settingsChanged" translate="no">settingsChanged</a></b></span>(const QString &amp;)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="midiinput.html#stopLearning" translate="no">stopLearning</a></b></span>()</li>
 </ul>
+</td></tr>
+</table></div>
 </article>
 </main>
 <footer class="api-footer">
