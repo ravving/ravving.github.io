@@ -5,7 +5,7 @@
 <!-- controllerscale.cpp -->
   <meta name="description" content="The controllers that play in a key (studio&lt;@op&gt;.&lt;/@op&gt;scales): the project's key goes to each (setKey()), and to each one that starts later. GUI thread only.">
   <meta name="keywords" content="class">
-  <title>ControllerScales Class | ravving C++ API 0.6.0</title>
+  <title>ControllerScales Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -91,12 +91,17 @@
 <h2 id="properties">Properties</h2>
 <ul>
 <li class="fn" translate="no"><b><a href="controllerscales.html#controllers-prop" translate="no">controllers</a></b> : QStringList</li>
+<li class="fn" translate="no"><b><a href="controllerscales.html#pads-prop" translate="no">pads</a></b> : int</li>
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="controllerscales.html#ControllerScales" translate="no">ControllerScales</a></b>(QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="controllerscales.html#controllers-prop" translate="no">controllers</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="controllerscales.html#inKey" translate="no">inKey</a></b>(int <i>note</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="controllerscales.html#lightpadPad" translate="no">lightpadPad</a></b>(int <i>note</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="controllerscales.html#pads-prop" translate="no">pads</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerscales.html#setKey" translate="no">setKey</a></b>(int <i>root</i>, const QList&lt;int&gt; &amp;<i>steps</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerscales.html#setPads" translate="no">setPads</a></b>(int <i>pads</i>)</td></tr>
 </table></div>
 <h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
@@ -106,6 +111,7 @@
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerscales.html#controllers-prop" translate="no">controllersChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerscales.html#pads-prop" translate="no">padsChanged</a></b>()</td></tr>
 </table></div>
 <!-- $$$ControllerScales-description -->
 <div class="descr">
@@ -127,6 +133,20 @@
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>controllersChanged</b></span>()</td></tr>
 </table></div>
 <!-- @@@controllers -->
+</div>
+<div class="fnitem">
+<!-- $$$pads-prop$$$pads$$$padsChanged -->
+<h3 class="fn" translate="no" id="pads-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">pads</span> : <span class="type">int</span></h3>
+<p>what the page on screen plays from pads (<a href="controllerscale.html#Pads-enum" translate="no">ControllerScale::Pads</a>): a Lightpad's 3×3 pads then send C2 to G♯2, pads 1 to 9 (MachinePanel.<a href="controllerscales.html#lightpadPad" translate="no">lightpadPad</a>()).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>pads</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>padsChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@pads -->
 </div>
 </div>
 <div class="func">
@@ -152,11 +172,32 @@
 <!-- @@@detach -->
 </div>
 <div class="fnitem">
+<!-- $$$inKey[overload1]$$$inKeyint -->
+<h3 class="fn" translate="no" id="inKey"><span class="type">bool</span> ControllerScales::<span class="name">inKey</span>(<span class="type">int</span> <i>note</i>) const</h3>
+<p>Returns whether <i translate="no">note</i> is in the project's key (<a href="controllerscales.html#setKey" translate="no">setKey</a>()); every note is, before a key is set.</p>
+<!-- @@@inKey -->
+</div>
+<div class="fnitem">
+<!-- $$$lightpadPad[overload1]$$$lightpadPadint -->
+<h3 class="fn" translate="no" id="lightpadPad"><span class="type">int</span> ControllerScales::<span class="name">lightpadPad</span>(<span class="type">int</span> <i>note</i>) const</h3>
+<p>Returns the pad of a Lightpad's layout on the page (<a href="controllerscales.html#pads-prop" translate="no">pads</a>()) that <i translate="no">note</i> is, counted from 36: the first nine, or all sixteen for the 4×4 layout; -1 for a note outside it or no layout.</p>
+<!-- @@@lightpadPad -->
+</div>
+<div class="fnitem">
 <!-- $$$setKey[overload1]$$$setKeyintconstQList<int>& -->
 <h3 class="fn" translate="no" id="setKey"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ControllerScales::<span class="name">setKey</span>(<span class="type">int</span> <i>root</i>, const <span class="type">QList</span>&lt;<span class="type">int</span>&gt; &amp;<i>steps</i>)</h3>
 <p>The project's key, <i translate="no">root</i> (0 to 11) and the scale's <i translate="no">steps</i>, for every controller that plays in one.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setKey -->
+</div>
+<div class="fnitem">
+<!-- $$$setPads[overload1]$$$setPadsint -->
+<h3 class="fn" translate="no" id="setPads"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ControllerScales::<span class="name">setPads</span>(<span class="type">int</span> <i>pads</i>)</h3>
+<p>What the page on screen plays from pads, <i translate="no">pads</i> (<a href="controllerscale.html#Pads-enum" translate="no">ControllerScale::Pads</a>), for every controller that plays in a key.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><p><b>See also </b><a href="controllerscales.html#pads-prop" translate="no">pads</a>().</p>
+<!-- @@@setPads -->
+</div>
 </div>
 </article>
 </main>
@@ -167,4 +208,3 @@
 </footer>
 </body>
 </html>
-</div>

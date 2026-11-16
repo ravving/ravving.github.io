@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
 <!-- controllercapability.cpp -->
-  <meta name="description" content="What every capability interface of a controller has: the controller's name (controllerName()). A ControllerDriver implements the interfaces of what its controller can do (ControllerOctave, ControllerScale), and overrides controllerName() once for all of them.">
+  <meta name="description" content="What every capability interface of a controller has: which controller it is (controller()). A ControllerDriver implements the interfaces of what its controller can do (ControllerOctave, ControllerScale), and overrides controller() once for all of them.">
   <meta name="keywords" content="class">
-  <title>ControllerCapability Class | ravving C++ API 0.6.0</title>
+  <title>ControllerCapability Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -75,11 +75,11 @@
 <div class="sidebar-content" id="sidebar-content"></div></div>
 <h1 class="title" translate="no">ControllerCapability Class</h1>
 <!-- $$$ControllerCapability-brief -->
-<p>What every capability interface of a controller has: the controller's name (<a href="controllercapability.html#controllerName" translate="no">controllerName</a>()). A <a href="controllerdriver.html" translate="no">ControllerDriver</a> implements the interfaces of what its controller can do (<a href="controlleroctave.html" translate="no">ControllerOctave</a>, <a href="controllerscale.html" translate="no">ControllerScale</a>), and overrides <a href="controllercapability.html#controllerName" translate="no">controllerName</a>() once for all of them. <a href="#details">More...</a></p>
+<p>What every capability interface of a controller has: which controller it is (<a href="controllercapability.html#controller" translate="no">controller</a>()). A <a href="controllerdriver.html" translate="no">ControllerDriver</a> implements the interfaces of what its controller can do (<a href="controlleroctave.html" translate="no">ControllerOctave</a>, <a href="controllerscale.html" translate="no">ControllerScale</a>), and overrides <a href="controllercapability.html#controller" translate="no">controller</a>() once for all of them. <a href="#details">More...</a></p>
 <!-- @@@ControllerCapability -->
 <div class="table"><table class="alignedsummary requisites" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;controllercapability.h&gt;</code></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="controlleroctave.html" translate="no">ControllerOctave</a> and <a href="controllerscale.html" translate="no">ControllerScale</a></p>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="controllermixer.html" translate="no">ControllerMixer</a>, <a href="controlleroctave.html" translate="no">ControllerOctave</a>, and <a href="controllerscale.html" translate="no">ControllerScale</a></p>
 </td></tr>
 </table></div>
 <ul>
@@ -89,7 +89,7 @@
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="controllercapability.html#dtor.ControllerCapability" translate="no">~ControllerCapability</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="controllercapability.html#controllerName" translate="no">controllerName</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual ControllerId </td><td class="memItemRight bottomAlign"><b><a href="controllercapability.html#controller" translate="no">controller</a></b>() const = 0</td></tr>
 </table></div>
 <!-- $$$ControllerCapability-description -->
 <div class="descr">
@@ -105,10 +105,10 @@
 <!-- @@@~ControllerCapability -->
 </div>
 <div class="fnitem">
-<!-- $$$controllerName[overload1]$$$controllerName -->
-<h3 class="fn" translate="no" id="controllerName"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">QString</span> ControllerCapability::<span class="name">controllerName</span>() const</h3>
-<p>Returns the controller's name, as <a href="midiinput.html" translate="no">MidiInput</a> knows it: settings are kept by it.</p>
-<!-- @@@controllerName -->
+<!-- $$$controller[overload1]$$$controller -->
+<h3 class="fn" translate="no" id="controller"><code class="details extra" translate="no">[pure virtual]</code> <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> ControllerCapability::<span class="name">controller</span>() const</h3>
+<p>Returns the controller's id: the key its settings are kept under (<a href="controllersettingsstore.html" translate="no">ControllerSettingsStore</a>) and the hubs list it by.</p>
+<!-- @@@controller -->
 </div>
 </div>
 </article>

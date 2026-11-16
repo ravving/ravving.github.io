@@ -5,7 +5,7 @@
 <!-- soundfonttags.cpp -->
   <meta name="description" content="What a soundfont file is filed as: its family (a drum kit, keys, a synth…), its genre and its maker, from data&lt;@op&gt;/&lt;/@op&gt;soundfonts&lt;@op&gt;.&lt;/@op&gt;json and the family folders of the library, the cache and a USB stick.">
   <meta name="keywords" content="class">
-  <title>SoundfontTags Class | ravving C++ API 0.6.0</title>
+  <title>SoundfontTags Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -91,6 +91,7 @@
 </table></div>
 <h2 id="static-public-members">Static Public Members</h2>
 <div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QStringList&gt; </td><td class="memItemRight bottomAlign"><b><a href="soundfonttags.html#alike" translate="no">alike</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="soundfonttags.html#families" translate="no">families</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="soundfonttags.html#familyFolder" translate="no">familyFolder</a></b>(const QString &amp;<i>family</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="soundfonttags.html#familyForProgram" translate="no">familyForProgram</a></b>(const QString &amp;<i>family</i>, int <i>bank</i>, int <i>program</i>)</td></tr>
@@ -123,6 +124,12 @@
 <!-- @@@SoundfontTags -->
 <div class="func">
 <h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$alike[overload1]$$$alike -->
+<h3 class="fn" translate="no" id="alike"><code class="details extra" translate="no">[static]</code> <span class="type">QList</span>&lt;<span class="type">QStringList</span>&gt; SoundfontTags::<span class="name">alike</span>()</h3>
+<p>Returns the fonts that stand in for one another (the table's <code translate="no">alike</code>): each group lists the file names of one font in its editions, the best first. <a href="paths.html#relocated" translate="no">Paths::relocated</a>() plays a missing font of a group from another one (<a href="paths.html#setSoundfontEquivalents" translate="no">Paths::setSoundfontEquivalents</a>()).</p>
+<!-- @@@alike -->
+</div>
 <div class="fnitem">
 <!-- $$$families[overload1]$$$families -->
 <h3 class="fn" translate="no" id="families"><code class="details extra" translate="no">[static]</code> <span class="type">QStringList</span> SoundfontTags::<span class="name">families</span>()</h3>
@@ -174,7 +181,7 @@
 <div class="fnitem">
 <!-- $$$load[overload1]$$$loadconstQString& -->
 <h3 class="fn" translate="no" id="load"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> SoundfontTags::<span class="name">load</span>(const <span class="type">QString</span> &amp;<i>file</i>)</h3>
-<p>Reads the table <i translate="no">file</i> (data/soundfonts.json: <code translate="no">families</code> and <code translate="no">genres</code> in their order and <code translate="no">fonts</code> by file name, each <code translate="no">{&quot;family&quot;, &quot;genre&quot;, &quot;maker&quot;}</code>). Missing or unreadable, the table is empty and every font is <a href="soundfonttags.html#other" translate="no">other</a>() with the maker read off its name.</p>
+<p>Reads the table <i translate="no">file</i> (data/soundfonts.json: <code translate="no">families</code> and <code translate="no">genres</code> in their order and <code translate="no">fonts</code> by file name, each <code translate="no">{&quot;family&quot;, &quot;genre&quot;, &quot;maker&quot;}</code>, and <code translate="no">alike</code>, the groups of file names that are one font in several editions). Missing or unreadable, the table is empty and every font is <a href="soundfonttags.html#other" translate="no">other</a>() with the maker read off its name.</p>
 <!-- @@@load -->
 </div>
 <div class="fnitem">

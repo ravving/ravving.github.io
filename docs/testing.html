@@ -229,6 +229,14 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 <td>every kind of sound switch between two sections, heard: one machine plays a note on every beat, A on one sound and B on another, picked at random moments while the master records; <code>tools/section-switches-test.py</code> tells the two sounds apart and checks every change lands on a bar line. Engine switches on CHORDS, BASS and LEAD (a synth ↔ a soundfont, two synths), a soundfont switch inside one FluidSynth, a kit switch on DRUMS 1</td>
 </tr>
 <tr>
+<td><code>tools/held-notes-test.sh</code></td>
+<td>notes across a change of sound, heard at each engine's own output: a LEAD key held while the project's sound moves from a soundfont to a synth and back, with both engines running (a section keeps each), ends on the engine it started on; a sequenced note the same, by the next bar; the stuck-sound issue and its ALL NOTES OFF; the same whole-bar note in two sections on one synth and on a soundfont, not cut at the bar line; a DRUMS 1 pad hit while a section's kit waits for the bar plays the kit heard, and after it the new one. A held note that never sounded fails (a silent graph would pass the rest)</td>
+</tr>
+<tr>
+<td><code>tools/bt-stress-test.sh</code></td>
+<td>the Bluetooth MIDI links under CPU load (<a href="#bluetooth-under-load">below</a>): an HCI trace of the idle device, then of every core hogged while the project plays, read by <code>tools/bt-stress.py</code>: no disconnection or HCI error, every link still sent to on time (a hosted ROLI block is pinged every 0.4 s from the main thread the hogs compete with), packets confirmed within a second, nothing fallen silent; with it ravving's fifo round trip, the Pi's throttling flags and the adapter's error counters. Refuses to run while the project plays</td>
+</tr>
+<tr>
 <td><code>tools/audit-fixes-test.sh</code></td>
 <td>the second libravving audit's fixes (<code>notes/design/audit-2-fixes.md</code>): an export's WAV whole the moment it is done, sections picked over and over while stopped and the last one heard from the first bar, the bars counted in time over a long play, no sequencer queue overflow or ring-full warning from the audio threads, the transport with one sequencer (playing on play, the 16ths told, off on stop; step 9, <code>notes/design/step-9.md</code>), and ravving's wakeups at rest</td>
 </tr>
@@ -250,7 +258,7 @@ AppImage; the AppImage and its release check (<a href="packaging.html">packaging
 </tr>
 <tr>
 <td><code>tools/drums-test.sh</code></td>
-<td>the DRUMS page suite (67 checks: 62 on the device, 5 timing checks on the laptop from a recording of the lane): a new project starting clean on every page (patterns, pan, level, tempo, swing, LIVE, STEP, AUTO), the grid (toggle, accent, undo / redo, clear, bars, view bar, cursor and STEP entry), the kit (another loaded, reset), the row mix heard (mute, solo, level, accent, the machine's mute and pause), LIVE (a pad heard, hits recorded while playing), presets (save, load, remove), every SOUND EFFECT on and off with its knobs read back and DRIVE / COMPRESSOR / EQ / PAN heard, the kit's MODS, and <code>tools/hits-timing.py</code> (shared with the chords suite): every 8th within 12 ms, accents louder. It works in a project of its own and puts the previous one back</td>
+<td>the DRUMS page suite (102 checks: 85 on the device, 17 timing and FEEL checks on the laptop from recordings of the lane): a new project starting clean on every page (patterns, pan, level, the rows' mute, solo and level, FEEL, tempo, swing, LIVE, STEP, AUTO), the grid (toggle, accent, undo / redo, clear, bars, view bar, cursor and STEP entry), the kit (another loaded, reset), the row mix heard (mute, solo, level, accent, the machine's mute and pause), LIVE (a pad heard, hits recorded while playing; through another machine's solo a pad heard and the pattern silent, its own M silencing both), presets (save, load, remove), every SOUND EFFECT on and off with its knobs read back and DRIVE / COMPRESSOR / EQ / PAN heard, the kit's MODS, FEEL's amounts read back, <code>tools/hits-timing.py</code> (shared with the chords suite): every 8th within 12 ms, accents louder, and <code>tools/feel-check.py</code> on the hats and the kick recorded plain, at full TIMING and VELOCITY, and at full PULSE: the hats leave the grid (no further than 11 clock ticks) and hit unevenly, another way on every bar, the kick holds the grid and is tighter than the hats, the off-beat 8ths play softer. Both find the hits with <code>tools/hits.py</code>. It works in a project of its own and puts the previous one back</td>
 </tr>
 <tr>
 <td><code>tools/chords-test.sh</code></td>
@@ -496,6 +504,36 @@ hold on the wrong one writes a step.</p>
 <p><a href="routing.html">routing.md</a> has the map of what ravving wires, and the tools: pw-top, pw-dump,
 pw-dot, jack_iodelay…</p>
 <p><code>tools/issues-test.sh</code> checks the issues center end to end (reports over the fifo, order, dismiss, clear, the drawer card and the dialog).</p>
+<h3 id="bluetooth-under-load">Bluetooth under load</h3>
+<p><code>tools/bt-stress-test.sh</code> asks whether a busy device makes its Bluetooth MIDI links flaky.
+It needs a Bluetooth MIDI controller connected and ravving running with the project stopped.
+A hosted ROLI block is the best subject: ravving pings it every 0.4 s, so the trace carries
+traffic without anyone playing.</p>
+<p>The suite records two HCI traces with <code>btmon</code> and copies them to <code>/tmp/bt-stress/</code>:</p>
+<ul>
+<li><code>IDLE</code> seconds (40) of the device at rest;</li>
+<li><code>LOAD</code> seconds (90) with <code>HOGS</code> busy loops, one per core at ravving's own priority, while
+  the project plays (<code>PLAY=0</code> leaves it stopped).</li>
+</ul>
+<h4 id="reading-a-trace">Reading a trace</h4>
+<p><code>tools/bt-stress.py IDLE.txt LOAD.txt</code> reads the traces (<code>btmon -t -r</code>) and prints, per link:</p>
+<ul>
+<li>the packets each way per second;</li>
+<li>the longest gap between two packets sent to it: a late keep-alive means ravving's main
+  thread starved;</li>
+<li>how long the controller took to confirm each packet, from an ACL Data TX to the Number of
+  Completed Packets event that counts it;</li>
+<li>every disconnection, connection update and HCI error.</li>
+</ul>
+<p>The loaded trace fails on a disconnection, an HCI error, a send gap over <code>--max-gap</code> (2 s), a
+confirmation over <code>--max-confirm</code> (1 s), or a link that fell silent.</p>
+<p>Around the traces the suite checks ravving's fifo round trip (<code>get studio tempo</code> every 5 s,
+the write's time against the journal's answer), the Pi's <code>get_throttled</code> flags and
+temperature, the adapter's error counters and the journal's disconnections.</p>
+<p>The data path is the kernel's ATT socket into PipeWire's <code>bluez_midi</code> node, then ravving's
+MIDI thread. The host's keep-alives come from ravving's main thread. What the radio does with
+an A2DP link or a scan beside the MIDI link is another matter (<a href="debugging.html">debugging.md</a>,
+"Bluetooth troubleshooting").</p>
 <h2 id="bluetooth">Bluetooth</h2>
 <p>The basic checks: <code>sh tools/bluetooth-setup.sh --check</code>. With a device at hand, over the
 fifo:</p>

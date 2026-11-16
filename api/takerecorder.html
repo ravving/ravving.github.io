@@ -5,7 +5,7 @@
 <!-- takerecorder.cpp -->
   <meta name="description" content="Records what is played live on a machine into its pattern; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;take.">
   <meta name="keywords" content="class">
-  <title>TakeRecorder Class | ravving C++ API 0.6.0</title>
+  <title>TakeRecorder Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -102,7 +102,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#TakeRecorder" translate="no">TakeRecorder</a></b>(Studio *<i>studio</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#countInBeat-prop" translate="no">countInBeat</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#expression" translate="no">expression</a></b>(QObject *<i>machine</i>, int <i>status</i>, int <i>data1</i>, int <i>data2</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#hit" translate="no">hit</a></b>(QObject *<i>machine</i>, int <i>row</i>, bool <i>accented</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#hit" translate="no">hit</a></b>(QObject *<i>machine</i>, int <i>row</i>, bool <i>accented</i>, int <i>touch</i> = 0)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#machine-prop" translate="no">machine</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#release" translate="no">release</a></b>(QObject *<i>machine</i>, int <i>row</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="takerecorder.html#state-prop" translate="no">state</a></b>() const</td></tr>
@@ -216,9 +216,9 @@
 <!-- @@@full -->
 </div>
 <div class="fnitem">
-<!-- $$$hit[overload1]$$$hitQObject*intbool -->
-<h3 class="fn" translate="no" id="hit"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> TakeRecorder::<span class="name">hit</span>(<span class="type">QObject</span> *<i>machine</i>, <span class="type">int</span> <i>row</i>, <span class="type">bool</span> <i>accented</i>)</h3>
-<p>Writes a live hit on <i translate="no">machine</i>'s <i translate="no">row</i>, accented when <i translate="no">accented</i> is true, into the take when that machine is recording one.</p>
+<!-- $$$hit[overload1]$$$hitQObject*intboolint -->
+<h3 class="fn" translate="no" id="hit"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> TakeRecorder::<span class="name">hit</span>(<span class="type">QObject</span> *<i>machine</i>, <span class="type">int</span> <i>row</i>, <span class="type">bool</span> <i>accented</i>, <span class="type">int</span> <i>touch</i> = 0)</h3>
+<p>Writes a live hit on <i translate="no">machine</i>'s <i translate="no">row</i>, accented when <i translate="no">accented</i> is true, into the take when that machine is recording one; a <i translate="no">touch</i> from 1 to 127 (a controller's velocity) is kept with it, so it plays back as loud as it was heard (<a href="machine.html#recordLive" translate="no">Machine::recordLive</a>()).</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@hit -->
 </div>

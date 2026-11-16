@@ -5,7 +5,7 @@
 <!-- sections.cpp -->
   <meta name="description" content="The song's sections, each holding every machine's pattern, and the song: the sections in order, each played a number of times; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;sections.">
   <meta name="keywords" content="class">
-  <title>Sections Class | ravving C++ API 0.6.0</title>
+  <title>Sections Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -93,8 +93,10 @@
 <h2 id="public-types">Public Types</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> class </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html" translate="no">Host</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="sections-skipbounds.html" translate="no">SkipBounds</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="sections.html#Landing-enum" translate="no">Landing</a></b> { NextBar, NextBeat }</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="sections.html#Mode-enum" translate="no">Mode</a></b> { Loop, Song }</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="sections.html#SwitchAt-enum" translate="no">SwitchAt</a></b> { SwitchBar, SwitchSection }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="sections.html#SwitchAt-enum" translate="no">SwitchAt</a></b> { SwitchBar, SwitchSection, SwitchBeat }</td></tr>
 </table></div>
 <h2 id="properties">Properties</h2>
 <div class="table"><table class="propsummary" translate="no">
@@ -157,15 +159,20 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#setBars" translate="no">setBars</a></b>(const QString &amp;<i>id</i>, int <i>bars</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#setColour" translate="no">setColour</a></b>(const QString &amp;<i>id</i>, int <i>colour</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#mode-prop" translate="no">setMode</a></b>(Sections::Mode <i>mode</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#setPaused" translate="no">setPaused</a></b>(bool <i>paused</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#setRepeats" translate="no">setRepeats</a></b>(int <i>index</i>, int <i>repeats</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#setSkipBackInPass" translate="no">setSkipBackInPass</a></b>(bool <i>inPass</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#switchAt-prop" translate="no">setSwitchAt</a></b>(int <i>switchAt</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="sections.html#skipBackInPass" translate="no">skipBackInPass</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Sections::SkipBounds </td><td class="memItemRight bottomAlign"><b><a href="sections.html#skipBounds" translate="no">skipBounds</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#skipped" translate="no">skipped</a></b>(int <i>bar</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="sections.html#song-prop" translate="no">song</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#songBar-prop" translate="no">songBar</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#songBars-prop" translate="no">songBars</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#songStarting" translate="no">songStarting</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="sections.html#state" translate="no">state</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sections.html#switchAt-prop" translate="no">switchAt</a></b>() const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#switchLanded" translate="no">switchLanded</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#switchLanded" translate="no">switchLanded</a></b>(int <i>bar</i> = -1)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="sections.html#switching-prop" translate="no">switching</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#transportStarted" translate="no">transportStarted</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sections.html#transportStopped" translate="no">transportStopped</a></b>()</td></tr>
@@ -219,6 +226,16 @@
 <div class="types">
 <h2>Member Type Documentation</h2>
 <div class="fnitem">
+<!-- $$$Landing$$$NextBar$$$NextBeat -->
+<h3 class="fn" translate="no" id="Landing-enum">enum class Sections::<span class="name">Landing</span></h3>
+<p>Where a section's content cued with <a href="sections-host.html#applyMachines" translate="no">Host::applyMachines</a>() takes over.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">Sections::Landing::NextBar</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">On the next bar line.</td></tr>
+<tr><td class="topAlign"><code translate="no">Sections::Landing::NextBeat</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">On the next beat, each clip counted from that beat's bar line.</td></tr>
+</table></div>
+<!-- @@@Landing -->
+</div>
+<div class="fnitem">
 <!-- $$$Mode$$$Loop$$$Song -->
 <h3 class="fn" translate="no" id="Mode-enum">enum Sections::<span class="name">Mode</span></h3>
 <p>How the transport plays the sections.</p>
@@ -229,12 +246,13 @@
 <!-- @@@Mode -->
 </div>
 <div class="fnitem">
-<!-- $$$SwitchAt$$$SwitchBar$$$SwitchSection -->
+<!-- $$$SwitchAt$$$SwitchBar$$$SwitchSection$$$SwitchBeat -->
 <h3 class="fn" translate="no" id="SwitchAt-enum">enum Sections::<span class="name">SwitchAt</span></h3>
-<p>When a section picked while playing takes over; QML reads them as <code translate="no">Rave.switchBar</code> and <code translate="no">Rave.switchSection</code>.</p>
+<p>When a section picked while playing takes over; QML reads them as <code translate="no">Rave.switchBar</code>, <code translate="no">Rave.switchSection</code> and <code translate="no">Rave.switchBeat</code>.</p>
 <div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
 <tr><td class="topAlign"><code translate="no">Sections::SwitchBar</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">On the next bar.</td></tr>
 <tr><td class="topAlign"><code translate="no">Sections::SwitchSection</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">When the playing section ends its pass.</td></tr>
+<tr><td class="topAlign"><code translate="no">Sections::SwitchBeat</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">On the next beat, coming in at the same place in its own bar (picked during beat 2, it joins on beat 3). Only a pick lands on the beat: the song's own entries, and a pick while stopped, keep to the bar.</td></tr>
 </table></div>
 <!-- @@@SwitchAt -->
 </div>
@@ -457,7 +475,7 @@
 <div class="fnitem">
 <!-- $$$switchAt-prop$$$switchAt$$$setSwitchAtint$$$switchAtChanged -->
 <h3 class="fn" translate="no" id="switchAt-prop"><span class="name">switchAt</span> : <span class="type">int</span></h3>
-<p>when a section picked while playing takes over: <a href="sections.html#SwitchAt-enum" translate="no">SwitchBar</a> or <a href="sections.html#SwitchAt-enum" translate="no">SwitchSection</a>, as a number. Saved with the project. Switching to <a href="sections.html#SwitchAt-enum" translate="no">SwitchBar</a> applies a waiting pick from the next bar.</p>
+<p>when a section picked while playing takes over: <a href="sections.html#SwitchAt-enum" translate="no">SwitchBar</a>, <a href="sections.html#SwitchAt-enum" translate="no">SwitchSection</a> or <a href="sections.html#SwitchAt-enum" translate="no">SwitchBeat</a>, as a number. Saved with the project. Leaving <a href="sections.html#SwitchAt-enum" translate="no">SwitchSection</a> applies a waiting pick from the next bar.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>switchAt</b></span>() const</td></tr>
@@ -523,7 +541,7 @@
 <div class="fnitem">
 <!-- $$$barStarted[overload1]$$$barStartedint -->
 <h3 class="fn" translate="no" id="barStarted"><span class="type">void</span> Sections::<span class="name">barStarted</span>(<span class="type">int</span> <i>bar</i>)</h3>
-<p>Tells the sections a <i translate="no">bar</i> began, counted from the transport's start; a missed bar is caught up, not miscounted. Applies a waiting pick whose pass ended and cues the song's next entry.</p>
+<p>Tells the sections a <i translate="no">bar</i> began, counted from the transport's start; a missed bar is caught up, not miscounted, and a bar before the last (a skip back, inside the entry) counts again. Applies a waiting pick whose pass ended and cues the song's next entry.</p>
 <!-- @@@barStarted -->
 </div>
 <div class="fnitem">
@@ -608,7 +626,7 @@
 <div class="fnitem">
 <!-- $$$playFrom[overload1]$$$playFromint -->
 <h3 class="fn" translate="no" id="playFrom"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">playFrom</span>(<span class="type">int</span> <i>index</i>)</h3>
-<p>Plays the song from the entry at <i translate="no">index</i> and switches to Song mode: starts the transport when stopped (<a href="sections-host.html#startPlayback" translate="no">Host::startPlayback</a>()), or from the next bar while playing.</p>
+<p>Plays the song from the entry at <i translate="no">index</i> and switches to Song mode: starts the transport when stopped or paused (<a href="sections-host.html#startPlayback" translate="no">Host::startPlayback</a>()), or from the next bar while playing.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@playFrom -->
 </div>
@@ -660,11 +678,43 @@
 </div><!-- @@@setColour -->
 </div>
 <div class="fnitem">
+<!-- $$$setPaused[overload1]$$$setPausedbool -->
+<h3 class="fn" translate="no" id="setPaused"><span class="type">void</span> Sections::<span class="name">setPaused</span>(<span class="type">bool</span> <i>paused</i>)</h3>
+<p>Tells the sections the transport paused (<i translate="no">paused</i>) or went on from the pause: the bar count, the song's entry and a cued switch wait meanwhile, but a song entry picked then plays from its start (<a href="sections.html#playFrom" translate="no">playFrom</a>()).</p>
+<!-- @@@setPaused -->
+</div>
+<div class="fnitem">
 <!-- $$$setRepeats[overload1]$$$setRepeatsintint -->
 <h3 class="fn" translate="no" id="setRepeats"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Sections::<span class="name">setRepeats</span>(<span class="type">int</span> <i>index</i>, <span class="type">int</span> <i>repeats</i>)</h3>
 <p>Sets how many times the song entry at <i translate="no">index</i> plays, <i translate="no">repeats</i> 1 to <a href="sections.html#MaxRepeats-var" translate="no">MaxRepeats</a>.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setRepeats -->
+</div>
+<div class="fnitem">
+<!-- $$$setSkipBackInPass[overload1]$$$setSkipBackInPassbool -->
+<h3 class="fn" translate="no" id="setSkipBackInPass"><span class="type">void</span> Sections::<span class="name">setSkipBackInPass</span>(<span class="type">bool</span> <i>inPass</i>)</h3>
+<p>Sets where a skip back stops (<a href="sections.html#skipBackInPass" translate="no">skipBackInPass</a>()) to <i translate="no">inPass</i>, from now on.</p>
+<p><b>See also </b><a href="sections.html#skipBackInPass" translate="no">skipBackInPass</a>().</p>
+<!-- @@@setSkipBackInPass -->
+</div>
+<div class="fnitem">
+<!-- $$$skipBackInPass[overload1]$$$skipBackInPass -->
+<h3 class="fn" translate="no" id="skipBackInPass"><span class="type">bool</span> Sections::<span class="name">skipBackInPass</span>() const</h3>
+<p>Returns whether a skip back stops at bar 1 of the pass playing (<code translate="no">true</code>, the default) or goes back over its passes to the section's first bar, in SONG the entry's.</p>
+<p><b>See also </b><a href="sections.html#setSkipBackInPass" translate="no">setSkipBackInPass</a>().</p>
+<!-- @@@skipBackInPass -->
+</div>
+<div class="fnitem">
+<!-- $$$skipBounds[overload1]$$$skipBounds -->
+<h3 class="fn" translate="no" id="skipBounds"><span class="type"><a href="sections-skipbounds.html" translate="no">Sections::SkipBounds</a></span> Sections::<span class="name">skipBounds</span>() const</h3>
+<p>Returns where a skip may go now, in transport bars: inside the pass of the section playing (in SONG, the song entry's repeat), back to its first bar or to the section's (the entry's) first (<a href="sections.html#skipBackInPass" translate="no">skipBackInPass</a>()), never past the pass's last bar. The studio's sequencer is told them as they change (<a href="sections-host.html#setSkipBounds" translate="no">Host::setSkipBounds</a>()), each from the bar it starts on.</p>
+<!-- @@@skipBounds -->
+</div>
+<div class="fnitem">
+<!-- $$$skipped[overload1]$$$skippedint -->
+<h3 class="fn" translate="no" id="skipped"><span class="type">void</span> Sections::<span class="name">skipped</span>(<span class="type">int</span> <i>bar</i>)</h3>
+<p>Tells the sections the transport skipped to the start of <i translate="no">bar</i>, the studio's count: it is shown from now, and its start comes next as a bar begun (<a href="sections.html#barStarted" translate="no">barStarted</a>()), which cues what follows a pass's last bar. The sections keep no count of their own.</p>
+<!-- @@@skipped -->
 </div>
 <div class="fnitem">
 <!-- $$$songPositionChanged -->
@@ -686,9 +736,9 @@
 <!-- @@@state -->
 </div>
 <div class="fnitem">
-<!-- $$$switchLanded[overload1]$$$switchLanded -->
-<h3 class="fn" translate="no" id="switchLanded"><span class="type">void</span> Sections::<span class="name">switchLanded</span>()</h3>
-<p>Reports that the cued switch has landed on the bar: the current section is now the one playing. The host calls it (see <a href="sections-host.html#applyMachines" translate="no">Host::applyMachines</a>()).</p>
+<!-- $$$switchLanded[overload1]$$$switchLandedint -->
+<h3 class="fn" translate="no" id="switchLanded"><span class="type">void</span> Sections::<span class="name">switchLanded</span>(<span class="type">int</span> <i>bar</i> = -1)</h3>
+<p>Reports that the cued switch has landed on the bar (or the beat), <i translate="no">bar</i> when the host knows it (-1 when not): the current section is now the one playing. A switch that landed on a beat counts its section from the bar it landed in. The host calls it (see <a href="sections-host.html#applyMachines" translate="no">Host::applyMachines</a>()).</p>
 <!-- @@@switchLanded -->
 </div>
 <div class="fnitem">

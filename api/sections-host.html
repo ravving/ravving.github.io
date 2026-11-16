@@ -5,7 +5,7 @@
 <!-- sections.cpp -->
   <meta name="description" content="What Sections needs of the machines; the studio implements it.">
   <meta name="keywords" content="class">
-  <title>Sections::Host Class | ravving C++ API 0.6.0</title>
+  <title>Sections::Host Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -85,9 +85,10 @@
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#dtor.Host" translate="no">~Host</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#applyMachines" translate="no">applyMachines</a></b>(const QVariantMap &amp;<i>machines</i>, int <i>bars</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#applyMachines" translate="no">applyMachines</a></b>(const QVariantMap &amp;<i>machines</i>, int <i>bars</i>, Sections::Landing <i>landing</i>) = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#barsOf" translate="no">barsOf</a></b>(const QVariantMap &amp;<i>machines</i>) const = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#captureMachines" translate="no">captureMachines</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#setSkipBounds" translate="no">setSkipBounds</a></b>(const Sections::SkipBounds &amp;<i>bounds</i>, int <i>fromBar</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#setSpan" translate="no">setSpan</a></b>(int <i>bars</i>) = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#soundingIn" translate="no">soundingIn</a></b>(const QVariantMap &amp;<i>machines</i>) const = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="sections-host.html#startPlayback" translate="no">startPlayback</a></b>() = 0</td></tr>
@@ -108,9 +109,9 @@
 <!-- @@@~Host -->
 </div>
 <div class="fnitem">
-<!-- $$$applyMachines[overload1]$$$applyMachinesconstQVariantMap&int -->
-<h3 class="fn" translate="no" id="applyMachines"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">bool</span> Host::<span class="name">applyMachines</span>(const <span class="type">QVariantMap</span> &amp;<i>machines</i>, <span class="type">int</span> <i>bars</i>)</h3>
-<p>Gives the machines their content from <i translate="no">machines</i> (a machine left out gets an empty pattern) in a section <i translate="no">bars</i> long (the length a machine with <a href="machine.html#once-prop" translate="no">Machine::once</a> plays, then rests through): at once when stopped, else on the next bar. Returns <code translate="no">true</code> when it waits for the bar; <a href="sections.html#switchLanded" translate="no">Sections::switchLanded</a>() then reports the arrival.</p>
+<!-- $$$applyMachines[overload1]$$$applyMachinesconstQVariantMap&intSections::Landing -->
+<h3 class="fn" translate="no" id="applyMachines"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">bool</span> Host::<span class="name">applyMachines</span>(const <span class="type">QVariantMap</span> &amp;<i>machines</i>, <span class="type">int</span> <i>bars</i>, <span class="type"><a href="sections.html#Landing-enum" translate="no">Sections::Landing</a></span> <i>landing</i>)</h3>
+<p>Gives the machines their content from <i translate="no">machines</i> (a machine left out gets an empty pattern) in a section <i translate="no">bars</i> long (the length a machine with <a href="machine.html#once-prop" translate="no">Machine::once</a> plays, then rests through): at once when stopped, else on the next bar, or the next beat by <i translate="no">landing</i>. Returns <code translate="no">true</code> when it waits for the bar (or beat); <a href="sections.html#switchLanded" translate="no">Sections::switchLanded</a>() then reports the arrival.</p>
 <!-- @@@applyMachines -->
 </div>
 <div class="fnitem">
@@ -124,6 +125,12 @@
 <h3 class="fn" translate="no" id="captureMachines"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">QVariantMap</span> Host::<span class="name">captureMachines</span>() const</h3>
 <p>Returns every machine's section content as it is now, as a map of machine key to content.</p>
 <!-- @@@captureMachines -->
+</div>
+<div class="fnitem">
+<!-- $$$setSkipBounds[overload1]$$$setSkipBoundsconstSections::SkipBounds&int -->
+<h3 class="fn" translate="no" id="setSkipBounds"><code class="details extra" translate="no">[virtual]</code> <span class="type">void</span> Host::<span class="name">setSkipBounds</span>(const <span class="type"><a href="sections-skipbounds.html" translate="no">Sections::SkipBounds</a></span> &amp;<i>bounds</i>, <span class="type">int</span> <i>fromBar</i>)</h3>
+<p>Tells the sequencer a skip may go within <i translate="no">bounds</i> from bar <i translate="no">fromBar</i>'s line on (-1: now). The default does nothing.</p>
+<!-- @@@setSkipBounds -->
 </div>
 <div class="fnitem">
 <!-- $$$setSpan[overload1]$$$setSpanint -->

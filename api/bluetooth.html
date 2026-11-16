@@ -5,7 +5,7 @@
 <!-- bluetooth.cpp -->
   <meta name="description" content="The Bluetooth adapter and devices, published to QML as bluetooth: power, scan, pair, connect, send and receive files, and play through an audio device.">
   <meta name="keywords" content="class">
-  <title>Bluetooth Class | ravving C++ API 0.6.0</title>
+  <title>Bluetooth Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -149,7 +149,7 @@
 <p>Built on BluezQt (BlueZ over D-Bus): a Manager for the adapter and the devices, a pairing agent with the DisplayYesNo capability, an ObexManager with Object Push sessions for sending, and an OBEX agent for receiving. Received files are saved in the library's <code translate="no">incoming</code> folder, renamed with a number when the name is taken, and announced with <a href="bluetooth.html#fileReceived" translate="no">fileReceived</a>().</p>
 <p>Audio devices are played through over A2DP. When one connects, WirePlumber creates its sink (<code translate="no">bluez_output.&lt;address&gt;.1</code>); <a href="bluetooth.html#useAsOutput" translate="no">useAsOutput</a>() hands that sink to <a href="audiooutputs.html" translate="no">AudioOutputs</a>, which routes the master to it. Disconnecting, forgetting or quitting sends the sound back to the jacks.</p>
 <p>Connecting a device that does not answer the page is retried after 2, 5 and 10 s. BlueZ registers one local A2DP endpoint per codec, shared by every device, so only one audio device streams a given codec at a time: a device refused while another audio device is connected is handed the link (the other is disconnected and the connection retried). When the adapter comes on, the output <a href="audiooutputs.html" translate="no">AudioOutputs</a> kept is connected once if no other audio device is connected.</p>
-<p>Scans last 12 s and find classic (BR/EDR) devices only; see <a href="bluetooth.html#startDiscovery" translate="no">startDiscovery</a>().</p>
+<p>Scans last 12 s: Bluetooth MIDI controllers first (Low Energy, by their MIDI service), then classic (BR/EDR) devices; see <a href="bluetooth.html#startDiscovery" translate="no">startDiscovery</a>(). A MIDI controller connects without pairing (<a href="bluetooth.html#pair" translate="no">pair</a>()); PipeWire then shows it as a MIDI port, a controller like any other (<a href="midiinput.html" translate="no">MidiInput</a>).</p>
 <p>devices is rebuilt 150 ms after any BlueZ change; pairing and transfer are set by the agents. state is <code translate="no">unavailable</code>, with reason, until BlueZ answers. GUI thread only, with asynchronous D-Bus calls; outcomes are reported with <a href="bluetooth.html#notify" translate="no">notify</a>().</p>
 </div>
 <!-- @@@Bluetooth -->
@@ -186,7 +186,7 @@
 <div class="fnitem">
 <!-- $$$devices-prop$$$devices$$$devicesChanged -->
 <h3 class="fn" translate="no" id="devices-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">devices</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the devices known or in range, connected ones first, then paired ones, then by signal strength. Each is a map with the keys <code translate="no">address</code>, <code translate="no">name</code>, <code translate="no">kind</code> (<code translate="no">phone</code>, <code translate="no">computer</code>, <code translate="no">audio</code>, <code translate="no">input</code> or <code translate="no">other</code>), <code translate="no">paired</code>, <code translate="no">connected</code>, <code translate="no">trusted</code>, <code translate="no">rssi</code>, <code translate="no">audio</code> (it can play) and <code translate="no">receives</code> (it can take a file).</p>
+<p>This property holds the devices known or in range, connected ones first, then paired ones, then by signal strength. Each is a map with the keys <code translate="no">address</code>, <code translate="no">name</code>, <code translate="no">kind</code> (<code translate="no">phone</code>, <code translate="no">computer</code>, <code translate="no">audio</code>, <code translate="no">input</code>, <code translate="no">midi</code> or <code translate="no">other</code>), <code translate="no">paired</code>, <code translate="no">connected</code>, <code translate="no">trusted</code>, <code translate="no">rssi</code>, <code translate="no">battery</code> (its charge in percent as the device reports it, -1 when it reports none), <code translate="no">audio</code> (it can play), <code translate="no">midi</code> (a Bluetooth MIDI controller) and <code translate="no">receives</code> (it can take a file).</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>devices</b></span>() const</td></tr>
@@ -368,7 +368,7 @@
 <div class="fnitem">
 <!-- $$$pair[overload1]$$$pairconstQString& -->
 <h3 class="fn" translate="no" id="pair"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Bluetooth::<span class="name">pair</span>(const <span class="type">QString</span> &amp;<i>address</i>)</h3>
-<p>Pairs with the device at <i translate="no">address</i>, then trusts it (so it may connect on its own) and connects it. A device already paired is only connected.</p>
+<p>Pairs with the device at <i translate="no">address</i>, then trusts it (so it may connect on its own) and connects it. A device already paired is only connected, and a Bluetooth MIDI controller is trusted and connected without pairing.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@pair -->
 </div>
@@ -403,7 +403,7 @@
 <div class="fnitem">
 <!-- $$$startDiscovery[overload1]$$$startDiscovery -->
 <h3 class="fn" translate="no" id="startDiscovery"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Bluetooth::<span class="name">startDiscovery</span>()</h3>
-<p>Scans for 12 s, for classic (BR/EDR) devices only: speakers, headphones, phones and computers offer A2DP and OBEX there, while a dual-mode speaker found by its LE advertisement would pair only its LE Audio side. An inquiry shares the radio with any audio link, which breaks up while it runs. Does nothing when off or already scanning.</p>
+<p>Scans for 12 s: the first 4 s for Bluetooth MIDI controllers (Low Energy devices offering the MIDI service, nothing else of LE), the rest for classic (BR/EDR) devices: speakers, headphones, phones and computers offer A2DP and OBEX there, while a dual-mode speaker found by its LE advertisement would pair only its LE Audio side. An inquiry shares the radio with any audio link, which breaks up while it runs. Does nothing when off or already scanning.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@startDiscovery -->
 </div>

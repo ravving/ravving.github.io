@@ -421,12 +421,22 @@ git checkout into a venv). Then it runs <code>tools/build-appimage.sh</code> the
 <ul>
 <li><code>## ravving X.Y</code>, an ARU line, the date and one sentence on what the release is about;</li>
 <li><code>### New</code>: each feature in a line or two, its on-screen names in capitals, linked to the
-  manual's or the guide's section that explains it;</li>
+  manual's or the guide's section that explains it. A long list is grouped under more headings
+  (playing live, your controllers, on the screen), each under 200 words;</li>
 <li><code>### Fixed</code>: what a player notices working now, linked where a page covers it.</li>
 </ul>
 <p>The landing page's news block (site/index.html, <code>landing-news</code>) then gets the new version, a
 headline and two sentences, its READ MORE pointing at the new section (<code>docs/news.html#ravving-XY</code>).
 Render the pages and translate the new texts as for any page change.</p>
+<h3 id="how-the-news-reads">How the news reads</h3>
+<ul>
+<li id="what-the-player-notices"><strong>What the player notices.</strong> Each line says what they can do now, or what works now that
+  went wrong before. Use everyday words ("a knob you aren't touching leaves the drum rows
+  alone"), not the cause in the code.</li>
+<li><strong>No names of devices or products</strong>, the one ravving runs on included. Say what kind of thing
+  it is: a pad controller, a controller with faders, your device.</li>
+<li><strong>Checked:</strong> ctest <code>own-names</code> looks for names in the page and in the landing's news block.</li>
+</ul>
 <h2 id="before-a-release-the-translations">Before a release: the translations</h2>
 <p>Every release has its translations reviewed:</p>
 <ul>
@@ -599,6 +609,11 @@ them installed, and the hidden paths stay listed.</p>
 <td><code>bluetooth.service</code> fails at boot (status 203/EXEC), the adapter stays DOWN, the control center says "its service is not running"</td>
 <td>zynthian-sys's drop-in <code>/etc/systemd/system/bluetooth.service.d/01-disable-sap-plugin.conf</code> starts <code>/usr/lib/bluetooth/bluetoothd</code>, which Debian 13 moved to <code>/usr/libexec/bluetooth/</code></td>
 <td><code>data/systemd/50-ravving-bluetoothd-path.conf</code>, installed to the same drop-in folder: the same flags (<code>--compat --experimental --noplugin=sap</code>) with the path that exists</td>
+</tr>
+<tr>
+<td>a Bluetooth MIDI controller connects but nothing arrives; WirePlumber logs <code>spa.bluez5.midi.node: AcquireWrite() ... NotAuthorized</code></td>
+<td>BlueZ's own MIDI plugin (on with <code>--experimental</code>) takes the device's MIDI characteristic: PipeWire cannot write to it, and BlueZ's ALSA port passes nothing on</td>
+<td>the same drop-in adds <code>midi</code> to <code>--noplugin</code>: PipeWire's Bluetooth MIDI alone, a "<device>:out" port ravving plays from</td>
 </tr>
 <tr>
 <td>a speaker or headphones pair but will not connect: <code>org.bluez.Error.Failed br-connection-profile-unavailable</code>; the adapter's UUIDs (<code>bluetoothctl show</code>) list no Audio Source / Audio Sink</td>

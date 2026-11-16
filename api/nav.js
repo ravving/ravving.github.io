@@ -26,6 +26,10 @@ window.ravNav = [
     "href": "cuiafifo.html"
    },
    {
+    "title": "DeviceBridge",
+    "href": "devicebridge.html"
+   },
+   {
     "title": "Fonts",
     "href": "fonts.html"
    },
@@ -62,6 +66,10 @@ window.ravNav = [
     "href": "mousewatcher.html"
    },
    {
+    "title": "PotFilter",
+    "href": "potfilter.html"
+   },
+   {
     "title": "QmlSourceOverride",
     "href": "qmlsourceoverride.html"
    },
@@ -82,6 +90,10 @@ window.ravNav = [
     "href": "screenshottour.html"
    },
    {
+    "title": "SplashLights",
+    "href": "splashlights.html"
+   },
+   {
     "title": "StartupSplash",
     "href": "startupsplash.html"
    },
@@ -96,10 +108,6 @@ window.ravNav = [
    {
     "title": "WsLedStrip",
     "href": "wsledstrip.html"
-   },
-   {
-    "title": "ZynthboxBridge",
-    "href": "zynthboxbridge.html"
    }
   ]
  },
@@ -150,6 +158,10 @@ window.ravNav = [
    {
     "title": "Localization",
     "href": "localization.html"
+   },
+   {
+    "title": "Mix",
+    "href": "mix.html"
    },
    {
     "title": "NamedStore",
@@ -250,8 +262,20 @@ window.ravNav = [
     "href": "drummachine.html"
    },
    {
+    "title": "DrumMachine::HitLengths",
+    "href": "drummachine-hitlengths.html"
+   },
+   {
+    "title": "DrumMachine::PlayLoop",
+    "href": "drummachine-playloop.html"
+   },
+   {
     "title": "EngineProfiles",
     "href": "engineprofiles.html"
+   },
+   {
+    "title": "FeelStore",
+    "href": "feelstore.html"
    },
    {
     "title": "Machine",
@@ -332,6 +356,18 @@ window.ravNav = [
     "href": "effectchain-knob.html"
    },
    {
+    "title": "EngineCatalog",
+    "href": "enginecatalog.html"
+   },
+   {
+    "title": "EngineMidi",
+    "href": "enginemidi.html"
+   },
+   {
+    "title": "EngineWatch",
+    "href": "enginewatch.html"
+   },
+   {
     "title": "FluidSynthEngine",
     "href": "fluidsynthengine.html"
    },
@@ -358,6 +394,10 @@ window.ravNav = [
    {
     "title": "RepeatCore",
     "href": "repeatcore.html"
+   },
+   {
+    "title": "SilenceWatch",
+    "href": "silencewatch.html"
    },
    {
     "title": "SoundEngine",
@@ -442,6 +482,22 @@ window.ravNav = [
     "href": "audiotap.html"
    },
    {
+    "title": "Connection",
+    "href": "connection.html"
+   },
+   {
+    "title": "ConnectionMultiplexer",
+    "href": "connectionmultiplexer.html"
+   },
+   {
+    "title": "ConnectionRegistry",
+    "href": "connectionregistry.html"
+   },
+   {
+    "title": "Controller",
+    "href": "controller.html"
+   },
+   {
     "title": "ControllerCapability",
     "href": "controllercapability.html"
    },
@@ -458,12 +514,28 @@ window.ravNav = [
     "href": "controllerhub.html"
    },
    {
+    "title": "ControllerId",
+    "href": "controllerid.html"
+   },
+   {
+    "title": "ControllerMixer",
+    "href": "controllermixer.html"
+   },
+   {
+    "title": "ControllerMixers",
+    "href": "controllermixers.html"
+   },
+   {
     "title": "ControllerOctave",
     "href": "controlleroctave.html"
    },
    {
     "title": "ControllerOctaves",
     "href": "controlleroctaves.html"
+   },
+   {
+    "title": "ControllerProfiles",
+    "href": "controllerprofiles.html"
    },
    {
     "title": "ControllerScale",
@@ -474,8 +546,28 @@ window.ravNav = [
     "href": "controllerscales.html"
    },
    {
+    "title": "ControllerSettings",
+    "href": "controllersettings.html"
+   },
+   {
+    "title": "ControllerSettingsStore",
+    "href": "controllersettingsstore.html"
+   },
+   {
+    "title": "DriverSpec",
+    "href": "driverspec.html"
+   },
+   {
+    "title": "EncoderGuess",
+    "href": "encoderguess.html"
+   },
+   {
     "title": "Exporter",
     "href": "exporter.html"
+   },
+   {
+    "title": "FaderPickup",
+    "href": "faderpickup.html"
    },
    {
     "title": "HardwarePorts",
@@ -502,6 +594,22 @@ window.ravNav = [
     "href": "jackwiring.html"
    },
    {
+    "title": "KeyWatch",
+    "href": "keywatch.html"
+   },
+   {
+    "title": "LearnedMessage",
+    "href": "learnedmessage.html"
+   },
+   {
+    "title": "LearnedMixer",
+    "href": "learnedmixer.html"
+   },
+   {
+    "title": "LearnedMixers",
+    "href": "learnedmixers.html"
+   },
+   {
     "title": "LiveRecMic",
     "href": "liverecmic.html"
    },
@@ -510,8 +618,52 @@ window.ravNav = [
     "href": "liverecordings.html"
    },
    {
+    "title": "MackieControl",
+    "href": "mackiecontrol.html"
+   },
+   {
+    "title": "MackieControl::Event",
+    "href": "mackiecontrol-event.html"
+   },
+   {
+    "title": "MackieSurface",
+    "href": "mackiesurface.html"
+   },
+   {
+    "title": "Midi",
+    "href": "midi.html"
+   },
+   {
+    "title": "MidiEnums",
+    "href": "midienums.html"
+   },
+   {
     "title": "MidiInput",
     "href": "midiinput.html"
+   },
+   {
+    "title": "MidiMessage",
+    "href": "midimessage.html"
+   },
+   {
+    "title": "MidiTransport",
+    "href": "miditransport.html"
+   },
+   {
+    "title": "MidiValues",
+    "href": "midivalues.html"
+   },
+   {
+    "title": "MixerControl",
+    "href": "mixercontrol.html"
+   },
+   {
+    "title": "MixerStrip",
+    "href": "mixerstrip.html"
+   },
+   {
+    "title": "MixerTransport",
+    "href": "mixertransport.html"
    },
    {
     "title": "MusicLibrary",
@@ -530,8 +682,24 @@ window.ravNav = [
     "href": "pitchdetector.html"
    },
    {
+    "title": "RelativeEncoder",
+    "href": "relativeencoder.html"
+   },
+   {
     "title": "RoliBlocks",
     "href": "roliblocks.html"
+   },
+   {
+    "title": "RouterTransport",
+    "href": "routertransport.html"
+   },
+   {
+    "title": "SoundActivity",
+    "href": "soundactivity.html"
+   },
+   {
+    "title": "TapTempo",
+    "href": "taptempo.html"
    },
    {
     "title": "Tuner",
@@ -667,12 +835,24 @@ window.ravNav = [
   "label": "Other",
   "pages": [
    {
+    "title": "Feel",
+    "href": "feel.html"
+   },
+   {
     "title": "IconPacks",
     "href": "iconpacks.html"
    },
    {
+    "title": "Machine::KeyboardContext",
+    "href": "machine-keyboardcontext.html"
+   },
+   {
     "title": "ProjectHistory::Limits",
     "href": "projecthistory-limits.html"
+   },
+   {
+    "title": "Sections::SkipBounds",
+    "href": "sections-skipbounds.html"
    },
    {
     "title": "Sketchpad::TrackCue",
@@ -709,6 +889,10 @@ window.ravNav = [
    {
     "title": "ThemeType",
     "href": "themetype.html"
+   },
+   {
+    "title": "WindowShadow",
+    "href": "windowshadow.html"
    }
   ]
  },
@@ -723,6 +907,10 @@ window.ravNav = [
    {
     "title": "ArmBar",
     "href": "qml-ravving-controls-armbar.html"
+   },
+   {
+    "title": "BackButton",
+    "href": "qml-ravving-controls-backbutton.html"
    },
    {
     "title": "BrowseList",
@@ -755,6 +943,10 @@ window.ravNav = [
    {
     "title": "ConfirmButton",
     "href": "qml-ravving-controls-confirmbutton.html"
+   },
+   {
+    "title": "ConfirmDialog",
+    "href": "qml-ravving-controls-confirmdialog.html"
    },
    {
     "title": "ControlGroup",
@@ -903,6 +1095,18 @@ window.ravNav = [
    {
     "title": "ValueTip",
     "href": "qml-ravving-controls-valuetip.html"
+   },
+   {
+    "title": "WheelNotches",
+    "href": "qml-ravving-controls-wheelnotches.html"
+   },
+   {
+    "title": "WindowControls",
+    "href": "qml-ravving-controls-windowcontrols.html"
+   },
+   {
+    "title": "WindowFrame",
+    "href": "qml-ravving-controls-windowframe.html"
    }
   ]
  },

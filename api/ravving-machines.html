@@ -4,7 +4,7 @@
   <meta charset="utf-8">
 <!-- index.qdoc -->
   <meta name="description" content="The machines (one per page's instrument), their kits and their sound controls.">
-  <title>Machines | ravving C++ API 0.6.0</title>
+  <title>Machines | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -20,8 +20,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -71,19 +71,22 @@
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="drumkit.html">DrumKit</a></p></td><td class="tblDescr"><p>A drum kit read from a soundfont (SF2 or SF3): which key plays which drum</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="drumkit-row.html">DrumKit::Row</a></p></td><td class="tblDescr"><p>One row of a kit</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="drummachine.html">DrumMachine</a></p></td><td class="tblDescr"><p>A Machine whose steps are drum hits; the studio has three, configured in kits.json</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="drummachine-hitlengths.html">DrumMachine::HitLengths</a></p></td><td class="tblDescr"><p>How long a drum machine's hits play: SETTINGS · KEYS · DRUMS</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="drummachine-playloop.html">DrumMachine::PlayLoop</a></p></td><td class="tblDescr"><p>Where a clip's pattern plays, as playLengths() reads it</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="engineprofiles.html">EngineProfiles</a></p></td><td class="tblDescr"><p>Engine profiles of data/engines.json, one per engine: which controls of an engine are exposed</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="machine.html">Machine</a></p></td><td class="tblDescr"><p>Base class of the studio's instruments: one sketchpad track playing a pattern of steps from its clips (PatternClip, published to libravving's sequencer) through a sound engine</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="monomachine.html">MonoMachine</a></p></td><td class="tblDescr"><p>A Machine playing a monophonic line; kits.json configures the bass and the lead as two instances</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="padkitcontrols.html">PadKitControls</a></p></td><td class="tblDescr"><p>PadSamplerMachine's kit controls: the knobs that belong to the kit rather than to one pad</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="padsamplermachine.html">PadSamplerMachine</a></p></td><td class="tblDescr"><p>A Machine playing 16 sample pads on libravving's SamplerSynth, in four banks (A to D) of 16 pads and steps each</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="samplerbanks.html">SamplerBanks</a></p></td><td class="tblDescr"><p>Samplers' banks as a section sees them</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="samplermachine.html">SamplerMachine</a></p></td><td class="tblDescr"><p>A Machine playing samples on libravving's SamplerSynth, with four banks (A to D) of eight sample slots and steps each</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols.html">SoundControls</a></p></td><td class="tblDescr"><p>A machine's sound controls: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's cc: and gen: controls, by symbol)</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-card.html">SoundControls::Card</a></p></td><td class="tblDescr"><p>One card: its title and its knobs, in order</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-choice.html">SoundControls::Choice</a></p></td><td class="tblDescr"><p>One position of a switch knob: its label and the engine controls it sets (symbol to value)</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-knob.html">SoundControls::Knob</a></p></td><td class="tblDescr"><p>One knob: its name, the engine control it drives (symbol), its range there (minimum, maximum), its defaultValue (0..1), its choices when it is a switch (empty for a continuous knob) and whether it maps exponentially (logarithmic)</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-page.html">SoundControls::Page</a></p></td><td class="tblDescr"><p>A group of the full MODS page: its title and its knobs, each as CARD/KNOB (a MODS knob, or one of the group's own)</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-readout.html">SoundControls::Readout</a></p></td><td class="tblDescr"><p>How a knob's value reads: its unit, the transform from the engine's value to the number shown (none: the engine's value), its decimals (-1: about three figures) and whether a positive value wears its sign (signedValue)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="feelstore.html">FeelStore</a></p></td><td class="tblDescr"><p>A machine's feel as a card of knobs reads and sets it: every dial from 0 to 1</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="machine.html">Machine</a></p></td><td class="tblDescr"><p>Base class of the studio's instruments: one sketchpad track playing a pattern of steps from its clips (PatternClip, published to libravving's sequencer) through a sound engine</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="monomachine.html">MonoMachine</a></p></td><td class="tblDescr"><p>A Machine playing a monophonic line; kits.json configures the bass and the lead as two instances</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="padkitcontrols.html">PadKitControls</a></p></td><td class="tblDescr"><p>PadSamplerMachine's kit controls: the knobs that belong to the kit rather than to one pad</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="padsamplermachine.html">PadSamplerMachine</a></p></td><td class="tblDescr"><p>A Machine playing 16 sample pads on libravving's SamplerSynth, in four banks (A to D) of 16 pads and steps each</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="samplerbanks.html">SamplerBanks</a></p></td><td class="tblDescr"><p>Samplers' banks as a section sees them</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="samplermachine.html">SamplerMachine</a></p></td><td class="tblDescr"><p>A Machine playing samples on libravving's SamplerSynth, with four banks (A to D) of eight sample slots and steps each</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols.html">SoundControls</a></p></td><td class="tblDescr"><p>A machine's sound controls: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's cc: and gen: controls, by symbol)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-card.html">SoundControls::Card</a></p></td><td class="tblDescr"><p>One card: its title and its knobs, in order</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-choice.html">SoundControls::Choice</a></p></td><td class="tblDescr"><p>One position of a switch knob: its label and the engine controls it sets (symbol to value)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-knob.html">SoundControls::Knob</a></p></td><td class="tblDescr"><p>One knob: its name, the engine control it drives (symbol), its range there (minimum, maximum), its defaultValue (0..1), its choices when it is a switch (empty for a continuous knob) and whether it maps exponentially (logarithmic)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-page.html">SoundControls::Page</a></p></td><td class="tblDescr"><p>A group of the full MODS page: its title and its knobs, each as CARD/KNOB (a MODS knob, or one of the group's own)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-readout.html">SoundControls::Readout</a></p></td><td class="tblDescr"><p>How a knob's value reads: its unit, the transform from the engine's value to the number shown (none: the engine's value), its decimals (-1: about three figures) and whether a positive value wears its sign (signedValue)</p></td></tr>
 </table></div>
 </div>
 <!-- @@@ravving-machines -->
@@ -92,19 +95,22 @@
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="drumkit.html">DrumKit</a></p></td><td class="tblDescr"><p>A drum kit read from a soundfont (SF2 or SF3): which key plays which drum</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="drumkit-row.html">DrumKit::Row</a></p></td><td class="tblDescr"><p>One row of a kit</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="drummachine.html">DrumMachine</a></p></td><td class="tblDescr"><p>A Machine whose steps are drum hits; the studio has three, configured in kits.json</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="drummachine-hitlengths.html">DrumMachine::HitLengths</a></p></td><td class="tblDescr"><p>How long a drum machine's hits play: SETTINGS · KEYS · DRUMS</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="drummachine-playloop.html">DrumMachine::PlayLoop</a></p></td><td class="tblDescr"><p>Where a clip's pattern plays, as playLengths() reads it</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="engineprofiles.html">EngineProfiles</a></p></td><td class="tblDescr"><p>Engine profiles of data/engines.json, one per engine: which controls of an engine are exposed</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="machine.html">Machine</a></p></td><td class="tblDescr"><p>Base class of the studio's instruments: one sketchpad track playing a pattern of steps from its clips (PatternClip, published to libravving's sequencer) through a sound engine</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="monomachine.html">MonoMachine</a></p></td><td class="tblDescr"><p>A Machine playing a monophonic line; kits.json configures the bass and the lead as two instances</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="padkitcontrols.html">PadKitControls</a></p></td><td class="tblDescr"><p>PadSamplerMachine's kit controls: the knobs that belong to the kit rather than to one pad</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="padsamplermachine.html">PadSamplerMachine</a></p></td><td class="tblDescr"><p>A Machine playing 16 sample pads on libravving's SamplerSynth, in four banks (A to D) of 16 pads and steps each</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="samplerbanks.html">SamplerBanks</a></p></td><td class="tblDescr"><p>Samplers' banks as a section sees them</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="samplermachine.html">SamplerMachine</a></p></td><td class="tblDescr"><p>A Machine playing samples on libravving's SamplerSynth, with four banks (A to D) of eight sample slots and steps each</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols.html">SoundControls</a></p></td><td class="tblDescr"><p>A machine's sound controls: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's cc: and gen: controls, by symbol)</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-card.html">SoundControls::Card</a></p></td><td class="tblDescr"><p>One card: its title and its knobs, in order</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-choice.html">SoundControls::Choice</a></p></td><td class="tblDescr"><p>One position of a switch knob: its label and the engine controls it sets (symbol to value)</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-knob.html">SoundControls::Knob</a></p></td><td class="tblDescr"><p>One knob: its name, the engine control it drives (symbol), its range there (minimum, maximum), its defaultValue (0..1), its choices when it is a switch (empty for a continuous knob) and whether it maps exponentially (logarithmic)</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-page.html">SoundControls::Page</a></p></td><td class="tblDescr"><p>A group of the full MODS page: its title and its knobs, each as CARD/KNOB (a MODS knob, or one of the group's own)</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-readout.html">SoundControls::Readout</a></p></td><td class="tblDescr"><p>How a knob's value reads: its unit, the transform from the engine's value to the number shown (none: the engine's value), its decimals (-1: about three figures) and whether a positive value wears its sign (signedValue)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="feelstore.html">FeelStore</a></p></td><td class="tblDescr"><p>A machine's feel as a card of knobs reads and sets it: every dial from 0 to 1</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="machine.html">Machine</a></p></td><td class="tblDescr"><p>Base class of the studio's instruments: one sketchpad track playing a pattern of steps from its clips (PatternClip, published to libravving's sequencer) through a sound engine</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="monomachine.html">MonoMachine</a></p></td><td class="tblDescr"><p>A Machine playing a monophonic line; kits.json configures the bass and the lead as two instances</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="padkitcontrols.html">PadKitControls</a></p></td><td class="tblDescr"><p>PadSamplerMachine's kit controls: the knobs that belong to the kit rather than to one pad</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="padsamplermachine.html">PadSamplerMachine</a></p></td><td class="tblDescr"><p>A Machine playing 16 sample pads on libravving's SamplerSynth, in four banks (A to D) of 16 pads and steps each</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="samplerbanks.html">SamplerBanks</a></p></td><td class="tblDescr"><p>Samplers' banks as a section sees them</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="samplermachine.html">SamplerMachine</a></p></td><td class="tblDescr"><p>A Machine playing samples on libravving's SamplerSynth, with four banks (A to D) of eight sample slots and steps each</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols.html">SoundControls</a></p></td><td class="tblDescr"><p>A machine's sound controls: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's cc: and gen: controls, by symbol)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-card.html">SoundControls::Card</a></p></td><td class="tblDescr"><p>One card: its title and its knobs, in order</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-choice.html">SoundControls::Choice</a></p></td><td class="tblDescr"><p>One position of a switch knob: its label and the engine controls it sets (symbol to value)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-knob.html">SoundControls::Knob</a></p></td><td class="tblDescr"><p>One knob: its name, the engine control it drives (symbol), its range there (minimum, maximum), its defaultValue (0..1), its choices when it is a switch (empty for a continuous knob) and whether it maps exponentially (logarithmic)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-page.html">SoundControls::Page</a></p></td><td class="tblDescr"><p>A group of the full MODS page: its title and its knobs, each as CARD/KNOB (a MODS knob, or one of the group's own)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="soundcontrols-readout.html">SoundControls::Readout</a></p></td><td class="tblDescr"><p>How a knob's value reads: its unit, the transform from the engine's value to the number shown (none: the engine's value), its decimals (-1: about three figures) and whether a positive value wears its sign (signedValue)</p></td></tr>
 </table></div>
 </article>
 </main>

@@ -114,7 +114,9 @@ effects, LIVE play and STEP entry. Implement:</p>
 <ul>
 <li><code>onAttached()</code>: write the machine's own state into its libravving pattern;</li>
 <li><code>refresh()</code>: publish the bar on screen to QML (its own Q_PROPERTYs + <code>stepsChanged</code>);</li>
-<li><code>revoice()</code>: rewrite every step's velocity (mute/solo/kick modes changed);</li>
+<li><code>revoice()</code>: rewrite every step's velocity (the level they are written at changed). A
+  row's mute and solo are note gains (<code>Track::setNoteGain()</code>). The machine's mute and ONLY
+  KICK skip the pattern (<code>applyMute()</code>, <code>applyKickMode()</code>). None of them is a rewrite;</li>
 <li><code>clearOwnSteps()</code>, <code>applyChart(chart)</code>, <code>chart()</code>: its preset format (a chart is a
   map of strings, one character per step, so preset files stay readable);</li>
 <li><code>placeHit(position, key, accented)</code>, <code>liveNotes(key)</code>, <code>liveVelocity(key, accented)</code>:
@@ -137,7 +139,8 @@ duration is in pattern ticks via <code>stepTicks()</code>. Call <code>markEdited
 <h3 id="2-data">2. Data</h3>
 <ul>
 <li>an entry in kits.json's <code>machines</code>: <code>key</code>, <code>kind</code>, <code>track</code>, <code>zynthianChannel</code>, <code>engine</code>,
-  <code>sound</code>, <code>presets</code>, <code>defaultPreset</code>, <code>baseNote</code>… Tracks and channels must be unused.</li>
+  <code>sound</code>, <code>presets</code>, <code>defaultPreset</code>, <code>baseNote</code>, <code>octaveRange</code>… Tracks and channels must be
+  unused.</li>
 <li>a presets file, <code>data/&lt;machine&gt;-presets.json</code> (<code>{presets: [{name, genre, chart}]}</code>),
   installed by CMakeLists.txt.</li>
 </ul>
@@ -152,12 +155,14 @@ children. Override what <code>MachinePanel</code> declares:</p>
 <ul>
 <li><code>stepLeds</code>, and <code>liveKeyDown/Up</code>: what pads do while LIVE;</li>
 <li><code>stepKey</code>, and <code>moveSelection(dy)</code>: ▲ ▼ in the editor, false at the edge;</li>
-<li><code>keyForNote</code> / <code>padForKey</code>: what a keyboard note plays and which pad lights.</li>
+<li><code>padForKey</code>: which pad lights for a key a keyboard holds.</li>
 </ul>
-<p>Light live notes from <code>heldKeys</code>.</p>
+<p>What a keyboard note plays is the machine's: override <code>Machine::keyForNote</code> in C++. Play pads
+with <code>padDown</code> / <code>padUp</code> (the machine holds them) and light live notes from <code>heldKeys</code>.</p>
 <h3 id="5-qml-the-page">5. QML: the page</h3>
 <p>A <code>MachinePage</code> declaring its panel (see <code>pages/ChordsPage.qml</code>); it
-forwards the device and an external keyboard to it.</p>
+forwards the device's keys to it. An external keyboard plays the machine on screen through
+<code>studio.playedMachine</code>.</p>
 <h3 id="6-build-files-and-skin">6. Build files and skin</h3>
 <p>Add the C++ files to <code>src/backend/CMakeLists.txt</code> and the QML files to <code>src/CMakeLists.txt</code>
 (<code>RAVVING_QML_FILES</code>). Add a screenshot step in <code>src/main.cpp</code>, and the machine to
@@ -235,34 +240,43 @@ The values are saved with the machine.</p>
     which a laptop test runs on known input.</li>
 <li>Keep the process callback lock-free: atomics from the GUI thread, buffers allocated
     before the client runs, no Qt calls.</li>
-<li>For musical timing, <code>ZynthboxBridge::timerTickAtFrame(jack_frame_time())</code> gives the
+<li>For musical timing, <code>DeviceBridge::timerTickAtFrame(jack_frame_time())</code> gives the
     transport position sample-accurately.</li>
 </ul>
 <h2 id="a-new-live-fx-pad-on-the-mix">A new LIVE FX pad on the mix</h2>
 <p>Three pieces:</p>
 <ul>
 <li>an <code>Effect</code> in <code>LiveFxEngine</code> (no Qt in its callback): a stage in <code>processFrame()</code>, its
-  state flushed of denormals, its switch ramped over <code>FadeFrames</code>, its tail in <code>isIdle()</code>;</li>
-<li>its name and bank slot in <code>LiveFx</code> (<code>Banks</code>, <code>EnginePads</code>, the list that says how it latches);</li>
+  state flushed of denormals, its tail in <code>isIdle()</code>. Its wet part is scaled by its amount
+  (<code>m_amount</code>, one of the <code>Amounts</code>), which glides along its transition;</li>
+<li>its name and bank slot in <code>LiveFx</code> (<code>Banks</code>, <code>EnginePads</code>, the list that says how it
+  latches) and its transition in <code>PadTransitions</code> (an engage, a release and a curve);</li>
 <li>a row in tests/tst_livefxengine.cpp: silence stays silence, noise stays finite, no click
   at its switch, its length on the grid at a few tempos.</li>
 </ul>
 <h2 id="a-midi-controller-ravving-talks-to">A MIDI controller ravving talks to</h2>
 <p>A controller that only plays notes needs nothing: MidiInput takes it, and its defaults (bend
 range, velocity curve, channel) go in <code>data/midi-devices.json</code> by a part of its name. One that
-ravving talks back to (its octave, its scale lights, its buttons) gets a driver:</p>
+ravving talks back to (its octave, its scale lights, its buttons) gets a driver.</p>
+<h3 id="the-drivers-four-parts">The driver's four parts</h3>
 <ol>
-<li>A <code>ControllerDriver</code> subclass in <code>src/backend</code>: <code>start()</code> / <code>stop()</code>, <code>handle()</code> for its
-   messages (the base's <code>receiveSysex()</code> puts them together), and the base's <code>send</code>, <code>request</code>
-   and <code>keepAlive</code> for the way out. <code>RoliBlocks</code> is the example.</li>
+<li>A <code>ControllerDriver</code> subclass in <code>src/backend</code>, constructed with the controller's
+   <code>ControllerId</code>, its protocol id and the <code>MidiTransport</code>. It has <code>start()</code> / <code>stop()</code>,
+   <code>handle()</code> for its messages (the base's <code>receiveSysex()</code> puts them together), and the base's
+   <code>send</code>, <code>request</code> and <code>keepAlive</code> for the way out. <code>RoliBlocks</code> is the example.</li>
 <li>The capabilities it has, inherited as interfaces: <code>ControllerOctave</code> (<code>followOctave</code>;
    <code>octaveMoved</code> when its own buttons move it, <code>requestOctave</code> to move ravving's),
-   <code>ControllerScale</code> (<code>followKey</code>). Each takes its <code>controllerName()</code> from the base.
+   <code>ControllerScale</code> (<code>followKey</code>). Each has <code>controller()</code> return the base's <code>id()</code>.
    SETTINGS · MIDI shows the sections of the capabilities a controller has.</li>
-<li>Registered in <code>Studio</code>: <code>m_drivers-&gt;addDriver(id, namePart, factory)</code>. The hubs find it on
-   their own.</li>
-<li>A test beside <code>tests/tst_controllerdrivers.cpp</code>, driving it without a device.</li>
+<li>Its <code>static DriverSpec spec()</code>: <code>DriverSpec::named(id, namePart, make)</code> for a controller
+   found by a part of its name, <code>DriverSpec::surface(id, make, remakeOn)</code> for one the user or
+   its profile names as its <code>surface</code>; <code>make</code> gets the <code>Controller</code>, its <code>ControllerSettings</code>
+   and the transport. One line in <code>Studio</code>: <code>m_drivers-&gt;addDriver(TheDriver::spec())</code>. The
+   hubs find it on their own.</li>
+<li>A test beside <code>tests/tst_controllerdrivers.cpp</code> (<code>aProtocolIsOnlyASpec</code> is the template),
+   driving it on a <code>FakeTransport</code> without a device.</li>
 </ol>
+<h3 id="a-capability-shared-by-many-controllers">A capability shared by many controllers</h3>
 <p>A capability many controllers share is a new interface and hub (<code>ControllerCapability</code>,
 <code>ControllerHub</code>) added with <code>ControllerDrivers::addHub()</code>; the drivers' registry stays as it is.</p>
 <h2 id="hardware-and-focus">Hardware and focus</h2>

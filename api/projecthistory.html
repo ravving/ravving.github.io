@@ -5,7 +5,7 @@
 <!-- projecthistory.cpp -->
   <meta name="description" content="A project's timeline: the versions a long press on SAVE keeps (Projects::saveVersion()), to go back to, published to QML as studio&lt;@op&gt;.&lt;/@op&gt;projects&lt;@op&gt;.&lt;/@op&gt;history.">
   <meta name="keywords" content="class">
-  <title>ProjectHistory Class | ravving C++ API 0.6.0</title>
+  <title>ProjectHistory Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -130,7 +130,6 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#sweep" translate="no">sweep</a></b>(const QStringList &amp;<i>keep</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#switchTo" translate="no">switchTo</a></b>(const QString &amp;<i>branch</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#tidy" translate="no">tidy</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="projecthistory.html#timeOf" translate="no">timeOf</a></b>(const QString &amp;<i>id</i>) const</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
@@ -155,7 +154,7 @@
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p>The snapshots live in a <a href="snapshotstore.html" translate="no">SnapshotStore</a> in the projects folder (<code translate="no">.timeline</code>, a bare git repository whichever backend writes it), one branch per project (<a href="projecthistory.html#branchFor" translate="no">branchFor</a>(): by the project's id, or its name until it has one) and one for the session never saved (<a href="projecthistory.html#unsavedBranch" translate="no">unsavedBranch</a>()); each snapshot holds the project's JSON, so the folder can be read with git itself. Projects drives it: <a href="projecthistory.html#switchTo" translate="no">switchTo</a>() follows the project open, <a href="projecthistory.html#restart" translate="no">restart</a>() begins a trail afresh (NEW), <a href="projecthistory.html#snapshot" translate="no">snapshot</a>() adds a version (a SAVE's is kept even when unchanged), <a href="projecthistory.html#carry" translate="no">carry</a>() continues the trail under a new key (the first SAVE, SAVE AS NEW), <a href="projecthistory.html#rename" translate="no">rename</a>() and <a href="projecthistory.html#remove" translate="no">remove</a>() follow the project's file, <a href="projecthistory.html#sweep" translate="no">sweep</a>() drops the trails of files that are gone, <a href="projecthistory.html#tidy" translate="no">tidy</a>() holds a trail to its limit and packs the store. Going back is <a href="projects.html#restore" translate="no">Projects::restore</a>(): the state read by <a href="projecthistory.html#stateAt" translate="no">stateAt</a>() replaces the session. Older trails may hold snapshots of every change (kinds change, open, new, restore); they are listed and restored as the versions are.</p>
-<p>Every write runs on a worker thread, one after the other, with the store held under a lock; entries lists the branch's newest snapshots (Shown at most) and follows each write. Without a backend that can work here (<a href="snapshotstore.html#create" translate="no">SnapshotStore::create</a>()) nothing is kept: available is <code translate="no">false</code> and entries stays empty. <a href="projecthistory.html#stateAt" translate="no">stateAt</a>() and <a href="projecthistory.html#timeOf" translate="no">timeOf</a>() are read on the calling thread.</p>
+<p>Every write runs on a worker thread, one after the other, with the store held under a lock; entries lists the branch's newest snapshots (Shown at most) and follows each write. Without a backend that can work here (<a href="snapshotstore.html#create" translate="no">SnapshotStore::create</a>()) nothing is kept: available is <code translate="no">false</code> and entries stays empty. <a href="projecthistory.html#stateAt" translate="no">stateAt</a>() is read on the calling thread.</p>
 </div>
 <!-- @@@ProjectHistory -->
 <div class="prop">
@@ -385,13 +384,6 @@
 <h3 class="fn" translate="no" id="tidyTitle"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> ProjectHistory::<span class="name">tidyTitle</span>(const <span class="type">QString</span> &amp;<i>title</i>)</h3>
 <p>Returns <i translate="no">title</i> as a snapshot keeps it: on one line, the spaces around it trimmed, at most 40 characters.</p>
 <!-- @@@tidyTitle -->
-</div>
-<div class="fnitem">
-<!-- $$$timeOf[overload1]$$$timeOfconstQString& -->
-<h3 class="fn" translate="no" id="timeOf"><code class="details extra" translate="no">[invokable]</code> <span class="type">qint64</span> ProjectHistory::<span class="name">timeOf</span>(const <span class="type">QString</span> &amp;<i>id</i>) const</h3>
-<p>Returns when the snapshot <i translate="no">id</i> among entries was taken (seconds since the epoch), or 0 when it is not listed.</p>
-<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
-</div><!-- @@@timeOf -->
 </div>
 <div class="fnitem">
 <!-- $$$unsavedBranch[overload1]$$$unsavedBranch -->

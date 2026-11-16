@@ -5,7 +5,7 @@
 <!-- inputeffects.cpp -->
   <meta name="description" content="The effects on the device input: a chain of LV2 plugins (jalv) between the input and whoever hears it (the monitor and the take, or the live recording's tap), so what is heard is what is recorded.">
   <meta name="keywords" content="class">
-  <title>InputEffects Class | ravving C++ API 0.6.0</title>
+  <title>InputEffects Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -95,7 +95,7 @@
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#InputEffects" translate="no">InputEffects</a></b>(const QString &amp;<i>presetsFile</i>, const QString &amp;<i>use</i>, const QString &amp;<i>settingsFile</i>, ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#InputEffects" translate="no">InputEffects</a></b>(const QString &amp;<i>presetsFile</i>, const QString &amp;<i>use</i>, const QString &amp;<i>settingsFile</i>, DeviceBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#about-prop" translate="no">about</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QList&lt;AudioInsert *&gt; </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#chain" translate="no">chain</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="inputeffects.html#knobs-prop" translate="no">knobs</a></b>() const</td></tr>
@@ -179,8 +179,8 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$InputEffects[overload1]$$$InputEffectsconstQString&constQString&constQString&ZynthboxBridge*QObject* -->
-<h3 class="fn" translate="no" id="InputEffects">InputEffects::<span class="name">InputEffects</span>(const <span class="type">QString</span> &amp;<i>presetsFile</i>, const <span class="type">QString</span> &amp;<i>use</i>, const <span class="type">QString</span> &amp;<i>settingsFile</i>, <span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<!-- $$$InputEffects[overload1]$$$InputEffectsconstQString&constQString&constQString&DeviceBridge*QObject* -->
+<h3 class="fn" translate="no" id="InputEffects">InputEffects::<span class="name">InputEffects</span>(const <span class="type">QString</span> &amp;<i>presetsFile</i>, const <span class="type">QString</span> &amp;<i>use</i>, const <span class="type">QString</span> &amp;<i>settingsFile</i>, <span class="type"><a href="devicebridge.html" translate="no">DeviceBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
 <p>Reads the presets made for <i translate="no">use</i> (<code translate="no">recorder</code>, <code translate="no">liverec</code>: a preset's <code translate="no">uses</code> in the file; one without is for all) from <i translate="no">presetsFile</i> (<code translate="no">data/input-fx.json</code>), with their plugins run through <i translate="no">bridge</i> (null: nothing runs), with the given <i translate="no">parent</i>. With a <i translate="no">settingsFile</i> (a QSettings file name under ravving's, <code translate="no">liverec-fx</code>) the preset in use and the knobs are read from it and kept there; empty, they last the session.</p>
 <!-- @@@InputEffects -->
 </div>

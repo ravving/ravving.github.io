@@ -5,7 +5,7 @@
 <!-- livefxengine.cpp -->
   <meta name="description" content="The punch-in effects on the whole mix, in the audio thread: LiveFx's pads beyond the kicks, the filters' sweeps, CRUSH and the beat repeat.">
   <meta name="keywords" content="class">
-  <title>LiveFxEngine Class | ravving C++ API 0.6.0</title>
+  <title>LiveFxEngine Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -72,6 +72,7 @@
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
 <li class="level1"><a href="#static-public-members">Static Public Members</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
+<li class="level2"><a href="#engage-and-release">Engage and release</a></li>
 <li class="level2"><a href="#the-ring-and-the-head">The ring and the head</a></li>
 <li class="level2"><a href="#the-rest-in-stereo-in-this-order">The rest, in stereo, in this order</a></li>
 </ul>
@@ -102,9 +103,12 @@
 <tr><td class="memItemLeft rightAlign topAlign"> double </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#sampleRate" translate="no">sampleRate</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#setEffects" translate="no">setEffects</a></b>(quint32 <i>mask</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#setGrid" translate="no">setGrid</a></b>(quint64 <i>barStart</i>, double <i>framesPerStep</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#setTransition" translate="no">setTransition</a></b>(LiveFxEngine::Effect <i>effect</i>, const int &amp;<i>transition</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#transition" translate="no">transition</a></b>(LiveFxEngine::Effect <i>effect</i>) const</td></tr>
 </table></div>
 <h2 id="static-public-members">Static Public Members</h2>
 <div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#DefaultTransition-var" translate="no">DefaultTransition</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#FadeFrames-var" translate="no">FadeFrames</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const double </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#LongestBeatSeconds-var" translate="no">LongestBeatSeconds</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> quint32 </td><td class="memItemRight bottomAlign"><b><a href="livefxengine.html#bit" translate="no">bit</a></b>(LiveFxEngine::Effect <i>effect</i>)</td></tr>
@@ -114,7 +118,9 @@
 <!-- $$$LiveFxEngine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p><a href="beatrepeat.html" translate="no">BeatRepeat</a> runs it in its JACK callback, after the repeat, so a loop held under REVERSE plays backwards. The GUI thread switches effects with <a href="livefxengine.html#setEffects" translate="no">setEffects</a>() and gives the transport's grid with <a href="livefxengine.html#setGrid" translate="no">setGrid</a>(); the audio thread reads only atomics and buffers allocated by <a href="livefxengine.html#prepare" translate="no">prepare</a>(), takes no lock and allocates nothing.</p>
+<p><a href="beatrepeat.html" translate="no">BeatRepeat</a> runs it in its JACK callback, after the repeat, so a loop held under REVERSE plays backwards. The GUI thread switches effects with <a href="livefxengine.html#setEffects" translate="no">setEffects</a>(), declares how each comes in and lets go with <a href="livefxengine.html#setTransition" translate="no">setTransition</a>() and gives the transport's grid with <a href="livefxengine.html#setGrid" translate="no">setGrid</a>(); the audio thread reads only atomics, the glides and buffers allocated by <a href="livefxengine.html#prepare" translate="no">prepare</a>(), takes no lock and allocates nothing.</p>
+<h3 id="engage-and-release">Engage and release</h3>
+<p>Every effect has an amount, 0 (off) to 1 (all of it), and a transition (libravving::Transition): <a href="livefxengine.html#setEffects" translate="no">setEffects</a>() sends each amount that changes to 1 over the effect's engage, or to 0 over its release, along its curve, and a libravving::RtRamp glides it frame by frame. The amount is how much of the effect is heard: the wet part of the filters, the echo's send, the kills' cut, how far FADE OUT has gone. The head effects share one amount, how much of the head is heard in the live input's place; the head keeps playing while it lets go, so a TAPE STOP's silence or a REWIND gives way to the live input over the release. The kills and PHONE are filter stages that run 256 frames from rest first: their amount is on its way meanwhile, and the stage comes in over <a href="livefxengine.html#FadeFrames-var" translate="no">FadeFrames</a> once warm. FREEZE has none: it takes its moment in and rings out on its own (about a second). Until <a href="livefxengine.html#setTransition" translate="no">setTransition</a>() says otherwise, each is <a href="livefxengine.html#DefaultTransition-var" translate="no">DefaultTransition</a>.</p>
 <h3 id="the-ring-and-the-head">The ring and the head</h3>
 <p>Every frame of the input goes into a stereo ring (twice the longest beat, <a href="livefxengine.html#LongestBeatSeconds-var" translate="no">LongestBeatSeconds</a>: 2.7 s at 48 kHz). One <i>head</i> at a time reads it instead of the live input:</p>
 <ul>
@@ -127,7 +133,7 @@
 </ul>
 <h3 id="the-rest-in-stereo-in-this-order">The rest, in stereo, in this order</h3>
 <p>FLANGER (a 0.7 to 4.7 ms delay with feedback swept once a bar), ECHO (a dotted 8th with darkening feedback; what is in it rings out after the pad lets go), FREEZE (a small feedback-delay reverb that takes in one 16th of the mix, then holds it; let go, it fades in about a second), the KILL LOW / MID / HIGH isolator (Linkwitz&ndash;Riley crossovers at 250 Hz and 2.44 kHz), PHONE (500 Hz to 2.5 kHz, mono, driven), ALIAS (held to 6 kHz with no filtering), GATE (open for the first half of every 16th), AUTO-PAN (the mix in mono, across and back once a beat), MONO and FADE OUT (to silence over two beats).</p>
-<p>Every switch, and every jump of the head, is crossfaded over <a href="livefxengine.html#FadeFrames-var" translate="no">FadeFrames</a>. A filter stage runs 256 frames from rest before it fades in, so its start never sounds. With nothing on and no tail ringing, <a href="livefxengine.html#process" translate="no">process</a>() only fills the ring and passes the input through.</p>
+<p>The engine's own moves are crossfaded over <a href="livefxengine.html#FadeFrames-var" translate="no">FadeFrames</a>: the head going from one effect to another or to its next segment, the gate's chop, FREEZE's intake, and a filter stage coming in (it runs 256 frames from rest first, so its start never sounds). With nothing on, no amount moving and no tail ringing, <a href="livefxengine.html#process" translate="no">process</a>() only fills the ring and passes the input through.</p>
 </div>
 <!-- @@@LiveFxEngine -->
 <div class="types">
@@ -165,7 +171,7 @@
 <div class="fnitem">
 <!-- $$$LiveFxEngine[overload1]$$$LiveFxEngine -->
 <h3 class="fn" translate="no" id="LiveFxEngine">LiveFxEngine::<span class="name">LiveFxEngine</span>()</h3>
-<p>Constructs an engine with nothing on; <a href="livefxengine.html#prepare" translate="no">prepare</a>() must run before <a href="livefxengine.html#process" translate="no">process</a>().</p>
+<p>Constructs an engine with nothing on, every effect's transition <a href="livefxengine.html#DefaultTransition-var" translate="no">DefaultTransition</a>; <a href="livefxengine.html#prepare" translate="no">prepare</a>() must run before <a href="livefxengine.html#process" translate="no">process</a>().</p>
 <!-- @@@LiveFxEngine -->
 </div>
 <div class="fnitem">
@@ -196,7 +202,7 @@
 <div class="fnitem">
 <!-- $$$isIdle[overload1]$$$isIdle -->
 <h3 class="fn" translate="no" id="isIdle"><span class="type">bool</span> LiveFxEngine::<span class="name">isIdle</span>() const</h3>
-<p>Returns whether nothing is on and nothing rings out: <a href="livefxengine.html#process" translate="no">process</a>() then only fills the ring. The audio thread's state (tests read it between cycles).</p>
+<p>Returns whether nothing is on, no amount moves and nothing rings out: <a href="livefxengine.html#process" translate="no">process</a>() then only fills the ring. The audio thread's state (tests read it between cycles).</p>
 <!-- @@@isIdle -->
 </div>
 <div class="fnitem">
@@ -220,7 +226,7 @@
 <div class="fnitem">
 <!-- $$$setEffects[overload1]$$$setEffectsquint32 -->
 <h3 class="fn" translate="no" id="setEffects"><span class="type">void</span> LiveFxEngine::<span class="name">setEffects</span>(<span class="type">quint32</span> <i>mask</i>)</h3>
-<p>Switches the effects to <i translate="no">mask</i>, a <a href="livefxengine.html#bit" translate="no">bit</a>() per effect on; any thread. Of the head effects (<a href="livefxengine.html#isHead" translate="no">isHead</a>()) only the first one set plays.</p>
+<p>Switches the effects to <i translate="no">mask</i>, a <a href="livefxengine.html#bit" translate="no">bit</a>() per effect on: each effect coming on glides in over its transition's engage, each going off lets go over its release. Of the head effects (<a href="livefxengine.html#isHead" translate="no">isHead</a>()) only the first one set plays; a head let go keeps playing until its release is over. GUI thread (the one thread that calls setEffects() and <a href="livefxengine.html#setTransition" translate="no">setTransition</a>()).</p>
 <p><b>See also </b><a href="livefxengine.html#effects" translate="no">effects</a>().</p>
 <!-- @@@setEffects -->
 </div>
@@ -230,13 +236,33 @@
 <p>Gives the transport's grid: <i translate="no">barStart</i>, a frame a bar started at (or the moment of a press, the transport stopped), and <i translate="no">framesPerStep</i>, a 16th's length. Any thread; the audio thread takes the pair whole at its next cycle.</p>
 <!-- @@@setGrid -->
 </div>
+<div class="fnitem">
+<!-- $$$setTransition[overload1]$$$setTransitionLiveFxEngine::Effectconstint& -->
+<h3 class="fn" translate="no" id="setTransition"><span class="type">void</span> LiveFxEngine::<span class="name">setTransition</span>(<span class="type"><a href="livefxengine.html#Effect-enum" translate="no">LiveFxEngine::Effect</a></span> <i>effect</i>, const <span class="type">int</span> &amp;<i>transition</i>)</h3>
+<p>Sets how <i translate="no">effect</i> comes in and lets go, from its next switch: <i translate="no">transition</i>. A head effect's engage is its own, and its release is the one heard when it lets go to the live input; FREEZE has no amount and keeps none. GUI thread.</p>
+<p><b>See also </b><a href="livefxengine.html#transition" translate="no">transition</a>().</p>
+<!-- @@@setTransition -->
+</div>
+<div class="fnitem">
+<!-- $$$transition[overload1]$$$transitionLiveFxEngine::Effect -->
+<h3 class="fn" translate="no" id="transition"><span class="type">int</span> LiveFxEngine::<span class="name">transition</span>(<span class="type"><a href="livefxengine.html#Effect-enum" translate="no">LiveFxEngine::Effect</a></span> <i>effect</i>) const</h3>
+<p>Returns <i translate="no">effect</i>'s transition (<a href="livefxengine.html#DefaultTransition-var" translate="no">DefaultTransition</a> until <a href="livefxengine.html#setTransition" translate="no">setTransition</a>()).</p>
+<p><b>See also </b><a href="livefxengine.html#setTransition" translate="no">setTransition</a>().</p>
+<!-- @@@transition -->
+</div>
 </div>
 <div class="vars">
 <h2>Member Variable Documentation</h2>
 <div class="fnitem">
+<!-- $$$DefaultTransition -->
+<h3 class="fn" translate="no" id="DefaultTransition-var">const <span class="type">int</span> LiveFxEngine::<span class="name">DefaultTransition</span></h3>
+<p>every effect's transition until <a href="livefxengine.html#setTransition" translate="no">setTransition</a>() gives another: <a href="livefxengine.html#FadeFrames-var" translate="no">FadeFrames</a> at 48 kHz each way, linear.</p>
+<!-- @@@DefaultTransition -->
+</div>
+<div class="fnitem">
 <!-- $$$FadeFrames -->
 <h3 class="fn" translate="no" id="FadeFrames-var">const <span class="type">int</span> LiveFxEngine::<span class="name">FadeFrames</span></h3>
-<p>This variable holds the length of every crossfade, in frames: 64 (1.3 ms at 48 kHz).</p>
+<p>This variable holds the length of the engine's own crossfades, in frames: 64 (1.3 ms at 48 kHz).</p>
 <!-- @@@FadeFrames -->
 </div>
 <div class="fnitem">

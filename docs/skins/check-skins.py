@@ -20,6 +20,10 @@ on, WCAG 2.x contrast:
               >= 4.5:1 on the nameplate (#1b1b20: its name in neon)
   apart       every two machines' glows differ by at least 20 (CIE76 Lab Delta E), so the
               header's lights tell them apart
+  pages       every page (song, player, mic, guitar, line, settings, mixer) in the file's
+              `pages`: ink >= 7:1 and dim >= 4.5:1 on both chassis colours, accent >= 3:1 on
+              the chassis or the well; the SONG page's ink >= 4.5:1 and glow >= 3:1 on the
+              section keys' caps (cap, capShade, groupCap, groupCapShade)
 
   tools/check-skins.py [--quiet] [FILE.json ...]
   tools/check-skins.py --similar [LIMIT]
@@ -47,6 +51,10 @@ HEADER_CHIP = '#0f0f12'
 NAMEPLATE = '#1b1b20'
 KEYS = ['chassisTop', 'chassisBottom', 'ink', 'accent', 'glow', 'plateColor', 'cap', 'capShade',
         'capBorder', 'groupCap', 'groupCapShade', 'well', 'rail']
+# the other views' skins in a file's `pages` (Rave.pageSkin), their colours, and who draws caps
+PAGES = ['song', 'player', 'mic', 'guitar', 'line', 'settings', 'mixer']
+PAGE_KEYS = ['chassisTop', 'chassisBottom', 'well', 'rail', 'ink', 'dim', 'accent', 'glow']
+PAGE_CAPS = {'song': ['cap', 'groupCap']}
 
 
 def channels(colour):
@@ -134,13 +142,46 @@ def check_machine(name, s):
     return problems
 
 
+def check_page(page, s):
+    name = f'page {page}'
+    problems = []
+    caps = PAGE_CAPS.get(page, [])
+    missing = [k for k in PAGE_KEYS + ['dark'] + caps + [c + 'Shade' for c in caps] if k not in s]
+    if missing:
+        return [f'{name}: missing {", ".join(missing)}']
+
+    def least(key, faces, minimum, what):
+        ratio, face = min((contrast(s[key], s[f]), f) for f in faces)
+        if ratio < minimum:
+            problems.append(f'{name}: {what} {ratio:.1f}:1 on {face}, under {minimum}:1')
+
+    if bool(s['dark']) != is_dark(mix(s['chassisTop'], s['chassisBottom'])):
+        problems.append(f'{name}: "dark" does not match the chassis')
+    least('ink', ['chassisTop', 'chassisBottom'], 7.0, 'ink')
+    least('dim', ['chassisTop', 'chassisBottom'], 4.5, 'dim')
+    if caps:
+        least('ink', caps + [c + 'Shade' for c in caps], 4.5, 'ink')
+        least('glow', caps, 3.0, 'glow')
+    on_case = min(contrast(s['accent'], s[f]) for f in ('chassisTop', 'chassisBottom'))
+    in_well = contrast(s['accent'], s['well'])
+    if max(on_case, in_well) < 3.0:
+        problems.append(f'{name}: accent {on_case:.1f}:1 on the chassis and {in_well:.1f}:1 on the well, under 3.0:1')
+    return problems
+
+
 def check_file(path):
     data = json.loads(path.read_text())
     skin = data.get('skin', {})
     machines = skin.get('machines', {})
+    pages = skin.get('pages', {})
     problems = []
     if not skin.get('name') or not skin.get('about'):
         problems.append('no name or about')
+    for page in PAGES:
+        if page not in pages:
+            problems.append(f'page {page}: missing (laid over the felt: tools/skin-pages.py --write)')
+            continue
+        problems += check_page(page, pages[page])
     for name in MACHINES:
         if name not in machines:
             problems.append(f'{name}: missing (falls back to ravving\'s own)')

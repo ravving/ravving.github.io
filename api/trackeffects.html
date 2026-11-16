@@ -5,7 +5,7 @@
 <!-- trackeffects.cpp -->
   <meta name="description" content="One machine's effects (the EffectChain), on its track's JackPassthrough, the processing every libravving track has; published to QML as machine&lt;@op&gt;.&lt;/@op&gt;effects.">
   <meta name="keywords" content="class">
-  <title>TrackEffects Class | ravving C++ API 0.6.0</title>
+  <title>TrackEffects Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -102,10 +102,9 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#enabled-prop" translate="no">enabled</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> double </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#pan" translate="no">pan</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#restore" translate="no">restore</a></b>(const QVariantMap &amp;<i>state</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#setEchoThrow" translate="no">setEchoThrow</a></b>(double <i>level</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#setEchoThrow" translate="no">setEchoThrow</a></b>(double <i>level</i>, int <i>ms</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#setEnabled" translate="no">setEnabled</a></b>(const QString &amp;<i>effect</i>, bool <i>on</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#setPan" translate="no">setPan</a></b>(double <i>pan</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#setSendLevel" translate="no">setSendLevel</a></b>(double <i>gain</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#setValue" translate="no">setValue</a></b>(const QString &amp;<i>effect</i>, const QString &amp;<i>knob</i>, double <i>value</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#state" translate="no">state</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> double </td><td class="memItemRight bottomAlign"><b><a href="trackeffects.html#value" translate="no">value</a></b>(const QString &amp;<i>effect</i>, const QString &amp;<i>knob</i>) const</td></tr>
@@ -132,7 +131,7 @@
 <li>REVERB and DELAY: sends into the studio's <a href="globaleffects.html" translate="no">GlobalEffects</a>; MIX is the send level (the reverb reaching +6 dB at 100 %, the delay unity), and the shared knobs are <a href="globaleffects.html" translate="no">GlobalEffects</a>'. <a href="trackeffects.html#setEchoThrow" translate="no">setEchoThrow</a>() raises the delay send to at least a given level;</li>
 <li>DRIVE: a saturator first in the chain (its distortion feeds the rest): the machine's own Calf Saturator (<a href="trackeffects.html#DriveUri-var" translate="no">DriveUri</a>, <a href="trackeffects.html#attachDrive" translate="no">attachDrive</a>()), between its engine and its track only while DRIVE is on (<a href="trackeffects.html#driveSwitched" translate="no">driveSwitched</a>(); <a href="jackwiring.html" translate="no">JackWiring</a> moves it in and out), started the first time it is switched on. AMOUNT is how hard it saturates (input gain up to +36 dB and the saturation itself), with the output turned down to match, so DRIVE changes the tone rather than the level; TONE darkens it (a low-pass after it, from 1.2 kHz at 0 to wide open at 100 %).</li>
 </ul>
-<p>The sends follow the machine's level (<a href="trackeffects.html#setSendLevel" translate="no">setSendLevel</a>()). Without a passthrough (a desktop run) everything is kept and nothing sounds. GUI thread only.</p>
+<p>The sends leave after the machine's level and mute: the engine scales them by the track's fader (libravving::Strip::setSends()). Without a passthrough (a desktop run) everything is kept and nothing sounds. GUI thread only.</p>
 </div>
 <!-- @@@TrackEffects -->
 <div class="prop">
@@ -216,9 +215,9 @@
 <!-- @@@restore -->
 </div>
 <div class="fnitem">
-<!-- $$$setEchoThrow[overload1]$$$setEchoThrowdouble -->
-<h3 class="fn" translate="no" id="setEchoThrow"><span class="type">void</span> TrackEffects::<span class="name">setEchoThrow</span>(<span class="type">double</span> <i>level</i>)</h3>
-<p>Raises the delay send to at least <i translate="no">level</i> (0..1), whether DELAY is on or not; <a href="livefx.html" translate="no">LiveFx</a>'s echo uses it. Not saved.</p>
+<!-- $$$setEchoThrow[overload1]$$$setEchoThrowdoubleint -->
+<h3 class="fn" translate="no" id="setEchoThrow"><span class="type">void</span> TrackEffects::<span class="name">setEchoThrow</span>(<span class="type">double</span> <i>level</i>, <span class="type">int</span> <i>ms</i>)</h3>
+<p>Raises the delay send to at least <i translate="no">level</i> (0..1), whether DELAY is on or not, the send gliding there over <i translate="no">ms</i> milliseconds (slow at both ends; 0: at once); <a href="livefx.html" translate="no">LiveFx</a>'s echo and the PAD SAMPLER's ECHO use it. Not saved.</p>
 <!-- @@@setEchoThrow -->
 </div>
 <div class="fnitem">
@@ -235,12 +234,6 @@
 <p>Sets the stereo position to <i translate="no">pan</i>, -1 to +1, switching PAN on when off centre.</p>
 <p><b>See also </b><a href="trackeffects.html#pan" translate="no">pan</a>().</p>
 <!-- @@@setPan -->
-</div>
-<div class="fnitem">
-<!-- $$$setSendLevel[overload1]$$$setSendLeveldouble -->
-<h3 class="fn" translate="no" id="setSendLevel"><span class="type">void</span> TrackEffects::<span class="name">setSendLevel</span>(<span class="type">double</span> <i>gain</i>)</h3>
-<p>Sets the machine's level as a raw <i translate="no">gain</i>: the sends are scaled by it too, so the reverb and the delay follow the level as the dry sound does (post-fader), and a gain of 0 silences them.</p>
-<!-- @@@setSendLevel -->
 </div>
 <div class="fnitem">
 <!-- $$$setValue[overload1]$$$setValueconstQString&constQString&double -->

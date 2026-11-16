@@ -5,7 +5,7 @@
 <!-- paths.cpp -->
   <meta name="description" content="Where ravving keeps its files: one place that decides every folder.">
   <meta name="keywords" content="class">
-  <title>Paths Class | ravving C++ API 0.6.0</title>
+  <title>Paths Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -94,6 +94,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="paths.html#forgetSoundfonts" translate="no">forgetSoundfonts</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#importedSamples" translate="no">importedSamples</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="paths.html#initialise" translate="no">initialise</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="paths.html#isSystemSoundfont" translate="no">isSystemSoundfont</a></b>(const QString &amp;<i>path</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#library" translate="no">library</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#liveRecordings" translate="no">liveRecordings</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#midi" translate="no">midi</a></b>()</td></tr>
@@ -105,10 +106,13 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#relocated" translate="no">relocated</a></b>(const QString &amp;<i>path</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#reversedCache" translate="no">reversedCache</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#samples" translate="no">samples</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="paths.html#setSoundfontEquivalents" translate="no">setSoundfontEquivalents</a></b>(const QList&lt;QStringList&gt; &amp;<i>groups</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="paths.html#setSystemSoundfontRoots" translate="no">setSystemSoundfontRoots</a></b>(const QStringList &amp;<i>roots</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#soundfontCache" translate="no">soundfontCache</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#soundfontNamed" translate="no">soundfontNamed</a></b>(const QString &amp;<i>fileName</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#soundfonts" translate="no">soundfonts</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#state" translate="no">state</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="paths.html#systemSoundfontRoots" translate="no">systemSoundfontRoots</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#takes" translate="no">takes</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#templates" translate="no">templates</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="paths.html#videos" translate="no">videos</a></b>()</td></tr>
@@ -125,6 +129,7 @@
 <tr valign="top" class="even"><td >library</td><td ><code translate="no">/zynthian/zynthian-my-data/ravving</code> on the device (the data partition every Zynthbox has), <code translate="no">$XDG_DATA_HOME/ravving</code> on a desktop</td><td >the user's own work, kept across reinstalls and shared over webconf</td></tr>
 </table></div>
 <p>The library holds <code translate="no">projects/</code> (named projects), <code translate="no">templates/</code> (Templates), <code translate="no">presets/</code> (the user's pattern presets, <code translate="no">&lt;machine&gt;-presets.json</code>), <code translate="no">samples/</code> (with <code translate="no">takes/</code>, <code translate="no">recordings/</code> and <code translate="no">imported/</code>), <code translate="no">soundfonts/</code>, <code translate="no">midi/</code>, <code translate="no">recordings/</code> (the RECORDER's tracks), <code translate="no">videos/</code> and <code translate="no">exports/</code> (tracks with their covers and sidecars, and <code translate="no">.ravv</code> bundles).</p>
+<p>The sounds ravving ships no copy of are looked up, not assumed: a soundfont is named by its path on a Zynthbox (<code translate="no">/zynthian/zynthian-data/soundfonts/...</code>), in <code translate="no">data/kits.json</code> and in every project, and <a href="paths.html#relocated" translate="no">relocated</a>() finds the file that plays for it on this machine in <a href="paths.html#systemSoundfontRoots" translate="no">systemSoundfontRoots</a>() (the Zynthbox folder, then the desktop's soundfont folders) and the library. A project made on one machine so plays on the other.</p>
 <p>For development and tests, <code translate="no">RAVVING_HOME</code> puts all four roots under one folder and <code translate="no">RAVVING_LIBRARY</code> moves the library alone; <code translate="no">RAVVING_PROJECT_DIR</code> (the session folder) and <code translate="no">RAVVING_PROJECTS_DIR</code> are honoured too.</p>
 <p><a href="paths.html#initialise" translate="no">initialise</a>() reads the environment once, before QGuiApplication reads the XDG variables (main() points them at the bundled theme after it), moves files found in the legacy layout (<code translate="no">~/.local/share/ravving</code>'s project, presets and caches; takes in zynthbox-qml's samples folder; recordings in its capture folder) into these folders, rewriting the paths the session and the projects refer to, and makes the folders. The getters only read what <a href="paths.html#initialise" translate="no">initialise</a>() decided and are thread-safe after it.</p>
 </div>
@@ -164,7 +169,7 @@
 <div class="fnitem">
 <!-- $$$forgetSoundfonts[overload1]$$$forgetSoundfonts -->
 <h3 class="fn" translate="no" id="forgetSoundfonts"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> Paths::<span class="name">forgetSoundfonts</span>()</h3>
-<p>Forgets what <a href="paths.html#soundfontNamed" translate="no">soundfontNamed</a>() read: the library's and the cache's folders are read again at the next lookup. Called by whatever puts a soundfont in them or takes one out.</p>
+<p>Forgets what <a href="paths.html#soundfontNamed" translate="no">soundfontNamed</a>() and <a href="paths.html#relocated" translate="no">relocated</a>() read of the library's and the cache's folders: they are read again at the next lookup. Called by whatever puts a soundfont in them or takes one out. The system's folders, which ravving never changes, stay as read.</p>
 <!-- @@@forgetSoundfonts -->
 </div>
 <div class="fnitem">
@@ -178,6 +183,12 @@
 <h3 class="fn" translate="no" id="initialise"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> Paths::<span class="name">initialise</span>()</h3>
 <p>Decides every folder from the environment, moves the legacy layout's files and makes the folders. Call it once at start, before the XDG variables are changed.</p>
 <!-- @@@initialise -->
+</div>
+<div class="fnitem">
+<!-- $$$isSystemSoundfont[overload1]$$$isSystemSoundfontconstQString& -->
+<h3 class="fn" translate="no" id="isSystemSoundfont"><code class="details extra" translate="no">[static]</code> <span class="type">bool</span> Paths::<span class="name">isSystemSoundfont</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Returns whether <i translate="no">path</i> names a file under one of <a href="paths.html#systemSoundfontRoots" translate="no">systemSoundfontRoots</a>(): a soundfont that comes with the system, named the same in every project whatever machine plays it.</p>
+<!-- @@@isSystemSoundfont -->
 </div>
 <div class="fnitem">
 <!-- $$$library[overload1]$$$library -->
@@ -230,7 +241,13 @@
 <div class="fnitem">
 <!-- $$$relocated[overload1]$$$relocatedconstQString& -->
 <h3 class="fn" translate="no" id="relocated"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">relocated</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
-<p>Returns where a sample a project names as <i translate="no">path</i> lives now: the path itself when it exists, else a take's place in <a href="paths.html#takes" translate="no">takes</a>(), else the path unchanged. Saved projects keep the paths they were saved with; this resolves them after the legacy layout's files moved. A soundfont of <a href="paths.html#soundfonts" translate="no">soundfonts</a>() or <a href="paths.html#soundfontCache" translate="no">soundfontCache</a>() that is gone is the file of its name wherever it is now (<a href="paths.html#soundfontNamed" translate="no">soundfontNamed</a>()): a cached font the library kept when a project was saved with it, or a font moved into a genre folder.</p>
+<p>Returns where the file a project or <code translate="no">data/kits.json</code> names as <i translate="no">path</i> lives now: the path itself when it exists, else the first of these that does, else the path unchanged.</p>
+<ul>
+<li>A take named in the samples folder: its place in <a href="paths.html#takes" translate="no">takes</a>().</li>
+<li>A soundfont of <a href="paths.html#soundfonts" translate="no">soundfonts</a>() or <a href="paths.html#soundfontCache" translate="no">soundfontCache</a>(): the file of its name wherever it is now (<a href="paths.html#soundfontNamed" translate="no">soundfontNamed</a>()): a cached font the library kept when a project was saved with it, or a font moved into a genre folder.</li>
+<li>A soundfont under one of <a href="paths.html#systemSoundfontRoots" translate="no">systemSoundfontRoots</a>() (a Zynthbox's <code translate="no">/zynthian/zynthian-data/soundfonts</code>, a desktop's <code translate="no">/usr/share/soundfonts</code>): the same place below another root, then a file of its name anywhere in the roots or the library, then a file that stands in for it (<a href="paths.html#setSoundfontEquivalents" translate="no">setSoundfontEquivalents</a>()), found the same way.</li>
+</ul>
+<p>Saved projects keep the paths they were saved with, so one made on a Zynthbox plays on a desktop and back. On a Zynthbox its own fonts are where their paths say, and nothing is searched.</p>
 <!-- @@@relocated -->
 </div>
 <div class="fnitem">
@@ -244,6 +261,19 @@
 <h3 class="fn" translate="no" id="samples"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">samples</span>()</h3>
 <p>Returns the library's samples folder.</p>
 <!-- @@@samples -->
+</div>
+<div class="fnitem">
+<!-- $$$setSoundfontEquivalents[overload1]$$$setSoundfontEquivalentsconstQList<QStringList>& -->
+<h3 class="fn" translate="no" id="setSoundfontEquivalents"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> Paths::<span class="name">setSoundfontEquivalents</span>(const <span class="type">QList</span>&lt;<span class="type">QStringList</span>&gt; &amp;<i>groups</i>)</h3>
+<p>Tells <a href="paths.html#relocated" translate="no">relocated</a>() which soundfonts stand in for one another: each of <i translate="no">groups</i> lists the file names of one font in its editions (FluidR3's mono <code translate="no">.sf3</code> on a Zynthbox, the stereo <code translate="no">.sf2</code> a desktop's package brings), the best first. A font of a group that is missing plays from the first other one found. <a href="soundfonttags.html#load" translate="no">SoundfontTags::load</a>() sets them from <code translate="no">data/soundfonts.json</code> (<code translate="no">alike</code>).</p>
+<!-- @@@setSoundfontEquivalents -->
+</div>
+<div class="fnitem">
+<!-- $$$setSystemSoundfontRoots[overload1]$$$setSystemSoundfontRootsconstQStringList& -->
+<h3 class="fn" translate="no" id="setSystemSoundfontRoots"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> Paths::<span class="name">setSystemSoundfontRoots</span>(const <span class="type">QStringList</span> &amp;<i>roots</i>)</h3>
+<p>Makes <i translate="no">roots</i> the folders <a href="paths.html#systemSoundfontRoots" translate="no">systemSoundfontRoots</a>() returns, in that order, and forgets what was read from the ones before (for the tests, and a system with its fonts elsewhere).</p>
+<p><b>See also </b><a href="paths.html#systemSoundfontRoots" translate="no">systemSoundfontRoots</a>().</p>
+<!-- @@@setSystemSoundfontRoots -->
 </div>
 <div class="fnitem">
 <!-- $$$soundfontCache[overload1]$$$soundfontCache -->
@@ -268,6 +298,13 @@
 <h3 class="fn" translate="no" id="state"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> Paths::<span class="name">state</span>()</h3>
 <p>Returns the live session's folder.</p>
 <!-- @@@state -->
+</div>
+<div class="fnitem">
+<!-- $$$systemSoundfontRoots[overload1]$$$systemSoundfontRoots -->
+<h3 class="fn" translate="no" id="systemSoundfontRoots"><code class="details extra" translate="no">[static]</code> <span class="type">QStringList</span> Paths::<span class="name">systemSoundfontRoots</span>()</h3>
+<p>Returns the folders this system keeps soundfonts in, whether they exist or not: the Zynthbox's (<code translate="no">/zynthian/zynthian-data/soundfonts</code>) first, then <code translate="no">soundfonts</code>, <code translate="no">sounds/sf2</code> and <code translate="no">sounds/sf3</code> under each XDG data folder (<code translate="no">~/.local/share</code>, <code translate="no">/usr/local/share</code>, <code translate="no">/usr/share</code>). The list is read from the environment at the first call (<a href="paths.html#initialise" translate="no">initialise</a>() makes it), or is what <a href="paths.html#setSystemSoundfontRoots" translate="no">setSystemSoundfontRoots</a>() gave.</p>
+<p><b>See also </b><a href="paths.html#setSystemSoundfontRoots" translate="no">setSystemSoundfontRoots</a>().</p>
+<!-- @@@systemSoundfontRoots -->
 </div>
 <div class="fnitem">
 <!-- $$$takes[overload1]$$$takes -->

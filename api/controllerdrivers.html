@@ -5,7 +5,7 @@
 <!-- controllerdrivers.cpp -->
   <meta name="description" content="The controllers ravving has a driver for (studio&lt;@op&gt;.&lt;/@op&gt;drivers): one ControllerDriver per controller a driver fits, started when the controller is plugged in, stopped when it goes or ravving quits.">
   <meta name="keywords" content="class">
-  <title>ControllerDrivers Class | ravving C++ API 0.6.0</title>
+  <title>ControllerDrivers Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -92,16 +92,17 @@
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#ControllerDrivers" translate="no">ControllerDrivers</a></b>(int *<i>router</i>, MidiInput *<i>midiIn</i>, QObject *<i>parent</i> = nullptr)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#addDriver" translate="no">addDriver</a></b>(const QString &amp;<i>id</i>, const QString &amp;<i>namePart</i>, const ControllerDrivers::Factory &amp;<i>factory</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#ControllerDrivers" translate="no">ControllerDrivers</a></b>(const ConnectionRegistry *<i>registry</i>, ConnectionMultiplexer *<i>multiplexer</i>, MidiTransport *<i>transport</i>, ControllerSettingsStore *<i>store</i>, MidiInput *<i>midiIn</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#addDriver" translate="no">addDriver</a></b>(const DriverSpec &amp;<i>driver</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#addHub" translate="no">addHub</a></b>(ControllerHub *<i>hub</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#controllerAdded" translate="no">controllerAdded</a></b>(const QString &amp;<i>name</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#controllerRemoved" translate="no">controllerRemoved</a></b>(const QString &amp;<i>name</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#device" translate="no">device</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#controllerAdded" translate="no">controllerAdded</a></b>(const ControllerId &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#controllerRemoved" translate="no">controllerRemoved</a></b>(const ControllerId &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#device" translate="no">device</a></b>(const QString &amp;<i>id</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#devices-prop" translate="no">devices</a></b>() const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#enabled" translate="no">enabled</a></b>(const QString &amp;<i>name</i>) const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#received" translate="no">received</a></b>(const QString &amp;<i>name</i>, const QByteArray &amp;<i>bytes</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#setEnabled" translate="no">setEnabled</a></b>(const QString &amp;<i>name</i>, bool <i>enabled</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#enabled" translate="no">enabled</a></b>(const QString &amp;<i>id</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#received" translate="no">received</a></b>(const ControllerId &amp;<i>id</i>, const QByteArray &amp;<i>bytes</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#setEnabled" translate="no">setEnabled</a></b>(const QString &amp;<i>id</i>, bool <i>enabled</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllerdrivers.html#setSurface" translate="no">setSurface</a></b>(const QString &amp;<i>id</i>, const QString &amp;<i>type</i>)</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
@@ -110,7 +111,9 @@
 <!-- $$$ControllerDrivers-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>A driver is registered with <a href="controllerdrivers.html#addDriver" translate="no">addDriver</a>(): an id, the part of a controller's name that picks it (<code translate="no">&quot;BLOCK&quot;</code> for ROLI's), and what makes its <a href="controllerdriver.html" translate="no">ControllerDriver</a>. Hosting a controller can be turned off per controller (<a href="controllerdrivers.html#setEnabled" translate="no">setEnabled</a>(), kept in the <code translate="no">ravving/midi</code> settings beside <a href="midiinput.html" translate="no">MidiInput</a>'s). While a driver runs, every hub (<a href="controllerdrivers.html#addHub" translate="no">addHub</a>(): studio.octaves, studio.scales…) is offered it and takes it if it has the hub's capability. GUI thread only.</p>
+<p>A driver is registered with <a href="controllerdrivers.html#addDriver" translate="no">addDriver</a>(), as a <a href="driverspec.html" translate="no">DriverSpec</a>: its id, which controllers it is for (by a part of their name, <a href="driverspec.html#named" translate="no">DriverSpec::named</a>(); or the ones whose settings name it as their <code translate="no">surface</code>, <a href="driverspec.html#surface" translate="no">DriverSpec::surface</a>(): a Mackie Control surface, by its profile's defaults or by the user's choice, <a href="controllerdrivers.html#setSurface" translate="no">setSurface</a>()), how its <a href="controllerdriver.html" translate="no">ControllerDriver</a> is made and which settings remake it. The first driver registered that fits a controller hosts it. Hosting can be turned off per controller (<a href="controllerdrivers.html#setEnabled" translate="no">setEnabled</a>(): the <code translate="no">host</code> setting, <a href="controllersettingsstore.html" translate="no">ControllerSettingsStore</a>).</p>
+<p>A controller is one device however many connections it has (<a href="connectionregistry.html" translate="no">ConnectionRegistry</a>: a cable's several ports, its radio beside its cable), made for the controller's id; what the controller sends on any of its connections reaches it (its System Exclusive through the <a href="connectionmultiplexer.html" translate="no">ConnectionMultiplexer</a>, its short messages through <a href="midiinput.html#setSurface" translate="no">MidiInput::setSurface</a>() for a control surface), and what it sends goes through the <a href="miditransport.html" translate="no">MidiTransport</a>, to whichever connection carries the controller now. The device is remade when its driver changes (another surface chosen) or when a setting its driver remakes on does (DriverSpec::remakeOn: a surface's knobs' encoding and its faders' pick-up), and started or stopped as hosting is turned on or off.</p>
+<p>While a driver runs, every hub (<a href="controllerdrivers.html#addHub" translate="no">addHub</a>(): studio.octaves, studio.scales…) is offered it and takes it if it has the hub's capability. GUI thread only.</p>
 </div>
 <!-- @@@ControllerDrivers -->
 <div class="prop">
@@ -118,7 +121,7 @@
 <div class="fnitem">
 <!-- $$$devices-prop$$$devices$$$devicesChanged -->
 <h3 class="fn" translate="no" id="devices-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">devices</span> : <span class="type">QVariantList</span></h3>
-<p>This property holds the controllers hosted, each a map: <code translate="no">name</code>, <code translate="no">protocol</code>, <code translate="no">state</code>, <code translate="no">facts</code>, <code translate="no">enabled</code>.</p>
+<p>This property holds the controllers hosted, one entry per controller plugged in that a driver fits, each a map: <code translate="no">id</code>, <code translate="no">title</code> (the controller's name shown), <code translate="no">protocol</code>, <code translate="no">state</code>, <code translate="no">facts</code>, <code translate="no">enabled</code>.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>devices</b></span>() const</td></tr>
@@ -133,15 +136,15 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$ControllerDrivers[overload1]$$$ControllerDriversint*MidiInput*QObject* -->
-<h3 class="fn" translate="no" id="ControllerDrivers">ControllerDrivers::<span class="name">ControllerDrivers</span>(<span class="type">int</span> *<i>router</i>, <span class="type"><a href="midiinput.html" translate="no">MidiInput</a></span> *<i>midiIn</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>Hosts over <i translate="no">router</i> (null on a desktop: no controllers), told of the controllers by <i translate="no">midiIn</i>, with <i translate="no">parent</i>.</p>
+<!-- $$$ControllerDrivers[overload1]$$$ControllerDriversconstConnectionRegistry*ConnectionMultiplexer*MidiTransport*ControllerSettingsStore*MidiInput*QObject* -->
+<h3 class="fn" translate="no" id="ControllerDrivers">ControllerDrivers::<span class="name">ControllerDrivers</span>(const <span class="type"><a href="connectionregistry.html" translate="no">ConnectionRegistry</a></span> *<i>registry</i>, <span class="type"><a href="connectionmultiplexer.html" translate="no">ConnectionMultiplexer</a></span> *<i>multiplexer</i>, <span class="type"><a href="miditransport.html" translate="no">MidiTransport</a></span> *<i>transport</i>, <span class="type"><a href="controllersettingsstore.html" translate="no">ControllerSettingsStore</a></span> *<i>store</i>, <span class="type"><a href="midiinput.html" translate="no">MidiInput</a></span> *<i>midiIn</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Hosts the controllers <i translate="no">registry</i> lists, their System Exclusive from <i translate="no">multiplexer</i> (null: none), sending through <i translate="no">transport</i> (null: nowhere), their settings in <i translate="no">store</i> (hosting, the surface chosen, what a surface's device is made with), a hosted surface's messages through <i translate="no">midiIn</i> (null: none), with <i translate="no">parent</i>.</p>
 <!-- @@@ControllerDrivers -->
 </div>
 <div class="fnitem">
-<!-- $$$addDriver[overload1]$$$addDriverconstQString&constQString&constControllerDrivers::Factory& -->
-<h3 class="fn" translate="no" id="addDriver"><span class="type">void</span> ControllerDrivers::<span class="name">addDriver</span>(const <span class="type">QString</span> &amp;<i>id</i>, const <span class="type">QString</span> &amp;<i>namePart</i>, const <span class="type">ControllerDrivers::Factory</span> &amp;<i>factory</i>)</h3>
-<p>Registers the driver <i translate="no">id</i> for the controllers whose name holds <i translate="no">namePart</i>, made by <i translate="no">factory</i>.</p>
+<!-- $$$addDriver[overload1]$$$addDriverconstDriverSpec& -->
+<h3 class="fn" translate="no" id="addDriver"><span class="type">void</span> ControllerDrivers::<span class="name">addDriver</span>(const <span class="type"><a href="driverspec.html" translate="no">DriverSpec</a></span> &amp;<i>driver</i>)</h3>
+<p>Registers <i translate="no">driver</i>: the controllers it matches, plugged in now or later, get its device.</p>
 <!-- @@@addDriver -->
 </div>
 <div class="fnitem">
@@ -151,46 +154,52 @@
 <!-- @@@addHub -->
 </div>
 <div class="fnitem">
-<!-- $$$controllerAdded[overload1]$$$controllerAddedconstQString& -->
-<h3 class="fn" translate="no" id="controllerAdded"><span class="type">void</span> ControllerDrivers::<span class="name">controllerAdded</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
-<p>The controller <i translate="no">name</i> was plugged in: hosted, if a driver fits it and it is enabled.</p>
+<!-- $$$controllerAdded[overload1]$$$controllerAddedconstControllerId& -->
+<h3 class="fn" translate="no" id="controllerAdded"><span class="type">void</span> ControllerDrivers::<span class="name">controllerAdded</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>)</h3>
+<p>The controller <i translate="no">id</i> was plugged in: hosted, if a driver fits it and it is enabled (listed, <a href="controllerdrivers.html#devices-prop" translate="no">devices</a>(), but not started if hosting it is off, so it can be turned on again).</p>
 <!-- @@@controllerAdded -->
 </div>
 <div class="fnitem">
-<!-- $$$controllerRemoved[overload1]$$$controllerRemovedconstQString& -->
-<h3 class="fn" translate="no" id="controllerRemoved"><span class="type">void</span> ControllerDrivers::<span class="name">controllerRemoved</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
-<p>The controller <i translate="no">name</i> was unplugged: its device stops and goes.</p>
+<!-- $$$controllerRemoved[overload1]$$$controllerRemovedconstControllerId& -->
+<h3 class="fn" translate="no" id="controllerRemoved"><span class="type">void</span> ControllerDrivers::<span class="name">controllerRemoved</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>)</h3>
+<p>The controller <i translate="no">id</i> was unplugged: its device stops and goes.</p>
 <!-- @@@controllerRemoved -->
 </div>
 <div class="fnitem">
 <!-- $$$device[overload1]$$$deviceconstQString& -->
-<h3 class="fn" translate="no" id="device"><code class="details extra" translate="no">[invokable]</code> <span class="type">QObject</span> *ControllerDrivers::<span class="name">device</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
-<p>Returns the <a href="controllerdriver.html" translate="no">ControllerDriver</a> hosting the controller <i translate="no">name</i>, null when none.</p>
+<h3 class="fn" translate="no" id="device"><code class="details extra" translate="no">[invokable]</code> <span class="type">QObject</span> *ControllerDrivers::<span class="name">device</span>(const <span class="type">QString</span> &amp;<i>id</i>) const</h3>
+<p>Returns the <a href="controllerdriver.html" translate="no">ControllerDriver</a> hosting the controller <i translate="no">id</i>, null when none does.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@device -->
 </div>
 <div class="fnitem">
 <!-- $$$enabled[overload1]$$$enabledconstQString& -->
-<h3 class="fn" translate="no" id="enabled"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> ControllerDrivers::<span class="name">enabled</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
-<p>Returns whether the controller <i translate="no">name</i> is hosted (yes unless turned off).</p>
+<h3 class="fn" translate="no" id="enabled"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> ControllerDrivers::<span class="name">enabled</span>(const <span class="type">QString</span> &amp;<i>id</i>) const</h3>
+<p>Returns whether the controller <i translate="no">id</i> is hosted (yes unless turned off).</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><p><b>See also </b><a href="controllerdrivers.html#setEnabled" translate="no">setEnabled</a>().</p>
 <!-- @@@enabled -->
 </div>
 <div class="fnitem">
-<!-- $$$received[overload1]$$$receivedconstQString&constQByteArray& -->
-<h3 class="fn" translate="no" id="received"><span class="type">void</span> ControllerDrivers::<span class="name">received</span>(const <span class="type">QString</span> &amp;<i>name</i>, const <span class="type">QByteArray</span> &amp;<i>bytes</i>)</h3>
-<p>A message <i translate="no">bytes</i> came from the controller <i translate="no">name</i>, for its device.</p>
+<!-- $$$received[overload1]$$$receivedconstControllerId&constQByteArray& -->
+<h3 class="fn" translate="no" id="received"><span class="type">void</span> ControllerDrivers::<span class="name">received</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>, const <span class="type">QByteArray</span> &amp;<i>bytes</i>)</h3>
+<p>A System Exclusive message <i translate="no">bytes</i> came from the controller <i translate="no">id</i>, for its device.</p>
 <!-- @@@received -->
 </div>
 <div class="fnitem">
 <!-- $$$setEnabled[overload1]$$$setEnabledconstQString&bool -->
-<h3 class="fn" translate="no" id="setEnabled"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ControllerDrivers::<span class="name">setEnabled</span>(const <span class="type">QString</span> &amp;<i>name</i>, <span class="type">bool</span> <i>enabled</i>)</h3>
-<p>Hosts the controller <i translate="no">name</i> (<i translate="no">enabled</i>) or leaves it alone: it keeps sending plain MIDI either way.</p>
+<h3 class="fn" translate="no" id="setEnabled"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ControllerDrivers::<span class="name">setEnabled</span>(const <span class="type">QString</span> &amp;<i>id</i>, <span class="type">bool</span> <i>enabled</i>)</h3>
+<p>Hosts the controller <i translate="no">id</i> (<i translate="no">enabled</i>) or leaves it alone: it keeps sending plain MIDI either way. Kept in the controller's settings (<code translate="no">host</code>); its device starts or stops with it (refresh()).</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><p><b>See also </b><a href="controllerdrivers.html#enabled" translate="no">enabled</a>().</p>
 <!-- @@@setEnabled -->
 </div>
+<div class="fnitem">
+<!-- $$$setSurface[overload1]$$$setSurfaceconstQString&constQString& -->
+<h3 class="fn" translate="no" id="setSurface"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> ControllerDrivers::<span class="name">setSurface</span>(const <span class="type">QString</span> &amp;<i>id</i>, const <span class="type">QString</span> &amp;<i>type</i>)</h3>
+<p>Has the controller <i translate="no">id</i> hosted as a control surface by the driver <i translate="no">type</i> (<code translate="no">mackie</code>), or by none (empty): kept in its settings (<code translate="no">surface</code>). Chosen, it is hosted (<a href="controllerdrivers.html#setEnabled" translate="no">setEnabled</a>()); none, it is a plain controller again.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@setSurface -->
 </div>
 </article>
 </main>
@@ -201,3 +210,4 @@
 </footer>
 </body>
 </html>
+</div>

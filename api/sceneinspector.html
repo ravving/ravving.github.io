@@ -5,7 +5,7 @@
 <!-- sceneinspector.cpp -->
   <meta name="description" content="Logs what the running scene holds, for CuiaFifo's items and animations commands.">
   <meta name="keywords" content="namespace">
-  <title>SceneInspector Namespace | ravving C++ API 0.6.0</title>
+  <title>SceneInspector Namespace | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -85,9 +85,11 @@
 </ul>
 <h2 id="functions">Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sceneinspector.html#click" translate="no">click</a></b>(QQuickWindow *<i>window</i>, const QPointF &amp;<i>point</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QQuickItem *</td><td class="memItemRight bottomAlign"><b><a href="sceneinspector.html#findItem" translate="no">findItem</a></b>(QQuickItem *<i>root</i>, const QString &amp;<i>name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sceneinspector.html#logAnimations" translate="no">logAnimations</a></b>(QQuickWindow *<i>window</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sceneinspector.html#logItems" translate="no">logItems</a></b>(QQuickWindow *<i>window</i>, const QString &amp;<i>pattern</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sceneinspector.html#mouse" translate="no">mouse</a></b>(QQuickWindow *<i>window</i>, const QString &amp;<i>action</i>, const QPointF &amp;<i>point</i>)</td></tr>
 </table></div>
 <!-- $$$SceneInspector-description -->
 <div class="descr">
@@ -97,6 +99,12 @@
 <!-- @@@SceneInspector -->
 <div class="func">
 <h2>Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$click[overload1]$$$clickQQuickWindow*constQPointF& -->
+<h3 class="fn" translate="no" id="click"><span class="type">void</span> SceneInspector::<span class="name">click</span>(<span class="type">QQuickWindow</span> *<i>window</i>, const <span class="type">QPointF</span> &amp;<i>point</i>)</h3>
+<p>Clicks the left mouse button at <i translate="no">point</i> (scene coordinates) in <i translate="no">window</i>, as a mouse would: a press, then the release 80 ms later, both through the window's own delivery. First logs the visible items under the point, topmost first (<code translate="no">ravving: under ...</code>), to see what takes it. For <a href="cuiafifo.html" translate="no">CuiaFifo</a>'s <code translate="no">click</code> command, where no input tool reaches the window (Wayland).</p>
+<!-- @@@click -->
+</div>
 <div class="fnitem">
 <!-- $$$findItem[overload1]$$$findItemQQuickItem*constQString& -->
 <h3 class="fn" translate="no" id="findItem"><span class="type">QQuickItem</span> *SceneInspector::<span class="name">findItem</span>(<span class="type">QQuickItem</span> *<i>root</i>, const <span class="type">QString</span> &amp;<i>name</i>)</h3>
@@ -114,6 +122,12 @@
 <h3 class="fn" translate="no" id="logItems"><span class="type">int</span> SceneInspector::<span class="name">logItems</span>(<span class="type">QQuickWindow</span> *<i>window</i>, const <span class="type">QString</span> &amp;<i>pattern</i>)</h3>
 <p>Logs every item of <i translate="no">window</i> whose QML type name contains <i translate="no">pattern</i> (such as <code translate="no">DialFace</code>): its position and size in the window, implicit size, visibility and parent type. Returns how many matched; 0 when <i translate="no">window</i> is null.</p>
 <!-- @@@logItems -->
+</div>
+<div class="fnitem">
+<!-- $$$mouse[overload1]$$$mouseQQuickWindow*constQString&constQPointF& -->
+<h3 class="fn" translate="no" id="mouse"><span class="type">void</span> SceneInspector::<span class="name">mouse</span>(<span class="type">QQuickWindow</span> *<i>window</i>, const <span class="type">QString</span> &amp;<i>action</i>, const <span class="type">QPointF</span> &amp;<i>point</i>)</h3>
+<p>Sends <i translate="no">window</i> one left-button mouse event at <i translate="no">point</i>: <i translate="no">action</i> is <code translate="no">press</code>, <code translate="no">move</code> (with the button held) or <code translate="no">release</code>; or one notch of the wheel, <code translate="no">wheelup</code> or <code translate="no">wheeldown</code> (<code translate="no">ctrl-wheelup</code>, <code translate="no">alt-wheeldown…</code> with that key held). For <a href="cuiafifo.html" translate="no">CuiaFifo</a>'s <code translate="no">mouse</code> command: a hold and a drag, step by step.</p>
+<!-- @@@mouse -->
 </div>
 </div>
 </article>

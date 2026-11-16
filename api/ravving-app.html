@@ -4,7 +4,7 @@
   <meta charset="utf-8">
 <!-- index.qdoc -->
   <meta name="description" content="The application object, the device's keys, knobs and LEDs, the bridge to libzynthbox.">
-  <title>App and hardware input | ravving C++ API 0.6.0</title>
+  <title>App and hardware input | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -20,8 +20,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -68,49 +68,53 @@
 <div class="descr" id="details">
 <div class="table"><table class="annotated">
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="cuiafifo.html">CuiaFifo</a></p></td><td class="tblDescr"><p>Remote-control fifo at /tmp/webconf-writes-to-this-fifo: each line written to it is a command for ravving</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="fonts.html">Fonts</a></p></td><td class="tblDescr"><p>Ravving's three typefaces, built into the binary, published to QML as fonts</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardware.html">Hardware</a></p></td><td class="tblDescr"><p>QML type that carries the Hardware attached property, and the dispatcher that walks the focus chain</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="hardwareattached.html">HardwareAttached</a></p></td><td class="tblDescr"><p>Hardware attached object: the device's knobs and buttons for one item, the way Keys gives it the keyboard</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareevent.html">HardwareEvent</a></p></td><td class="tblDescr"><p>One hardware event (a knob turn, a pot move, a button) delivered to QML through the Hardware attached property</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="hardwareknobs.html">HardwareKnobs</a></p></td><td class="tblDescr"><p>Polls the device's four knobs (zyncoder's zynpots) and reports them as relative turns or absolute positions</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareswitches.html">HardwareSwitches</a></p></td><td class="tblDescr"><p>Polls the device's buttons (zyncoder's zynswitches) and puts every press and release on MidiRouter's CUIA queue</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="keyedlistmodel.html">KeyedListModel</a></p></td><td class="tblDescr"><p>A list model that applies each new list of maps as the fewest row changes, so QML views keep their delegates</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="leds.html">Leds</a></p></td><td class="tblDescr"><p>Device's button LEDs by button name, published to QML as leds</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="mousewatcher.html">MouseWatcher</a></p></td><td class="tblDescr"><p>Shows the pointer only while a mouse is plugged in</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="devicebridge.html">DeviceBridge</a></p></td><td class="tblDescr"><p>Loads libzyncoder and libravving, starts the hardware pollers and forwards their events; published to QML as bridge</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="fonts.html">Fonts</a></p></td><td class="tblDescr"><p>Ravving's three typefaces, built into the binary, published to QML as fonts</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="hardware.html">Hardware</a></p></td><td class="tblDescr"><p>QML type that carries the Hardware attached property, and the dispatcher that walks the focus chain</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareattached.html">HardwareAttached</a></p></td><td class="tblDescr"><p>Hardware attached object: the device's knobs and buttons for one item, the way Keys gives it the keyboard</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="hardwareevent.html">HardwareEvent</a></p></td><td class="tblDescr"><p>One hardware event (a knob turn, a pot move, a button) delivered to QML through the Hardware attached property</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareknobs.html">HardwareKnobs</a></p></td><td class="tblDescr"><p>Polls the device's four knobs (zyncoder's zynpots) and reports them as relative turns or absolute positions</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="hardwareswitches.html">HardwareSwitches</a></p></td><td class="tblDescr"><p>Polls the device's buttons (zyncoder's zynswitches) and puts every press and release on MidiRouter's CUIA queue</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="keyedlistmodel.html">KeyedListModel</a></p></td><td class="tblDescr"><p>A list model that applies each new list of maps as the fewest row changes, so QML views keep their delegates</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="leds.html">Leds</a></p></td><td class="tblDescr"><p>Device's button LEDs by button name, published to QML as leds</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="mousewatcher.html">MouseWatcher</a></p></td><td class="tblDescr"><p>Shows the pointer only while a mouse is plugged in</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="potfilter.html">PotFilter</a></p></td><td class="tblDescr"><p>Tells a fixed-end pot's turns from its noise: the position to report for each raw reading, or none</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="qmlsourceoverride.html">QmlSourceOverride</a></p></td><td class="tblDescr"><p>A development aid that serves the Ravving module's QML files from a source tree instead of the copies compiled into the binary</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="qrcodeitem.html">QrCodeItem</a></p></td><td class="tblDescr"><p>A QML item that draws a QR code of its text (QrCode { text: share.url })</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="ravving.html">Ravving</a></p></td><td class="tblDescr"><p>App-level state the QML shell binds to, and the entry point of the hardware input; published to QML as ravving</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="sceneinspector.html">SceneInspector</a></p></td><td class="tblDescr"><p>Logs what the running scene holds, for CuiaFifo's items and animations commands</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="screenshottour.html">ScreenshotTour</a></p></td><td class="tblDescr"><p>Screenshot tour: a development aid that drives the interface through a list of steps, saves a PNG of the window after each, and quits</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="startupsplash.html">StartupSplash</a></p></td><td class="tblDescr"><p>Startup splash and its lifetime, published to QML as startup (null when none is shown)</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="stderrwatch.html">StderrWatch</a></p></td><td class="tblDescr"><p>Reads everything the process writes to stderr, passes it on to the journal and turns known trouble into issues</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="unixsignals.html">UnixSignals</a></p></td><td class="tblDescr"><p>Turns SIGTERM and SIGINT into a Qt signal on the main thread, so systemctl stop and Ctrl+C run ravving's exit steps (the lights off) before the process ends</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="wsledstrip.html">WsLedStrip</a></p></td><td class="tblDescr"><p>A strip of WS2812 (&quot;NeoPixel&quot;) LEDs on an SPI bus: the button LEDs of the Zynthbox</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="zynthboxbridge.html">ZynthboxBridge</a></p></td><td class="tblDescr"><p>Loads libzyncoder and libravving, starts the hardware pollers and forwards their events; published to QML as zynthbox</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="splashlights.html">SplashLights</a></p></td><td class="tblDescr"><p>Key lights' side of the startup splash: a still frame while the studio loads, then a light show that goes with each look's show (SplashLook.qml)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="startupsplash.html">StartupSplash</a></p></td><td class="tblDescr"><p>Startup splash and its lifetime, published to QML as startup (null when none is shown)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="stderrwatch.html">StderrWatch</a></p></td><td class="tblDescr"><p>Reads everything the process writes to stderr, passes it on to the journal and turns known trouble into issues</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="unixsignals.html">UnixSignals</a></p></td><td class="tblDescr"><p>Turns SIGTERM and SIGINT into a Qt signal on the main thread, so systemctl stop and Ctrl+C run ravving's exit steps (the lights off) before the process ends</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="wsledstrip.html">WsLedStrip</a></p></td><td class="tblDescr"><p>A strip of WS2812 (&quot;NeoPixel&quot;) LEDs on an SPI bus: the button LEDs of the Zynthbox</p></td></tr>
 </table></div>
 </div>
 <!-- @@@ravving-app -->
 <div class="table"><table class="annotated">
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="cuiafifo.html">CuiaFifo</a></p></td><td class="tblDescr"><p>Remote-control fifo at /tmp/webconf-writes-to-this-fifo: each line written to it is a command for ravving</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="fonts.html">Fonts</a></p></td><td class="tblDescr"><p>Ravving's three typefaces, built into the binary, published to QML as fonts</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardware.html">Hardware</a></p></td><td class="tblDescr"><p>QML type that carries the Hardware attached property, and the dispatcher that walks the focus chain</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="hardwareattached.html">HardwareAttached</a></p></td><td class="tblDescr"><p>Hardware attached object: the device's knobs and buttons for one item, the way Keys gives it the keyboard</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareevent.html">HardwareEvent</a></p></td><td class="tblDescr"><p>One hardware event (a knob turn, a pot move, a button) delivered to QML through the Hardware attached property</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="hardwareknobs.html">HardwareKnobs</a></p></td><td class="tblDescr"><p>Polls the device's four knobs (zyncoder's zynpots) and reports them as relative turns or absolute positions</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareswitches.html">HardwareSwitches</a></p></td><td class="tblDescr"><p>Polls the device's buttons (zyncoder's zynswitches) and puts every press and release on MidiRouter's CUIA queue</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="keyedlistmodel.html">KeyedListModel</a></p></td><td class="tblDescr"><p>A list model that applies each new list of maps as the fewest row changes, so QML views keep their delegates</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="leds.html">Leds</a></p></td><td class="tblDescr"><p>Device's button LEDs by button name, published to QML as leds</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="mousewatcher.html">MouseWatcher</a></p></td><td class="tblDescr"><p>Shows the pointer only while a mouse is plugged in</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="devicebridge.html">DeviceBridge</a></p></td><td class="tblDescr"><p>Loads libzyncoder and libravving, starts the hardware pollers and forwards their events; published to QML as bridge</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="fonts.html">Fonts</a></p></td><td class="tblDescr"><p>Ravving's three typefaces, built into the binary, published to QML as fonts</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="hardware.html">Hardware</a></p></td><td class="tblDescr"><p>QML type that carries the Hardware attached property, and the dispatcher that walks the focus chain</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareattached.html">HardwareAttached</a></p></td><td class="tblDescr"><p>Hardware attached object: the device's knobs and buttons for one item, the way Keys gives it the keyboard</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="hardwareevent.html">HardwareEvent</a></p></td><td class="tblDescr"><p>One hardware event (a knob turn, a pot move, a button) delivered to QML through the Hardware attached property</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="hardwareknobs.html">HardwareKnobs</a></p></td><td class="tblDescr"><p>Polls the device's four knobs (zyncoder's zynpots) and reports them as relative turns or absolute positions</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="hardwareswitches.html">HardwareSwitches</a></p></td><td class="tblDescr"><p>Polls the device's buttons (zyncoder's zynswitches) and puts every press and release on MidiRouter's CUIA queue</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="keyedlistmodel.html">KeyedListModel</a></p></td><td class="tblDescr"><p>A list model that applies each new list of maps as the fewest row changes, so QML views keep their delegates</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="leds.html">Leds</a></p></td><td class="tblDescr"><p>Device's button LEDs by button name, published to QML as leds</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="mousewatcher.html">MouseWatcher</a></p></td><td class="tblDescr"><p>Shows the pointer only while a mouse is plugged in</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="potfilter.html">PotFilter</a></p></td><td class="tblDescr"><p>Tells a fixed-end pot's turns from its noise: the position to report for each raw reading, or none</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="qmlsourceoverride.html">QmlSourceOverride</a></p></td><td class="tblDescr"><p>A development aid that serves the Ravving module's QML files from a source tree instead of the copies compiled into the binary</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="qrcodeitem.html">QrCodeItem</a></p></td><td class="tblDescr"><p>A QML item that draws a QR code of its text (QrCode { text: share.url })</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="ravving.html">Ravving</a></p></td><td class="tblDescr"><p>App-level state the QML shell binds to, and the entry point of the hardware input; published to QML as ravving</p></td></tr>
 <tr class="even topAlign"><td class="tblName" translate="no"><p><a href="sceneinspector.html">SceneInspector</a></p></td><td class="tblDescr"><p>Logs what the running scene holds, for CuiaFifo's items and animations commands</p></td></tr>
 <tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="screenshottour.html">ScreenshotTour</a></p></td><td class="tblDescr"><p>Screenshot tour: a development aid that drives the interface through a list of steps, saves a PNG of the window after each, and quits</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="startupsplash.html">StartupSplash</a></p></td><td class="tblDescr"><p>Startup splash and its lifetime, published to QML as startup (null when none is shown)</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="stderrwatch.html">StderrWatch</a></p></td><td class="tblDescr"><p>Reads everything the process writes to stderr, passes it on to the journal and turns known trouble into issues</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="unixsignals.html">UnixSignals</a></p></td><td class="tblDescr"><p>Turns SIGTERM and SIGINT into a Qt signal on the main thread, so systemctl stop and Ctrl+C run ravving's exit steps (the lights off) before the process ends</p></td></tr>
-<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="wsledstrip.html">WsLedStrip</a></p></td><td class="tblDescr"><p>A strip of WS2812 (&quot;NeoPixel&quot;) LEDs on an SPI bus: the button LEDs of the Zynthbox</p></td></tr>
-<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="zynthboxbridge.html">ZynthboxBridge</a></p></td><td class="tblDescr"><p>Loads libzyncoder and libravving, starts the hardware pollers and forwards their events; published to QML as zynthbox</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="splashlights.html">SplashLights</a></p></td><td class="tblDescr"><p>Key lights' side of the startup splash: a still frame while the studio loads, then a light show that goes with each look's show (SplashLook.qml)</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="startupsplash.html">StartupSplash</a></p></td><td class="tblDescr"><p>Startup splash and its lifetime, published to QML as startup (null when none is shown)</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="stderrwatch.html">StderrWatch</a></p></td><td class="tblDescr"><p>Reads everything the process writes to stderr, passes it on to the journal and turns known trouble into issues</p></td></tr>
+<tr class="odd topAlign"><td class="tblName" translate="no"><p><a href="unixsignals.html">UnixSignals</a></p></td><td class="tblDescr"><p>Turns SIGTERM and SIGINT into a Qt signal on the main thread, so systemctl stop and Ctrl+C run ravving's exit steps (the lights off) before the process ends</p></td></tr>
+<tr class="even topAlign"><td class="tblName" translate="no"><p><a href="wsledstrip.html">WsLedStrip</a></p></td><td class="tblDescr"><p>A strip of WS2812 (&quot;NeoPixel&quot;) LEDs on an SPI bus: the button LEDs of the Zynthbox</p></td></tr>
 </table></div>
 </article>
 </main>

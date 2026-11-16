@@ -143,9 +143,11 @@
 <li>ミックスストリップ</li>
 <li>MODS（音を形づくるノブ）</li>
 <li>FXs、SOUND EFFECTS のチェーン;</li>
+<li>FEEL（どれだけゆるく演奏するか。SLOT SAMPLER 以外のすべてのマシン）;</li>
 <li>パターンエディター。</li>
 </ul>
-<p>ストリップの MODS と FXs は、その下にノブを開きます。一度に 1 つだけで、片方を開くともう片方は閉じます。BACK で開いている方を閉じます。</p>
+<p>ストリップの MODS、FXs、FEEL は、その下にノブを開きます。開けるのは一度に 1 つで、1 つ開くと
+ほかは閉じます。BACK で開いているものを閉じます。</p>
 <h3 id="every-control-of-the-sound">音のすべてのコントロール</h3>
 <p>ストリップの MODS を長押しすると、ウィンドウ全体が音のコントロールになります：エンジンの回す価値のあるノブすべてが、3 つずつのグループで。上部にエンジン、音色、楽器の名前が出ます。それぞれ自分の単位（Hz、ms、dB、半音）で表示されます。</p>
 <ul>
@@ -200,7 +202,7 @@
 </tr>
 <tr>
 <td>グリッドで BACK</td>
-<td>そのマシンの最後の変更を取り消す（ALT + BACK でグリッドを離れる）。MODS や FXs が開いていれば先に閉じる</td>
+<td>そのマシンの最後の変更を取り消します（ALT + BACK でグリッドから出ます）。MODS、FXs、FEEL が開いているときは、まずそれを閉じます</td>
 </tr>
 <tr>
 <td>コードのページで 2</td>
@@ -240,29 +242,22 @@
 <p>ポインターはマウスをつないでいるときだけ表示されます。</p>
 <h3 id="bars">小節</h3>
 <p>ツールバーの + で小節を追加します（最大 8）。− は 2 回目のタップで表示中の小節を削除します（待っている間は ? と表示）。後ろの小節が繰り上がり、取り消せば戻ります。‹ › で小節をめくれます。グリッド上の ◀ ▶ でも同じです。</p>
-<h3 id="record-a-take">Record a take</h3>
-<p>Press <strong>RECORD</strong> on an instrument's page and play: the keys, the pads or a MIDI keyboard. What you
-play is written into the pattern.</p>
+<h3 id="record-a-take">テイクを録る</h3>
+<p>インストゥルメントのページで <strong>RECORD</strong> を押し、キー、パッド、MIDI キーボードで演奏します。弾いたものがパターンに書き込まれます。</p>
 <ul>
-<li><strong>A tap</strong> adds to what's there (an overdub). <strong>A hold</strong> clears the pattern first.</li>
-<li><strong>With the music stopped,</strong> you get one bar of count-in, with the metronome.</li>
-<li><strong>RECORD again</strong> ends the take. One undo takes the whole take back.</li>
+<li><strong>タップ</strong>は今あるものに重ねます（オーバーダブ）。<strong>長押し</strong>は先にパターンを消します。</li>
+<li><strong>音楽が止まっていれば、</strong>メトロノーム付きで 1 小節のカウントインがあります。</li>
+<li><strong>もう一度 RECORD</strong> でテイクが終わります。取り消し 1 回でテイク全体が戻ります。</li>
 </ul>
-<h3 id="auto-knob-moves-and-takes-that-grow">AUTO: knob moves, and takes that grow</h3>
-<p>The grid's toolbar has an <strong>AUTO</strong> switch. It does two things for that instrument:</p>
+<h3 id="auto-knob-moves-and-takes-that-grow">AUTO: ノブの動きと、伸びるテイク</h3>
+<p>グリッドのツールバーには <strong>AUTO</strong> スイッチがあります。そのインストゥルメントに対して 2 つのことをします。</p>
 <ul>
-<li id="it-plays-your-knob-moves-back"><strong>It plays your knob moves back.</strong> Turn on AUTO in the header, play, and turn the MODS or FXs
-  knobs: each move is written at the step it was made on. The grid's AUTO lights up by itself,
-  and shows AUTO • while there are moves. Every loop then turns those knobs the same way.</li>
-<li id="it-makes-a-take-grow"><strong>It makes a take grow.</strong> With AUTO on, a take doesn't loop round on the bars you have. When
-  the music reaches the last bar, a new empty bar is added after it, and the grid follows. Keep
-  playing, up to eight bars. At eight, a message says so and the take loops from there.</li>
-<li><strong>When the take ends,</strong> the empty bars it added at the end are taken off again.</li>
+<li id="it-plays-your-knob-moves-back"><strong>ノブの動きを再現します。</strong>ヘッダーで AUTO をオンにして演奏し、MODS や FX のノブを回すと、動きがそのステップに書き込まれます。グリッドの AUTO は自動で点灯し、動きがある間は AUTO • と表示します。以降はループごとに同じようにノブが回ります。</li>
+<li id="it-makes-a-take-grow"><strong>テイクを伸ばします。</strong>AUTO がオンだと、テイクは今ある小節でループしません。音楽が最後の小節に着くと空の小節が後ろに加わり、グリッドもついてきます。8 小節まで弾き続けられます。8 で知らせが出て、テイクはそこからループします。</li>
+<li><strong>テイクが終わると、</strong>終わりに加えた空の小節は取り除かれます。</li>
 </ul>
-<p>Switch the grid's AUTO off to play the pattern without the knob moves, or to record a take that
-loops on its bars. Your moves stay saved. A long press on AUTO clears them.</p>
-<p>While AUTO plays your moves, those knobs follow them. A knob you turn by hand jumps back at the
-next recorded move.</p>
+<p>グリッドの AUTO をオフにすると、ノブの動きなしでパターンを鳴らしたり、今ある小節でループするテイクを録れます。動きは保存されたままです。AUTO の長押しで消えます。</p>
+<p>AUTO が動きを再現している間、そのノブは動きに従います。手で回したノブは、次に記録された動きで元に戻ります。</p>
 <h3 id="save-and-open-projects">プロジェクトの保存と読み込み</h3>
 <ul>
 <li><strong>最初の SAVE</strong> ではプロジェクト名を尋ね、画面キーボードが表示されます。
@@ -273,6 +268,7 @@ next recorded move.</p>
 <li><strong>名前変更</strong> で開いているプロジェクトの名前とアイコンを変えます。保存していない変更は保存されないままです。</li>
 </ul>
 <p>PROJECT ▾ にプロジェクトとデモが並びます。タップすると開きます。未保存の変更があるときは、もう一度タップして確定します。長押しか ★ でお気に入りになります。</p>
+<p>プロジェクトを開く、新規、タイムラインのバージョンに戻す、のどれも、まず音楽を止め、録音中のテイクを終え（録れた分は残ります）、押さえているキーをすべて離します。</p>
 <p>下の列はいつも開いているプロジェクトに働きます：新規、テンプレート、インポート、
 次に新規として保存、名前の変更、タイムライン、そして書き出しです。</p>
 <h3 id="the-timeline">タイムライン</h3>
@@ -382,10 +378,12 @@ next recorded move.</p>
 <li><strong>セルを長押し</strong>すると、その行で手前にあるノートがそのセルまで伸びます。間のステップで何が鳴っていても伸ばしたままです。</li>
 <li><strong>ノートそのものを長押し</strong>すると、1 ステップの長さに戻ります。</li>
 <li><strong>SELECT がオンなら、</strong>ノブ 1 で選んだノートの LENGTH を同じように設定します。</li>
+</ul>
+<h4 id="what-a-take-keeps">テイクが残すもの</h4>
+<ul>
 <li><strong>LIVE のテイク（●）</strong>では、パッドや MIDI キーボードで各キーを押さえていた長さが残ります。ベースとリードではそれがノートの長さになります。コードでは、その間に弾いたほかの音の下で、コードやノートがステップをまたいで伸びます。</li>
-<li id="what-your-fingers-do-on-a-note-is-kept-too"><strong>What your fingers do on a note is kept too.</strong> On the bass and lead, a take keeps a
-  controller's bend, pressure and slide (a Seaboard, an MPE keyboard) in the note held. It plays
-  back with it: a glide, a vibrato, a swell. A new take over the note replaces it.</li>
+<li id="what-your-fingers-do-on-a-note-is-kept-too"><strong>ノートの上での指の動きも残ります。</strong>ベースとリードでは、押さえたノートの中にコントローラー（Seaboard、MPE キーボード）のベンド、プレッシャー、スライドが残ります。グライド、ビブラート、スウェルがそのまま再現されます。同じノートに新しいテイクを重ねると置き換わります。</li>
+<li id="and-how-hard-you-played-it"><strong>どれだけ強く弾いたかも。</strong>MIDI キーボードのノートは聞いたとおりの大きさで再現されます。テイクはそのベロシティをノートの VELOCITY として、どのページでも残します。</li>
 <li>ステップ内で離したキーは 1 ステップの長さのままです。</li>
 <li>伸ばしたコードのノートはベースと同じように表示されます。ノートの始まりは塗りつぶしのセル、続いている間は薄いセルです。</li>
 </ul>
@@ -449,6 +447,9 @@ next recorded move.</p>
 <li>プロジェクトと、保存したパターンプリセットに残ります。</li>
 </ul>
 <h3 id="shape-a-drum-hit">ドラムのヒットを作り込む</h3>
+<p>ドラムのヒットは、パターンに書いてもパッドで叩いても、ドラムマシンのように最後まで鳴ります。同じ行の次のヒットで短く切れ、クローズド HAT は鳴っている OPEN ハットを止めます。</p>
+<p>ループする音のキット（DrumFire、E Ave、SP 12）は各ヒットを 1 ステップに留めるので、鳴り続けることはありません。</p>
+<p>短いヒットが好みなら、設定 → キー → ドラム → DRUM HITS RING OUT をオフにすると、どのヒットも 1 ステップになります。隣の CLOSED HAT CUTS THE OPEN HAT は、ハイハットのカットだけをオフにします。</p>
 <p>ドラムマシンと 2 つのサンプラーでは、SELECT でヒットを選び、ノブを回してまとめて変えます。グリッド右上の表示に、最初に選んだヒットの値が出ます。タップすると 2 つのページを切り替えます。</p>
 <table>
 <thead>
@@ -496,11 +497,90 @@ next recorded move.</p>
 <td><strong>NUDGE</strong>、前か後ろへのずれ</td>
 <td>前後に半ステップ</td>
 </tr>
+<tr>
+<td>2/2</td>
+<td>3</td>
+<td><strong>GHOST</strong>、ごく弱く鳴らすヒット</td>
+<td>ON、OFF</td>
+</tr>
 </tbody>
 </table>
 <ul>
 <li>PAD SAMPLER には NUDGE はありません。</li>
+<li>GHOST は VELOCITY の近道です。ON でヒットを 35 % に、OFF で 100 % に戻します。スネアの
+  合間の静かなヒットで試してみてください。</li>
 <li>設定はヒットと一緒に移動・コピーされ、プロジェクトに保存されます。</li>
+</ul>
+<h3 id="feel-play-it-a-little-looser">FEEL：少しゆるく演奏する</h3>
+<p>パターンは毎回まったく同じに鳴ります。FEEL はそれを、パスごとに少しずつ違う形でゆるめます。
+書いたノートは 1 つも変わりません。マシンのストリップの <strong>FEEL</strong> をタップしてダイヤルを回します。
+0 ではダイヤルは何もしません。</p>
+<table>
+<thead>
+<tr>
+<th>マシン</th>
+<th>ダイヤル</th>
+<th>できること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ドラム、PAD SAMPLER</td>
+<td><strong>TIMING</strong></td>
+<td>ヒットがほんの少し前か後ろにずれます。ドラムキットではキックは動かず、ハイハットがいちばん動きます。</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>VELOCITY</strong></td>
+<td>ヒットがほんの少し弱く、または強く鳴ります。</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>PULSE</strong></td>
+<td>ハイハット、シンバル、パーカッションが拍の裏で弱く鳴ります。拍を刻む手のように。パッドでは、すべてのパッドがそうなります。</td>
+</tr>
+<tr>
+<td>コード</td>
+<td><strong>STRUM</strong></td>
+<td>コードのノートが 1 つずつ順に鳴ります。最初のノートはステップの位置のままです。</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>DIRECTION</strong></td>
+<td>DOWN はいちばん低いノートから、UP はいちばん高いノートから、ALT はコードごとに向きを変えます。</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>VELOCITY</strong></td>
+<td>コードごとにほんの少し弱く、または強く鳴ります。</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>TOP</strong></td>
+<td>いちばん上のノートがほかより前に出ます。</td>
+</tr>
+<tr>
+<td>ベース、リード</td>
+<td><strong>VELOCITY</strong></td>
+<td>ノートがほんの少し弱く、または強く鳴ります。</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>LENGTH</strong></td>
+<td>ノートが少し短くなります。それぞれ違う分だけ。スライドと伸ばしたノートは長さを保ちます。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>FEEL が開いていてノブを持っている間（グリッドから ▲）、ノブ 1–3 でダイヤルを回します。コードでは
+  ▶ で TOP に移ります。</li>
+<li>少しで十分です。30–50 あたりから始めましょう。</li>
+<li>ベースとリードはタイミングを保つので、ベースはキックに揃ったままです。</li>
+<li>SLOT SAMPLER に FEEL はありません。ループは自分のタイミングを保ちます。</li>
+<li>自分の STRUM を持つコード（SELECT、大きいノブ）はそれを保ちます。</li>
+<li>曲をもう一度再生すると同じように鳴り、エクスポートも同じです。</li>
+<li>FEEL はマシンのものです。すべてのセクションがそれで鳴り、プロジェクトと一緒に保存され、
+  アンドゥでは変わりません。</li>
 </ul>
 <h3 id="slots-write-with-whole-chords">SLOTS：コード単位で書く</h3>
 <p>コードのページでは、SLOTS でコードを 1 つずつ組み立てられます：</p>
@@ -527,7 +607,12 @@ next recorded move.</p>
 <h3 id="tempo-and-swing">テンポとスウィング</h3>
 <p>ノブを回すと(画面でも本体のノブでも)、その値が少しの間ノブの下に大きく表示されます。</p>
 <ul>
-<li><strong>BPM：</strong>テンポ。TEMPO グループにフォーカスがあるとき、ノブ 1 で設定します。ほかの機器が ravving のクロックを送っているときは、その機器のテンポを表示し、ここでは変えられません。</li>
+<li><strong>BPM:</strong> テンポです。TEMPO グループにフォーカスがあればノブ 1 で、または上下にドラッグして決めます。別の機器が ravving にクロックを送っていれば、その機器のテンポを表示し、ここでは変えられません。</li>
+<li><span><strong>TAP テンポ:</strong> 赤い BPM 表示をリズムに合わせてタップするか、ALT を押したまま METRONOME をリズムに合わせて押します（ALT を押している間、METRONOME キーは白く光ります）。</span><ul>
+<li>2 回目から、テンポは直近の数回のタップに追い、キャプションがそれを数えます（TAP 1、TAP 2…）。</li>
+<li>1 回のずれたタップでは動きません。新しいテンポで叩けば、そのテンポの 2 つ目の間隔から追います。2 秒止めればやり直せます。</li>
+</ul>
+</li>
 <li><strong>SWING：</strong>ノブ 2 で 50 %（イーブン）から 75 %（いちばん強いシャッフル）まで。ラベルをタップすると 8 分（SWING 8、ジャズ向け）と 16 分（SWING 16、ハウスやヒップホップ向け）を切り替えます。</li>
 </ul>
 <p>テンプレートとデモは、プロジェクトを始めるときに両方を設定します。</p>
@@ -662,18 +747,17 @@ next recorded move.</p>
 <li>CRUSH か STUTTER の上で<strong>ドラッグ</strong>すると量が変わります：ビット数を減らす、または繰り返しを短く。</li>
 <li><strong>1 つずつ：</strong>LOOP は 1 つずつ鳴り、押している LOOP より STUTTER が優先されます。REVERSE、REWIND、STOP、HALF、OCT UP、WOBBLE も同じです。</li>
 <li><strong>ブレイク中：</strong>何も鳴っていないときに押した LOOP や STUTTER は待ち、音楽が戻ってきたら、その入ったステップから取り込みます。</li>
-<li>どの切り替えも滑らかです。ループ、ゲート、フランジャー、オートパンはテンポと小節に合わせて動きます。</li>
+<li>どのパッドも離すとなめらかに戻ります。ループとテープ系のパッドは約 3 分の 1 秒かけて戻ります。ループ、ゲート、フランジャー、オートパンはテンポと小節に合わせて動きます。</li>
 </ul>
 <p>PHASER、ECHO、HEAVY はパッドの横にあります。ALT を押しながらノブ 1〜3 を回すと、どこからでも設定できます。それぞれの下に設定が表示されます: フェイザーのかかり具合、エコーのセンド量 (dB)、HEAVY のコンプレッション比です。</p>
 <h3 id="record-the-whole-mix">ミックス全体を録音</h3>
-<p><strong>ALT + ●</strong> opens LIVE REC from any page (<a href="#start-a-recording">Start a recording</a>):</p>
+<p><strong>ALT + ●</strong> はどのページからでもライブ録音を開きます（<a href="#start-a-recording">録画を始める</a>）。</p>
 <ul>
-<li>Pick <strong>AUDIO ONLY</strong> to record everything the speakers play as a WAV, or VIDEO to film it.</li>
-<li>Put the MIC in if you want your voice, and tap START.</li>
-<li>The RECORD light breathes red, and the header shows ● REC with the time.</li>
-<li><strong>STOP</strong> ends the recording and the music. With LIVE REC already on, ALT + ● starts the next
-  recording straight away.</li>
-<li>The WAV goes among your TRACKS in the exports folder, and the music player has it.</li>
+<li><strong>AUDIO ONLY</strong> を選ぶとスピーカーから鳴るすべてを WAV に録音し、VIDEO なら映像も撮ります。</li>
+<li>声を入れたければ MIC を差し、START をタップします。</li>
+<li>RECORD ライトが赤く明滅し、ヘッダーに ● REC と時間が出ます。</li>
+<li><strong>STOP</strong> で録音も音楽も終わります。ライブ録音がすでに開いていれば、ALT + ● で次の録音がすぐ始まります。</li>
+<li>WAV はエクスポートフォルダーのトラックに並び、ミュージックプレーヤーからも聴けます。</li>
 </ul>
 <p>どの録音を使うか：</p>
 <table>
@@ -697,11 +781,11 @@ next recorded move.</p>
 <td>書き出しとして、ジャケット付きで</td>
 </tr>
 <tr>
-<td><strong>LIVE REC, AUDIO ONLY</strong> (ALT + ●)</td>
+<td><strong>ライブ録音、AUDIO ONLY</strong>（ALT + ●）</td>
 <td>スピーカーから鳴る音すべてを、演奏しながら</td>
 <td>あり</td>
 <td>MIC を入れた場合</td>
-<td>ALT + ● or LIVE REC → START, STOP to stop (the music too)</td>
+<td>ALT + ● またはライブ録音 → START、STOP で停止（音楽も）</td>
 <td>書き出しとして、トラック の中に</td>
 </tr>
 <tr>
@@ -714,20 +798,39 @@ next recorded move.</p>
 </tr>
 </tbody>
 </table>
-<p>To keep a live set with the pads you played, use LIVE REC (ALT + ●). It's also the one that can
-add your voice.</p>
+<p>叩いたパッドごとライブセットを残すには、ライブ録音（ALT + ●）を使います。声を加えられるのもこちらです。</p>
+<h3 id="the-instruments">インストゥルメント</h3>
+<p>各インストゥルメントにはヘッダーのチップがあり、タップでそのページが開きます。名前は上にあり、ミュートやソロから外れて音が出ないあいだは薄く表示されます。その下の行はインストゥルメントの状態を示し、各マークは決まった位置にあるので動きません。</p>
+<ul>
+<li>サウンドランプ(下記)。</li>
+<li>ソロ中は <strong>S</strong>、ミュート中は <strong>M</strong>。</li>
+<li>フェーダーが一番下のあいだは斜線の入ったスピーカー。</li>
+<li>パターンが一時停止中は <strong>❚❚</strong>。</li>
+<li>テイクを録音中は <strong>●</strong>、カウントイン中は薄く表示。</li>
+<li>ステップキーで LIVE 演奏中は <strong>L</strong>。</li>
+</ul>
+<p>MIXER か、コントローラーのミキサーボタンで設定します。</p>
+<h3 id="the-sound-lamps">サウンドランプ</h3>
+<p>ヘッダーの各インストゥルメントのチップと MIXER のストリップには小さなランプがあります。フェーダーやミュート、ソロに関係なく、そのインストゥルメントのパターンにノートが書かれているか、それが鳴っているかを示します。ライブで弾いても点灯しません。その音はレベルバーが示します。</p>
+<ul>
+<li>パターンが鳴っているあいだは<strong>点灯</strong>。ノートの合間も点いたままなので、動いているパターンは一定の光に見えます。ミュートしたインストゥルメントのランプは、鳴らしていないノートで点灯します。</li>
+<li><strong>薄く</strong>はパターンにノートがあり、再生すれば鳴るとき。一時停止中、ミュート中、トランスポート停止中です。</li>
+<li>何も書かれていないときは<strong>消灯</strong>。チップではそのとき表示されません。</li>
+</ul>
+<p>だからコントローラーの音量フェーダーを使うとき、どのフェーダーがどのインストゥルメントを上げるのか、聞く前にランプが教えてくれます。</p>
 <h3 id="the-mixer">ミキサー</h3>
 <p><strong>✱</strong> で MIXER が開きます:すべての楽器が横並びに、それぞれ縦のストリップで。
 ✱ か BACK で戻り、数字キーでそのページへ。各ストリップは上から:</p>
 <ul>
-<li>ネームプレート(タップでその楽器のページへ);</li>
-<li>レベルフェーダーと、その横のメーター;</li>
+<li>ネームプレート(タップでそのインストゥルメントのページへ)とサウンドランプ。</li>
+<li>レベルフェーダー。左側にデシベルの目盛りがあり、0 dB が太い目盛り、上端が +20、下端が −40。上の表示はレベルを dB で示し、一番下では −∞ dB。</li>
+<li>その横のメーター。出てくる音を dBFS で示します。白い線は −6、信号が熱くなるところです。</li>
 <li>PAN;</li>
 <li>❚❚:楽器のパターンを止めます。ライブ演奏はそのままできます。セクションごとに保存されるので、
   ここで楽器を止めると曲の各パートでどれが鳴るかが決まります;</li>
-<li>S と M。</li>
+<li>S と M。M はインストゥルメントを消音します。パターンも、ライブで弾く音も、リバーブとディレイも。S はソロにしたものだけを鳴らします。LIVE で弾いているインストゥルメントは、パターンが鳴らないままでも弾いた音は聞こえるので、ソロにしたインストゥルメントに合わせて弾けます。</li>
 </ul>
-<p>キーで:</p>
+<h4 id="the-mixer-with-the-keys">キーで使うミキサー</h4>
 <ul>
 <li><strong>ストリップを選ぶ</strong>には ◀ ▶ かステップキー。ステップのライトがストリップを示し、ミュートは暗く、選んだものは白です。</li>
 <li><strong>ノブ 1</strong> でパン、<strong>ノブ 2</strong> でレベル、大ノブでレベルを細かく。</li>
@@ -810,7 +913,7 @@ add your voice.</p>
 <p>パッドの角には、バンクのパターンでの <strong>♪ とヒット数</strong>(全小節分)が表示されるので、
 選んでいなくても鳴るパッドがわかります。パッドの下のステップ列は選択中のパッドのステップです。
 パッドをタップするとそのステップが見られます。パッドはサンプルが鳴っている間、どれだけ長くても光ります。</p>
-<p><strong>PAD FX：</strong>パッドが鳴っている間に ECHO、TAPE STOP、SCRATCH、STUTTER、SKIP、REVERSE を押すとエフェクトがかかります。離すと元に戻ります。</p>
+<p><strong>PAD FX：</strong>パッドが鳴っている間に ECHO、TAPE STOP、SCRATCH、STUTTER、SKIP、REVERSE を押し続けると、そのパッドにエフェクトがかかります。離すとなめらかに元に戻ります。TAPE STOP と SCRATCH はスピードがすっと戻り、エコーはフェードアウトしながら響き続けます。</p>
 <h3 id="16-levels">16 LEVELS</h3>
 <p>16 LVL をオンにすると、16 パッドすべてが選んでいたパッドを鳴らし、TYPE で振り分けます：</p>
 <ul>
@@ -891,7 +994,7 @@ add your voice.</p>
 <li><strong>Alien</strong>（「Ambients &amp; Drones」のフォントから）：The Thing、Strange voices、Crystal voice、Glassy、Winds、Chaos、The Pulse。</li>
 </ul>
 <p>伸ばして重ねるポリフォニックなマシンに合います：ボイシングが続く間コードが鳴り続け、キーがベースやリードと音程をそろえます。</p>
-<p>サウンドの選択画面では、左側にグループが並び、それぞれにいくつのサウンドがあるかが表示されます：</p>
+<p>サウンドピッカーのタイトルは、ネームプレートと同じく、インストゥルメントが今鳴らしているものを示します（セクション固有の音なら §）。ピッカーは左にグループを並べ、それぞれの音の数を添えます。</p>
 <ul>
 <li>ALL、次に ★ FAVOURITES（星印か ALT + SELECT）、そのあとにグループごとの行。多いときはスクロールします。</li>
 <li>残りのスペースはサウンドのグリッドです。</li>
@@ -1108,14 +1211,29 @@ add your voice.</p>
 <li>大ノブの横にある <strong>X と Y</strong> で、どのページやダイアログからでも前後のセクションへ移動し、端まで行くと反対側に戻ります。切り替わる前にもう一度押すと、キューに追加せず選択をさらに進めます。セクションが 1 つだけなら、SONG ページで追加するようメッセージが出ます。</li>
 <li><strong>SONG ページ</strong>（下）にはセクションごとのキーがあります。</li>
 </ul>
-<p>再生中は、選んだセクションが次の小節の頭でぴったり切り替わります：音が抜けたり重なったりせず、パートが変わらないマシンはそのまま鳴り続けます。停止中はすぐに切り替わります。</p>
-<h3 id="when-a-switch-lands-bar-or-section">切り替えのタイミング：BAR か SECTION</h3>
+<p>再生中は、選んだものが次の小節線（または次の拍、セクションの終わり。下の SWITCH を参照）でぴったり入れ替わります。ノートが抜けたり重なったりせず、パートが変わらないマシンはそのまま鳴り続けます。停止中なら即座です。</p>
+<h3 id="when-a-switch-lands-beat-bar-or-section">切り替えが入るとき: 拍、小節、セクション</h3>
 <p>SONG ページの SWITCH 設定はプロジェクトに保存されます：</p>
 <ul>
-<li><strong>BAR：</strong>選んだセクションが次の小節から始まります。</li>
+<li><strong>拍:</strong> 選んだセクションが次の拍で、自分の小節の同じ位置から入ります。いちばん速い切り替えで、長くても 4 分音符 1 つ分です。</li>
+<li><strong>小節:</strong> 次の小節で入れ替わります。</li>
 <li><strong>SECTION：</strong>鳴っているセクションが 1 周し終えるのを待ち、その小節の頭で切り替えます。その間キーが点滅し、鳴っているキーは点灯したままです。待っているセクションをもう一度選ぶとキャンセル、停止すると即座に切り替わります。1 小節のセクションは毎小節で終わります。</li>
 </ul>
-<p>切り替えは必ず小節の頭で起こり、小節の途中では起こりません。</p>
+<p>どれを選んでも、切り替えはその拍か小節線にぴったり落ちます。ノートが抜けたり重なったりしません。ソング自体のパート間の移動は、いつも小節で行われます。</p>
+<h3 id="skip-a-bar">1 小節スキップ</h3>
+<p><strong>ALT + X</strong> で1小節戻り、<strong>ALT + Y</strong> で1小節進みます。音楽を止めずに、すぐに。コントロールサーフェスの ◀◀ ▶▶（または 1小節戻る と 1小節進む として覚えさせたキー）も同じです。</p>
+<ul>
+<li><strong>着地する位置:</strong> 音楽プレーヤーと同じく、小節の頭です。戻るとまず鳴っている小節の頭へ。ただし最初の拍のうちなら前の小節へ戻ります。「4 パス中の 3 パス目」に鳴るパートも鳴り直します。</li>
+<li><strong>素早く押すとさらに先へ:</strong> 押した回数が積み重なります。4小節目の途中なら、最初の ALT + X でその頭へ、さらに3回で1小節目に着きます。途中で小節線を越えても同じです。</li>
+<li><strong>鳴っているセクションの中にとどまります:</strong> 進むのは最後の小節までで、次に来るものはこれまでどおり小節線で入ります。戻るのはこのパスの1小節目までです。設定 · キー · 戻るスキップの停止位置 を セクションの頭 にすると、パスをさかのぼって戻れます（曲の中では、パートの繰り返し）。</li>
+<li><strong>最初の小節では、</strong>戻るとその小節を頭からやり直します。</li>
+</ul>
+<h4 id="what-you-hear-on-a-skip">スキップで聞こえるもの</h4>
+<ul>
+<li><strong>伸ばしている音:</strong> 新しい小節の頭でも鳴っているコード、ベース、リードの音は鳴り続け、それより前に始まってそこでまだ鳴っている音は入ってきます。ドラムとサンプルのヒットは最後まで鳴ります。</li>
+<li><strong>一時停止中は、</strong>再生を続ける位置がスキップで動きます。カウントイン中や録音中のテイクではスキップできません。</li>
+<li>セクションの切り替え、曲の次のパート、曲の終わりは、これまでどおり小節線を待ちます: 戻るとまずその小節がもう一度鳴ります。</li>
+</ul>
 <h3 id="queue-up-sections">セクションをキューに入れる</h3>
 <p>LOOP では選択を<strong>3 つまで</strong>並べられます。それぞれ 1 周鳴って次に移り、最後のものがループし続けます。</p>
 <ul>
@@ -1162,10 +1280,11 @@ MODE 単独では今まで通り入力モードを切り替えます。</p>
 <ul>
 <li><strong>タップ</strong>でセクションを選び、<strong>ダブルタップ</strong>で名前を変え、<strong>長押ししてドラッグ</strong>で移動。</li>
 <li><strong>×</strong> は 2 回目のタップで削除します。</li>
-<li><strong>＋</strong>で画面のセクションをコピーし、続きの番号を付けます（A は A 2、次に A 3）。</li>
+<li><strong>＋</strong> は画面のセクションをコピーし、その後ろに番号を付けます（A は A 2、次は A 3）。番号が入らない長い名前は、場所を空けるため短くなります。</li>
 </ul>
 <p>新しいセクション（＋、画面のセクションのコピー）はソングの最後に加わり、画面に表示されます。</p>
 <p>セクションの上の行には RENAME、COLOUR、LENGTH（1–8 小節、または最長のパターンに合わせる AUTO）、MOVE、ADD TO SONG があります。</p>
+<h4 id="the-song-strip">ソングストリップ</h4>
 <p><strong>ソング</strong>はブロックの列で、各ブロックの幅は小節数×リピート数です。ブロックを選んで移動、リピート（×1〜×16）の設定、削除ができます。</p>
 <table>
 <thead>
@@ -1215,7 +1334,7 @@ MODE 単独では今まで通り入力モードを切り替えます。</p>
 </ul>
 <p>全部を録るには EXPORT → WHAT：SONG でソング全体を余韻付きで 1 テイクに録ります。LOOP なら BARS × LOOPS を録ります。</p>
 <h2 id="settings">設定</h2>
-<p>MENU → SETTINGS を押すと専用のページが開き、左にカテゴリーが並びます：</p>
+<p>MENU → SETTINGS を押すと専用のページが開き、左にカテゴリーが並びます。閉じたところから開きます：同じカテゴリー、同じスクロール位置です。</p>
 <table>
 <thead>
 <tr>
@@ -1230,7 +1349,7 @@ MODE 単独では今まで通り入力モードを切り替えます。</p>
 </tr>
 <tr>
 <td>KEYS</td>
-<td>NOTES OUTSIDE THE SCALE、TRANSPORT ON SCREEN、FIXED KNOBS が値を引き継ぐ方法</td>
+<td>スケール外のノート、画面上のトランスポート、固定ノブが値を受け取る方法、キーライトの明るさ、ドラムのヒットを最後まで鳴らすかどうか、戻るスキップの停止位置</td>
 </tr>
 <tr>
 <td>LOOK</td>
@@ -1250,7 +1369,7 @@ MODE 単独では今まで通り入力モードを切り替えます。</p>
 </tr>
 <tr>
 <td>MIDI</td>
-<td>Each MIDI controller plugged in: its channel, velocity, expression, and LEARN for its drum keys and its buttons and knobs</td>
+<td>接続中の各 MIDI コントローラー: チャンネル、ベロシティ、エクスプレッション、ドラムキーとボタン・ノブの LEARN</td>
 </tr>
 <tr>
 <td>PROFILE</td>
@@ -1289,10 +1408,15 @@ SETTINGS → KEYS → FIXED KNOBS で、回したときの動きを選びます:
 </tbody>
 </table>
 <p>無限回転のノブの本体では、この設定はグレー表示になります。必要ないためです。</p>
+<p>固定ノブが届くところすべてに効きます。ドラムとスロットの行のミュート、ソロ、レベルも同じです。
+触っていないノブは、止まった位置で少し揺れても何も変えません。</p>
+<h3 id="key-lights">キーライト</h3>
+<p>設定 → キー → ライト → キーライトで、キーの明るさを 1 % から 100 % の間で決めます（最初は 15 %）。− と + で回すか、SELECT で段階的に上げて端で折り返します。変更はすぐ反映されます。Zynthbox 自身のページも同じ設定を使うので、どちらでもキーは同じ見え方です。</p>
 <h3 id="skins">スキン</h3>
-<p>ravving のマシンはそれぞれ専用のケースと色をまとっています:ravving が最初に使う PASTEL NIGHT のスキンです。
-SETTINGS → LOOK → SKINS でほかのものをすぐ試せ、選択は再起動後も残ります。
-各セット名の下のピクセルのグリッドがその色を示します:マシンごとに 1 列、上からケース、キー、ライト。</p>
+<p>ravving のマシンはそれぞれ自分のケースと色をまとっています。ravving が起動時に使う PASTEL NIGHT スキンです。設定 → LOOK → SKINS で他のものをすぐ試せ、選択は再起動後も残ります。</p>
+<p>各セットはカードです。名前の下にピクセルのグリッドがあり、マシンごとに 1 列、上から順にケース、キー、ライトの色を示します。</p>
+<p>他のビューもセットの装いになります。ソングページ、ミュージックプレーヤー、レコーダー、設定、ミキサーにもセット内の色があるので、セットはひとつの完全なルックです。</p>
+<h4 id="the-skin-sets">スキンセット</h4>
 <p>どのページも明るいケースにできます。グリッドのノート、コード、パッド、ラベルはそれに合わせて暗くなります。セット：</p>
 <ul>
 <li>RAVVING：すべてのマシンをダークな地に、それぞれの色で染めて。</li>
@@ -1337,14 +1461,16 @@ SETTINGS → LOOK → SKINS でほかのものをすぐ試せ、選択は再起�
 <li>パッドをタップするとそこに入ります。すでに別のスロットにあるパッドは入れ替わります。</li>
 </ol>
 <p>本体のキーでは、スロットで SELECT を押すと、どのスロットにも入っていない次のパッドに切り替わります。DEFAULT PADS で最初の 16 個に戻ります。</p>
-<h3 id="midi-controllers">MIDI controllers</h3>
-<p>Plug a MIDI keyboard, a pad controller or a groovebox into USB, or pair it over Bluetooth,
-and it plays the machine on screen, into a take too. The drums play by their General MIDI
-notes (36 the kick, 38 the snare…), the bass, chords and lead by pitch, the PAD SAMPLER's pads
-by number.</p>
-<p>MENU → MIDI (or SETTINGS → MIDI) lists the controllers plugged in, with what each has
-learned. SET UP (or SELECT) opens one; ◀ ALL CONTROLLERS (or BACK) goes back to the list. A
-controller's settings are saved by its name, so they're there again next time it's plugged in:</p>
+<h3 id="midi-controllers">MIDI コントローラー</h3>
+<p>MIDI キーボード、パッドコントローラー、グルーヴボックスを USB に差すか Bluetooth でつなぐ（MENU → BLUETOOTH、SCAN、CONNECT）と、画面のマシンを演奏でき、テイクにも入ります。</p>
+<ul>
+<li><strong>ドラム</strong>は General MIDI のノートで鳴ります（36 がキック、38 がスネア…）。</li>
+<li><strong>ベース、リード、コードの NOTES</strong> は音高で、PAD SAMPLER のパッドは番号で鳴ります。</li>
+<li><strong>コードの CHORDS ビュー</strong>では、白鍵が 7 つのコードパッドに順に対応します。どのオクターブでも C が 1 つ目、B が 7 つ目で、黒鍵は何も鳴らしません。</li>
+<li><strong>同時に押さえた 2 つのコード</strong>が共有するノートは、1 回だけ鳴って保持されます。</li>
+</ul>
+<p>MENU → MIDI（または設定 → MIDI）は接続中のコントローラーを 1 行ずつ並べ、接続方法（USB、Bluetooth、または両方）と学習済みの内容を示します。設定（または SELECT）で開き、◀ すべてのコントローラー（または BACK）でリストに戻ります。</p>
+<p>コントローラーの設定は名前で保存されるので、次に差したときもそのまま残っています。</p>
 <table>
 <thead>
 <tr>
@@ -1355,55 +1481,91 @@ controller's settings are saved by its name, so they're there again next time it
 <tbody>
 <tr>
 <td>CHANNEL</td>
-<td>Hear it on every channel (the default: an MPE controller plays each note on its own) or on one</td>
+<td>すべてのチャンネルで受ける（標準。MPE コントローラーはノートごとに別のチャンネルで鳴らす）か、1 つだけで受ける</td>
 </tr>
 <tr>
 <td>TRANSPOSE</td>
-<td>Move its notes up or down, in semitones</td>
+<td>ノートを半音単位で上下にずらす</td>
 </tr>
 <tr>
 <td>VELOCITY</td>
-<td>AS SENT; SOFT or SOFTER for pads whose light taps come out too quiet; FIXED for a controller that sends none</td>
+<td>そのまま。軽いタップが小さすぎるパッドにはソフトかソフター。どのタッチも半分以上の大きさにするならイーブン（Lightpad をゆっくり押すとほぼ無音で届く）。ベロシティを送らないコントローラーには固定</td>
 </tr>
 <tr>
 <td>EXPRESSION</td>
-<td>Its pitch bend, pressure, mod wheel and slide reach the synth it plays, from the key you pressed last</td>
+<td>ピッチベンド、プレッシャー、モジュレーションホイール、サスティン、スライドが、最後に押したキーから演奏中のシンセへ届きます。音量スライダー、パンノブ、バンクボタンは届きません。インストゥルメントのレベルを変えるには、ミキサーのコントロールとして学習します</td>
+</tr>
+<tr>
+<td>PRESSURE</td>
+<td>そのまま。最大のプレッシャーまで強く押しすぎないといけないならライターかライト。軽く押すだけで大きすぎるならファームかファーマー</td>
 </tr>
 <tr>
 <td>BEND RANGE</td>
-<td>What its bend wheel or glide covers at full: ±2 for most keyboards, ±48 for an MPE controller. A controller that says its own sets this</td>
+<td>ベンドホイールやグライドを最大にしたときの幅。たいていのキーボードは ±2、MPE コントローラーは ±48。自分の範囲を伝えるコントローラーなら自動で設定されます</td>
+</tr>
+<tr>
+<td>1 台の機器、2 つの経路</td>
+<td>ravving が知っているコントローラー（Donner STARRYCTRL、ROLI ブロック）は、USB で来ても Bluetooth で来ても設定をひとつだけ持ちます。片方でキーを学習すれば、もう片方でも使えます。</td>
 </tr>
 <tr>
 <td>DRUM KEYS · LEARN DRUMS</td>
-<td>Hit the key you want for each drum row, in turn: it sounds as it learns, and the next row is up. The same keys play the PAD SAMPLER's pads. CLEAR (on the row) goes back to the GM notes</td>
+<td>ドラムの行ごとに使いたいキーを順に叩きます。学習しながら鳴り、次の行へ進みます。同じキーが PAD SAMPLER のパッドも鳴らします。行の クリア で GM のノートに戻ります</td>
 </tr>
 <tr>
 <td>CONTROLS · LEARN A CONTROL</td>
-<td>The device's keys and knobs (PLAY, STOP, a page key, a step key, KNOB 1…), one ringed: press the button or move the knob on the controller that will be it, and the next is up. REMOVE takes one back</td>
+<td>本体のキーとノブ（PLAY、STOP、ページキー、ステップキー、ノブ 1…）とミキサー（各インストゥルメントの音量、パン、ミュート、ソロ、録音、一時停止と、トランスポートの一時停止、1小節戻る、1小節進む、前のマシン、次のマシン）が並び、ひとつが囲まれます。コントローラーでそれにしたいボタンを押すか、ノブやフェーダーを動かすと、次へ進みます。削除でひとつ戻せます</td>
+</tr>
+<tr>
+<td>MIXER · MIXER LIGHTS</td>
+<td>ミキサーのコントロールを学習したら、ボタンやパッドを表示内容どおりに光らせる（多くのコントローラーで）か、光らせないか</td>
 </tr>
 </tbody>
 </table>
-<p>In both dialogs ▲ ▼ (or a tap) pick the row or control, SKIP leaves one as it is, UNDO (or ◀)
-takes the last learn back, and CLEAR forgets what the ringed one holds.</p>
-<h4 id="hosted-blocks">Hosted blocks</h4>
-<p>A Lightpad, Seaboard or Lumi Keys block (and the control blocks on its sides) gets a HOST
-section too. Hosted, the block's note grid follows the project:</p>
+<p>どちらのダイアログでも ▲ ▼（またはタップ）で行やコントロールを選び、スキップはそのまま飛ばし、取り消し（または ◀）は最後の学習を戻し、クリアは囲まれたものの内容を忘れます。</p>
+<h4 id="hosted-blocks">ホストされたブロック</h4>
+<p>Lightpad、Seaboard、Lumi Keys のブロック（と両脇のコントロールブロック）には HOST セクションも付きます。ホストされると、ブロックのノートグリッドはプロジェクトに従います。</p>
 <ul>
-<li>change the key or the scale in the header and the grid lays itself out in it, root notes
-  marked;</li>
-<li>OCT on the bass or lead page moves the grid's octave, and the block's own octave buttons
-  move OCT;</li>
-<li>the control blocks' buttons keep doing what you learned for them.</li>
+<li>ヘッダーでキーやスケールを変えると、グリッドがそれに合わせて並び替わり、ルートに印が付きます。</li>
+<li>ベースやリードのページの OCT でグリッドのオクターブが動き、ブロック自身のオクターブボタンで OCT が動きます。</li>
+<li><span>ボタンを <strong>LIGHTPAD パッド</strong>として学習すると、パッドをオンオフできます。</span><ul>
+<li>ドラムのページとコードの CHORDS ビューでは、Lightpad のグリッドが 3×3 のパッドになり、ドラムやコードごとにひとつずつ。</li>
+<li>サンプラーのページでは 4×4 のパッドになり、16 のスロットやパッドごとにひとつずつ。</li>
+<li>最後のドラムやコードを越えたパッドは、最初から繰り返します。</li>
+<li>他のページではキーに合ったノートに戻り、Seaboard は自分の鍵盤をそのまま演奏します。</li>
 </ul>
-<p>Turn HOST THIS CONTROLLER off and the block runs on its own again.</p>
-<h4 id="octave">OCTAVE</h4>
-<p>A controller with octave buttons of its own gets an OCTAVE section.</p>
+</li>
+<li>コントロールブロックのボタンは、学習させたとおりに動き続けます。</li>
+</ul>
+<p>このコントローラーをホストするをオフにすると、ブロックは再び単独で動きます。</p>
+<h4 id="a-mixer-controller">ミキサーコントローラー</h4>
+<p>Donner STARRYCTRL（DAW Mode にする: SHIFT と ◁ か ▷）は、つないだ瞬間からミキサーです。Mackie Control を話す他のコントローラーも、HOST セクションの Mackie Control サーフェスをオンにすればミキサーになります。Behringer X-Touch、Icon、Korg nanoKONTROL、DAW モードの Arturia キーボードなどです。</p>
+<h4 id="the-eight-strips">8 本のストリップ</h4>
+<p>8 本のストリップは 8 つのインストゥルメントで、ヘッダーの順（ドラム 1、2、3、コード、ベース、リード、サンプラー、パッド）です。</p>
 <ul>
-<li><strong>Octave follows ravving</strong> on: its buttons move the octave of the instrument on screen, and
-  it follows OCT.</li>
-<li>Off: they only shift its own notes. The section shows where it is ("Its octave: −1").</li>
-<li><strong>RESET TO 0</strong> puts it back, for when a sound goes quiet because the controller sits far
-  from it.</li>
+<li><strong>フェーダー</strong>はインストゥルメントの音量を決めます。音量の位置まで動かしたとき（ライトの点滅が止まる）に初めて効くので、動かしても音量が跳ねません。HOST セクションのフェーダーのピックアップをオフにすれば、動かすだけですぐ音量が変わります。0 dB の近くでは 0 dB に止まります。</li>
+<li><strong>ノブ</strong>はインストゥルメントをパンします。ゆっくり回せば細かく、速く回せば大きく動きます。通り過ぎるとき中央で一度止まり、押せばパンが中央に戻ります。</li>
+<li><strong>M</strong>、<strong>S</strong>、<strong>R</strong> はインストゥルメントをミュート、ソロ、録音します。4 つ目のボタンはパターンを止め、もう一度動かします。R はインストゥルメントのページも開くので、次にどのコントローラーで弾いてもその音とノートに届きます(学習させた REC も同じです)。</li>
+<li>どこで変えても、各ライトが今の状態を示します。M、S、停止ボタンは画面と一致し、R はテイクのカウントイン中に点滅、録音中は点灯。PLAY、STOP、RECORD はトランスポートどおりに光ります。</li>
+</ul>
+<h4 id="transport-keys-on-the-surface">サーフェスのトランスポートキー</h4>
+<p>STARRYCTRL では ▶（再生と一時停止）、❚❚（停止）、●、◁ ▷ がすぐ使えます。△ と ▽ はインストゥルメントを順に切り替え（ドラムマシンとサンプラーはそれぞれ別）、◀◀ と ▶▶ は 1 小節戻したり進めたりします。他のサーフェスでは、トランスポートキーを学習させます。Mackie Control サーフェスをオフにすると、ノートとノブは学習したキーの働きだけをします。</p>
+<p>複数の経路でつながったコントローラー（STARRYCTRL のケーブルは 2 つのポートを見せ、Bluetooth が 3 つ目）は、リストでは 1 行、ミキサーも 1 つです。ケーブルがある間はケーブルで、なければ Bluetooth で ravving の声を受け、ravving はすべてを聞きます。HOST やフェーダーのピックアップを含む設定は、コントローラーのものです。</p>
+<h4 id="any-controller-as-a-mixer">どんなコントローラーもミキサーに</h4>
+<p>Mackie Control がなくても、自分で学習させればよいのです。コントロールを学習では、本体のキーとノブの下にミキサーのグループが並びます。各インストゥルメントの音量、パン、ミュート、ソロ、録音、一時停止と、トランスポートの一時停止、1小節戻る、1小節進む、前のマシン、次のマシンがあります。</p>
+<p>欲しいものごとに、フェーダーを動かすか、ノブを回すか、パッドを押します。</p>
+<ul>
+<li><strong>フェーダー</strong>や端で止まるノブは、今の位置まで動かしたときに音量やパンを受け取るので、何も跳ねません。ピッチベンドを送るフェーダーも使えます。</li>
+<li><strong>無限に回る</strong>ノブは、今の位置から音量やパンを段階的に動かします。速く回せば速く動き、0 dB や中央で一度止まります。</li>
+<li><strong>ボタン</strong>やパッドはインストゥルメントのミュート、ソロ、録音、一時停止（一時停止はパターンを止める）、またはソングの一時停止（トランスポートの一時停止）です。1小節戻ると 1小節進むは 1 小節スキップ、前のマシンと次のマシンは画面のインストゥルメントを切り替えます。音量では 0 dB に、パンでは中央に戻ります。</li>
+</ul>
+<h4 id="lights-and-pick-up">ライトとピックアップ</h4>
+<p>多くのコントローラーでは、パッドやボタンが表示内容どおりに光ります。逆に点滅するなら、ミキサーセクションのミキサーのライトをオフにしてください。同じセクションのフェーダーのピックアップは、学習したフェーダーとノブにもサーフェスの規則として効きます。オンなら音量の位置に届いたときに効き、オフなら動かすだけで変わります。</p>
+<h4 id="octave">OCTAVE</h4>
+<p>自分のオクターブボタンを持つコントローラーには、オクターブセクションが付きます。</p>
+<ul>
+<li><strong>オクターブは ravving に従う</strong>がオン: ボタンが画面のインストゥルメントのオクターブを動かし、OCT に従います。</li>
+<li>オフ: 自分のノートだけをずらします。セクションに今の位置が出ます（「本体のオクターブ: −1」）。</li>
+<li><strong>0 に戻す</strong>で元に戻します。コントローラーが遠く離れて音が出なくなったときに。</li>
 </ul>
 <h2 id="languages">言語</h2>
 <p>ravving は英語、スペイン語、日本語に対応し、それぞれのミュージシャンの言葉を使います：BATERÍA、BOMBO、COMPÁS、ドラム、キック、小節。</p>
@@ -1439,7 +1601,7 @@ section too. Hosted, the block's note grid follows the project:</p>
 </tr>
 <tr>
 <td>ARU</td>
-<td>ピクセルのタコ、オオカミの子、エイリアンのどれかがランダムに、手を振ってジャンプ</td>
+<td>ピクセルのタコ、子オオカミ、エイリアンがランダムに登場し、手を振ったり、7 つのパーティームード（ヒップホップ、グレゴリオ、ポップ、パンク、テクノ、ジャズ、メタル）のどれかで踊ったり</td>
 </tr>
 <tr>
 <td>OFF</td>
@@ -1447,7 +1609,17 @@ section too. Hosted, the block's note grid follows the project:</p>
 </tr>
 </tbody>
 </table>
-<p>スタジオを読み込んでいる間、起動画面は静止画なので起動が速いままです。</p>
+<p>スタジオの読み込み中、スプラッシュは静止したままなので起動は速いまま。起動の各ステップで切り替わり、下の行が今どのステップかを示します。01 · マザーシップ起動 から 06 · オーディオと MIDI 接続 · GO まで。</p>
+<p>ARU なら、起動が進むにつれて 2 匹の仲間がステージに加わり、ステップごとに新しいポーズを決めます。</p>
+<h3 id="the-splashs-key-lights">スプラッシュのキーライト</h3>
+<p>キーはルックの色で一緒に光ります。読み込み中は静かに、そのあとは画面に合わせたライトショーです。</p>
+<ul>
+<li><strong>ANIME</strong> は各ロゴの色でストロボし、カットごとに速くなり、中央から外へ紫に弾けてきらめきます。</li>
+<li><strong>GLOW</strong> はステップキーの上を白い彗星が走り、ハローが膨らんでからきらめきます。</li>
+<li><strong>ZOOM</strong> はステップキーの中央から両端へ、白熱した青い波を送ります。</li>
+<li><strong>ARU</strong> はステップキーの左半分、次に右半分を揺らし、白く跳ねて点滅するか、パーティームードの色で左右に踊らせ、動きごとに光ります。</li>
+</ul>
+<p>どのショーも、両端からキーを暗く掃いて終わります。ショーはキーライトの 3 倍の明るさ（最大でフル）で走るので、演奏中にキーが使う暗めの設定でも生き生きしています。</p>
 <h2 id="exports-and-the-music-player">書き出しとミュージックプレーヤー</h2>
 <p>PROJECT ▾ → EXPORT でプロジェクトを本体の外へ、ライブラリの <code>exports/</code> フォルダーに書き出します。2 種類あります。</p>
 <h3 id="a-track">トラック</h3>
@@ -1475,7 +1647,9 @@ section too. Hosted, the block's note grid follows the project:</p>
 <li><strong>オン：</strong>音が鳴って記録され、ピアノロールの専用の行に入ります。</li>
 <li><strong>オフ：</strong>そこでは消音され、記録されません。</li>
 </ul>
-<p>ドラム、サンプラー、度数で弾くコードはこの設定に関係しません。</p>
+<p>ドラム、サンプラー、コードの CHORDS ビューはこの設定を無視します。</p>
+<p>コントローラーがあなたと違うキーで演奏し続けていると（自分のキーやトランスポーズが別に設定されているなど）、問題センターがポップアップで知らせます。コントローラーの名前と、そのノートが合うキーを示すので、コントローラーをあなたのキーに合わせるか、上のバーで自分のキーを変えられます。</p>
+<p>ravving はこのためにリード、ベース、コードの NOTES だけを読み、十数個のノートが鳴ってから判断します。わざとクロマチックに弾けばどのキーにも合わず、警告は出ません。コントローラーがあなたのキーで演奏し直すか、キーを変えると警告は消えます。</p>
 <h2 id="video-recordings-and-the-computer-link">ビデオ録画とコンピューター接続</h2>
 <p>コントロールセンターの LIVE REC カードでセッションを録画します。</p>
 <h3 id="start-a-recording">録画を始める</h3>
@@ -1626,12 +1800,12 @@ section too. Hosted, the block's note grid follows the project:</p>
 <p>USB メモリーやパーティションが複数あると、USB カードがそれぞれの名前を出し、どれを開くか尋ねます。</p>
 <p>読み取り専用の USB メモリー（ロックされたもの、インストーラーのイメージ）はその旨を表示します。何もコピーされず、ページに FORMAT が出ます。FORMAT はメモリー全体を消去し、RAVVING という名前の書き込み可能な FAT32 パーティション 1 つにします。EJECT と FORMAT は、3 秒以内にもう一度押す必要があります。</p>
 <h2 id="bluetooth">Bluetooth</h2>
-<p>MENU → BLUETOOTH にデバイスが並びます：接続中のもの、ペアリング済みのもの、範囲内のものの順です。ペアリング済みで未接続のデバイスには「paired · not connected」と表示されます。</p>
+<p>MENU → BLUETOOTH はデバイスを並べます。接続中のもの、次にペアリング済みのもの、そして範囲内のものです。接続していないペアリング済みデバイスは「paired · not connected」と表示されます。充電量を報告する接続中のデバイスはそれも示し（「connected · battery 50 %」）、設定 → MIDI の Bluetooth コントローラーの行も同じです。</p>
 <h3 id="find-and-pair-a-device">デバイスを探してペアリングする</h3>
 <ol>
 <li>Bluetooth をオンにします。</li>
-<li>SCAN をタップします。スピーカー、ヘッドホン、スマホ、コンピューターを短時間で探します。</li>
-<li>デバイスをタップして行を開き、PAIR をタップします。</li>
+<li>SCAN をタップします。短いスキャンで、まず MIDI コントローラー、次にスピーカー、ヘッドホン、スマートフォン、コンピューターを探します。</li>
+<li>デバイスをタップして行を開き、PAIR をタップします。MIDI コントローラー（キーボードのアイコン）は代わりに CONNECT を見せます。ペアリングなしでつながります。</li>
 <li>ravving が上部で尋ねたら、パスキーを確認するか PIN を入力します。</li>
 </ol>
 <p>スピーカーが鳴っている間は SCAN が自動で始まりません。本体の共有の無線でスキャンすると Bluetooth の音が途切れるからです。VISIBLE にすると 3 分間スマホから本体が見つかり、ファイルを送ってもらえます。</p>
@@ -1824,13 +1998,16 @@ section too. Hosted, the block's note grid follows the project:</p>
 <li><strong>ALL GOOD</strong>：問題なし。</li>
 <li><strong>それ以外</strong>は問題の数を、いちばん深刻なものの色で表示します。</li>
 </ul>
-<p>タップすると深刻な順に一覧が出ます。それぞれに詳細と提案があり、役立つときは RESTART RAVVING などのボタンも付きます。新しいエラーや警告はメッセージでも表示されます。</p>
-<p>見ているもの：</p>
+<p>タップすると全リストが、重いものから順に出ます。各問題には詳細、提案、そして役立つ操作ごとのボタン（RAVVING を再起動、オールノートオフなど）があります。SELECT は最初のものを実行します。新しいエラーと警告はメッセージとしても出ます。</p>
+<h4 id="what-it-watches">見守っているもの</h4>
 <ul>
 <li>サウンドエンジンがない、またはエンジンが起動できなかった</li>
 <li>現れなかったオーディオ接続や、音切れ</li>
 <li>本体のキーが反応しなくなった</li>
+<li>音楽が止まり、キーも押されていないのに鳴り続けるインストゥルメント。固まったノートです（オールノートオフで止まります。停止中に STOP を押しても同じ）。</li>
+<li>プロジェクトと違うキーで演奏している MIDI コントローラー。</li>
 <li>ミュージックプレーヤーが再生できない</li>
+<li>ノートが音にならないインストゥルメント。ravving はまず音を再読み込みし、そう知らせます。</li>
 <li>Bluetooth が使えない、または音が出ない出力</li>
 <li>失敗した書き出し、マウントできない USB メモリー、ほぼいっぱいのストレージ</li>
 </ul>

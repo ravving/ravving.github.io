@@ -5,7 +5,7 @@
 <!-- padsamplermachine.cpp -->
   <meta name="description" content="A Machine playing 16 sample pads on libravving's SamplerSynth, in four banks (A to D) of 16 pads and steps each.">
   <meta name="keywords" content="class">
-  <title>PadSamplerMachine Class | ravving C++ API 0.6.0</title>
+  <title>PadSamplerMachine Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -164,7 +164,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#secondTrack-prop" translate="no">secondTrack</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#selectedPad-prop" translate="no">selectedPad</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#bank-prop" translate="no">setBank</a></b>(int <i>bank</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setBridge" translate="no">setBridge</a></b>(ZynthboxBridge *<i>bridge</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setBridge" translate="no">setBridge</a></b>(DeviceBridge *<i>bridge</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setCacheFolder" translate="no">setCacheFolder</a></b>(const QString &amp;<i>folder</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setFlag" translate="no">setFlag</a></b>(int <i>pad</i>, const QString &amp;<i>flag</i>, bool <i>on</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#heldFx-prop" translate="no">setHeldFx</a></b>(const QString &amp;<i>fx</i>)</td></tr>
@@ -195,10 +195,10 @@
 <h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#checkSaved" translate="no">checkSaved</a></b>(const QVariantMap &amp;<i>state</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#feelKeys" translate="no">feelKeys</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#sectionBars" translate="no">sectionBars</a></b>(const QVariantMap &amp;<i>content</i>) const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#setSwing" translate="no">setSwing</a></b>(int <i>swing</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#state" translate="no">state</a></b>() const override</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#stopLive" translate="no">stopLive</a></b>(int <i>key</i>) override</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
@@ -221,9 +221,14 @@
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#LevelNoteBase-var" translate="no">LevelNoteBase</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#PadCount-var" translate="no">PadCount</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#padFeel" translate="no">padFeel</a></b>(int <i>timing</i>, int <i>velocity</i>)</td></tr>
 </table></div>
 <h2 id="reimplemented-protected-functions">Reimplemented Protected Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#applyFeel" translate="no">applyFeel</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#applyMute" translate="no">applyMute</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#keyForNote" translate="no">keyForNote</a></b>(int <i>note</i>, int <i>slot</i>, const Machine::KeyboardContext &amp;<i>context</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual float </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#noteGain" translate="no">noteGain</a></b>(int <i>note</i>) const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="padsamplermachine.html#rowNote" translate="no">rowNote</a></b>(int <i>row</i>) const override</td></tr>
 </table></div>
 <!-- $$$PadSamplerMachine-description -->
@@ -232,13 +237,13 @@
 <p>The current bank is the one that plays. Each loaded pad is one ClipAudioSource set up on its root slice from the pad's parameters; its key zone and root note are the pad's note (kits.json <code translate="no">baseNote</code> + pad, note 36 for pad 1 by default), so a pattern note or a live key plays exactly that pad. A sketchpad track has ten sample slots and its pattern reads only those, so pads 1 to 10 live on the machine's track and pads 11 to 16 on a second one (kits.json <code translate="no">secondTrack</code>). The machine keeps the second track's pattern in step with its own (length, loop, swing, the hits of pads 11 to 16) and sends those pads' live notes on that track. Both tracks' sample outputs are wired into the first track's lane, so the kit has one level, one pan and one effects chain (<a href="jackwiring.html#setSampleOutputs" translate="no">JackWiring::setSampleOutputs</a>()).</p>
 <p>A pad's parameters are stored by tab and knob, each 0..1 (see tabs), and mapped to the slice: TRIM (start, end, loop point), MIX (volume as velocity, pan), AMP ENV (attack, decay or release), TUNE (semitones, fine), PLAY (mono or poly, mute group as an exclusivity group) and FILTER. AMP ENV's VEL SENS, TUNE's WARP, PLAY's OFFSET and the FLT ENV tab are stored but not applied. The pad flags (<a href="padsamplermachine.html#setFlag" translate="no">setFlag</a>()): <code translate="no">noteOn</code> (plays while held) or one-shot, <code translate="no">looping</code> (from the loop point), <code translate="no">reverse</code> (plays a reversed copy of the file, rendered once into the cache folder), <code translate="no">muted</code>, <code translate="no">soloed</code> and <code translate="no">sixteenLevels</code>.</p>
 <p>FILTER puts one equaliser band (two for the 4-pole types) of the chosen type (OFF, CLASSIC, LPF2, LPF4, HPF2, HPF4, BPF2, BPF4) on the pad's clip at the cutoff, with the resonance as its Q; it takes effect as far as libravving applies a clip's equaliser to its voices.</p>
-<p><a href="padsamplermachine.html#audition" translate="no">audition</a>() plays a pad once. <a href="padsamplermachine.html#setLatched" translate="no">setLatched</a>() latches a pad: it switches to looping and its note is held until unlatched; <a href="padsamplermachine.html#stopAll" translate="no">stopAll</a>() unlatches every pad. A latched pad ignores <a href="padsamplermachine.html#stopLive" translate="no">stopLive</a>().</p>
+<p><a href="padsamplermachine.html#audition" translate="no">audition</a>() plays a pad once. <a href="padsamplermachine.html#setLatched" translate="no">setLatched</a>() latches a pad: it switches to looping and its note is held until unlatched; <a href="padsamplermachine.html#stopAll" translate="no">stopAll</a>() unlatches every pad. A latched pad is held by its latch (<a href="machine.html#Hold-enum" translate="no">Machine::Hold::Latch</a>): a finger letting it go leaves it sounding.</p>
 <p>The kit controls (kit, a <a href="padkitcontrols.html" translate="no">PadKitControls</a>): KIT volume (the machine's level), SEMI and FINE added to every pad's tune, and 16 LEVELS. With 16 LEVELS on (<a href="padsamplermachine.html#sixteenLevels-prop" translate="no">setSixteenLevels</a>()), the sixteen keys all play the source pad, by type: VELOCITY (pad 1 softest, 16 hardest), TUNE (a semitone per pad, the original pitch on pad 4) or SCALE (steps of root and scale from pad 4). TUNE and SCALE use sixteen extra slices on the source pad's clip, each on its own note (<a href="padsamplermachine.html#LevelNoteBase-var" translate="no">LevelNoteBase</a> + pad) with its pitch. Hits written while the mode is on are the bank's level hits, stored apart from the pads' own and exposed as steps meanwhile.</p>
 <p>The pad effects (<a href="padsamplermachine.html#heldFx-prop" translate="no">heldFx</a>, active while held) act on the clip of <a href="padsamplermachine.html#fxPad-prop" translate="no">fxPad</a>, so they affect every voice of that pad:</p>
 <ul>
-<li>ECHO: the track's echo throw (<a href="trackeffects.html#setEchoThrow" translate="no">TrackEffects::setEchoThrow</a>()) at full while held;</li>
-<li>TAPE STOP: the clip's speed sweeps down to 0.02 over 0.9 s, back to 1 on release;</li>
-<li>SCRATCH: the speed sweeps between 0.45 and 1.6 while held;</li>
+<li>ECHO: the track's echo throw (<a href="trackeffects.html#setEchoThrow" translate="no">TrackEffects::setEchoThrow</a>()) at full while held, its send gliding in over 10 ms and out over 150 ms;</li>
+<li>TAPE STOP: the clip's speed sweeps down to 0.02 over 0.9 s, and back to 1 over 150 ms on release;</li>
+<li>SCRATCH: the speed sweeps between 0.45 and 1.6 while held (160 ms each way), and back to 1 over 80 ms on release;</li>
 <li>STUTTER: the pad retriggers every 16th note of the tempo while held;</li>
 <li>SKIP: the pad restarts an 8th note past its current position; its start is restored on release;</li>
 <li>REVERSE: the pad plays its reversed copy from the mirrored position while held, and forwards again on release. The reversed copy must already exist; if it is still being rendered, nothing plays.</li>
@@ -640,6 +645,19 @@
 </div><!-- @@@applyChop -->
 </div>
 <div class="fnitem">
+<!-- $$$applyFeel[overload1]$$$applyFeel -->
+<h3 class="fn" translate="no" id="applyFeel"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">applyFeel</span>()</h3>
+<p>Gives both tracks the pads' feel on every note, and writes the pattern again when the pulse changed (every pad's hits softer off the beat, <a href="machine.html#pulsed" translate="no">Machine::pulsed</a>()).</p>
+<!-- @@@applyFeel -->
+</div>
+<div class="fnitem">
+<!-- $$$applyMute[overload1]$$$applyMute -->
+<h3 class="fn" translate="no" id="applyMute"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">applyMute</span>()</h3>
+<p>Reimplements: <a href="machine.html#applyMute" translate="no">Machine::applyMute</a>().</p>
+<p>The second track (pads 11 to 16) is muted with the first.</p>
+<!-- @@@applyMute -->
+</div>
+<div class="fnitem">
 <!-- $$$attachSecond[overload1]$$$attachSecondPatternClip*int* -->
 <h3 class="fn" translate="no" id="attachSecond"><span class="type">void</span> PadSamplerMachine::<span class="name">attachSecond</span>(<span class="type"><a href="patternclip.html" translate="no">PatternClip</a></span> *<i>pattern</i>, <span class="type">int</span> *<i>track</i>)</h3>
 <p>Attaches the second track's <i translate="no">pattern</i> and its sketchpad <i translate="no">track</i> (pads 11 to 16); called after <a href="machine.html#attach" translate="no">attach</a>().</p>
@@ -721,6 +739,13 @@
 </div><!-- @@@erasePad -->
 </div>
 <div class="fnitem">
+<!-- $$$feelKeys[overload1]$$$feelKeys -->
+<h3 class="fn" translate="no" id="feelKeys"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QStringList</span> PadSamplerMachine::<span class="name">feelKeys</span>() const</h3>
+<p>Reimplements: <a href="machine.html#feelKeys" translate="no">Machine::feelKeys</a>() const.</p>
+<p>Returns Feel::Timing, Feel::Velocity and Feel::Pulse: the pads are drums.</p>
+<!-- @@@feelKeys -->
+</div>
+<div class="fnitem">
 <!-- $$$fxPadChanged -->
 <h3 class="fn" translate="no" id="fxPadChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">fxPadChanged</span>()</h3>
 <p>Emitted when <a href="padsamplermachine.html#fxPad-prop" translate="no">fxPad</a> changed.</p>
@@ -749,6 +774,13 @@
 </div><!-- @@@keyChanged -->
 </div>
 <div class="fnitem">
+<!-- $$$keyForNote[overload1]$$$keyForNoteintintconstMachine::KeyboardContext& -->
+<h3 class="fn" translate="no" id="keyForNote"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">int</span> PadSamplerMachine::<span class="name">keyForNote</span>(<span class="type">int</span> <i>note</i>, <span class="type">int</span> <i>slot</i>, const <span class="type"><a href="machine-keyboardcontext.html" translate="no">Machine::KeyboardContext</a></span> &amp;<i>context</i>) const</h3>
+<p>Reimplements: <a href="machine.html#keyForNote" translate="no">Machine::keyForNote</a>(int note, int slot, const Machine::KeyboardContext &amp;context) const.</p>
+<p>A controller's <i translate="no">note</i> plays a pad: the drum key it was learned as (<i translate="no">slot</i>, pads 1 to 16), else a Lightpad's pad, else the 16 pads from the base note up, wrapping (<a href="padsamplermachine.html#padForNote" translate="no">padForNote</a>()).</p>
+<!-- @@@keyForNote -->
+</div>
+<div class="fnitem">
 <!-- $$$loadSample[overload1]$$$loadSampleintconstQString&qrealqreal -->
 <h3 class="fn" translate="no" id="loadSample"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">loadSample</span>(<span class="type">int</span> <i>pad</i>, const <span class="type">QString</span> &amp;<i>path</i>, <span class="type">qreal</span> <i>start</i> = 0, <span class="type">qreal</span> <i>length</i> = 1)</h3>
 <p>Puts the sample file <i translate="no">path</i> on <i translate="no">pad</i>, trimmed to <i translate="no">start</i> (a fraction of the file) and <i translate="no">length</i> (a fraction of what follows the start). The pad is unlatched and its reverse flag and tune reset; its mix and play settings stay.</p>
@@ -766,6 +798,19 @@
 <h3 class="fn" translate="no" id="loadedSlotsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">loadedSlotsChanged</span>()</h3>
 <p>Emitted when the set of loaded pads changed; the wiring follows (<a href="padsamplermachine.html#loadedSampleNumbers" translate="no">loadedSampleNumbers</a>()).</p>
 <!-- @@@loadedSlotsChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$noteGain[overload1]$$$noteGainint -->
+<h3 class="fn" translate="no" id="noteGain"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">float</span> PadSamplerMachine::<span class="name">noteGain</span>(<span class="type">int</span> <i>note</i>) const</h3>
+<p>Reimplements: <a href="machine.html#noteGain" translate="no">Machine::noteGain</a>(int note) const.</p>
+<p>A pad's note plays at 1 while the pad is audible(), else 0; a LEVELS note as its source pad (applyPadGains()); any other note at 1.</p>
+<!-- @@@noteGain -->
+</div>
+<div class="fnitem">
+<!-- $$$padFeel[overload1]$$$padFeelintint -->
+<h3 class="fn" translate="no" id="padFeel"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> PadSamplerMachine::<span class="name">padFeel</span>(<span class="type">int</span> <i>timing</i>, <span class="type">int</span> <i>velocity</i>)</h3>
+<p>Returns the feel every pad plays with for the amounts <i translate="no">timing</i> and <i translate="no">velocity</i> (0 to 100): at 100 a hit lands up to 5.5 clock ticks (about a quarter of a step) from its place and moves its velocity by up to 56 %. The pads have no roles, so each is as loose as a drum kit's snare is in time: whatever a pad holds, a kick too, stays near its step.</p>
+<!-- @@@padFeel -->
 </div>
 <div class="fnitem">
 <!-- $$$padForNote[overload1]$$$padForNoteint -->
@@ -817,8 +862,8 @@
 </div><!-- @@@selectedPadChanged -->
 </div>
 <div class="fnitem">
-<!-- $$$setBridge[overload1]$$$setBridgeZynthboxBridge* -->
-<h3 class="fn" translate="no" id="setBridge"><span class="type">void</span> PadSamplerMachine::<span class="name">setBridge</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>)</h3>
+<!-- $$$setBridge[overload1]$$$setBridgeDeviceBridge* -->
+<h3 class="fn" translate="no" id="setBridge"><span class="type">void</span> PadSamplerMachine::<span class="name">setBridge</span>(<span class="type"><a href="devicebridge.html" translate="no">DeviceBridge</a></span> *<i>bridge</i>)</h3>
 <p>Sets the <i translate="no">bridge</i> through which the machine creates the pads' clips; set before the machine is attached.</p>
 <!-- @@@setBridge -->
 </div>
@@ -906,13 +951,6 @@
 <p>Unlatches every pad.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@stopAll -->
-</div>
-<div class="fnitem">
-<!-- $$$stopLive[overload1]$$$stopLiveint -->
-<h3 class="fn" translate="no" id="stopLive"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> PadSamplerMachine::<span class="name">stopLive</span>(<span class="type">int</span> <i>key</i>)</h3>
-<p>Reimplements: <a href="machine.html#stopLive" translate="no">Machine::stopLive</a>(int key).</p>
-<p>Ends the sound of the live <i translate="no">key</i>, unless its pad is latched.</p>
-<!-- @@@stopLive -->
 </div>
 <div class="fnitem">
 <!-- $$$tabChanged -->

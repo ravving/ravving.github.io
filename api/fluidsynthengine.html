@@ -5,7 +5,7 @@
 <!-- fluidsynthengine.cpp -->
   <meta name="description" content="A FluidSynth process playing a soundfont preset (SF2 or SF3) per clip of its track, such as a drum machine's kit or a soundfont sound source, out of the soundfonts it holds.">
   <meta name="keywords" content="class">
-  <title>FluidSynthEngine Class | ravving C++ API 0.6.0</title>
+  <title>FluidSynthEngine Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -88,8 +88,9 @@
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#FluidSynthEngine" translate="no">FluidSynthEngine</a></b>(const QString &amp;<i>name</i>, const QString &amp;<i>soundfont</i>, int <i>bank</i>, int <i>program</i>, ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#FluidSynthEngine" translate="no">FluidSynthEngine</a></b>(const QString &amp;<i>name</i>, const QString &amp;<i>soundfont</i>, int <i>bank</i>, int <i>program</i>, DeviceBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#believed" translate="no">believed</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#checkPresets" translate="no">checkPresets</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#loadFont" translate="no">loadFont</a></b>(const QString &amp;<i>soundfont</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#output" translate="no">output</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#query" translate="no">query</a></b>(const QString &amp;<i>command</i>)</td></tr>
@@ -98,9 +99,11 @@
 <h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#audioOutputPorts" translate="no">audioOutputPorts</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#canReload" translate="no">canReload</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#hasControl" translate="no">hasControl</a></b>(const QString &amp;<i>symbol</i>) const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#midiInputPort" translate="no">midiInputPort</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#reconfigure" translate="no">reconfigure</a></b>(const QVariantMap &amp;<i>config</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#reloadChannels" translate="no">reloadChannels</a></b>(const QList&lt;int&gt; &amp;<i>channels</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#setControl" translate="no">setControl</a></b>(const QString &amp;<i>symbol</i>, double <i>value</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#start" translate="no">start</a></b>() override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="fluidsynthengine.html#stop" translate="no">stop</a></b>() override</td></tr>
@@ -109,16 +112,18 @@
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p>It runs with FluidSynth's usual Zynthian options plus channel 0's soundfont on the command line (no default GM soundfont loads, even when that font fails), <code translate="no">select</code> for each channel's preset, and FluidSynth's own MIDI router keeping channels 0 and 1 and sending every other channel to 0. It renders at the graph's rate and period (<a href="audiograph.html" translate="no">AudioGraph</a>). The process is a <a href="consoleprocess.html" translate="no">ConsoleProcess</a> (libravving's ProcessWrapper): restarted if it crashes, and it dies with ravving.</p>
-<p>Each channel has a preset of its own (Channels): a track's notes come on their clip's channel (0 for clip a, 1 for clip b; libravving's same picking style), so the clip that plays picks the preset, and a section's soundfont sound or kit changes exactly on the bar its clip starts on. It holds more than one soundfont: <a href="fluidsynthengine.html#selectPreset" translate="no">selectPreset</a>() loads a font it does not have yet (<code translate="no">load</code>, on the process's own thread: the sound playing goes on meanwhile) and selects the preset on a channel (<code translate="no">select</code>, between two periods; the notes sounding keep the preset they began on), without a restart or a gap. <a href="fluidsynthengine.html#loadFont" translate="no">loadFont</a>() loads one ahead of time; A font stays loaded as long as the process runs (FluidSynth puts off dropping a font whose notes still ring, and a font half gone is one no preset can be selected from); a crash restart starts clean. FluidSynth numbers the fonts as they load: the <code translate="no">fonts</code> reply at the start says the command-line font's id, each <code translate="no">load</code>'s reply the id its font got, and only then is a preset of it selected, so a load that failed or was never sent (the process still starting) cannot shift the ids of the fonts after it. After a start or a crash restart the fonts load again and every channel's preset is selected again, the same way.</p>
+<p>Each channel has a preset of its own (Channels): a track's notes come on their clip's channel (0 for clip a, 1 for clip b; libravving's same picking style), so the clip that plays picks the preset, and a section's soundfont sound or kit changes exactly on the bar its clip starts on. It holds more than one soundfont: <a href="fluidsynthengine.html#selectPreset" translate="no">selectPreset</a>() loads a font it does not have yet (<code translate="no">load</code> without a reset, on the process's own thread: the sound playing goes on meanwhile, and no channel leaves the preset selected on it) and selects the preset on a channel (<code translate="no">select</code>, between two periods; the notes sounding keep the preset they began on), without a restart or a gap. <a href="fluidsynthengine.html#loadFont" translate="no">loadFont</a>() loads one ahead of time; A font stays loaded as long as the process runs (FluidSynth puts off dropping a font whose notes still ring, and a font half gone is one no preset can be selected from); a crash restart starts clean. FluidSynth numbers the fonts as they load: the <code translate="no">fonts</code> reply at the start says the command-line font's id, each <code translate="no">load</code>'s reply the id its font got, and only then is a preset of it selected, so a load that failed or was never sent (the process still starting) cannot shift the ids of the fonts after it. After a start or a crash restart the fonts load again and every channel's preset is selected again, the same way.</p>
+<p>Nothing but ravving picks a preset: a load never resets the channels, and FluidSynth's router drops the program changes that come in (a controller's would switch a channel to that number in the newest font). After every start, load and select, and when the transport starts (<a href="fluidsynthengine.html#checkPresets" translate="no">checkPresets</a>()), what each channel really plays is read back from FluidSynth and a channel off its preset is selected again; one still off after that is reported as an issue.</p>
 <p>kits.json engine object: <code translate="no">{&quot;type&quot;: &quot;fluidsynth&quot;, &quot;soundfont&quot;: path, &quot;bank&quot;: 0, &quot;program&quot;: 0}</code>.</p>
-<p>Its controls (a soundfont source's sound controls, kits.json <code translate="no">sourceSound</code>) are named <code translate="no">cc:N</code>, a MIDI controller (0..127; CC 1 is the vibrato of the SoundFont's default modulator, at most 50 cents), or <code translate="no">gen:N</code>, an offset to SoundFont 2 generator N of every voice on the channels, in the generator's own units (cents for the filter cutoff, centibels for its resonance, timecents for the envelope's times), sent as the SF2 NRPN FluidSynth understands (NRPN 120 / N, data entry around 8192, scaled by the generator's NRPN step). Both hold for the notes played after them and are sent again at every start. A preset whose vibrato LFO is stopped (a rate under about 1 Hz) gets it started at 5.5 Hz, read from the soundfont itself (<a href="soundfontfile.html" translate="no">SoundFontFile</a>), so vibrato reaches it.</p>
+<p>Its controls (a soundfont source's sound controls, kits.json <code translate="no">sourceSound</code>) are named <code translate="no">cc:N</code>, a MIDI controller (0..127; CC 1 is the vibrato of the SoundFont's default modulator, at most 50 cents), or <code translate="no">gen:N</code>, an offset to SoundFont 2 generator N of every voice on the channels, in the generator's own units (cents for the filter cutoff, centibels for its resonance, timecents for the envelope's times), sent as the SF2 NRPN FluidSynth understands (NRPN 120 / N, data entry around 8192, scaled by the generator's NRPN step). Both hold for the notes played after them and are sent again at every start. A preset whose vibrato LFO is stopped (a rate under about 1 Hz) gets it started at 5.5 Hz, read from the soundfont itself (<a href="soundfontfile.html" translate="no">SoundFontFile</a>), so vibrato reaches it. Every NRPN write ends with the null RPN, so no data entry that comes later can write a generator.</p>
+<p>A channel's whole state is ravving's: the preset, the controls' last values, FluidSynth's defaults for the rest. <a href="fluidsynthengine.html#reloadChannels" translate="no">reloadChannels</a>() sends it again over a Reset All Controllers, for a channel that went silent with the right preset on it (<a href="enginewatch.html" translate="no">EngineWatch</a>).</p>
 </div>
 <!-- @@@FluidSynthEngine -->
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$FluidSynthEngine[overload1]$$$FluidSynthEngineconstQString&constQString&intintZynthboxBridge*QObject* -->
-<h3 class="fn" translate="no" id="FluidSynthEngine">FluidSynthEngine::<span class="name">FluidSynthEngine</span>(const <span class="type">QString</span> &amp;<i>name</i>, const <span class="type">QString</span> &amp;<i>soundfont</i>, <span class="type">int</span> <i>bank</i>, <span class="type">int</span> <i>program</i>, <span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<!-- $$$FluidSynthEngine[overload1]$$$FluidSynthEngineconstQString&constQString&intintDeviceBridge*QObject* -->
+<h3 class="fn" translate="no" id="FluidSynthEngine">FluidSynthEngine::<span class="name">FluidSynthEngine</span>(const <span class="type">QString</span> &amp;<i>name</i>, const <span class="type">QString</span> &amp;<i>soundfont</i>, <span class="type">int</span> <i>bank</i>, <span class="type">int</span> <i>program</i>, <span class="type"><a href="devicebridge.html" translate="no">DeviceBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
 <p>Constructs an engine named <i translate="no">name</i> on the JACK graph playing preset <i translate="no">bank</i> / <i translate="no">program</i> of the soundfont <i translate="no">soundfont</i> on every channel, run through <i translate="no">bridge</i>, with the given <i translate="no">parent</i>. Not started.</p>
 <!-- @@@FluidSynthEngine -->
 </div>
@@ -134,6 +139,19 @@
 <h3 class="fn" translate="no" id="believed"><span class="type">QString</span> FluidSynthEngine::<span class="name">believed</span>() const</h3>
 <p>Returns what this object believes the engine holds: every font with the id it counts on, and each channel's preset. Against <a href="fluidsynthengine.html#output" translate="no">output</a>(), where the engine says what it really holds.</p>
 <!-- @@@believed -->
+</div>
+<div class="fnitem">
+<!-- $$$canReload[overload1]$$$canReload -->
+<h3 class="fn" translate="no" id="canReload"><code class="details extra" translate="no">[override virtual]</code> <span class="type">bool</span> FluidSynthEngine::<span class="name">canReload</span>() const</h3>
+<p>Reimplements: <a href="soundengine.html#canReload" translate="no">SoundEngine::canReload</a>() const.</p>
+<p>Returns true: a channel's state is ravving's own, and all of it can be sent again.</p>
+<!-- @@@canReload -->
+</div>
+<div class="fnitem">
+<!-- $$$checkPresets[overload1]$$$checkPresets -->
+<h3 class="fn" translate="no" id="checkPresets"><span class="type">void</span> FluidSynthEngine::<span class="name">checkPresets</span>()</h3>
+<p>Reads back from FluidSynth what each channel plays, once the commands sent so far have run, and selects again a channel that is not on the preset it was given (whatever moved it); one still off after that is reported as an issue. Several calls in a row ask once. Nothing while the process is not running (its start selects every preset and checks them).</p>
+<!-- @@@checkPresets -->
 </div>
 <div class="fnitem">
 <!-- $$$hasControl[overload1]$$$hasControlconstQString& -->
@@ -175,6 +193,13 @@
 <!-- @@@reconfigure -->
 </div>
 <div class="fnitem">
+<!-- $$$reloadChannels[overload1]$$$reloadChannelsconstQList<int>& -->
+<h3 class="fn" translate="no" id="reloadChannels"><code class="details extra" translate="no">[override virtual]</code> <span class="type">bool</span> FluidSynthEngine::<span class="name">reloadChannels</span>(const <span class="type">QList</span>&lt;<span class="type">int</span>&gt; &amp;<i>channels</i>)</h3>
+<p>Reimplements: <a href="soundengine.html#reloadChannels" translate="no">SoundEngine::reloadChannels</a>(const QList&lt;int&gt; &amp;channels).</p>
+<p>Brings each of <i translate="no">channels</i> (all of them when empty) back to the state ravving gave it, out of whatever a stray message left there: all notes off, Reset All Controllers (which also zeroes the channel's SoundFont generator offsets), the volume, pan and pitch bend range a reset keeps set to FluidSynth's defaults, the channel's preset selected again (with its vibrato's revival), then every control the MODS and expressions last set (<a href="fluidsynthengine.html#setControl" translate="no">setControl</a>()). The channels are read back afterwards (<a href="fluidsynthengine.html#checkPresets" translate="no">checkPresets</a>()). Nothing while the process is not running: its start does all of it.</p>
+<!-- @@@reloadChannels -->
+</div>
+<div class="fnitem">
 <!-- $$$selectPreset[overload1]$$$selectPresetintconstQString&intint -->
 <h3 class="fn" translate="no" id="selectPreset"><span class="type">void</span> FluidSynthEngine::<span class="name">selectPreset</span>(<span class="type">int</span> <i>channel</i>, const <span class="type">QString</span> &amp;<i>soundfont</i>, <span class="type">int</span> <i>bank</i>, <span class="type">int</span> <i>program</i>)</h3>
 <p>Switches <i translate="no">channel</i> (0 to Channels - 1) to preset <i translate="no">bank</i> / <i translate="no">program</i> of <i translate="no">soundfont</i>, loading the font first when the engine does not hold it (<a href="fluidsynthengine.html#loadFont" translate="no">loadFont</a>()): the preset is selected as soon as the font is in. Nothing restarts: the notes sounding end on the preset they began on, the next ones play the new one. Before the process runs it only sets what the start plays.</p>
@@ -184,7 +209,7 @@
 <!-- $$$setControl[overload1]$$$setControlconstQString&double -->
 <h3 class="fn" translate="no" id="setControl"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> FluidSynthEngine::<span class="name">setControl</span>(const <span class="type">QString</span> &amp;<i>symbol</i>, <span class="type">double</span> <i>value</i>)</h3>
 <p>Reimplements: <a href="soundengine.html#setControl" translate="no">SoundEngine::setControl</a>(const QString &amp;symbol, double value).</p>
-<p>Sends <i translate="no">value</i> to the control <i translate="no">symbol</i> on every channel: <code translate="no">cc:N</code> as a controller (rounded and clamped to 0..127), <code translate="no">gen:N</code> as an NRPN generator offset. Ignored while the process is not running; the studio sends the controls again in full once it has started.</p>
+<p>Sends <i translate="no">value</i> to the control <i translate="no">symbol</i> on every channel: <code translate="no">cc:N</code> as a controller (rounded and clamped to 0..127), <code translate="no">gen:N</code> as an NRPN generator offset. The value is kept for <a href="fluidsynthengine.html#reloadChannels" translate="no">reloadChannels</a>(). Not sent while the process is not running; the studio sends the controls again in full once it has started.</p>
 <p><b>See also </b><a href="fluidsynthengine.html#hasControl" translate="no">hasControl</a>().</p>
 <!-- @@@setControl -->
 </div>

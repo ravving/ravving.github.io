@@ -5,7 +5,7 @@
 <!-- roliblocks.cpp -->
   <meta name="description" content="ravving as the host of ROLI's BLOCKS (a Lightpad, with the control blocks on its DNA connectors): the handshake and keep-alive they need, the project's key and the current machine's octave set on their note grid, their octave buttons back, a Live Block's SCALE and octave buttons on the grid, and their buttons as the MIDI they sent before.">
   <meta name="keywords" content="class">
-  <title>RoliBlocks Class | ravving C++ API 0.6.0</title>
+  <title>RoliBlocks Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -89,15 +89,16 @@
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#RoliBlocks" translate="no">RoliBlocks</a></b>(const QString &amp;<i>name</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#RoliBlocks" translate="no">RoliBlocks</a></b>(const ControllerId &amp;<i>id</i>, MidiTransport *<i>transport</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#setOctave" translate="no">setOctave</a></b>(int <i>octave</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#setTimings" translate="no">setTimings</a></b>(int <i>probeMs</i>, int <i>retryMs</i>)</td></tr>
 </table></div>
 <h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#controllerName" translate="no">controllerName</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual ControllerId </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#controller" translate="no">controller</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#followKey" translate="no">followKey</a></b>(int <i>root</i>, const QList&lt;int&gt; &amp;<i>steps</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#followOctave" translate="no">followOctave</a></b>(int <i>octave</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#followPads" translate="no">followPads</a></b>(int <i>pads</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#start" translate="no">start</a></b>() override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#stop" translate="no">stop</a></b>() override</td></tr>
 </table></div>
@@ -106,6 +107,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#checksum" translate="no">checksum</a></b>(const QByteArray &amp;<i>payload</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#packet" translate="no">packet</a></b>(int <i>index</i>, const QByteArray &amp;<i>payload</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#scaleId" translate="no">scaleId</a></b>(const QList&lt;int&gt; &amp;<i>steps</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> DriverSpec </td><td class="memItemRight bottomAlign"><b><a href="roliblocks.html#spec" translate="no">spec</a></b>()</td></tr>
 </table></div>
 <!-- $$$RoliBlocks-description -->
 <div class="descr">
@@ -117,9 +119,9 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$RoliBlocks[overload1]$$$RoliBlocksconstQString&QObject* -->
-<h3 class="fn" translate="no" id="RoliBlocks"><code class="details extra" translate="no">[explicit]</code> RoliBlocks::<span class="name">RoliBlocks</span>(const <span class="type">QString</span> &amp;<i>name</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
-<p>The host of the blocks on the controller <i translate="no">name</i> (the Lightpad's port), with <i translate="no">parent</i>.</p>
+<!-- $$$RoliBlocks[overload1]$$$RoliBlocksconstControllerId&MidiTransport*QObject* -->
+<h3 class="fn" translate="no" id="RoliBlocks">RoliBlocks::<span class="name">RoliBlocks</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>, <span class="type"><a href="miditransport.html" translate="no">MidiTransport</a></span> *<i>transport</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>The host of the blocks on the controller <i translate="no">id</i> (the Lightpad's), sending through <i translate="no">transport</i>, with <i translate="no">parent</i>.</p>
 <!-- @@@RoliBlocks -->
 </div>
 <div class="fnitem">
@@ -129,11 +131,11 @@
 <!-- @@@checksum -->
 </div>
 <div class="fnitem">
-<!-- $$$controllerName[overload1]$$$controllerName -->
-<h3 class="fn" translate="no" id="controllerName"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QString</span> RoliBlocks::<span class="name">controllerName</span>() const</h3>
-<p>Reimplements: <a href="controllercapability.html#controllerName" translate="no">ControllerCapability::controllerName</a>() const.</p>
-<p>Returns the controller's name: its settings are kept by it.</p>
-<!-- @@@controllerName -->
+<!-- $$$controller[overload1]$$$controller -->
+<h3 class="fn" translate="no" id="controller"><code class="details extra" translate="no">[override virtual]</code> <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> RoliBlocks::<span class="name">controller</span>() const</h3>
+<p>Reimplements: <a href="controllercapability.html#controller" translate="no">ControllerCapability::controller</a>() const.</p>
+<p>Returns the controller's id (<a href="controllerdriver.html#id" translate="no">ControllerDriver::id</a>()).</p>
+<!-- @@@controller -->
 </div>
 <div class="fnitem">
 <!-- $$$followKey[overload1]$$$followKeyintconstQList<int>& -->
@@ -148,6 +150,13 @@
 <p>Reimplements: <a href="controlleroctave.html#followOctave" translate="no">ControllerOctave::followOctave</a>(int octave).</p>
 <p>ravving's <i translate="no">octave</i> on the note grid (<a href="roliblocks.html#setOctave" translate="no">setOctave</a>()).</p>
 <!-- @@@followOctave -->
+</div>
+<div class="fnitem">
+<!-- $$$followPads[overload1]$$$followPadsint -->
+<h3 class="fn" translate="no" id="followPads"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> RoliBlocks::<span class="name">followPads</span>(<span class="type">int</span> <i>pads</i>)</h3>
+<p>Reimplements: <a href="controllerscale.html#followPads" translate="no">ControllerScale::followPads</a>(int pads).</p>
+<p>The page on screen plays <i translate="no">pads</i> (<a href="controllerscale.html#Pads-enum" translate="no">ControllerScale::Pads</a>): the Lightpad's grid shows 3×3 pads for the drums or the chords, and goes back to its notes for the rest.</p>
+<!-- @@@followPads -->
 </div>
 <div class="fnitem">
 <!-- $$$packet[overload1]$$$packetintconstQByteArray& -->
@@ -172,6 +181,12 @@
 <h3 class="fn" translate="no" id="setTimings"><span class="type">void</span> RoliBlocks::<span class="name">setTimings</span>(<span class="type">int</span> <i>probeMs</i>, <span class="type">int</span> <i>retryMs</i>)</h3>
 <p>How long the probe waits for its answer (<i translate="no">probeMs</i>) and the topology requests are apart (<i translate="no">retryMs</i>): the blocks' pace by default, shorter in a test.</p>
 <!-- @@@setTimings -->
+</div>
+<div class="fnitem">
+<!-- $$$spec[overload1]$$$spec -->
+<h3 class="fn" translate="no" id="spec"><code class="details extra" translate="no">[static]</code> <span class="type"><a href="driverspec.html" translate="no">DriverSpec</a></span> RoliBlocks::<span class="name">spec</span>()</h3>
+<p>Returns how the driver is added to <a href="controllerdrivers.html" translate="no">ControllerDrivers</a>: for the controllers with <code translate="no">BLOCK</code> in their name (a Lightpad BLOCK, a Seaboard BLOCK).</p>
+<!-- @@@spec -->
 </div>
 <div class="fnitem">
 <!-- $$$start[overload1]$$$start -->

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- relativeencoder.cpp -->
+  <meta name="description" content="An endless knob on a MIDI controller: what its CC values say (decode()) and how far a tick goes once the knob turns fast (accelerate()).">
+  <meta name="keywords" content="class">
+  <title>RelativeEncoder Class | ravving C++ API 0.7.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>RelativeEncoder</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">RelativeEncoder Class</h1>
+<!-- $$$RelativeEncoder-brief -->
+<p>An endless knob on a MIDI controller: what its CC values say (<a href="relativeencoder.html#decode" translate="no">decode</a>()) and how far a tick goes once the knob turns fast (<a href="relativeencoder.html#accelerate" translate="no">accelerate</a>()). <a href="#details">More...</a></p>
+<!-- @@@RelativeEncoder -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;relativeencoder.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="relativeencoder-members.html">List of all members, including inherited members</a></li>
+<li>RelativeEncoder is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="relativeencoder.html#Mode-enum" translate="no">Mode</a></b> { SignMagnitude, TwosComplement, OffsetBinary }</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="relativeencoder.html#accelerate" translate="no">accelerate</a></b>(int <i>delta</i>, qint64 <i>nowMs</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="relativeencoder.html#reset" translate="no">reset</a></b>()</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="relativeencoder.html#decode" translate="no">decode</a></b>(RelativeEncoder::Mode <i>mode</i>, int <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> std::optional&lt;RelativeEncoder::Mode&gt; </td><td class="memItemRight bottomAlign"><b><a href="relativeencoder.html#modeNamed" translate="no">modeNamed</a></b>(const QString &amp;<i>name</i>)</td></tr>
+</table></div>
+<!-- $$$RelativeEncoder-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>An endless knob sends a change, not a position: read as a position (0 to 127), its &quot;one up&quot; and &quot;one down&quot; would jump a value between two far-apart places. <a href="relativeencoder.html#decode" translate="no">decode</a>() turns a value into the change it means, by the knob's Mode.</p>
+<p><a href="relativeencoder.html#accelerate" translate="no">accelerate</a>() multiplies a single tick by how fast the knob turns: the ticks of the same way within the last WindowMs. Counting ticks over a window, rather than timing the gap between two, keeps the speed right over Bluetooth, which delivers a few ticks at once every connection interval. A knob that already sends bigger changes when turned fast (Mackie Control's V-Pots may) is taken as it is. One per knob; GUI thread only.</p>
+</div>
+<!-- @@@RelativeEncoder -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<div class="fnitem">
+<!-- $$$Mode$$$SignMagnitude$$$TwosComplement$$$OffsetBinary -->
+<h3 class="fn" translate="no" id="Mode-enum">enum class RelativeEncoder::<span class="name">Mode</span></h3>
+<p>How an endless knob encodes a turn in a CC's value.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">RelativeEncoder::Mode::SignMagnitude</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">bit 6 the way (set: down), bits 0 to 5 how far: 1 up, 65 down (Mackie Control's V-Pots)</td></tr>
+<tr><td class="topAlign"><code translate="no">RelativeEncoder::Mode::TwosComplement</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">a 7-bit two's complement: 1 up, 127 down</td></tr>
+<tr><td class="topAlign"><code translate="no">RelativeEncoder::Mode::OffsetBinary</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">64 plus the change: 65 up, 63 down</td></tr>
+</table></div>
+<!-- @@@Mode -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$accelerate[overload1]$$$accelerateintqint64 -->
+<h3 class="fn" translate="no" id="accelerate"><span class="type">int</span> RelativeEncoder::<span class="name">accelerate</span>(<span class="type">int</span> <i>delta</i>, <span class="type">qint64</span> <i>nowMs</i>)</h3>
+<p>Returns <i translate="no">delta</i>, a change <a href="relativeencoder.html#decode" translate="no">decode</a>() gave at <i translate="no">nowMs</i> (a monotonic clock in milliseconds), with the speed's acceleration: a single tick counts once while the knob turns slowly (up to three ticks in WindowMs, this one included), twice from four, and once more for every two further ticks in the window, up to MaxFactor (twelve). A change of more than one tick, or one back the other way, counts as it is.</p>
+<!-- @@@accelerate -->
+</div>
+<div class="fnitem">
+<!-- $$$decode[overload1]$$$decodeRelativeEncoder::Modeint -->
+<h3 class="fn" translate="no" id="decode"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> RelativeEncoder::<span class="name">decode</span>(<span class="type"><a href="relativeencoder.html#Mode-enum" translate="no">RelativeEncoder::Mode</a></span> <i>mode</i>, <span class="type">int</span> <i>value</i>)</h3>
+<p>Returns the change the CC <i translate="no">value</i> (0 to 127) means for a knob of <i translate="no">mode</i>: positive up (clockwise), negative down, 0 for no change (a 0, or 64 in <a href="relativeencoder.html#Mode-enum" translate="no">OffsetBinary</a>).</p>
+<!-- @@@decode -->
+</div>
+<div class="fnitem">
+<!-- $$$modeNamed[overload1]$$$modeNamedconstQString& -->
+<h3 class="fn" translate="no" id="modeNamed"><code class="details extra" translate="no">[static]</code> <span class="type">std::optional</span>&lt;<span class="type"><a href="relativeencoder.html#Mode-enum" translate="no">RelativeEncoder::Mode</a></span>&gt; RelativeEncoder::<span class="name">modeNamed</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Returns the Mode named <i translate="no">name</i> as data/midi-devices.json's <code translate="no">knobs</code> says it (<code translate="no">sign-magnitude</code>, <code translate="no">twos-complement</code>, <code translate="no">offset-binary</code>), none for any other.</p>
+<!-- @@@modeNamed -->
+</div>
+<div class="fnitem">
+<!-- $$$reset[overload1]$$$reset -->
+<h3 class="fn" translate="no" id="reset"><span class="type">void</span> RelativeEncoder::<span class="name">reset</span>()</h3>
+<p>Forgets the ticks: the next one counts once.</p>
+<!-- @@@reset -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

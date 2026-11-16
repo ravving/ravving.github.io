@@ -228,13 +228,108 @@ for typed bindings), so a QML change is a rebuild like any other, and QML errors
 build time. To try QML on the device without rebuilding, copy the <code>qml/</code> folder over and
 start ravving with <code>RAVVING_QML_DIR</code> pointing at it.</p>
 <h2 id="run-on-a-desktop">Run on a desktop</h2>
-<pre><code class="language-sh">cmake -S . -B build -G Ninja &amp;&amp; cmake --build build
-RAVVING_WINDOWED=1 RAVVING_NO_ZYNTHBOX=1 ./build/ravving
-# or straight from the source tree's QML, no rebuild between QML edits:
-RAVVING_WINDOWED=1 RAVVING_NO_ZYNTHBOX=1 RAVVING_QML_DIR=$PWD/qml ./build/ravving
+<pre><code class="language-sh">tools/desktop.sh --build                  # builds libravving and ravving, then runs this checkout
+tools/desktop.sh RAVVING_SCALE=1.2        # the next runs: VAR=VALUE pairs go to ravving
+# the UI alone (silent), straight from the source tree's QML, no rebuild between QML edits:
+RAVVING_NO_ZYNTHBOX=1 RAVVING_QML_DIR=$PWD/qml ./build/ravving
 </code></pre>
 <p>On a desktop without a terminal, Qt logs to journald; add <code>QT_FORCE_STDERR_LOGGING=1</code> to see
 QML warnings.</p>
+<h3 id="desktop-mode">Desktop mode</h3>
+<p>Away from the Zynthbox (no <code>/zynthian/zynthian-my-data</code>) ravving runs as a desktop app
+(<code>ravving.desktop</code>; <code>RAVVING_DESKTOP=1</code> or <code>0</code> decides instead). Its window:</p>
+<ul>
+<li><strong>Size</strong>: resizable, drawn at the screen's density over the device panel's, so a button is
+  as big as on the Zynthbox (<code>Theme.scale</code>; every size goes through <code>Theme.px()</code>).
+  <code>RAVVING_SCALE</code> (0.5 to 2) picks another.</li>
+<li><strong>Frame</strong>: its own, with rounded corners, resize edges and the header's minimise, maximise
+  and close buttons; the header moves the window. <code>RAVVING_NO_CSD=1</code> asks for the window
+  manager's frame. Built with <code>RAVVING_WINDOW_SHADOW</code> (on off the device, off in the AppImage),
+  KF6WindowSystem gives it a shadow.</li>
+<li><strong>Closing while the music plays</strong> asks first (QUIT RAVVING?); closing again quits.</li>
+</ul>
+<p>What changes for a mouse, a touchpad and a computer's keyboard:</p>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the step grids, the rolls</td>
+<td>a click toggles a step or a note; a drag from an empty cell draws the lasso at once (no hold); a sideways drag with the mouse draws or does nothing (a finger on a touch screen pages the bars)</td>
+</tr>
+<tr>
+<td>the note rolls (BASS, LEAD, CHORDS · NOTES)</td>
+<td>the wheel scrolls the rows, Ctrl + wheel zooms; a taller window shows more rows, each as tall as before</td>
+</tr>
+<tr>
+<td>any pattern editor</td>
+<td>Alt + wheel, or a sideways scroll, pages the bars</td>
+</tr>
+<tr>
+<td>every dial, BPM and the other number displays</td>
+<td>the wheel over one turns it, a notch a device knob's detent</td>
+</tr>
+<tr>
+<td>the grids while playing</td>
+<td>not locked: the play lock is for stray fingers on the device's screen</td>
+</tr>
+<tr>
+<td>the knobs' badges and focus frames</td>
+<td>hidden: a computer has no knobs to point at</td>
+</tr>
+<tr>
+<td>the transport</td>
+<td>the header always shows ▶ ■ ● and the metronome (SETTINGS · KEYS greys its switch out)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-sounds-on-a-desktop">The sounds on a desktop</h3>
+<p>With libravving (no <code>RAVVING_NO_ZYNTHBOX</code>) the machines play what the desktop has
+(<a href="engines.html">engines.md</a>, "Finding the engines and their sounds"):</p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Where it is looked for</th>
+<th>Without it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FluidR3 General MIDI (<code>FluidR3_GM.sf2</code> or <code>.sf3</code>: Arch <code>soundfont-fluid</code>, Debian <code>fluid-soundfont-gm</code>)</td>
+<td><code>/usr/share/soundfonts</code>, <code>/usr/share/sounds/sf2</code>, <code>~/.local/share/soundfonts</code></td>
+<td>no drums, no soundfont sounds</td>
+</tr>
+<tr>
+<td><code>fluidsynth</code>, <code>jalv</code>, <code>lv2ls</code>, <code>lv2info</code></td>
+<td><code>PATH</code></td>
+<td>the engines of that kind do not start (an issue says which)</td>
+</tr>
+<tr>
+<td>Nekobi (bass), Calf Monosynth (lead), TAL-NoiseMaker (chords: Arch <code>distrho-ports-lv2</code>)</td>
+<td>the LV2 folders (<code>lv2ls</code>)</td>
+<td>the machine plays its <code>or</code> fallback in <code>kits.json</code>, a General MIDI program</td>
+</tr>
+<tr>
+<td>the effects' plugins (Calf, Dragonfly, guitarix, the TAP echo)</td>
+<td>the LV2 folders</td>
+<td>that effect does nothing (an issue says which)</td>
+</tr>
+<tr>
+<td>the Zynthbox's own kits and soundfonts (<code>SFZ Drum Machines</code>, <code>SFZ Synths</code>…)</td>
+<td>any soundfont folder above, or the library's <code>soundfonts/</code>, by file name</td>
+<td>their kits and sounds are not listed</td>
+</tr>
+</tbody>
+</table>
+<p>The drum machines start on General MIDI kits (Electronic, TR-808, Power) and the kit picker
+lists the General MIDI ones. Copying a Zynthbox's <code>/zynthian/zynthian-data/soundfonts</code> into
+<code>~/.local/share/soundfonts</code> brings the rest: the fonts are found by name. A plugin installed
+later is picked up at the next start.</p>
 <p>Keys send the same events as the device:</p>
 <table>
 <thead>
@@ -280,8 +375,20 @@ QML warnings.</p>
 </thead>
 <tbody>
 <tr>
+<td><code>RAVVING_DESKTOP=1</code> / <code>0</code></td>
+<td>desktop mode on or off, whatever the machine (unset: on away from the Zynthbox)</td>
+</tr>
+<tr>
 <td><code>RAVVING_WINDOWED=1</code></td>
-<td>windowed instead of fullscreen</td>
+<td>windowed instead of fullscreen (always so in desktop mode)</td>
+</tr>
+<tr>
+<td><code>RAVVING_SCALE</code></td>
+<td>desktop mode: the size the design is drawn at, 0.5 to 2 (unset: the screen's density)</td>
+</tr>
+<tr>
+<td><code>RAVVING_NO_CSD=1</code></td>
+<td>desktop mode: the window manager's frame instead of ravving's own</td>
 </tr>
 <tr>
 <td><code>RAVVING_NO_ZYNTHBOX=1</code></td>
@@ -344,7 +451,7 @@ themselves are where they were: the split is of the CMake files only):</p>
 </tr>
 <tr>
 <td><code>src/backend/CMakeLists.txt</code></td>
-<td><code>ravving_backend</code>, the static backend library (<code>src/backend/*</code> and <code>src/zynthboxbridge.*</code>): its sources, its PUBLIC include directories (<code>src/</code>, so the app includes <code>backend/xxx.h</code>; <code>src/backend/</code>, so its files include each other bare), its PUBLIC link set (the Qt modules, JACK, sndfile, TagLib, zlib, BluezQt), the <code>RAVVING_*</code> compile definitions, the unity build</td>
+<td><code>ravving_backend</code>, the static backend library (<code>src/backend/*</code> and <code>src/devicebridge.*</code>): its sources, its PUBLIC include directories (<code>src/</code>, so the app includes <code>backend/xxx.h</code>; <code>src/backend/</code>, so its files include each other bare), its PUBLIC link set (the Qt modules, JACK, sndfile, TagLib, zlib, BluezQt), the <code>RAVVING_*</code> compile definitions, the unity build</td>
 </tr>
 <tr>
 <td><code>src/CMakeLists.txt</code></td>
@@ -436,7 +543,7 @@ long as a 4-core laptop for the same work.</p>
 </ul>
 <h3 id="where-the-backend-lives">Where the backend lives</h3>
 <ul>
-<li id="the-backend-is-a-library-of-its-own"><strong>The backend is a library of its own.</strong> <code>src/backend</code> (and <code>zynthboxbridge</code>) build as the
+<li id="the-backend-is-a-library-of-its-own"><strong>The backend is a library of its own.</strong> <code>src/backend</code> (and <code>devicebridge</code>) build as the
   static library <code>ravving_backend</code>, outside the QML module. A backend header edit recompiles no
   QML.</li>
 <li>Qt's type registration reads the metadata of every QObject class in the QML module's

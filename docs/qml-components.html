@@ -99,10 +99,11 @@
 
 <p>The QML components in <code>qml/</code>: the shared base types, the pages and their parts. They follow the <a href="ui-rules.html">UI rules</a>.</p>
 <p>Studio machines are shown by <code>MachinePanel</code>: a MachineModule backed by a Machine. It keeps the
-level, pan, ❚❚, effects, sound, REC and takes, the STEP cursor, the LIVE pads and the keyboard
-bookkeeping.</p>
-<p><code>MachinePage</code> is the page around any panel: it forwards the step keys, ▲ ▼, the
-header hand-off and an external keyboard to its <code>panel</code>. <code>BassPage</code>, <code>LeadPage</code> and
+level, pan, ❚❚, effects, sound, REC and takes, the STEP cursor and the LIVE pads; the keys held
+are the machine's (<code>Machine.heldKeys</code>, <code>heldPads</code>).</p>
+<p><code>MachinePage</code> is the page around any panel: it forwards the step keys, ▲ ▼ and the
+header hand-off to its <code>panel</code>. An external keyboard plays the machine on screen
+(<code>studio.playedMachine</code>). <code>BassPage</code>, <code>LeadPage</code> and
 <code>ChordsPage</code> only declare their panel.</p>
 <h3 id="drummachinepanel">DrumMachinePanel</h3>
 <p>The step grid. In LIVE, the pads are the rows and key 9 adds the accent.</p>
@@ -163,7 +164,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 </tr>
 <tr>
 <td><code>Session</code> (singleton)</td>
-<td>global state: key, scale, tempo, swing, transport clock, live FX, mute/solo; the views instead of the page (<code>mixView</code>, <code>songView</code>, <code>playerView</code>, <code>recorderView</code>, <code>settingsView</code>, <code>modsView</code>, one at a time); <code>sectionWaiting</code> / <code>sectionBlink</code> for a section waiting for its bar; the modal layers up (<code>overlays</code>, <code>inputBlocked</code>)</td>
+<td>global state: key, scale, tempo, swing, transport clock, live FX, mute/solo (<code>muted</code>, <code>soloed</code>, <code>isSilenced()</code>, the toggles: <code>studio.mix</code>'s); the views instead of the page (<code>mixView</code>, <code>songView</code>, <code>playerView</code>, <code>recorderView</code>, <code>settingsView</code>, <code>modsView</code>, one at a time); <code>sectionWaiting</code> / <code>sectionBlink</code> for a section waiting for its bar; the modal layers up (<code>overlays</code>, <code>inputBlocked</code>)</td>
 </tr>
 <tr>
 <td><code>RaveHeader</code></td>
@@ -191,7 +192,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 </tr>
 <tr>
 <td><code>InstrumentChip</code>, <code>Caption</code>, <code>LedDisplay</code></td>
-<td>header parts; a chip draws its machine's track level as a slim bar along its bottom (the mixer's colours), only while the machine sounds, from the header's <code>meters</code> (<code>studio.meters()</code> read ten times a second; the pads' second track counts too)</td>
+<td>header parts; a chip is its machine's name over an indicator row (SoundLamp, clear with nothing to play, then S and M, the block set's 8 px <code>volume-off</code>, <code>pause</code> and <code>record</code> icons at the letters' height, and L, each in a fixed spot, clear while off), and draws its machine's track level as a slim bar along its bottom (the mixer's colours), only while the machine sounds, from the header's <code>meters</code> (<code>studio.meters()</code> read ten times a second; the pads' second track counts too)</td>
 </tr>
 <tr>
 <td><code>Machine</code> (sound sources)</td>
@@ -215,7 +216,7 @@ compiled with qmlcachegen (bytecode, and typed bindings as C++), and loaded with
 </tr>
 <tr>
 <td><code>PianoRoll</code></td>
-<td>notes × 16 steps, mono (a MonoMachine: bass, lead) or poly (a ChordMachine's NOTES view: <code>noteSets</code>, <code>toggleNote</code>), ACCENT/SLIDE lanes. Two fingers pinch to zoom (rows kept 18–56 px tall, so the range follows the scale and the height) and drag to scroll; a scroll past an octave shifts the owner's octave (<code>octaveScrolled</code>), so OCT − / + shows what is on screen. ▲ ▼ select a note row (<code>currentNote</code>; a tap or a note played live selects too) and a step key writes that note. <code>heldNotes</code> lights the rows played live; a held note without a row shows as an edge marker ("▲ G4" / "▼ E2") or, outside the scale, a lit line between its neighbours with its name Gestures: a one-finger drag scrolls the rows (DragHandler, the gesture locked to its first axis; past 8 semitones <code>octaveScrolled</code> shifts the owner's octave) or pages the bars sideways (one bar per 120 px, the content following the finger), two fingers pinch to zoom and scroll; a tap toggles a cell. The row count is set by the zoom (<code>rowCount</code>), so scrolling never resizes the rows or the ACC / SLIDE lanes (fixed 20 px)</td>
+<td>notes × 16 steps, mono (a MonoMachine: bass, lead) or poly (a ChordMachine's NOTES view: <code>noteSets</code>, <code>toggleNote</code>), ACCENT/SLIDE lanes. Two fingers pinch to zoom (rows kept 18–56 px tall, so the range follows the scale and the height) and drag to scroll; with a <code>zoomKey</code> the zoom is kept in the profile when the pinch ends and restored when the roll comes back; a scroll only moves the view and OCT − / + leaves the view where it is (the scroll makes up for the owner's lowNote moving). ▲ ▼ select a note row (<code>currentNote</code>; a tap or a note played live selects too) and a step key writes that note. <code>heldNotes</code> lights the rows played live; a held note without a row shows as an edge marker ("▲ G4" / "▼ E2") or, outside the scale, a lit line between its neighbours with its name Gestures: a one-finger drag scrolls the rows (DragHandler, the gesture locked to its first axis) or pages the bars sideways (one bar per 120 px, the content following the finger), two fingers pinch to zoom and scroll; a tap toggles a cell. The row count is set by the zoom (<code>rowCount</code>), so scrolling never resizes the rows or the ACC / SLIDE lanes (fixed 20 px)</td>
 </tr>
 <tr>
 <td><code>ModsPage</code>, <code>ModsGroup</code></td>
@@ -316,7 +317,8 @@ switching, the chord cursor.</p>
 <li>buttons: <code>ActionButton</code>, <code>Chip</code>, <code>StripButton</code>, <code>ConfirmButton</code> and <code>SecondPress</code>,
     <code>CloseButton</code>;</li>
 <li>the knob layer: <code>Knob</code> and its <code>DialFace</code>, <code>Fader</code>, <code>KnobSwitch</code>, <code>LevelSlider</code>,
-    <code>KnobGroup</code>, <code>PickUp</code>, <code>KnobBadge</code>;</li>
+    <code>KnobGroup</code>, <code>PickUp</code>, <code>KnobBadge</code>, <code>WheelNotches</code> (a desktop's wheel over a dial or a
+    number display);</li>
 <li>readouts: <code>Meter</code>, <code>KeyCap</code>, <code>Nameplate</code>, <code>Plate</code>, <code>LedDisplay</code>, <code>Toast</code>, <code>EmptyNote</code>,
     <code>ArmBar</code>, <code>Icon</code>;</li>
 <li>dialogs and their parts: <code>Dialog</code>, <code>DialogHeader</code>, <code>ChoiceDialog</code>, <code>ComboBox</code>,

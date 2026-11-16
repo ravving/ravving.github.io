@@ -5,7 +5,7 @@
 <!-- samplermachine.cpp -->
   <meta name="description" content="A Machine playing samples on libravving's SamplerSynth, with four banks (A to D) of eight sample slots and steps each.">
   <meta name="keywords" content="class">
-  <title>SamplerMachine Class | ravving C++ API 0.6.0</title>
+  <title>SamplerMachine Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -72,6 +72,7 @@
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
 <li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
 <li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#reimplemented-protected-functions">Reimplemented Protected Functions</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -127,7 +128,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#rows-prop" translate="no">rows</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#sampleSlots-prop" translate="no">sampleSlots</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#bank-prop" translate="no">setBank</a></b>(int <i>bank</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#setBridge" translate="no">setBridge</a></b>(ZynthboxBridge *<i>bridge</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#setBridge" translate="no">setBridge</a></b>(DeviceBridge *<i>bridge</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#setCacheFolder" translate="no">setCacheFolder</a></b>(const QString &amp;<i>folder</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#setRowLevel" translate="no">setRowLevel</a></b>(int <i>row</i>, qreal <i>level</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#setRowMuted" translate="no">setRowMuted</a></b>(int <i>row</i>, bool <i>muted</i>)</td></tr>
@@ -158,11 +159,16 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#stepsChanged" translate="no">stepsChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#transientsDetected" translate="no">transientsDetected</a></b>(int <i>slot</i>, const QVariantList &amp;<i>onsets</i>)</td></tr>
 </table></div>
+<h2 id="reimplemented-protected-functions">Reimplemented Protected Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#keyForNote" translate="no">keyForNote</a></b>(int <i>note</i>, int <i>slot</i>, const Machine::KeyboardContext &amp;<i>context</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual float </td><td class="memItemRight bottomAlign"><b><a href="samplermachine.html#noteGain" translate="no">noteGain</a></b>(int <i>note</i>) const override</td></tr>
+</table></div>
 <!-- $$$SamplerMachine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p>The current bank is the one that plays. Each loaded slot is one ClipAudioSource on the machine's sketchpad track (slot <i>i</i> on sample slot <i>i</i> % 5, row <i>i</i> / 5), set up on its root slice: its key zone and root note are the slot's note (kits.json's <code translate="no">baseNote</code> + <i>i</i>), so a pattern note or a live key plays exactly that sample, untransposed. It plays one-shot (a retrigger cuts the previous voice); the slot's pitch is the slice's pitch (±12 semitones); the trim (start as a fraction of the file, length as a fraction of what follows the start) is its start and length; reverse plays a reversed copy of the file, rendered once on a worker thread into the cache folder. The track is a sampler track (libravving::Track::Kind::Sampler), so its notes reach SamplerSynth, which plays the clips made for the track's slots.</p>
-<p>The step pattern follows <a href="drummachine.html" translate="no">DrumMachine</a>'s interface: a row per slot, an accent row, and per-row level, mute and solo applied as velocities. Presets (<code translate="no">sampler-presets.json</code>) are rhythms over the slots: keys &quot;1&quot; to &quot;8&quot; a row each, &quot;x&quot; a hit and &quot;X&quot; an accented one. The current bank is view state, outside the undo history, and a section keeps the banks' hits, not their samples.</p>
+<p>The step pattern follows <a href="drummachine.html" translate="no">DrumMachine</a>'s interface: a row per slot, an accent row, and per-row level, mute and solo: the level is the velocity a hit is written at, the mute and the solo the slot's note gain as it plays (libravving::Track::setNoteGain()), so they rewrite nothing; ONLY KICK skips the whole pattern (<a href="machine.html#applyKickMode" translate="no">Machine::applyKickMode</a>()). Presets (<code translate="no">sampler-presets.json</code>) are rhythms over the slots: keys &quot;1&quot; to &quot;8&quot; a row each, &quot;x&quot; a hit and &quot;X&quot; an accented one. The current bank is view state, outside the undo history, and a section keeps the banks' hits, not their samples.</p>
 </div>
 <!-- @@@SamplerMachine -->
 <div class="prop">
@@ -377,6 +383,13 @@
 </div><!-- @@@detectTransients -->
 </div>
 <div class="fnitem">
+<!-- $$$keyForNote[overload1]$$$keyForNoteintintconstMachine::KeyboardContext& -->
+<h3 class="fn" translate="no" id="keyForNote"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">int</span> SamplerMachine::<span class="name">keyForNote</span>(<span class="type">int</span> <i>note</i>, <span class="type">int</span> <i>slot</i>, const <span class="type"><a href="machine-keyboardcontext.html" translate="no">Machine::KeyboardContext</a></span> &amp;<i>context</i>) const</h3>
+<p>Reimplements: <a href="machine.html#keyForNote" translate="no">Machine::keyForNote</a>(int note, int slot, const Machine::KeyboardContext &amp;context) const.</p>
+<p>A controller's <i translate="no">note</i> plays a slot: a Lightpad's pad is its slot, any other note the slot from the machine's base note, wrapping (<a href="samplermachine.html#slotForNote" translate="no">slotForNote</a>()); <i translate="no">slot</i> is unused.</p>
+<!-- @@@keyForNote -->
+</div>
+<div class="fnitem">
 <!-- $$$loadSample[overload1]$$$loadSampleintconstQString&qrealqreal -->
 <h3 class="fn" translate="no" id="loadSample"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> SamplerMachine::<span class="name">loadSample</span>(<span class="type">int</span> <i>slot</i>, const <span class="type">QString</span> &amp;<i>path</i>, <span class="type">qreal</span> <i>start</i> = 0, <span class="type">qreal</span> <i>length</i> = 1)</h3>
 <p>Puts the sample file <i translate="no">path</i> in <i translate="no">slot</i> of the current bank, trimmed to <i translate="no">start</i> and <i translate="no">length</i> as <a href="samplermachine.html#setSlotTrim" translate="no">setSlotTrim</a>() takes them. Pitch and reverse are reset; the slot's mix stays.</p>
@@ -394,6 +407,13 @@
 <h3 class="fn" translate="no" id="loadedSlotsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> SamplerMachine::<span class="name">loadedSlotsChanged</span>()</h3>
 <p>Emitted when the set of loaded slots changes; the studio rewires the sample outputs (<a href="samplermachine.html#loadedSampleNumbers" translate="no">loadedSampleNumbers</a>()).</p>
 <!-- @@@loadedSlotsChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$noteGain[overload1]$$$noteGainint -->
+<h3 class="fn" translate="no" id="noteGain"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">float</span> SamplerMachine::<span class="name">noteGain</span>(<span class="type">int</span> <i>note</i>) const</h3>
+<p>Reimplements: <a href="machine.html#noteGain" translate="no">Machine::noteGain</a>(int note) const.</p>
+<p>A slot's note plays at 1 while the slot is audible(), else 0; a note of no slot at 1.</p>
+<!-- @@@noteGain -->
 </div>
 <div class="fnitem">
 <!-- $$$playPositionsChanged -->
@@ -424,8 +444,8 @@
 <!-- @@@sectionBars -->
 </div>
 <div class="fnitem">
-<!-- $$$setBridge[overload1]$$$setBridgeZynthboxBridge* -->
-<h3 class="fn" translate="no" id="setBridge"><span class="type">void</span> SamplerMachine::<span class="name">setBridge</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>)</h3>
+<!-- $$$setBridge[overload1]$$$setBridgeDeviceBridge* -->
+<h3 class="fn" translate="no" id="setBridge"><span class="type">void</span> SamplerMachine::<span class="name">setBridge</span>(<span class="type"><a href="devicebridge.html" translate="no">DeviceBridge</a></span> *<i>bridge</i>)</h3>
 <p>Sets the <i translate="no">bridge</i> through which the machine loads the slots' samples; set before the machine is attached.</p>
 <!-- @@@setBridge -->
 </div>

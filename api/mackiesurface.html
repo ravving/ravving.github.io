@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- mackiesurface.cpp -->
+  <meta name="description" content="A control surface in Mackie Control's DAW mode (a Donner STARRYCTRL) as the instruments' mixer: a ControllerDriver with mixer strips (ControllerMixer).">
+  <meta name="keywords" content="class">
+  <title>MackieSurface Class | ravving C++ API 0.7.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>MackieSurface</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#reimplemented-protected-functions">Reimplemented Protected Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">MackieSurface Class</h1>
+<!-- $$$MackieSurface-brief -->
+<p>A control surface in Mackie Control's DAW mode (a Donner STARRYCTRL) as the instruments' mixer: a <a href="controllerdriver.html" translate="no">ControllerDriver</a> with mixer strips (<a href="controllermixer.html" translate="no">ControllerMixer</a>). <a href="#details">More...</a></p>
+<!-- @@@MackieSurface -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;mackiesurface.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="controllerdriver.html" translate="no">ControllerDriver</a> and <a href="controllermixer.html" translate="no">ControllerMixer</a></td></tr>
+</table></div>
+<ul>
+<li><a href="mackiesurface-members.html">List of all members, including inherited members</a></li>
+<li>MackieSurface is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#MackieSurface" translate="no">MackieSurface</a></b>(const ControllerId &amp;<i>id</i>, const ControllerSettings &amp;<i>settings</i>, MidiTransport *<i>transport</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#faderPickup" translate="no">faderPickup</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#setClock" translate="no">setClock</a></b>(const std::function&lt;qint64 ()&gt; &amp;<i>now</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#setFaderPickup" translate="no">setFaderPickup</a></b>(bool <i>pickup</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#setPacing" translate="no">setPacing</a></b>(int <i>gapMs</i>, int <i>perFlush</i>, int <i>faderGapMs</i> = 30)</td></tr>
+</table></div>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#controlSurface" translate="no">controlSurface</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual ControllerId </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#controller" translate="no">controller</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#followStrip" translate="no">followStrip</a></b>(int <i>strip</i>, const MixerStrip &amp;<i>state</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#followTransport" translate="no">followTransport</a></b>(const MixerTransport &amp;<i>state</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#receiveMidi" translate="no">receiveMidi</a></b>(int <i>size</i>, quint8 <i>status</i>, quint8 <i>data1</i>, quint8 <i>data2</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#start" translate="no">start</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#stop" translate="no">stop</a></b>() override</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> DriverSpec </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#spec" translate="no">spec</a></b>()</td></tr>
+</table></div>
+<h2 id="reimplemented-protected-functions">Reimplemented Protected Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="mackiesurface.html#handle" translate="no">handle</a></b>(const QByteArray &amp;<i>bytes</i>) override</td></tr>
+</table></div>
+<!-- $$$MackieSurface-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Its eight channel strips are the instruments, in the order <a href="controllermixers.html" translate="no">ControllerMixers</a> has them. On each strip:</p>
+<ul>
+<li>the fader is the instrument's level, as the surface labels it. A fader has no motor: it takes the level over once it reaches it (within PickupWindow, or crossing it), so a fader left elsewhere does not jump the level; a level changed anywhere else lets go of it until it is reached again. With the pick-up off (<a href="mackiesurface.html#setFaderPickup" translate="no">setFaderPickup</a>(), the controller's <code translate="no">pickup</code> setting) any move sets the level. The level's position goes back to the fader, so the surface's own light above it shows whether the two agree. Near 0 dB (UnityZone) is 0 dB.</li>
+<li>the knob, an endless V-Pot, is the instrument's pan: each tick PanStep left or right, faster as the knob turns faster (<a href="relativeencoder.html" translate="no">RelativeEncoder</a>), from where the pan is. Turned through the middle it stops there once; pressed (a surface whose knobs press) it goes back to the middle.</li>
+<li>the buttons are the instrument's mute (M), solo (S), take (R: ● on the instrument's strip, flashing while it counts in) and stop (the fourth: its pattern paused, ❚❚). Each acts on its press.</li>
+</ul>
+<p>Every light follows the instruments whatever changes them, and the transport's PLAY (lit while playing), STOP (lit while stopped) and RECORD (a take or LIVE REC: flashing while it counts in, lit while it records). △ and ▽ show the previous and the next machine, ◀◀ and ▶▶ skip a bar back and on. The transport keys themselves, ◁ ▷ and the bank keys are left to <a href="midiinput.html" translate="no">MidiInput</a>'s learned keys (the surface's defaults in data/midi-devices.json: PLAY plays and pauses, STOP stops).</p>
+<p>What goes out is what changed only: each light and fader is sent when its state differs from what it was last sent, and changes waiting to go are merged (a fader moving fast sends its latest position). They go in small batches (<a href="mackiesurface.html#setPacing" translate="no">setPacing</a>()), a resync on connecting included, which a Bluetooth link takes in its stride. Nothing runs while nothing changes. GUI thread only.</p>
+</div>
+<!-- @@@MackieSurface -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$MackieSurface[overload1]$$$MackieSurfaceconstControllerId&constControllerSettings&MidiTransport*QObject* -->
+<h3 class="fn" translate="no" id="MackieSurface">MackieSurface::<span class="name">MackieSurface</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>, const <span class="type"><a href="controllersettings.html" translate="no">ControllerSettings</a></span> &amp;<i>settings</i>, <span class="type"><a href="miditransport.html" translate="no">MidiTransport</a></span> *<i>transport</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>The surface of the controller <i translate="no">id</i> as <i translate="no">settings</i> say (its <code translate="no">knobs'</code> encoding, Mackie Control's sign and magnitude unless said; its faders' <code translate="no">pickup</code>), sending through <i translate="no">transport</i>, with <i translate="no">parent</i>.</p>
+<!-- @@@MackieSurface -->
+</div>
+<div class="fnitem">
+<!-- $$$controlSurface[overload1]$$$controlSurface -->
+<h3 class="fn" translate="no" id="controlSurface"><code class="details extra" translate="no">[override virtual]</code> <span class="type">bool</span> MackieSurface::<span class="name">controlSurface</span>() const</h3>
+<p>Reimplements: <a href="controllerdriver.html#controlSurface" translate="no">ControllerDriver::controlSurface</a>() const.</p>
+<p>Returns true: the surface's messages are its own, never notes to play.</p>
+<!-- @@@controlSurface -->
+</div>
+<div class="fnitem">
+<!-- $$$controller[overload1]$$$controller -->
+<h3 class="fn" translate="no" id="controller"><code class="details extra" translate="no">[override virtual]</code> <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> MackieSurface::<span class="name">controller</span>() const</h3>
+<p>Reimplements: <a href="controllercapability.html#controller" translate="no">ControllerCapability::controller</a>() const.</p>
+<p>Returns the controller's id (<a href="controllerdriver.html#id" translate="no">ControllerDriver::id</a>()).</p>
+<!-- @@@controller -->
+</div>
+<div class="fnitem">
+<!-- $$$faderPickup[overload1]$$$faderPickup -->
+<h3 class="fn" translate="no" id="faderPickup"><span class="type">bool</span> MackieSurface::<span class="name">faderPickup</span>() const</h3>
+<p>Returns whether the faders wait to reach their level (<a href="mackiesurface.html#setFaderPickup" translate="no">setFaderPickup</a>()).</p>
+<p><b>See also </b><a href="mackiesurface.html#setFaderPickup" translate="no">setFaderPickup</a>().</p>
+<!-- @@@faderPickup -->
+</div>
+<div class="fnitem">
+<!-- $$$followStrip[overload1]$$$followStripintconstMixerStrip& -->
+<h3 class="fn" translate="no" id="followStrip"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> MackieSurface::<span class="name">followStrip</span>(<span class="type">int</span> <i>strip</i>, const <span class="type"><a href="mixerstrip.html" translate="no">MixerStrip</a></span> &amp;<i>state</i>)</h3>
+<p>Reimplements: <a href="controllermixer.html#followStrip" translate="no">ControllerMixer::followStrip</a>(int strip, const MixerStrip &amp;state).</p>
+<p>Strip <i translate="no">strip</i> shows <i translate="no">state</i> now: its lights follow, and a level changed by anything but its fader lets the fader go and shows it where the level is.</p>
+<!-- @@@followStrip -->
+</div>
+<div class="fnitem">
+<!-- $$$followTransport[overload1]$$$followTransportconstMixerTransport& -->
+<h3 class="fn" translate="no" id="followTransport"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> MackieSurface::<span class="name">followTransport</span>(const <span class="type"><a href="mixertransport.html" translate="no">MixerTransport</a></span> &amp;<i>state</i>)</h3>
+<p>Reimplements: <a href="controllermixer.html#followTransport" translate="no">ControllerMixer::followTransport</a>(const MixerTransport &amp;state).</p>
+<p>The transport is <i translate="no">state</i> now: PLAY, STOP and RECORD light by it.</p>
+<!-- @@@followTransport -->
+</div>
+<div class="fnitem">
+<!-- $$$handle[overload1]$$$handleconstQByteArray& -->
+<h3 class="fn" translate="no" id="handle"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">void</span> MackieSurface::<span class="name">handle</span>(const <span class="type">QByteArray</span> &amp;<i>bytes</i>)</h3>
+<p>Reimplements: <a href="controllerdriver.html#handle" translate="no">ControllerDriver::handle</a>(const QByteArray &amp;bytes).</p>
+<p>A System Exclusive message <i translate="no">bytes</i> from the surface (a Mackie Control handshake, on the surfaces that send one): logged, nothing more.</p>
+<!-- @@@handle -->
+</div>
+<div class="fnitem">
+<!-- $$$receiveMidi[overload1]$$$receiveMidiintquint8quint8quint8 -->
+<h3 class="fn" translate="no" id="receiveMidi"><code class="details extra" translate="no">[override virtual]</code> <span class="type">bool</span> MackieSurface::<span class="name">receiveMidi</span>(<span class="type">int</span> <i>size</i>, <span class="type">quint8</span> <i>status</i>, <span class="type">quint8</span> <i>data1</i>, <span class="type">quint8</span> <i>data2</i>)</h3>
+<p>Reimplements: <a href="controllerdriver.html#receiveMidi" translate="no">ControllerDriver::receiveMidi</a>(int size, quint8 status, quint8 data1, quint8 data2).</p>
+<p>Takes the surface's message of <i translate="no">size</i> bytes <i translate="no">status</i> <i translate="no">data1</i> <i translate="no">data2</i> if it is a channel strip's fader, knob or button, or a key of its own (△ ▽, ◀◀ ▶▶), and returns whether it did. Anything else (the transport keys, ◁ ▷) is left to <a href="midiinput.html" translate="no">MidiInput</a>.</p>
+<!-- @@@receiveMidi -->
+</div>
+<div class="fnitem">
+<!-- $$$setClock[overload1]$$$setClockconststd::function<qint64()>& -->
+<h3 class="fn" translate="no" id="setClock"><span class="type">void</span> MackieSurface::<span class="name">setClock</span>(const <span class="type">std::function</span>&lt;<span class="type">qint64</span> ()&gt; &amp;<i>now</i>)</h3>
+<p>Has the knobs' turns timed by <i translate="no">now</i> (milliseconds, monotonic), a clock of the caller's: for tests. Unset, the surface times them itself.</p>
+<!-- @@@setClock -->
+</div>
+<div class="fnitem">
+<!-- $$$setFaderPickup[overload1]$$$setFaderPickupbool -->
+<h3 class="fn" translate="no" id="setFaderPickup"><span class="type">void</span> MackieSurface::<span class="name">setFaderPickup</span>(<span class="type">bool</span> <i>pickup</i>)</h3>
+<p>Has every fader wait to reach its level before it takes it (<i translate="no">pickup</i> on, the default), or set the level on any move (off): <a href="faderpickup.html#setPickup" translate="no">FaderPickup::setPickup</a>().</p>
+<p><b>See also </b><a href="mackiesurface.html#faderPickup" translate="no">faderPickup</a>().</p>
+<!-- @@@setFaderPickup -->
+</div>
+<div class="fnitem">
+<!-- $$$setPacing[overload1]$$$setPacingintintint -->
+<h3 class="fn" translate="no" id="setPacing"><span class="type">void</span> MackieSurface::<span class="name">setPacing</span>(<span class="type">int</span> <i>gapMs</i>, <span class="type">int</span> <i>perFlush</i>, <span class="type">int</span> <i>faderGapMs</i> = 30)</h3>
+<p>Sends at most <i translate="no">perFlush</i> messages at a time, <i translate="no">gapMs</i> apart, and a fader's position at most once every <i translate="no">faderGapMs</i> (8 ms, 12 and 30 ms by default: a resync of every light and fader in a few batches, a moving level at about 30 a second).</p>
+<!-- @@@setPacing -->
+</div>
+<div class="fnitem">
+<!-- $$$spec[overload1]$$$spec -->
+<h3 class="fn" translate="no" id="spec"><code class="details extra" translate="no">[static]</code> <span class="type"><a href="driverspec.html" translate="no">DriverSpec</a></span> MackieSurface::<span class="name">spec</span>()</h3>
+<p>Returns how the driver is added to <a href="controllerdrivers.html" translate="no">ControllerDrivers</a>: for the controllers whose settings name <code translate="no">mackie</code> as their surface, remade when their knobs' encoding or their faders' pick-up changes.</p>
+<!-- @@@spec -->
+</div>
+<div class="fnitem">
+<!-- $$$start[overload1]$$$start -->
+<h3 class="fn" translate="no" id="start"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> MackieSurface::<span class="name">start</span>()</h3>
+<p>Reimplements: <a href="controllerdriver.html#start" translate="no">ControllerDriver::start</a>().</p>
+<p>Starts hosting: the surface needs no handshake, so it is ready at once. What it shows goes out as it comes (<a href="mackiesurface.html#followStrip" translate="no">followStrip</a>(), <a href="mackiesurface.html#followTransport" translate="no">followTransport</a>()); a strip with no instrument is dark.</p>
+<!-- @@@start -->
+</div>
+<div class="fnitem">
+<!-- $$$stop[overload1]$$$stop -->
+<h3 class="fn" translate="no" id="stop"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> MackieSurface::<span class="name">stop</span>()</h3>
+<p>Reimplements: <a href="controllerdriver.html#stop" translate="no">ControllerDriver::stop</a>().</p>
+<p>Stops hosting: the surface's lights go out, and what was waiting is dropped. What it knew of the surface goes too (where its faders are, which held which level, the knobs' speed): when it connects again, every light and fader is sent again and each fader picks its level up anew.</p>
+<!-- @@@stop -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

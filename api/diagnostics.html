@@ -5,7 +5,7 @@
 <!-- diagnostics.cpp -->
   <meta name="description" content="The issue registry, published to QML as issues: the problems on this device now, with translated texts and suggested fixes.">
   <meta name="keywords" content="class">
-  <title>Diagnostics Class | ravving C++ API 0.6.0</title>
+  <title>Diagnostics Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -105,7 +105,7 @@
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#Diagnostics" translate="no">Diagnostics</a></b>(QObject *<i>parent</i> = nullptr)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#act" translate="no">act</a></b>(const QString &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#act" translate="no">act</a></b>(const QString &amp;<i>id</i>, const QString &amp;<i>chosen</i> = QString())</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#clear" translate="no">clear</a></b>(const QString &amp;<i>id</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#counts-prop" translate="no">counts</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#dismiss" translate="no">dismiss</a></b>(const QString &amp;<i>id</i>)</td></tr>
@@ -116,12 +116,14 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#note" translate="no">note</a></b>(const QString &amp;<i>text</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#notices-prop" translate="no">notices</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#report" translate="no">report</a></b>(const QString &amp;<i>id</i>, const QString &amp;<i>component</i>, const QString &amp;<i>severity</i>, const QString &amp;<i>title</i>, const QString &amp;<i>detail</i> = QString(), const QString &amp;<i>suggestion</i> = QString(), const QString &amp;<i>action</i> = QString())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#report-1" translate="no">report</a></b>(const QString &amp;<i>id</i>, const QString &amp;<i>component</i>, const QString &amp;<i>severity</i>, const QString &amp;<i>title</i>, const QString &amp;<i>detail</i>, const QString &amp;<i>suggestion</i>, const QStringList &amp;<i>actions</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#summary-prop" translate="no">summary</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#warnings-prop" translate="no">warnings</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#worst-prop" translate="no">worst</a></b>() const</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#actionRequested" translate="no">actionRequested</a></b>(const QString &amp;<i>id</i>, const QString &amp;<i>action</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#issues-prop" translate="no">issuesChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#log-prop" translate="no">logChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="diagnostics.html#reported" translate="no">reported</a></b>(const QString &amp;<i>severity</i>, const QString &amp;<i>title</i>)</td></tr>
@@ -134,7 +136,7 @@
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p>Every component runs its own checks (at start, and whenever something fails or recovers) and reports here through <a href="issues.html#report" translate="no">Issues::report</a>() and <a href="issues.html#clear" translate="no">Issues::clear</a>().</p>
-<p>An issue is a map with <code translate="no">id</code>, <code translate="no">component</code> and its translated <code translate="no">componentLabel</code>, <code translate="no">severity</code>, <code translate="no">title</code>, <code translate="no">detail</code>, <code translate="no">suggestion</code>, <code translate="no">action</code> and its <code translate="no">actionLabel</code>, <code translate="no">since</code> (the ISO time of the first report) and <code translate="no">count</code> (the reports since). The severities are <code translate="no">error</code> (something does not work), <code translate="no">warning</code> (it works worse or will stop) and <code translate="no">notice</code> (informational, no action needed). The actions are <code translate="no">restart</code> (ravving), <code translate="no">unset-gdb</code> (the gdb aid off, then restart) and <code translate="no">reboot</code>.</p>
+<p>An issue is a map with <code translate="no">id</code>, <code translate="no">component</code> and its translated <code translate="no">componentLabel</code>, <code translate="no">severity</code>, <code translate="no">title</code>, <code translate="no">detail</code>, <code translate="no">suggestion</code>, <code translate="no">actions</code> (none, one or more, each <code translate="no">{id, label}</code>: a button each), <code translate="no">action</code> and its <code translate="no">actionLabel</code> (the first of them), <code translate="no">since</code> (the ISO time of the first report) and <code translate="no">count</code> (the reports since). The severities are <code translate="no">error</code> (something does not work), <code translate="no">warning</code> (it works worse or will stop) and <code translate="no">notice</code> (informational, no action needed). The actions are <code translate="no">restart</code> (ravving), <code translate="no">unset-gdb</code> (the gdb aid off, then restart), <code translate="no">reboot</code> and <code translate="no">all-notes-off</code> (Studio ends every note the instruments hold).</p>
 <p>Reporting an id again updates it and increments its count; <a href="diagnostics.html#clear" translate="no">clear</a>() removes it when the component sees it recovered; <a href="diagnostics.html#dismiss" translate="no">dismiss</a>() hides it while its detail stays the same, and it comes back when the detail changes.</p>
 <p>log keeps the last 40 warnings ravving printed (the message handler in <code translate="no">main.cpp</code> feeds <a href="diagnostics.html#note" translate="no">note</a>()). <a href="diagnostics.html#report" translate="no">report</a>() and <a href="diagnostics.html#note" translate="no">note</a>() may be called from any thread; they are queued to this object's thread. One instance, created by main() (<a href="diagnostics.html#instance" translate="no">instance</a>()).</p>
 </div>
@@ -263,11 +265,17 @@
 <!-- @@@Diagnostics -->
 </div>
 <div class="fnitem">
-<!-- $$$act[overload1]$$$actconstQString& -->
-<h3 class="fn" translate="no" id="act"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Diagnostics::<span class="name">act</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
-<p>Runs the action of the issue <i translate="no">id</i>: <code translate="no">restart</code> restarts ravving's service, <code translate="no">unset-gdb</code> removes <code translate="no">RAVVING_GDB</code> from the user manager's environment and restarts, <code translate="no">reboot</code> reboots the device.</p>
+<!-- $$$act[overload1]$$$actconstQString&constQString& -->
+<h3 class="fn" translate="no" id="act"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Diagnostics::<span class="name">act</span>(const <span class="type">QString</span> &amp;<i>id</i>, const <span class="type">QString</span> &amp;<i>chosen</i> = QString())</h3>
+<p>Runs the action <i translate="no">chosen</i> of the issue <i translate="no">id</i> (its first one when <i translate="no">chosen</i> is empty; nothing when the issue has no such action): <code translate="no">restart</code> restarts ravving's service, <code translate="no">unset-gdb</code> removes <code translate="no">RAVVING_GDB</code> from the user manager's environment and restarts, <code translate="no">reboot</code> reboots the device; any other goes out as <a href="diagnostics.html#actionRequested" translate="no">actionRequested</a>() for the component that carries it out.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@act -->
+</div>
+<div class="fnitem">
+<!-- $$$actionRequested[overload1]$$$actionRequestedconstQString&constQString& -->
+<h3 class="fn" translate="no" id="actionRequested"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> Diagnostics::<span class="name">actionRequested</span>(const <span class="type">QString</span> &amp;<i>id</i>, const <span class="type">QString</span> &amp;<i>action</i>)</h3>
+<p>Emitted when the issue <i translate="no">id</i>'s <i translate="no">action</i> is one a component carries out (<a href="diagnostics.html#act" translate="no">act</a>()), not Diagnostics itself.</p>
+<!-- @@@actionRequested -->
 </div>
 <div class="fnitem">
 <!-- $$$clear[overload1]$$$clearconstQString& -->
@@ -309,6 +317,12 @@
 <p>Reports the problem <i translate="no">id</i>, found (or found again) by <i translate="no">component</i>, at <i translate="no">severity</i>, with its <i translate="no">title</i>, <i translate="no">detail</i>, <i translate="no">suggestion</i> and <i translate="no">action</i> (see the class description). A dismissed issue with the same detail stays hidden. Thread-safe: from another thread the report is queued. Also logs a line to the journal.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@report -->
+</div>
+<div class="fnitem">
+<!-- $$$report$$$reportconstQString&constQString&constQString&constQString&constQString&constQString&constQStringList& -->
+<h3 class="fn" translate="no" id="report-1"><span class="type">void</span> Diagnostics::<span class="name">report</span>(const <span class="type">QString</span> &amp;<i>id</i>, const <span class="type">QString</span> &amp;<i>component</i>, const <span class="type">QString</span> &amp;<i>severity</i>, const <span class="type">QString</span> &amp;<i>title</i>, const <span class="type">QString</span> &amp;<i>detail</i>, const <span class="type">QString</span> &amp;<i>suggestion</i>, const <span class="type">QStringList</span> &amp;<i>actions</i>)</h3>
+<p>Reports the problem <i translate="no">id</i> as report() does, with <i translate="no">actions</i>, each a button on the issue (the first is what SELECT does), in the order given.</p>
+<!-- @@@report -->
 </div>
 <div class="fnitem">
 <!-- $$$reported[overload1]$$$reportedconstQString&constQString& -->

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- controllermixer.cpp -->
+  <meta name="description" content="A controller with mixer strips, a control surface: each strip follows an instrument (followStrip()), the transport buttons the transport (followTransport()), and the strips' controls come back as requests (askStrip(), askTransport()). Its driver implements it (MackieSurface).">
+  <meta name="keywords" content="class">
+  <title>ControllerMixer Class | ravving C++ API 0.7.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>ControllerMixer</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#protected-functions">Protected Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">ControllerMixer Class</h1>
+<!-- $$$ControllerMixer-brief -->
+<p>A controller with mixer strips, a control surface: each strip follows an instrument (<a href="controllermixer.html#followStrip" translate="no">followStrip</a>()), the transport buttons the transport (<a href="controllermixer.html#followTransport" translate="no">followTransport</a>()), and the strips' controls come back as requests (<a href="controllermixer.html#askStrip" translate="no">askStrip</a>(), <a href="controllermixer.html#askTransport" translate="no">askTransport</a>()). Its driver implements it (<a href="mackiesurface.html" translate="no">MackieSurface</a>). <a href="#details">More...</a></p>
+<!-- @@@ControllerMixer -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;controllermixer.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="controllercapability.html" translate="no">ControllerCapability</a></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="learnedmixer.html" translate="no">LearnedMixer</a> and <a href="mackiesurface.html" translate="no">MackieSurface</a></p>
+</td></tr>
+</table></div>
+<ul>
+<li><a href="controllermixer-members.html">List of all members, including inherited members</a></li>
+<li>ControllerMixer is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="controllermixer.html#StripRequest-enum" translate="no">StripRequest</a></b> { Level, Pan, Mute, Solo, Record, Stop }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="controllermixer.html#TransportRequest-enum" translate="no">TransportRequest</a></b> { Pause, Page, Skip }</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="controllermixer.html#followStrip" translate="no">followStrip</a></b>(int <i>strip</i>, const MixerStrip &amp;<i>state</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="controllermixer.html#followTransport" translate="no">followTransport</a></b>(const MixerTransport &amp;<i>state</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllermixer.html#setMixerRequests" translate="no">setMixerRequests</a></b>(const ControllerMixer::StripRequests &amp;<i>strips</i>, const ControllerMixer::TransportRequests &amp;<i>transport</i>)</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="controllermixer.html#snappedLevel" translate="no">snappedLevel</a></b>(qreal <i>level</i>, qreal <i>unity</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="controllermixer.html#turnedLevel" translate="no">turnedLevel</a></b>(qreal <i>level</i>, qreal <i>unity</i>, int <i>ticks</i>, qreal <i>step</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="controllermixer.html#turnedPan" translate="no">turnedPan</a></b>(qreal <i>pan</i>, int <i>ticks</i>, qreal <i>step</i>)</td></tr>
+</table></div>
+<h2 id="protected-functions">Protected Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllermixer.html#askStrip" translate="no">askStrip</a></b>(int <i>strip</i>, ControllerMixer::StripRequest <i>request</i>, qreal <i>value</i> = 0) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="controllermixer.html#askTransport" translate="no">askTransport</a></b>(ControllerMixer::TransportRequest <i>request</i>, qreal <i>value</i> = 0) const</td></tr>
+</table></div>
+<!-- $$$ControllerMixer-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+</div>
+<!-- @@@ControllerMixer -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<div class="fnitem">
+<!-- $$$StripRequest$$$Level$$$Pan$$$Mute$$$Solo$$$Record$$$Stop -->
+<h3 class="fn" translate="no" id="StripRequest-enum">enum class ControllerMixer::<span class="name">StripRequest</span></h3>
+<p>What a strip's control asks of its instrument.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">ControllerMixer::StripRequest::Level</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">its level, to a value 0 to 1</td></tr>
+<tr><td class="topAlign"><code translate="no">ControllerMixer::StripRequest::Pan</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">its pan, to a value −1 to 1</td></tr>
+<tr><td class="topAlign"><code translate="no">ControllerMixer::StripRequest::Mute</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">its mute, flipped</td></tr>
+<tr><td class="topAlign"><code translate="no">ControllerMixer::StripRequest::Solo</code></td><td class="topAlign tblval"><code translate="no">3</code></td><td class="topAlign">its solo, flipped</td></tr>
+<tr><td class="topAlign"><code translate="no">ControllerMixer::StripRequest::Record</code></td><td class="topAlign tblval"><code translate="no">4</code></td><td class="topAlign">its take, started or ended</td></tr>
+<tr><td class="topAlign"><code translate="no">ControllerMixer::StripRequest::Stop</code></td><td class="topAlign tblval"><code translate="no">5</code></td><td class="topAlign">its written pattern, paused or played again</td></tr>
+</table></div>
+<!-- @@@StripRequest -->
+</div>
+<div class="fnitem">
+<!-- $$$TransportRequest$$$Pause$$$Page$$$Skip -->
+<h3 class="fn" translate="no" id="TransportRequest-enum">enum class ControllerMixer::<span class="name">TransportRequest</span></h3>
+<p>What a controller asks of the transport or the screen.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">ControllerMixer::TransportRequest::Pause</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">the transport, paused or gone on with</td></tr>
+<tr><td class="topAlign"><code translate="no">ControllerMixer::TransportRequest::Page</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">the screen's next or previous instrument page, the value's sign</td></tr>
+<tr><td class="topAlign"><code translate="no">ControllerMixer::TransportRequest::Skip</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">the transport, the value's bars on or back</td></tr>
+</table></div>
+<!-- @@@TransportRequest -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$askStrip[overload1]$$$askStripintControllerMixer::StripRequestqreal -->
+<h3 class="fn" translate="no" id="askStrip"><code class="details extra" translate="no">[protected]</code> <span class="type">void</span> ControllerMixer::<span class="name">askStrip</span>(<span class="type">int</span> <i>strip</i>, <span class="type"><a href="controllermixer.html#StripRequest-enum" translate="no">ControllerMixer::StripRequest</a></span> <i>request</i>, <span class="type">qreal</span> <i>value</i> = 0) const</h3>
+<p>Strip <i translate="no">strip</i>'s control asked <i translate="no">request</i> of its instrument; <i translate="no">value</i> is the level or the pan asked for.</p>
+<!-- @@@askStrip -->
+</div>
+<div class="fnitem">
+<!-- $$$askTransport[overload1]$$$askTransportControllerMixer::TransportRequestqreal -->
+<h3 class="fn" translate="no" id="askTransport"><code class="details extra" translate="no">[protected]</code> <span class="type">void</span> ControllerMixer::<span class="name">askTransport</span>(<span class="type"><a href="controllermixer.html#TransportRequest-enum" translate="no">ControllerMixer::TransportRequest</a></span> <i>request</i>, <span class="type">qreal</span> <i>value</i> = 0) const</h3>
+<p>The controller asked <i translate="no">request</i> of the transport or the screen; <i translate="no">value</i> is the bars to skip or the page's direction.</p>
+<!-- @@@askTransport -->
+</div>
+<div class="fnitem">
+<!-- $$$followStrip[overload1]$$$followStripintconstMixerStrip& -->
+<h3 class="fn" translate="no" id="followStrip"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">void</span> ControllerMixer::<span class="name">followStrip</span>(<span class="type">int</span> <i>strip</i>, const <span class="type"><a href="mixerstrip.html" translate="no">MixerStrip</a></span> &amp;<i>state</i>)</h3>
+<p>Strip <i translate="no">strip</i> (0 up) shows <i translate="no">state</i> now: its instrument changed, from wherever.</p>
+<!-- @@@followStrip -->
+</div>
+<div class="fnitem">
+<!-- $$$followTransport[overload1]$$$followTransportconstMixerTransport& -->
+<h3 class="fn" translate="no" id="followTransport"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">void</span> ControllerMixer::<span class="name">followTransport</span>(const <span class="type"><a href="mixertransport.html" translate="no">MixerTransport</a></span> &amp;<i>state</i>)</h3>
+<p>The transport is <i translate="no">state</i> now.</p>
+<!-- @@@followTransport -->
+</div>
+<div class="fnitem">
+<!-- $$$setMixerRequests[overload1]$$$setMixerRequestsconstControllerMixer::StripRequests&constControllerMixer::TransportRequests& -->
+<h3 class="fn" translate="no" id="setMixerRequests"><span class="type">void</span> ControllerMixer::<span class="name">setMixerRequests</span>(const <span class="type">ControllerMixer::StripRequests</span> &amp;<i>strips</i>, const <span class="type">ControllerMixer::TransportRequests</span> &amp;<i>transport</i>)</h3>
+<p>Has <a href="controllermixer.html#askStrip" translate="no">askStrip</a>() go to <i translate="no">strips</i> and <a href="controllermixer.html#askTransport" translate="no">askTransport</a>() to <i translate="no">transport</i> (<a href="controllermixers.html" translate="no">ControllerMixers</a> sets them; empty: nowhere).</p>
+<!-- @@@setMixerRequests -->
+</div>
+<div class="fnitem">
+<!-- $$$snappedLevel[overload1]$$$snappedLevelqrealqreal -->
+<h3 class="fn" translate="no" id="snappedLevel"><code class="details extra" translate="no">[static]</code> <span class="type">qreal</span> ControllerMixer::<span class="name">snappedLevel</span>(<span class="type">qreal</span> <i>level</i>, <span class="type">qreal</span> <i>unity</i>)</h3>
+<p>Returns <i translate="no">level</i>, or 0 dB (<i translate="no">unity</i>, -1 when not known) when it is within UnityZone of it.</p>
+<!-- @@@snappedLevel -->
+</div>
+<div class="fnitem">
+<!-- $$$turnedLevel[overload1]$$$turnedLevelqrealqrealintqreal -->
+<h3 class="fn" translate="no" id="turnedLevel"><code class="details extra" translate="no">[static]</code> <span class="type">qreal</span> ControllerMixer::<span class="name">turnedLevel</span>(<span class="type">qreal</span> <i>level</i>, <span class="type">qreal</span> <i>unity</i>, <span class="type">int</span> <i>ticks</i>, <span class="type">qreal</span> <i>step</i>)</h3>
+<p>Returns <i translate="no">level</i> turned by <i translate="no">ticks</i> of <i translate="no">step</i>, within 0 and 1: a turn going through 0 dB (<i translate="no">unity</i>, -1 when not known) stops there once, and the next tick goes on.</p>
+<!-- @@@turnedLevel -->
+</div>
+<div class="fnitem">
+<!-- $$$turnedPan[overload1]$$$turnedPanqrealintqreal -->
+<h3 class="fn" translate="no" id="turnedPan"><code class="details extra" translate="no">[static]</code> <span class="type">qreal</span> ControllerMixer::<span class="name">turnedPan</span>(<span class="type">qreal</span> <i>pan</i>, <span class="type">int</span> <i>ticks</i>, <span class="type">qreal</span> <i>step</i>)</h3>
+<p>Returns <i translate="no">pan</i> turned by <i translate="no">ticks</i> of <i translate="no">step</i>, within −1 and 1: a turn going through the middle stops there once, and the next tick goes on.</p>
+<!-- @@@turnedPan -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

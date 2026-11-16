@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- learnedmixer.cpp -->
+  <meta name="description" content="A plain MIDI controller as the instruments' mixer: its keys, knobs and faders learned as the MIXER controls in SETTINGS · MIDI (MixerControl), linked to the instruments through ControllerMixers like a control surface's strips (MackieSurface).">
+  <meta name="keywords" content="class">
+  <title>LearnedMixer Class | ravving C++ API 0.7.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>LearnedMixer</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">LearnedMixer Class</h1>
+<!-- $$$LearnedMixer-brief -->
+<p>A plain MIDI controller as the instruments' mixer: its keys, knobs and faders learned as the MIXER controls in SETTINGS · MIDI (<a href="mixercontrol.html" translate="no">MixerControl</a>), linked to the instruments through <a href="controllermixers.html" translate="no">ControllerMixers</a> like a control surface's strips (<a href="mackiesurface.html" translate="no">MackieSurface</a>). <a href="#details">More...</a></p>
+<!-- @@@LearnedMixer -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;learnedmixer.h&gt;</code></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="controllermixer.html" translate="no">ControllerMixer</a> and </td></tr>
+</table></div>
+<ul>
+<li><a href="learnedmixer-members.html">List of all members, including inherited members</a></li>
+<li>LearnedMixer is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#LearnedMixer" translate="no">LearnedMixer</a></b>(const ControllerId &amp;<i>id</i>, MidiTransport *<i>transport</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#lightsOff" translate="no">lightsOff</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#receive" translate="no">receive</a></b>(const QString &amp;<i>control</i>, int <i>status</i>, int <i>data1</i>, int <i>data2</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#setClock" translate="no">setClock</a></b>(const std::function&lt;qint64 ()&gt; &amp;<i>now</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#setControls" translate="no">setControls</a></b>(const QHash&lt;QString, QString&gt; &amp;<i>controls</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#setFaderPickup" translate="no">setFaderPickup</a></b>(bool <i>pickup</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#setKnobs" translate="no">setKnobs</a></b>(std::optional&lt;RelativeEncoder::Mode&gt; <i>knobs</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#setLights" translate="no">setLights</a></b>(bool <i>lights</i>)</td></tr>
+</table></div>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual ControllerId </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#controller" translate="no">controller</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#followStrip" translate="no">followStrip</a></b>(int <i>strip</i>, const MixerStrip &amp;<i>state</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#followTransport" translate="no">followTransport</a></b>(const MixerTransport &amp;<i>state</i>) override</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="learnedmixer.html#light" translate="no">light</a></b>(const QString &amp;<i>message</i>, bool <i>lit</i>)</td></tr>
+</table></div>
+<!-- $$$LearnedMixer-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>What a learned message does depends on what it is and what it is learned as:</p>
+<ul>
+<li>a fader or an absolute knob (a CC sending positions, or a pitch bend, 14 bits) on a strip's VOLUME or PAN takes the value over once it reaches it (within PickupWindow, or crossing it), as a surface's fader does: one left elsewhere does not jump the value, and a value changed anywhere else lets go of it until it is reached again; with the pick-up off (<a href="learnedmixer.html#setFaderPickup" translate="no">setFaderPickup</a>(), the controller's <code translate="no">pickup</code> setting) any move sets the value. Near 0 dB is 0 dB, near the middle the middle.</li>
+<li>an endless knob (a CC repeating a turn's values: <a href="encoderguess.html" translate="no">EncoderGuess</a>) on VOLUME or PAN turns it from where it is, faster as it turns faster (<a href="relativeencoder.html" translate="no">RelativeEncoder</a>): the volume LevelStep a tick, stopping once at 0 dB, the pan PanStep, stopping once in the middle.</li>
+<li>a key (a note, or a CC from MidiValues::PressedFrom up) on MUTE, SOLO, REC or PAUSE flips it on its press; on the transport's PAUSE it pauses while playing and goes on while paused; on VOLUME it sets 0 dB, on PAN the middle.</li>
+</ul>
+<p>A learned key's light follows its state (muted, soloed, a take on, paused): its own note or CC goes back to the controller at Lit or Unlit, which lights the pads and buttons of many controllers; <a href="learnedmixer.html#setLights" translate="no">setLights</a>() turns that off. Only what changed is sent, together. GUI thread only.</p>
+</div>
+<!-- @@@LearnedMixer -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$LearnedMixer[overload1]$$$LearnedMixerconstControllerId&MidiTransport*QObject* -->
+<h3 class="fn" translate="no" id="LearnedMixer">LearnedMixer::<span class="name">LearnedMixer</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>, <span class="type"><a href="miditransport.html" translate="no">MidiTransport</a></span> *<i>transport</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>The mixer of the controller <i translate="no">id</i>, its lights sent through <i translate="no">transport</i> (null: nowhere), with <i translate="no">parent</i>.</p>
+<!-- @@@LearnedMixer -->
+</div>
+<div class="fnitem">
+<!-- $$$controller[overload1]$$$controller -->
+<h3 class="fn" translate="no" id="controller"><code class="details extra" translate="no">[override virtual]</code> <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> LearnedMixer::<span class="name">controller</span>() const</h3>
+<p>Reimplements: <a href="controllercapability.html#controller" translate="no">ControllerCapability::controller</a>() const.</p>
+<p>Returns the controller's id.</p>
+<!-- @@@controller -->
+</div>
+<div class="fnitem">
+<!-- $$$followStrip[overload1]$$$followStripintconstMixerStrip& -->
+<h3 class="fn" translate="no" id="followStrip"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> LearnedMixer::<span class="name">followStrip</span>(<span class="type">int</span> <i>strip</i>, const <span class="type"><a href="mixerstrip.html" translate="no">MixerStrip</a></span> &amp;<i>state</i>)</h3>
+<p>Reimplements: <a href="controllermixer.html#followStrip" translate="no">ControllerMixer::followStrip</a>(int strip, const MixerStrip &amp;state).</p>
+<p>Strip <i translate="no">strip</i> shows <i translate="no">state</i> now: a level or pan changed by anything but the controller's fader lets the fader go, and the learned keys' lights follow.</p>
+<!-- @@@followStrip -->
+</div>
+<div class="fnitem">
+<!-- $$$followTransport[overload1]$$$followTransportconstMixerTransport& -->
+<h3 class="fn" translate="no" id="followTransport"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> LearnedMixer::<span class="name">followTransport</span>(const <span class="type"><a href="mixertransport.html" translate="no">MixerTransport</a></span> &amp;<i>state</i>)</h3>
+<p>Reimplements: <a href="controllermixer.html#followTransport" translate="no">ControllerMixer::followTransport</a>(const MixerTransport &amp;state).</p>
+<p>The transport is <i translate="no">state</i> now: a key learned as its PAUSE lights while paused.</p>
+<!-- @@@followTransport -->
+</div>
+<div class="fnitem">
+<!-- $$$light[overload1]$$$lightconstQString&bool -->
+<h3 class="fn" translate="no" id="light"><code class="details extra" translate="no">[static]</code> <span class="type">QByteArray</span> LearnedMixer::<span class="name">light</span>(const <span class="type">QString</span> &amp;<i>message</i>, <span class="type">bool</span> <i>lit</i>)</h3>
+<p>Returns the message that lights (<i translate="no">lit</i>) or darkens the key learned as <i translate="no">message</i>: a note-on or a CC on its own number and channel at MidiValues::Lit or MidiValues::Unlit; nothing for a pitch bend.</p>
+<!-- @@@light -->
+</div>
+<div class="fnitem">
+<!-- $$$lightsOff[overload1]$$$lightsOff -->
+<h3 class="fn" translate="no" id="lightsOff"><span class="type">void</span> LearnedMixer::<span class="name">lightsOff</span>()</h3>
+<p>Turns every light it lit off, and forgets them: sent again from scratch when it lights them next.</p>
+<!-- @@@lightsOff -->
+</div>
+<div class="fnitem">
+<!-- $$$receive[overload1]$$$receiveconstQString&intintint -->
+<h3 class="fn" translate="no" id="receive"><span class="type">void</span> LearnedMixer::<span class="name">receive</span>(const <span class="type">QString</span> &amp;<i>control</i>, <span class="type">int</span> <i>status</i>, <span class="type">int</span> <i>data1</i>, <span class="type">int</span> <i>data2</i>)</h3>
+<p>The controller sent <i translate="no">status</i> (<code translate="no">0x90</code> / <code translate="no">0x80</code> a note, <code translate="no">0xB0</code> a CC, <code translate="no">0xE0</code> a pitch bend; no channel) with <i translate="no">data1</i> and <i translate="no">data2</i>, learned as <i translate="no">control</i> (a <a href="mixercontrol.html" translate="no">MixerControl</a> id).</p>
+<!-- @@@receive -->
+</div>
+<div class="fnitem">
+<!-- $$$setClock[overload1]$$$setClockconststd::function<qint64()>& -->
+<h3 class="fn" translate="no" id="setClock"><span class="type">void</span> LearnedMixer::<span class="name">setClock</span>(const <span class="type">std::function</span>&lt;<span class="type">qint64</span> ()&gt; &amp;<i>now</i>)</h3>
+<p>Has the knobs' turns timed by <i translate="no">now</i> (milliseconds, monotonic), a clock of the caller's: for tests. Unset, the mixer times them itself.</p>
+<!-- @@@setClock -->
+</div>
+<div class="fnitem">
+<!-- $$$setControls[overload1]$$$setControlsconstQHash<QString,QString>& -->
+<h3 class="fn" translate="no" id="setControls"><span class="type">void</span> LearnedMixer::<span class="name">setControls</span>(const <span class="type">QHash</span>&lt;<span class="type">QString</span>, <span class="type">QString</span>&gt; &amp;<i>controls</i>)</h3>
+<p>The controller's MIXER controls are <i translate="no">controls</i> now (a control id to its message, as <a href="midiinput.html" translate="no">MidiInput</a> keeps them): a key learned for none of them goes dark, and what the knobs turned out to be is heard anew.</p>
+<!-- @@@setControls -->
+</div>
+<div class="fnitem">
+<!-- $$$setFaderPickup[overload1]$$$setFaderPickupbool -->
+<h3 class="fn" translate="no" id="setFaderPickup"><span class="type">void</span> LearnedMixer::<span class="name">setFaderPickup</span>(<span class="type">bool</span> <i>pickup</i>)</h3>
+<p>Has every fader and absolute knob wait to reach its value before it takes it (<i translate="no">pickup</i> on, the default), or set the value on any move (off): <a href="faderpickup.html#setPickup" translate="no">FaderPickup::setPickup</a>().</p>
+<!-- @@@setFaderPickup -->
+</div>
+<div class="fnitem">
+<!-- $$$setKnobs[overload1]$$$setKnobsstd::optional<RelativeEncoder::Mode> -->
+<h3 class="fn" translate="no" id="setKnobs"><span class="type">void</span> LearnedMixer::<span class="name">setKnobs</span>(<span class="type">std::optional</span>&lt;<span class="type"><a href="relativeencoder.html#Mode-enum" translate="no">RelativeEncoder::Mode</a></span>&gt; <i>knobs</i>)</h3>
+<p>Has the controller's endless knobs read as <i translate="no">knobs</i> (none: told by what they send).</p>
+<!-- @@@setKnobs -->
+</div>
+<div class="fnitem">
+<!-- $$$setLights[overload1]$$$setLightsbool -->
+<h3 class="fn" translate="no" id="setLights"><span class="type">void</span> LearnedMixer::<span class="name">setLights</span>(<span class="type">bool</span> <i>lights</i>)</h3>
+<p>Sends the learned keys' state back to the controller (<i translate="no">lights</i>), or not: turned off, the lights it lit go dark.</p>
+<!-- @@@setLights -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

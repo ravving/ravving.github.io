@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- enginecatalog.cpp -->
+  <meta name="description" content="Which engines this system can run: the programs on PATH, the LV2 plugins installed and the soundfonts found, and so which of a sound's engines plays.">
+  <meta name="keywords" content="class">
+  <title>EngineCatalog Class | ravving C++ API 0.7.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>EngineCatalog</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">EngineCatalog Class</h1>
+<!-- $$$EngineCatalog-brief -->
+<p>Which engines this system can run: the programs on <code translate="no">PATH</code>, the LV2 plugins installed and the soundfonts found, and so which of a sound's engines plays. <a href="#details">More...</a></p>
+<!-- @@@EngineCatalog -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;enginecatalog.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="enginecatalog-members.html">List of all members, including inherited members</a></li>
+<li>EngineCatalog is part of <a href="ravving-engines.html">Engines and effects</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#chosen" translate="no">chosen</a></b>(const QVariantMap &amp;<i>engine</i>, const QVariantList &amp;<i>alternatives</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#forgetPlugins" translate="no">forgetPlugins</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#hasPlugin" translate="no">hasPlugin</a></b>(const QString &amp;<i>uri</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#hasProgram" translate="no">hasProgram</a></b>(const QString &amp;<i>program</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#knowsPlugins" translate="no">knowsPlugins</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#lacking" translate="no">lacking</a></b>(const QVariantMap &amp;<i>engine</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#resolved" translate="no">resolved</a></b>(QVariantMap <i>machine</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#setPlugins" translate="no">setPlugins</a></b>(const QStringList &amp;<i>uris</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#setPrograms" translate="no">setPrograms</a></b>(const QStringList &amp;<i>programs</i>)</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#bundleFile" translate="no">bundleFile</a></b>(const QString &amp;<i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#parsePluginList" translate="no">parsePluginList</a></b>(const QByteArray &amp;<i>output</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#pluginFolders" translate="no">pluginFolders</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> EngineCatalog &amp;</td><td class="memItemRight bottomAlign"><b><a href="enginecatalog.html#shared" translate="no">shared</a></b>()</td></tr>
+</table></div>
+<!-- $$$EngineCatalog-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p><code translate="no">data/kits.json</code> names every engine as a Zynthbox has it. Another system (a desktop) may lack a plugin or a soundfont, so an engine may come with others to play in its place, in order, as <code translate="no">or</code> beside it:</p>
+<pre class="cpp" translate="no"><code class="cpp">
+ {<span class="string">&quot;name&quot;</span>: <span class="string">&quot;TAL NoiseMaker&quot;</span><span class="operator">,</span>
+  <span class="string">&quot;engine&quot;</span>: {<span class="string">&quot;type&quot;</span>: <span class="string">&quot;jalv&quot;</span><span class="operator">,</span> <span class="string">&quot;uri&quot;</span>: <span class="string">&quot;http://kunz.corrupt.ch/products/tal-noisemaker&quot;</span>}<span class="operator">,</span>
+  <span class="string">&quot;or&quot;</span>: <span class="operator">[</span>{<span class="string">&quot;name&quot;</span>: <span class="string">&quot;Polysynth&quot;</span><span class="operator">,</span> <span class="string">&quot;type&quot;</span>: <span class="string">&quot;fluidsynth&quot;</span><span class="operator">,</span>
+          <span class="string">&quot;soundfont&quot;</span>: <span class="string">&quot;/zynthian/zynthian-data/soundfonts/SF2 Instruments/FluidR3Mono_GM.sf3&quot;</span><span class="operator">,</span>
+          <span class="string">&quot;bank&quot;</span>: <span class="number">0</span><span class="operator">,</span> <span class="string">&quot;program&quot;</span>: <span class="number">90</span>}<span class="operator">]</span>}
+</code></pre>
+<p><a href="enginecatalog.html#resolved" translate="no">resolved</a>() gives a machine's config with the first engine that can run in the place of each (<a href="enginecatalog.html#chosen" translate="no">chosen</a>()), before <a href="engineprofiles.html" translate="no">EngineProfiles</a> reads it: the MODS are those of the engine that plays. An <code translate="no">or</code> entry is an engine object that may bring the <code translate="no">name</code> its sound is listed by. Where the first choice runs (a Zynthbox) nothing changes.</p>
+<p>An engine can run when <a href="enginecatalog.html#lacking" translate="no">lacking</a>() finds nothing missing: its program (<code translate="no">fluidsynth</code>, <code translate="no">jalv</code>), its plugin (a <code translate="no">jalv</code> engine's <code translate="no">uri</code> among the installed ones) and its soundfont (where <a href="paths.html#relocated" translate="no">Paths::relocated</a>() finds it). The installed plugins are what <code translate="no">lv2ls</code> lists, kept in <code translate="no">Paths::cache()/lv2-plugins.json</code> until a folder of <a href="enginecatalog.html#pluginFolders" translate="no">pluginFolders</a>() or a bundle in one changes; without <code translate="no">lv2ls</code>, and on the Zynthbox (which ships them all), the plugins are unknown and every one is taken as installed. <a href="enginecatalog.html#shared" translate="no">shared</a>() is the one the app asks; a test makes its own and says what is installed (<a href="enginecatalog.html#setPrograms" translate="no">setPrograms</a>(), <a href="enginecatalog.html#setPlugins" translate="no">setPlugins</a>()). GUI thread only.</p>
+</div>
+<!-- @@@EngineCatalog -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$bundleFile[overload1]$$$bundleFileconstQString& -->
+<h3 class="fn" translate="no" id="bundleFile"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> EngineCatalog::<span class="name">bundleFile</span>(const <span class="type">QString</span> &amp;<i>path</i>)</h3>
+<p>Returns where the file <i translate="no">path</i> of an LV2 bundle (<code translate="no">/usr/local/lib/lv2/X.lv2/presets.ttl</code>) is on this system: the path itself when it exists, else the same file of the bundle of that name in one of <a href="enginecatalog.html#pluginFolders" translate="no">pluginFolders</a>(), else the path unchanged.</p>
+<!-- @@@bundleFile -->
+</div>
+<div class="fnitem">
+<!-- $$$chosen[overload1]$$$chosenconstQVariantMap&constQVariantList& -->
+<h3 class="fn" translate="no" id="chosen"><span class="type">QVariantMap</span> EngineCatalog::<span class="name">chosen</span>(const <span class="type">QVariantMap</span> &amp;<i>engine</i>, const <span class="type">QVariantList</span> &amp;<i>alternatives</i>) const</h3>
+<p>Returns the one to play of <i translate="no">engine</i> and its <i translate="no">alternatives</i> (the <code translate="no">or</code> beside it): the first that lacks nothing (<a href="enginecatalog.html#lacking" translate="no">lacking</a>()), as it is listed (an alternative with its <code translate="no">name</code>); <i translate="no">engine</i> itself when none can run, so what is missing is the first choice.</p>
+<!-- @@@chosen -->
+</div>
+<div class="fnitem">
+<!-- $$$forgetPlugins[overload1]$$$forgetPlugins -->
+<h3 class="fn" translate="no" id="forgetPlugins"><span class="type">void</span> EngineCatalog::<span class="name">forgetPlugins</span>()</h3>
+<p>Forgets the installed plugins: they are read again when next asked (one was installed).</p>
+<!-- @@@forgetPlugins -->
+</div>
+<div class="fnitem">
+<!-- $$$hasPlugin[overload1]$$$hasPluginconstQString& -->
+<h3 class="fn" translate="no" id="hasPlugin"><span class="type">bool</span> EngineCatalog::<span class="name">hasPlugin</span>(const <span class="type">QString</span> &amp;<i>uri</i>) const</h3>
+<p>Returns whether the LV2 plugin <i translate="no">uri</i> is installed; <code translate="no">true</code> when the plugins are unknown (<a href="enginecatalog.html#knowsPlugins" translate="no">knowsPlugins</a>()), so a system without <code translate="no">lv2ls</code> starts every engine kits.json names.</p>
+<!-- @@@hasPlugin -->
+</div>
+<div class="fnitem">
+<!-- $$$hasProgram[overload1]$$$hasProgramconstQString& -->
+<h3 class="fn" translate="no" id="hasProgram"><span class="type">bool</span> EngineCatalog::<span class="name">hasProgram</span>(const <span class="type">QString</span> &amp;<i>program</i>) const</h3>
+<p>Returns whether <i translate="no">program</i> is on <code translate="no">PATH</code> (or among those <a href="enginecatalog.html#setPrograms" translate="no">setPrograms</a>() gave).</p>
+<!-- @@@hasProgram -->
+</div>
+<div class="fnitem">
+<!-- $$$knowsPlugins[overload1]$$$knowsPlugins -->
+<h3 class="fn" translate="no" id="knowsPlugins"><span class="type">bool</span> EngineCatalog::<span class="name">knowsPlugins</span>() const</h3>
+<p>Returns whether the installed plugins could be listed; without that <a href="enginecatalog.html#hasPlugin" translate="no">hasPlugin</a>() answers <code translate="no">true</code> for every plugin.</p>
+<!-- @@@knowsPlugins -->
+</div>
+<div class="fnitem">
+<!-- $$$lacking[overload1]$$$lackingconstQVariantMap& -->
+<h3 class="fn" translate="no" id="lacking"><span class="type">QString</span> EngineCatalog::<span class="name">lacking</span>(const <span class="type">QVariantMap</span> &amp;<i>engine</i>) const</h3>
+<p>Returns what this system lacks to run <i translate="no">engine</i> (a kits.json engine object): the program's name, the plugin's URI or the soundfont's path, the first one missing; empty when it can run, and for an object without a <code translate="no">type</code> (a machine with no engine of its own) or of a type unknown here.</p>
+<!-- @@@lacking -->
+</div>
+<div class="fnitem">
+<!-- $$$parsePluginList[overload1]$$$parsePluginListconstQByteArray& -->
+<h3 class="fn" translate="no" id="parsePluginList"><code class="details extra" translate="no">[static]</code> <span class="type">QStringList</span> EngineCatalog::<span class="name">parsePluginList</span>(const <span class="type">QByteArray</span> &amp;<i>output</i>)</h3>
+<p>Returns the plugin URIs in <i translate="no">output</i>, what <code translate="no">lv2ls</code> prints: one URI a line.</p>
+<!-- @@@parsePluginList -->
+</div>
+<div class="fnitem">
+<!-- $$$pluginFolders[overload1]$$$pluginFolders -->
+<h3 class="fn" translate="no" id="pluginFolders"><code class="details extra" translate="no">[static]</code> <span class="type">QStringList</span> EngineCatalog::<span class="name">pluginFolders</span>()</h3>
+<p>Returns the folders LV2 plugins are installed in, whether they exist or not: those of <code translate="no">LV2_PATH</code> when it is set, else the usual ones (<code translate="no">~/.lv2</code>, <code translate="no">/usr/local/lib/lv2</code>, <code translate="no">/usr/lib/lv2</code> and their <code translate="no">lib64</code> and multiarch kin).</p>
+<!-- @@@pluginFolders -->
+</div>
+<div class="fnitem">
+<!-- $$$resolved[overload1]$$$resolvedQVariantMap -->
+<h3 class="fn" translate="no" id="resolved"><span class="type">QVariantMap</span> EngineCatalog::<span class="name">resolved</span>(<span class="type">QVariantMap</span> <i>machine</i>) const</h3>
+<p>Returns the kits.json config <i translate="no">machine</i> as this system plays it: its own <code translate="no">engine</code> and each of its <code translate="no">sources'</code> the one <a href="enginecatalog.html#chosen" translate="no">chosen</a>() picks, the <code translate="no">or</code> lists gone. An alternative in the place of the machine's own engine brings its <code translate="no">name</code> as the <code translate="no">sourceName</code> and drops the <code translate="no">soundPresets</code> (the first choice's factory sounds, otherwise read from where this system has the plugin's bundle: <a href="enginecatalog.html#bundleFile" translate="no">bundleFile</a>()); one in the place of a source's renames the source when it has a <code translate="no">name</code>. A source none of whose engines can run is left out: its sound cannot be picked. The machine's own engine stays even when it cannot run, and <a href="soundengine.html#createEngine" translate="no">SoundEngine::createEngine</a>() reports it.</p>
+<!-- @@@resolved -->
+</div>
+<div class="fnitem">
+<!-- $$$setPlugins[overload1]$$$setPluginsconstQStringList& -->
+<h3 class="fn" translate="no" id="setPlugins"><span class="type">void</span> EngineCatalog::<span class="name">setPlugins</span>(const <span class="type">QStringList</span> &amp;<i>uris</i>)</h3>
+<p>Makes <i translate="no">uris</i> the LV2 plugins installed, in place of asking <code translate="no">lv2ls</code>.</p>
+<!-- @@@setPlugins -->
+</div>
+<div class="fnitem">
+<!-- $$$setPrograms[overload1]$$$setProgramsconstQStringList& -->
+<h3 class="fn" translate="no" id="setPrograms"><span class="type">void</span> EngineCatalog::<span class="name">setPrograms</span>(const <span class="type">QStringList</span> &amp;<i>programs</i>)</h3>
+<p>Makes <i translate="no">programs</i> the only programs this catalog finds, in place of looking on <code translate="no">PATH</code>.</p>
+<!-- @@@setPrograms -->
+</div>
+<div class="fnitem">
+<!-- $$$shared[overload1]$$$shared -->
+<h3 class="fn" translate="no" id="shared"><code class="details extra" translate="no">[static]</code> <span class="type"><a href="enginecatalog.html" translate="no">EngineCatalog</a></span> &amp;EngineCatalog::<span class="name">shared</span>()</h3>
+<p>Returns the catalog of this system, read when first asked.</p>
+<!-- @@@shared -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

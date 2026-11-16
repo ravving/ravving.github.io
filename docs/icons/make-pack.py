@@ -84,6 +84,7 @@ NAMES = {
     "bluetooth": "Bluetooth",
     "brightness": "the screen's brightness",
     "volume": "the volume, the master",
+    "volume-off": "a level all the way down (an instrument's chip)",
     "mixer": "the mixer",
     "midi": "MIDI",
     "cpu": "the CPU's load",
@@ -125,6 +126,10 @@ NAMES = {
     "menu": "MENU",
     "globe": "the language, the internet",
     "heart": "a like, thanks",
+    # the desktop window's own controls, at the right of its header
+    "window-minimize": "the desktop window's minimise",
+    "window-maximize": "the desktop window's maximise",
+    "window-restore": "the desktop window's restore (back from maximised)",
 }
 
 SMALLEST_GRID, LARGEST_GRID, LONGEST_PATH = 4, 16, 8192

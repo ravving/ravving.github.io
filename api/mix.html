@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- mix.cpp -->
+  <meta name="description" content="The machines' mutes and solos, and which of them that makes silent (studio&lt;@op&gt;.&lt;/@op&gt;mix).">
+  <meta name="keywords" content="class">
+  <title>Mix Class | ravving C++ API 0.7.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>Mix</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">Mix Class</h1>
+<!-- $$$Mix-brief -->
+<p>The machines' mutes and solos, and which of them that makes silent (<code translate="no">studio.mix</code>). <a href="#details">More...</a></p>
+<!-- @@@Mix -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;mix.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="mix-members.html">List of all members, including inherited members</a></li>
+<li>Mix is part of <a href="ravving-studio.html">Studio and projects</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<div class="table"><table class="propsummary" translate="no">
+<tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="mix.html#activeSampler-prop" translate="no">activeSampler</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="mix.html#liveMachine-prop" translate="no">liveMachine</a></b> : QString</li>
+<li class="fn" translate="no"><b><a href="mix.html#muted-prop" translate="no">muted</a></b> : QVariantMap</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="mix.html#silenced-prop" translate="no">silenced</a></b> : QVariantMap</li>
+<li class="fn" translate="no"><b><a href="mix.html#soloed-prop" translate="no">soloed</a></b> : QVariantMap</li>
+</ul>
+</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="mix.html#Mix" translate="no">Mix</a></b>(const QStringList &amp;<i>keys</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="mix.html#activeSampler-prop" translate="no">activeSampler</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="mix.html#isHeardLive" translate="no">isHeardLive</a></b>(const QString &amp;<i>key</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="mix.html#isMuted" translate="no">isMuted</a></b>(const QString &amp;<i>key</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="mix.html#isSilenced" translate="no">isSilenced</a></b>(const QString &amp;<i>key</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="mix.html#isSoloed" translate="no">isSoloed</a></b>(const QString &amp;<i>key</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="mix.html#liveMachine-prop" translate="no">liveMachine</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="mix.html#muted-prop" translate="no">muted</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mix.html#restore" translate="no">restore</a></b>(const QVariantMap &amp;<i>muted</i>, const QVariantMap &amp;<i>soloed</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mix.html#activeSampler-prop" translate="no">setActiveSampler</a></b>(const QString &amp;<i>key</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mix.html#liveMachine-prop" translate="no">setLiveMachine</a></b>(const QString &amp;<i>key</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mix.html#setMuted" translate="no">setMuted</a></b>(const QString &amp;<i>key</i>, bool <i>muted</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mix.html#setSoloed" translate="no">setSoloed</a></b>(const QString &amp;<i>key</i>, bool <i>soloed</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="mix.html#silenced-prop" translate="no">silenced</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mix.html#soloOnly" translate="no">soloOnly</a></b>(const QString &amp;<i>key</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="mix.html#soloed-prop" translate="no">soloed</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mix.html#toggleMuted" translate="no">toggleMuted</a></b>(const QString &amp;<i>key</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mix.html#toggleSoloed" translate="no">toggleSoloed</a></b>(const QString &amp;<i>key</i>)</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="mix.html#activeSampler-prop" translate="no">changed</a></b>()</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const QString </td><td class="memItemRight bottomAlign"><b><a href="mix.html#PadSampler-var" translate="no">PadSampler</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const QString </td><td class="memItemRight bottomAlign"><b><a href="mix.html#SlotSampler-var" translate="no">SlotSampler</a></b></td></tr>
+</table></div>
+<!-- $$$Mix-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>One mute and one solo per machine, by its key (<code translate="no">drums1</code>, <code translate="no">chords</code>, <code translate="no">pads…</code>). A machine is silenced when it is muted, when another machine is soloed and it is not, or when it is the sampler not playing (the SLOT SAMPLER and the PAD SAMPLER take turns: <a href="mix.html#activeSampler-prop" translate="no">activeSampler</a>()). The machine played LIVE (<a href="mix.html#liveMachine-prop" translate="no">liveMachine</a>) and left out only by another's solo is still heard live: its patterns are silent, what is played on it is not (<a href="mix.html#isHeardLive" translate="no">isHeardLive</a>()). The studio hands each machine its verdicts (<a href="machine.html#muted-prop" translate="no">Machine::muted</a>, <a href="machine.html#heardLive" translate="no">Machine::heardLive</a>) and saves the mutes and solos with the session; the screens, the device's keys and the control surfaces all change them here. A key that is not one of the machines' is left out: it is neither kept nor saved. GUI thread only.</p>
+</div>
+<!-- @@@Mix -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$activeSampler-prop$$$activeSampler$$$setActiveSamplerconstQString&$$$changed -->
+<h3 class="fn" translate="no" id="activeSampler-prop"><span class="name">activeSampler</span> : <span class="type">QString</span></h3>
+<p>This property holds the sampler that plays, <a href="mix.html#SlotSampler-var" translate="no">SlotSampler</a> or <a href="mix.html#PadSampler-var" translate="no">PadSampler</a>; the other one is silenced. Any other key set is taken as <a href="mix.html#SlotSampler-var" translate="no">SlotSampler</a>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>activeSampler</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setActiveSampler</b></span>(const QString &amp;<i>key</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>changed</b></span>()</td></tr>
+</table></div>
+<!-- @@@activeSampler -->
+</div>
+<div class="fnitem">
+<!-- $$$liveMachine-prop$$$liveMachine$$$setLiveMachineconstQString&$$$changed -->
+<h3 class="fn" translate="no" id="liveMachine-prop"><span class="name">liveMachine</span> : <span class="type">QString</span></h3>
+<p>This property holds the machine the step keys play LIVE (the screen's <code translate="no">Session.liveMachine</code>), &quot;&quot; for none. A key that is not a machine's is taken as none.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>liveMachine</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setLiveMachine</b></span>(const QString &amp;<i>key</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="mix.html#activeSampler-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@liveMachine -->
+</div>
+<div class="fnitem">
+<!-- $$$muted-prop$$$muted$$$changed -->
+<h3 class="fn" translate="no" id="muted-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">muted</span> : <span class="type">QVariantMap</span></h3>
+<p>This property holds the mutes, key → <code translate="no">true</code>; a key absent or <code translate="no">false</code> is not muted.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>muted</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="mix.html#activeSampler-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@muted -->
+</div>
+<div class="fnitem">
+<!-- $$$silenced-prop$$$silenced$$$changed -->
+<h3 class="fn" translate="no" id="silenced-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">silenced</span> : <span class="type">QVariantMap</span></h3>
+<p>Every machine's key → whether it is silent now (<a href="mix.html#isSilenced" translate="no">isSilenced</a>()).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>silenced</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="mix.html#activeSampler-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@silenced -->
+</div>
+<div class="fnitem">
+<!-- $$$soloed-prop$$$soloed$$$changed -->
+<h3 class="fn" translate="no" id="soloed-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">soloed</span> : <span class="type">QVariantMap</span></h3>
+<p>This property holds the solos, key → <code translate="no">true</code>; a key absent or <code translate="no">false</code> is not soloed.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>soloed</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="mix.html#activeSampler-prop" translate="no">changed</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@soloed -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$Mix[overload1]$$$MixconstQStringList&QObject* -->
+<h3 class="fn" translate="no" id="Mix"><code class="details extra" translate="no">[explicit]</code> Mix::<span class="name">Mix</span>(const <span class="type">QStringList</span> &amp;<i>keys</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs the mix of the machines <i translate="no">keys</i> with <i translate="no">parent</i>: nothing muted or soloed, the SLOT SAMPLER playing.</p>
+<!-- @@@Mix -->
+</div>
+<div class="fnitem">
+<!-- $$$isHeardLive[overload1]$$$isHeardLiveconstQString& -->
+<h3 class="fn" translate="no" id="isHeardLive"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Mix::<span class="name">isHeardLive</span>(const <span class="type">QString</span> &amp;<i>key</i>) const</h3>
+<p>Returns whether the machine <i translate="no">key</i> is silenced but still heard live: it is the <a href="mix.html#liveMachine-prop" translate="no">liveMachine</a> and is left out only by another machine's solo (not muted, not the sampler resting). Its patterns stay silent; what is played on it is heard.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@isHeardLive -->
+</div>
+<div class="fnitem">
+<!-- $$$isMuted[overload1]$$$isMutedconstQString& -->
+<h3 class="fn" translate="no" id="isMuted"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Mix::<span class="name">isMuted</span>(const <span class="type">QString</span> &amp;<i>key</i>) const</h3>
+<p>Returns whether the machine <i translate="no">key</i> is muted (its own M, whatever the solos).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@isMuted -->
+</div>
+<div class="fnitem">
+<!-- $$$isSilenced[overload1]$$$isSilencedconstQString& -->
+<h3 class="fn" translate="no" id="isSilenced"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Mix::<span class="name">isSilenced</span>(const <span class="type">QString</span> &amp;<i>key</i>) const</h3>
+<p>Returns whether the machine <i translate="no">key</i> is silent: muted, left out by another machine's solo, or the sampler not playing. Played LIVE and left out only by a solo, it is still heard live (<a href="mix.html#isHeardLive" translate="no">isHeardLive</a>()).</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@isSilenced -->
+</div>
+<div class="fnitem">
+<!-- $$$isSoloed[overload1]$$$isSoloedconstQString& -->
+<h3 class="fn" translate="no" id="isSoloed"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> Mix::<span class="name">isSoloed</span>(const <span class="type">QString</span> &amp;<i>key</i>) const</h3>
+<p>Returns whether the machine <i translate="no">key</i> is soloed.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@isSoloed -->
+</div>
+<div class="fnitem">
+<!-- $$$restore[overload1]$$$restoreconstQVariantMap&constQVariantMap& -->
+<h3 class="fn" translate="no" id="restore"><span class="type">void</span> Mix::<span class="name">restore</span>(const <span class="type">QVariantMap</span> &amp;<i>muted</i>, const <span class="type">QVariantMap</span> &amp;<i>soloed</i>)</h3>
+<p>Takes a session's or a project's <i translate="no">muted</i> and <i translate="no">soloed</i> (key → bool, as saved) at once. The sampler playing stays: it is the one on screen.</p>
+<!-- @@@restore -->
+</div>
+<div class="fnitem">
+<!-- $$$setMuted[overload1]$$$setMutedconstQString&bool -->
+<h3 class="fn" translate="no" id="setMuted"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Mix::<span class="name">setMuted</span>(const <span class="type">QString</span> &amp;<i>key</i>, <span class="type">bool</span> <i>muted</i>)</h3>
+<p>Mutes the machine <i translate="no">key</i> when <i translate="no">muted</i> is true, unmutes it otherwise.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><p><b>See also </b><a href="mix.html#muted-prop" translate="no">muted</a>().</p>
+<!-- @@@setMuted -->
+</div>
+<div class="fnitem">
+<!-- $$$setSoloed[overload1]$$$setSoloedconstQString&bool -->
+<h3 class="fn" translate="no" id="setSoloed"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Mix::<span class="name">setSoloed</span>(const <span class="type">QString</span> &amp;<i>key</i>, <span class="type">bool</span> <i>soloed</i>)</h3>
+<p>Solos the machine <i translate="no">key</i> when <i translate="no">soloed</i> is true, drops its solo otherwise; other solos stay.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><p><b>See also </b><a href="mix.html#soloed-prop" translate="no">soloed</a>().</p>
+<!-- @@@setSoloed -->
+</div>
+<div class="fnitem">
+<!-- $$$soloOnly[overload1]$$$soloOnlyconstQString& -->
+<h3 class="fn" translate="no" id="soloOnly"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Mix::<span class="name">soloOnly</span>(const <span class="type">QString</span> &amp;<i>key</i>)</h3>
+<p>Solos the machine <i translate="no">key</i> alone: every other solo is dropped.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@soloOnly -->
+</div>
+<div class="fnitem">
+<!-- $$$toggleMuted[overload1]$$$toggleMutedconstQString& -->
+<h3 class="fn" translate="no" id="toggleMuted"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Mix::<span class="name">toggleMuted</span>(const <span class="type">QString</span> &amp;<i>key</i>)</h3>
+<p>Flips the machine <i translate="no">key</i>'s mute.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@toggleMuted -->
+</div>
+<div class="fnitem">
+<!-- $$$toggleSoloed[overload1]$$$toggleSoloedconstQString& -->
+<h3 class="fn" translate="no" id="toggleSoloed"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Mix::<span class="name">toggleSoloed</span>(const <span class="type">QString</span> &amp;<i>key</i>)</h3>
+<p>Flips the machine <i translate="no">key</i>'s solo.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@toggleSoloed -->
+</div>
+<div class="vars">
+<h2>Member Variable Documentation</h2>
+</div>
+<div class="fnitem">
+<!-- $$$PadSampler -->
+<h3 class="fn" translate="no" id="PadSampler-var">const <span class="type">QString</span> Mix::<span class="name">PadSampler</span></h3>
+<p>This variable holds the PAD SAMPLER's key, <code translate="no">pads</code>.</p>
+<!-- @@@PadSampler -->
+</div>
+<div class="fnitem">
+<!-- $$$SlotSampler -->
+<h3 class="fn" translate="no" id="SlotSampler-var">const <span class="type">QString</span> Mix::<span class="name">SlotSampler</span></h3>
+<p>This variable holds the SLOT SAMPLER's key, <code translate="no">sampler</code>.</p>
+<!-- @@@SlotSampler -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

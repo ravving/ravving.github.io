@@ -72,7 +72,7 @@
 <li><a href="backend.html">Backend classes</a></li>
 <li><a href="qml-components.html">QML components</a></li>
 <li><a href="undo-history.html">The undo history</a></li>
-<li class="on"><a href="bluetooth.html" aria-current="page">Bluetooth</a><ul><li><a href="#the-backend">The backend</a></li><li><a href="#discovery">Discovery</a></li><li><a href="#audio-output">Audio output</a></li><li><a href="#the-codec">The codec</a></li><li><a href="#the-silence-watch">The silence watch</a></li><li><a href="#one-audio-device-at-a-time">One audio device at a time</a></li><li><a href="#when-a-device-doesnt-answer">When a device doesn&#x27;t answer</a></li><li><a href="#the-kept-output-comes-back">The kept output comes back</a></li><li><a href="#files">Files</a></li></ul></li>
+<li class="on"><a href="bluetooth.html" aria-current="page">Bluetooth</a><ul><li><a href="#the-backend">The backend</a></li><li><a href="#discovery">Discovery</a></li><li><a href="#midi-controllers">MIDI controllers</a></li><li><a href="#audio-output">Audio output</a></li><li><a href="#the-codec">The codec</a></li><li><a href="#the-silence-watch">The silence watch</a></li><li><a href="#one-audio-device-at-a-time">One audio device at a time</a></li><li><a href="#when-a-device-doesnt-answer">When a device doesn&#x27;t answer</a></li><li><a href="#the-kept-output-comes-back">The kept output comes back</a></li><li><a href="#files">Files</a></li></ul></li>
 <li><a href="live-recording.html">Live recordings</a></li>
 <li><a href="engines.html">The engines</a></li>
 <li><a href="routing.html">The audio graph</a></li>
@@ -119,8 +119,23 @@ from the control center's BLUETOOTH card.</p>
 <p>The Pi has one radio for Bluetooth and Wi-Fi, and an inquiry breaks up a playing A2DP link. So
 a scan lasts 12 s (<code>DiscoverySeconds</code>), and only starts on its own while no audio device is
 connected.</p>
-<p>It scans classic devices only (<code>setDiscoveryFilter {Transport: bredr}</code>). A dual-mode speaker
+<p>The scan has two parts. The first 4 s (<code>MidiDiscoverySeconds</code>) look for Bluetooth MIDI
+controllers only: <code>setDiscoveryFilter {Transport: le, UUIDs: [the MIDI service]}</code>. The rest
+looks for classic devices only (<code>{Transport: bredr}</code>, <code>discoverClassic()</code>). A dual-mode speaker
 paired from its LE advertisement gets no A2DP sink, and the Pi's firmware has no LE Audio.</p>
+<h2 id="midi-controllers">MIDI controllers</h2>
+<p>A device offering the Bluetooth MIDI service (<code>03b80e5a-…</code>) is kind <code>midi</code>. <code>pair()</code> trusts
+and connects it without pairing: many controllers (the ROLI blocks) refuse to pair.</p>
+<ul>
+<li>PipeWire's Bluetooth MIDI then shows it as two ports, <code>&lt;name&gt;:out</code> (what it plays) and
+  <code>&lt;name&gt;:in</code>.</li>
+<li><code>MidiInput</code> takes the <code>:out</code> side as the controller and leaves <code>:in</code> out
+  (<code>MidiInput::isSendSide</code>).</li>
+<li>A driver (RoliBlocks) hears the device on <code>:out</code> and writes to it on <code>:in</code>
+  (<code>ControllerDrivers</code>).</li>
+<li>BlueZ's own MIDI plugin is off (<code>--noplugin=sap,midi</code> in ravving's bluetoothd drop-in): with
+  it on, the two stacks fight over the device and nothing arrives.</li>
+</ul>
 <h2 id="audio-output">Audio output</h2>
 <p>When an audio device connects, WirePlumber makes a sink node <code>bluez_output.&lt;address&gt;.1</code>, plus an
 input (capture) node for HFP. <code>useAsOutput</code> hands it to <code>AudioOutputs</code> (<code>outputs</code>, also the

@@ -5,7 +5,7 @@
 <!-- LedDisplay.qml -->
   <meta name="description" content="A red seven-segment-style readout (the TEMPO display), with a caption under it (label, as a Knob has).">
   <meta name="keywords" content="qmltype">
-  <title>LedDisplay QML Type | ravving C++ API 0.6.0</title>
+  <title>LedDisplay QML Type | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -69,6 +69,7 @@
 <h3 id="toc">Contents</h3>
 <ul>
 <li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -98,9 +99,13 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-leddisplay.html#to-prop" translate="no">to</a></b> : real</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-leddisplay.html#value-prop" translate="no">value</a></b> : real</li>
 </ul>
+<h2 id="signals">Signals</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-leddisplay.html#tapped-signal" translate="no">tapped</a></b>(real <i>ms</i>)</li>
+</ul>
 <!-- $$$LedDisplay-description -->
 <h2 id="details">Detailed Description</h2>
-<p>Drag up/down to change the value; as a <a href="qml-ravving-controls-knobgroup.html" translate="no">KnobGroup</a> target it shows a <a href="qml-ravving-controls-knobbadge.html" translate="no">KnobBadge</a> in its corner. While <code translate="no">external</code> (another device sets it: a MIDI clock) it shows <code translate="no">externalValue</code> under a small EXT, and neither a drag nor a knob changes it.</p>
+<p>Drag up/down, or turn a mouse wheel over it, to change the value; a tap that does not drag is <code translate="no">tapped()</code> (TAP tempo). As a <a href="qml-ravving-controls-knobgroup.html" translate="no">KnobGroup</a> target it shows a <a href="qml-ravving-controls-knobbadge.html" translate="no">KnobBadge</a> in its corner. While <code translate="no">external</code> (another device sets it: a MIDI clock) it shows <code translate="no">externalValue</code> under a small EXT, and neither a drag, the wheel, a tap nor a knob changes it.</p>
 <!-- @@@LedDisplay -->
 <h2>Property Documentation</h2>
 <div class="fnitem">
@@ -175,6 +180,13 @@
 <p>The shown value; changed by dragging.</p>
 <!-- @@@value -->
 </div>
+<h2>Signal Documentation</h2>
+<div class="fnitem">
+<!-- $$$tapped[overload1]$$$tappedreal -->
+<h3 class="fn qml-member qml-method" translate="no" id="tapped-signal"><span class="name">tapped</span>(<span class="type">real</span> <i>ms</i>)</h3>
+<p>Pressed and let go without dragging; <i translate="no">ms</i> is when it was pressed (<code translate="no">Date.now()</code>), so a run of taps is timed by their presses.</p>
+<div class="admonition note"><p><b>Note: </b>The corresponding handler is <code translate="no">onTapped</code>.</p>
+</div><!-- @@@tapped -->
 </article>
 </main>
 <footer class="api-footer">
@@ -184,3 +196,4 @@
 </footer>
 </body>
 </html>
+</div>

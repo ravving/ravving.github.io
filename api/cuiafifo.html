@@ -5,7 +5,7 @@
 <!-- cuiafifo.cpp -->
   <meta name="description" content="The remote-control fifo at &lt;@op&gt;/&lt;/@op&gt;tmp&lt;@op&gt;/&lt;/@op&gt;webconf&lt;@op&gt;-&lt;/@op&gt;writes&lt;@op&gt;-&lt;/@op&gt;to&lt;@op&gt;-&lt;/@op&gt;&lt;@keyword&gt;this&lt;/@keyword&gt;&lt;@op&gt;-&lt;/@op&gt;fifo: each line written to it is a command for ravving.">
   <meta name="keywords" content="class">
-  <title>CuiaFifo Class | ravving C++ API 0.6.0</title>
+  <title>CuiaFifo Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -93,9 +93,11 @@
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="cuiafifo.html#animationsReceived" translate="no">animationsReceived</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="cuiafifo.html#callReceived" translate="no">callReceived</a></b>(const QString &amp;<i>object</i>, const QString &amp;<i>method</i>, const QStringList &amp;<i>arguments</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="cuiafifo.html#clickReceived" translate="no">clickReceived</a></b>(qreal <i>x</i>, qreal <i>y</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="cuiafifo.html#cuiaReceived" translate="no">cuiaReceived</a></b>(const QString &amp;<i>cuia</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="cuiafifo.html#getReceived" translate="no">getReceived</a></b>(const QString &amp;<i>object</i>, const QString &amp;<i>property</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="cuiafifo.html#itemsReceived" translate="no">itemsReceived</a></b>(const QString &amp;<i>pattern</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="cuiafifo.html#mouseReceived" translate="no">mouseReceived</a></b>(const QString &amp;<i>action</i>, qreal <i>x</i>, qreal <i>y</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="cuiafifo.html#setReceived" translate="no">setReceived</a></b>(const QString &amp;<i>object</i>, const QString &amp;<i>property</i>, const QString &amp;<i>value</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="cuiafifo.html#shotReceived" translate="no">shotReceived</a></b>(const QString &amp;<i>path</i>)</td></tr>
 </table></div>
@@ -111,6 +113,8 @@
 <tr valign="top" class="even"><td ><code translate="no">set|OBJECT|PROPERTY|VALUE</code></td><td ><a href="cuiafifo.html#setReceived" translate="no">setReceived</a>(); VALUE may contain &quot;|&quot;.</td></tr>
 <tr valign="top" class="odd"><td ><code translate="no">shot|PATH</code></td><td ><a href="cuiafifo.html#shotReceived" translate="no">shotReceived</a>(): the window grabbed to a PNG.</td></tr>
 <tr valign="top" class="even"><td ><code translate="no">items|PATTERN</code></td><td ><a href="cuiafifo.html#itemsReceived" translate="no">itemsReceived</a>(): the geometry of every item whose QML type contains PATTERN, to the log.</td></tr>
+<tr valign="top" class="odd"><td ><code translate="no">click|X|Y</code></td><td ><a href="cuiafifo.html#clickReceived" translate="no">clickReceived</a>(): a left click at X, Y in the window (logical pixels), with what is under it to the log.</td></tr>
+<tr valign="top" class="even"><td ><code translate="no">mouse|ACTION|X|Y</code></td><td ><a href="cuiafifo.html#mouseReceived" translate="no">mouseReceived</a>(): one left-button event, ACTION <code translate="no">press</code>, <code translate="no">move</code> or <code translate="no">release</code>, for a hold or a drag; or a wheel notch, <code translate="no">wheelup</code> or <code translate="no">wheeldown</code>, with a <code translate="no">ctrl-</code> or <code translate="no">alt-</code> prefix for that key held.</td></tr>
 <tr valign="top" class="odd"><td ><code translate="no">animations</code></td><td ><a href="cuiafifo.html#animationsReceived" translate="no">animationsReceived</a>(): every running animation and repeating Timer, to the log.</td></tr>
 </table></div>
 <pre class="cpp plain" translate="no"><code class="text">
@@ -141,6 +145,12 @@
 <!-- @@@callReceived -->
 </div>
 <div class="fnitem">
+<!-- $$$clickReceived[overload1]$$$clickReceivedqrealqreal -->
+<h3 class="fn" translate="no" id="clickReceived"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> CuiaFifo::<span class="name">clickReceived</span>(<span class="type">qreal</span> <i>x</i>, <span class="type">qreal</span> <i>y</i>)</h3>
+<p>Emitted for a <code translate="no">click|X|Y</code> line: click the window at <i translate="no">x</i>, <i translate="no">y</i>.</p>
+<!-- @@@clickReceived -->
+</div>
+<div class="fnitem">
 <!-- $$$cuiaReceived[overload1]$$$cuiaReceivedconstQString& -->
 <h3 class="fn" translate="no" id="cuiaReceived"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> CuiaFifo::<span class="name">cuiaReceived</span>(const <span class="type">QString</span> &amp;<i>cuia</i>)</h3>
 <p>Emitted for a <code translate="no">cuia/</code> line; <i translate="no">cuia</i> is the command in upper case, such as <code translate="no">&quot;SWITCH_PLAY_RELEASED&quot;</code>.</p>
@@ -157,6 +167,12 @@
 <h3 class="fn" translate="no" id="itemsReceived"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> CuiaFifo::<span class="name">itemsReceived</span>(const <span class="type">QString</span> &amp;<i>pattern</i>)</h3>
 <p>Emitted for an <code translate="no">items|</code> line: log the geometry of the items whose QML type name contains <i translate="no">pattern</i>.</p>
 <!-- @@@itemsReceived -->
+</div>
+<div class="fnitem">
+<!-- $$$mouseReceived[overload1]$$$mouseReceivedconstQString&qrealqreal -->
+<h3 class="fn" translate="no" id="mouseReceived"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> CuiaFifo::<span class="name">mouseReceived</span>(const <span class="type">QString</span> &amp;<i>action</i>, <span class="type">qreal</span> <i>x</i>, <span class="type">qreal</span> <i>y</i>)</h3>
+<p>Emitted for a <code translate="no">mouse|ACTION|X|Y</code> line: one mouse event, <i translate="no">action</i> at <i translate="no">x</i>, <i translate="no">y</i>.</p>
+<!-- @@@mouseReceived -->
 </div>
 <div class="fnitem">
 <!-- $$$setReceived[overload1]$$$setReceivedconstQString&constQString&constQString& -->

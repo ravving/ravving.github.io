@@ -5,7 +5,7 @@
 <!-- hardwareknobs.cpp -->
   <meta name="description" content="Polls the device's four knobs (zyncoder's zynpots) and reports them as relative turns or absolute positions.">
   <meta name="keywords" content="class">
-  <title>HardwareKnobs Class | ravving C++ API 0.6.0</title>
+  <title>HardwareKnobs Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -102,7 +102,7 @@
 <p>Knobs 0 to 2 are the small knobs, knob 3 the big one. Every 20 ms each knob whose value changed is read through libzyncoder's zynpot functions:</p>
 <ul>
 <li>an endless encoder (every knob on the older kits, the big knob on all of them) emits <a href="hardwareknobs.html#turned" translate="no">turned</a>() with the detents moved, and is recentred near the ends of its range so it never runs out;</li>
-<li>a fixed-end pot (the three small knobs of the Z2_V5B kit) emits <a href="hardwareknobs.html#moved" translate="no">moved</a>() with its position 0..1. Readings within 2 raw steps of the recent average are ignored as jitter, and the last 16 raw steps at either end snap to the end, so a control's minimum and maximum are always reached.</li>
+<li>a fixed-end pot (the three small knobs of the Z2_V5B kit) emits <a href="hardwareknobs.html#moved" translate="no">moved</a>() with its position 0..1, its noise filtered out by a <a href="potfilter.html" translate="no">PotFilter</a>: a pot left alone reports nothing until it moves more than a few raw steps, and the last raw steps at either end snap to the end, so a control's minimum and maximum are always reached.</li>
 </ul>
 <p>The kit comes from <code translate="no">ZYNTHIAN_WIRING_LAYOUT</code>; Z2_V5 and Z2_V5B mount the small knobs reversed, which an inverted range compensates for. MidiRouter's CUIA queue carries no value, so the knobs are signalled directly rather than as CUIA commands.</p>
 </div>

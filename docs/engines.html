@@ -74,7 +74,7 @@
 <li><a href="undo-history.html">The undo history</a></li>
 <li><a href="bluetooth.html">Bluetooth</a></li>
 <li><a href="live-recording.html">Live recordings</a></li>
-<li class="on"><a href="engines.html" aria-current="page">The engines</a><ul><li><a href="#the-mods-one-profile-per-engine-dataenginesjson">The MODS: one profile per engine (data/engines.json)</a></li><li><a href="#nekobi-bass-track-3">Nekobi: BASS (track 3)</a></li><li><a href="#tal-noisemaker-chords-track-4">TAL-NoiseMaker: CHORDS (track 4)</a></li><li><a href="#calf-monosynth-lead-track-5">Calf Monosynth: LEAD (track 5)</a></li><li><a href="#fluidsynth-drums-13-tracks-02">FluidSynth: DRUMS 1–3 (tracks 0–2)</a></li><li><a href="#samplersynth-slot-sampler-track-6">SamplerSynth: SLOT SAMPLER (track 6)</a></li><li><a href="#the-audio-input-hifiberry-dacadc-pro-pcm1863">The audio input (HiFiBerry DAC+ADC Pro, PCM1863)</a></li><li><a href="#the-input-effects-datainput-fxjson">The input effects (data/input-fx.json)</a></li><li><a href="#effects">Effects</a></li></ul></li>
+<li class="on"><a href="engines.html" aria-current="page">The engines</a><ul><li><a href="#finding-the-engines-and-their-sounds-enginecatalog-paths">Finding the engines and their sounds (EngineCatalog, Paths)</a></li><li><a href="#the-mods-one-profile-per-engine-dataenginesjson">The MODS: one profile per engine (data/engines.json)</a></li><li><a href="#nekobi-bass-track-3">Nekobi: BASS (track 3)</a></li><li><a href="#tal-noisemaker-chords-track-4">TAL-NoiseMaker: CHORDS (track 4)</a></li><li><a href="#calf-monosynth-lead-track-5">Calf Monosynth: LEAD (track 5)</a></li><li><a href="#fluidsynth-drums-13-tracks-02">FluidSynth: DRUMS 1–3 (tracks 0–2)</a></li><li><a href="#samplersynth-slot-sampler-track-6">SamplerSynth: SLOT SAMPLER (track 6)</a></li><li><a href="#the-audio-input-hifiberry-dacadc-pro-pcm1863">The audio input (HiFiBerry DAC+ADC Pro, PCM1863)</a></li><li><a href="#the-input-effects-datainput-fxjson">The input effects (data/input-fx.json)</a></li><li><a href="#effects">Effects</a></li></ul></li>
 <li><a href="routing.html">The audio graph</a></li>
 <li><a href="translations.html">Translations</a></li>
 <li><a href="ui-rules.html">UI rules</a></li>
@@ -101,6 +101,129 @@
 from the engine mods' research (each mod's <code>docs/RESEARCH.md</code>, decoded from the engine's own
 source); read the mod before changing an engine's <code>engine.controls</code> in <code>data/kits.json</code> or its
 MODS profile in <code>data/engines.json</code>.</p>
+<h2 id="finding-the-engines-and-their-sounds-enginecatalog-paths">Finding the engines and their sounds (EngineCatalog, Paths)</h2>
+<p><code>data/kits.json</code> names every engine as a Zynthbox has it: a soundfont by its path under
+<code>/zynthian/zynthian-data/soundfonts</code>, an LV2 synth by its URI. The same file runs a desktop,
+where the fonts are elsewhere and a plugin may not be installed. Nothing in it is per
+platform: ravving looks for what it names.</p>
+<h3 id="a-soundfonts-file">A soundfont's file</h3>
+<p>A path stays the font's name everywhere: in <code>kits.json</code>, in a project, in the kit picker.
+<code>Paths::relocated()</code> gives the file that plays for it on this system. A font that is where its
+path says is used as is, so a Zynthbox searches nothing. One that is not is looked for, in
+order:</p>
+<ol>
+<li>at the same place below another of the system's soundfont folders
+   (<code>Paths::systemSoundfontRoots()</code>);</li>
+<li>by its file name anywhere in those folders, then in ravving's library and soundfont cache;</li>
+<li>as one of the fonts <code>data/soundfonts.json</code> calls alike.</li>
+</ol>
+<p>The system's soundfont folders are, in order:</p>
+<table>
+<thead>
+<tr>
+<th>Folder</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/zynthian/zynthian-data/soundfonts</code></td>
+<td>a Zynthbox</td>
+</tr>
+<tr>
+<td><code>soundfonts</code>, <code>sounds/sf2</code>, <code>sounds/sf3</code> under <code>$XDG_DATA_HOME</code></td>
+<td><code>~/.local/share</code></td>
+</tr>
+<tr>
+<td>the same under each of <code>$XDG_DATA_DIRS</code></td>
+<td><code>/usr/local/share</code>, <code>/usr/share</code></td>
+</tr>
+</tbody>
+</table>
+<p>The kit folder (<code>kitFolder</code>) is found the same way: at the same place below another of those
+folders, its kits listed by their Zynthbox paths.</p>
+<p>The engine's config gets the file found just before the engine starts (<code>Studio::syncSlots()</code>,
+<code>Studio::placeSound()</code>). <code>DrumKit</code> reads the file found and keeps the path given. The kit
+picker lists the <code>presetKits</code> whose font is found.</p>
+<h3 id="fonts-alike">Fonts alike</h3>
+<pre><code class="language-json">&quot;alike&quot;: [
+  [&quot;FluidR3Mono_GM.sf3&quot;, &quot;FluidR3_GM.sf3&quot;, &quot;FluidR3_GM.sf2&quot;]
+]
+</code></pre>
+<p>A group lists one font in its editions, the best first: the same presets at the same bank and
+program numbers. Any font of a group stands in for any other. A project made on a desktop
+names <code>/usr/share/soundfonts/FluidR3_GM.sf2</code>, and plays the mono font on a Zynthbox; one made
+on a Zynthbox plays the stereo font on a desktop.</p>
+<h3 id="what-this-system-can-run">What this system can run</h3>
+<p><code>EngineCatalog</code> knows it:</p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>How it is known</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the programs (<code>fluidsynth</code>, <code>jalv</code>)</td>
+<td>on <code>PATH</code></td>
+</tr>
+<tr>
+<td>the LV2 plugins</td>
+<td>what <code>lv2ls</code> lists, kept in <code>~/.cache/ravving/lv2-plugins.json</code> until one of the LV2 folders changes</td>
+</tr>
+<tr>
+<td>the soundfonts</td>
+<td><code>Paths::relocated()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Without <code>lv2ls</code> the plugins are unknown and every engine <code>kits.json</code> names is started.</p>
+<h3 id="an-engines-fallbacks">An engine's fallbacks</h3>
+<p>An engine can come with others to play in its place, as <code>or</code> beside it, in order:</p>
+<pre><code class="language-json">&quot;engine&quot;: {&quot;type&quot;: &quot;jalv&quot;, &quot;uri&quot;: &quot;http://kunz.corrupt.ch/products/tal-noisemaker&quot;, &quot;controls&quot;: {}},
+&quot;sourceName&quot;: &quot;TAL NoiseMaker&quot;,
+&quot;or&quot;: [
+    {&quot;name&quot;: &quot;Polysynth · GM&quot;, &quot;type&quot;: &quot;fluidsynth&quot;,
+     &quot;soundfont&quot;: &quot;/zynthian/zynthian-data/soundfonts/SF2 Instruments/FluidR3Mono_GM.sf3&quot;, &quot;bank&quot;: 0, &quot;program&quot;: 90}
+]
+</code></pre>
+<p>An <code>or</code> entry is an engine object, with an optional <code>name</code> its sound is listed by. A machine's
+own engine and each of its <code>sources</code> may have one. A drum machine's are kits: <code>soundfont</code> may
+be <code>&lt;file&gt;#&lt;bank&gt;:&lt;program&gt;</code>.</p>
+<p><code>EngineCatalog::resolved()</code> rewrites a machine's config with the first choice that runs,
+before <code>EngineProfiles</code> reads it. So the MODS are those of the engine that plays. A soundfont
+in the place of a machine's synth takes the soundfont sources' MODS.</p>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>The first choice runs</th>
+<th>An <code>or</code> entry runs</th>
+<th>Nothing runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a machine's own engine</td>
+<td>as written</td>
+<td>it plays, under its <code>name</code>; the first choice's <code>soundPresets</code> are dropped</td>
+<td>the engine stays; starting it raises the issue <code>engine-missing-&lt;name&gt;</code>, which says what is missing</td>
+</tr>
+<tr>
+<td>a source</td>
+<td>as written</td>
+<td>it plays, under its <code>name</code> when it has one</td>
+<td>the source is not listed</td>
+</tr>
+</tbody>
+</table>
+<p>A project names a machine's sound by its source's name. So one saved where a fallback played
+plays the machine's own engine where that is installed.</p>
+<p>An effect whose plugin is not installed (<code>JalvPlugin::start()</code>) raises <code>lv2-missing-&lt;uri&gt;</code> and
+starts no process.</p>
+<p>A fallback belongs in <code>kits.json</code> only when it is an honest stand-in found on a usual desktop:
+a General MIDI program of FluidR3 for a synth, a General MIDI kit for a drum machine's kit.</p>
 <h2 id="the-mods-one-profile-per-engine-dataenginesjson">The MODS: one profile per engine (data/engines.json)</h2>
 <p>What a page lets you tweak of an engine belongs to the <strong>engine</strong>, not the machine. That's its
 SOUND MODIFIERS, the MODS cards, and its expressions, such as the lead ribbon's vibrato.</p>
@@ -402,6 +525,39 @@ channel 1 clip b's.</p>
 <li>A section's preset starts with its clip, on the bar, and the process never restarts.</li>
 <li>A kit change or a section's soundfont sound costs no engine and no gap
   (FluidSynthEngine::selectPreset()).</li>
+<li>Only ravving picks a channel's preset: a font loads without resetting the channels
+  (<code>load FILE 0</code>), and FluidSynth's router drops the program changes that come in from
+  controllers. FluidSynth's default reset would look every channel's preset up in the newest
+  font first, a General MIDI font's piano on a kit.</li>
+<li>After every start, load and select, and whenever the transport starts, ravving reads back what
+  each channel plays (<code>channels -verbose</code>) and selects again a channel off its preset. One
+  still off is an issue on screen (FluidSynthEngine::checkPresets()).</li>
+</ul>
+<h3 id="a-channels-state-is-ravvings">A channel's state is ravving's</h3>
+<ul>
+<li>Every NRPN write (a MODS knob, the vibrato's revival) ends with the null RPN (CC 101 / 100 at
+  127). FluidSynth keeps the NRPN armed after a data entry, pointed at generator 0 (the sample
+  start offset), so any later CC 6 on the channel would move every sample's start and silence the
+  short ones.</li>
+<li>A controller's channel-state messages never reach an engine (EngineMidi::isChannelState()):
+  bank select, data entry and parameter select, volume, balance and pan, the channel modes.</li>
+</ul>
+<h3 id="a-silent-engine">A silent engine</h3>
+<ul>
+<li>A machine whose notes make no sound is found and its channels reloaded, at most once every
+  30 s.</li>
+<li>Found by EngineWatch and SilenceWatch: two notes at velocity 20 or more, 600 ms each without
+    −70 dBFS on its track's meter, within 4 s, nothing heard between.</li>
+<li>Only notes that reach the engine count. A pattern muted or cut by ONLY KICK is not
+    expected to sound, nor a note its gain silences (Machine::noteGain(): a drum row, a slot
+    or a pad muted, soloed out or cut).</li>
+<li>A note counts at the velocity its gain leaves it: a drum row turned down to a whisper
+    plays under velocity 20 and proves nothing.</li>
+<li>Reloaded by FluidSynthEngine::reloadChannels(): all notes off, Reset All Controllers, volume
+    100, pan 64, bend range ±2, the preset selected again, every control's last value.</li>
+<li>The issue "… played notes that made no sound: its sound was reloaded" clears with the next
+    note heard. Still silent after a second reload, it is an error.</li>
+<li><code>tools/device.sh call studio reloadEngine drums1</code> reloads by hand.</li>
 </ul>
 <h3 id="what-the-facts-say">What the facts say</h3>
 <table>
@@ -428,8 +584,13 @@ channel 1 clip b's.</p>
 <td>a generator's NRPN value is scaled: ×2 for the cutoff, the pitch depths and the envelope times, ×4 for the LFO rates (FluidSynth's <code>nrpn_scale</code>)</td>
 <td>each knob sends its offset divided by its generator's scale (<code>FluidSynthEngine</code>)</td>
 </tr>
+<tr>
+<td>on a melodic channel (all of ravving's) FluidSynth picks a note's zone by the <strong>tuned key</strong>, the key plus the channel's coarse and fine tune rounded to a semitone (<code>fluid_defpreset_noteon</code>); only a drum-type channel picks by the key played</td>
+<td>a kit sends no tune: a tune of −1 played each key's lower neighbour, so the converted kits (one zone per key, gaps between them) went silent on the kick and snares and the clap played the long kick (checked on FluidSynth 2.6.1, 36 of the 40 SFZ Drum Machines kits have gaps)</td>
+</tr>
 </tbody>
 </table>
+<h4 id="the-kits-sound-modifiers">The kit's SOUND MODIFIERS</h4>
 <p>The drums' SOUND MODIFIERS are the kit's own (engines.json's <code>kitSound</code>,
 EngineProfiles::resolveKit):</p>
 <table>
@@ -448,16 +609,17 @@ EngineProfiles::resolveKit):</p>
 <td>SHAPE</td>
 <td>ATTACK, LENGTH (the release)</td>
 </tr>
-<tr>
-<td>PITCH</td>
-<td>TUNE in semitones, FINE in cents</td>
-</tr>
 </tbody>
 </table>
 <p>They're SF2 generator offsets sent as NRPNs, like the soundfont sources' MODS. A kit is one
 soundfont on one channel, so they act on the whole kit. Per-drum settings would need a channel
 per row.</p>
-<p><strong>Acoustic kits inside a General MIDI font</strong> (kits.json <code>presetKits</code>, the picker's ACOUSTIC
+<p>A kit has no TUNE or FINE: engines.json's <code>kitRetired</code> names those knobs, so a value saved in
+an older project is dropped quietly (SoundControls::setRetired()): never sent, never reported
+missing. A kit's pitch would need a drum-type channel, which FluidSynth's shell cannot
+set (only a GS SysEx, with GS bank select).</p>
+<h4 id="acoustic-kits-inside-a-general-midi-font">Acoustic kits inside a General MIDI font</h4>
+<p>Kits that are one preset of a General MIDI font (kits.json <code>presetKits</code>, the picker's ACOUSTIC
 group):</p>
 <ul>
 <li><strong>The path</strong> may name one preset of a soundfont, <code>&lt;file&gt;#&lt;bank&gt;:&lt;program&gt;</code>, then choose a
@@ -507,8 +669,44 @@ Facts from libravving's source (<code>SamplerSynthVoice.cpp</code>, <code>ClipAu
 <td>previews play at 64 on the global lane</td>
 </tr>
 <tr>
-<td>AudioLevels' track gain (a machine's VOL) runs −40…+20 dB, 0 at <code>gainAbsolute</code> 0.667; the lane's sends leave before it</td>
-<td>the sends are scaled by VOL's gain in ravving (<code>TrackEffects::setSendLevel</code>)</td>
+<td>AudioLevels' track gain (a machine's VOL) runs −40…+20 dB, 0 at <code>gainAbsolute</code> 0.667; a track's lane sends after it: the lane scales its two sends by what the gain lets through (<code>JackPassthrough::setSendGain</code>, set whenever the gain or its mute changes), gliding within a period as the dry sound does</td>
+<td>VOL 0 and a mute silence the echoes too, and a fader move touches neither the EQ, the compressor nor DRIVE</td>
+</tr>
+<tr>
+<td>a track's mute is two verbs: <code>Track::setPatternMuted</code> skips its pattern's steps in the sequencer (which counts on) and ends the notes they hold as it begins, <code>Mixer::setTrackMuted</code> mutes its AudioLevels gain, and with it the lane's sends; the level, the pan, the mute and the fader at its bottom all glide within a period from the gain the last one ended on, never a cut</td>
+<td>a muted machine (<code>Machine::muted</code>, set by <code>studio.mix</code>) calls both: silent whatever it plays, live notes and a note still ringing too; ONLY KICK calls the first alone, so the two never undo each other</td>
+</tr>
+<tr>
+<td><code>Track::setNoteGain</code> scales a note's velocity as the sequencer plays it (0: skipped)</td>
+<td>a drum row's, a sampler slot's and a pad's level, mute and solo, and the drums' kick cuts: no hit rewritten</td>
+</tr>
+<tr>
+<td><code>Sequencer::setClipPlaying(…, now)</code> stopping the clip playing ends the notes it holds in the sequencer</td>
+<td>❚❚ needs no CC 123: a sampler's one-shot rings out, a held synth note ends</td>
+</tr>
+<tr>
+<td>every glide verb takes a time and a curve (<code>libravving::Curve</code>: <code>Linear</code>, or <code>Eased</code>, the S-curve 3t² − 2t³), and one primitive carries them all, <code>libravving::RtRamp</code> (libravving/rtramp.h): the application's thread asks (the last request wins, lock-free), the audio thread takes it at the top of a period and reads the value at each frame exactly on its curve, so a glide shorter than a period ends on its frame; <code>libravving::Transition</code> is an engage and a release (ms) and a curve, <code>RtRamp::toward(on, transition)</code> the amount of an effect switched by it</td>
+<td>LIVE FX's pads, the PAD SAMPLER's effects</td>
+</tr>
+<tr>
+<td>a clip's speed glides on the audio thread (<code>Clip::rampSpeed(to, ms, curve)</code>; <code>Clip::swingSpeed(first, second, ms, curve)</code>, back and forth): the voices read it frame by frame, so there is no step</td>
+<td>TAPE STOP (down over 900 ms, back up over 150 ms) and SCRATCH (160 ms each way, back over 80 ms), eased</td>
+</tr>
+<tr>
+<td><code>Strip::rampSends(first, second, ms, curve)</code> glides a strip's two send levels on the audio thread; <code>setSends</code> (or the lane's gain handlers) take over at once</td>
+<td>an echo throw: the LIVE FX echo knob (50 ms), the PAD SAMPLER's ECHO (in over 10 ms, out over 150 ms)</td>
+</tr>
+<tr>
+<td><code>Compressor::glideMs</code>: switching the compressor in or out, and a change of its make-up, glide (eased) on the audio thread: the gain it applies is scaled in decibels from none of it to all of it, make-up included; the threshold and the ratio need no glide, the attack and the release carry their changes</td>
+<td>HEAVY, 50 ms</td>
+</tr>
+<tr>
+<td><code>Clip::retrigger(ticks)</code>: SyncTimer's process strikes every voice of the clip still sounding (a note-off and a note-on at its velocity, SamplerSynth's own MIDI path) on the frame of each line, the transport's heard ticks while it plays, from the call while stopped; a one-shot that ended is struck again too, a held style let go is not</td>
+<td>the PAD SAMPLER's STUTTER, every 16th (<code>ticksPerBeat() / 4</code>)</td>
+</tr>
+<tr>
+<td><code>Strip::rampBandFrequency(band, hz, ms, curve)</code> glides an equaliser band in log Hz on the audio thread: while it glides the band is filtered 32 frames at a time, each part with coefficients made for the glide's middle there, the newest set from the application's thread taken once it is there</td>
+<td>LO PASS, HI PASS and DROP's sweeps</td>
 </tr>
 </tbody>
 </table>

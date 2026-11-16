@@ -111,12 +111,12 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 <tbody>
 <tr>
 <td><code>Studio</code></td>
-<td>backend root (<code>studio</code> in QML): builds the machines from <code>data/kits.json</code>, transport (play/stop, tempo, swing, step), saves the sequence after edits; a preview clock on a desktop; the sampler's browser (<code>sampleFiles()</code>: kits.json <code>sampleFolders</code>, folders labelled short) and hold-to-hear previews (<code>previewSample()</code> / <code>stopPreview()</code>: a one-shot clip on SamplerSynth's global lane); the engines as slots per machine (<code>Slot {engine, channel, kind}</code>, up to five, one per engine kind the project's and the sections' sounds need: <code>syncSlots()</code>, the first on the machine's own Zynthian channel, the rest from the jam's pool of <code>SynthChannels</code> (15) as they come; <code>freeSynthChannels</code>, <code>sectionSoundCost()</code> for the pickers); a machine's track picks its sound by clip, so clip a's notes play slot 0's engine on MIDI channel 0 and clip b's slot 1's on channel 1: <code>placeSound()</code> puts the sound into the slot of the clip that plays it (the engine's channel, a FluidSynth's preset on the clip's channel, an all-notes-off to an engine the clip leaves), and a section cued while playing has its clip waiting for the bar, so its sound starts with it; <code>landSound()</code> makes that clip the one heard live (<code>Machine::liveClip()</code>, the router's current clip), at once or, cued while playing, on the last sixteenth before the bar (<code>scheduleLanding()</code>); the imported soundfonts (<code>refreshImported()</code>, then <code>importedRefreshed</code>): the library's and the soundfont cache's fonts as kits (bank-128 presets, or a font whose sample names make it a kit) and sources (every other preset, banks 128 and 120 left out); <code>soundfontOffer(path, presets, wholeKit)</code> says what a stick's or the catalog's font would give, pathed where it will play from; a SAVE copies the cached fonts the project plays into the library (<code>Projects::Session::keep</code>), and the start clears the cache of the rest</td>
+<td>backend root (<code>studio</code> in QML): builds the machines from <code>data/kits.json</code>, transport (play, pause: ▶ goes on from the 16th it stopped in; stop: back to the start; tempo, swing, step), saves the sequence after edits; a preview clock on a desktop; the sampler's browser (<code>sampleFiles()</code>: kits.json <code>sampleFolders</code>, folders labelled short) and hold-to-hear previews (<code>previewSample()</code> / <code>stopPreview()</code>: a one-shot clip on SamplerSynth's global lane); the engines as slots per machine (<code>Slot {engine, channel, kind}</code>, up to five, one per engine kind the project's and the sections' sounds need: <code>syncSlots()</code>, the first on the machine's own Zynthian channel, the rest from the jam's pool of <code>SynthChannels</code> (15) as they come; <code>freeSynthChannels</code>, <code>sectionSoundCost()</code> for the pickers); a machine's track picks its sound by clip, so clip a's notes play slot 0's engine on MIDI channel 0 and clip b's slot 1's on channel 1: <code>placeSound()</code> puts the sound into the slot of the clip that plays it (the engine's channel, a FluidSynth's preset on the clip's channel, an all-notes-off to an engine the clip leaves), and a section cued while playing has its clip waiting for the bar, so its sound starts with it; <code>landSound()</code> makes that clip the one heard live (<code>Machine::liveClip()</code>, the router's current clip), at once or, cued while playing, on the last sixteenth before the bar (<code>scheduleLanding()</code>); the imported soundfonts (<code>refreshImported()</code>, then <code>importedRefreshed</code>): the library's and the soundfont cache's fonts as kits (bank-128 presets, or a font whose sample names make it a kit) and sources (every other preset, banks 128 and 120 left out); <code>soundfontOffer(path, presets, wholeKit)</code> says what a stick's or the catalog's font would give, pathed where it will play from; a SAVE copies the cached fonts the project plays into the library (<code>Projects::Session::keep</code>), and the start clears the cache of the rest</td>
 <td>sketchpad song + transport glue</td>
 </tr>
 <tr>
 <td><code>Machine</code></td>
-<td>the base of every machine: track (level, pan, effects, mute, ❚❚, kick cuts), pattern (bars, view bar following the playing bar while playing: <code>follow</code>, off when a bar is picked mid-play, back on when stopped; playhead, STEP cursor), presets, LIVE play/record, UNDO / REDO of the pattern (<code>canUndo</code>, <code>undo()</code>, <code>canRedo</code>, <code>redo()</code>: every <code>edited</code> whose content differs is a step back, 100 deep (<code>History::Depth</code>), changes within 0.5 s of the last joining its step (a knob turned, a handle dragged); the sound chosen is kept (<code>soundChoice()</code>), the mix, the sound's knobs (MODS) and effects are left out, and so are a subclass's <code>viewKeys()</code> such as the sampler's bank; <code>beginEditGroup()</code>/<code>endEditGroup()</code> make a take one step; a project open starts it afresh); subclasses give steps, sound and velocities; SECTIONS: <code>sectionContent()</code> (the pattern part less <code>soundState()</code>'s keys and the <code>viewKeys()</code>, plus ❚❚ and ONCE) and <code>applySectionContent()</code> (laid over the machine's own by <code>withSection()</code>, the history started over; an empty map empties the pattern), <code>sectionBars()</code> / <code>sectionSounds()</code>; the samplers keep their banks' hits, not their samples (<code>SamplerBanks</code>) Its own length (<code>bars</code>, <code>m_bars</code>) is kept apart from what its clip plays: <code>applyPlayLength()</code> is the one place that sets the clip's <code>patternLength</code> and <code>bankOffset</code>, from <code>playedBars()</code>: one bar under ⟲ (the bar on screen), the section's span under ONCE (<code>once</code>, <code>setSpan()</code> from the studio; the bars past its own emptied by <code>clearRest()</code>), else its own; while it rests the playhead hides and a live hit is not written.; a sound per section: the project's sound (<code>projectSoundName</code>, <code>soundState()</code>) and the section on screen's own (<code>sectionSound()</code>, <code>hasSectionSound</code>, <code>chooseSectionSoundSource()</code> / <code>useProjectSound()</code>, carried in <code>sectionContent()</code> as <code>sectionSound</code> and in <code>soundChoice()</code> for undo) with its MODS (<code>sectionMods()</code> / <code>setSectionMods()</code>, <code>sectionMods</code> in the content: the knobs its own sound plays hold them while it is on screen, the project's values set aside and given back when it leaves, <code>soundState()</code> always the project's; a cued section's wait for <code>landSectionMods()</code> from <code>Studio::landSound()</code>); <code>soundSource</code> / <code>soundSourceName</code> / <code>engineConfig()</code> / <code>activeSound()</code> are the one playing; <code>engineKindFor()</code> / <code>engineConfigFor()</code> say what engine a sound needs (one FluidSynth for all soundfonts, a synth source's own)</td>
+<td>the base of every machine: its feel (<code>feelKeys</code>, <code>feelCards</code>, <code>feel</code>, <code>setFeel()</code>: <a href="#feel">Feel</a>), track (level, pan, effects, mute, ❚❚, kick cuts: the mute and ONLY KICK each skip the pattern, which plays again only once neither does (<code>patternSilenced()</code>), the sequencer ending the notes it held; ❚❚ stops the clip now, its held notes ended, a one-shot ringing out), pattern (bars, view bar following the playing bar while playing: <code>follow</code>, off when a bar is picked mid-play, back on when stopped; playhead, STEP cursor), presets, LIVE play/record, UNDO / REDO of the pattern (<code>canUndo</code>, <code>undo()</code>, <code>canRedo</code>, <code>redo()</code>: every <code>edited</code> whose content differs is a step back, 100 deep (<code>History::Depth</code>), changes within 0.5 s of the last joining its step (a knob turned, a handle dragged); the sound chosen is kept (<code>soundChoice()</code>), the mix, the sound's knobs (MODS) and effects are left out, and so are a subclass's <code>viewKeys()</code> such as the sampler's bank; <code>beginEditGroup()</code>/<code>endEditGroup()</code> make a take one step; a project open starts it afresh); subclasses give steps, sound and velocities; SECTIONS: <code>sectionContent()</code> (the pattern part less <code>soundState()</code>'s keys and the <code>viewKeys()</code>, plus ❚❚ and ONCE) and <code>applySectionContent()</code> (laid over the machine's own by <code>withSection()</code>, the history started over; an empty map empties the pattern), <code>sectionBars()</code> / <code>sectionSounds()</code>; the samplers keep their banks' hits, not their samples (<code>SamplerBanks</code>) Its own length (<code>bars</code>, <code>m_bars</code>) is kept apart from what its clip plays: <code>applyPlayLength()</code> is the one place that sets the clip's <code>patternLength</code> and <code>bankOffset</code>, from <code>playedBars()</code>: one bar under ⟲ (the bar on screen), the section's span under ONCE (<code>once</code>, <code>setSpan()</code> from the studio; the bars past its own emptied by <code>clearRest()</code>), else its own; while it rests the playhead hides and a live hit is not written.; a sound per section: the project's sound (<code>projectSoundName</code>, <code>soundState()</code>) and the section on screen's own (<code>sectionSound()</code>, <code>hasSectionSound</code>, <code>chooseSectionSoundSource()</code> / <code>useProjectSound()</code>, carried in <code>sectionContent()</code> as <code>sectionSound</code> and in <code>soundChoice()</code> for undo) with its MODS (<code>sectionMods()</code> / <code>setSectionMods()</code>, <code>sectionMods</code> in the content: the knobs its own sound plays hold them while it is on screen, the project's values set aside and given back when it leaves, <code>soundState()</code> always the project's; a cued section's wait for <code>landSectionMods()</code> from <code>Studio::landSound()</code>); <code>soundSource</code> / <code>soundSourceName</code> / <code>engineConfig()</code> / <code>activeSound()</code> are the one playing; <code>engineKindFor()</code> / <code>engineConfigFor()</code> say what engine a sound needs (one FluidSynth for all soundfonts, a synth source's own)</td>
 <td>new</td>
 </tr>
 <tr>
@@ -151,7 +151,7 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 </tr>
 <tr>
 <td><code>DrumMachine</code></td>
-<td>one drum machine: kit rows, steps as subnotes of its track's clip (PatternClip), accents, presets, per-row level/mute/solo (as velocities), level (track gain), pan (track passthrough), mute, audition, kit switching and reset</td>
+<td>one drum machine: kit rows, steps as subnotes of its track's clip (PatternClip), accents, presets, per-row level/mute/solo (as velocities), level (track gain), pan (track passthrough), mute, audition, kit switching and reset; hits ring out: the pattern goes to the sequencer through <code>shapeForPlay()</code> (a copy, <code>PatternClip::setShaper()</code>), where <code>playLengths()</code> gives a ringing row's hits the whole loop (the sequencer ends a note before striking it again) and the OPEN hat an end a clock tick before the next closed HAT (nudge and swing counted); a looped row keeps one step; live, a ringing row gets no note-off and a closed HAT ends the OPEN one; <code>setHitLengths()</code> (SETTINGS · KEYS · DRUMS, from <code>UserProfile</code>'s <code>drumsRingOut</code> and <code>hatChoke</code>) turns ringing or the choke off; its feel (TIMING, VELOCITY, PULSE) plays the kit loosely without rewriting a hit (<a href="#feel">Feel</a>)</td>
 <td>new</td>
 </tr>
 <tr>
@@ -160,18 +160,63 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 <td>new</td>
 </tr>
 <tr>
+<td><code>ControllerId</code>, <code>Connection</code>, <code>Controller</code></td>
+<td>what names a controller whichever way it is plugged in (a known controller's label, else its connection's key), one way it is plugged in (a port: its name, key, <code>Transport</code> and send target), and a controller with its connections and the primary one (<code>title()</code>, <code>overBluetooth()</code>)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ConnectionRegistry</code></td>
+<td>the controllers plugged in (<code>studio.controllers</code>; <code>ids</code>, <code>describe(id)</code>), read from the router's list of ports: the one place a port's name is understood (<code>keyOf</code>, <code>transportOf</code>, <code>isSendSide</code>, <code>isController</code>), a known controller's several connections as one <code>Controller</code> with a primary connection (a cable before Bluetooth; <code>sendTarget(id)</code>), <code>controllerAdded</code> / <code>controllerRemoved</code> / <code>connectionsChanged</code>; parks every controller's raw notes on unused track 9</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ConnectionMultiplexer</code>, <code>MidiMessage</code></td>
+<td>the router's messages as one stream stamped with the controller and connection (<code>midi(MidiMessage)</code>, <code>sysex(controller, bytes)</code>); the same message from another of the controller's connections within 150 ms is a copy and dropped, a repeat on one connection always passes; its clock can be set</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>MidiTransport</code>, <code>RouterTransport</code></td>
+<td>the way out to a controller by its id (<code>sendMidi</code>, <code>sendSysex</code>), with no knowledge of which port carries it; <code>RouterTransport</code> sends to the primary connection's send target through libravving's router</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ControllerSettings</code>, <code>ControllerSettingsStore</code></td>
+<td>one controller's settings as a value type (the scalar <code>Field</code>s by the name they are kept and shown under, <code>label</code>, <code>surface</code> and whether it was chosen, <code>knobs</code>, <code>host</code>, <code>octaveLinked</code>, <code>hits</code>, <code>controls</code>; <code>clamp()</code>, <code>toMap()</code> for QML) and the one reader and writer of the <code>ravving/midi</code> file: a controller's profile under the file's group named by its id, <code>update(id, change)</code> for every write (MidiInput's, ControllerDrivers' and ControllerOctaves'), <code>forget(id)</code>, an older version's groups under a connection's name read and moved, <code>changed(id)</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>Midi</code></td>
+<td>the controllers' enumerations shared with QML as the Ravving module's <code>Midi</code> type: <code>DriverState</code> (Idle, Connecting, Ready, Lost), <code>LearnTarget</code> (Nothing, Hit, Control), <code>ControlGroup</code> (Keys, Knobs, Mixer)</td>
+<td>—</td>
+</tr>
+<tr>
 <td><code>MidiInput</code></td>
-<td>external controllers (<code>studio.midiIn</code>; <code>devices</code>: the connected ones' names): notes from MidiRouter's hardware port (raw controller notes parked on unused track 9; every device's channels reset to the current track; bridge duplicates dropped), per-controller settings by name (channel, transpose, velocity curve, bend range, expression; <code>data/midi-devices.json</code> defaults, RPN 0 bend range), MIDI learn (drum keys to rows and pads; notes and CCs as the device's keys and knobs, fed to <code>Ravving::handleCuia</code> / knob handlers), expression to the machine on screen, plug-in/out notices</td>
+<td>what a controller's messages become (<code>studio.midiIn</code>): notes with the controller's channel, transpose, velocity curve and drum keys, its settings read and changed through the <code>ControllerSettingsStore</code> (<code>setOption(id, field name, value)</code>, the drum keys, the controls, <code>forget</code>), MIDI learn (a <code>Midi.LearnTarget</code> (drum keys to rows and pads; notes, CCs and pitch bends as the device's keys, knobs and MIXER controls, fed to <code>Ravving::handleCuia</code> / knob handlers / <code>LearnedMixer</code>), a hosted surface's messages handed to its driver first (<code>setSurface(id)</code>), expression to the machine on screen (never an engine channel's state: <code>EngineMidi</code>), a controller unplugged lets its notes go; its clock can be set (<code>setClock()</code>)</td>
 <td>zynthbox-qml's MIDI controller handling (subset)</td>
 </tr>
 <tr>
-<td><code>ControllerDriver</code>, <code>ControllerDrivers</code></td>
-<td>a controller ravving talks to over System Exclusive (the base: transport, request / reply, keep-alive, 7-bit packing) and the registry of them all (<code>studio.drivers</code>: a driver per controller name, on/off per controller, each running driver offered to the capability hubs)</td>
+<td><code>LearnedMessage</code></td>
+<td>the one grammar of a learned message (a note, a CC or a pitch bend on a channel): read from the bytes (<code>of()</code>), written as the settings keep it (<code>text()</code>: <code>note 1 60</code>, <code>cc 2 74</code>, <code>bend 3</code>; <code>parse()</code>), hashed by its packed <code>key()</code>, described for the user (<code>C4 · CH 1</code>)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ControllerProfiles</code></td>
+<td>the known controllers' defaults (<code>data/midi-devices.json</code>): the first entry a controller fits by a part of its name and, when the entry says, the USB id of the sound card it is on (<code>/proc/asound</code>); its <code>label</code> names the controller on every connection; what an entry says that no profile may (an unknown key, a wrong type, no <code>match</code> or <code>usb</code>) is dropped and reported (<code>problems()</code>)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>MidiValues</code></td>
+<td>what a controller's bytes mean, the same wherever they are read: where a CC presses a key (64), a pitch bend as a fader's position (a 7-bit fader's top is all the way), the velocity and pressure curves, a bend scaled to the engines' ±2 semitones, the lit / unlit values sent back</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ControllerDriver</code>, <code>ControllerDrivers</code>, <code>DriverSpec</code></td>
+<td>a controller ravving talks to over System Exclusive (the base, made with the controller's id, its protocol id and the <code>MidiTransport</code>: request / reply, keep-alive, 7-bit packing, <code>send()</code> / <code>sendMidi()</code> through the transport) and the registry of them all (<code>studio.drivers</code>: one device per controller id however it is connected, on/off per controller through the settings store (<code>host</code>), its state a <code>Midi.DriverState</code>, each running driver offered to the capability hubs); a protocol is added as a <code>DriverSpec</code> (its id, <code>matches</code>, <code>make</code>, <code>remakeOn</code>; <code>DriverSpec::named()</code> by a part of the name, <code>DriverSpec::surface()</code> by the <code>surface</code> setting), one per driver's <code>spec()</code></td>
 <td>—</td>
 </tr>
 <tr>
 <td><code>ControllerCapability</code>, <code>ControllerHub</code></td>
-<td>what a controller can do beside its notes: the interface a driver inherits (with the controller's name) and the hub that keeps every driver having it</td>
+<td>what a controller can do beside its notes: the interface a driver inherits (with the controller's id, <code>controller()</code>) and the hub that keeps every driver having it (<code>attach</code> / <code>detach</code>)</td>
 <td>—</td>
 </tr>
 <tr>
@@ -186,7 +231,47 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 </tr>
 <tr>
 <td><code>RoliBlocks</code></td>
-<td>ROLI BLOCKS as hosted by ravving (a ControllerOctave and a ControllerScale): the probe, the topology, API mode, pings, the note grid's root / scale / octave from the project, the blocks' buttons as the CCs they sent before</td>
+<td>ROLI BLOCKS as hosted by ravving (a ControllerOctave and a ControllerScale): the probe, the topology, API mode, pings, the note grid's root / scale / octave from the project, the blocks' buttons as the CCs they sent before; each block's kind (Lightpad, Live Block, Seaboard, Lumi Keys…) read from its serial; <code>spec()</code> for the controllers with BLOCK in their name</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>Mix</code></td>
+<td>the machines' mutes and solos (<code>studio.mix</code>: <code>muted</code>, <code>soloed</code>, <code>silenced</code>, <code>activeSampler</code>, <code>liveMachine</code>; <code>setMuted</code>, <code>setSoloed</code>, <code>toggleMuted</code>, <code>toggleSoloed</code>, <code>soloOnly</code>, <code>isHeardLive</code>): a machine is silenced when muted, when another one is soloed and it is not, or when it is the sampler not playing; the machine played LIVE (<code>Session.liveMachine</code>) and left out only by another's solo is still heard live (<code>isHeardLive</code>: its patterns silent, its channel open, <code>Machine::heardLive</code>); the studio sets each machine's <code>muted</code> and <code>heardLive</code> from it from the session's start, and saves the mutes and solos with the session (<code>muted</code>, <code>soloed</code> in its UI values). <code>Session.qml</code>'s <code>muted</code>, <code>soloed</code> and <code>isSilenced()</code> read it, and the MIXER, the S / M buttons, the device's keys and the control surfaces (<code>MixerLink.qml</code>) change it through <code>Session</code>'s toggles; a key no machine has is left out</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>ControllerMixer</code>, <code>ControllerMixers</code>, <code>MixerStrip</code>, <code>MixerTransport</code>, <code>MixerControl</code></td>
+<td>a controller with mixer strips (the capability: each strip follows an instrument's level, pan, mute, solo, take and pause, the transport its buttons; its controls come back as a strip's requests (<code>StripRequest</code>) or the transport's and the screen's (<code>TransportRequest</code>)) and the hub that links them all to the instruments (<code>studio.mixers</code>: <code>setStrip()</code>, <code>setTransport()</code>, the <code>…Requested</code> signals); <code>MixerControl</code> is the learnable MIXER control ids (<code>MIXER&lt;strip&gt;_&lt;part&gt;</code>, <code>MIXER_&lt;part&gt;</code> for the transport)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>FaderPickup</code></td>
+<td>a fader or an absolute knob with no motor on a value it does not show: it takes the value over once it reaches it (or crosses it), lets go when the value changes elsewhere, or, with the pick-up off, takes it on any move; shared by <code>MackieSurface</code> and <code>LearnedMixer</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>MackieControl</code>, <code>MackieSurface</code></td>
+<td>Mackie Control's messages in DAW mode (pure functions: a strip's fader as pitch bend on its channel, its V-Pot's CC, the buttons' notes; the lights and fader positions back) and the control surface driver that speaks them (a Donner STARRYCTRL) as the instruments' mixer: a <code>ControllerDriver</code> with <code>ControllerMixer</code> strips, made as the controller's settings say (<code>knobs</code>, <code>pickup</code>), its own keys (△ ▽ ◀◀ ▶▶) one set of notes, endless knobs decoded and accelerated, pick-up, lights sent on change only and paced; <code>spec()</code> for the controllers whose <code>surface</code> is <code>mackie</code>, remade on <code>knobs</code> or <code>pickup</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>LearnedMixer</code>, <code>LearnedMixers</code></td>
+<td>a plain controller as the instruments' mixer: its keys, knobs and faders learned as the MIXER controls (through <code>MidiInput::mixerControl</code>), a <code>ControllerMixer</code> like a surface's strips (pick-up, endless knobs told from faders by <code>EncoderGuess</code>, pitch bend faders, keys flipping and lit back on their own note or CC, the transport's pause), made with the controller's id and the <code>MidiTransport</code> its lights go through; <code>LearnedMixers</code> makes one per controller the registry lists with MIXER controls and attaches it to the mixers' hub as a driver would</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>RelativeEncoder</code>, <code>EncoderGuess</code></td>
+<td>an endless knob's CC values decoded (sign-magnitude, two's complement, offset binary) and accelerated as it turns faster; and whether a learned CC is an endless knob's or a position's (a fader's), told from what it sends</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>KeyWatch</code></td>
+<td>warns when a controller plays in another key than the project's (<code>studio.keyWatch</code>): of the last notes a controller played as notes, when enough are out of the key and in one other, that key is named</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>TapTempo</code></td>
+<td>TAP tempo (<code>studio.tapTempo</code>): the tempo from the gaps between taps, a run's mean rounded to a whole BPM, a pause starting a new run</td>
 <td>—</td>
 </tr>
 <tr>
@@ -221,12 +306,12 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 </tr>
 <tr>
 <td><code>PadSamplerMachine</code></td>
-<td>page 5's PAD SAMPLER (<code>studio.machines.pads</code>, kind "pads"): 4 banks × 16 pads, each loaded pad one ClipAudioSource set up from the pad's <code>params[tab][knob]</code> (TRIM start / end / loop point, MIX pan, AMP ENV attack and decay / release, TUNE semi + fine, PLAY mono / mute group as exclusivity groups) and flags (NOTE ON = NonLooping, LOOP = Looping from the loop point, REVERSE = a reversed copy, MUTE; 16 LEVELS kept); pads 1–10 on track 7, 11–16 on a second track (kits.json <code>secondTrack</code> 8) whose pattern the machine mirrors (hits, length, loop, swing, mute) and whose live notes go out on it, both tracks' sample outputs wired into track 7's lane (<code>JackWiring::setSampleOutputs(track, samples, laneTrack)</code>); level as velocity; FILTER = the clip's equaliser bands (one, two for the 4-pole types, cutoff and Q from the knobs); the kit's knobs (<code>PadKitControls</code>, the SOUND MODIFIERS: KIT volume / semi / fine, 16 LEVELS type and switch); 16 LEVELS: the selected pad becomes the source, every pad plays it by velocity ramp or on sixteen level slices (notes 64–79, transposed by root note per TUNE semitones or the header's SCALE from pad 4), the hits meanwhile are the bank's level hits; audition = one pass; latch = the note held with the slice looping, unlatched after a short delay so the note-off is not ignored; PAD FX held on the pad played last (<code>heldFx</code>, <code>fxPad</code>): ECHO = the track's echo throw, TAPE STOP / SCRATCH = sweeps of the clip's <code>speedRatio</code> (a QVariantAnimation), STUTTER = a sixteenth-of-the-tempo retrigger, SKIP / REVERSE = the pad restarted with its start moved on / its reversed copy from the point reached, restored on release; erase pad, halve / double, UNMUTE ALL; presets <code>pads-presets.json</code> ("1"–"16"); <code>playing</code> and <code>playPositions</code> (per pad: whether its clip sounds and where it is in the file, from the clip's isPlaying / position signals) feed the grid's beam and the screen's playhead</td>
+<td>page 5's PAD SAMPLER (<code>studio.machines.pads</code>, kind "pads"): 4 banks × 16 pads, each loaded pad one ClipAudioSource set up from the pad's <code>params[tab][knob]</code> (TRIM start / end / loop point, MIX pan, AMP ENV attack and decay / release, TUNE semi + fine, PLAY mono / mute group as exclusivity groups) and flags (NOTE ON = NonLooping, LOOP = Looping from the loop point, REVERSE = a reversed copy, MUTE; 16 LEVELS kept); a pad's MUTE and solo are its notes' gains on its own track (<code>Track::setNoteGain()</code>, the 16 LEVELS notes too: no hit rewritten); pads 1–10 on track 7, 11–16 on a second track (kits.json <code>secondTrack</code> 8) whose pattern the machine mirrors (hits, length, loop, swing, mute) and whose live notes go out on it, both tracks' sample outputs wired into track 7's lane (<code>JackWiring::setSampleOutputs(track, samples, laneTrack)</code>); level as velocity; FILTER = the clip's equaliser bands (one, two for the 4-pole types, cutoff and Q from the knobs); the kit's knobs (<code>PadKitControls</code>, the SOUND MODIFIERS: KIT volume / semi / fine, 16 LEVELS type and switch); 16 LEVELS: the selected pad becomes the source, every pad plays it by velocity ramp or on sixteen level slices (notes 64–79, transposed by root note per TUNE semitones or the header's SCALE from pad 4), the hits meanwhile are the bank's level hits; audition = one pass; latch = the note held with the slice looping, unlatched after a short delay so the note-off is not ignored; PAD FX held on the pad played last (<code>heldFx</code>, <code>fxPad</code>): ECHO = the track's echo throw (its send in over 10 ms, out over 150 ms), TAPE STOP / SCRATCH = the engine's glides of the clip's speed, frame by frame, eased (<code>Clip::rampSpeed()</code> to 0.02 over 900 ms; <code>Clip::swingSpeed()</code> between 0.45 and 1.6, 160 ms a leg; let go, back to 1 over 150 ms and 80 ms), each pad effect's engage and release declared together (<code>EchoTransition</code>, <code>TapeStopTransition</code>, <code>ScratchTransition</code>), STUTTER = the pad struck at once, then its clip struck again on every 16th of the transport (<code>Clip::retrigger()</code>, every voice still sounding, or a one-shot that ended; none while the pad is silenced by its mute, a solo, the machine's mute or ONLY KICK), SKIP / REVERSE = the pad restarted with its start moved on / its reversed copy from the point reached; each ends on the pad it started on, restored on release; erase pad, halve / double, UNMUTE ALL; presets <code>pads-presets.json</code> ("1"–"16"); <code>playing</code> and <code>playPositions</code> (per pad: whether its clip sounds and where it is in the file, from the clip's isPlaying / position signals) feed the grid's beam and the screen's playhead</td>
 <td>the MPC Sample</td>
 </tr>
 <tr>
 <td><code>SamplerMachine</code></td>
-<td>page 5's SLOT SAMPLER (<code>studio.machines.sampler</code>, track 6, "sample-trig"): 4 banks × 8 slots, each slot one ClipAudioSource (made through the bridge's exported constructor) on its track's sample slot <code>i % 5</code>, row <code>i / 5</code>, set up on its root slice: key zone = root note = <code>baseNote + i</code>, one-shot (a retrigger chokes it), PITCH = slice pitch, trim = start/length samples, 8 ms release; REVERSE plays a reversed copy rendered once in a worker (<code>AudioFile::writeReversed</code>, cached by path hash). Steps, accents and row mix as the drums (velocities); presets <code>sampler-presets.json</code> ("1"–"8": x/X). Published to the track as <code>samples</code> (<code>SketchpadTrack::setSamples</code>), its loaded slots' SamplerSynth ports wired into the lane (<code>JackWiring::setSampleOutputs</code>); <code>playing</code> / <code>playPositions</code> per slot as the PAD SAMPLER has</td>
+<td>page 5's SLOT SAMPLER (<code>studio.machines.sampler</code>, track 6, "sample-trig"): 4 banks × 8 slots, each slot one ClipAudioSource (made through the bridge's exported constructor) on its track's sample slot <code>i % 5</code>, row <code>i / 5</code>, set up on its root slice: key zone = root note = <code>baseNote + i</code>, one-shot (a retrigger chokes it), PITCH = slice pitch, trim = start/length samples, 8 ms release; REVERSE plays a reversed copy rendered once in a worker (<code>AudioFile::writeReversed</code>, cached by path hash). Steps and accents as the drums (velocities), a slot's mute and solo its note's gain (<code>Track::setNoteGain()</code>: no hit rewritten); presets <code>sampler-presets.json</code> ("1"–"8": x/X). Published to the track as <code>samples</code> (<code>SketchpadTrack::setSamples</code>), its loaded slots' SamplerSynth ports wired into the lane (<code>JackWiring::setSampleOutputs</code>); <code>playing</code> / <code>playPositions</code> per slot as the PAD SAMPLER has</td>
 <td>new</td>
 </tr>
 <tr>
@@ -276,12 +361,12 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 </tr>
 <tr>
 <td><code>DrumKit</code></td>
-<td>reads a soundfont (SF2/SF3 preset → instrument → sample name per key) and finds eight roles: KICK SNARE CLAP TOM HAT OPEN CYMBAL PERC; a role the kit lacks is "—" and silent. A row is named after what its key plays when that is not the role's own drum (a conga on CLAP, timpani on TOM; always on CYMBAL and PERC: RIDE, COWBELL), and a font whose sample names say only the role names its keys in data/soundfonts.json's <code>rows</code> (the Animal Kit's BARK, QUACK…)</td>
+<td>reads a soundfont (SF2/SF3 preset → instrument → sample name per key) and finds eight roles: KICK SNARE CLAP TOM HAT OPEN CYMBAL PERC; a role the kit lacks is "—" and silent. A row is named after what its key plays when that is not the role's own drum (a conga on CLAP, timpani on TOM; always on CYMBAL and PERC: RIDE, COWBELL), and a font whose sample names say only the role names its keys in data/soundfonts.json's <code>rows</code> (the Animal Kit's BARK, QUACK…). A row <code>rings</code> unless a zone on its key loops (sample mode 1 or 3, the instrument's global zone counted): DrumFire, E Ave and SP 12 loop throughout, LINN9000 2 on one key</td>
 <td>new</td>
 </tr>
 <tr>
 <td><code>libravving::Track</code></td>
-<td>a track's routing (<code>Sequencer::track()</code>): synth or sampler (<code>setKind</code>), the synth each sound slot plays (<code>setSynth</code>, <code>setClipSynth</code>), the sampler's picking, the mute and per-note gains the sequencer applies; it applies from its first <code>Sequencer::track()</code> call (the studio switches a machine's synth between its engines with <code>setSynth()</code>)</td>
+<td>a track's routing (<code>Sequencer::track()</code>): synth or sampler (<code>setKind</code>), the synth each sound slot plays (<code>setSynth</code>, <code>setClipSynth</code>), the sampler's picking, the pattern mute (<code>setPatternMuted</code>: the steps skipped, the channel's own mute is <code>Mixer::setTrackMuted</code>), and per-note gains (<code>setNoteGain</code>), per-note feels (<code>setNoteFeel</code>: a <code>NoteFeel</code>, how far a note plays from its place, how much its velocity moves and how much it is cut short, another way each pass) and the chords' (<code>setChordFeel</code>: a <code>ChordFeel</code>, the strum, its direction and the top voice) the sequencer applies as the notes go out; it applies from its first <code>Sequencer::track()</code> call (the studio switches a machine's synth between its engines with <code>setSynth()</code>)</td>
 <td><code>sketchpad_channel.py</code></td>
 </tr>
 <tr>
@@ -291,7 +376,7 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 </tr>
 <tr>
 <td><code>SoundEngine</code>, <code>FluidSynthEngine</code></td>
-<td>an engine process with MIDI in and stereo out; FluidSynth runs a soundfont preset; FluidSynth holds several soundfonts at once and switches preset without a restart (<code>selectPreset()</code>, <code>loadFont()</code>, <code>keepFonts()</code>; the fonts load again in order after a crash restart, so their ids are known)</td>
+<td>an engine process with MIDI in and stereo out; FluidSynth runs a soundfont preset; FluidSynth holds several soundfonts at once and switches preset without a restart (<code>selectPreset()</code>, <code>loadFont()</code>, <code>keepFonts()</code>; the fonts load again in order after a crash restart, so their ids are known; a load never resets the channels, incoming program changes are dropped, and <code>checkPresets()</code> reads back what each channel plays and selects again one off its preset); every NRPN write ends with the null RPN; <code>reloadChannels()</code> sends a channel's whole state again over a Reset All Controllers (<code>canReload()</code>: FluidSynth only)</td>
 <td><code>zynthian_engine(_fluidsynth).py</code></td>
 </tr>
 <tr>
@@ -306,17 +391,17 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 </tr>
 <tr>
 <td><code>TrackEffects</code></td>
-<td>a machine's effects (<code>machine.effects</code>) on its track's JackPassthrough: EQ (low shelf 250 Hz / peak 1 kHz / high shelf 5 kHz, ±12 dB), COMPRESSOR, SIDECHAIN (the compressor keyed from DRUMS 1), PAN (= the strip's pan), REVERB/DELAY sends after the fader (<code>setSendLevel()</code>: the machine's VOL gain scales them, so VOL 0 silences the echoes too; the lane itself sends before AudioLevels' gain), DRIVE (the machine's own Calf Saturator, inserted between engine and track only while on: AMOUNT = input gain up to +36 dB + saturation, output 1/(1+1.1·AMOUNT); TONE = post low-pass 1.2 kHz → open); saved with the machine</td>
+<td>a machine's effects (<code>machine.effects</code>) on its track's JackPassthrough: EQ (low shelf 250 Hz / peak 1 kHz / high shelf 5 kHz, ±12 dB), COMPRESSOR, SIDECHAIN (the compressor keyed from DRUMS 1), PAN (= the strip's pan), REVERB/DELAY sends (MIX, the level before the fader: libravving sends them after the track's VOL and mute, so VOL 0 and a mute silence the echoes too), DRIVE (the machine's own Calf Saturator, inserted between engine and track only while on: AMOUNT = input gain up to +36 dB + saturation, output 1/(1+1.1·AMOUNT); TONE = post low-pass 1.2 kHz → open); saved with the machine</td>
 <td>zynthbox-qml's track mixer EQ/compressor</td>
 </tr>
 <tr>
 <td><code>LiveFx</code></td>
-<td>the header's LIVE FX (<code>studio.liveFx</code>), thirty pads in two banks of sixteen (<code>banks</code>, <code>bank</code>, <code>pads</code> the shown bank's, <code>allPads</code>; <code>nextBank</code>; MAIN is <code>headerPads</code>, the sixteen slots the profile keeps under <code>liveFx/header</code>, the first eight standing in the header and the rest shown while ALT is held; MORE every other pad): NO KICK / ONLY KICK (drum kick mode, as velocities), LO PASS / HI PASS (sweeps on GlobalPlayback's equaliser), DROP (kick out + high-pass build while held), STUTTER and LOOP 4 / 8 / 8T / 16 / 32 (BeatRepeat; one loop at a time, STUTTER over a held loop), CRUSH (Calf Crusher) and PHASER (Calf Phaser) as master inserts GlobalPlayback → repeat (+ engine) → crusher → phaser → speakers, the rest on the LiveFxEngine after the repeat (KILL LOW / MID / HIGH, REVERSE, REWIND, STOP, HALF, OCT UP, WOBBLE, ECHO, FREEZE, FLANGER, GATE, AUTO-PAN, MONO, PHONE, ALIAS, FADE OUT; one head of REVERSE … WOBBLE at a time), ECHO (every machine thrown into the delay), HEAVY (GlobalPlayback's compressor); taps latch NO/ONLY KICK, the filters and the KILLs; DROP, CRUSH, FLANGER, GATE, AUTO-PAN, MONO, PHONE and ALIAS act while held and latch after half a second; the rest only while held (dragging a held pad picks CRUSH's 8 · 6 · 4 · 3 BIT or STUTTER's 1/16 · 1/32 · 1/64, shown on the pad: <code>readouts</code>); <code>syncGrid()</code> puts the engine back on the bar at a tempo change or a transport start; <code>debugState()</code> (<code>call studio.liveFx debugState</code>) gives the pads' state and the audio thread's last cycle</td>
+<td>the header's LIVE FX (<code>studio.liveFx</code>), thirty pads in two banks of sixteen (<code>banks</code>, <code>bank</code>, <code>pads</code> the shown bank's, <code>allPads</code>; <code>nextBank</code>; MAIN is <code>headerPads</code>, the sixteen slots the profile keeps under <code>liveFx/header</code>, the first eight standing in the header and the rest shown while ALT is held; MORE every other pad): NO KICK / ONLY KICK (<code>Machine::setKickMode()</code>: the drums' rows by their notes' gains; ONLY KICK skips every other machine's pattern, <code>Track::setPatternMuted()</code>, apart from its mute, with its live keys silent, never an edit), LO PASS / HI PASS (sweeps on GlobalPlayback's equaliser the engine glides evenly through the octaves, <code>Strip::rampBandFrequency()</code>, the band switched off once back at rest), DROP (kick out + high-pass build while held), STUTTER and LOOP 4 / 8 / 8T / 16 / 32 (BeatRepeat; one loop at a time, STUTTER over a held loop), CRUSH (Calf Crusher, which crossfades its own bypass over 1024 frames) and PHASER (Calf Phaser, always on, its amount smoothed by Calf over 10 ms) as master inserts GlobalPlayback → repeat (+ engine) → crusher → phaser → speakers, the rest on the LiveFxEngine after the repeat (KILL LOW / MID / HIGH, REVERSE, REWIND, STOP, HALF, OCT UP, WOBBLE, ECHO, FREEZE, FLANGER, GATE, AUTO-PAN, MONO, PHONE, ALIAS, FADE OUT; one head of REVERSE … WOBBLE at a time), ECHO (every machine thrown into the delay), HEAVY (GlobalPlayback's compressor), each knob's change gliding over <code>knobGlideMs()</code> (50 ms: <code>TrackEffects::setEchoThrow(level, ms)</code>, <code>Compressor::glideMs</code>); every pad that glides has one <code>libravving::Transition</code> in the table beside the pad list (<code>LiveFx::transition(pad)</code>): the heads, FADE OUT, STUTTER and the LOOPs 10 ms in and 300 ms back to the live input, eased; the KILLs, ECHO's send, FLANGER, GATE, AUTO-PAN, MONO, PHONE and ALIAS 10 ms in and 150 ms out, eased; DROP 2 s up and 30 ms back, HI PASS 450 / 220 ms, LO PASS 500 / 220 ms, linear in pitch; NO KICK, ONLY KICK, CRUSH and FREEZE act at once; the engine's effects take theirs through <code>BeatRepeat::setTransition()</code>, the repeat the engaging pad's through <code>setRepeatTransition()</code>; taps latch NO/ONLY KICK, the filters and the KILLs; DROP, CRUSH, FLANGER, GATE, AUTO-PAN, MONO, PHONE and ALIAS act while held and latch after half a second; the rest only while held (dragging a held pad picks CRUSH's 8 · 6 · 4 · 3 BIT or STUTTER's 1/16 · 1/32 · 1/64, shown on the pad: <code>readouts</code>); <code>syncGrid()</code> puts the engine back on the bar at a tempo change or a transport start; <code>debugState()</code> (<code>call studio.liveFx debugState</code>) gives the pads' state and the audio thread's last cycle</td>
 <td>new</td>
 </tr>
 <tr>
 <td><code>DeviceControls</code></td>
-<td>the control center's device side (<code>device</code>): screen brightness (the backlight in /sys/class/backlight, 5 % a knob detent as Plasma's applet, never under 30 %, where the screen looks dead; a fixed pot spans 30–100 %), the output jacks' level (the LM4811 through zyncoder, <code>ZynthboxBridge::setOutputLevel</code>), both kept in QSettings <code>ravving/device</code> and put back at start; Wi-Fi (<code>device.wifi</code>, below); Bluetooth power (bluetoothctl, only while the service runs); the address shown (Wi-Fi's, else any network's); CPU, temperature, free storage; reboot / power off. Polled every 2 s only while the drawer is open; commands run through <code>runCommand</code> (command.h: asynchronous, 4 s timeout)</td>
+<td>the control center's device side (<code>device</code>): screen brightness (the backlight in /sys/class/backlight, 5 % a knob detent as Plasma's applet, never under 30 %, where the screen looks dead; a fixed pot spans 30–100 %), the output jacks' level (the LM4811 through zyncoder, <code>DeviceBridge::setOutputLevel</code>), both kept in QSettings <code>ravving/device</code> and put back at start; Wi-Fi (<code>device.wifi</code>, below); Bluetooth power (bluetoothctl, only while the service runs); the address shown (Wi-Fi's, else any network's); CPU, temperature, free storage; reboot / power off. Polled every 2 s only while the drawer is open; commands run through <code>runCommand</code> (command.h: asynchronous, 4 s timeout)</td>
 <td>zynthbox-qml's settings pages</td>
 </tr>
 <tr>
@@ -356,7 +441,7 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 </tr>
 <tr>
 <td><code>Exporter</code></td>
-<td>EXPORT (<code>studio.exporter</code>, the header's PROJECT ▾ and <code>ExportPopup</code>): a TRACK, the production recorded as the speakers hear it (AudioLevels' GlobalPlayback writer, post master gain) while the transport plays the project from its first beat for BARS × LOOPS bars plus a TAIL; the recording is placed on the audio clock (<code>LiveFx::audioFrame()</code>, the beat repeat's JACK client: SyncTimer's own playhead values are on another clock) a moment before playback, cut from the frame SyncTimer began playback at (<code>ZynthboxBridge::playbackStartFrame</code>) to exactly the bars at the tempo, the tail faded, pulled down to −0.1 dBFS only if it peaked over full scale, and written by libsndfile as WAV 24-bit (default), FLAC, OGG Vorbis or MP3 (<code>AudioFile::writeCut</code>), tagged by TagLib (ID3v2 / Vorbis comments, RIFF INFO too for WAV: title, artist, album, genre, composer, comment, date, BPM, the cover as the picture) with a PNG cover and a JSON sidecar (project, tempo, key, length, peak) beside it. A BUNDLE: <code>.ravv</code>, a zip (<code>ZipWriter</code>) of project.json (the state, every sample it refers to that is not the image's rewritten to samples/<file>), the samples, metadata.json and cover.png; <code>importProject()</code> unpacks one (samples into <code>samples/imported/&lt;name&gt;/</code>) into a new project (<code>Projects::addProject</code>). Metadata as a map or JSON text ({name, format, title, artist, album, genre, composer, comment, bars, loops, tail, icon, art, coverStyle}; <code>coverStyle</code> picks the covers' look (<code>random</code>, the default, <code>sidebar</code> or <code>corner</code>), <code>art</code> is the covers' seed (<code>AlbumArt</code>, a fresh one when left out), and <code>credits</code> (<code>coverCredits()</code>: author, sounds that play, bpm, key, date) is added for the covers and kept in the sidecar; the icon, the current project's unless given, goes on both covers and into the bundle's two JSON files, and comes back on import); <code>busy</code> / <code>phase</code> / <code>progress</code>, started / finished / failed</td>
+<td>EXPORT (<code>studio.exporter</code>, the header's PROJECT ▾ and <code>ExportPopup</code>): a TRACK, the production recorded as the speakers hear it (AudioLevels' GlobalPlayback writer, post master gain) while the transport plays the project from its first beat for BARS × LOOPS bars plus a TAIL; the recording is placed on the audio clock (<code>LiveFx::audioFrame()</code>, the beat repeat's JACK client: SyncTimer's own playhead values are on another clock) a moment before playback, cut from the frame SyncTimer began playback at (<code>DeviceBridge::playbackStartFrame</code>) to exactly the bars at the tempo, the tail faded, pulled down to −0.1 dBFS only if it peaked over full scale, and written by libsndfile as WAV 24-bit (default), FLAC, OGG Vorbis or MP3 (<code>AudioFile::writeCut</code>), tagged by TagLib (ID3v2 / Vorbis comments, RIFF INFO too for WAV: title, artist, album, genre, composer, comment, date, BPM, the cover as the picture) with a PNG cover and a JSON sidecar (project, tempo, key, length, peak) beside it. A BUNDLE: <code>.ravv</code>, a zip (<code>ZipWriter</code>) of project.json (the state, every sample it refers to that is not the image's rewritten to samples/<file>), the samples, metadata.json and cover.png; <code>importProject()</code> unpacks one (samples into <code>samples/imported/&lt;name&gt;/</code>) into a new project (<code>Projects::addProject</code>). Metadata as a map or JSON text ({name, format, title, artist, album, genre, composer, comment, bars, loops, tail, icon, art, coverStyle}; <code>coverStyle</code> picks the covers' look (<code>random</code>, the default, <code>sidebar</code> or <code>corner</code>), <code>art</code> is the covers' seed (<code>AlbumArt</code>, a fresh one when left out), and <code>credits</code> (<code>coverCredits()</code>: author, sounds that play, bpm, key, date) is added for the covers and kept in the sidecar; the icon, the current project's unless given, goes on both covers and into the bundle's two JSON files, and comes back on import); <code>busy</code> / <code>phase</code> / <code>progress</code>, started / finished / failed</td>
 <td>new</td>
 </tr>
 <tr>
@@ -395,6 +480,16 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 <td>new</td>
 </tr>
 <tr>
+<td><code>EngineWatch</code>, <code>SilenceWatch</code></td>
+<td>a machine whose engine stays silent while sent notes (<code>Machine::notesSent()</code>, live and per step, a step's notes only those that reach the engine, at the velocity their gain leaves them (<code>Machine::noteGain()</code>), against what its track is fed before its fader and mute (<code>Meters::tracksIn</code>), read every 50 ms only while notes wait): two notes at velocity 20+ without −70 dBFS within 600 ms each, within 4 s, nothing heard between, reload the silent notes' channels (<code>SoundEngine::reloadChannels()</code>) and raise <code>engine-silent-&lt;machine&gt;</code> (a warning; an error when a reload 30 s later did not help); the next note heard clears it. SilenceWatch is the pure logic (tests/tst_silencewatch.cpp)</td>
+<td>new</td>
+</tr>
+<tr>
+<td><code>EngineMidi</code></td>
+<td>which of a controller's channel messages may reach an engine's channel: bend, pressure, the performance CCs; never bank select, data entry / NRPN / RPN, volume, balance, pan or the channel modes (<code>isChannelState()</code>)</td>
+<td>new</td>
+</tr>
+<tr>
 <td><code>OutputWatch</code></td>
 <td><code>ravving-outwatch</code>, a JACK client of two inputs that listens, while another output plays, to what the master sends into AudioOutputs' loopback and what the loopback plays out (peaks kept on the audio thread, compared every second): music in with nothing out for 6 s says <code>silent()</code> (AudioOutputs routes again once, then reports "… plays no sound"), sound out again <code>flowing()</code>; idle (the jacks) it is disconnected</td>
 <td>new</td>
@@ -430,8 +525,13 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 <td>new</td>
 </tr>
 <tr>
+<td><code>SoundActivity</code></td>
+<td>which tracks sound, or would: a track's level before its fader (<code>Meters::tracksIn</code>, what its machine makes) over −60 dBFS, or a note its muted pattern came to (the sequencer counts them, <code>Sequencer::silentHits()</code>), keeps it sounding for 600 ms, so a running pattern reads steady; <code>Studio::meters()</code> hands it out as <code>sounding</code> beside <code>tracks</code> (as heard); <code>Machine::hasNotes</code> says a pattern would sound at all; the two light <code>SoundLamp.qml</code> on the header's chips and the MIXER's strips</td>
+<td>new</td>
+</tr>
+<tr>
 <td><code>UserProfile</code></td>
-<td>who uses the device (<code>profile</code>): <code>user</code>, <code>author</code> (the exports' credit, the user's name when empty), the last <code>album</code> and <code>genre</code> typed; any key with <code>value()</code> / <code>setValue()</code>; QSettings <code>ravving/profile</code></td>
+<td>who uses the device (<code>profile</code>): <code>user</code>, <code>author</code> (the exports' credit, the user's name when empty), the last <code>album</code> and <code>genre</code> typed; <code>drumsRingOut</code> and <code>hatChoke</code> (how long drum hits play); any key with <code>value()</code> / <code>setValue()</code>; QSettings <code>ravving/profile</code></td>
 <td>new</td>
 </tr>
 <tr>
@@ -451,17 +551,17 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 </tr>
 <tr>
 <td><code>BeatRepeat</code></td>
-<td>ravving's own JACK client (<code>ravving-repeat</code>), first master insert: anchors at the 16th under way (sample accurate through <code>ZynthboxBridge::timerTickAtFrame</code>, SyncTimer's frame → tick map, its step-ring index read back as a tick count against <code>cumulativeBeat</code>), lets it play out, then repeats the audio from the anchor every N 16ths; the signal processing is its <code>RepeatCore</code>; after the repeat the same callback runs its <code>LiveFxEngine</code> (<code>setEffects</code>, <code>syncGrid</code> with the bar under way); <code>debugState()</code> gives the last anchor, length and effects mask and the audio thread's last cycle (start frame, peaks into the repeat, out of it, out of the engine); the <code>ravving.livefx</code> logging category traces the calls</td>
+<td>ravving's own JACK client (<code>ravving-repeat</code>), first master insert: anchors at the 16th under way (sample accurate through <code>DeviceBridge::timerTickAtFrame</code>, SyncTimer's frame → tick map, its step-ring index read back as a tick count against <code>cumulativeBeat</code>), lets it play out, then repeats the audio from the anchor every N 16ths; the signal processing is its <code>RepeatCore</code>; after the repeat the same callback runs its <code>LiveFxEngine</code> (<code>setEffects</code>, <code>syncGrid</code> with the bar under way); <code>debugState()</code> gives the last anchor, length and effects mask and the audio thread's last cycle (start frame, peaks into the repeat, out of it, out of the engine); the <code>ravving.livefx</code> logging category traces the calls</td>
 <td>new</td>
 </tr>
 <tr>
 <td><code>RepeatCore</code></td>
-<td>the beat repeat's signal processing, no JACK (tests run it on known input, with the engine after it: tests/tst_livefxchain.cpp): <code>engage(anchor, length, step)</code> copies what already played since the anchor from its history (2.7 s) into the slice (5.4 s at most) and repeats it; engaged on silence (nothing above −70 dBFS since the anchor) it waits and anchors on the step the first sound lands in, so a loop pressed in a break grabs the music coming back; 10 ms equal-power seams into the slice's own continuation (no dip to silence each pass), an eased 10 ms crossfade in and an eased 300 ms release out; passes on only sound (<code>MaxSample</code>); <code>tickCount()</code> reads a SyncTimer step-ring index back as the tick it stands for; lock-free (atomics, preallocated history and slice)</td>
+<td>the beat repeat's signal processing, no JACK (tests run it on known input, with the engine after it: tests/tst_livefxchain.cpp): <code>engage(anchor, length, step)</code> copies what already played since the anchor from its history (2.7 s) into the slice (5.4 s at most) and repeats it; engaged on silence (nothing above −70 dBFS since the anchor) it waits and anchors on the step the first sound lands in, so a loop pressed in a break grabs the music coming back; 10 ms equal-power seams into the slice's own continuation (no dip to silence each pass), the switch in and out its <code>libravving::Transition</code> (<code>setTransition</code>; <code>DefaultTransition</code> 10 ms in, 300 ms out, eased), an <code>RtRamp</code> read per frame; passes on only sound (<code>MaxSample</code>); <code>tickCount()</code> reads a SyncTimer step-ring index back as the tick it stands for; lock-free (atomics, preallocated history and slice)</td>
 <td>new</td>
 </tr>
 <tr>
 <td><code>LiveFxEngine</code></td>
-<td>the punch-in effects on the mix, in BeatRepeat's audio callback (no QObject, no allocation, lock or I/O there): a stereo ring of the input (2.7 s) read by one <em>head</em> at a time (REVERSE, REWIND, STOP, HALF, OCT UP, WOBBLE: 4-point Hermite reads, each seam crossfaded), then FLANGER, ECHO (a dotted 8th, rings out), FREEZE (a four-line feedback reverb that takes in 186 ms, then holds), the KILL isolator (Linkwitz–Riley crossovers at 250 Hz and 2.44 kHz), PHONE, ALIAS, GATE (16ths), AUTO-PAN (mono, a turn a beat), MONO, FADE OUT (two beats); REWIND, STOP, WOBBLE, AUTO-PAN, FADE OUT, PHONE, GATE, the crossovers and FREEZE's fill adapted from SLOOP's punch.c (GPL-3.0-only); every switch crossfaded over 64 frames, a filter stage warmed 256 frames before it fades in; the GUI thread sets a bit mask (<code>setEffects</code>) and the grid (<code>setGrid</code>: a bar's start frame and a 16th's length, a seqlock); <code>isIdle()</code> once nothing is on and no tail rings, when <code>process()</code> only fills the ring; tested on the laptop (tests/tst_livefxengine.cpp)</td>
+<td>the punch-in effects on the mix, in BeatRepeat's audio callback (no QObject, no allocation, lock or I/O there): a stereo ring of the input (2.7 s) read by one <em>head</em> at a time (REVERSE, REWIND, STOP, HALF, OCT UP, WOBBLE: 4-point Hermite reads, each seam crossfaded), then FLANGER, ECHO (a dotted 8th, rings out), FREEZE (a four-line feedback reverb that takes in 186 ms, then holds), the KILL isolator (Linkwitz–Riley crossovers at 250 Hz and 2.44 kHz), PHONE, ALIAS, GATE (16ths), AUTO-PAN (mono, a turn a beat), MONO, FADE OUT (two beats); REWIND, STOP, WOBBLE, AUTO-PAN, FADE OUT, PHONE, GATE, the crossovers and FREEZE's fill adapted from SLOOP's punch.c (GPL-3.0-only); every effect an amount glided along its transition (<code>setTransition(effect, transition)</code>, <code>DefaultTransition</code> 64 frames at 48 kHz, linear, until then; one <code>libravving::RtRamp</code> each, read per frame): the wet part, the echo's send, the kills' cut, FADE OUT's depth; the heads share one amount, the head playing on under it while it lets go, so the live input comes back over the release; FREEZE rings out on its own; the engine's own moves (a head to another head or its next segment, the gate's chop, FREEZE's intake) crossfaded over 64 frames, a filter stage (the kills, PHONE) warmed 256 frames before it comes in over 64 frames, its amount on its way meanwhile; the GUI thread sets a bit mask (<code>setEffects</code>, which sends each changed amount) and the grid (<code>setGrid</code>: a bar's start frame and a 16th's length, a seqlock); <code>isIdle()</code> once nothing is on, no amount moves and no tail rings, when <code>process()</code> only fills the ring; tested on the laptop (tests/tst_livefxengine.cpp)</td>
 <td>new</td>
 </tr>
 <tr>
@@ -512,7 +612,8 @@ typed API in <code>libravving/include/libravving/engine.h</code> (<a href="archi
 <li><code>drumMachines</code>: track, Zynthian channel, engine, default kit and preset.</li>
 <li><code>machines</code>, by <code>kind</code>: <code>mono</code> (bass on track 3, lead on track 5) and <code>chords</code> (track 4). Each
   has its engine (type, LV2 URI, fixed <code>controls</code>), its <code>sound</code> (SOUND MODIFIERS), a <code>presets</code>
-  file, <code>defaultPreset</code>, <code>baseNote</code> and velocities.</li>
+  file and <code>defaultPreset</code>. Each also has <code>baseNote</code>, <code>octaveRange</code> (<code>[lowest, highest]</code> for
+  OCT, -2 to 2 without it, at most 4 either way: <code>minOctave</code>, <code>maxOctave</code>) and velocities.</li>
 <li>The kit folder: the 40 drum-machine soundfonts in zynthian-data.</li>
 </ul>
 <p>Studio builds the machines generically and publishes the non-drum ones as
@@ -555,8 +656,149 @@ read back from velocities.</p>
 presetName, presetEdited, canSavePresets, rowLevels, rowMuted, rowSoloed, toggleStep(),
 toggleAccent(), clear(), loadPreset(), saveAsPreset(), removePreset(), setRowLevel(),
 setRowMuted(), setRowSoloed(), audition()</code>. The studio's
-<code>DrumMachine</code> and <code>SamplerMachine</code> implement it; <code>PatternState.qml</code> implements it in memory
-for pages whose backend is still to come (the melodic toolbars).</p>
+<code>DrumMachine</code> and <code>SamplerMachine</code> implement it.</p>
+<h3 id="feel">Feel</h3>
+<p>A machine can play its pattern loosely. Nothing is rewritten: the pattern stays as written.
+With every amount at 0 it plays exactly so.</p>
+<table>
+<thead>
+<tr>
+<th>Machine</th>
+<th>Dials (<code>Machine::feelKeys</code>)</th>
+<th>What they do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DRUMS 1–3</td>
+<td>TIMING, VELOCITY, PULSE</td>
+<td>each hit a little early or late and softer or harder, another way each pass; the hats, cymbals and percussion softer off the beat</td>
+</tr>
+<tr>
+<td>PAD SAMPLER</td>
+<td>TIMING, VELOCITY, PULSE</td>
+<td>the same on every pad</td>
+</tr>
+<tr>
+<td>CHORDS</td>
+<td>STRUM, DIRECTION, VELOCITY, TOP</td>
+<td>a chord's voices one after the other; from the lowest (DOWN), the highest (UP) or each chord the other way (ALT); the chord a little softer or harder each pass; the top voice louder</td>
+</tr>
+<tr>
+<td>BASS, LEAD</td>
+<td>VELOCITY, LENGTH</td>
+<td>each note a little softer or harder, and cut a little short, another way each pass</td>
+</tr>
+<tr>
+<td>SLOT SAMPLER</td>
+<td>none</td>
+<td>a loop keeps its own timing</td>
+</tr>
+</tbody>
+</table>
+<p>Every dial goes from 0 (as written) to 100; DIRECTION is a choice (<code>feelChoices()</code>).
+<code>feelCards</code> groups them for the screen, three to a card so knobs 1 to 3 reach them all (the
+chords' TOP is on a card of its own). The names are English keys (<code>feel.h</code>), translated where
+they are drawn.</p>
+<h4 id="at-100">At 100</h4>
+<table>
+<thead>
+<tr>
+<th>Machine</th>
+<th>The furthest a note goes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A kit's HAT, PERC</td>
+<td>11 clock ticks from its place (just under half a step: 57 ms at 120 BPM), 70 % of its velocity</td>
+</tr>
+<tr>
+<td>OPEN, CYMBAL, TOM</td>
+<td>10 clock ticks, 49–56 %</td>
+</tr>
+<tr>
+<td>SNARE, CLAP</td>
+<td>about a quarter of a step, 42 %</td>
+</tr>
+<tr>
+<td>KICK</td>
+<td>about a tenth of a step (it holds the grid), 25 %</td>
+</tr>
+<tr>
+<td>A pad</td>
+<td>about a quarter of a step, 56 %</td>
+</tr>
+<tr>
+<td>A chord</td>
+<td>11 clock ticks from the first voice to the last (under half a step: 57 ms at 120 BPM), 20 % of its velocity; the top voice 25 % louder and the ones between it and the lowest 25 % softer</td>
+</tr>
+<tr>
+<td>A line's note</td>
+<td>25 % of its velocity, 40 % shorter</td>
+</tr>
+</tbody>
+</table>
+<p>Most notes land well inside those bounds: at 100 a hat sits about two clock ticks from its
+place on average. The pulse at 100 plays a beat's four 16ths at 100, 20, 60 and 20 % of their
+velocity (<code>Machine::pulsed()</code>).</p>
+<h4 id="how-it-plays">How it plays</h4>
+<ul>
+<li>The machine gives its track each note's <code>libravving::NoteFeel</code> (<code>Track::setNoteFeel()</code>:
+  timing, velocity, length) or its chords' <code>libravving::ChordFeel</code> (<code>Track::setChordFeel()</code>:
+  strum, direction, top voice, velocity), in <code>applyFeel()</code>, as it gives a note its gain.</li>
+<li>A kit's hits each move on their own. A chord's voices move their velocity together.</li>
+<li><code>RtSequencer</code> asks, for each note within reach of the tick playing, where this pass has it,
+  and strikes it then. A note never moves half a step, so two hits of a row never cross.</li>
+<li>Four fifths of a note's feel is its own: that is what sounds loose. The other fifth is a slow
+  drift every track shares, so the machines lean early or late, soft or hard, a little together.</li>
+</ul>
+<h4 id="chords-and-lines">Chords and lines</h4>
+<ul>
+<li>A chord is the notes of one step written to start together. Its first voice struck plays on
+  the chord's place and the others after it, so a strum never comes before its step. A chord
+  with a STRUM of its own (SELECT's) keeps it.</li>
+<li>A line keeps its timing: BASS stays with the kick, and on a mono synth a note that starts
+  before the last one ends slides. LENGTH only shortens, and a note that runs into the next (a
+  slide, a tie) keeps its length.</li>
+</ul>
+<h4 id="on-the-clocks-ticks">On the clock's ticks</h4>
+<ul>
+<li>A deviation is a whole number of clock ticks (96 a beat): 5.2 ms each at 120 BPM. It scales
+  with the tempo.</li>
+<li>A note is struck once though its tick moves under it. The sequencer keeps, per note, which
+  one it struck last. So an amount turned while playing neither doubles nor drops a note. Nor
+  does a clip taking over on a line whose first hit the clip before had played early.</li>
+<li>The drums' pulse is written on the pattern's way to the sequencer (<code>shapeForPlay()</code>,
+  <code>DrumMachine::pulse()</code>); the pads' with their hits.</li>
+</ul>
+<h4 id="the-same-each-time">The same each time</h4>
+<p>What a note gets comes from where it is: the playback's seed, its clip's pass, its step and
+note. No generator runs on.</p>
+<ul>
+<li>A pass plays the same each time it is played from the start.</li>
+<li>An export is the same file twice.</li>
+<li>A skip back plays the bar as it was.</li>
+<li>The feel never changes which notes play: CHANCE and PLAY ON draw apart from it.</li>
+</ul>
+<h4 id="saved">Saved</h4>
+<p><code>feel</code> in the machine's state: the dials that are not 0, by name. A project without it plays
+as written. It is the machine's, not the pattern's: every section plays with it, undo leaves
+it as it is, and loading a preset keeps it.</p>
+<h4 id="ghost-notes">Ghost notes</h4>
+<p>A ghost note is a hit's VELOCITY, and nothing more is kept than that.</p>
+<ul>
+<li><code>Machine::setShapes(picks, "ghost", 1)</code> sets the picked hits to <code>Machine::GhostVelocity</code>:
+  35 % of what their row and accent give them. <code>0</code> sets them back to 100.</li>
+<li><code>shapeSettings()</code> says <code>ghost</code> for a hit at <code>Machine::GhostCeiling</code> (45 %) or less.</li>
+<li>SELECT's readout has it on its second page, knob 3 (<code>HitShaper</code>).</li>
+</ul>
+<pre><code class="language-sh">tools/device.sh call drums1 setFeel TIMING 40
+tools/device.sh call chords setFeel STRUM 35
+tools/device.sh call chords setFeel DIRECTION 2
+tools/device.sh get bass feel
+tools/device.sh call drums1 setShapes '[[3,38],[7,38]]' ghost 1
+</code></pre>
 <h3 id="get-more-the-store">GET MORE: the store</h3>
 <p><code>Store</code> (<code>src/backend/store.h</code>, published as <code>store</code>) lists the free things of the
 <a href="https://github.com/ravving/ravving_repo" rel="noopener" target="_blank">ravving_repo</a> repository and brings them into the

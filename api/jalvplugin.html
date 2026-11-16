@@ -5,7 +5,7 @@
 <!-- jalvplugin.cpp -->
   <meta name="description" content="One LV2 plugin running in its own jalv process on the JACK graph: an effect (a reverb, a delay..., audio in and out) or an instrument (MIDI in, audio out; JalvEngine).">
   <meta name="keywords" content="class">
-  <title>JalvPlugin Class | ravving C++ API 0.6.0</title>
+  <title>JalvPlugin Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -88,7 +88,7 @@
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#JalvPlugin" translate="no">JalvPlugin</a></b>(const QString &amp;<i>name</i>, const QString &amp;<i>uri</i>, ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#JalvPlugin" translate="no">JalvPlugin</a></b>(const QString &amp;<i>name</i>, const QString &amp;<i>uri</i>, DeviceBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#hasControl" translate="no">hasControl</a></b>(const QString &amp;<i>symbol</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#isStarted" translate="no">isStarted</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="jalvplugin.html#midiInputPort" translate="no">midiInputPort</a></b>() const</td></tr>
@@ -111,8 +111,8 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$JalvPlugin[overload1]$$$JalvPluginconstQString&constQString&ZynthboxBridge*QObject* -->
-<h3 class="fn" translate="no" id="JalvPlugin">JalvPlugin::<span class="name">JalvPlugin</span>(const <span class="type">QString</span> &amp;<i>name</i>, const <span class="type">QString</span> &amp;<i>uri</i>, <span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<!-- $$$JalvPlugin[overload1]$$$JalvPluginconstQString&constQString&DeviceBridge*QObject* -->
+<h3 class="fn" translate="no" id="JalvPlugin">JalvPlugin::<span class="name">JalvPlugin</span>(const <span class="type">QString</span> &amp;<i>name</i>, const <span class="type">QString</span> &amp;<i>uri</i>, <span class="type"><a href="devicebridge.html" translate="no">DeviceBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
 <p>Constructs the plugin <i translate="no">uri</i>, to run as the JACK client <i translate="no">name</i> through <i translate="no">bridge</i>, with the given <i translate="no">parent</i>. Not started.</p>
 <!-- @@@JalvPlugin -->
 </div>
@@ -158,7 +158,7 @@
 <div class="fnitem">
 <!-- $$$start[overload1]$$$start -->
 <h3 class="fn" translate="no" id="start"><span class="type">void</span> JalvPlugin::<span class="name">start</span>()</h3>
-<p>Starts jalv with every control set so far. Later calls do nothing, so a plugin needed only sometimes (<a href="trackeffects.html" translate="no">TrackEffects</a>' DRIVE) is started on first use. <a href="audioinsert.html#started" translate="no">started</a>() follows each start and restart.</p>
+<p>Starts jalv with every control set so far. Later calls do nothing, so a plugin needed only sometimes (<a href="trackeffects.html" translate="no">TrackEffects</a>' DRIVE) is started on first use. <a href="audioinsert.html#started" translate="no">started</a>() follows each start and restart. A plugin this system does not have (<a href="enginecatalog.html" translate="no">EngineCatalog</a>) is reported as an issue and no process starts.</p>
 <!-- @@@start -->
 </div>
 <div class="fnitem">

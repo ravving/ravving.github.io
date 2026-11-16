@@ -5,7 +5,7 @@
 <!-- drummachine.cpp -->
   <meta name="description" content="A Machine whose steps are drum hits; the studio has three, configured in kits.json.">
   <meta name="keywords" content="class">
-  <title>DrumMachine Class | ravving C++ API 0.6.0</title>
+  <title>DrumMachine Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -68,10 +68,14 @@
 <div class="toc">
 <h3 id="toc">Contents</h3>
 <ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
 <li class="level1"><a href="#properties">Properties</a></li>
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
 <li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
 <li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#protected-functions">Protected Functions</a></li>
+<li class="level1"><a href="#reimplemented-protected-functions">Reimplemented Protected Functions</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -88,6 +92,11 @@
 <li><a href="drummachine-members.html">List of all members, including inherited members</a></li>
 <li>DrumMachine is part of <a href="ravving-machines.html">Machines</a>.</li>
 </ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="drummachine-hitlengths.html" translate="no">HitLengths</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> struct </td><td class="memItemRight bottomAlign"><b><a href="drummachine-playloop.html" translate="no">PlayLoop</a></b></td></tr>
+</table></div>
 <h2 id="properties">Properties</h2>
 <div class="table"><table class="propsummary" translate="no">
 <tr><td class="topAlign"><ul>
@@ -119,6 +128,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#rowMuted-prop" translate="no">rowMuted</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#rowSoloed-prop" translate="no">rowSoloed</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#rows-prop" translate="no">rows</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#setHitLengths" translate="no">setHitLengths</a></b>(const DrumMachine::HitLengths &amp;<i>lengths</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#setRowLevel" translate="no">setRowLevel</a></b>(int <i>row</i>, qreal <i>level</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#setRowMuted" translate="no">setRowMuted</a></b>(int <i>row</i>, bool <i>muted</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#setRowSoloed" translate="no">setRowSoloed</a></b>(int <i>row</i>, bool <i>soloed</i>)</td></tr>
@@ -133,8 +143,11 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#engineConfig" translate="no">engineConfig</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#engineConfigFor" translate="no">engineConfigFor</a></b>(const QVariantMap &amp;<i>sound</i>) const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#engineKindFor" translate="no">engineKindFor</a></b>(const QVariantMap &amp;<i>sound</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#feelKeys" translate="no">feelKeys</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#hasSectionSound" translate="no">hasSectionSound</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#hasSoundChoice" translate="no">hasSoundChoice</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#noteOff" translate="no">noteOff</a></b>(int <i>note</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#noteOn" translate="no">noteOn</a></b>(int <i>note</i>, int <i>velocity</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#projectSound" translate="no">projectSound</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#sectionSound" translate="no">sectionSound</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#setSectionSound" translate="no">setSectionSound</a></b>(const QVariantMap &amp;<i>sound</i>) override</td></tr>
@@ -148,11 +161,31 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#rowMixChanged" translate="no">rowMixChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#stepsChanged" translate="no">stepsChanged</a></b>()</td></tr>
 </table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#feelFor" translate="no">feelFor</a></b>(const QString &amp;<i>role</i>, int <i>timing</i>, int <i>velocity</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#feels" translate="no">feels</a></b>(const QList&lt;DrumKit::Row&gt; &amp;<i>rows</i>, int <i>timing</i>, int <i>velocity</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#playLengths" translate="no">playLengths</a></b>(int &amp;<i>pattern</i>, const DrumMachine::PlayLoop &amp;<i>loop</i>, const QSet&lt;int&gt; &amp;<i>ringing</i>, int <i>hat</i>, int <i>open</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#pulse" translate="no">pulse</a></b>(int &amp;<i>pattern</i>, const QSet&lt;int&gt; &amp;<i>notes</i>, int <i>amount</i>)</td></tr>
+</table></div>
+<h2 id="protected-functions">Protected Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#shapeForPlay" translate="no">shapeForPlay</a></b>(int &amp;<i>pattern</i>, const PatternClip &amp;<i>clip</i>) const override</td></tr>
+</table></div>
+<h2 id="reimplemented-protected-functions">Reimplemented Protected Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#applyFeel" translate="no">applyFeel</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#applyKickMode" translate="no">applyKickMode</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#keyForNote" translate="no">keyForNote</a></b>(int <i>note</i>, int <i>slot</i>, const Machine::KeyboardContext &amp;<i>context</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual float </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#noteGain" translate="no">noteGain</a></b>(int <i>note</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="drummachine.html#shapesForPlay" translate="no">shapesForPlay</a></b>() const override</td></tr>
+</table></div>
 <!-- $$$DrumMachine-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p><code translate="no">data/kits.json</code> gives it its track, Zynthian channel, engine and default preset; its presets are the drum <a href="presetlibrary.html" translate="no">PresetLibrary</a> the drum machines share, written per role so any preset plays on any kit. Its rows come from its kit, a soundfont read by <a href="drumkit.html" translate="no">DrumKit</a>: eight roles (KICK to PERC), each with the kit's note for it. <a href="drummachine.html#loadKit" translate="no">loadKit</a>() switches kits and moves every hit to the new kit's note for the same role, so a pattern survives any kit change. A hit is a subnote with the row's note on that step; without libravving (a desktop run) the steps are kept in memory.</p>
 <p>Each row has a level, a mute and a solo, kept per role so they survive kit changes. They are applied through the hits' velocities: a row's level and a step's accent give the velocity every hit of that row is written with, and -1 (<a href="machine.html#SilentVelocity-var" translate="no">Machine::SilentVelocity</a>, &quot;do not play&quot;) marks a muted row, an unsoloed one while any row is soloed, or one the kick cut silences (<a href="machine.html#setKickMode" translate="no">Machine::setKickMode</a>()). Accents are kept by the machine, not read back from velocities. A live key is a row.</p>
+<p>The kit can play loosely (<a href="machine.html#feel-prop" translate="no">Machine::feel</a>: <code translate="no">TIMING</code>, <code translate="no">VELOCITY</code>, <code translate="no">PULSE</code>): each hit a little off its place and its velocity, another way on every pass, by its row's role (the kick all but on the grid, the hats and percussion the loosest), and the hats and percussion softer off the beat. None of it rewrites a hit: the timing and velocity are moved as the notes play (libravving::NoteFeel, <a href="drummachine.html#feels" translate="no">feels</a>()), the pulse on the pattern's way to the sequencer (<a href="drummachine.html#pulse" translate="no">pulse</a>()). With all three at 0 the kit plays exactly as written.</p>
 <p>The QML step grid uses rows, steps, accents, the per-row mix, <a href="drummachine.html#toggleStep" translate="no">toggleStep</a>(), <a href="drummachine.html#toggleAccent" translate="no">toggleAccent</a>(), <a href="drummachine.html#setRowLevel" translate="no">setRowLevel</a>(), <a href="drummachine.html#setRowMuted" translate="no">setRowMuted</a>(), <a href="drummachine.html#setRowSoloed" translate="no">setRowSoloed</a>() and <a href="drummachine.html#audition" translate="no">audition</a>(), with Machine's playhead, bars, presets and <a href="machine.html#clear" translate="no">clear</a>().</p>
 </div>
 <!-- @@@DrumMachine -->
@@ -280,6 +313,19 @@
 <!-- @@@DrumMachine -->
 </div>
 <div class="fnitem">
+<!-- $$$applyFeel[overload1]$$$applyFeel -->
+<h3 class="fn" translate="no" id="applyFeel"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">void</span> DrumMachine::<span class="name">applyFeel</span>()</h3>
+<p>Gives the track every row's feel (and none to any other note), and shapes the clips again when the pulse changed.</p>
+<!-- @@@applyFeel -->
+</div>
+<div class="fnitem">
+<!-- $$$applyKickMode[overload1]$$$applyKickMode -->
+<h3 class="fn" translate="no" id="applyKickMode"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">void</span> DrumMachine::<span class="name">applyKickMode</span>()</h3>
+<p>Reimplements: <a href="machine.html#applyKickMode" translate="no">Machine::applyKickMode</a>().</p>
+<p>The kick cut is the rows' gains: NO KICK silences the kick row, ONLY KICK every other row. The pattern and the live keys follow the same verdict (velocityFor()).</p>
+<!-- @@@applyKickMode -->
+</div>
+<div class="fnitem">
 <!-- $$$applySoundParts[overload1]$$$applySoundPartsconstQVariantMap& -->
 <h3 class="fn" translate="no" id="applySoundParts"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> DrumMachine::<span class="name">applySoundParts</span>(const <span class="type">QVariantMap</span> &amp;<i>parts</i>)</h3>
 <p>Reimplements: <a href="machine.html#applySoundParts" translate="no">Machine::applySoundParts</a>(const QVariantMap &amp;parts).</p>
@@ -322,6 +368,25 @@
 <!-- @@@engineKindFor -->
 </div>
 <div class="fnitem">
+<!-- $$$feelFor[overload1]$$$feelForconstQString&intint -->
+<h3 class="fn" translate="no" id="feelFor"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> DrumMachine::<span class="name">feelFor</span>(const <span class="type">QString</span> &amp;<i>role</i>, <span class="type">int</span> <i>timing</i>, <span class="type">int</span> <i>velocity</i>)</h3>
+<p>Returns the feel <i translate="no">role</i>'s hits play with for the amounts <i translate="no">timing</i> and <i translate="no">velocity</i> (0 to 100): at 100 the loosest roles (HAT, PERC) play up to 11 clock ticks (just under half a step) from their place and move their velocity by up to 70 %; OPEN, CYMBAL and TOM a little less, SNARE and CLAP half as far in time, KICK a fifth (it holds the grid). A role the kits do not have gets none.</p>
+<!-- @@@feelFor -->
+</div>
+<div class="fnitem">
+<!-- $$$feelKeys[overload1]$$$feelKeys -->
+<h3 class="fn" translate="no" id="feelKeys"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QStringList</span> DrumMachine::<span class="name">feelKeys</span>() const</h3>
+<p>Reimplements: <a href="machine.html#feelKeys" translate="no">Machine::feelKeys</a>() const.</p>
+<p>Returns Feel::Timing, Feel::Velocity and Feel::Pulse.</p>
+<!-- @@@feelKeys -->
+</div>
+<div class="fnitem">
+<!-- $$$feels[overload1]$$$feelsconstQList<DrumKit::Row>&intint -->
+<h3 class="fn" translate="no" id="feels"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> DrumMachine::<span class="name">feels</span>(const <span class="type">QList</span>&lt;<span class="type"><a href="drumkit-row.html" translate="no">DrumKit::Row</a></span>&gt; &amp;<i>rows</i>, <span class="type">int</span> <i>timing</i>, <span class="type">int</span> <i>velocity</i>)</h3>
+<p>Returns the feel of every MIDI note for a kit's <i translate="no">rows</i> and the amounts <i translate="no">timing</i> and <i translate="no">velocity</i>: each row's note its role's (<a href="drummachine.html#feelFor" translate="no">feelFor</a>()), any other note none.</p>
+<!-- @@@feels -->
+</div>
+<div class="fnitem">
 <!-- $$$hasSectionSound[overload1]$$$hasSectionSound -->
 <h3 class="fn" translate="no" id="hasSectionSound"><code class="details extra" translate="no">[override virtual]</code> <span class="type">bool</span> DrumMachine::<span class="name">hasSectionSound</span>() const</h3>
 <p>Reimplements: <a href="machine.html#hasSectionSound" translate="no">Machine::hasSectionSound</a>() const.</p>
@@ -333,6 +398,13 @@
 <p>Reimplements: <a href="machine.html#hasSoundChoice" translate="no">Machine::hasSoundChoice</a>() const.</p>
 <p>Returns <code translate="no">true</code>: there is always a kit to pick.</p>
 <!-- @@@hasSoundChoice -->
+</div>
+<div class="fnitem">
+<!-- $$$keyForNote[overload1]$$$keyForNoteintintconstMachine::KeyboardContext& -->
+<h3 class="fn" translate="no" id="keyForNote"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">int</span> DrumMachine::<span class="name">keyForNote</span>(<span class="type">int</span> <i>note</i>, <span class="type">int</span> <i>slot</i>, const <span class="type"><a href="machine-keyboardcontext.html" translate="no">Machine::KeyboardContext</a></span> &amp;<i>context</i>) const</h3>
+<p>Reimplements: <a href="machine.html#keyForNote" translate="no">Machine::keyForNote</a>(int note, int slot, const Machine::KeyboardContext &amp;context) const.</p>
+<p>A controller's <i translate="no">note</i> plays a row: the drum key it was learned as (<i translate="no">slot</i>, SETTINGS · MIDI), else a Lightpad's pad (rows 1 to 8 in order, the ninth the first again), else the note's General MIDI role (<a href="drummachine.html#rowForNote" translate="no">rowForNote</a>()).</p>
+<!-- @@@keyForNote -->
 </div>
 <div class="fnitem">
 <!-- $$$kitChanged -->
@@ -356,6 +428,31 @@
 </div><!-- @@@loadSectionKit -->
 </div>
 <div class="fnitem">
+<!-- $$$noteGain[overload1]$$$noteGainint -->
+<h3 class="fn" translate="no" id="noteGain"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">float</span> DrumMachine::<span class="name">noteGain</span>(<span class="type">int</span> <i>note</i>) const</h3>
+<p>Reimplements: <a href="machine.html#noteGain" translate="no">Machine::noteGain</a>(int note) const.</p>
+<p>A row's note plays at its row's gain (rowGain()): its level against the default one, 0 when muted, soloed out or cut.</p>
+<!-- @@@noteGain -->
+</div>
+<div class="fnitem">
+<!-- $$$noteOff[overload1]$$$noteOffint -->
+<h3 class="fn" translate="no" id="noteOff"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> DrumMachine::<span class="name">noteOff</span>(<span class="type">int</span> <i>note</i>)</h3>
+<p>Ends <i translate="no">note</i>, as Machine::noteOff() does, unless the kit's sound there rings out: a struck drum plays to its end, whenever the key or pad is let go.</p>
+<!-- @@@noteOff -->
+</div>
+<div class="fnitem">
+<!-- $$$noteOn[overload1]$$$noteOnintint -->
+<h3 class="fn" translate="no" id="noteOn"><code class="details extra" translate="no">[override virtual]</code> <span class="type">void</span> DrumMachine::<span class="name">noteOn</span>(<span class="type">int</span> <i>note</i>, <span class="type">int</span> <i>velocity</i>)</h3>
+<p>Plays <i translate="no">note</i> at <i translate="no">velocity</i>, as Machine::noteOn() does; a closed HAT first chokes an OPEN hat that rings.</p>
+<!-- @@@noteOn -->
+</div>
+<div class="fnitem">
+<!-- $$$playLengths[overload1]$$$playLengthsint&constDrumMachine::PlayLoop&constQSet<int>&intint -->
+<h3 class="fn" translate="no" id="playLengths"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> DrumMachine::<span class="name">playLengths</span>(<span class="type">int</span> &amp;<i>pattern</i>, const <span class="type"><a href="drummachine-playloop.html" translate="no">DrumMachine::PlayLoop</a></span> &amp;<i>loop</i>, const <span class="type">QSet</span>&lt;<span class="type">int</span>&gt; &amp;<i>ringing</i>, <span class="type">int</span> <i>hat</i>, <span class="type">int</span> <i>open</i>)</h3>
+<p>Sets the length of every hit in <i translate="no">pattern</i> that plays in <i translate="no">loop</i>: a note in <i translate="no">ringing</i> lasts the whole loop (the next hit of its row ends it); the <i translate="no">open</i> hat ends a clock tick or more before the next <i translate="no">hat</i>, its delay and the swing counted as the sequencer places notes (RtSequencer); any other note one step (0). -1 for a role the kit lacks.</p>
+<!-- @@@playLengths -->
+</div>
+<div class="fnitem">
 <!-- $$$projectKitPath -->
 <h3 class="fn" translate="no" id="projectKitPath"><span class="type">QString</span> DrumMachine::<span class="name">projectKitPath</span>() const</h3>
 <p>Returns the project's kit, what a section without one of its own plays (<a href="drummachine.html#kitPath-prop" translate="no">kitPath</a> is the one playing).</p>
@@ -367,6 +464,12 @@
 <p>Reimplements: <a href="machine.html#projectSound" translate="no">Machine::projectSound</a>() const.</p>
 <p>The project's kit (<code translate="no">kit</code>).</p>
 <!-- @@@projectSound -->
+</div>
+<div class="fnitem">
+<!-- $$$pulse[overload1]$$$pulseint&constQSet<int>&int -->
+<h3 class="fn" translate="no" id="pulse"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> DrumMachine::<span class="name">pulse</span>(<span class="type">int</span> &amp;<i>pattern</i>, const <span class="type">QSet</span>&lt;<span class="type">int</span>&gt; &amp;<i>notes</i>, <span class="type">int</span> <i>amount</i>)</h3>
+<p>Plays the hits of <i translate="no">notes</i> in <i translate="no">pattern</i> softer off the beat, by <i translate="no">amount</i> (0: as written, 100: the most), each as <a href="machine.html#pulsed" translate="no">Machine::pulsed</a>() has it on its step.</p>
+<!-- @@@pulse -->
 </div>
 <div class="fnitem">
 <!-- $$$resetKit[overload1]$$$resetKit -->
@@ -398,6 +501,12 @@
 <!-- @@@sectionSound -->
 </div>
 <div class="fnitem">
+<!-- $$$setHitLengths[overload1]$$$setHitLengthsconstDrumMachine::HitLengths& -->
+<h3 class="fn" translate="no" id="setHitLengths"><span class="type">void</span> DrumMachine::<span class="name">setHitLengths</span>(const <span class="type"><a href="drummachine-hitlengths.html" translate="no">DrumMachine::HitLengths</a></span> &amp;<i>lengths</i>)</h3>
+<p>Sets how long hits play (<i translate="no">lengths</i>); the patterns go to the sequencer again.</p>
+<!-- @@@setHitLengths -->
+</div>
+<div class="fnitem">
 <!-- $$$setRowLevel[overload1]$$$setRowLevelintqreal -->
 <h3 class="fn" translate="no" id="setRowLevel"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> DrumMachine::<span class="name">setRowLevel</span>(<span class="type">int</span> <i>row</i>, <span class="type">qreal</span> <i>level</i>)</h3>
 <p>Sets the level of <i translate="no">row</i> to <i translate="no">level</i>, 0..1.</p>
@@ -427,6 +536,19 @@
 <p>Takes the kit (<code translate="no">kit</code>) of <i translate="no">sound</i> as the section's own, or goes back to the project's kit without one (or with one that is not on this device).</p>
 <p><b>See also </b><a href="drummachine.html#sectionSound" translate="no">sectionSound</a>().</p>
 <!-- @@@setSectionSound -->
+</div>
+<div class="fnitem">
+<!-- $$$shapeForPlay[overload1]$$$shapeForPlayint&constPatternClip& -->
+<h3 class="fn" translate="no" id="shapeForPlay"><code class="details extra" translate="no">[protected]</code> <span class="type">void</span> DrumMachine::<span class="name">shapeForPlay</span>(<span class="type">int</span> &amp;<i>pattern</i>, const <span class="type"><a href="patternclip.html" translate="no">PatternClip</a></span> &amp;<i>clip</i>) const</h3>
+<p>Gives every hit in <i translate="no">pattern</i> the length a drum machine plays it with, for <i translate="no">clip</i>'s play length and swing. A row whose sound plays to its end once struck rings out: its hit lasts the whole loop, and the next hit of the same row ends it (the sequencer and FluidSynth each end a note before striking it again). An OPEN hat is choked: it ends just before the next closed HAT, its nudge and the swing counted. A row whose sound loops keeps one step, as written (it would hold on otherwise). The pattern's hits carry no length of their own. Then the pulse (the feel's <code translate="no">PULSE</code>): the hats, cymbals and percussion softer off the beat.</p>
+<!-- @@@shapeForPlay -->
+</div>
+<div class="fnitem">
+<!-- $$$shapesForPlay[overload1]$$$shapesForPlay -->
+<h3 class="fn" translate="no" id="shapesForPlay"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">bool</span> DrumMachine::<span class="name">shapesForPlay</span>() const</h3>
+<p>Reimplements: <a href="machine.html#shapesForPlay" translate="no">Machine::shapesForPlay</a>() const.</p>
+<p>Returns true: a drum machine's hits are lengthened on their way to the sequencer (<a href="drummachine.html#shapeForPlay" translate="no">shapeForPlay</a>()).</p>
+<!-- @@@shapesForPlay -->
 </div>
 <div class="fnitem">
 <!-- $$$soundState[overload1]$$$soundState -->

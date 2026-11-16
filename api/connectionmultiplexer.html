@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- connectionmultiplexer.cpp -->
+  <meta name="description" content="Every controller's messages as one stream (midi(), sysex()), each stamped with its controller and connection, a message come twice over a controller's several connections passed on once: the one reader of what the router says controllers send.">
+  <meta name="keywords" content="class">
+  <title>ConnectionMultiplexer Class | ravving C++ API 0.7.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>ConnectionMultiplexer</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">ConnectionMultiplexer Class</h1>
+<!-- $$$ConnectionMultiplexer-brief -->
+<p>Every controller's messages as one stream (<a href="connectionmultiplexer.html#midi" translate="no">midi</a>(), <a href="connectionmultiplexer.html#sysex" translate="no">sysex</a>()), each stamped with its controller and connection, a message come twice over a controller's several connections passed on once: the one reader of what the router says controllers send. <a href="#details">More...</a></p>
+<!-- @@@ConnectionMultiplexer -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;connectionmultiplexer.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="connectionmultiplexer-members.html">List of all members, including inherited members</a></li>
+<li>ConnectionMultiplexer is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="connectionmultiplexer.html#ConnectionMultiplexer" translate="no">ConnectionMultiplexer</a></b>(const ConnectionRegistry *<i>registry</i>, int *<i>router</i> = nullptr, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionmultiplexer.html#receive" translate="no">receive</a></b>(const QString &amp;<i>connection</i>, int <i>size</i>, quint8 <i>byte0</i>, quint8 <i>byte1</i>, quint8 <i>byte2</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionmultiplexer.html#receiveSysex" translate="no">receiveSysex</a></b>(const QString &amp;<i>connection</i>, const QByteArray &amp;<i>bytes</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionmultiplexer.html#setClock" translate="no">setClock</a></b>(const std::function&lt;qint64 ()&gt; &amp;<i>now</i>)</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionmultiplexer.html#midi" translate="no">midi</a></b>(const MidiMessage &amp;<i>message</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionmultiplexer.html#sysex" translate="no">sysex</a></b>(const ControllerId &amp;<i>controller</i>, const QByteArray &amp;<i>bytes</i>)</td></tr>
+</table></div>
+<!-- $$$ConnectionMultiplexer-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>A controller plugged in several ways at once (a cable's two ports, its radio beside its cable; a port bridged twice) sends each message on each. The multiplexer keeps, for each controller, which connection each message last came on and when: the same message from <i>another</i> of its connections within CopyWindowMs is that one come the other way, and dropped. A message from the <i>same</i> connection again is never dropped (an endless knob's identical ticks), nor is anything from a controller with one connection. This is the one place copies are told from repeats; what reads the stream (<a href="midiinput.html" translate="no">MidiInput</a>, the drivers) sees each message once. Time comes from its own clock, or the one given (<a href="connectionmultiplexer.html#setClock" translate="no">setClock</a>()).</p>
+</div>
+<!-- @@@ConnectionMultiplexer -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$ConnectionMultiplexer[overload1]$$$ConnectionMultiplexerconstConnectionRegistry*int*QObject* -->
+<h3 class="fn" translate="no" id="ConnectionMultiplexer"><code class="details extra" translate="no">[explicit]</code> ConnectionMultiplexer::<span class="name">ConnectionMultiplexer</span>(const <span class="type"><a href="connectionregistry.html" translate="no">ConnectionRegistry</a></span> *<i>registry</i>, <span class="type">int</span> *<i>router</i> = nullptr, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Reads the connections' controllers from <i translate="no">registry</i> and the messages from <i translate="no">router</i> (null: none, until <a href="connectionmultiplexer.html#receive" translate="no">receive</a>() brings them), with <i translate="no">parent</i>.</p>
+<!-- @@@ConnectionMultiplexer -->
+</div>
+<div class="fnitem">
+<!-- $$$midi[overload1]$$$midiconstMidiMessage& -->
+<h3 class="fn" translate="no" id="midi"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ConnectionMultiplexer::<span class="name">midi</span>(const <span class="type"><a href="midimessage.html" translate="no">MidiMessage</a></span> &amp;<i>message</i>)</h3>
+<p>A short MIDI <i translate="no">message</i> came from a controller: stamped with its <a href="controllerid.html" translate="no">ControllerId</a> and its connection, with the copies over the controller's other connections dropped.</p>
+<!-- @@@midi -->
+</div>
+<div class="fnitem">
+<!-- $$$receive[overload1]$$$receiveconstQString&intquint8quint8quint8 -->
+<h3 class="fn" translate="no" id="receive"><span class="type">void</span> ConnectionMultiplexer::<span class="name">receive</span>(const <span class="type">QString</span> &amp;<i>connection</i>, <span class="type">int</span> <i>size</i>, <span class="type">quint8</span> <i>byte0</i>, <span class="type">quint8</span> <i>byte1</i>, <span class="type">quint8</span> <i>byte2</i>)</h3>
+<p>The message <i translate="no">byte0</i> <i translate="no">byte1</i> <i translate="no">byte2</i> (<i translate="no">size</i> bytes) came on <i translate="no">connection</i>: passed on as <a href="connectionmultiplexer.html#midi" translate="no">midi</a>() unless it is a copy of one come on another connection of the same controller.</p>
+<!-- @@@receive -->
+</div>
+<div class="fnitem">
+<!-- $$$receiveSysex[overload1]$$$receiveSysexconstQString&constQByteArray& -->
+<h3 class="fn" translate="no" id="receiveSysex"><span class="type">void</span> ConnectionMultiplexer::<span class="name">receiveSysex</span>(const <span class="type">QString</span> &amp;<i>connection</i>, const <span class="type">QByteArray</span> &amp;<i>bytes</i>)</h3>
+<p>The System Exclusive message <i translate="no">bytes</i> (what came between 0xF0 and 0xF7) came on <i translate="no">connection</i>: passed on as <a href="connectionmultiplexer.html#sysex" translate="no">sysex</a>() with its controller.</p>
+<!-- @@@receiveSysex -->
+</div>
+<div class="fnitem">
+<!-- $$$setClock[overload1]$$$setClockconststd::function<qint64()>& -->
+<h3 class="fn" translate="no" id="setClock"><span class="type">void</span> ConnectionMultiplexer::<span class="name">setClock</span>(const <span class="type">std::function</span>&lt;<span class="type">qint64</span> ()&gt; &amp;<i>now</i>)</h3>
+<p>Reads the time (milliseconds) from <i translate="no">now</i> rather than from a clock of its own, so a test can say what time it is.</p>
+<!-- @@@setClock -->
+</div>
+<div class="fnitem">
+<!-- $$$sysex[overload1]$$$sysexconstControllerId&constQByteArray& -->
+<h3 class="fn" translate="no" id="sysex"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ConnectionMultiplexer::<span class="name">sysex</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>controller</i>, const <span class="type">QByteArray</span> &amp;<i>bytes</i>)</h3>
+<p>The System Exclusive message <i translate="no">bytes</i> came from <i translate="no">controller</i>, on any of its connections.</p>
+<!-- @@@sysex -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

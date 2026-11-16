@@ -5,7 +5,7 @@
 <!-- localization.cpp -->
   <meta name="description" content="The interface's language (KI18n), published to QML as localization.">
   <meta name="keywords" content="class">
-  <title>Localization Class | ravving C++ API 0.6.0</title>
+  <title>Localization Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -111,6 +111,7 @@
 <h2 id="static-public-members">Static Public Members</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="localization.html#savedLanguage" translate="no">savedLanguage</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="localization.html#setUpContext" translate="no">setUpContext</a></b>(QQmlEngine *<i>engine</i>)</td></tr>
 </table></div>
 <!-- $$$Localization-description -->
 <div class="descr">
@@ -198,6 +199,12 @@
 <h3 class="fn" translate="no" id="setUp"><span class="type">void</span> Localization::<span class="name">setUp</span>(<span class="type">QQmlEngine</span> *<i>engine</i>)</h3>
 <p>Puts the i18n functions on the root context of <i translate="no">engine</i> (KLocalization::setupLocalizedContext()); call it once the engine exists, before any QML loads.</p>
 <!-- @@@setUp -->
+</div>
+<div class="fnitem">
+<!-- $$$setUpContext[overload1]$$$setUpContextQQmlEngine* -->
+<h3 class="fn" translate="no" id="setUpContext"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> Localization::<span class="name">setUpContext</span>(<span class="type">QQmlEngine</span> *<i>engine</i>)</h3>
+<p>Puts the i18n functions (<a href="catalog.html#i18nc" translate="no">i18nc</a>() and the rest) on the root context of <i translate="no">engine</i>, in the language set up already, without following later language changes: for an engine of its own, as the startup splash's. Call it before any QML loads.</p>
+<!-- @@@setUpContext -->
 </div>
 </div>
 </article>

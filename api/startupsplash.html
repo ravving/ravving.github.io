@@ -5,7 +5,7 @@
 <!-- startupsplash.cpp -->
   <meta name="description" content="The startup splash and its lifetime, published to QML as startup (null when none is shown).">
   <meta name="keywords" content="class">
-  <title>StartupSplash Class | ravving C++ API 0.6.0</title>
+  <title>StartupSplash Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -89,23 +89,38 @@
 <li>StartupSplash is part of <a href="ravving-app.html">App and hardware input</a>.</li>
 </ul>
 <h2 id="properties">Properties</h2>
-<ul>
+<div class="table"><table class="propsummary" translate="no">
+<tr><td class="topAlign"><ul>
+<li class="fn" translate="no"><b><a href="startupsplash.html#aruFrames-prop" translate="no">aruFrames</a></b> : const QStringList</li>
+<li class="fn" translate="no"><b><a href="startupsplash.html#aruHolds-prop" translate="no">aruHolds</a></b> : const QList&lt;int&gt;</li>
+<li class="fn" translate="no"><b><a href="startupsplash.html#aruParty-prop" translate="no">aruParty</a></b> : const QVariantList</li>
+<li class="fn" translate="no"><b><a href="startupsplash.html#phase-prop" translate="no">phase</a></b> : QString</li>
+</ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><b><a href="startupsplash.html#pick-prop" translate="no">pick</a></b> : const int</li>
+<li class="fn" translate="no"><b><a href="startupsplash.html#progress-prop" translate="no">progress</a></b> : qreal</li>
 <li class="fn" translate="no"><b><a href="startupsplash.html#style-prop" translate="no">style</a></b> : const QString</li>
 </ul>
+</td></tr>
+</table></div>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#aruFrames-prop" translate="no">aruFrames</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;int&gt; </td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#aruHolds-prop" translate="no">aruHolds</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#aruParty-prop" translate="no">aruParty</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#phase-prop" translate="no">phase</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#pick-prop" translate="no">pick</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#progress-prop" translate="no">progress</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#style-prop" translate="no">style</a></b>() const</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#play" translate="no">play</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#progressChanged" translate="no">progressChanged</a></b>()</td></tr>
 </table></div>
 <h2 id="static-public-members">Static Public Members</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#defaultStyle" translate="no">defaultStyle</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> StartupSplash *</td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#show" translate="no">show</a></b>(QObject *<i>parent</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> StartupSplash *</td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#show" translate="no">show</a></b>(QObject *<i>parent</i>, Leds *<i>leds</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="startupsplash.html#styles" translate="no">styles</a></b>()</td></tr>
 </table></div>
 <h2 id="related-non-members">Related Non-Members</h2>
@@ -124,14 +139,72 @@
 <div class="prop">
 <h2>Property Documentation</h2>
 <div class="fnitem">
+<!-- $$$aruFrames-prop$$$aruFrames -->
+<h3 class="fn" translate="no" id="aruFrames-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">aruFrames</span> : const <span class="type">QStringList</span></h3>
+<p>ARU's frames for this start's pick: the one it waits on, then the show's eight steps (<a href="splashlights.html#aruFrames" translate="no">SplashLights::aruFrames</a>()); SplashLook plays them.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>aruFrames</b></span>() const</td></tr>
+</table></div>
+<!-- @@@aruFrames -->
+</div>
+<div class="fnitem">
+<!-- $$$aruHolds-prop$$$aruHolds -->
+<h3 class="fn" translate="no" id="aruHolds-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">aruHolds</span> : const <span class="type">QList</span>&lt;<span class="type">int</span>&gt;</h3>
+<p>how long each of ARU's eight steps holds, in ms (<a href="splashlights.html#aruHolds" translate="no">SplashLights::aruHolds</a>()), so the show on screen and the key lights keep one rhythm.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QList&lt;int&gt; </td><td class="memItemRight bottomAlign"><span class="name"><b>aruHolds</b></span>() const</td></tr>
+</table></div>
+<!-- @@@aruHolds -->
+</div>
+<div class="fnitem">
+<!-- $$$aruParty-prop$$$aruParty -->
+<h3 class="fn" translate="no" id="aruParty-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">aruParty</span> : const <span class="type">QVariantList</span></h3>
+<p>This property holds the three dancers of the party while the studio loads (<a href="splashlights.html#aruParty" translate="no">SplashLights::aruParty</a>()): the pick's character in the middle, the other two species beside it.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantList </td><td class="memItemRight bottomAlign"><span class="name"><b>aruParty</b></span>() const</td></tr>
+</table></div>
+<!-- @@@aruParty -->
+</div>
+<div class="fnitem">
+<!-- $$$phase-prop$$$phase$$$progressChanged -->
+<h3 class="fn" translate="no" id="phase-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">phase</span> : <span class="type">QString</span></h3>
+<p>This property holds the startup mark <a href="startupsplash.html#progress-prop" translate="no">progress</a>() stands at: <code translate="no">splash</code>, then <code translate="no">studio</code>, <code translate="no">backends</code>, <code translate="no">qml</code>, <code translate="no">first-frame</code>, <code translate="no">wired</code>. SplashLook names the step from it, at the foot of every look.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>phase</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="startupsplash.html#progressChanged" translate="no">progressChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@phase -->
+</div>
+<div class="fnitem">
 <!-- $$$pick-prop$$$pick -->
 <h3 class="fn" translate="no" id="pick-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">pick</span> : const <span class="type">int</span></h3>
-<p>This property holds which logo variant <code translate="no">glow</code> and <code translate="no">still</code> show (0 to 4), or which character <code translate="no">aru</code> shows (0 the octopus, 1 the wolf pup, 2 the alien), chosen at random each start.</p>
+<p>This property holds which logo variant <code translate="no">glow</code> and <code translate="no">still</code> show (0 to 4), or which character and look <code translate="no">aru</code> shows (<a href="splashlights.html#aruFrames" translate="no">SplashLights::aruFrames</a>()), chosen at random each start.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>pick</b></span>() const</td></tr>
 </table></div>
 <!-- @@@pick -->
+</div>
+<div class="fnitem">
+<!-- $$$progress-prop$$$progress$$$progressChanged -->
+<h3 class="fn" translate="no" id="progress-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">progress</span> : <span class="type">qreal</span></h3>
+<p>how far the start has come, 0 to 1: each startup mark (<a href="startupsplash.html#startupMark" translate="no">startupMark</a>()) moves it by the share of a start that phase took when measured (studio 0.30, backends 0.33, qml 0.70, first-frame 0.78, wired 1). SplashLook brings the party on and speeds it up with it; QML reads it as <code translate="no">startup.progress</code>, and the splash window gets it as its <code translate="no">progress</code>.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> qreal </td><td class="memItemRight bottomAlign"><span class="name"><b>progress</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="startupsplash.html#progressChanged" translate="no">progressChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@progress -->
 </div>
 <div class="fnitem">
 <!-- $$$style-prop$$$style -->
@@ -159,9 +232,16 @@
 <!-- @@@play -->
 </div>
 <div class="fnitem">
-<!-- $$$show[overload1]$$$showQObject* -->
-<h3 class="fn" translate="no" id="show"><code class="details extra" translate="no">[static]</code> <span class="type"><a href="startupsplash.html" translate="no">StartupSplash</a></span> *StartupSplash::<span class="name">show</span>(<span class="type">QObject</span> *<i>parent</i>)</h3>
-<p>Shows the splash with the saved style and returns it, parented to <i translate="no">parent</i>; returns <code translate="no">nullptr</code> when the style is <code translate="no">off</code>, there is no screen, or the window could not be created. Blocks for up to 300 ms in a local event loop until the window's first frame is on screen at the screen's size, then marks <code translate="no">splash</code> (<a href="startupsplash.html#startupMark" translate="no">startupMark</a>()). The splash receives every later startup mark through <a href="startupsplash.html#startupListener" translate="no">startupListener</a>().</p>
+<!-- $$$progressChanged -->
+<h3 class="fn" translate="no" id="progressChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> StartupSplash::<span class="name">progressChanged</span>()</h3>
+<p>Emitted with each startup mark that moves <a href="startupsplash.html#progress-prop" translate="no">progress</a>().</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="startupsplash.html#phase-prop" translate="no">phase</a> and <a href="startupsplash.html#progress-prop" translate="no">progress</a>. </p>
+</div><!-- @@@progressChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$show[overload1]$$$showQObject*Leds* -->
+<h3 class="fn" translate="no" id="show"><code class="details extra" translate="no">[static]</code> <span class="type"><a href="startupsplash.html" translate="no">StartupSplash</a></span> *StartupSplash::<span class="name">show</span>(<span class="type">QObject</span> *<i>parent</i>, <span class="type"><a href="leds.html" translate="no">Leds</a></span> *<i>leds</i> = nullptr)</h3>
+<p>Shows the splash with the saved style and returns it, parented to <i translate="no">parent</i>; returns <code translate="no">nullptr</code> when the style is <code translate="no">off</code>, there is no screen, or the window could not be created. The pick is random unless <code translate="no">RAVVING_SPLASH_PICK</code> sets it (for testing a look). With <i translate="no">leds</i> (and a strip) the keys light along (<a href="splashlights.html" translate="no">SplashLights</a>): still while loading, the light show with the look's show. Blocks for up to 300 ms in a local event loop until the window's first frame is on screen at the screen's size, then marks <code translate="no">splash</code> (<a href="startupsplash.html#startupMark" translate="no">startupMark</a>()). The splash receives every later startup mark through <a href="startupsplash.html#startupListener" translate="no">startupListener</a>().</p>
 <!-- @@@show -->
 </div>
 <div class="fnitem">

@@ -5,7 +5,7 @@
 <!-- controllerscale.cpp -->
   <meta name="description" content="A controller that plays in a key, a note grid (a Lightpad): ravving's key goes to it (followKey()). Its driver implements it (RoliBlocks).">
   <meta name="keywords" content="class">
-  <title>ControllerScale Class | ravving C++ API 0.6.0</title>
+  <title>ControllerScale Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -68,6 +68,7 @@
 <div class="toc">
 <h3 id="toc">Contents</h3>
 <ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
@@ -87,15 +88,35 @@
 <li><a href="controllerscale-members.html">List of all members, including inherited members</a></li>
 <li>ControllerScale is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
 </ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="controllerscale.html#Pads-enum" translate="no">Pads</a></b> { NoPads, DrumPads, ChordPads, SamplerPads }</td></tr>
+</table></div>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="controllerscale.html#followKey" translate="no">followKey</a></b>(int <i>root</i>, const QList&lt;int&gt; &amp;<i>steps</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="controllerscale.html#followPads" translate="no">followPads</a></b>(int <i>pads</i>)</td></tr>
 </table></div>
 <!-- $$$ControllerScale-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 </div>
 <!-- @@@ControllerScale -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<div class="fnitem">
+<!-- $$$Pads$$$NoPads$$$DrumPads$$$ChordPads$$$SamplerPads -->
+<h3 class="fn" translate="no" id="Pads-enum">enum ControllerScale::<span class="name">Pads</span></h3>
+<p>What the page on screen plays from pads.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">ControllerScale::NoPads</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">notes (the lead, the bass, the chords' NOTES)</td></tr>
+<tr><td class="topAlign"><code translate="no">ControllerScale::DrumPads</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">its eight drum rows</td></tr>
+<tr><td class="topAlign"><code translate="no">ControllerScale::ChordPads</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">its chord pads</td></tr>
+<tr><td class="topAlign"><code translate="no">ControllerScale::SamplerPads</code></td><td class="topAlign tblval"><code translate="no">3</code></td><td class="topAlign">the samplers' 16 slots or pads</td></tr>
+</table></div>
+<!-- @@@Pads -->
+</div>
+</div>
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
@@ -103,6 +124,12 @@
 <h3 class="fn" translate="no" id="followKey"><code class="details extra" translate="no">[pure virtual]</code> <span class="type">void</span> ControllerScale::<span class="name">followKey</span>(<span class="type">int</span> <i>root</i>, const <span class="type">QList</span>&lt;<span class="type">int</span>&gt; &amp;<i>steps</i>)</h3>
 <p>The project's key: <i translate="no">root</i> (0 to 11, C to B) and the scale's <i translate="no">steps</i> (semitones from it).</p>
 <!-- @@@followKey -->
+</div>
+<div class="fnitem">
+<!-- $$$followPads[overload1]$$$followPadsint -->
+<h3 class="fn" translate="no" id="followPads"><code class="details extra" translate="no">[virtual]</code> <span class="type">void</span> ControllerScale::<span class="name">followPads</span>(<span class="type">int</span> <i>pads</i>)</h3>
+<p>The page on screen plays <i translate="no">pads</i> (Pads): a note grid that can show pads shows one for each (<a href="roliblocks.html" translate="no">RoliBlocks</a>). By default nothing changes.</p>
+<!-- @@@followPads -->
 </div>
 </div>
 </article>

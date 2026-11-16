@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- learnedmessage.cpp -->
+  <meta name="description" content="A controller's message as learned for a control: a note, a CC or a pitch bend on a channel, read from the bytes that come (of()) and written as the settings keep it (text(): &lt;@string&gt;&amp;quot;note 1 60&amp;quot;&lt;/@string&gt;, &lt;@string&gt;&amp;quot;cc 2 74&amp;quot;&lt;/@string&gt;, &lt;@string&gt;&amp;quot;bend 3&amp;quot;&lt;/@string&gt;; parse()).">
+  <meta name="keywords" content="class">
+  <title>LearnedMessage Class | ravving C++ API 0.7.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>LearnedMessage</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#related-non-members">Related Non-Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">LearnedMessage Class</h1>
+<!-- $$$LearnedMessage-brief -->
+<p>A controller's message as learned for a control: a note, a CC or a pitch bend on a channel, read from the bytes that come (<a href="learnedmessage.html#of" translate="no">of</a>()) and written as the settings keep it (<a href="learnedmessage.html#text" translate="no">text</a>(): <code translate="no">&quot;note 1 60&quot;</code>, <code translate="no">&quot;cc 2 74&quot;</code>, <code translate="no">&quot;bend 3&quot;</code>; <a href="learnedmessage.html#parse" translate="no">parse</a>()). <a href="#details">More...</a></p>
+<!-- @@@LearnedMessage -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;learnedmessage.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="learnedmessage-members.html">List of all members, including inherited members</a></li>
+<li>LearnedMessage is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#Kind-enum" translate="no">Kind</a></b> { Cc, Note, Bend }</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#LearnedMessage" translate="no">LearnedMessage</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#LearnedMessage-1" translate="no">LearnedMessage</a></b>(LearnedMessage::Kind <i>kind</i>, int <i>channel</i>, int <i>data1</i> = 0)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#channel" translate="no">channel</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#data1" translate="no">data1</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#described" translate="no">described</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#isBend" translate="no">isBend</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#isNote" translate="no">isNote</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#key" translate="no">key</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> LearnedMessage::Kind </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#kind" translate="no">kind</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#text" translate="no">text</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#operator-not-eq" translate="no">operator!=</a></b>(const LearnedMessage &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#operator-eq-eq" translate="no">operator==</a></b>(const LearnedMessage &amp;<i>other</i>) const</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#keyOf" translate="no">keyOf</a></b>(const QString &amp;<i>text</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#noteName" translate="no">noteName</a></b>(int <i>note</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> std::optional&lt;LearnedMessage&gt; </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#of" translate="no">of</a></b>(quint8 <i>status</i>, quint8 <i>data1</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> std::optional&lt;LearnedMessage&gt; </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#parse" translate="no">parse</a></b>(const QString &amp;<i>text</i>)</td></tr>
+</table></div>
+<h2 id="related-non-members">Related Non-Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> size_t </td><td class="memItemRight bottomAlign"><b><a href="learnedmessage.html#qHash" translate="no">qHash</a></b>(const LearnedMessage &amp;<i>message</i>, size_t <i>seed</i> = 0)</td></tr>
+</table></div>
+<!-- $$$LearnedMessage-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The one grammar for a learned message, wherever one is kept or read: <a href="midiinput.html" translate="no">MidiInput</a>'s controls, the known controllers' defaults (data/midi-devices.json), a <a href="learnedmixer.html" translate="no">LearnedMixer</a>'s lights. A message hashes by its <a href="learnedmessage.html#key" translate="no">key</a>() (its kind, channel and number packed), so the controls learned can be looked up as the bytes arrive. Channels are 1 to 16, as the settings show them.</p>
+</div>
+<!-- @@@LearnedMessage -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<div class="fnitem">
+<!-- $$$Kind$$$Cc$$$Note$$$Bend -->
+<h3 class="fn" translate="no" id="Kind-enum">enum class LearnedMessage::<span class="name">Kind</span></h3>
+<p>What a message is.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">LearnedMessage::Kind::Cc</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">a control change (a knob's, a button's, a fader's position)</td></tr>
+<tr><td class="topAlign"><code translate="no">LearnedMessage::Kind::Note</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">a note, on or off (a key's, a pad's)</td></tr>
+<tr><td class="topAlign"><code translate="no">LearnedMessage::Kind::Bend</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">a pitch bend (a fader's 14 bits); its number is 0</td></tr>
+</table></div>
+<!-- @@@Kind -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$LearnedMessage[overload1]$$$LearnedMessage -->
+<h3 class="fn" translate="no" id="LearnedMessage"><code class="details extra" translate="no">[constexpr noexcept <a href="https://en.cppreference.com/w/cpp/language/function#Defaulted_functions" translate="no">default</a>]</code> LearnedMessage::<span class="name">LearnedMessage</span>()</h3>
+<p>Default-constructs an instance of <span translate="no">LearnedMessage</span>.</p>
+<!-- @@@LearnedMessage -->
+</div>
+<div class="fnitem">
+<!-- $$$LearnedMessage$$$LearnedMessageLearnedMessage::Kindintint -->
+<h3 class="fn" translate="no" id="LearnedMessage-1">LearnedMessage::<span class="name">LearnedMessage</span>(<span class="type"><a href="learnedmessage.html#Kind-enum" translate="no">LearnedMessage::Kind</a></span> <i>kind</i>, <span class="type">int</span> <i>channel</i>, <span class="type">int</span> <i>data1</i> = 0)</h3>
+<p>A message of <i translate="no">kind</i> on <i translate="no">channel</i> (1 to 16) with <i translate="no">data1</i> (the note or the CC number; 0 for a bend).</p>
+<!-- @@@LearnedMessage -->
+</div>
+<div class="fnitem">
+<!-- $$$channel[overload1]$$$channel -->
+<h3 class="fn" translate="no" id="channel"><span class="type">int</span> LearnedMessage::<span class="name">channel</span>() const</h3>
+<p>Returns the channel, 1 to 16.</p>
+<!-- @@@channel -->
+</div>
+<div class="fnitem">
+<!-- $$$data1[overload1]$$$data1 -->
+<h3 class="fn" translate="no" id="data1"><span class="type">int</span> LearnedMessage::<span class="name">data1</span>() const</h3>
+<p>Returns the note or the CC number (0 to 127); 0 for a bend.</p>
+<!-- @@@data1 -->
+</div>
+<div class="fnitem">
+<!-- $$$described[overload1]$$$described -->
+<h3 class="fn" translate="no" id="described"><span class="type">QString</span> LearnedMessage::<span class="name">described</span>() const</h3>
+<p>Returns the message as the user reads it: &quot;C4 · CH 1&quot;, &quot;CC 74 · CH 2&quot;, &quot;BEND · CH 3&quot;.</p>
+<!-- @@@described -->
+</div>
+<div class="fnitem">
+<!-- $$$isBend[overload1]$$$isBend -->
+<h3 class="fn" translate="no" id="isBend"><span class="type">bool</span> LearnedMessage::<span class="name">isBend</span>() const</h3>
+<p>Returns whether the message is a pitch bend (<a href="learnedmessage.html#Kind-enum" translate="no">Kind::Bend</a>).</p>
+<!-- @@@isBend -->
+</div>
+<div class="fnitem">
+<!-- $$$isNote[overload1]$$$isNote -->
+<h3 class="fn" translate="no" id="isNote"><span class="type">bool</span> LearnedMessage::<span class="name">isNote</span>() const</h3>
+<p>Returns whether the message is a note (<a href="learnedmessage.html#Kind-enum" translate="no">Kind::Note</a>).</p>
+<!-- @@@isNote -->
+</div>
+<div class="fnitem">
+<!-- $$$key[overload1]$$$key -->
+<h3 class="fn" translate="no" id="key"><span class="type">int</span> LearnedMessage::<span class="name">key</span>() const</h3>
+<p>Returns the message packed into one number (its kind, channel and data1), what the controls learned are looked up by as the bytes arrive; never negative.</p>
+<!-- @@@key -->
+</div>
+<div class="fnitem">
+<!-- $$$keyOf[overload1]$$$keyOfconstQString& -->
+<h3 class="fn" translate="no" id="keyOf"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> LearnedMessage::<span class="name">keyOf</span>(const <span class="type">QString</span> &amp;<i>text</i>)</h3>
+<p>Returns the <a href="learnedmessage.html#key" translate="no">key</a>() of the message written as <i translate="no">text</i>, -1 for text that is none.</p>
+<!-- @@@keyOf -->
+</div>
+<div class="fnitem">
+<!-- $$$kind[overload1]$$$kind -->
+<h3 class="fn" translate="no" id="kind"><span class="type"><a href="learnedmessage.html#Kind-enum" translate="no">LearnedMessage::Kind</a></span> LearnedMessage::<span class="name">kind</span>() const</h3>
+<p>Returns what the message is.</p>
+<!-- @@@kind -->
+</div>
+<div class="fnitem">
+<!-- $$$noteName[overload1]$$$noteNameint -->
+<h3 class="fn" translate="no" id="noteName"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> LearnedMessage::<span class="name">noteName</span>(<span class="type">int</span> <i>note</i>)</h3>
+<p>Returns MIDI <i translate="no">note</i>'s name, &quot;C4&quot; for 60.</p>
+<!-- @@@noteName -->
+</div>
+<div class="fnitem">
+<!-- $$$of[overload1]$$$ofquint8quint8 -->
+<h3 class="fn" translate="no" id="of"><code class="details extra" translate="no">[static]</code> <span class="type">std::optional</span>&lt;<span class="type"><a href="learnedmessage.html" translate="no">LearnedMessage</a></span>&gt; LearnedMessage::<span class="name">of</span>(<span class="type">quint8</span> <i>status</i>, <span class="type">quint8</span> <i>data1</i>)</h3>
+<p>Returns the message <i translate="no">status</i> (its channel in the low half) with <i translate="no">data1</i> is, or nothing for one that cannot be learned (pressure, a program change, a system message).</p>
+<!-- @@@of -->
+</div>
+<div class="fnitem">
+<!-- $$$parse[overload1]$$$parseconstQString& -->
+<h3 class="fn" translate="no" id="parse"><code class="details extra" translate="no">[static]</code> <span class="type">std::optional</span>&lt;<span class="type"><a href="learnedmessage.html" translate="no">LearnedMessage</a></span>&gt; LearnedMessage::<span class="name">parse</span>(const <span class="type">QString</span> &amp;<i>text</i>)</h3>
+<p>Returns the message written as <i translate="no">text</i> (<code translate="no">&quot;note 1 60&quot;</code>, <code translate="no">&quot;cc 2 74&quot;</code>, <code translate="no">&quot;bend 3&quot;</code>), or nothing for text that is none.</p>
+<!-- @@@parse -->
+</div>
+<div class="fnitem">
+<!-- $$$text[overload1]$$$text -->
+<h3 class="fn" translate="no" id="text"><span class="type">QString</span> LearnedMessage::<span class="name">text</span>() const</h3>
+<p>Returns the message as the settings keep it: <code translate="no">&quot;note 1 60&quot;</code>, <code translate="no">&quot;cc 2 74&quot;</code>, <code translate="no">&quot;bend 3&quot;</code>.</p>
+<!-- @@@text -->
+</div>
+<div class="fnitem">
+<!-- $$$operator!=[overload1]$$$operator!=constLearnedMessage& -->
+<h3 class="fn" translate="no" id="operator-not-eq"><span class="type">bool</span> LearnedMessage::<span class="name">operator!=</span>(const <span class="type"><a href="learnedmessage.html" translate="no">LearnedMessage</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns whether this is another message than <i translate="no">other</i>.</p>
+<!-- @@@operator!= -->
+</div>
+<div class="fnitem">
+<!-- $$$operator==[overload1]$$$operator==constLearnedMessage& -->
+<h3 class="fn" translate="no" id="operator-eq-eq"><span class="type">bool</span> LearnedMessage::<span class="name">operator==</span>(const <span class="type"><a href="learnedmessage.html" translate="no">LearnedMessage</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns whether this is the same message as <i translate="no">other</i>: the same kind, channel and number.</p>
+<!-- @@@operator== -->
+</div>
+</div>
+<div class="relnonmem">
+<h2>Related Non-Members</h2>
+<div class="fnitem">
+<!-- $$$qHash[overload1]$$$qHashconstLearnedMessage&size_t -->
+<h3 class="fn" translate="no" id="qHash"><span class="type">size_t</span> <span class="name">qHash</span>(const <span class="type"><a href="learnedmessage.html" translate="no">LearnedMessage</a></span> &amp;<i>message</i>, <span class="type">size_t</span> <i>seed</i> = 0)</h3>
+<p>Returns the hash of <i translate="no">message</i> (its <a href="learnedmessage.html#key" translate="no">key</a>()), with <i translate="no">seed</i>: a <a href="learnedmessage.html" translate="no">LearnedMessage</a> keys a QHash.</p>
+<!-- @@@qHash -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

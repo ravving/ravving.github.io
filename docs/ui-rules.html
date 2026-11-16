@@ -126,7 +126,7 @@ holds the rules and their exceptions, and is where a new rule goes.</p>
 <tr>
 <td><code>Ravving.Controls</code> (<code>controls/</code>)</td>
 <td>a control with properties or behaviour of its own, besides the look</td>
-<td><code>ActionButton</code>, <code>Chip</code>, <code>ConfirmButton</code>, <code>Knob</code>, <code>Fader</code>, <code>KnobSwitch</code>, <code>Meter</code>, <code>KeyCap</code> (on <code>CapFace</code>, the grid's cap the SONG page's keys and blocks share), <code>Nameplate</code></td>
+<td><code>ActionButton</code>, <code>Chip</code>, <code>ConfirmButton</code>, <code>ConfirmDialog</code>, <code>Knob</code>, <code>Fader</code>, <code>KnobSwitch</code>, <code>Meter</code>, <code>KeyCap</code> (on <code>CapFace</code>, the grid's cap the SONG page's keys and blocks share), <code>Nameplate</code></td>
 </tr>
 <tr>
 <td>the app (<code>qml/</code>)</td>
@@ -164,7 +164,7 @@ page-focus request (Main.qml wires those).</p>
 <td>every page (<code>MachineModule</code> wears a Pane for the machines)</td>
 </tr>
 <tr>
-<td>The top band of controls (row 1: transport, plate, ✕; row 2: the deck)</td>
+<td>The top band of controls (row 1: ← back, transport, plate; row 2: the deck)</td>
 <td><code>QQC.ToolBar</code> with <code>position: QQC.ToolBar.Header</code>, its rows in <code>contentItem: ColumnLayout {}</code></td>
 <td>the dashboard (<code>RaveHeader</code>), every full-window page</td>
 </tr>
@@ -209,14 +209,19 @@ page-focus request (Main.qml wires those).</p>
 <td>DELETE, REMOVE, CLEAR SONG, FORMAT, EJECT</td>
 </tr>
 <tr>
+<td>A question asked before something that can't be taken back, when there is no button of ravving's to press twice</td>
+<td><code>ConfirmDialog</code></td>
+<td>QUIT RAVVING? (closing the desktop window while the music plays)</td>
+</tr>
+<tr>
 <td>A state (on/off, or one of a set)</td>
 <td><code>Chip</code> / <code>StripButton</code></td>
 <td>modes, tabs, banks, sorts</td>
 </tr>
 <tr>
 <td>The way out</td>
-<td><code>CloseButton</code> (the ✕)</td>
-<td>every dialog (DialogHeader) and every full page</td>
+<td><code>CloseButton</code> (the ✕) for a dialog, <code>BackButton</code> (←) for a full page</td>
+<td>every dialog (DialogHeader); every full page</td>
 </tr>
 <tr>
 <td>An empty list or view</td>
@@ -286,7 +291,7 @@ page-focus request (Main.qml wires those).</p>
 <tr>
 <td>Controls that belong together, on one well that takes no room</td>
 <td><code>ControlGroup</code> (its knob's badge on the corner)</td>
-<td>↶ ↷ (the header's, a pattern's), ‹ 1/1 ›, the bars' + −, MOVE ◀ ▶, every <code>Stepper</code></td>
+<td>the header's ROOT and SCALE, ↶ ↷ (the header's, a pattern's), ‹ 1/1 ›, the bars' + −, MOVE ◀ ▶, every <code>Stepper</code></td>
 </tr>
 <tr>
 <td>The well itself, 2 px past what it backs</td>
@@ -311,6 +316,11 @@ page-focus request (Main.qml wires those).</p>
   so it always binds <code>checked</code>, or is checkable. <em>Checked:</em> <code>chip-shows-state</code>.</li>
 <li><strong><code>ConfirmButton</code> for what cannot be undone:</strong> the first tap arms it (AGAIN? and a countdown
   bar), a second one within three seconds does it.</li>
+<li id="ask-in-this-order"><strong>Ask in this order.</strong> Undo first (↶ and the history) where the act can be taken back. Then
+  the AGAIN? second press on the button pressed (<code>ConfirmButton</code>, <code>SecondPress</code>). A
+  <code>ConfirmDialog</code> only when the request comes from outside ravving's own buttons (the window
+  manager, another device) or the consequence can't be seen where it was asked. Never for a
+  routine act.</li>
 <li>All of them at the standard size (see Button sizes). <em>Checked:</em> <code>actions-are-actionbuttons</code>
   (no bare <code>QQC.Button</code>).</li>
 </ul>
@@ -405,13 +415,21 @@ and Button sizes):</p>
 </ul>
 <h2 id="leaving">Leaving</h2>
 <ul>
-<li><strong>One ✕, the <code>CloseButton</code>, everywhere.</strong> A dialog gets it from <code>DialogHeader</code>; a full page puts
-  it at the end of its header's first row. <em>Checked:</em> <code>close-is-closebutton</code>.</li>
+<li id="a-dialog-leaves-by-its-a-page-by-its"><strong>A dialog leaves by its ✕, a page by its ←.</strong> <em>Checked:</em> <code>close-is-closebutton</code>,
+  <code>page-leaves-by-back</code>.</li>
+<li>A dialog's way out is the <code>CloseButton</code> at its top right, from <code>DialogHeader</code>.</li>
+<li>A full page's is the <code>BackButton</code>, as BACK on the device: the first thing at the far left of
+    its header (SETTINGS: the top of its sidebar). A page never wears a ✕, so the ✕ at a
+    window's top right is only ever the desktop window's own.</li>
 <li><strong>A view under the header has no ✕</strong> (the SONG page, the MIXER): the header stays on screen,
   and the control that opened the view closes it (the project plate, ✱), as BACK does.</li>
-<li><strong>No CLOSE / CANCEL / DONE buttons:</strong> the ✕ and BACK already leave. A button that stops work
-  under way (CANCEL an export) is an action, and a question's answers (NO / YES while pairing) are
-  answers; both are listed as exceptions. <em>Checked:</em> <code>no-close-text</code>.</li>
+<li><strong>No CLOSE / CANCEL / DONE buttons:</strong> the ✕ (or ←) and BACK already leave. <em>Checked:</em>
+  <code>no-close-text</code> (the pairing row's NO / YES is its listed exception). Two kinds of button
+  aren't ways out:</li>
+<li>A button that stops work under way (CANCEL an export) is an action.</li>
+<li>A question's answers are answers: a <code>ConfirmDialog</code>'s two words name what each does (KEEP
+    PLAYING / QUIT), never YES / NO, OK / CANCEL. Its safe answer comes first and does what the
+    ✕ and BACK do; the act is never the default.</li>
 </ul>
 <h2 id="pages">Pages</h2>
 <ul>
@@ -420,7 +438,7 @@ and Button sizes):</p>
 <li>A page that takes the whole window (MUSIC PLAYER, RECORDER) has a header band like the
   dashboard's: a <code>QQC.ToolBar</code> with <code>position: QQC.ToolBar.Header</code>. <em>Checked:</em>
   <code>full-page-has-header</code>.</li>
-<li>Row 1: its transport, a <code>Plate</code> saying what's on, its own toggles, and the ✕.</li>
+<li>Row 1: the <code>BackButton</code>, its transport, a <code>Plate</code> saying what's on, its own toggles.</li>
 <li>Row 2: its deck of grouped controls, on strips (<code>QQC.ToolBar</code>).</li>
 <li>The view sits under it, on its <code>QQC.Page</code>.</li>
 <li>Its controls go on strips by group, its work areas in wells (<code>QQC.Frame</code>).</li>
@@ -617,16 +635,41 @@ a single line in theme/fonts.cpp. <em>Checked:</em> <code>font-families</code>.<
 <td></td>
 </tr>
 <tr>
-<td>and teal, the SONG page a matte slate night.</td>
+<td>and teal. The SONG page has no palette of its own: it wears the skin set's felt (below).</td>
 <td></td>
 </tr>
 </tbody>
 </table>
+<h3 id="the-pages-skins">The pages' skins</h3>
+<p>The other views wear the skin set too: the SONG page, the music player, the RECORDER's three
+inputs (MIC, GUITAR, LINE), SETTINGS and the MIXER's frame (<code>Rave.songSkin</code>, <code>playerSkin</code>,
+<code>recorderSkins</code>, <code>settingsSkin</code>, <code>mixerSkin</code>, each <code>Rave.pageSkin()</code>). On ravving's own set
+they are the <code>own*</code> literals in Rave.qml (the tokens' and <code>palette-readable</code>'s).</p>
+<h4 id="a-page-on-another-set">A page on another set</h4>
+<p>On any other set, a page's skin is the set's file's <code>pages.&lt;page&gt;</code> laid over the set's felt
+(<code>Theme.feltSkin()</code>, theme/theme.cpp):</p>
+<ul>
+<li>the felt: the set's dark cases' mean colour in OKLab, its chroma calmed to 0.03 and its
+  lightness held between 0.26 and 0.36 (a page is always dark);</li>
+<li>then a machine skin's steps for the chassis bottom, the well, the rail and the caps;</li>
+<li>the ink and dim ink near white and faintly tinted (7:1 and 4.5:1 on the chassis by those
+  steps);</li>
+<li>the page's own signal (its accent and glow: the SONG gold, the player's violet, the inputs'
+  red, amber and teal, the core orange) where the file names none.</li>
+</ul>
+<p>So a file that says nothing of a page still dresses it in the set, and a theme can set every
+colour of every page. The shipped sets carry all seven pages, written by
+<code>tools/skin-pages.py --write</code> (which fills only what a file does not name) and checked by
+<code>check-skins.py</code>.</p>
 <h3 id="skin-sets">Skin sets</h3>
 <p>A skin set (<code>data/skins/&lt;set&gt;.json</code>, SETTINGS → LOOK → SKINS) gives every machine its case,
-keys, well and lights. The shipped sets: ARCADE, CEL, JELLY, KISSA, METRO, PENCIL (the default),
-PREVIOUS, REEF, SIGNAL, SORBET, STUDIO and TOON, beside ravving's own (Rave.ownSkins). A profile
-naming a set that is not there wears PENCIL.</p>
+keys, well and lights (<code>machines</code>), and every other view its skin (<code>pages</code>: <code>song</code>, <code>player</code>,
+<code>mic</code>, <code>guitar</code>, <code>line</code>, <code>settings</code>, <code>mixer</code>). A page has the same colour keys as a machine,
+the SONG page's with its caps.</p>
+<p>The shipped sets: ARCADE, CEL, JELLY, KISSA, METRO, PENCIL (the default), PREVIOUS, REEF,
+SIGNAL, SORBET, STUDIO and TOON, beside ravving's own (Rave.ownSkins). A profile naming a set
+that is not there wears PENCIL.</p>
+<h4 id="what-check-skinspy-checks">What check-skins.py checks</h4>
 <p><code>python3 tools/check-skins.py [FILE.json…]</code> checks each colour against what it is drawn on (all
 the shipped sets when no file is given):</p>
 <ul>
@@ -638,7 +681,10 @@ the shipped sets when no file is given):</p>
 <li><code>glow</code> ≥ 3:1 on those caps and on the well: a lit key, a lit step, a note or chord in a roll;</li>
 <li><code>accent</code> ≥ 3:1 on the chassis or on the well: lit chips, knob arcs, custom chords;</li>
 <li><code>glow</code> ≥ 3:1 on the header's instrument chip, <code>plateColor</code> ≥ 4.5:1 on the nameplate;</li>
-<li>every two machines' glows apart (Delta E ≥ 20), so the header's lights tell them apart.</li>
+<li>every two machines' glows apart (Delta E ≥ 20), so the header's lights tell them apart;</li>
+<li>every page in <code>pages</code>: <code>ink</code> ≥ 7:1 and <code>dim</code> ≥ 4.5:1 on both chassis colours, <code>accent</code> ≥ 3:1
+  on the chassis or the well. The SONG page's <code>ink</code> ≥ 4.5:1 and <code>glow</code> ≥ 3:1 on its caps. A
+  page missing is reported (ravving lays it over the felt).</li>
 </ul>
 <h4 id="fixing-and-comparing-sets">Fixing and comparing sets</h4>
 <p><code>tools/skin-fix.py FILE.json…</code> nudges a failing set until it passes, moving only the colours a

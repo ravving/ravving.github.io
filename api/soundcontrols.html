@@ -5,7 +5,7 @@
 <!-- soundcontrols.cpp -->
   <meta name="description" content="A machine's sound controls: cards of knobs that each drive its engine's own controls (LV2 ports of a jalv engine, FluidSynth's cc: and gen: controls, by symbol).">
   <meta name="keywords" content="class">
-  <title>SoundControls Class | ravving C++ API 0.6.0</title>
+  <title>SoundControls Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -110,10 +110,12 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#cards-prop" translate="no">cards</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#engineControls" translate="no">engineControls</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#has" translate="no">has</a></b>(const QString &amp;<i>cardKnob</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#isRetired" translate="no">isRetired</a></b>(const QString &amp;<i>cardKnob</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantList </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#pages-prop" translate="no">pages</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#readout" translate="no">readout</a></b>(const QString &amp;<i>cardKnob</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#restore" translate="no">restore</a></b>(const QVariantMap &amp;<i>state</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#setKnob" translate="no">setKnob</a></b>(const QString &amp;<i>cardKnob</i>, double <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#setRetired" translate="no">setRetired</a></b>(const QStringList &amp;<i>cardKnobs</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#setValue" translate="no">setValue</a></b>(const QString &amp;<i>card</i>, const QString &amp;<i>knob</i>, double <i>value</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#state" translate="no">state</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="soundcontrols.html#symbols" translate="no">symbols</a></b>() const</td></tr>
@@ -245,6 +247,12 @@
 <!-- @@@has -->
 </div>
 <div class="fnitem">
+<!-- $$$isRetired[overload1]$$$isRetiredconstQString& -->
+<h3 class="fn" translate="no" id="isRetired"><span class="type">bool</span> SoundControls::<span class="name">isRetired</span>(const <span class="type">QString</span> &amp;<i>cardKnob</i>) const</h3>
+<p>Returns whether <i translate="no">cardKnob</i> (<code translate="no">CARD/KNOB</code>) is a knob this sound had once and has lost (<a href="soundcontrols.html#setRetired" translate="no">setRetired</a>()).</p>
+<!-- @@@isRetired -->
+</div>
+<div class="fnitem">
 <!-- $$$readout[overload1]$$$readoutconstQString& -->
 <h3 class="fn" translate="no" id="readout"><code class="details extra" translate="no">[invokable]</code> <span class="type">QString</span> SoundControls::<span class="name">readout</span>(const <span class="type">QString</span> &amp;<i>cardKnob</i>) const</h3>
 <p>Returns how the knob <i translate="no">cardKnob</i> (<code translate="no">CARD/KNOB</code>) reads now: its value as the engine means it, in its unit (&quot;2.77 kHz&quot;, &quot;−12 st&quot;, &quot;+6.7 dB&quot;), a switch's or a choice's label, or the percent of its travel when its profile gives no readout. Empty for an unknown knob.</p>
@@ -254,7 +262,7 @@
 <div class="fnitem">
 <!-- $$$restore[overload1]$$$restoreconstQVariantMap& -->
 <h3 class="fn" translate="no" id="restore"><span class="type">QStringList</span> SoundControls::<span class="name">restore</span>(const <span class="type">QVariantMap</span> &amp;<i>state</i>)</h3>
-<p>Restores the saved <i translate="no">state</i>, replacing the current values (missing knobs return to their defaults), and sends every control to the engine again (<a href="soundcontrols.html#controlChanged" translate="no">controlChanged</a>()): a page's own knob that was set and is missing now sends its start. Returns the saved knobs that do not exist; they are dropped.</p>
+<p>Restores the saved <i translate="no">state</i>, replacing the current values (missing knobs return to their defaults), and sends every control to the engine again (<a href="soundcontrols.html#controlChanged" translate="no">controlChanged</a>()): a page's own knob that was set and is missing now sends its start. Returns the saved knobs that do not exist, other than retired ones (<a href="soundcontrols.html#setRetired" translate="no">setRetired</a>()); all of them are dropped.</p>
 <!-- @@@restore -->
 </div>
 <div class="fnitem">
@@ -263,6 +271,13 @@
 <p>Sets the knob <i translate="no">cardKnob</i>, written <code translate="no">CARD/KNOB</code>, to <i translate="no">value</i>, as <a href="soundcontrols.html#setValue" translate="no">setValue</a>() does.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setKnob -->
+</div>
+<div class="fnitem">
+<!-- $$$setRetired[overload1]$$$setRetiredconstQStringList& -->
+<h3 class="fn" translate="no" id="setRetired"><span class="type">void</span> SoundControls::<span class="name">setRetired</span>(const <span class="type">QStringList</span> &amp;<i>cardKnobs</i>)</h3>
+<p>Sets the knobs, <i translate="no">cardKnobs</i> in <code translate="no">CARD/KNOB</code> form, that this sound had once and has lost since: their saved values are dropped without being counted as unknown (<a href="soundcontrols.html#restore" translate="no">restore</a>()), so an older project neither sends them nor reports them missing. A drum kit's PITCH knobs are: FluidSynth picks a melodic channel's zones by the tuned key, so a kit's tune played the neighbouring keys' drums (keys with none went silent) instead of retuning them.</p>
+<p><b>See also </b><a href="soundcontrols.html#isRetired" translate="no">isRetired</a>().</p>
+<!-- @@@setRetired -->
 </div>
 <div class="fnitem">
 <!-- $$$setValue[overload1]$$$setValueconstQString&constQString&double -->

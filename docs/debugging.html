@@ -446,6 +446,11 @@ btmon -r /tmp/lg.snoop | less                    # or open it in Wireshark
 <td>the jacks were not muted: pick the jacks and the device again</td>
 </tr>
 <tr>
+<td>a Bluetooth MIDI controller lags or drops while the device is busy</td>
+<td><code>tools/bt-stress-test.sh</code> (<a href="testing.html">testing.md</a>, "Bluetooth under load")</td>
+<td>the CPUs are not it: with every core hogged the links keep their 0.4 s pings, confirmations and packets in. Look at the radio instead: Bluetooth audio playing at the same time, Wi-Fi on 2.4 GHz, a scan running (the rows below)</td>
+</tr>
+<tr>
 <td>glitchy sound over Bluetooth</td>
 <td><code>pw-top</code>: is the bluez sink the driver of ravving's nodes?</td>
 <td>the default sink was switched by hand (<code>wpctl set-default</code>): put the jacks back as default, ravving routes through the loopback instead; Wi-Fi on the same antenna also costs (the Pi's radio is shared)</td>

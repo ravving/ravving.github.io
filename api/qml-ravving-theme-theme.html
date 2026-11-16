@@ -5,7 +5,7 @@
 <!-- theme.cpp -->
   <meta name="description" content="ravving's design tokens.">
   <meta name="keywords" content="qmltype">
-  <title>Theme QML Type (Singleton) | ravving C++ API 0.6.0</title>
+  <title>Theme QML Type (Singleton) | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -70,6 +70,7 @@
 <h3 id="toc">Contents</h3>
 <ul>
 <li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#methods">Methods</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -103,6 +104,7 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#longDuration-prop" translate="no">longDuration</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#monospaceFamily-prop" translate="no">monospaceFamily</a></b> : string</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#radius-prop" translate="no">radius</a></b> : int</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#scale-prop" translate="no">scale</a></b> : real</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#shortDuration-prop" translate="no">shortDuration</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#smallSpacing-prop" translate="no">smallSpacing</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#spacing-prop" translate="no">spacing</a></b> : int</li>
@@ -111,6 +113,10 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#toolTipDelay-prop" translate="no">toolTipDelay</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#type-prop" translate="no">type</a></b> : QtObject</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-theme-theme.html#unit-prop" translate="no">unit</a></b> : real</li>
+</ul>
+<h2 id="methods">Methods</h2>
+<ul>
+<li class="fn" translate="no">int <b><a href="qml-ravving-theme-theme.html#px-method" translate="no">px</a></b>(real <i>designPixels</i>)</li>
 </ul>
 <!-- $$$Theme-description -->
 <h2 id="details">Detailed Description</h2>
@@ -193,6 +199,12 @@
 <!-- @@@radius -->
 </div>
 <div class="fnitem">
+<!-- $$$scale -->
+<h3 class="fn qml-member qml-property" translate="no" id="scale-prop"><span class="name">scale</span> : <span class="type">real</span> <code class="details extra" translate="no">[read-only]</code></h3>
+<p>How big the design's pixels are drawn: 1 on the device; on the desktop, the screen's density over the device's 7-inch panel's, so a control is as big as on the Zynthbox (set by the app before any QML exists). Every size goes through <a href="qml-ravving-theme-theme.html#px-method" translate="no">px</a>(), which rounds it to whole pixels.</p>
+<!-- @@@scale -->
+</div>
+<div class="fnitem">
 <!-- $$$smallSpacing -->
 <h3 class="fn qml-member qml-property" translate="no" id="smallSpacing-prop"><span class="name">smallSpacing</span> : <span class="type">int</span> <code class="details extra" translate="no">[read-only]</code></h3>
 <p>The small gap between a control's parts (an indicator and its label, an icon and text).</p>
@@ -227,6 +239,13 @@
 <h3 class="fn qml-member qml-property" translate="no" id="unit-prop"><span class="name">unit</span> : <span class="type">real</span> <code class="details extra" translate="no">[read-only]</code></h3>
 <p>The base size unit the style's controls are measured in (24 px on the 800 px-high panel).</p>
 <!-- @@@unit -->
+</div>
+<h2>Method Documentation</h2>
+<div class="fnitem">
+<!-- $$$px[overload1]$$$pxreal -->
+<h3 class="fn qml-member qml-method" translate="no" id="px-method"><span class="type">int</span> <span class="name">px</span>(<span class="type">real</span> <i>designPixels</i>)</h3>
+<p><i translate="no">designPixels</i>, a size as the design gives it (pixels on the device's 1280 x 800 screen), at Theme.scale, in whole pixels: <code translate="no">width: Theme.px(80)</code>. Never 0 for a size that is not.</p>
+<!-- @@@px -->
 </div>
 </article>
 </main>

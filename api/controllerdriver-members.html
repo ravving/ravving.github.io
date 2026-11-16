@@ -5,7 +5,7 @@
 <!-- controllerdriver.cpp -->
   <meta name="description" content="A controller ravving knows how to talk to: the base of each driver (RoliBlocks), with the System Exclusive transport, request / reply pairing, a keep-alive and the 7-bit packing the drivers share.">
   <meta name="keywords" content="auto-generated">
-  <title>List of All Members for ControllerDriver | ravving C++ API 0.6.0</title>
+  <title>List of All Members for ControllerDriver | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -69,22 +69,25 @@
 <p>This is the complete list of members for <a href="controllerdriver.html">ControllerDriver</a>, including inherited members.</p>
 <div class="table"><table class="propsummary" translate="no">
 <tr><td class="topAlign"><ul>
-<li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#ControllerDriver" translate="no">ControllerDriver</a></b></span>(const QString &amp;, const QString &amp;, QObject *)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#ControllerDriver" translate="no">ControllerDriver</a></b></span>(const ControllerId &amp;, const QString &amp;, MidiTransport *, QObject *)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#controlSurface" translate="no">controlSurface</a></b></span>() const : bool</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#facts-prop" translate="no">facts</a></b></span>() const : QVariantMap</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#facts-prop" translate="no">factsChanged</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#handle" translate="no">handle</a></b></span>(const QByteArray &amp;)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#id" translate="no">id</a></b></span>() const : ControllerId</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#keepAlive" translate="no">keepAlive</a></b></span>(int, const std::function&lt;void ()&gt; &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#midiEmulated" translate="no">midiEmulated</a></b></span>(int, int, int)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#name-prop" translate="no">name</a></b></span>() const : QString</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#pack7" translate="no">pack7</a></b></span>(const QByteArray &amp;) : QByteArray</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#protocol-prop" translate="no">protocol</a></b></span>() const : QString</li>
 </ul></td><td class="topAlign"><ul>
+<li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#receiveMidi" translate="no">receiveMidi</a></b></span>(int, quint8, quint8, quint8) : bool</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#receiveSysex" translate="no">receiveSysex</a></b></span>(const QByteArray &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#request" translate="no">request</a></b></span>(const QByteArray &amp;, const ControllerDriver::Matcher &amp;, const ControllerDriver::Reply &amp;, int, const std::function&lt;void ()&gt; &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#send" translate="no">send</a></b></span>(const QByteArray &amp;)</li>
-<li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#setSender" translate="no">setSender</a></b></span>(const ControllerDriver::Sender &amp;)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#sendMidi" translate="no">sendMidi</a></b></span>(const QByteArray &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#start" translate="no">start</a></b></span>()</li>
-<li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#state-prop" translate="no">state</a></b></span>() const : QString</li>
+<li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#state-prop" translate="no">state</a></b></span>() const : Midi::DriverState</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#state-prop" translate="no">stateChanged</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#stop" translate="no">stop</a></b></span>()</li>
 <li class="fn" translate="no"><span class="name"><b><a href="controllerdriver.html#unpack7" translate="no">unpack7</a></b></span>(const QByteArray &amp;) : QByteArray</li>

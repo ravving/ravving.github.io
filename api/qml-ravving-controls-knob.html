@@ -5,7 +5,7 @@
 <!-- Knob.qml -->
   <meta name="description" content="A labelled knob.">
   <meta name="keywords" content="qmltype">
-  <title>Knob QML Type | ravving C++ API 0.6.0</title>
+  <title>Knob QML Type | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -118,7 +118,7 @@
 <!-- $$$Knob-description -->
 <h2 id="details">Detailed Description</h2>
 <p>The dial is a QQC Dial for the touch handling (a vertical drag), drawn by a <a href="qml-ravving-controls-dialface.html" translate="no">DialFace</a>: vector, so it stays crisp at the small sizes the machines use, in the machine's accent; a range around zero (pan, pitch, dB) fills from its centre. The caption, readout and the optional end markers (e.g. L and R on a pan knob, beside the dial's lower corners) follow the machine's ink.</p>
-<p>It is also a <a href="qml-ravving-controls-knobgroup.html" translate="no">KnobGroup</a> target: a group sets <code translate="no">knobBadge</code> while a device knob drives it, and the <a href="qml-ravving-controls-knobbadge.html" translate="no">KnobBadge</a> appears on the dial's shoulder.</p>
+<p>It is also a <a href="qml-ravving-controls-knobgroup.html" translate="no">KnobGroup</a> target: a group sets <code translate="no">knobBadge</code> while a device knob drives it, and the <a href="qml-ravving-controls-knobbadge.html" translate="no">KnobBadge</a> appears on the dial's shoulder. On a desktop the mouse wheel over it turns it a <code translate="no">knobStep</code> a notch (<a href="qml-ravving-controls-wheelnotches.html" translate="no">WheelNotches</a>).</p>
 <!-- @@@Knob -->
 <h2>Property Documentation</h2>
 <div class="fnitem">
@@ -240,7 +240,7 @@
 <div class="fnitem">
 <!-- $$$moved[overload1]$$$moved -->
 <h3 class="fn qml-member qml-method" translate="no" id="moved-signal"><span class="name">moved</span>()</h3>
-<p>The user turned the dial by touch (not emitted for programmatic changes). A drag replaces a binding on <code translate="no">value</code>; owners that bind it restore the binding here.</p>
+<p>The user turned the dial by touch or, on a desktop, the mouse wheel (not emitted for programmatic changes). A drag or a wheel replaces a binding on <code translate="no">value</code>; owners that bind it restore the binding here.</p>
 <div class="admonition note"><p><b>Note: </b>The corresponding handler is <code translate="no">onMoved</code>.</p>
 </div><!-- @@@moved -->
 <h2>Method Documentation</h2>

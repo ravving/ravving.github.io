@@ -5,7 +5,7 @@
 <!-- globaleffects.cpp -->
   <meta name="description" content="The studio's two send effects: one reverb and one delay that every machine sends into, their returns mixed into the master.">
   <meta name="keywords" content="class">
-  <title>GlobalEffects Class | ravving C++ API 0.6.0</title>
+  <title>GlobalEffects Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -87,7 +87,7 @@
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="globaleffects.html#GlobalEffects" translate="no">GlobalEffects</a></b>(ZynthboxBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="globaleffects.html#GlobalEffects" translate="no">GlobalEffects</a></b>(DeviceBridge *<i>bridge</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> JalvPlugin *</td><td class="memItemRight bottomAlign"><b><a href="globaleffects.html#delay" translate="no">delay</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="globaleffects.html#restore" translate="no">restore</a></b>(const QVariantMap &amp;<i>state</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> JalvPlugin *</td><td class="memItemRight bottomAlign"><b><a href="globaleffects.html#reverb" translate="no">reverb</a></b>() const</td></tr>
@@ -106,7 +106,7 @@
 <p><a href="trackeffects.html" translate="no">TrackEffects</a> sets how much each machine sends. One of each for the whole studio saves CPU for the machines, so their own knobs (REVERB SIZE, DELAY TIME and FDBK, the chain's shared knobs, <a href="effectchain.html" translate="no">EffectChain</a>) are the same on every machine:</p>
 <ul>
 <li>reverb: Dragonfly Room Reverb (wet only); SIZE sets the room size and the decay;</li>
-<li>delay: TAP Stereo Echo (wet only); TIME picks a note length that follows the tempo (1/16, 1/8, dotted 1/8, 1/4, dotted 1/4, 1/2), FDBK the feedback.</li>
+<li>delay: TAP Stereo Echo (wet only, each side echoing on its own side); TIME picks a note length that follows the tempo (1/16, 1/8, dotted 1/8, 1/4, dotted 1/4, 1/2), FDBK the feedback.</li>
 </ul>
 <p>Each runs in jalv (<a href="jalvplugin.html" translate="no">JalvPlugin</a>). Without libravving (a desktop run) no process starts and the knobs only keep their values. GUI thread only.</p>
 </div>
@@ -114,8 +114,8 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$GlobalEffects[overload1]$$$GlobalEffectsZynthboxBridge*QObject* -->
-<h3 class="fn" translate="no" id="GlobalEffects"><code class="details extra" translate="no">[explicit]</code> GlobalEffects::<span class="name">GlobalEffects</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<!-- $$$GlobalEffects[overload1]$$$GlobalEffectsDeviceBridge*QObject* -->
+<h3 class="fn" translate="no" id="GlobalEffects"><code class="details extra" translate="no">[explicit]</code> GlobalEffects::<span class="name">GlobalEffects</span>(<span class="type"><a href="devicebridge.html" translate="no">DeviceBridge</a></span> *<i>bridge</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
 <p>Starts the two effects through <i translate="no">bridge</i>, which runs their processes (null on a desktop: no process starts), with the given <i translate="no">parent</i>.</p>
 <!-- @@@GlobalEffects -->
 </div>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- connectionregistry.cpp -->
+  <meta name="description" content="The controllers plugged in (studio&lt;@op&gt;.&lt;/@op&gt;controllers), each one Controller however many connections it has, read from the router's list of ports: the one reader of what the router says about controllers coming and going, and the one place a port's name is understood.">
+  <meta name="keywords" content="class">
+  <title>ConnectionRegistry Class | ravving C++ API 0.7.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>ConnectionRegistry</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#related-non-members">Related Non-Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">ConnectionRegistry Class</h1>
+<!-- $$$ConnectionRegistry-brief -->
+<p>The controllers plugged in (<code translate="no">studio.controllers</code>), each one Controller however many connections it has, read from the router's list of ports: the one reader of what the router says about controllers coming and going, and the one place a port's name is understood. <a href="#details">More...</a></p>
+<!-- @@@ConnectionRegistry -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;connectionregistry.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="connectionregistry-members.html">List of all members, including inherited members</a></li>
+<li>ConnectionRegistry is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn" translate="no"><b><a href="connectionregistry.html#ids-prop" translate="no">ids</a></b> : QStringList</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#ConnectionRegistry" translate="no">ConnectionRegistry</a></b>(const QString &amp;<i>profilesFile</i> = QString(), int *<i>router</i> = nullptr, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#add" translate="no">add</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Controller </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#controller" translate="no">controller</a></b>(const ControllerId &amp;<i>id</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;ControllerId&gt; </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#controllers" translate="no">controllers</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#describe" translate="no">describe</a></b>(const QString &amp;<i>id</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const Controller *</td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#find" translate="no">find</a></b>(const ControllerId &amp;<i>id</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> ControllerId </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#idOf" translate="no">idOf</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#ids-prop" translate="no">ids</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const ControllerProfiles &amp;</td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#profiles" translate="no">profiles</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#remove" translate="no">remove</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#sendTarget" translate="no">sendTarget</a></b>(const ControllerId &amp;<i>id</i>) const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#connectionsChanged" translate="no">connectionsChanged</a></b>(const ControllerId &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#controllerAdded" translate="no">controllerAdded</a></b>(const ControllerId &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#controllerRemoved" translate="no">controllerRemoved</a></b>(const ControllerId &amp;<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#controllersChanged" translate="no">controllersChanged</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#plugged" translate="no">plugged</a></b>(const QString &amp;<i>title</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#unplugged" translate="no">unplugged</a></b>(const QString &amp;<i>title</i>)</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#isController" translate="no">isController</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#isSendSide" translate="no">isSendSide</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#keyOf" translate="no">keyOf</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#sendSideOf" translate="no">sendSideOf</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Transport </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#transportOf" translate="no">transportOf</a></b>(const QString &amp;<i>name</i>)</td></tr>
+</table></div>
+<h2 id="related-non-members">Related Non-Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="connectionregistry.html#Transport-enum" translate="no">Transport</a></b> { Usb, Bluetooth, Serial, Virtual }</td></tr>
+</table></div>
+<!-- $$$ConnectionRegistry-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>A port's name says what it is (<a href="connectionregistry.html#keyOf" translate="no">keyOf</a>(), <a href="connectionregistry.html#transportOf" translate="no">transportOf</a>(), <a href="connectionregistry.html#isSendSide" translate="no">isSendSide</a>()): PipeWire's bridge prefix and underscores go, so a message's name and the list's name are one key; a Bluetooth MIDI device is two ports, &quot;&lt;device&gt;:out&quot; (what it plays: the connection) and &quot;&lt;device&gt;:in&quot; (what is sent to it: the connection's send target); ALSA's loopback, the device's own serial MIDI and PipeWire's empty Bluetooth node are no controllers (<a href="connectionregistry.html#isController" translate="no">isController</a>()).</p>
+<p>The connections of a known controller (<a href="controllerprofiles.html" translate="no">ControllerProfiles</a>: a label) are one Controller whichever way they come (a cable's several ports, its radio beside its cable); any other connection is a controller of its own, named by its key. Each controller has a primary connection, the one what is sent to it goes through (<a href="connectionregistry.html#sendTarget" translate="no">sendTarget</a>()): a cable before Bluetooth, the first plugged in among equals; it moves when that one goes or a better one comes (<a href="connectionregistry.html#connectionsChanged" translate="no">connectionsChanged</a>()). A controller is added with its first connection (<a href="connectionregistry.html#controllerAdded" translate="no">controllerAdded</a>()) and removed with its last (<a href="connectionregistry.html#controllerRemoved" translate="no">controllerRemoved</a>()).</p>
+<p>With a router, every controller's channels are kept parked on ParkedTrack as it comes, so its raw notes reach <a href="midiinput.html" translate="no">MidiInput</a> only. GUI thread only.</p>
+</div>
+<!-- @@@ConnectionRegistry -->
+<div class="prop">
+<h2>Property Documentation</h2>
+<div class="fnitem">
+<!-- $$$ids-prop$$$ids$$$controllersChanged -->
+<h3 class="fn" translate="no" id="ids-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">ids</span> : <span class="type">QStringList</span></h3>
+<p>This property holds the controllers plugged in, by their ids, in the order they came.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>ids</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="connectionregistry.html#controllersChanged" translate="no">controllersChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@ids -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$ConnectionRegistry[overload1]$$$ConnectionRegistryconstQString&int*QObject* -->
+<h3 class="fn" translate="no" id="ConnectionRegistry"><code class="details extra" translate="no">[explicit]</code> ConnectionRegistry::<span class="name">ConnectionRegistry</span>(const <span class="type">QString</span> &amp;<i>profilesFile</i> = QString(), <span class="type">int</span> *<i>router</i> = nullptr, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<p>Reads the known controllers from <i translate="no">profilesFile</i> (data/midi-devices.json) and follows <i translate="no">router</i>'s controllers (null on a desktop: none, until <a href="connectionregistry.html#add" translate="no">add</a>() says so), with <i translate="no">parent</i>.</p>
+<!-- @@@ConnectionRegistry -->
+</div>
+<div class="fnitem">
+<!-- $$$add[overload1]$$$addconstQString& -->
+<h3 class="fn" translate="no" id="add"><span class="type">void</span> ConnectionRegistry::<span class="name">add</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>The port <i translate="no">name</i> is plugged in: a connection of its controller, the controller itself when it is its first. A port that is no controller (<a href="connectionregistry.html#isController" translate="no">isController</a>()) is nothing.</p>
+<!-- @@@add -->
+</div>
+<div class="fnitem">
+<!-- $$$connectionsChanged[overload1]$$$connectionsChangedconstControllerId& -->
+<h3 class="fn" translate="no" id="connectionsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ConnectionRegistry::<span class="name">connectionsChanged</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>)</h3>
+<p>The controller <i translate="no">id</i> gained or lost a connection, and stays plugged in; its primary connection may have moved (<a href="connectionregistry.html#sendTarget" translate="no">sendTarget</a>()).</p>
+<!-- @@@connectionsChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$controller[overload1]$$$controllerconstControllerId& -->
+<h3 class="fn" translate="no" id="controller"><span class="type"><a href="controller.html" translate="no">Controller</a></span> ConnectionRegistry::<span class="name">controller</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>) const</h3>
+<p>Returns a copy of the controller <i translate="no">id</i>: one with no connections when it is not plugged in.</p>
+<!-- @@@controller -->
+</div>
+<div class="fnitem">
+<!-- $$$controllerAdded[overload1]$$$controllerAddedconstControllerId& -->
+<h3 class="fn" translate="no" id="controllerAdded"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ConnectionRegistry::<span class="name">controllerAdded</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>)</h3>
+<p>The controller <i translate="no">id</i> is plugged in: its first connection came.</p>
+<!-- @@@controllerAdded -->
+</div>
+<div class="fnitem">
+<!-- $$$controllerRemoved[overload1]$$$controllerRemovedconstControllerId& -->
+<h3 class="fn" translate="no" id="controllerRemoved"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ConnectionRegistry::<span class="name">controllerRemoved</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>)</h3>
+<p>The controller <i translate="no">id</i> is gone: its last connection went.</p>
+<!-- @@@controllerRemoved -->
+</div>
+<div class="fnitem">
+<!-- $$$controllers[overload1]$$$controllers -->
+<h3 class="fn" translate="no" id="controllers"><span class="type">QList</span>&lt;<span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span>&gt; ConnectionRegistry::<span class="name">controllers</span>() const</h3>
+<p>Returns the controllers plugged in, in the order they came.</p>
+<!-- @@@controllers -->
+</div>
+<div class="fnitem">
+<!-- $$$controllersChanged -->
+<h3 class="fn" translate="no" id="controllersChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ConnectionRegistry::<span class="name">controllersChanged</span>()</h3>
+<p>The list of controllers (ids) changed.</p>
+<div class="admonition note"><p><b>Note: </b>Notifier signal for property <a href="connectionregistry.html#ids-prop" translate="no">ids</a>. </p>
+</div><!-- @@@controllersChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$describe[overload1]$$$describeconstQString& -->
+<h3 class="fn" translate="no" id="describe"><code class="details extra" translate="no">[invokable]</code> <span class="type">QVariantMap</span> ConnectionRegistry::<span class="name">describe</span>(const <span class="type">QString</span> &amp;<i>id</i>) const</h3>
+<p>Returns the controller <i translate="no">id</i> for QML: <code translate="no">id</code>, <code translate="no">title</code> (<a href="controller.html#title" translate="no">Controller::title</a>()), <code translate="no">label</code>, <code translate="no">bluetooth</code> (reached over Bluetooth only) and <code translate="no">connections</code>, a list of maps with each connection's <code translate="no">name</code>, <code translate="no">transport</code> (<code translate="no">usb</code>, <code translate="no">bluetooth</code>, <code translate="no">serial</code> or <code translate="no">virtual</code>) and <code translate="no">primary</code>.</p>
+<div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
+</div><!-- @@@describe -->
+</div>
+<div class="fnitem">
+<!-- $$$find[overload1]$$$findconstControllerId& -->
+<h3 class="fn" translate="no" id="find">const <span class="type"><a href="controller.html" translate="no">Controller</a></span> *ConnectionRegistry::<span class="name">find</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>) const</h3>
+<p>Returns the controller <i translate="no">id</i>, null when it is not plugged in. The pointer is good until the next <a href="connectionregistry.html#add" translate="no">add</a>() or <a href="connectionregistry.html#remove" translate="no">remove</a>().</p>
+<!-- @@@find -->
+</div>
+<div class="fnitem">
+<!-- $$$idOf[overload1]$$$idOfconstQString& -->
+<h3 class="fn" translate="no" id="idOf"><span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> ConnectionRegistry::<span class="name">idOf</span>(const <span class="type">QString</span> &amp;<i>name</i>) const</h3>
+<p>Returns the id of the controller behind the connection <i translate="no">name</i> (as the router lists it or as a message names it, plugged in or not): its profile's label, else its key.</p>
+<!-- @@@idOf -->
+</div>
+<div class="fnitem">
+<!-- $$$isController[overload1]$$$isControllerconstQString& -->
+<h3 class="fn" translate="no" id="isController"><code class="details extra" translate="no">[static]</code> <span class="type">bool</span> ConnectionRegistry::<span class="name">isController</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Returns whether the port <i translate="no">name</i> is a controller: not ALSA's loopback (&quot;Midi Through&quot;), not the device's own serial MIDI (&quot;ttymidi&quot;), not PipeWire's Bluetooth MIDI node (&quot;BLE MIDI n&quot;, there with nothing paired), and not a Bluetooth device's send side (<a href="connectionregistry.html#isSendSide" translate="no">isSendSide</a>()).</p>
+<!-- @@@isController -->
+</div>
+<div class="fnitem">
+<!-- $$$isSendSide[overload1]$$$isSendSideconstQString& -->
+<h3 class="fn" translate="no" id="isSendSide"><code class="details extra" translate="no">[static]</code> <span class="type">bool</span> ConnectionRegistry::<span class="name">isSendSide</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Returns whether the port <i translate="no">name</i> is only the way to a Bluetooth MIDI device: PipeWire shows one as two ports, &quot;&lt;device&gt;:out&quot; (what it plays, the connection) and &quot;&lt;device&gt;:in&quot; (what is sent to it).</p>
+<!-- @@@isSendSide -->
+</div>
+<div class="fnitem">
+<!-- $$$keyOf[overload1]$$$keyOfconstQString& -->
+<h3 class="fn" translate="no" id="keyOf"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> ConnectionRegistry::<span class="name">keyOf</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Returns the connection <i translate="no">name</i>'s key: the same for the router's list (&quot;Midi-Bridge:USB Composite Device MIDI 1&quot;) and the messages (&quot;Midi_Bridge:USB_Composite_Device_MIDI_1&quot;), with the bridge's prefix gone, underscores as spaces and no slash (a settings group's name).</p>
+<!-- @@@keyOf -->
+</div>
+<div class="fnitem">
+<!-- $$$plugged[overload1]$$$pluggedconstQString& -->
+<h3 class="fn" translate="no" id="plugged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ConnectionRegistry::<span class="name">plugged</span>(const <span class="type">QString</span> &amp;<i>title</i>)</h3>
+<p>A controller is plugged in, shown as <i translate="no">title</i> (<a href="controller.html#title" translate="no">Controller::title</a>()); emitted with <a href="connectionregistry.html#controllerAdded" translate="no">controllerAdded</a>() for QML.</p>
+<!-- @@@plugged -->
+</div>
+<div class="fnitem">
+<!-- $$$profiles[overload1]$$$profiles -->
+<h3 class="fn" translate="no" id="profiles">const <span class="type"><a href="controllerprofiles.html" translate="no">ControllerProfiles</a></span> &amp;ConnectionRegistry::<span class="name">profiles</span>() const</h3>
+<p>Returns the known controllers' profiles.</p>
+<!-- @@@profiles -->
+</div>
+<div class="fnitem">
+<!-- $$$remove[overload1]$$$removeconstQString& -->
+<h3 class="fn" translate="no" id="remove"><span class="type">void</span> ConnectionRegistry::<span class="name">remove</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>The port <i translate="no">name</i> was unplugged: its controller loses the connection, and goes with its last.</p>
+<!-- @@@remove -->
+</div>
+<div class="fnitem">
+<!-- $$$sendSideOf[overload1]$$$sendSideOfconstQString& -->
+<h3 class="fn" translate="no" id="sendSideOf"><code class="details extra" translate="no">[static]</code> <span class="type">QString</span> ConnectionRegistry::<span class="name">sendSideOf</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Returns the port that reaches the controller on the connection <i translate="no">name</i>: a Bluetooth MIDI device's &quot;&lt;device&gt;:in&quot; for its &quot;&lt;device&gt;:out&quot;, the name itself for any other.</p>
+<!-- @@@sendSideOf -->
+</div>
+<div class="fnitem">
+<!-- $$$sendTarget[overload1]$$$sendTargetconstControllerId& -->
+<h3 class="fn" translate="no" id="sendTarget"><span class="type">QString</span> ConnectionRegistry::<span class="name">sendTarget</span>(const <span class="type"><a href="controllerid.html" translate="no">ControllerId</a></span> &amp;<i>id</i>) const</h3>
+<p>Returns the port what is sent to the controller <i translate="no">id</i> goes to (its primary connection's send target), empty while it is not plugged in.</p>
+<!-- @@@sendTarget -->
+</div>
+<div class="fnitem">
+<!-- $$$transportOf[overload1]$$$transportOfconstQString& -->
+<h3 class="fn" translate="no" id="transportOf"><code class="details extra" translate="no">[static]</code> <span class="type"><a href="connectionregistry.html#Transport-enum" translate="no">Transport</a></span> ConnectionRegistry::<span class="name">transportOf</span>(const <span class="type">QString</span> &amp;<i>name</i>)</h3>
+<p>Returns how the connection <i translate="no">name</i> reaches ravving, from its name: Bluetooth for PipeWire's &quot;&lt;device&gt;:in&quot; and &quot;&lt;device&gt;:out&quot; ports, Serial for the device's own serial MIDI (ttymidi), Virtual for ALSA's loopback (Midi Through), Usb for any other.</p>
+<!-- @@@transportOf -->
+</div>
+<div class="fnitem">
+<!-- $$$unplugged[overload1]$$$unpluggedconstQString& -->
+<h3 class="fn" translate="no" id="unplugged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> ConnectionRegistry::<span class="name">unplugged</span>(const <span class="type">QString</span> &amp;<i>title</i>)</h3>
+<p>The controller shown as <i translate="no">title</i> is gone; emitted with <a href="connectionregistry.html#controllerRemoved" translate="no">controllerRemoved</a>() for QML.</p>
+<!-- @@@unplugged -->
+</div>
+</div>
+<div class="relnonmem">
+<h2>Related Non-Members</h2>
+<div class="fnitem">
+<!-- $$$Transport$$$Usb$$$Bluetooth$$$Serial$$$Virtual -->
+<h3 class="fn" translate="no" id="Transport-enum">enum class <span class="name">Transport</span></h3>
+<p>How a connection reaches ravving, read from its name (<a href="connectionregistry.html#transportOf" translate="no">ConnectionRegistry::transportOf</a>()).</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">ConnectionRegistry::Transport::Usb</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">a cable: a USB port's MIDI</td></tr>
+<tr><td class="topAlign"><code translate="no">ConnectionRegistry::Transport::Bluetooth</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">Bluetooth MIDI: PipeWire's two ports for one device</td></tr>
+<tr><td class="topAlign"><code translate="no">ConnectionRegistry::Transport::Serial</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">the device's own serial MIDI (ttymidi)</td></tr>
+<tr><td class="topAlign"><code translate="no">ConnectionRegistry::Transport::Virtual</code></td><td class="topAlign tblval"><code translate="no">3</code></td><td class="topAlign">a virtual port of the system's (ALSA's loopback)</td></tr>
+</table></div>
+<!-- @@@Transport -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

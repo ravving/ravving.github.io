@@ -150,10 +150,11 @@ instruments and the master volume.</p>
 <li>a mix strip;</li>
 <li>its MODS, the knobs that shape its sound;</li>
 <li>its FXs, a SOUND EFFECTS chain;</li>
+<li>its FEEL, how loosely it plays (every machine but the SLOT SAMPLER);</li>
 <li>its pattern editor.</li>
 </ul>
-<p>MODS and FXs on the strip open their knobs under it, one at a time: opening one closes the other.
-BACK closes whichever is open.</p>
+<p>MODS, FXs and FEEL on the strip open their knobs under it, one at a time: opening one closes
+the others. BACK closes whichever is open.</p>
 <h3 id="every-control-of-the-sound">Every control of the sound</h3>
 <p>Hold MODS on the strip and the whole window becomes the sound's controls: every knob of the
 engine worth turning, in groups of three. The top names the engine, the sound and the instrument. Each reads in its own unit, Hz, ms, dB or semitones.</p>
@@ -215,7 +216,7 @@ MISSING (it needs the internet), then pick a choice.</p>
 </tr>
 <tr>
 <td>BACK on a grid</td>
-<td>Undo that machine's last change (ALT + BACK leaves the grid); with MODS or FXs open, it closes them first</td>
+<td>Undo that machine's last change (ALT + BACK leaves the grid); with MODS, FXs or FEEL open, it closes them first</td>
 </tr>
 <tr>
 <td>2, on the chords page</td>
@@ -299,6 +300,8 @@ next recorded move.</p>
 </ul>
 <p>PROJECT ▾ lists your projects and the demos. Tap one to open it. If you have unsaved changes,
 tap it a second time to confirm. A long press or ★ makes a project a favourite.</p>
+<p>Opening a project, NEW or a version from the timeline first stops the music, ends a take that's
+recording (keeping what it caught) and lets go of every key held.</p>
 <p>The row at the bottom always works on the project you have open: NEW, TEMPLATES and IMPORT,
 then SAVE AS NEW, RENAME and TIMELINE, then EXPORT.</p>
 <h3 id="the-timeline">The timeline</h3>
@@ -441,12 +444,17 @@ badges.</p>
   held through whatever the steps in between play.</li>
 <li><strong>A long press on the note itself</strong> takes it back to one step.</li>
 <li><strong>With SELECT on,</strong> knob 1 sets the picked notes' LENGTH the same way.</li>
+</ul>
+<h4 id="what-a-take-keeps">What a take keeps</h4>
+<ul>
 <li><strong>A LIVE take (●)</strong> keeps how long you hold each key, from the pads or a MIDI keyboard. On
   the bass and lead that's the note's length. On the chords it's the chord or note held over
   the steps, under whatever else you play meanwhile.</li>
 <li id="what-your-fingers-do-on-a-note-is-kept-too"><strong>What your fingers do on a note is kept too.</strong> On the bass and lead, a take keeps a
   controller's bend, pressure and slide (a Seaboard, an MPE keyboard) in the note held. It plays
   back with it: a glide, a vibrato, a swell. A new take over the note replaces it.</li>
+<li id="and-how-hard-you-played-it"><strong>And how hard you played it.</strong> A note from a MIDI keyboard plays back as loud as you
+  heard it: the take keeps its velocity as the note's VELOCITY, on every page.</li>
 <li>A key let go within its step stays one step long.</li>
 <li>A held chord's notes show like the bass's: one solid cell where a note starts, lighter ones
   for as long as it goes on.</li>
@@ -519,6 +527,12 @@ the big knob change them together, and the same readout shows the first one's va
 <li>They're kept with the project and in a saved pattern preset.</li>
 </ul>
 <h3 id="shape-a-drum-hit">Shape a drum hit</h3>
+<p>A drum hit rings out to its end, the way a drum machine's does, whether it's written in the
+pattern or played on a pad. The next hit on the same row cuts it short, and a closed HAT cuts an
+OPEN hat that's still ringing.</p>
+<p>Kits whose sounds loop (DrumFire, E Ave, SP 12) keep each hit one step long, so they never hum on.</p>
+<p>Prefer short hits? SETTINGS → KEYS → DRUMS → DRUM HITS RING OUT turns it off, and every hit lasts
+one step. CLOSED HAT CUTS THE OPEN HAT, beside it, turns off just the hi-hat cut.</p>
 <p>On the drum machines and both samplers, pick hits with SELECT, then turn the knobs to change
 them together. The readout at the top right of the grid shows the first picked hit's values.
 Tap it to switch between its two pages.</p>
@@ -568,11 +582,90 @@ Tap it to switch between its two pages.</p>
 <td><strong>NUDGE</strong>, early or late</td>
 <td>half a step either way</td>
 </tr>
+<tr>
+<td>2/2</td>
+<td>3</td>
+<td><strong>GHOST</strong>, a hit played very softly</td>
+<td>ON, OFF</td>
+</tr>
 </tbody>
 </table>
 <ul>
 <li>The PAD SAMPLER has no NUDGE.</li>
+<li>GHOST is a shortcut for VELOCITY: ON sets the hits to 35 %, OFF back to 100 %. Try it on a
+  snare's quiet in-between hits.</li>
 <li>The settings move and copy with the hit, and they're kept with the project.</li>
+</ul>
+<h3 id="feel-play-it-a-little-looser">FEEL: play it a little looser</h3>
+<p>A pattern plays every pass exactly the same. FEEL loosens it, a little differently on every
+pass, without changing a note you wrote. Tap <strong>FEEL</strong> on a machine's strip and turn its dials;
+at 0 a dial does nothing.</p>
+<table>
+<thead>
+<tr>
+<th>Machine</th>
+<th>Dial</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DRUMS, PAD SAMPLER</td>
+<td><strong>TIMING</strong></td>
+<td>Hits land a touch early or late. On a drum kit the kick stays put and the hats move the most.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>VELOCITY</strong></td>
+<td>Hits play a touch softer or harder.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>PULSE</strong></td>
+<td>Hats, cymbals and percussion play softer off the beat, like a hand keeping time. On the pads, every pad does.</td>
+</tr>
+<tr>
+<td>CHORDS</td>
+<td><strong>STRUM</strong></td>
+<td>A chord's notes play one after the other. The first one stays on its step.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>DIRECTION</strong></td>
+<td>DOWN starts from the lowest note, UP from the highest, ALT turns round on every chord.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>VELOCITY</strong></td>
+<td>Each chord plays a touch softer or harder.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>TOP</strong></td>
+<td>The top note sings out over the others.</td>
+</tr>
+<tr>
+<td>BASS, LEAD</td>
+<td><strong>VELOCITY</strong></td>
+<td>Notes play a touch softer or harder.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>LENGTH</strong></td>
+<td>Notes are cut a little short, each by its own amount. Slides and held notes keep their length.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Knobs 1–3 turn the dials while FEEL is open and has the knobs (▲ from the grid). On CHORDS,
+  ▶ goes on to TOP.</li>
+<li>A little goes a long way: start around 30–50.</li>
+<li>BASS and LEAD keep their timing, so the bass stays locked to the kick.</li>
+<li>The SLOT SAMPLER has no FEEL: a loop keeps its own timing.</li>
+<li>A chord that has a STRUM of its own (SELECT, the big knob) keeps it.</li>
+<li>Play the song again and it plays the same way again, and so does an export.</li>
+<li>FEEL belongs to the machine: every section plays with it, it's saved with the project, and
+  undo leaves it alone.</li>
 </ul>
 <h3 id="slots-write-with-whole-chords">SLOTS: write with whole chords</h3>
 <p>On the chords page, SLOTS lets you compose chord by chord:</p>
@@ -606,8 +699,16 @@ from outside the scale have their own setting (Notes outside the scale, below).<
 <p>Turn a knob, by hand or with the device's knobs, and its value shows large under it for a
 moment.</p>
 <ul>
-<li><strong>BPM:</strong> the tempo. With the TEMPO group focused, knob 1 sets it. When another device clocks
-  ravving, it shows that device's tempo and can't be changed here.</li>
+<li><strong>BPM:</strong> the tempo. With the TEMPO group focused, knob 1 sets it, or drag it up and down. When
+  another device clocks ravving, it shows that device's tempo and can't be changed here.</li>
+<li><strong>TAP tempo:</strong> tap the red BPM display in time, or hold ALT and press METRONOME in time (the
+  METRONOME key lights white while ALT is held).<ul>
+<li>From the second tap the tempo follows the last few taps, and the caption counts them
+  (TAP 1, TAP 2…).</li>
+<li>One sloppy tap doesn't move it; tap a new tempo and it follows from that tempo's second
+  gap. Stop for two seconds to start over.</li>
+</ul>
+</li>
 <li><strong>SWING:</strong> knob 2, from 50 % (straight) to 75 % (the heaviest shuffle). Tap its caption to
   swing the 8ths (SWING 8, for jazz) or the 16ths (SWING 16, for house and hip hop).</li>
 </ul>
@@ -750,8 +851,8 @@ moment.</p>
   goes for REVERSE, REWIND, STOP, HALF, OCT UP and WOBBLE.</li>
 <li><strong>In a break:</strong> a LOOP or STUTTER pressed while nothing plays waits, and grabs the music
   when it comes back, from the step it lands on.</li>
-<li>Every switch is smoothed. The loops, the gate, the flanger and the auto-pan follow the tempo
-  and the bar.</li>
+<li>Every pad lets go smoothly, the loops and the tape pads over about a third of a second.
+  The loops, the gate, the flanger and the auto-pan follow the tempo and the bar.</li>
 </ul>
 <p>PHASER, ECHO and HEAVY sit beside the pads. Hold ALT and turn knobs 1–3 to set them from
 anywhere. Each shows its setting under it: how deep the phaser goes, the echo send in dB, and
@@ -807,18 +908,50 @@ HEAVY's compression ratio.</p>
 </table>
 <p>To keep a live set with the pads you played, use LIVE REC (ALT + ●). It's also the one that can
 add your voice.</p>
+<h3 id="the-instruments">The instruments</h3>
+<p>Each instrument has a chip in the header: tap it to open its page. The name is on top, and it
+dims while the instrument is kept quiet, muted or left out of a solo. The row under it shows
+what the instrument is doing, each mark in a spot of its own so none moves:</p>
+<ul>
+<li>its sound lamp (below);</li>
+<li><strong>S</strong> while it's soloed and <strong>M</strong> while it's muted;</li>
+<li>a crossed speaker while its fader is all the way down;</li>
+<li><strong>❚❚</strong> while its pattern is paused;</li>
+<li><strong>●</strong> while a take records on it, dimmer while it counts in;</li>
+<li><strong>L</strong> while the step keys play it LIVE.</li>
+</ul>
+<p>Set them in the MIXER, or from a controller's mixer buttons.</p>
+<h3 id="the-sound-lamps">The sound lamps</h3>
+<p>Each instrument's chip in the header, and its strip in the MIXER, carries a small lamp. It tells
+you whether the instrument has notes written in its pattern, and whether they play, whatever its
+fader, mute or solo. Playing it live doesn't light it: the level bars show that sound.</p>
+<ul>
+<li><strong>Lit</strong> while its pattern plays. It stays lit between the notes, so a running pattern reads as
+  one steady light; a muted instrument's lamp lights for the notes it isn't playing.</li>
+<li><strong>Low</strong> while its pattern has notes, so it would sound if it played: paused, muted, or with the
+  transport stopped.</li>
+<li><strong>Dark</strong> when nothing is written. On a chip it's not shown at all then.</li>
+</ul>
+<p>So with the volume faders of a controller, the lamps tell you which fader will bring an
+instrument up before you hear it.</p>
 <h3 id="the-mixer">The MIXER</h3>
 <p><strong>✱</strong> opens the MIXER: every instrument at once, side by side, each standing up on its own strip.
 Press ✱ or BACK to go back, or a number key for that page. Each strip has, top to bottom:</p>
 <ul>
-<li>its nameplate (tap it to open that instrument's page);</li>
-<li>its level fader, with a meter beside it;</li>
+<li>its nameplate (tap it for that instrument's page), with its sound lamp;</li>
+<li>its level fader, with decibels marked along its left: 0 dB the strong mark, +20 at the top,
+  −40 at the bottom. The readout above it says the level in dB, −∞ dB all the
+  way down;</li>
+<li>a meter beside it, showing what comes out in dBFS. Its white line is −6, where a signal gets
+  hot;</li>
 <li>PAN;</li>
 <li>❚❚, which stops the instrument's pattern while you can still play it live. It's saved per
   section, so pausing instruments here sets which ones play in each part of the song;</li>
-<li>S and M.</li>
+<li>S and M. M silences the instrument: its pattern, what you play live, its reverb and delay.
+  S lets only soloed ones sound. The one you play LIVE still sounds when you play it, while its
+  pattern stays quiet, so you can play along with a soloed instrument.</li>
 </ul>
-<p>With the keys:</p>
+<h4 id="the-mixer-with-the-keys">The MIXER with the keys</h4>
 <ul>
 <li><strong>Pick a strip</strong> with ◀ ▶ or a step key. The step lights show the strips: muted ones dim, the
   picked one white.</li>
@@ -916,7 +1049,8 @@ so a pad that plays stands out even when it isn't selected. The step row under t
 the selected pad's steps; tap a pad to see its own. A pad lights up while its sample sounds,
 however long that lasts.</p>
 <p><strong>PAD FX:</strong> while a pad plays, hold ECHO, TAPE STOP, SCRATCH, STUTTER, SKIP or REVERSE to throw
-an effect on it. Let go and it's back to normal.</p>
+an effect on it. Let go and it eases back to normal: TAPE STOP and SCRATCH slide back up to
+speed, and the echo fades out and rings on.</p>
 <h3 id="16-levels">16 LEVELS</h3>
 <p>Switch 16 LVL on and all sixteen pads play the pad you had selected, spread by TYPE:</p>
 <ul>
@@ -1018,7 +1152,8 @@ SYNTH…) with GENRE and MAKER chips to narrow the list:</p>
 </ul>
 <p>They suit a sustained, polyphonic machine: the chords hold while the voicing lasts, and the key
 keeps them in tune with the bass and lead.</p>
-<p>The sound pickers list their groups down the left, each with how many sounds it holds:</p>
+<p>A sound picker's title says what the instrument plays now, as its nameplate does (§ when it is
+the section's own sound). The pickers list their groups down the left, each with how many sounds it holds:</p>
 <ul>
 <li>ALL, then ★ FAVOURITES (the star, or ALT + SELECT), then a row per group, scrolling when
   there are many.</li>
@@ -1305,18 +1440,43 @@ spare.</p>
   SONG page.</li>
 <li><strong>The SONG page</strong> (below) has a key for every section.</li>
 </ul>
-<p>While the music plays, a pick takes over on the next bar line, exactly on time: no note drops
-or doubles, and machines whose part doesn't change just keep playing. When stopped, a pick is
-immediate.</p>
-<h3 id="when-a-switch-lands-bar-or-section">When a switch lands: BAR or SECTION</h3>
+<p>While the music plays, a pick takes over on the next bar line (or the next beat, or at the
+section's end: SWITCH, below), exactly on time. No note drops or doubles, and machines whose
+part doesn't change just keep playing. When stopped, a pick is immediate.</p>
+<h3 id="when-a-switch-lands-beat-bar-or-section">When a switch lands: BEAT, BAR or SECTION</h3>
 <p>The SONG page's SWITCH setting is saved with the project:</p>
 <ul>
-<li><strong>BAR:</strong> a section you pick takes over on the next bar.</li>
+<li><strong>BEAT:</strong> a section you pick comes in on the next beat, at the same place in its own bar: the
+  quickest switch there is, a quarter note at most.</li>
+<li><strong>BAR:</strong> it takes over on the next bar.</li>
 <li><strong>SECTION:</strong> it waits for the section playing to finish its pass, then switches on that bar
   line. Its key blinks meanwhile, and the playing one stays lit. Pick the waiting one again to
   cancel; stop to switch at once. A one-bar section ends every bar.</li>
 </ul>
-<p>A switch always lands on a bar line, never mid-bar.</p>
+<p>Whichever you choose, the switch lands exactly on its beat or bar line: no note drops or
+doubles. The song's own moves from part to part always land on the bar.</p>
+<h3 id="skip-a-bar">Skip a bar</h3>
+<p><strong>ALT + X</strong> goes a bar back and <strong>ALT + Y</strong> a bar on, right away, without stopping the music. A
+control surface's ◀◀ ▶▶ (or the keys you learned as A BAR BACK and A BAR ON) do the same.</p>
+<ul>
+<li><strong>Where you land:</strong> the start of a bar, as on a music player. Back first goes to the start of
+  the bar playing, unless you're in its first beat: then it goes to the bar before. A part that
+  plays "on pass 3 of 4" plays again too.</li>
+<li><strong>Press quickly to go further:</strong> presses add up. Half way through bar 4, the first ALT + X
+  goes to its start and three more land on bar 1, even when a bar line passes in between.</li>
+<li><strong>It stays in the section playing:</strong> forward stops at its last bar, and what comes next still
+  comes in on its bar line. Back stops at bar 1 of this time round. Or set SETTINGS · KEYS ·
+  SKIP BACK STOPS AT to SECTION START to go back over its rounds (in a song, the part's repeats).</li>
+<li><strong>On the first bar,</strong> back starts it again.</li>
+</ul>
+<h4 id="what-you-hear-on-a-skip">What you hear on a skip</h4>
+<ul>
+<li><strong>Held notes:</strong> a chord, bass or lead note that also sounds at the new bar's start keeps
+  sounding; one that started earlier and still sounds there comes in. Drum and sample hits ring out.</li>
+<li><strong>Paused,</strong> the skip moves where play goes on from. A take counting in or recording can't skip.</li>
+<li>A section switch, the song's next part or its end still waits for its bar line: skip back and
+  you hear those bars again first.</li>
+</ul>
 <h3 id="queue-up-sections">Queue up sections</h3>
 <p>In LOOP you can line up <strong>to three</strong> picks. Each plays one pass, then the next takes over, and
 the last one keeps looping.</p>
@@ -1379,12 +1539,14 @@ the ALT keys. Each key has a dot for every machine that sounds in it.</p>
 <ul>
 <li><strong>Tap</strong> picks a section, <strong>double tap</strong> renames it, <strong>hold and drag</strong> moves it.</li>
 <li><strong>×</strong> deletes it, after a second tap.</li>
-<li><strong>＋</strong> copies the section on screen, numbered after it (A becomes A 2, then A 3).</li>
+<li><strong>＋</strong> copies the section on screen, numbered after it (A becomes A 2, then A 3). A name too
+  long for the number is shortened to make room for it.</li>
 </ul>
 <p>A new section (＋, a copy of the one on screen) joins the end of the song and becomes the one
 on screen.</p>
 <p>The row above the sections has RENAME, COLOUR, LENGTH (1–8 bars, or AUTO for the longest
 pattern), MOVE and ADD TO SONG.</p>
+<h4 id="the-song-strip">The song strip</h4>
 <p><strong>The song</strong> is a strip of blocks, each as wide as its bars times its repeats. Pick a block to
 move it, set its repeats (×1 to ×16) or remove it.</p>
 <table>
@@ -1441,7 +1603,8 @@ from start to end.</p>
 <p>To record it all, EXPORT → WHAT: SONG records the whole song in one take, plus its tail. LOOP
 records BARS × LOOPS instead.</p>
 <h2 id="settings">Settings</h2>
-<p>MENU → SETTINGS opens its own page, with the categories down the left:</p>
+<p>MENU → SETTINGS opens its own page, with the categories down the left. It opens where you left
+it: the same category, scrolled the same way.</p>
 <table>
 <thead>
 <tr>
@@ -1456,7 +1619,7 @@ records BARS × LOOPS instead.</p>
 </tr>
 <tr>
 <td>KEYS</td>
-<td>NOTES OUTSIDE THE SCALE, TRANSPORT ON SCREEN, and how the FIXED KNOBS take over a value</td>
+<td>NOTES OUTSIDE THE SCALE, TRANSPORT ON SCREEN, how the FIXED KNOBS take over a value, how bright the KEY LIGHTS are, whether DRUM HITS RING OUT, and where a SKIP BACK STOPS</td>
 </tr>
 <tr>
 <td>LOOK</td>
@@ -1517,11 +1680,21 @@ over is. SETTINGS → KEYS → FIXED KNOBS picks what happens when you turn it:<
 </tbody>
 </table>
 <p>On a device with endless knobs the setting is greyed out: those never need it.</p>
+<p>It counts everywhere a fixed knob reaches, the drum and slot rows' mute, solo and level too. A
+knob you leave alone changes nothing, even if it wobbles a little where it rests.</p>
+<h3 id="key-lights">Key lights</h3>
+<p>SETTINGS → KEYS → LIGHTS → KEY LIGHTS sets how bright the keys light up, from 1 % to 100 % (15 %
+to start with). Turn it with − and +, or SELECT steps it up and wraps around. The change shows at
+once. Zynthbox's own pages use the same setting, so the keys look alike in both.</p>
 <h3 id="skins">Skins</h3>
 <p>ravving's machines each wear a case and a colour of their own: the PASTEL NIGHT skins, which
 ravving starts in. SETTINGS → LOOK → SKINS tries the others, at once, and the choice stays after a
-restart. Under each set's name, a grid of pixels shows its colours: one column per machine, its
-case, keys and lights from top to bottom.</p>
+restart.</p>
+<p>Each set is a card: its name over a grid of pixels showing its colours, one column per
+machine, its case, keys and lights from top to bottom.</p>
+<p>The other views dress in the set too: the SONG page, the music player, the RECORDER, SETTINGS
+and the MIXER each have their colours in the set, so a set is a whole look.</p>
+<h4 id="the-skin-sets">The skin sets</h4>
 <p>Any page can wear a light case: the notes, chords, pads and labels on its grid turn dark to
 match. The sets:</p>
 <ul>
@@ -1581,13 +1754,19 @@ the pads that show while you hold ALT. Under them is every pad.</p>
 <p>With the device's keys, SELECT on a slot steps it to the next pad that isn't in a slot. DEFAULT
 PADS puts the first sixteen back.</p>
 <h3 id="midi-controllers">MIDI controllers</h3>
-<p>Plug a MIDI keyboard, a pad controller or a groovebox into USB, or pair it over Bluetooth,
-and it plays the machine on screen, into a take too. The drums play by their General MIDI
-notes (36 the kick, 38 the snare…), the bass, chords and lead by pitch, the PAD SAMPLER's pads
-by number.</p>
-<p>MENU → MIDI (or SETTINGS → MIDI) lists the controllers plugged in, with what each has
-learned. SET UP (or SELECT) opens one; ◀ ALL CONTROLLERS (or BACK) goes back to the list. A
-controller's settings are saved by its name, so they're there again next time it's plugged in:</p>
+<p>Plug a MIDI keyboard, a pad controller or a groovebox into USB, or connect it over Bluetooth
+(MENU → BLUETOOTH, SCAN, CONNECT), and it plays the machine on screen, into a take too.</p>
+<ul>
+<li><strong>The drums</strong> play by their General MIDI notes (36 the kick, 38 the snare…).</li>
+<li><strong>The bass, lead and the chords' NOTES</strong> play by pitch, the PAD SAMPLER's pads by number.</li>
+<li><strong>On the chords' CHORDS view</strong> the white keys are the seven chord pads in order, C the first
+  and B the seventh, in every octave; the black keys play nothing.</li>
+<li><strong>Two chords held together</strong> that share notes keep those notes ringing, struck once.</li>
+</ul>
+<p>MENU → MIDI (or SETTINGS → MIDI) lists the controllers plugged in, one row each, with how it
+is connected (USB, Bluetooth, or both at once) and what it has learned. SET UP (or SELECT) opens
+one; ◀ ALL CONTROLLERS (or BACK) goes back to the list.</p>
+<p>A controller's settings are saved by its name, so they're there again next time it's plugged in:</p>
 <table>
 <thead>
 <tr>
@@ -1606,15 +1785,23 @@ controller's settings are saved by its name, so they're there again next time it
 </tr>
 <tr>
 <td>VELOCITY</td>
-<td>AS SENT; SOFT or SOFTER for pads whose light taps come out too quiet; FIXED for a controller that sends none</td>
+<td>AS SENT; SOFT or SOFTER for pads whose light taps come out too quiet; EVEN so every touch is at least half loud (a Lightpad's slow presses arrive almost silent); FIXED for a controller that sends none</td>
 </tr>
 <tr>
 <td>EXPRESSION</td>
-<td>Its pitch bend, pressure, mod wheel and slide reach the synth it plays, from the key you pressed last</td>
+<td>Its pitch bend, pressure, mod wheel, sustain and slide reach the synth it plays, from the key you pressed last. Its volume slider, pan knob and bank buttons don't: learn one as a MIXER control to set an instrument's level</td>
+</tr>
+<tr>
+<td>PRESSURE</td>
+<td>AS SENT; LIGHTER or LIGHT when you have to press too hard for the full pressure; FIRM or FIRMER when a light press already gives too much</td>
 </tr>
 <tr>
 <td>BEND RANGE</td>
 <td>What its bend wheel or glide covers at full: ±2 for most keyboards, ±48 for an MPE controller. A controller that says its own sets this</td>
+</tr>
+<tr>
+<td>One device, both ways</td>
+<td>A controller ravving knows (the Donner STARRYCTRL, the ROLI blocks) keeps one set of settings whether it comes in by USB or by Bluetooth. Learn a key on one and it works on the other.</td>
 </tr>
 <tr>
 <td>DRUM KEYS · LEARN DRUMS</td>
@@ -1622,7 +1809,11 @@ controller's settings are saved by its name, so they're there again next time it
 </tr>
 <tr>
 <td>CONTROLS · LEARN A CONTROL</td>
-<td>The device's keys and knobs (PLAY, STOP, a page key, a step key, KNOB 1…), one ringed: press the button or move the knob on the controller that will be it, and the next is up. REMOVE takes one back</td>
+<td>The device's keys and knobs (PLAY, STOP, a page key, a step key, KNOB 1…) and the mixer (each instrument's VOLUME, PAN, MUTE, SOLO, REC and PAUSE, and the transport's PAUSE, A BAR BACK, A BAR ON, PREVIOUS MACHINE and NEXT MACHINE), one ringed: press the button, or move the knob or fader, on the controller that will be it, and the next is up. REMOVE takes one back</td>
+</tr>
+<tr>
+<td>MIXER · MIXER LIGHTS</td>
+<td>Once a mixer control is learned: its buttons and pads lit with what they show (on most controllers), or not</td>
 </tr>
 </tbody>
 </table>
@@ -1636,9 +1827,69 @@ section too. Hosted, the block's note grid follows the project:</p>
   marked;</li>
 <li>OCT on the bass or lead page moves the grid's octave, and the block's own octave buttons
   move OCT;</li>
+<li>learn a button as <strong>LIGHTPAD PADS</strong> to turn pads on or off:<ul>
+<li>on the drums pages and the chords' CHORDS view, the Lightpad's grid then turns into 3×3
+  pads, one for each drum or chord;</li>
+<li>on the sampler page it turns into 4×4 pads, one for each of the 16 slots or pads;</li>
+<li>pads past the last drum or chord start from the first again;</li>
+<li>on every other page it goes back to notes in your key, and a Seaboard keeps playing its
+  own keys;</li>
+</ul>
+</li>
 <li>the control blocks' buttons keep doing what you learned for them.</li>
 </ul>
 <p>Turn HOST THIS CONTROLLER off and the block runs on its own again.</p>
+<h4 id="a-mixer-controller">A mixer controller</h4>
+<p>A Donner STARRYCTRL (set to its DAW Mode: SHIFT with ◁ or ▷) is a mixer the moment you
+connect it. Any other controller that speaks Mackie Control becomes one when you turn on MACKIE
+CONTROL SURFACE in its HOST section. That's a Behringer X-Touch, an Icon, a Korg nanoKONTROL or
+an Arturia keyboard in its DAW mode.</p>
+<h4 id="the-eight-strips">The eight strips</h4>
+<p>Its eight strips are your eight instruments, in the header's order (DRUMS 1, 2, 3, CHORDS,
+BASS, LEAD, SAMPLER, PADS):</p>
+<ul>
+<li>the <strong>fader</strong> sets the instrument's volume. It only takes over once you bring it to where the
+  volume is (its light stops blinking), so moving it never makes the volume jump. Turn FADER
+  PICK-UP off (in its HOST section) and any move sets the volume at once. Near 0 dB it sits at
+  0 dB;</li>
+<li>the <strong>knob</strong> pans the instrument. Turn it slowly for fine steps and faster to go further. It
+  stops in the middle once on the way through; press it to centre the pan;</li>
+<li><strong>M</strong>, <strong>S</strong> and <strong>R</strong> mute, solo and record the instrument; the fourth button stops its
+  pattern, and starts it again. R also opens the instrument's page, so what you play next on
+  any controller goes to its sound and its notes (a REC you learned does the same);</li>
+<li>every light shows what's happening, wherever you changed it. M, S and the stop button match
+  the screen too; R blinks while a take counts in and is lit while it records; PLAY, STOP and
+  RECORD light as the transport.</li>
+</ul>
+<h4 id="transport-keys-on-the-surface">Transport keys on the surface</h4>
+<p>On the STARRYCTRL ▶ (play, and pause), ❚❚ (stop), ● and ◁ ▷ work straight away. Its △ and ▽
+step through the instruments (each drum machine and sampler its own), and ◀◀ and ▶▶ skip a bar
+back and on. On another surface, learn the transport keys. Turn MACKIE CONTROL SURFACE off and
+its notes and knobs only work the keys you learned for them.</p>
+<p>A controller connected more than one way (the STARRYCTRL's cable shows two ports, and its
+Bluetooth is a third) is one row in the list and one mixer. It hears ravving over the cable
+while there is one, over Bluetooth otherwise, and ravving listens to all of them. Its settings,
+HOST and FADER PICK-UP included, are the controller's.</p>
+<h4 id="any-controller-as-a-mixer">Any controller as a mixer</h4>
+<p>No Mackie Control? Learn your own. LEARN A CONTROL lists a MIXER group under the device's keys
+and knobs. It has VOLUME, PAN, MUTE, SOLO, REC and PAUSE for each instrument, and the
+transport's PAUSE, A BAR BACK, A BAR ON, PREVIOUS MACHINE and NEXT MACHINE.</p>
+<p>Move a fader, turn a knob or press a pad for each one you want:</p>
+<ul>
+<li>a <strong>fader</strong> or a knob that stops at its ends sets the volume or pan once you bring it to
+  where it is, so nothing jumps; a fader that sends pitch bend works too;</li>
+<li>a knob that <strong>turns forever</strong> steps the volume or pan from where it is, faster as you turn
+  faster, and stops once at 0 dB or the middle;</li>
+<li>a <strong>button</strong> or pad mutes, solos, records or pauses the instrument (PAUSE stops its
+  pattern), or pauses the song (the transport's PAUSE). A BAR BACK and A BAR ON skip a bar,
+  PREVIOUS MACHINE and NEXT MACHINE step through the instruments on screen. On VOLUME it goes
+  back to 0 dB, on PAN to the middle.</li>
+</ul>
+<h4 id="lights-and-pick-up">Lights and pick-up</h4>
+<p>Pads and buttons light up with what they show on most controllers; turn MIXER LIGHTS off (in the
+MIXER section) if yours blinks the wrong way. FADER PICK-UP, in the same section, is the
+surface's rule for learned faders and knobs too: on, a fader takes the volume over once it
+reaches it; off, any move sets it.</p>
 <h4 id="octave">OCTAVE</h4>
 <p>A controller with octave buttons of its own gets an OCTAVE section.</p>
 <ul>
@@ -1685,7 +1936,7 @@ docs are in English.</p>
 </tr>
 <tr>
 <td>ARU</td>
-<td>The pixel octopus, the wolf pup or the alien, at random, waving hello and jumping</td>
+<td>The pixel octopus, the wolf pup or the alien, at random, waving hello, or dancing in one of its seven party moods (hip hop, gregorian, pop, punk, techno, jazz, metal)</td>
 </tr>
 <tr>
 <td>OFF</td>
@@ -1693,7 +1944,24 @@ docs are in English.</p>
 </tr>
 </tbody>
 </table>
-<p>While the studio loads, the splash is a still picture, so the start stays quick.</p>
+<p>While the studio loads, the splash holds still, so the start stays quick. It changes at each
+step of the start, and a line at the bottom names the step it's at, from 01 · THE MOTHERSHIP
+POWERS UP to 06 · AUDIO AND MIDI WIRED · GO.</p>
+<p>With ARU, its two friends join it on stage as the start moves along, each striking a new pose
+at every step.</p>
+<h3 id="the-splashs-key-lights">The splash's key lights</h3>
+<p>The keys light along in the look's colours: still while it loads, then a light show in time with
+the screen's.</p>
+<ul>
+<li><strong>ANIME</strong> strobes them through each logo's colours, faster with every cut, bursts in violet
+  from the middle out and sparkles.</li>
+<li><strong>GLOW</strong> races a white comet over the step keys while its halo swells, then sparkles.</li>
+<li><strong>ZOOM</strong> sends a white-hot blue wave from the middle of the step keys to their ends.</li>
+<li><strong>ARU</strong> waves the step keys' left half, then the right, jumps in white and blinks, or dances
+  them side to side in its party mood's colour, flashing on every move.</li>
+</ul>
+<p>Every show ends by sweeping the keys dark from both ends. The show runs three times as bright as
+KEY LIGHTS (at most full), so it stays lively at the dim setting the keys use while you play.</p>
 <h2 id="exports-and-the-music-player">Exports and the music player</h2>
 <p>PROJECT ▾ → EXPORT saves your project out of the device, into the library's <code>exports/</code> folder.
 There are two kinds.</p>
@@ -1732,7 +2000,14 @@ bass or the chords' NOTES:</p>
 <li><strong>On:</strong> the note sounds and is recorded, in its own row on the piano roll.</li>
 <li><strong>Off:</strong> it's muted there and never recorded.</li>
 </ul>
-<p>The drums, the samplers and chords played by degree ignore this setting.</p>
+<p>The drums, the samplers and the chords' CHORDS view ignore this setting.</p>
+<p>If a controller keeps playing in another key than yours (its own key or transpose set
+differently, say), the issues center warns you, with a pop-up message. It names the controller
+and the key its notes fit, so you can set the controller to your key or change yours in the top
+bar.</p>
+<p>ravving reads only the lead, the bass and the chords' NOTES for this, and only after a dozen or
+so notes. Playing chromatic on purpose fits no one key and doesn't set it off. The warning goes
+away once the controller plays in your key again, or when you change the key.</p>
 <h2 id="video-recordings-and-the-computer-link">Video recordings and the computer link</h2>
 <p>The control center's LIVE REC card records your session.</p>
 <h3 id="start-a-recording">Start a recording</h3>
@@ -1938,12 +2213,16 @@ and its page offers FORMAT. FORMAT erases the whole stick into one writable FAT3
 called RAVVING. EJECT and FORMAT both need a second press within three seconds.</p>
 <h2 id="bluetooth">Bluetooth</h2>
 <p>MENU → BLUETOOTH lists your devices: the connected ones first, then the paired ones, then the
-ones in range. A paired device you aren't connected to reads "paired · not connected".</p>
+ones in range. A paired device you aren't connected to reads "paired · not connected". A connected
+device that reports its charge shows it too ("connected · battery 50 %"), and so does a
+Bluetooth controller's row in SETTINGS → MIDI.</p>
 <h3 id="find-and-pair-a-device">Find and pair a device</h3>
 <ol>
 <li>Switch Bluetooth on.</li>
-<li>Tap SCAN. It's a short scan for speakers, headphones, phones and computers.</li>
-<li>Tap the device to open its row, then tap PAIR.</li>
+<li>Tap SCAN. It's a short scan for MIDI controllers first, then speakers, headphones, phones
+   and computers.</li>
+<li>Tap the device to open its row, then tap PAIR. A MIDI controller (a keyboard icon) shows
+   CONNECT instead: it connects without pairing.</li>
 <li>Confirm the passkey, or type the PIN, when ravving asks at the top.</li>
 </ol>
 <p>SCAN doesn't start on its own while a speaker plays, because a scan makes a Bluetooth sound
@@ -2166,13 +2445,18 @@ wrong on the device right now, in plain words, with what to do about it.</p>
 <li><strong>Otherwise,</strong> the number of issues, lit in the colour of the worst one.</li>
 </ul>
 <p>Tap it for the full list, worst first. Each issue has its details, a suggestion, and a button
-where one helps, like RESTART RAVVING. New errors and warnings also pop up as a message.</p>
-<p>What it watches:</p>
+for each thing that helps, like RESTART RAVVING or ALL NOTES OFF. SELECT does the first one.
+New errors and warnings also pop up as a message.</p>
+<h4 id="what-it-watches">What it watches</h4>
 <ul>
 <li>the sound engine missing, or an engine that couldn't start;</li>
 <li>audio connections that never appeared, and audio dropouts;</li>
 <li>the device's keys stopping responding;</li>
+<li>an instrument that keeps sounding with the music stopped and no key held: a stuck note
+  (ALL NOTES OFF ends it, as STOP pressed while stopped does);</li>
+<li>a MIDI controller playing in another key than the project's;</li>
 <li>the music player unable to play;</li>
+<li>an instrument whose notes make no sound: ravving reloads its sound first, and says so;</li>
 <li>Bluetooth unavailable, or an output that plays no sound;</li>
 <li>an export that failed, a USB stick that wouldn't mount, storage nearly full.</li>
 </ul>

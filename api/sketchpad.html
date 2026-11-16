@@ -5,7 +5,7 @@
 <!-- sketchpad.cpp -->
   <meta name="description" content="Which clip each machine track plays, and when it changes: ravving's side of libravving's playfield (libravving::Sequencer).">
   <meta name="keywords" content="class">
-  <title>Sketchpad Class | ravving C++ API 0.6.0</title>
+  <title>Sketchpad Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -98,7 +98,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#setTrackPaused" translate="no">setTrackPaused</a></b>(int <i>track</i>, bool <i>paused</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#startPlayback" translate="no">startPlayback</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#stopAllAtNextBar" translate="no">stopAllAtNextBar</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#switchClips" translate="no">switchClips</a></b>(const QList&lt;Sketchpad::TrackCue&gt; &amp;<i>cues</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#switchClips" translate="no">switchClips</a></b>(const QList&lt;Sketchpad::TrackCue&gt; &amp;<i>cues</i>, int <i>landing</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="sketchpad.html#trackClip" translate="no">trackClip</a></b>(int <i>track</i>) const</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
@@ -157,9 +157,9 @@
 <!-- @@@stopAllAtNextBar -->
 </div>
 <div class="fnitem">
-<!-- $$$switchClips[overload1]$$$switchClipsconstQList<Sketchpad::TrackCue>& -->
-<h3 class="fn" translate="no" id="switchClips"><span class="type">int</span> Sketchpad::<span class="name">switchClips</span>(const <span class="type">QList</span>&lt;<span class="type"><a href="sketchpad-trackcue.html" translate="no">Sketchpad::TrackCue</a></span>&gt; &amp;<i>cues</i>)</h3>
-<p>Cues <i translate="no">cues</i> together: from the next bar each track plays its cue's clip (nothing when the cue is paused) and its other clip stops. The set is applied on the clock's own thread in one step, on the first bar line it has not processed yet, and <a href="sketchpad.html#clipSwitchLanded" translate="no">clipSwitchLanded</a>() reports it; the returned id names it (0 for an empty set).</p>
+<!-- $$$switchClips[overload1]$$$switchClipsconstQList<Sketchpad::TrackCue>&int -->
+<h3 class="fn" translate="no" id="switchClips"><span class="type">int</span> Sketchpad::<span class="name">switchClips</span>(const <span class="type">QList</span>&lt;<span class="type"><a href="sketchpad-trackcue.html" translate="no">Sketchpad::TrackCue</a></span>&gt; &amp;<i>cues</i>, <span class="type">int</span> <i>landing</i>)</h3>
+<p>Cues <i translate="no">cues</i> together: from the next bar each track plays its cue's clip (nothing when the cue is paused) and its other clip stops. The set is applied on the clock's own thread in one step, on the first bar line it has not processed yet (the first beat with <i translate="no">landing</i> NextBeat, each clip playing on from that beat's place in its bar), and <a href="sketchpad.html#clipSwitchLanded" translate="no">clipSwitchLanded</a>() reports it; the returned id names it (0 for an empty set).</p>
 <!-- @@@switchClips -->
 </div>
 <div class="fnitem">

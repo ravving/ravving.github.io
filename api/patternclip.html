@@ -5,7 +5,7 @@
 <!-- patternclip.cpp -->
   <meta name="description" content="One clip of a sketchpad track as a machine writes it: its pattern kept here, and published to libravving's sequencer as a whole.">
   <meta name="keywords" content="class">
-  <title>PatternClip Class | ravving C++ API 0.6.0</title>
+  <title>PatternClip Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -95,6 +95,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#clip" translate="no">clip</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#delay" translate="no">delay</a></b>(int <i>position</i>, int <i>index</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#hasNotes" translate="no">hasNotes</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#hasShaper" translate="no">hasShaper</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#noteIndex" translate="no">noteIndex</a></b>(int <i>position</i>, int <i>note</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#notes" translate="no">notes</a></b>(int <i>position</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const int &amp;</td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#pattern" translate="no">pattern</a></b>() const</td></tr>
@@ -106,12 +107,14 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#readBack" translate="no">readBack</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#removeBar" translate="no">removeBar</a></b>(int <i>bar</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#removeNote" translate="no">removeNote</a></b>(int <i>position</i>, int <i>index</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#reshape" translate="no">reshape</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#setDelay" translate="no">setDelay</a></b>(int <i>position</i>, int <i>index</i>, int <i>delay</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#setDuration" translate="no">setDuration</a></b>(int <i>position</i>, int <i>index</i>, int <i>duration</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#setEnabled" translate="no">setEnabled</a></b>(bool <i>enabled</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#setExpression" translate="no">setExpression</a></b>(const int &amp;<i>expression</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#setPlayLength" translate="no">setPlayLength</a></b>(int <i>steps</i>, int <i>fromBar</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#setShape" translate="no">setShape</a></b>(int <i>position</i>, int <i>index</i>, int <i>probability</i>, int <i>ratchets</i>, int <i>decay</i>, int <i>conditionA</i>, int <i>conditionB</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#setShaper" translate="no">setShaper</a></b>(int <i>shaper</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#setSwing" translate="no">setSwing</a></b>(int <i>swing</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#setVelocity" translate="no">setVelocity</a></b>(int <i>position</i>, int <i>index</i>, int <i>velocity</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="patternclip.html#stepTicks" translate="no">stepTicks</a></b>() const</td></tr>
@@ -179,6 +182,12 @@
 <h3 class="fn" translate="no" id="hasNotes"><span class="type">bool</span> PatternClip::<span class="name">hasNotes</span>() const</h3>
 <p>Returns whether any step has a note.</p>
 <!-- @@@hasNotes -->
+</div>
+<div class="fnitem">
+<!-- $$$hasShaper[overload1]$$$hasShaper -->
+<h3 class="fn" translate="no" id="hasShaper"><span class="type">bool</span> PatternClip::<span class="name">hasShaper</span>() const</h3>
+<p>Returns whether a shaper changes the pattern on its way to the sequencer (<a href="patternclip.html#setShaper" translate="no">setShaper</a>()).</p>
+<!-- @@@hasShaper -->
 </div>
 <div class="fnitem">
 <!-- $$$noteIndex[overload1]$$$noteIndexintint -->
@@ -254,6 +263,12 @@
 <!-- @@@removeNote -->
 </div>
 <div class="fnitem">
+<!-- $$$reshape[overload1]$$$reshape -->
+<h3 class="fn" translate="no" id="reshape"><span class="type">void</span> PatternClip::<span class="name">reshape</span>()</h3>
+<p>Sends the pattern again through the shaper (what it reads changed, the pattern did not). Nothing without a shaper.</p>
+<!-- @@@reshape -->
+</div>
+<div class="fnitem">
 <!-- $$$setDelay[overload1]$$$setDelayintintint -->
 <h3 class="fn" translate="no" id="setDelay"><span class="type">void</span> PatternClip::<span class="name">setDelay</span>(<span class="type">int</span> <i>position</i>, <span class="type">int</span> <i>index</i>, <span class="type">int</span> <i>delay</i>)</h3>
 <p>Sets the <i translate="no">delay</i>, in clock ticks after the step's start, of the note at <i translate="no">index</i> of step <i translate="no">position</i>.</p>
@@ -290,6 +305,13 @@
 <h3 class="fn" translate="no" id="setShape"><span class="type">void</span> PatternClip::<span class="name">setShape</span>(<span class="type">int</span> <i>position</i>, <span class="type">int</span> <i>index</i>, <span class="type">int</span> <i>probability</i>, <span class="type">int</span> <i>ratchets</i>, <span class="type">int</span> <i>decay</i>, <span class="type">int</span> <i>conditionA</i>, <span class="type">int</span> <i>conditionB</i>)</h3>
 <p>Sets how the note at <i translate="no">index</i> of step <i translate="no">position</i> plays when its step comes: its <i translate="no">probability</i> (%), <i translate="no">ratchets</i> (hits in the step), their <i translate="no">decay</i> (% softer each), and the passes it plays on (<i translate="no">conditionA</i> of every <i translate="no">conditionB</i>; <i translate="no">conditionA</i> alone: the first only; 0: every pass).</p>
 <!-- @@@setShape -->
+</div>
+<div class="fnitem">
+<!-- $$$setShaper[overload1]$$$setShaperint -->
+<h3 class="fn" translate="no" id="setShaper"><span class="type">void</span> PatternClip::<span class="name">setShaper</span>(<span class="type">int</span> <i>shaper</i>)</h3>
+<p>Has <i translate="no">shaper</i> change a copy of the pattern every time it is sent to the sequencer, and sends it again now; an empty one sends the pattern as written. A shaper may depend on the play length and the swing: a change of either sends the pattern again.</p>
+<p><b>See also </b><a href="patternclip.html#hasShaper" translate="no">hasShaper</a>().</p>
+<!-- @@@setShaper -->
 </div>
 <div class="fnitem">
 <!-- $$$setSwing[overload1]$$$setSwingint -->

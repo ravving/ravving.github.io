@@ -5,7 +5,7 @@
 <!-- skinfiles.cpp -->
   <meta name="description" content="The skin sets SETTINGS → LOOK → SKINS picks, one JSON file each.">
   <meta name="keywords" content="class">
-  <title>SkinFiles Class | ravving C++ API 0.6.0</title>
+  <title>SkinFiles Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -89,12 +89,14 @@
 <h2 id="properties">Properties</h2>
 <ul>
 <li class="fn" translate="no"><b><a href="skinfiles.html#colours-prop" translate="no">colours</a></b> : QVariantMap</li>
+<li class="fn" translate="no"><b><a href="skinfiles.html#pages-prop" translate="no">pages</a></b> : QVariantMap</li>
 <li class="fn" translate="no"><b><a href="skinfiles.html#sets-prop" translate="no">sets</a></b> : QVariantMap</li>
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="skinfiles.html#SkinFiles" translate="no">SkinFiles</a></b>(const QString &amp;<i>dataDir</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="skinfiles.html#colours-prop" translate="no">colours</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="skinfiles.html#pages-prop" translate="no">pages</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="skinfiles.html#sets-prop" translate="no">sets</a></b>() const</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
@@ -118,9 +120,10 @@
 <pre class="cpp plain" translate="no"><code class="text">
  {&quot;ravving&quot;: &quot;preset&quot;, &quot;type&quot;: &quot;skin&quot;,
   &quot;skin&quot;: {&quot;name&quot;: &quot;CEL&quot;, &quot;about&quot;: &quot;faded 1990s cel paint…&quot;,
-           &quot;machines&quot;: {&quot;drums1&quot;: {&quot;plateColor&quot;: &quot;#…&quot;, &quot;dark&quot;: true, &quot;chassisTop&quot;: &quot;#…&quot;, …}, …}}}
+           &quot;machines&quot;: {&quot;drums1&quot;: {&quot;plateColor&quot;: &quot;#…&quot;, &quot;dark&quot;: true, &quot;chassisTop&quot;: &quot;#…&quot;, …}, …},
+           &quot;pages&quot;: {&quot;song&quot;: {&quot;dark&quot;: true, &quot;chassisTop&quot;: &quot;#…&quot;, …}, &quot;player&quot;: {…}, …}}}
 </code></pre>
-<p>The machines are Rave.machineSkins' keys (<code translate="no">drums1</code> … <code translate="no">pads</code>) and the colours its skins' keys; a machine or colour a skin leaves out keeps ravving's own. The set's key is the file's name without <code translate="no">.json</code>. The shipped sets are in the data folder's <code translate="no">skins/</code> (data/skins in the source); the user's own in the library's <code translate="no">skins/</code> (<a href="skinfiles.html#userFolder" translate="no">userFolder</a>()), read after them, so one of the same key wins. Both folders are watched: a file copied in shows up without a restart.</p>
+<p>The machines are Rave.machineSkins' keys (<code translate="no">drums1</code> … <code translate="no">pads</code>) and the colours its skins' keys; a machine or colour a skin leaves out keeps ravving's own. The pages are the other views' skins (<code translate="no">song</code>, <code translate="no">player</code>, <code translate="no">mic</code>, <code translate="no">guitar</code>, <code translate="no">line</code>, <code translate="no">settings</code>, <code translate="no">mixer</code>), the same colour keys; a page or colour left out is laid over the set's felt (Rave.pageSkin()). The set's key is the file's name without <code translate="no">.json</code>. The shipped sets are in the data folder's <code translate="no">skins/</code> (data/skins in the source); the user's own in the library's <code translate="no">skins/</code> (<a href="skinfiles.html#userFolder" translate="no">userFolder</a>()), read after them, so one of the same key wins. Both folders are watched: a file copied in shows up without a restart.</p>
 </div>
 <!-- @@@SkinFiles -->
 <div class="prop">
@@ -140,9 +143,23 @@
 <!-- @@@colours -->
 </div>
 <div class="fnitem">
+<!-- $$$pages-prop$$$pages$$$setsChanged -->
+<h3 class="fn" translate="no" id="pages-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">pages</span> : <span class="type">QVariantMap</span></h3>
+<p>This property holds the sets' <code translate="no">pages</code> by key: page key → colour name → value, for Rave.skinPages (an empty map for a set whose file has none).</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>pages</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="skinfiles.html#sets-prop" translate="no">setsChanged</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@pages -->
+</div>
+<div class="fnitem">
 <!-- $$$sets-prop$$$sets$$$setsChanged -->
 <h3 class="fn" translate="no" id="sets-prop"><code class="details extra" translate="no">[read-only]</code> <span class="name">sets</span> : <span class="type">QVariantMap</span></h3>
-<p>This property holds the sets by key (a file's name without <code translate="no">.json</code>): maps with <code translate="no">name</code>, <code translate="no">about</code>, <code translate="no">machines</code> and <code translate="no">own</code> (<code translate="no">true</code> for a file of the user's folder). Emits setsChanged() when a file is added, changed or removed.</p>
+<p>This property holds the sets by key (a file's name without <code translate="no">.json</code>): maps with <code translate="no">name</code>, <code translate="no">about</code>, <code translate="no">machines</code>, <code translate="no">pages</code> (when the file has them) and <code translate="no">own</code> (<code translate="no">true</code> for a file of the user's folder). Emits setsChanged() when a file is added, changed or removed.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> QVariantMap </td><td class="memItemRight bottomAlign"><span class="name"><b>sets</b></span>() const</td></tr>

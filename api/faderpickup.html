@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- controllermixer.cpp -->
+  <meta name="description" content="A fader (or an absolute knob) with no motor, on a value it does not show: it takes the value over once it reaches it (within a window, or crossing it), so one left elsewhere does not jump the value; a value changed anywhere else lets go of it until it is reached again. The value it asked for coming back is not a change (asked()). With the pick-up off (setPickup()) it takes the value on any move instead: the fader always wins.">
+  <meta name="keywords" content="class">
+  <title>FaderPickup Class | ravving C++ API 0.7.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>FaderPickup</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">FaderPickup Class</h1>
+<!-- $$$FaderPickup-brief -->
+<p>A fader (or an absolute knob) with no motor, on a value it does not show: it takes the value over once it reaches it (within a window, or crossing it), so one left elsewhere does not jump the value; a value changed anywhere else lets go of it until it is reached again. The value it asked for coming back is not a change (<a href="faderpickup.html#asked" translate="no">asked</a>()). With the pick-up off (<a href="faderpickup.html#setPickup" translate="no">setPickup</a>()) it takes the value on any move instead: the fader always wins. <a href="#details">More...</a></p>
+<!-- @@@FaderPickup -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;controllermixer.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="faderpickup-members.html">List of all members, including inherited members</a></li>
+<li>FaderPickup is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="faderpickup.html#asked" translate="no">asked</a></b>(qreal <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="faderpickup.html#heard" translate="no">heard</a></b>(qreal <i>position</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="faderpickup.html#pickup" translate="no">pickup</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="faderpickup.html#reset" translate="no">reset</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="faderpickup.html#setPickup" translate="no">setPickup</a></b>(bool <i>pickup</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="faderpickup.html#take" translate="no">take</a></b>(qreal <i>position</i>, qreal <i>target</i>, qreal <i>window</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="faderpickup.html#valueChanged" translate="no">valueChanged</a></b>(qreal <i>value</i>)</td></tr>
+</table></div>
+<!-- $$$FaderPickup-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+</div>
+<!-- @@@FaderPickup -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$asked[overload1]$$$askedqreal -->
+<h3 class="fn" translate="no" id="asked"><span class="type">void</span> FaderPickup::<span class="name">asked</span>(<span class="type">qreal</span> <i>value</i>)</h3>
+<p>The fader asked for <i translate="no">value</i>: when it comes back (<a href="faderpickup.html#valueChanged" translate="no">valueChanged</a>()), the fader keeps it.</p>
+<!-- @@@asked -->
+</div>
+<div class="fnitem">
+<!-- $$$heard[overload1]$$$heardqreal -->
+<h3 class="fn" translate="no" id="heard"><span class="type">void</span> FaderPickup::<span class="name">heard</span>(<span class="type">qreal</span> <i>position</i>)</h3>
+<p>The fader was heard at <i translate="no">position</i> with no value to take (no instrument on its strip).</p>
+<!-- @@@heard -->
+</div>
+<div class="fnitem">
+<!-- $$$pickup[overload1]$$$pickup -->
+<h3 class="fn" translate="no" id="pickup"><span class="type">bool</span> FaderPickup::<span class="name">pickup</span>() const</h3>
+<p>Returns whether the fader waits to reach the value (<a href="faderpickup.html#setPickup" translate="no">setPickup</a>()).</p>
+<p><b>See also </b><a href="faderpickup.html#setPickup" translate="no">setPickup</a>().</p>
+<!-- @@@pickup -->
+</div>
+<div class="fnitem">
+<!-- $$$reset[overload1]$$$reset -->
+<h3 class="fn" translate="no" id="reset"><span class="type">void</span> FaderPickup::<span class="name">reset</span>()</h3>
+<p>Forgets the fader: where it was and what it held (a controller connecting again).</p>
+<!-- @@@reset -->
+</div>
+<div class="fnitem">
+<!-- $$$setPickup[overload1]$$$setPickupbool -->
+<h3 class="fn" translate="no" id="setPickup"><span class="type">void</span> FaderPickup::<span class="name">setPickup</span>(<span class="type">bool</span> <i>pickup</i>)</h3>
+<p>Has the fader wait to reach the value before it takes it (<i translate="no">pickup</i> on, the default), or take it on any move (off). Turning the pick-up on lets go of the value until it is reached.</p>
+<p><b>See also </b><a href="faderpickup.html#pickup" translate="no">pickup</a>().</p>
+<!-- @@@setPickup -->
+</div>
+<div class="fnitem">
+<!-- $$$take[overload1]$$$takeqrealqrealqreal -->
+<h3 class="fn" translate="no" id="take"><span class="type">bool</span> FaderPickup::<span class="name">take</span>(<span class="type">qreal</span> <i>position</i>, <span class="type">qreal</span> <i>target</i>, <span class="type">qreal</span> <i>window</i>)</h3>
+<p>The fader moved to <i translate="no">position</i>; the value is at <i translate="no">target</i>, in the same units. Returns whether the fader holds the value now: it held it already, or it is within <i translate="no">window</i> of it, or it went past it since it was last heard; with the pick-up off, always.</p>
+<!-- @@@take -->
+</div>
+<div class="fnitem">
+<!-- $$$valueChanged[overload1]$$$valueChangedqreal -->
+<h3 class="fn" translate="no" id="valueChanged"><span class="type">bool</span> FaderPickup::<span class="name">valueChanged</span>(<span class="type">qreal</span> <i>value</i>)</h3>
+<p>The value changed to <i translate="no">value</i>. Returns whether that let go of the fader: a change it did not ask for (from the screen, a project opened…). Its own coming back changes nothing.</p>
+<!-- @@@valueChanged -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

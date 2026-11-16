@@ -200,6 +200,12 @@ house style, and turn the latter off in <code>.clang-tidy</code>, with a line sa
 <p><code>tools/static-analysis.sh shell</code> runs ShellCheck 0.10 at <code>-S style</code> over every shell script;
 the baseline is <strong>0</strong>. ShellCheck is on the device (<code>apt install shellcheck</code>); on a laptop
 without it the script sends the files there.</p>
+<h3 id="qts-emit">Qt's <code>emit</code></h3>
+<p>Qt defines <code>emit</code> as an empty macro. A signal goes out with <code>Q_EMIT</code>, and nothing else in the
+C++ is named <code>emit</code>: a callback parameter called that compiles, with only a "statement has no
+effect" warning, into code that never calls it.</p>
+<p><code>ctest -R qt-emit</code> (<code>tools/check-qt-emit.py</code>) reads the app's and libravving's sources with
+their comments and strings blanked, and fails on any <code>emit</code> left.</p>
 <h3 id="handlers-under-dialogs">Handlers under dialogs</h3>
 <p>The modal dimmer stops items, not pointer handlers. Qt Quick still hands a press to every
 handler under it after the dialog's button or field took it, and a page's DragHandler then takes
@@ -346,7 +352,7 @@ today's counts, as the QML baseline does.</p>
 <p><code>main()</code> writes the phases of a start to the journal (<code>src/startuptimer.h</code>):</p>
 <pre><code>ravving: startup main 0 ms           process up (after startx, X and the binary loading)
 ravving: startup application 18 ms   QGuiApplication
-ravving: startup libzynthbox 649 ms  the sound engine, libravving
+ravving: startup libravving 649 ms  the sound engine, libravving
 ravving: startup studio 2922 ms      machines, effects, the session (Studio)
 ravving: startup backends …          the rest of the backends (outputs, Bluetooth, USB, sharing…)
 ravving: startup qml 3681 ms         Main.qml created

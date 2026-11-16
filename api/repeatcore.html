@@ -5,7 +5,7 @@
 <!-- repeatcore.cpp -->
   <meta name="description" content="The beat repeat's signal processing, with no JACK in it: BeatRepeat runs it in its callback, and the tests run it on known input.">
   <meta name="keywords" content="class">
-  <title>RepeatCore Class | ravving C++ API 0.6.0</title>
+  <title>RepeatCore Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -95,25 +95,26 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#process" translate="no">process</a></b>(const float *<i>inLeft</i>, const float *<i>inRight</i>, float *<i>outLeft</i>, float *<i>outRight</i>, quint32 <i>frames</i>, quint64 <i>startFrame</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#release" translate="no">release</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#setLength" translate="no">setLength</a></b>(quint32 <i>length</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#setTransition" translate="no">setTransition</a></b>(const int &amp;<i>transition</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#transition" translate="no">transition</a></b>() const</td></tr>
 </table></div>
 <h2 id="static-public-members">Static Public Members</h2>
 <div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#DefaultTransition-var" translate="no">DefaultTransition</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const quint64 </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#HistoryFrames-var" translate="no">HistoryFrames</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const float </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#MaxSample-var" translate="no">MaxSample</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> const double </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#ReleaseMs-var" translate="no">ReleaseMs</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const quint32 </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#SeamFrames-var" translate="no">SeamFrames</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const quint32 </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#SliceFrames-var" translate="no">SliceFrames</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const float </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#SoundThreshold-var" translate="no">SoundThreshold</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> const float </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#SwitchFrames-var" translate="no">SwitchFrames</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> quint32 </td><td class="memItemRight bottomAlign"><b><a href="repeatcore.html#clampedLength" translate="no">clampedLength</a></b>(double <i>frames</i>)</td></tr>
 </table></div>
 <!-- $$$RepeatCore-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 <p><a href="repeatcore.html#engage" translate="no">engage</a>() gives an anchor frame and a length: the audio from the anchor plays out live, then repeats every <i>length</i> frames until <a href="repeatcore.html#release" translate="no">release</a>(); <a href="repeatcore.html#setLength" translate="no">setLength</a>() changes the length of a running repeat on the same anchor. The input is always kept (<a href="repeatcore.html#HistoryFrames-var" translate="no">HistoryFrames</a>, 2.7 s at 48 kHz); an engagement copies what already played since its anchor into the slice it repeats (at most <a href="repeatcore.html#SliceFrames-var" translate="no">SliceFrames</a>, 5.4 s).</p>
-<p>Each repetition's head is crossfaded (<a href="repeatcore.html#SeamFrames-var" translate="no">SeamFrames</a>, 10 ms at 48 kHz, equal power) with what followed the slice when it first played, so the seam never dips to silence; the switch into the repeat eases over <a href="repeatcore.html#SwitchFrames-var" translate="no">SwitchFrames</a> and the release over <a href="repeatcore.html#ReleaseMs-var" translate="no">ReleaseMs</a> (an S-curve), so the repeat gives way to the live sound rather than being cut.</p>
+<p>Each repetition's head is crossfaded (<a href="repeatcore.html#SeamFrames-var" translate="no">SeamFrames</a>, 10 ms at 48 kHz, equal power) with what followed the slice when it first played, so the seam never dips to silence. The switch from the live input into the repeat and back is the repeat's transition (<a href="repeatcore.html#setTransition" translate="no">setTransition</a>(); by default <a href="repeatcore.html#DefaultTransition-var" translate="no">DefaultTransition</a>: 10 ms in, 300 ms out, an S-curve both ways), glided by a libravving::RtRamp, so the repeat gives way to the live sound rather than being cut.</p>
 <p>A repeat engaged on silence (a break in the music: nothing above <a href="repeatcore.html#SoundThreshold-var" translate="no">SoundThreshold</a> since its anchor) waits: the live input passes, and the first sound moves the anchor to the start of the step it lands in (<a href="repeatcore.html#engage" translate="no">engage</a>()'s <i translate="no">stepFrames</i> keep it on the grid), so the music coming back is what repeats, not the break.</p>
-<p>It also passes on only sound: a sample that is not finite, or beyond <a href="repeatcore.html#MaxSample-var" translate="no">MaxSample</a>, is passed on as silence. The GUI thread calls <a href="repeatcore.html#engage" translate="no">engage</a>(), <a href="repeatcore.html#setLength" translate="no">setLength</a>() and <a href="repeatcore.html#release" translate="no">release</a>(); the audio thread reads only atomics and the buffers <a href="repeatcore.html#prepare" translate="no">prepare</a>() allocated.</p>
+<p>It also passes on only sound: a sample that is not finite, or beyond <a href="repeatcore.html#MaxSample-var" translate="no">MaxSample</a>, is passed on as silence. The GUI thread calls <a href="repeatcore.html#engage" translate="no">engage</a>(), <a href="repeatcore.html#setLength" translate="no">setLength</a>(), <a href="repeatcore.html#release" translate="no">release</a>() and <a href="repeatcore.html#setTransition" translate="no">setTransition</a>(); the audio thread reads only atomics, the glide and the buffers <a href="repeatcore.html#prepare" translate="no">prepare</a>() allocated.</p>
 </div>
 <!-- @@@RepeatCore -->
 <div class="func">
@@ -133,7 +134,7 @@
 <div class="fnitem">
 <!-- $$$engage[overload1]$$$engagequint64quint32double -->
 <h3 class="fn" translate="no" id="engage"><span class="type">void</span> RepeatCore::<span class="name">engage</span>(<span class="type">quint64</span> <i>anchor</i>, <span class="type">quint32</span> <i>length</i>, <span class="type">double</span> <i>stepFrames</i> = 0)</h3>
-<p>Starts a repeat of <i translate="no">length</i> frames from <i translate="no">anchor</i>, a frame of the audio clock (in the past or just ahead): what played since it comes from the history, the rest is taken as it plays. <i translate="no">stepFrames</i>, a 16th's length, keeps a repeat engaged on silence on the grid when the sound comes (0: it starts where the sound starts). Any thread.</p>
+<p>Starts a repeat of <i translate="no">length</i> frames from <i translate="no">anchor</i>, a frame of the audio clock (in the past or just ahead): what played since it comes from the history, the rest is taken as it plays. <i translate="no">stepFrames</i>, a 16th's length, keeps a repeat engaged on silence on the grid when the sound comes (0: it starts where the sound starts). GUI thread.</p>
 <!-- @@@engage -->
 </div>
 <div class="fnitem">
@@ -163,18 +164,38 @@
 <div class="fnitem">
 <!-- $$$release[overload1]$$$release -->
 <h3 class="fn" translate="no" id="release"><span class="type">void</span> RepeatCore::<span class="name">release</span>()</h3>
-<p>Returns to the live input, over the release. Any thread.</p>
+<p>Returns to the live input, over the transition's release. GUI thread.</p>
 <!-- @@@release -->
 </div>
 <div class="fnitem">
 <!-- $$$setLength[overload1]$$$setLengthquint32 -->
 <h3 class="fn" translate="no" id="setLength"><span class="type">void</span> RepeatCore::<span class="name">setLength</span>(<span class="type">quint32</span> <i>length</i>)</h3>
-<p>Changes a running repeat's length to <i translate="no">length</i> frames, on the same anchor. Any thread.</p>
+<p>Changes a running repeat's length to <i translate="no">length</i> frames, on the same anchor. GUI thread.</p>
 <!-- @@@setLength -->
+</div>
+<div class="fnitem">
+<!-- $$$setTransition[overload1]$$$setTransitionconstint& -->
+<h3 class="fn" translate="no" id="setTransition"><span class="type">void</span> RepeatCore::<span class="name">setTransition</span>(const <span class="type">int</span> &amp;<i>transition</i>)</h3>
+<p>Sets what the switch into the repeat (<a href="repeatcore.html#engage" translate="no">engage</a>()) and back to the live input (<a href="repeatcore.html#release" translate="no">release</a>()) glide over, from the next of them: <i translate="no">transition</i>. GUI thread.</p>
+<p><b>See also </b><a href="repeatcore.html#transition" translate="no">transition</a>().</p>
+<!-- @@@setTransition -->
+</div>
+<div class="fnitem">
+<!-- $$$transition[overload1]$$$transition -->
+<h3 class="fn" translate="no" id="transition"><span class="type">int</span> RepeatCore::<span class="name">transition</span>() const</h3>
+<p>Returns the transition <a href="repeatcore.html#setTransition" translate="no">setTransition</a>() set (<a href="repeatcore.html#DefaultTransition-var" translate="no">DefaultTransition</a> until then).</p>
+<p><b>See also </b><a href="repeatcore.html#setTransition" translate="no">setTransition</a>().</p>
+<!-- @@@transition -->
 </div>
 </div>
 <div class="vars">
 <h2>Member Variable Documentation</h2>
+<div class="fnitem">
+<!-- $$$DefaultTransition -->
+<h3 class="fn" translate="no" id="DefaultTransition-var">const <span class="type">int</span> RepeatCore::<span class="name">DefaultTransition</span></h3>
+<p>This variable holds the switch into the repeat and out of it until <a href="repeatcore.html#setTransition" translate="no">setTransition</a>() gives another: 10 ms in, 300 ms out, an S-curve both ways.</p>
+<!-- @@@DefaultTransition -->
+</div>
 <div class="fnitem">
 <!-- $$$HistoryFrames -->
 <h3 class="fn" translate="no" id="HistoryFrames-var">const <span class="type">quint64</span> RepeatCore::<span class="name">HistoryFrames</span></h3>
@@ -186,12 +207,6 @@
 <h3 class="fn" translate="no" id="MaxSample-var">const <span class="type">float</span> RepeatCore::<span class="name">MaxSample</span></h3>
 <p>This variable holds the largest sample passed on: anything beyond (or not finite) is garbage, not sound.</p>
 <!-- @@@MaxSample -->
-</div>
-<div class="fnitem">
-<!-- $$$ReleaseMs -->
-<h3 class="fn" translate="no" id="ReleaseMs-var">const <span class="type">double</span> RepeatCore::<span class="name">ReleaseMs</span></h3>
-<p>This variable holds the release, in milliseconds: the repeat gives way to the live sound over this long.</p>
-<!-- @@@ReleaseMs -->
 </div>
 <div class="fnitem">
 <!-- $$$SeamFrames -->
@@ -210,12 +225,6 @@
 <h3 class="fn" translate="no" id="SoundThreshold-var">const <span class="type">float</span> RepeatCore::<span class="name">SoundThreshold</span></h3>
 <p>This variable holds the level (-70 dBFS) above which a sample counts as sound for a repeat engaged on silence.</p>
 <!-- @@@SoundThreshold -->
-</div>
-<div class="fnitem">
-<!-- $$$SwitchFrames -->
-<h3 class="fn" translate="no" id="SwitchFrames-var">const <span class="type">float</span> RepeatCore::<span class="name">SwitchFrames</span></h3>
-<p>This variable holds the eased crossfade into the repeat, in frames: 10 ms at 48 kHz.</p>
-<!-- @@@SwitchFrames -->
 </div>
 </div>
 </article>

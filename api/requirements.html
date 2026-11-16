@@ -5,7 +5,7 @@
 <!-- requirements.cpp -->
   <meta name="description" content="Reports as issues what this device lacks for ravving's features (data&lt;@op&gt;/&lt;/@op&gt;requirements&lt;@op&gt;.&lt;/@op&gt;json).">
   <meta name="keywords" content="namespace">
-  <title>Requirements Namespace | ravving C++ API 0.6.0</title>
+  <title>Requirements Namespace | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -86,11 +86,13 @@
 <h2 id="functions">Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="requirements.html#check" translate="no">check</a></b>(const QString &amp;<i>file</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="requirements.html#distros" translate="no">distros</a></b>(const QString &amp;<i>osRelease</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="requirements.html#packageFor" translate="no">packageFor</a></b>(const QVariant &amp;<i>package</i>, const QStringList &amp;<i>distros</i>)</td></tr>
 </table></div>
 <!-- $$$Requirements-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>The AppImage bundles no libraries: the music player needs Qt Multimedia's FFmpeg backend, Bluetooth audio PipeWire's Bluetooth plugin, Bluetooth file transfer BlueZ's OBEX daemon, the input ravving's WirePlumber rule, and so on. Each <code translate="no">feature</code> requirement whose files, folders or programs are missing becomes one warning naming the feature, what it costs and the package (or step) that brings it. The checks are existence checks only (QFileInfo, QStandardPaths::findExecutable()): no process starts. The <code translate="no">startup</code> requirements are checked by the setup program (Bundle), since without them ravving does not start.</p>
+<p>The AppImage bundles no libraries: the music player needs Qt Multimedia's FFmpeg backend, Bluetooth audio PipeWire's Bluetooth plugin, Bluetooth file transfer BlueZ's OBEX daemon, the input ravving's WirePlumber rule, and so on. Each <code translate="no">feature</code> requirement whose files, folders or programs are missing becomes one warning naming the feature, what it costs and the package (or step) that brings it, by the name this system's packages have (<a href="requirements.html#packageFor" translate="no">packageFor</a>(), from <code translate="no">/etc/os-release</code>). The checks are existence checks only (QFileInfo, QStandardPaths::findExecutable()): no process starts. The <code translate="no">startup</code> requirements are checked by the setup program (Bundle), since without them ravving does not start.</p>
 </div>
 <!-- @@@Requirements -->
 <div class="func">
@@ -100,6 +102,18 @@
 <h3 class="fn" translate="no" id="check"><span class="type">void</span> Requirements::<span class="name">check</span>(const <span class="type">QString</span> &amp;<i>file</i>)</h3>
 <p>Checks the <code translate="no">feature</code> requirements listed in <i translate="no">file</i> and reports each missing one as an issue, clearing those that are present.</p>
 <!-- @@@check -->
+</div>
+<div class="fnitem">
+<!-- $$$distros[overload1]$$$distrosconstQString& -->
+<h3 class="fn" translate="no" id="distros"><span class="type">QStringList</span> Requirements::<span class="name">distros</span>(const <span class="type">QString</span> &amp;<i>osRelease</i>)</h3>
+<p>Returns the names this system goes by, the most specific first, from <i translate="no">osRelease</i> (the text of <code translate="no">/etc/os-release</code>): its <code translate="no">ID</code>, then each of its <code translate="no">ID_LIKE</code> (<code translate="no">endeavouros</code>, <code translate="no">arch</code>; <code translate="no">raspbian</code>, <code translate="no">debian</code>), lower-cased.</p>
+<!-- @@@distros -->
+</div>
+<div class="fnitem">
+<!-- $$$packageFor[overload1]$$$packageForconstQVariant&constQStringList& -->
+<h3 class="fn" translate="no" id="packageFor"><span class="type">QString</span> Requirements::<span class="name">packageFor</span>(const <span class="type">QVariant</span> &amp;<i>package</i>, const <span class="type">QStringList</span> &amp;<i>distros</i>)</h3>
+<p>Returns the package that brings a requirement on a system called <i translate="no">distros</i> (<a href="requirements.html#distros" translate="no">distros</a>()), from <i translate="no">package</i>, its <code translate="no">package</code> in requirements.json: a string is the package's name everywhere; an object names it per system (<code translate="no">{&quot;debian&quot;: &quot;jalv lilv-utils&quot;, &quot;arch&quot;: &quot;jalv lilv&quot;}</code>) and gives the first of <i translate="no">distros</i> it has, empty when it has none.</p>
+<!-- @@@packageFor -->
 </div>
 </div>
 </article>

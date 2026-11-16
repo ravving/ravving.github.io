@@ -5,7 +5,7 @@
 <!-- monomachine.cpp -->
   <meta name="description" content="A Machine playing a monophonic line; kits.json configures the bass and the lead as two instances.">
   <meta name="keywords" content="class">
-  <title>MonoMachine Class | ravving C++ API 0.6.0</title>
+  <title>MonoMachine Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -72,6 +72,8 @@
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
 <li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
 <li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#reimplemented-protected-functions">Reimplemented Protected Functions</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -150,6 +152,7 @@
 </table></div>
 <h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#feelKeys" translate="no">feelKeys</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual QVariantMap </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#state" translate="no">state</a></b>() const override</td></tr>
 </table></div>
 <h2 id="signals">Signals</h2>
@@ -158,6 +161,15 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#octaveChanged" translate="no">octaveChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#polyChanged" translate="no">polyChanged</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#stepsChanged" translate="no">stepsChanged</a></b>()</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#lineFeel" translate="no">lineFeel</a></b>(int <i>velocity</i>, int <i>length</i>)</td></tr>
+</table></div>
+<h2 id="reimplemented-protected-functions">Reimplemented Protected Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#applyFeel" translate="no">applyFeel</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="monomachine.html#keyForNote" translate="no">keyForNote</a></b>(int <i>note</i>, int <i>slot</i>, const Machine::KeyboardContext &amp;<i>context</i>) const override</td></tr>
 </table></div>
 <!-- $$$MonoMachine-description -->
 <div class="descr">
@@ -272,7 +284,7 @@
 <div class="fnitem">
 <!-- $$$octave-prop$$$octave$$$setOctaveint$$$octaveChanged -->
 <h3 class="fn" translate="no" id="octave-prop"><span class="name">octave</span> : <span class="type">int</span></h3>
-<p>This property holds the octave shift of <a href="monomachine.html#degreeNote" translate="no">degreeNote</a>(), -2 to +2.</p>
+<p>This property holds the octave shift of <a href="monomachine.html#degreeNote" translate="no">degreeNote</a>(), minOctave to maxOctave.</p>
 <p><b>Access functions:</b></p>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>octave</b></span>() const</td></tr>
@@ -409,6 +421,12 @@
 </div><!-- @@@allPicks -->
 </div>
 <div class="fnitem">
+<!-- $$$applyFeel[overload1]$$$applyFeel -->
+<h3 class="fn" translate="no" id="applyFeel"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">void</span> MonoMachine::<span class="name">applyFeel</span>()</h3>
+<p>Gives the track's every note the line's feel.</p>
+<!-- @@@applyFeel -->
+</div>
+<div class="fnitem">
 <!-- $$$audition[overload1]$$$auditionint -->
 <h3 class="fn" translate="no" id="audition"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> MonoMachine::<span class="name">audition</span>(<span class="type">int</span> <i>note</i>)</h3>
 <p>Plays <i translate="no">note</i> now, as a plain step would.</p>
@@ -430,6 +448,13 @@
 </div><!-- @@@deleteNotes -->
 </div>
 <div class="fnitem">
+<!-- $$$feelKeys[overload1]$$$feelKeys -->
+<h3 class="fn" translate="no" id="feelKeys"><code class="details extra" translate="no">[override virtual]</code> <span class="type">QStringList</span> MonoMachine::<span class="name">feelKeys</span>() const</h3>
+<p>Reimplements: <a href="machine.html#feelKeys" translate="no">Machine::feelKeys</a>() const.</p>
+<p>Returns Feel::Velocity and Feel::Length. A line keeps its timing: BASS stays with the kick, and on a mono synth a note that starts before the last one ends slides.</p>
+<!-- @@@feelKeys -->
+</div>
+<div class="fnitem">
 <!-- $$$holdNoteTo[overload1]$$$holdNoteTointint -->
 <h3 class="fn" translate="no" id="holdNoteTo"><code class="details extra" translate="no">[invokable]</code> <span class="type">bool</span> MonoMachine::<span class="name">holdNoteTo</span>(<span class="type">int</span> <i>step</i>, <span class="type">int</span> <i>note</i>)</h3>
 <p>POLY: makes the MIDI <i translate="no">note</i> that sounds on or before <i translate="no">step</i> of the viewed bar last up to that step, whatever else the steps play; on the note's first step it goes back to one step. Returns whether a note's length changed.</p>
@@ -442,6 +467,19 @@
 <p>Emitted when root or scale changed.</p>
 <div class="admonition note"><p><b>Note: </b>Notifier signal for properties <a href="monomachine.html#root-prop" translate="no">root</a> and <a href="monomachine.html#scale-prop" translate="no">scale</a>. </p>
 </div><!-- @@@keyChanged -->
+</div>
+<div class="fnitem">
+<!-- $$$keyForNote[overload1]$$$keyForNoteintintconstMachine::KeyboardContext& -->
+<h3 class="fn" translate="no" id="keyForNote"><code class="details extra" translate="no">[override virtual protected]</code> <span class="type">int</span> MonoMachine::<span class="name">keyForNote</span>(<span class="type">int</span> <i>note</i>, <span class="type">int</span> <i>slot</i>, const <span class="type"><a href="machine-keyboardcontext.html" translate="no">Machine::KeyboardContext</a></span> &amp;<i>context</i>) const</h3>
+<p>Reimplements: <a href="machine.html#keyForNote" translate="no">Machine::keyForNote</a>(int note, int slot, const Machine::KeyboardContext &amp;context) const.</p>
+<p>A controller's <i translate="no">note</i> plays itself; one outside the key is not played unless SETTINGS · KEYS says so (it then sounds and records in a row of its own). <i translate="no">slot</i> is unused.</p>
+<!-- @@@keyForNote -->
+</div>
+<div class="fnitem">
+<!-- $$$lineFeel[overload1]$$$lineFeelintint -->
+<h3 class="fn" translate="no" id="lineFeel"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> MonoMachine::<span class="name">lineFeel</span>(<span class="type">int</span> <i>velocity</i>, <span class="type">int</span> <i>length</i>)</h3>
+<p>Returns the feel every note plays with for the amounts <i translate="no">velocity</i> and <i translate="no">length</i> (0 to 100): at 100 a note's velocity moves by up to 25 %, and it is cut short by up to 40 % of its length. A note is never made longer, and one that runs into the next (a slide, a tie) keeps its length.</p>
+<!-- @@@lineFeel -->
 </div>
 <div class="fnitem">
 <!-- $$$moveNotes[overload1]$$$moveNotesconstQVariantList&intbool -->

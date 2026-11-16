@@ -5,7 +5,7 @@
 <!-- leds.cpp -->
   <meta name="description" content="The device's button LEDs by button name, published to QML as leds.">
   <meta name="keywords" content="class">
-  <title>Leds Class | ravving C++ API 0.6.0</title>
+  <title>Leds Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -70,6 +70,7 @@
 <ul>
 <li class="level1"><a href="#properties">Properties</a></li>
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -88,13 +89,23 @@
 <h2 id="properties">Properties</h2>
 <ul>
 <li class="fn" translate="no"><b><a href="leds.html#available-prop" translate="no">available</a></b> : const bool</li>
+<li class="fn" translate="no"><b><a href="leds.html#brightness-prop" translate="no">brightness</a></b> : int</li>
 </ul>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="leds.html#Leds" translate="no">Leds</a></b>(QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="leds.html#allOff" translate="no">allOff</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="leds.html#available-prop" translate="no">available</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="leds.html#brightness-prop" translate="no">brightness</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="leds.html#endFrames" translate="no">endFrames</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="leds.html#setBrightness" translate="no">setBrightness</a></b>(int <i>percent</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="leds.html#setButtonColors" translate="no">setButtonColors</a></b>(const QVariantMap &amp;<i>colors</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="leds.html#showFrame" translate="no">showFrame</a></b>(const QHash&lt;QString, QColor&gt; &amp;<i>frame</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="leds.html#stepLights" translate="no">stepLights</a></b>() const</td></tr>
+</table></div>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="leds.html#brightness-prop" translate="no">brightnessChanged</a></b>()</td></tr>
 </table></div>
 <!-- $$$Leds-description -->
 <div class="descr">
@@ -103,7 +114,8 @@
 <pre class="cpp plain" translate="no"><code class="text">
  leds.setButtonColors({ step1: &quot;#e07708&quot;, num2: &quot;white&quot;, play: Qt.rgba(0, 1, 0, 1) })
 </code></pre>
-<p>Buttons left out show the dim inactive colour (blue at 1/255, times the brightness); a null, empty or transparent colour turns one off. Colours are scaled by the LED brightness setting shared with zynthbox-qml (<code translate="no">UI/ledBrightness</code>, 1 to 100 %, 15 by default) and written to the strip at the next turn of the event loop, coalesced.</p>
+<p>Buttons left out show the dim inactive colour (blue at 1/255); a null, empty or transparent colour turns one off. Colours are scaled by brightness, the setting shared with zynthbox-qml (<code translate="no">UI/ledBrightness</code>, 1 to 100 %, 15 by default), and written to the strip at the next turn of the event loop, coalesced.</p>
+<p>The startup splash's frames (<a href="leds.html#showFrame" translate="no">showFrame</a>()) may come from another thread and are written at once, ShowBoost times as bright as the setting (at most full): the show stays lively at the dim setting the keys use while playing.</p>
 <p>Button names: <code translate="no">menu</code>, <code translate="no">num1</code> to <code translate="no">num5</code>, <code translate="no">star</code>, <code translate="no">mode</code>, <code translate="no">step1</code> to <code translate="no">step16</code>, <code translate="no">alt</code>, <code translate="no">record</code>, <code translate="no">play</code>, <code translate="no">metronome</code>, <code translate="no">stop</code>, <code translate="no">back</code>, <code translate="no">up</code>, <code translate="no">select</code>, <code translate="no">left</code>, <code translate="no">down</code>, <code translate="no">right</code>, <code translate="no">global</code>. On the Z2_V4 kit only <code translate="no">step1</code> to <code translate="no">step5</code> have LEDs. The button-to-LED tables match libravving's ZynthboxBasics.</p>
 <p>The strip is a <a href="wsledstrip.html" translate="no">WsLedStrip</a> of <code translate="no">ZYNTHBOX_LED_COUNT</code> LEDs; on start the boot rainbow (<code translate="no">rainbow-leds.service</code>) is stopped.</p>
 </div>
@@ -119,6 +131,21 @@
 <tr><td class="memItemLeft topAlign rightAlign"> bool </td><td class="memItemRight bottomAlign"><span class="name"><b>available</b></span>() const</td></tr>
 </table></div>
 <!-- @@@available -->
+</div>
+<div class="fnitem">
+<!-- $$$brightness-prop$$$brightness$$$setBrightnessint$$$brightnessChanged -->
+<h3 class="fn" translate="no" id="brightness-prop"><span class="name">brightness</span> : <span class="type">int</span></h3>
+<p>how bright the key lights are, 1 to 100 %: every colour is scaled by it. Kept in zynthbox-qml's settings (<code translate="no">UI/ledBrightness</code>, 15 by default), so both apps light the keys alike; a change shows at once.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> int </td><td class="memItemRight bottomAlign"><span class="name"><b>brightness</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="leds.html#setBrightness" translate="no">setBrightness</a></b></span>(int <i>percent</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>brightnessChanged</b></span>()</td></tr>
+</table></div>
+<!-- @@@brightness -->
 </div>
 </div>
 <div class="func">
@@ -137,11 +164,38 @@
 </div><!-- @@@allOff -->
 </div>
 <div class="fnitem">
+<!-- $$$endFrames[overload1]$$$endFrames -->
+<h3 class="fn" translate="no" id="endFrames"><span class="type">void</span> Leds::<span class="name">endFrames</span>()</h3>
+<p>Ends <a href="leds.html#showFrame" translate="no">showFrame</a>()'s frames: the keys show the buttons' colours again, at once. Thread-safe.</p>
+<!-- @@@endFrames -->
+</div>
+<div class="fnitem">
+<!-- $$$setBrightness -->
+<h3 class="fn" translate="no" id="setBrightness"><span class="type">void</span> Leds::<span class="name">setBrightness</span>(<span class="type">int</span> <i>percent</i>)</h3>
+<p>Sets the brightness to <i translate="no">percent</i>, clamped to 1&ndash;100, saves it in zynthbox-qml's settings and lights the keys again with it.</p>
+<div class="admonition note"><p><b>Note: </b>Setter function for property <a href="leds.html#brightness-prop" translate="no">brightness</a>. </p>
+</div><p><b>See also </b><a href="leds.html#brightness-prop" translate="no">brightness</a>().</p>
+<!-- @@@setBrightness -->
+</div>
+<div class="fnitem">
 <!-- $$$setButtonColors[overload1]$$$setButtonColorsconstQVariantMap& -->
 <h3 class="fn" translate="no" id="setButtonColors"><code class="details extra" translate="no">[invokable]</code> <span class="type">void</span> Leds::<span class="name">setButtonColors</span>(const <span class="type">QVariantMap</span> &amp;<i>colors</i>)</h3>
 <p>Replaces the colour of every button with <i translate="no">colors</i>, a map of button name to colour (a QColor or a colour string); see the class description. Ignored when unavailable or unchanged.</p>
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@setButtonColors -->
+</div>
+<div class="fnitem">
+<!-- $$$showFrame[overload1]$$$showFrameconstQHash<QString,QColor>& -->
+<h3 class="fn" translate="no" id="showFrame"><span class="type">void</span> Leds::<span class="name">showFrame</span>(const <span class="type">QHash</span>&lt;<span class="type">QString</span>, <span class="type">QColor</span>&gt; &amp;<i>frame</i>)</h3>
+<p>Lights the keys with <i translate="no">frame</i> (button name → colour, scaled by brightness; a key left out is off) in place of the buttons' colours, until <a href="leds.html#endFrames" translate="no">endFrames</a>(): the startup splash's light show (<a href="splashlights.html" translate="no">SplashLights</a>), written at once. <a href="leds.html#setButtonColors" translate="no">setButtonColors</a>() meanwhile is kept for after it. Thread-safe: the show runs on a thread of its own, so a busy GUI thread does not hold it up.</p>
+<!-- @@@showFrame -->
+</div>
+<div class="fnitem">
+<!-- $$$stepLights[overload1]$$$stepLights -->
+<h3 class="fn" translate="no" id="stepLights"><span class="type">int</span> Leds::<span class="name">stepLights</span>() const</h3>
+<p>Returns how many step keys have a light on this kit, from step 1 on: 16, or 5 on the Z2_V4 kit.</p>
+<!-- @@@stepLights -->
+</div>
 </div>
 </article>
 </main>
@@ -152,4 +206,3 @@
 </footer>
 </body>
 </html>
-</div>

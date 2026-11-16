@@ -5,7 +5,7 @@
 <!-- Interaction.qml -->
   <meta name="description" content="The UI state the controls share, which the app reads and sets but the controls own.">
   <meta name="keywords" content="qmltype">
-  <title>Interaction QML Type | ravving C++ API 0.6.0</title>
+  <title>Interaction QML Type | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -89,9 +89,11 @@
 <ul>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#inputBlocked-prop" translate="no">inputBlocked</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#knobMode-prop" translate="no">knobMode</a></b> : string</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#knobs-prop" translate="no">knobs</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#knobsAbsolute-prop" translate="no">knobsAbsolute</a></b> : bool</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#openDialogs-prop" translate="no">openDialogs</a></b> : int</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#overlays-prop" translate="no">overlays</a></b> : list&lt;QtObject&gt;</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#wheel-prop" translate="no">wheel</a></b> : bool</li>
 </ul>
 <h2 id="signals">Signals</h2>
 <ul>
@@ -103,6 +105,7 @@
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#icon-method" translate="no">icon</a></b>(<i>name</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#iconIn-method" translate="no">iconIn</a></b>(<i>name</i>, <i>ink</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#keyIcon-method" translate="no">keyIcon</a></b>(<i>key</i>)</li>
+<li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#onTopLayer-method" translate="no">onTopLayer</a></b>(<i>item</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#overlayShown-method" translate="no">overlayShown</a></b>(<i>layer</i>, <i>shown</i>)</li>
 <li class="fn" translate="no"><b><a href="qml-ravving-controls-interaction.html#withIcons-method" translate="no">withIcons</a></b>(<i>text</i>, <i>ink</i>, <i>size</i>)</li>
 </ul>
@@ -124,6 +127,12 @@
 <!-- @@@knobMode -->
 </div>
 <div class="fnitem">
+<!-- $$$knobs -->
+<h3 class="fn qml-member qml-property" translate="no" id="knobs-prop"><span class="name">knobs</span> : <span class="type">bool</span></h3>
+<p>Whether the knob hints show: the knob badges (<a href="qml-ravving-controls-knobbadge.html" translate="no">KnobBadge</a>) and a knob group's frame (<a href="qml-ravving-controls-knobgroup.html" translate="no">KnobGroup</a>). On on the device; off on a desktop, a learned controller's knobs included (they still turn what has the focus). The app sets it.</p>
+<!-- @@@knobs -->
+</div>
+<div class="fnitem">
 <!-- $$$knobsAbsolute -->
 <h3 class="fn qml-member qml-property" translate="no" id="knobsAbsolute-prop"><span class="name">knobsAbsolute</span> : <span class="type">bool</span></h3>
 <p>Knobs 1&ndash;3 are fixed pots (the Z2_V5B kit): a control they drive waits for its pot to pass its value before following (<a href="qml-ravving-controls-pickup.html" translate="no">PickUp</a>). The app sets it from the device.</p>
@@ -140,6 +149,12 @@
 <h3 class="fn qml-member qml-property" translate="no" id="overlays-prop"><span class="name">overlays</span> : <span class="type">list</span>&lt;<span class="type">QtObject</span>&gt;</h3>
 <p>The modal layers up (the dialogs, the MENU drawer, a drop-down's list), and whether any is. The modal dimmer stops items (buttons, MouseAreas) under a dialog, but not pointer handlers: Qt Quick hands a press to every handler under it even after an item above took it, and a DragHandler then takes the drag over. So every handler on a page binds <code translate="no">enabled: !Interaction.inputBlocked</code> (the app's Session.<a href="qml-ravving-controls-interaction.html#inputBlocked-prop" translate="no">inputBlocked</a> reads this one; tools/check-handlers.py checks it); disabling the page instead would close the drop-downs on it (a disabled <a href="qml-ravving-controls-combobox.html" translate="no">ComboBox</a> shuts its list). Kept by identity, not counted, so a layer reported up twice (an open() repeated) or down twice cannot leave the page blocked.</p>
 <!-- @@@overlays -->
+</div>
+<div class="fnitem">
+<!-- $$$wheel -->
+<h3 class="fn qml-member qml-property" translate="no" id="wheel-prop"><span class="name">wheel</span> : <span class="type">bool</span></h3>
+<p>Whether a mouse wheel over a value turns it (<a href="qml-ravving-controls-wheelnotches.html" translate="no">WheelNotches</a>: a Knob, a <a href="qml-ravving-controls-leddisplay.html" translate="no">LedDisplay</a>): on a desktop. The app sets it.</p>
+<!-- @@@wheel -->
 </div>
 <h2>Signal Documentation</h2>
 <div class="fnitem">
@@ -174,6 +189,12 @@
 <h3 class="fn qml-member qml-method" translate="no" id="keyIcon-method"><span class="name">keyIcon</span>(<i>key</i>)</h3>
 <p>The icon <a href="qml-ravving-controls-interaction.html#withIcons-method" translate="no">withIcons</a>() draws for the character <i translate="no">key</i> (&quot;&quot; for none).</p>
 <!-- @@@keyIcon -->
+</div>
+<div class="fnitem">
+<!-- $$$onTopLayer[overload1]$$$onTopLayer -->
+<h3 class="fn qml-member qml-method" translate="no" id="onTopLayer-method"><span class="name">onTopLayer</span>(<i>item</i>)</h3>
+<p>Whether <i translate="no">item</i> is inside the modal layer on top (the dialog open over the others): it still takes the pointer while that layer is up. False with no layer up.</p>
+<!-- @@@onTopLayer -->
 </div>
 <div class="fnitem">
 <!-- $$$overlayShown[overload1]$$$overlayShown -->

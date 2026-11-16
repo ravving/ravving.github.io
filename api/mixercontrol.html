@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- controllermixer.cpp -->
+  <meta name="description" content="One of a mixer strip's controls a controller's key, knob or fader can be learned as (MidiInput's MIXER controls, LearnedMixer): a strip's volume, pan, mute, solo, take or pause, or the transport's ❚❚, a bar back or on, the previous or the next machine. Its id, as the settings keep it: MIXER1_VOLUME to MIXER8_PAUSE, MIXER_PAUSE, MIXER_BACK, MIXER_ON, MIXER_PREVIOUS, MIXER_NEXT.">
+  <meta name="keywords" content="struct">
+  <title>MixerControl Struct | ravving C++ API 0.7.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
+  <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ravving-api-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark')
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
+  <script src="ravving-api.js?v=3135469da3" defer></script>
+</head>
+<body class="api">
+<a class="skip" href="#doc">Skip to the text</a>
+<header class="nav">
+  <div class="wrap">
+    <button class="nav-toggle" type="button" aria-label="Show the classes" aria-controls="api-side">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <a class="brand" href="../index.html" aria-label="ravving">
+      <picture><source media="(max-width: 600px)" srcset="../assets/ravv.svg" width="492" height="104"><img class="wordmark" src="../assets/ravving.svg" alt="ravving" width="822" height="104"></picture>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="../features.html#features">Features</a>
+      <a href="../features.html#shortcuts">Shortcuts</a>
+      <a href="../docs/index.html">Docs</a>
+      <a href="index.html" aria-current="true">API reference</a>
+    </nav>
+    <button class="theme-toggle" type="button" title="Light or dark" aria-label="Switch between light and dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-5.4-5.4c0-1.81.89-3.41 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zM16.24 17.66l1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="crumbs" aria-label="Breadcrumbs">
+  <ul class="wrap">
+<li><a href="index.html">ravving C++ API</a></li>
+<li><a href="ravving-module.html" translate="no">C++ Classes</a></li>
+<li>MixerControl</li>
+  </ul>
+</nav>
+<main class="wrap api-wrap">
+<div class="scrim"></div>
+<aside class="api-side" id="api-side">
+  <form class="api-search" role="search" onsubmit="return false">
+    <input type="search" id="api-search" placeholder="Search the API… Studio, setLevel" aria-label="Search the API reference" autocomplete="off" spellcheck="false">
+    <ol id="api-results" hidden></ol>
+  </form>
+  <nav id="api-nav" aria-label="Classes"></nav>
+</aside>
+<article class="api-doc" id="doc">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">MixerControl Struct</h1>
+<!-- $$$MixerControl-brief -->
+<p>One of a mixer strip's controls a controller's key, knob or fader can be learned as (<a href="midiinput.html" translate="no">MidiInput</a>'s MIXER controls, <a href="learnedmixer.html" translate="no">LearnedMixer</a>): a strip's volume, pan, mute, solo, take or pause, or the transport's ❚❚, a bar back or on, the previous or the next machine. Its id, as the settings keep it: <code translate="no">MIXER1_VOLUME</code> to <code translate="no">MIXER8_PAUSE</code>, <code translate="no">MIXER_PAUSE</code>, <code translate="no">MIXER_BACK</code>, <code translate="no">MIXER_ON</code>, <code translate="no">MIXER_PREVIOUS</code>, <code translate="no">MIXER_NEXT</code>. <a href="#details">More...</a></p>
+<!-- @@@MixerControl -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;controllermixer.h&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="mixercontrol-members.html">List of all members, including inherited members</a></li>
+<li>MixerControl is part of <a href="ravving-audio.html">Audio, recording and export</a>.</li>
+</ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="mixercontrol.html#Part-enum" translate="no">Part</a></b> { Volume, Pan, Mute, Solo, Record, &hellip;, Next }</td></tr>
+</table></div>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="mixercontrol.html#continuous" translate="no">continuous</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="mixercontrol.html#id" translate="no">id</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="mixercontrol.html#transport" translate="no">transport</a></b>() const</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;MixerControl&gt; </td><td class="memItemRight bottomAlign"><b><a href="mixercontrol.html#all" translate="no">all</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> std::optional&lt;MixerControl&gt; </td><td class="memItemRight bottomAlign"><b><a href="mixercontrol.html#parse" translate="no">parse</a></b>(const QString &amp;<i>id</i>)</td></tr>
+</table></div>
+<!-- $$$MixerControl-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+</div>
+<!-- @@@MixerControl -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<div class="fnitem">
+<!-- $$$Part$$$Volume$$$Pan$$$Mute$$$Solo$$$Record$$$Pause$$$Back$$$On$$$Previous$$$Next -->
+<h3 class="fn" translate="no" id="Part-enum">enum class MixerControl::<span class="name">Part</span></h3>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code translate="no">MixerControl::Part::Volume</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">the level</td></tr>
+<tr><td class="topAlign"><code translate="no">MixerControl::Part::Pan</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">the pan</td></tr>
+<tr><td class="topAlign"><code translate="no">MixerControl::Part::Mute</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">the mute, flipped on a press</td></tr>
+<tr><td class="topAlign"><code translate="no">MixerControl::Part::Solo</code></td><td class="topAlign tblval"><code translate="no">3</code></td><td class="topAlign">the solo, flipped on a press</td></tr>
+<tr><td class="topAlign"><code translate="no">MixerControl::Part::Record</code></td><td class="topAlign tblval"><code translate="no">4</code></td><td class="topAlign">the take, started or ended on a press</td></tr>
+<tr><td class="topAlign"><code translate="no">MixerControl::Part::Pause</code></td><td class="topAlign tblval"><code translate="no">5</code></td><td class="topAlign">the strip's written pattern paused or played again; the transport paused or going on (strip -1)</td></tr>
+<tr><td class="topAlign"><code translate="no">MixerControl::Part::Back</code></td><td class="topAlign tblval"><code translate="no">6</code></td><td class="topAlign">the transport a bar back (strip -1 only)</td></tr>
+<tr><td class="topAlign"><code translate="no">MixerControl::Part::On</code></td><td class="topAlign tblval"><code translate="no">7</code></td><td class="topAlign">the transport a bar on (strip -1 only)</td></tr>
+<tr><td class="topAlign"><code translate="no">MixerControl::Part::Previous</code></td><td class="topAlign tblval"><code translate="no">8</code></td><td class="topAlign">the previous machine on screen (strip -1 only)</td></tr>
+<tr><td class="topAlign"><code translate="no">MixerControl::Part::Next</code></td><td class="topAlign tblval"><code translate="no">9</code></td><td class="topAlign">the next machine on screen (strip -1 only)</td></tr>
+</table></div>
+<!-- @@@Part -->
+</div>
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<div class="fnitem">
+<!-- $$$all[overload1]$$$all -->
+<h3 class="fn" translate="no" id="all"><code class="details extra" translate="no">[static]</code> <span class="type">QList</span>&lt;<span class="type"><a href="mixercontrol.html" translate="no">MixerControl</a></span>&gt; MixerControl::<span class="name">all</span>()</h3>
+<p>Returns every control: each strip's six in order, then the transport's five.</p>
+<!-- @@@all -->
+</div>
+<div class="fnitem">
+<!-- $$$continuous[overload1]$$$continuous -->
+<h3 class="fn" translate="no" id="continuous"><span class="type">bool</span> MixerControl::<span class="name">continuous</span>() const</h3>
+<p>Returns whether the control sets a value (the volume, the pan) rather than flipping one.</p>
+<!-- @@@continuous -->
+</div>
+<div class="fnitem">
+<!-- $$$id[overload1]$$$id -->
+<h3 class="fn" translate="no" id="id"><span class="type">QString</span> MixerControl::<span class="name">id</span>() const</h3>
+<p>Returns the control's id: <code translate="no">MIXER&lt;strip</code> from 1&gt;_&lt;part&gt;, or <code translate="no">MIXER_&lt;part&gt;</code> for the transport's.</p>
+<!-- @@@id -->
+</div>
+<div class="fnitem">
+<!-- $$$parse[overload1]$$$parseconstQString& -->
+<h3 class="fn" translate="no" id="parse"><code class="details extra" translate="no">[static]</code> <span class="type">std::optional</span>&lt;<span class="type"><a href="mixercontrol.html" translate="no">MixerControl</a></span>&gt; MixerControl::<span class="name">parse</span>(const <span class="type">QString</span> &amp;<i>id</i>)</h3>
+<p>Returns the control whose <a href="mixercontrol.html#id" translate="no">id</a>() is <i translate="no">id</i>, none for any other id.</p>
+<!-- @@@parse -->
+</div>
+<div class="fnitem">
+<!-- $$$transport[overload1]$$$transport -->
+<h3 class="fn" translate="no" id="transport"><span class="type">bool</span> MixerControl::<span class="name">transport</span>() const</h3>
+<p>Returns whether the control is the transport's, not a strip's.</p>
+<!-- @@@transport -->
+</div>
+</div>
+</article>
+</main>
+<footer class="api-footer">
+  <div class="wrap">
+    <p>ravving is by Camilo Higuita: its own source files are GPL-3.0-or-later, the program as a whole GPL-3.0-only (the README says why). This reference is generated from the C++ sources by QDoc (tools/build-api-docs.py); edit the <code>/*! */</code> blocks in the sources, not these pages.</p>
+  </div>
+</footer>
+</body>
+</html>

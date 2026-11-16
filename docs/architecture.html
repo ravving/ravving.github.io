@@ -109,7 +109,7 @@
  │ Ravving         page state, hardware → HardwareEvent   &quot;ravving&quot;    │
  │ Hardware        the `Hardware.on…` attached property  import Ravving│
  │ Fonts           the built-in typefaces                 &quot;fonts&quot;      │
- │ ZynthboxBridge  loads libzyncoder + libravving         &quot;zynthbox&quot;   │
+ │ DeviceBridge  loads libzyncoder + libravving         &quot;zynthbox&quot;   │
  │ HardwareSwitches  polls the buttons → MidiRouter's CUIA queue        │
  │ HardwareKnobs   polls the 4 knobs (turns / pot positions)            │
  │ UnixSignals     SIGTERM → LEDs off, then _exit (as zynthbox-qml)     │
@@ -128,8 +128,8 @@ delivered to the item with <strong>active focus</strong>, bubbling to its parent
 them.</p>
 <pre><code>device button ─► HardwareSwitches (zyncoder poll, 20 ms)
                    └► MidiRouter.enqueueCuiaCommand(&quot;SWITCH_STEP3_RELEASED&quot;)
-MIDI-mapped CUIA ─► MidiRouter ─► cuiaEvent ─► ZynthboxBridge ─► Ravving::handleCuia ─┐
-device knob ─► HardwareKnobs (zynpot poll) ─► Ravving::handleKnobTurn / handleKnobMove ─┤
+MIDI-mapped CUIA ─► MidiRouter ─► cuiaEvent ─► DeviceBridge ─► Ravving::handleCuia ─┐
+device knob ─► HardwareKnobs (zynpot poll, PotFilter) ─► Ravving::handleKnobTurn / handleKnobMove ─┤
 keyboard (dev) ─► Main.qml Shortcuts ─► ravving.simulateCuia / simulateKnob ────────────┤
                                                                                          ▼
                         HardwareEvent ─► Hardware::dispatch(window): activeFocusItem,
@@ -185,6 +185,18 @@ still not accepted. A handler that runs accepts the event unless it sets
   and knob 2 sets the level. BACK or a tap in the grid give the knobs back to the rows
   (<code>StepGrid.knobsActive</code> is off while the strip has them).</li>
 </ul>
+<h3 id="fixed-pots">Fixed pots</h3>
+<ul>
+<li>A Z2_V5B pot left alone still reads a few steps up and down. <code>PotFilter</code>
+  (src/backend/potfilter.h) keeps that noise out of HardwareKnobs.</li>
+<li>A resting pot reports nothing until it moves more than 6 of its 1024 steps.</li>
+<li>Then every move over 2 steps counts, until it rests again (600 ms without one).</li>
+<li>The ends snap within 16 steps, so a control's minimum and maximum are reached.</li>
+<li>Every fixed-pot taker goes through <code>PickUp</code>, as FIXED KNOBS says (pick up, jump or scale).</li>
+<li>The takers: the <code>KnobGroup</code>s, the control center, and the drum and SLOT SAMPLER grids
+    (<code>StepGrid</code>: a row's mute, solo and level).</li>
+<li>So a pot never throws a value to its own position unasked.</li>
+</ul>
 <h3 id="recording-and-the-metronome">Recording and the metronome</h3>
 <ul>
 <li>RECORD on an instrument page records that machine's take: the strip's ● shows ●, the count-in
@@ -199,14 +211,45 @@ still not accepted. A handler that runs accepts the event unless it sets
   wired to the master.</li>
 </ul>
 <h3 id="an-external-midi-controller">An external MIDI controller</h3>
-<p><code>MidiInput</code> (<code>studio.midiIn</code>) takes every controller libravving's router sees (USB, Bluetooth).
-A controller plays the machine on screen, on every page, through the same path as the step keys,
-so REC records it. LIVE, which may be left on another machine, is the step keys' only.</p>
+<p>A controller plays the machine on screen, on every page, through the same path as the step keys,
+so REC records it. LIVE, which may be left on another machine, is the step keys' only. The
+controllers go through four layers, each with one job.</p>
+<h4 id="the-registry">The registry</h4>
+<ul>
+<li><code>ConnectionRegistry</code> (<code>studio.controllers</code>) reads libravving's router: which ports are
+  controllers, and which ports are one controller. It is the one place a port's name is
+  understood:</li>
+<li><code>keyOf</code>: PipeWire's bridge prefix and underscores go, so a message's name and the list's
+    name are one key;</li>
+<li><code>transportOf</code>: USB, Bluetooth, the serial MIDI, a virtual port;</li>
+<li><code>isSendSide</code>: a Bluetooth device's <code>:in</code> port is only the way to it, see
+    <a href="bluetooth.html">Bluetooth</a>.</li>
+<li>A <code>Controller</code> has one <code>ControllerId</code>, a known controller's label (<code>ControllerProfiles</code>) or
+  its connection's key, and its <code>Connection</code>s (a cable's several ports, its radio beside its
+  cable). One of them is primary, the one what is sent to it goes through (a cable before
+  Bluetooth). QML lists <code>ids</code> and reads <code>describe(id)</code> (title, label, connections with their
+  transport).</li>
+<li>The registry parks every controller's raw notes on an unused track as it comes, so they
+    reach <code>MidiInput</code> only.</li>
+</ul>
+<h4 id="the-multiplexer-and-the-transport">The multiplexer and the transport</h4>
+<ul>
+<li><code>ConnectionMultiplexer</code> turns the router's messages into one stream of <code>MidiMessage</code>s, each
+  stamped with its controller and connection. The same message come from another of the
+  controller's connections within 150 ms is the one copy the bridges and the radio make, and is
+  dropped. A repeat on one connection (a knob's ticks) always passes. System Exclusive goes the
+  same way (<code>sysex(controller, bytes)</code>).</li>
+<li><code>MidiTransport</code> is the way out: anything sent to a controller (a driver's SysEx, a surface's
+  lights) names the controller, and <code>RouterTransport</code> takes it to the primary connection's send
+  target. Tests use a <code>FakeTransport</code> that records.</li>
+<li><code>MidiInput</code> (<code>studio.midiIn</code>) is what a controller's messages become, below.</li>
+</ul>
 <h4 id="its-settings">Its settings</h4>
 <ul>
-<li>Each controller has settings of its own, by its name: <code>ravving/midi</code> in QSettings, a readable
-  INI with the drum keys as <code>note=slot</code> and the controls as <code>CONTROL=message</code>. SETTINGS · MIDI
-  (<code>MidiSettings</code>) lists the controllers and opens one at a time.</li>
+<li>Each controller has settings of its own, by its id: <code>ravving/midi</code> in QSettings, a readable
+  INI with the drum keys as <code>note=slot</code> and the controls as <code>CONTROL=message</code> (<code>note 1 60</code>,
+  <code>cc 1 7</code>, <code>bend 1</code>). SETTINGS · MIDI (<code>MidiSettings</code>) lists the controllers, one row each
+  however many ways it is connected (<code>ControllerInfo</code> says how), and opens one at a time.</li>
 <li>The settings:</li>
 </ul>
 <table>
@@ -227,37 +270,114 @@ so REC records it. LIVE, which may be left on another machine, is the step keys'
 </tr>
 <tr>
 <td>velocity</td>
-<td>as sent, through a SOFT or SOFTER curve (pads that tap under 10), or FIXED</td>
+<td>as sent, through a SOFT or SOFTER curve (pads that tap under 10) or an EVEN one (every touch at half or more: a surface whose slow presses arrive at 1), or FIXED</td>
 </tr>
 <tr>
 <td>expression</td>
-<td>whether its bend, pressure and CCs play</td>
+<td>whether its bend, pressure and performance CCs play (never bank select, data entry, NRPN / RPN, volume, pan or the channel modes: EngineMidi)</td>
+</tr>
+<tr>
+<td>pressure</td>
+<td>as sent, through a LIGHTER or LIGHT curve (a surface that needs a hard press) or a FIRM or FIRMER one (a surface at its top at a medium press)</td>
 </tr>
 <tr>
 <td>bend range</td>
 <td>the semitones its full bend is</td>
 </tr>
+<tr>
+<td>surface</td>
+<td>the driver hosting it as a control surface (<code>mackie</code>), or none; kept once chosen in SETTINGS, the defaults' otherwise</td>
+</tr>
+<tr>
+<td>knobs</td>
+<td>how its endless knobs send their turns (the defaults' only, never kept), or told by their values</td>
+</tr>
+<tr>
+<td>lights</td>
+<td>whether its learned mixer keys are lit back</td>
+</tr>
+<tr>
+<td>pickup</td>
+<td>whether its faders (a surface's, or learned on VOLUME / PAN) take a level over only once they reach it (<code>FaderPickup</code>); off, any move sets the level</td>
+</tr>
 </tbody>
 </table>
 <ul>
-<li>A controller starts from the known defaults in <code>data/midi-devices.json</code>, matched by a part of
-  its name (a Lightpad's ±48 bend and softer curve), until the user changes one. A controller
-  that says its own bend range (RPN 0, as the MPE specification has one do on connecting) sets
-  it. FORGET goes back to the defaults.</li>
+<li>A controller starts from the known defaults in <code>data/midi-devices.json</code>, until the user
+  changes one. A controller that says its own bend range (RPN 0, as the MPE specification has
+  one do on connecting) sets it.</li>
+<li><code>ControllerProfiles</code> picks the first entry whose <code>match</code> is a part of its name and, when
+    the entry has a <code>usb</code> id, whose chip it is on (a Lightpad's ±48 bend and softer curve).</li>
+<li>FORGET drops everything kept for the controller: the settings here, whether it is hosted,
+  its octave's link.</li>
+</ul>
+<h5 id="the-settings-store">The settings store</h5>
+<ul>
+<li>The settings are one value, <code>ControllerSettings</code>: the fields above as <code>Field</code>s, named as
+  they are kept and shown (the INI key, <code>toMap()</code>'s key and <code>setOption()</code>'s option), plus
+  <code>hits</code>, <code>controls</code>, <code>label</code>, <code>surface</code>, <code>knobs</code>, <code>host</code>, <code>octaveLinked</code>.</li>
+<li>They are read and written by one object, the <code>ControllerSettingsStore</code>: the <code>ravving/midi</code>
+  file, one group per controller named by its id, a controller's profile under what the group
+  says. The id is a known controller's label, so its cable and its radio share it; else the
+  connection's key.</li>
+<li>Every change goes through <code>update(id, change)</code>, which clamps, saves and tells <code>changed(id)</code>.
+  <code>MidiInput</code> (the fields above, the hits, the controls), <code>ControllerDrivers</code> (<code>host</code>,
+  <code>surface</code>) and <code>ControllerOctaves</code> (<code>octaveLinked</code>) all write through it and reread on its
+  signal. A group kept under a connection's own name is read until the next save moves it to
+  the controller's.</li>
+</ul>
+<h5 id="profiles-and-enumerations">Profiles and enumerations</h5>
+<ul>
+<li>The profiles file is checked as it is read (<code>ControllerProfiles::problems()</code>). <code>match</code>,
+  <code>usb</code>, <code>label</code>, <code>surface</code>, <code>knobs</code> are text, and <code>channel</code>, <code>transpose</code>, <code>velocity</code>, <code>curve</code>,
+  <code>pressure</code>, <code>bendRange</code> numbers. <code>expression</code>, <code>lights</code>, <code>pickup</code>, <code>host</code> are booleans, <code>hits</code>
+  and <code>controls</code> objects. An unknown or wrong-typed key is dropped and logged
+  (<code>ravving.midi.profiles</code>), an entry without <code>match</code> or <code>usb</code> too.</li>
+<li>What the controllers' code tells QML as a choice is an enumeration, one QML type <code>Midi</code>
+  (<code>Midi.Ready</code>, <code>Midi.Hit</code>, <code>Midi.Knobs</code>): <code>Midi::DriverState</code>, <code>Midi::LearnTarget</code>,
+  <code>Midi::ControlGroup</code>. A protocol's id (<code>mackie</code>, <code>roli</code>) stays a string: it names a driver,
+  which owns it.</li>
 </ul>
 <h4 id="what-it-plays">What it plays</h4>
 <ul>
+<li>Chord keys: on the CHORDS view the white keys from C are the chord pads 1 to 7 in every octave
+  and the black keys play nothing (<code>ChordMachine::keyForNote</code>). A note two held keys share
+  is struck once and ends with the last of them (<code>Machine::press</code>, <code>Machine::release</code>).</li>
 <li>Drum keys: a note plays the drum row (and PAD SAMPLER pad) it was learned as. LEARN DRUMS
   takes one key per row, each heard as it learns (<code>MidiLearnPopup</code>, with SKIP, UNDO and
   CLEAR). Otherwise GM drum notes 35–59 map by role (<code>DrumKit::roleForGmNote</code>) and any other
   note cycles through the rows from C2.</li>
-<li>Velocity scales the hit: <code>Machine::playLive(key, accented, touch)</code>, where 100 plays the row's
-  level as it is. 100 or more records an accent.</li>
+</ul>
+<h5 id="velocity-and-expression">Velocity and expression</h5>
+<ul>
+<li>Velocity scales the hit: <code>Machine::press(hold, id, key, accented, touch)</code>, where 100 plays the row's
+  level as it is. 100 or more records an accent, and a take keeps the velocity itself
+  (<code>Machine::setHitVelocity</code>), so it plays back as loud as it was heard. That is a bass or
+  lead note's own velocity, a chord's, or a drum, slot or pad hit's VELOCITY (100 % at most).</li>
 <li>Expression goes to the machine on screen (<code>Machine::sendLive</code>). That is pitch bend, scaled
   from the controller's range to the engines' ±2; channel pressure; and the CCs no control is
   learned as (the mod wheel, sustain, an MPE slide's CC 74).</li>
 <li>It follows the channel of the key pressed last, and the bend is centred again when the last
   key is let go. The drum pages take none.</li>
+</ul>
+<h5 id="every-key-comes-up">Every key comes up</h5>
+<ul>
+<li>The machine holds every live key, by who holds it (<code>Machine::Hold</code>): a pad or step key, a
+  controller's key, the editor's preview, a latch, an audition. Each holder's release ends only
+  what its press began; a note another holder sounds goes on.</li>
+<li>A controller's key is one holder per controller, channel and note (<code>MidiInput::pressed</code>,
+  <code>released</code>). A second MPE touch on a note, or two notes on one chord degree, is not ended by
+  the other's release.</li>
+<li><code>Studio</code> plays it on the machine on screen (<code>Studio::playedMachine</code>, which maps the note with
+  <code>Machine::keyForNote</code>). Its release goes to every machine, so a page changed while the key is
+  down still ends it.</li>
+<li>Every press gets one release (<code>MidiInput::releaseNote</code>). A key's release is read before any
+  other filter: a surface hosted, a learn begun, the key learned as a control or the channel
+  changed while it was held cannot keep it. A key down again without its release ends its first
+  note.</li>
+<li>All notes off (<code>Studio::allNotesOff</code>, <code>Machine::silence</code>) forgets every hold.</li>
+<li>A take records the keys a pad or a controller holds (<code>Machine::keyPressed</code>, <code>keyReleased</code>), and
+  STEP entry writes them (<code>MachinePanel</code>).</li>
 </ul>
 <h4 id="its-expression-in-a-take">Its expression in a take</h4>
 <ul>
@@ -280,57 +400,231 @@ so REC records it. LIVE, which may be left on another machine, is the step keys'
   a relative encoder's 1 / 65 and 127 / 63 count too.</li>
 <li>Plugging one in or out shows a <code>Toast</code>: a dark pill, bottom centre. The control center's MIDI
   card lists them and opens SETTINGS · MIDI.</li>
-<li>Debug: <code>QT_LOGGING_RULES="ravving.midi.debug=true"</code>.</li>
+<li>Debug: <code>QT_LOGGING_RULES="ravving.midi.debug=true"</code> (the multiplexer's messages),
+  <code>ravving.midi.rpn.debug=true</code> (a controller saying its bend range),
+  <code>ravving.midi.profiles.debug=true</code> (the known controllers read).</li>
 </ul>
 <h3 id="controller-drivers-and-their-capabilities">Controller drivers and their capabilities</h3>
-<p><code>ControllerDrivers</code> (<code>studio.drivers</code>) runs a <code>ControllerDriver</code> for each connected controller
-whose protocol ravving knows. A driver is picked by a part of the controller's name
-(<code>addDriver(id, namePart, factory)</code>); one can be turned off per controller (SETTINGS · MIDI,
-HOST).</p>
+<p><code>ControllerDrivers</code> (<code>studio.drivers</code>) runs a <code>ControllerDriver</code> for each controller the
+registry lists whose protocol ravving knows. A protocol is added as a <code>DriverSpec</code>
+(<code>addDriver(TheDriver::spec())</code>):</p>
 <ul>
-<li>The base, <code>ControllerDriver</code>: the transport (libravving's <code>Router::sendSysex</code> / <code>onSysex</code>,
-  over its own <code>SysexHelper</code> copies), request / reply pairing with timeouts, a keep-alive, 7-bit
-  packing; <code>receiveSysex()</code> gets the controller's messages.</li>
+<li>its id;</li>
+<li>which controllers it is for (<code>matches</code>): a part of the controller's id or of any of its
+  connections' keys, <code>DriverSpec::named()</code>; or the ones whose settings name it as their
+  <code>surface</code>, <code>DriverSpec::surface()</code>;</li>
+<li>how its device is made (<code>make</code>, given the <code>Controller</code>, its <code>ControllerSettings</code> and the
+  <code>MidiTransport</code>);</li>
+<li>which settings remake it (<code>remakeOn</code>).</li>
+</ul>
+<p>The first spec that matches hosts the controller; hosting can be turned off per controller
+(SETTINGS · MIDI, HOST). A controller is one device however many connections it has, made for
+its <code>ControllerId</code>: it stays while any connection does, and what it sends goes out through the
+<code>MidiTransport</code>, which picks the connection.</p>
+<p><code>devices()</code> lists one entry per controller (<code>id</code>, <code>title</code>, <code>protocol</code>, <code>state</code> (a
+<code>Midi.DriverState</code>), <code>facts</code>, <code>enabled</code>). The device is remade when another spec matches (a
+surface chosen or dropped), or when a setting its spec remakes on changes (the Mackie surface's
+<code>knobs</code> and <code>pickup</code>). It is started or stopped when <code>host</code> flips. All of that is read from the
+settings store.</p>
+<h4 id="the-driver-base-and-its-messages">The driver base and its messages</h4>
+<ul>
+<li>The base, <code>ControllerDriver</code>: made with the controller's id, its protocol id and the
+  transport; request / reply pairing with timeouts, a keep-alive, 7-bit packing.
+  <code>receiveSysex()</code> gets the controller's messages (from the multiplexer), <code>send()</code> hands its
+  own to the transport.</li>
 <li>The way out: a controller's messages go on its ALSA sequencer port, whole. PipeWire's JACK
   bridge hands a long one to USB in pieces, which a block drops. The way in: the bridge's
   chunks are put back together in <code>SysexHelper</code>.</li>
+<li>Short messages out (a control surface's lights and faders): <code>ControllerDriver::sendMidi()</code>
+  through libravving's <code>Router::sendMidi</code>, which writes a batch to the controller's own output
+  port at the next cycle, together. The controller's output stays disabled, so the sequencer's
+  notes never reach it.</li>
+<li>Short messages in: a driver whose <code>controlSurface()</code> is true gets every message from its
+  controller first (<code>MidiInput::setSurface()</code>, <code>receiveMidi()</code>), from any of its connections.
+  The multiplexer's copies are already dropped (a knob's ticks on one connection all arrive).
+  What it leaves works the learned keys and knobs only and never plays.</li>
 </ul>
 <h4 id="capabilities">Capabilities</h4>
 <p>What a controller can do beside its notes is a capability:</p>
 <ul>
-<li>an interface a driver also inherits (<code>ControllerCapability</code>, with the controller's name);</li>
-<li>a hub that keeps every driver that has it (<code>ControllerHub</code>: <code>attach</code> / <code>detach</code>).</li>
+<li>an interface a driver also inherits (<code>ControllerCapability</code>, with the controller's id,
+  <code>controller()</code>);</li>
+<li>a hub that keeps every driver that has it (<code>ControllerHub</code>: <code>attach</code> / <code>detach</code>, the one way
+  in: a <code>LearnedMixer</code> joins <code>ControllerMixers</code> the same way a surface's driver does).</li>
 </ul>
 <p><code>ControllerDrivers::addHub()</code> offers each running driver to every hub. A new capability is a
 new interface and hub, with no change to the drivers' registry; a new driver only inherits the
-interfaces it has.</p>
+interfaces it has. A mixer's requests are two kinds: a strip's (<code>StripRequest</code>: level, pan,
+mute, solo, record, stop) and the transport's or the screen's (<code>TransportRequest</code>: pause, a
+page, a skip).</p>
+<h4 id="adding-a-protocol">Adding a protocol</h4>
+<ol>
+<li>A <code>ControllerDriver</code> subclass: <code>start()</code>, <code>stop()</code>, <code>handle()</code>; <code>send()</code> / <code>request()</code> for
+   the way out; the capability interfaces it has, each <code>controller()</code> returning <code>id()</code>.</li>
+<li>Its <code>static DriverSpec spec()</code>.</li>
+<li><code>m_drivers-&gt;addDriver(TheDriver::spec())</code> in <code>Studio</code>.</li>
+<li>A test on a <code>FakeTransport</code> (<code>tests/tst_controllerdrivers.cpp</code>, <code>aProtocolIsOnlyASpec</code>).</li>
+</ol>
+<p>Nothing else learns the protocol's name: the hubs, the settings, SETTINGS · MIDI and the
+control center work from the <code>ControllerDrivers</code> list.</p>
+<h5 id="the-capability-hubs">The capability hubs</h5>
 <ul>
 <li><code>ControllerOctave</code>, hub <code>ControllerOctaves</code> (<code>studio.octaves</code>): the controller's octave.
   Linked, it follows the machine on screen's (<code>followOctave</code>), and its own buttons come back
-  as <code>octaveRequested</code>. Unlinking is per controller (<code>setLinked</code>, kept by its name). Unlinked,
+  as <code>octaveRequested</code>. Unlinking is per controller (<code>setLinked</code>, the settings store's
+  <code>octaveLinked</code>). Unlinked,
   the hub still shows the controller's own octave (<code>octaves</code>), and <code>resetOctave</code> puts it back
   to 0 (SETTINGS · MIDI, OCTAVE).</li>
 <li><code>ControllerScale</code>, hub <code>ControllerScales</code> (<code>studio.scales</code>): the project's key and scale
   (<code>followKey(root, steps)</code>), for a controller that lights or limits its notes by them.</li>
+<li><code>ControllerMixer</code>, hub <code>ControllerMixers</code> (<code>studio.mixers</code>): mixer strips. <code>MixerLink.qml</code>
+  sets each of <code>Rave.instruments</code> as a strip (<code>setStrip(index, {level, unity, pan, muted,
+  soloed, paused, take})</code>) whenever any of them changes, wherever from, and the transport
+  (<code>setTransport(playing, recording)</code>). The hub passes on what changed only (<code>followStrip</code>,
+  <code>followTransport</code>), and the whole mix to a controller that connects.</li>
+<li>The strips' controls come back as <code>levelRequested</code>, <code>panRequested</code>, <code>muteRequested</code>,
+    <code>soloRequested</code>, <code>recordRequested</code> and <code>stopRequested</code>, which <code>MixerLink.qml</code> does as the
+    MIXER's own controls (<code>Session.toggleMuted</code>, <code>toggleSoloed</code>, <code>toggleTake</code>,
+    <code>machine.paused</code>). A surface is hosted once per controller (above), so a strip's request
+    comes once per press.</li>
 <li><code>Main.qml</code> pushes the machine on screen's octave to <code>studio.octaves.setOctave</code> and the key to
-  <code>studio.scales.setKey</code>.</li>
+  <code>studio.scales.setKey</code> and <code>studio.keyWatch.setKey</code>.</li>
+</ul>
+<h5 id="tap-tempo">Tap tempo</h5>
+<ul>
+<li><code>TapTempo</code> (<code>studio.tapTempo</code>): TAP tempo. <code>LedDisplay</code> reports a tap that did not drag
+  (<code>tapped(ms)</code>, timed at the press), and <code>Main.qml</code> ALT + METRONOME; both go to
+  <code>Session.tapTempo(ms)</code>. From a run's second tap the mean of its last four gaps sets the tempo
+  (<code>tempoTapped</code> → <code>Studio::setBpm</code>, not while an external clock runs).</li>
+<li>A gap 40 % off the run's mean waits: the next gap agreeing with it is a new tempo, else it
+    was a stray tap and the run starts again. A two-second pause starts over. <code>taps</code> counts the
+    taps after the last pause for the BPM caption. ALT + METRONOME is timed at its press
+    (<code>Date.now() - event.heldMs</code>).</li>
+</ul>
+<h5 id="the-key-watch">The key watch</h5>
+<ul>
+<li><code>KeyWatch</code> (<code>studio.keyWatch</code>): a controller says nothing of its own key, so its notes are
+  read. <code>MidiInput::notePlayed(controller, note)</code> (every note-on not learned as a drum row or
+  pad) feeds <code>heard()</code> while <code>pitched</code> (bound in <code>Main.qml</code> to the page on screen's
+  <code>scaleBound</code>: the lead, the bass, the chords' NOTES).</li>
+<li>Of a controller's last 16 notes (at least 12, five pitch classes or more), three or more
+    outside the key while all fit the same scale a few semitones away is a warning. It is
+    <code>offkey:&lt;controller&gt;</code> (component <code>midi</code>), naming the key they fit. It clears when they fit
+    the project's key again, and on <code>setKey</code>.</li>
 </ul>
 <h4 id="the-blocks-host">The BLOCKS host</h4>
+<h5 id="bringing-the-blocks-up">Bringing the blocks up</h5>
+<p><code>RoliBlocks</code> (" BLOCK"), the BLOCKS protocol's host, in order:</p>
 <ul>
-<li><code>RoliBlocks</code> (" BLOCK"), the BLOCKS protocol's host, in order:</li>
 <li>the probe (<code>00 21 10 78 3F</code>), answered with a serial dump that names the block on USB;</li>
 <li>the topology: every block's serial, index, battery and firmware (the settings' facts);</li>
 <li>API mode on each block, then pings: the master every 400 ms, the others every 1.7 s
-    (without them a block leaves API mode in 5 s and, in time, powers off);</li>
+  (without them a block leaves API mode in 5 s and, in time, powers off);</li>
 <li>the note grid's root (config item 5), scale (22) and octave (4): a <code>ControllerScale</code> and a
-    <code>ControllerOctave</code>. Linked, the octave is set on connect; unlinked, the block is queried, so the
-    block's own value shows.</li>
+  <code>ControllerOctave</code>. Linked, the octave is set on connect; unlinked, the block is queried, so
+  the block's own value shows.</li>
+<li>The root goes to a Lightpad only: a keyboard block (a Seaboard) has its transpose put back
+    to 0, so its keys play their own notes;</li>
+<li>every playing block's touch sensitivities (items 10–16), read into the log.</li>
+</ul>
+<h5 id="the-pads-on-a-lightpad">The pads on a Lightpad</h5>
+<ul>
+<li>Pads: <code>ControllerScales::setPads</code> reaches <code>followPads</code>. <code>Main.qml</code>'s <code>pagePads</code> is 1 on the
+  drums pages, 2 on the chords' CHORDS and 3 on the samplers, else 0, while <code>lightpadPads</code> is
+  on. A key learned as <code>PADS</code> toggles it (<code>MidiInput::padsToggled</code>, kept in the profile).</li>
+<li>The pads go to <code>padsBlock()</code>: the master if it is a Lightpad, else the first Lightpad on the
+  DNA (a Seaboard can be the master). It gets grid mode (item 20, the side: 3) 3×3, chord
+  mode (24) off, transpose 0, octave 0 and scale chromatic.</li>
+<li>The 3×3 grid sends C2 to G♯2 whatever the octave. <code>ControllerScales::lightpadPad()</code> reads those
+    notes as pads 1 to 9 while <code>studio.scales.pads</code> is on: drum rows 1 to 8, chords 1 to 7,
+    then from the first again.</li>
+<li>The samplers get a 4×4 grid (side 4), C2 up to D♯3, read as their 16 slots or pads.</li>
+<li>The host's octave stops reaching it. Back to notes, the grid mode, transpose, scale and
+  octave it said before the pads return (a master's then follow the key).</li>
+</ul>
+<h5 id="the-blocks-buttons-and-scales">The blocks' buttons and scales</h5>
+<ul>
 <li>The blocks' buttons arrive as BLOCKS messages in API mode. <code>RoliBlocks</code> emits the CCs they
   sent before (<code>midiEmulated</code>, CC 102 + the button's index), so MidiInput's learned controls
   keep working.</li>
 <li>ravving's scales map to the grid's by their steps (<code>RoliBlocks::scaleId</code>); one the grid has
   not got leaves it chromatic, and SETTINGS · KEYS decides about the notes outside the key.</li>
 <li>Debug: <code>QT_LOGGING_RULES="ravving.sysex*.debug=true"</code> logs every message both ways.</li>
+</ul>
+<h4 id="the-mackie-control-surface">The Mackie Control surface</h4>
+<ul>
+<li><code>MackieSurface</code>, a control surface in Mackie Control's DAW mode (<code>MackieControl</code> decodes and
+  encodes its messages): a <code>ControllerMixer</code>. Its eight strips are the eight instruments, in the
+  header's order.</li>
+<li>Which controllers it hosts is data: a <code>data/midi-devices.json</code> entry with
+  <code>"surface": "mackie"</code> (the STARRYCTRL), or the user's MACKIE CONTROL SURFACE in SETTINGS ·
+  MIDI · HOST, both kept as the controller's <code>surface</code> setting (<code>MidiInput::surfaceType()</code>).</li>
+<li><code>Studio</code> registers the driver once with no name part, and <code>ControllerDrivers</code> picks it for
+    every controller whose <code>surface</code> names it; a change of that setting starts or drops it at
+    once.</li>
+<li>The entry's <code>"knobs"</code> says how its V-Pots send their turns (<code>sign-magnitude</code>, the
+    default, <code>twos-complement</code>, <code>offset-binary</code>).</li>
+</ul>
+<h5 id="the-surfaces-strips">The surface's strips</h5>
+<ul>
+<li>The fader (pitch bend on the strip's channel, 14 bits) is the level, as the unit labels it.
+  It has no motor, so it picks the level up: within <code>PickupWindow</code> of it, or once it crosses
+  it. A level changed anywhere else lets go of it.</li>
+<li>The level's position goes back to the fader as pitch bend, from which the surface's own
+    light shows whether the two agree. Near 0 dB (<code>UnityZone</code>) is 0 dB.</li>
+<li>The V-Pot (CC 16 + the strip, relative) is the pan. <code>RelativeEncoder</code> decodes it
+  (sign-magnitude: 1 right, 65 left) and speeds it up: ×1 for up to three ticks within 120 ms,
+  then one more step every two ticks, up to ×6.</li>
+<li>Each step is <code>PanStep</code> (1/64), counted from where the pan is. A turn through the middle
+    stops there once; a V-Pot press centres it.</li>
+<li>Its buttons (notes on channel 1): M mute, S solo, R the instrument's take, the fourth its
+  pattern paused. Each acts on its press.</li>
+</ul>
+<h5 id="the-surfaces-lights">The surface's lights</h5>
+<ul>
+<li>The lights are note-ons on the button's note (velocity 0 off, 1 flashing, 127 on). M, S and
+  the fourth show the instrument's mute, solo and pause. R flashes while its take counts in,
+  and is lit while it records.</li>
+<li>PLAY is lit while playing, STOP while stopped, RECORD as the take or LIVE REC. A strip with
+    no instrument is dark.</li>
+<li>Only what changed is sent. Changes waiting to go are merged by light or fader, sent in
+  batches of 12 at least 8 ms apart, and each fader's position at most every 30 ms. On
+  connecting (Bluetooth again included), everything is sent once more and each fader picks
+  its level up anew.</li>
+<li>△ and ▽ (notes 96, 97) are the driver's: the previous and the next instrument page;
+  ◀◀ and ▶▶ (notes 91, 92) a bar back and a bar on (<code>Request::Skip</code>).
+  The transport keys and ◁ ▷ are MidiInput's learned keys (<code>data/midi-devices.json</code>).</li>
+<li>Debug: <code>QT_LOGGING_RULES="ravving.mackie.debug=true"</code> logs every message in.</li>
+</ul>
+<h4 id="a-learned-mixer">A learned mixer</h4>
+<ul>
+<li>Any controller's notes, CCs and pitch bends can be learned as the MIXER controls, beside
+  the device's keys and knobs. The controls (<code>MixerControl</code>) are <code>MIXER1_VOLUME</code> …
+  <code>MIXER8_PAUSE</code>, each strip's VOLUME, PAN, MUTE, SOLO, REC and PAUSE, and <code>MIXER_PAUSE</code>, the
+  transport's ❚❚. A pitch bend is learned as <code>bend CH</code>.</li>
+<li><code>MidiInput</code> hands a message learned as one to <code>mixerControl()</code>. <code>LearnedMixers</code> keeps a
+  <code>LearnedMixer</code> for each controller the registry lists with any learned: one per controller,
+  however it is connected, with the controls, <code>knobs</code>, <code>lights</code> and <code>pickup</code> read from the
+  settings store.</li>
+<li>It is a <code>ControllerMixer</code> attached to the same <code>ControllerMixers</code> hub as a Mackie surface,
+    so its requests are the surface's; its lights go out through the <code>MidiTransport</code>.</li>
+</ul>
+<h5 id="what-a-learned-message-does">What a learned message does</h5>
+<p>What a message does (<code>LearnedMixer</code>):</p>
+<ul>
+<li>A pitch bend, or a CC sending positions, on VOLUME or PAN is a fader: it picks the value up
+  (<code>FaderPickup</code>, shared with <code>MackieSurface</code>). With the controller's <code>pickup</code> off any move
+  sets the value. Near 0 dB is 0 dB and near the middle the middle.</li>
+<li>A CC sending a turn's value (1, 63, 65…) three times in a row is an endless knob
+  (<code>EncoderGuess</code>). Its encoding is the controller's <code>knobs</code> or told by its values; a fader
+  resting at a stop never passes for one. It steps from where the value is, sped up by
+  <code>RelativeEncoder</code>, stopping once at 0 dB or the middle.</li>
+<li>A note, or a CC from 64 up, is a key: MUTE, SOLO, REC and PAUSE flip on its press, the
+  transport's PAUSE pauses or goes on, VOLUME sets 0 dB, PAN the middle.</li>
+<li>A learned key's state goes back on its own note or CC (127 lit, 0 dark), which lights many
+  controllers' pads; only what changed, together. The controller's <code>lights</code> setting (SETTINGS ·
+  MIDI · MIXER · MIXER LIGHTS, <code>"lights": false</code> in its defaults) turns that off.</li>
+<li>Debug: <code>QT_LOGGING_RULES="ravving.mixer.debug=true"</code> logs the messages it gets.</li>
 </ul>
 <h3 id="the-key-lights">The key lights</h3>
 <p><code>Main.qml</code>'s <code>ledColors</code>:</p>
@@ -364,6 +658,10 @@ interfaces it has.</p>
 </tr>
 </tbody>
 </table>
+<p><code>Leds</code> scales every colour by <code>brightness</code> (1–100 %, SETTINGS → KEYS → LIGHTS), kept in
+zynthbox-qml's settings (<code>UI/ledBrightness</code>, 15 by default) so both apps light the keys alike.
+While the startup splash plays, <code>Leds::showFrame()</code> lights the keys with <code>SplashLights</code>' frames
+in place of these; <code>Leds::endFrames()</code> hands them back.</p>
 <h3 id="alt-and-the-shortcut-keys">ALT and the shortcut keys</h3>
 <ul>
 <li>ALT is a modifier held in C++ (<code>Ravving.altHeld</code>).</li>
@@ -436,7 +734,8 @@ behind them (the style's <code>Overlay.modal</code> and <code>Overlay.modeless</
 dialog takes the keys while open, and gives the focus back.</p>
 <ul>
 <li><strong>Dialogs</strong> wear one card look: a gradient #1e1c24 → #131118, a hairline border, radius 16,
-  and a <code>DialogHeader</code> with a spaced title, a hint and the ✕.</li>
+  and a <code>DialogHeader</code> with a spaced title, an optional subtitle in the accent, a hint and the
+  ✕. A sound picker's subtitle is what the machine plays now, as its nameplate says it.</li>
 <li><strong>The menu drawer</strong> is a settings panel: a gradient #211f28 → #16141c, hairline-split sections
   under small captions, and flat wells that light yellow (#f0c832).</li>
 </ul>
@@ -466,6 +765,49 @@ dialog takes the keys while open, and gives the focus back.</p>
   it (<code>bankOffset</code> = that bar, <code>patternLength</code> = one bar), while <code>bars</code> keeps the real length.
   Paging with ‹ › moves the loop. It isn't saved; attach and restore put the window back.</li>
 </ul>
+<h3 id="skipping-bars">Skipping bars</h3>
+<ul>
+<li><code>studio.skip(bars)</code> moves the playback to a bar's start, on or back, at once: libravving's
+  <code>Sequencer::skip()</code> is read on the next process cycle (<code>RtSequencer::takeSkip()</code>, <code>land()</code>).
+  Every clip keeps its alignment and plays the pass it plays there. Paused, it moves where
+  playback goes on.</li>
+<li>Back is a music player's: from past the bar's first beat (<code>TicksPerBeat</code>) it goes to that
+  bar's start first, one bar fewer back. Stopped by the bounds, it restarts the bar playing.</li>
+<li>A skip asked within <code>Studio::SkipChainMs</code> (500 ms) of the last is <em>chained</em>. It counts from
+  the bar the last one went to, not the bar playing, so quick presses add up even when a bar
+  line passes between them.</li>
+<li>A skip that cannot move (a chained one at the bounds, one on past them) is reported as not
+  moving: <code>Studio::skipStopped()</code> (a toast).</li>
+</ul>
+<h4 id="its-bounds">Its bounds</h4>
+<ul>
+<li>The engine stops a skip at its bounds (<code>Sequencer::setSkipBounds()</code>), which <code>Sections</code> sends
+  as they change (<code>Sections::skipBounds()</code>).</li>
+<li>They are the pass playing in LOOP, the entry's repeat in SONG. Forward stops at its last bar,
+  back at its first or, with <code>UserProfile::skipBackInPass</code> off, at the section's (the entry's)
+  first.</li>
+<li>The next section's bounds are sent when it is cued, and wait for its line.</li>
+</ul>
+<h4 id="what-waits-and-what-sounds">What waits, and what sounds</h4>
+<ul>
+<li>What waits for a bar line waits for it in playback ticks (<code>Track::nextAt</code>, the switch set's
+  line). That is a section switch, the song's next entry and its end (<code>Studio::m_stopAtBar</code>).</li>
+<li>They come that much later after a skip back, and at once after a skip forward over their
+  line.</li>
+<li>The chords, bass and lead chase their notes (<code>Sequencer::setTrackChase()</code>,
+  <code>RtSequencer::chase()</code>). A held note that sounds at the new place goes on. One that sounds
+  there and is not held is struck for its rest (a 16th at least). The others end.</li>
+<li>Other tracks end what they hold.</li>
+<li>The 16ths up to the tick it left are told first, then <code>onSkipped</code>, then the 16ths from the
+  bar it landed on (<code>SixteenthCounter::landOn()</code>). <code>Studio::m_bar</code> becomes the bar before:
+  the landing bar's start is told next as a bar begun, and <code>Sections::barStarted()</code> cues what
+  follows a pass's last bar. <code>Sections::skipped()</code> only shows the new bar meanwhile.</li>
+<li>Refused (and logged) while stopped, in the desktop preview, and while a take counts in or
+  records.</li>
+<li>ALT + X / Y (<code>Ravving::skipRequested</code>, Main.qml) and a controller's ◀◀ ▶▶
+  (<code>ControllerMixer::Request::Skip</code> → <code>ControllerMixers::skipRequested</code> → <code>MixerLink.qml</code>)
+  ask for it.</li>
+</ul>
 <h2 id="the-libravving-bridge">The libravving bridge</h2>
 <p>libravving is ravving's own copy of libzynthbox, kept in <code>libravving/</code> and trimmed to what
 ravving plays through (libravving/README.md). It is installed as <code>/usr/lib/libravving.so</code>, beside
@@ -478,7 +820,7 @@ zynthbox-qml's <code>libzynthbox.so</code>, and bundled in the AppImage.</p>
 <li>every call on the application's thread, unless a function says otherwise.</li>
 </ul>
 <h3 id="loading-it">Loading it</h3>
-<p><code>ZynthboxBridge</code>:</p>
+<p><code>DeviceBridge</code>:</p>
 <ol>
 <li><code>dlopen</code>s <code>libzyncoder.so</code> and calls <code>init_zynlib()</code>: the engine needs zyncoder's MIDI router
    first, the same order as zynthbox-qml. Without zyncoder there are no device keys or knobs.</li>
@@ -555,6 +897,10 @@ written: ravving reads the device's sample library and writes only to its own pl
 </tr>
 </tbody>
 </table>
+<p>The sounds ravving does not own are found, not assumed. A soundfont is named by its path on a
+Zynthbox, and <code>Paths::relocated()</code> gives the file that plays for it here. <code>EngineCatalog</code>
+picks the first of an engine's choices this system can run. See <a href="engines.html">engines.md</a>,
+"Finding the engines and their sounds".</p>
 <p>On a desktop the library is <code>~/.local/share/ravving</code>. Files of an older layout are moved into
 this one at start (<code>Paths::initialise()</code>), and the session's and projects' sample paths with them.</p>
 <h2 id="a-projects-file">A project's file</h2>
@@ -693,10 +1039,45 @@ successive snapshots as small deltas of each other and drops what no branch reac
 is up until the page is ready, then plays a short show into the page. MENU → SETTINGS → STARTUP
 picks the look, from the next start: ANIME, GLOW, STILL, ZOOM, ARU or OFF.</p>
 <ul>
-<li><strong>While the studio loads</strong>, the splash is a still picture. A moving one keeps the screen
-  redrawn every frame and slows the start.</li>
+<li><strong>While the studio loads</strong>, nothing moves. A moving picture keeps the screen redrawn every
+  frame and slows the start, and the GUI thread is busy loading between the startup marks.</li>
+<li>The picture changes only at the marks (src/startuptimer.h). <code>StartupSplash::marked()</code> sets
+    <code>phase</code>, the mark reached (splash, studio, backends, qml, first-frame, wired), and
+    <code>progress</code>, 0 to 1.</li>
+<li>Both are pushed into the splash window, and the page's overlay reads them as
+    <code>startup.phase</code> and <code>startup.progress</code>.</li>
+<li><strong>The step line</strong> at the foot of every look names the step reached: an episode title per
+  mark in the brand's display face (<code>SplashLook.stepTitle()</code>), the mark itself after it.</li>
 <li><strong>The show</strong> plays in the page's own window, since kwin keeps a full-screen window above a
   "stay on top" one.</li>
+</ul>
+<h3 id="the-lights-and-aru">The lights and ARU</h3>
+<ul>
+<li><strong>The key lights</strong> play along (<code>SplashLights</code>): the look's colours still while the studio
+  loads (one write), then each show's light show, about 30 frames a second, from the same
+  <code>play()</code> signal. The step keys carry the sweeps and halves (a row from 1 to 16 on every kit),
+  the number keys and the rest follow.</li>
+<li>Each frame is a function of the time, and the timelines are SplashLook.qml's durations:
+    ctest <code>splashlights</code> reads them from the QML. The lights' clock starts at the page window's
+    first frame after <code>play()</code> (startup mark <code>show</code>), as the show's Animators wait for frames
+    while the page is still busy.</li>
+<li><strong>ARU</strong> is a species (octopus, wolf pup, alien) in a look: the plain hello or one of the
+  party's seven moods (the About page's dancers).</li>
+<li><code>SplashLights::aruFrames()</code> and <code>aruHolds()</code> say which frames the show steps through and
+    how long each holds; <code>StartupSplash</code> hands them to SplashLook (<code>aruFrames</code>, <code>aruHolds</code>),
+    and the lights take the mood's colour. <code>RAVVING_SPLASH_PICK</code> sets the pick, to test a look.</li>
+</ul>
+<h3 id="arus-party-while-the-studio-loads">ARU's party while the studio loads</h3>
+<ul>
+<li>The ARU look shows the party on a stage (qml/SplashStage.qml).
+  <code>SplashLights::aruParty()</code> makes it, and StartupSplash hands it over as <code>aruParty</code>.</li>
+<li>The picked character stands in the middle. The other two species come on at its sides at
+  the studio and page marks, over a floor line filled to <code>progress</code>.</li>
+<li>Each startup step is a still tableau, every dancer in another frame of its loop. The
+  picked one goes into its show when <code>play()</code> comes.</li>
+</ul>
+<h3 id="the-logos">The logos</h3>
+<ul>
 <li><strong>The logos</strong> are the effect SVGs drawn without their backgrounds
   (data/branding/make-splash.sh). ARU's frames, the pixel octopus, the wolf pup and the alien, are drawn by
   data/branding/make-aru.py from data/branding/aru/.</li>

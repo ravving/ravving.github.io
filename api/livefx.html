@@ -5,7 +5,7 @@
 <!-- livefx.cpp -->
   <meta name="description" content="Performance effects on the whole mix, switched by pads, and three send levels; published to QML as studio&lt;@op&gt;.&lt;/@op&gt;liveFx.">
   <meta name="keywords" content="class">
-  <title>LiveFx Class | ravving C++ API 0.6.0</title>
+  <title>LiveFx Class | ravving C++ API 0.7.0</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style/ravving.css?v=1bdacbda15">
   <link rel="icon" type="image/svg+xml" href="../assets/vv-16-tile.svg">
@@ -21,8 +21,8 @@
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
-  <script src="nav.js?v=fd733103c9" defer></script>
-  <script src="search.js?v=131a6217f4" defer></script>
+  <script src="nav.js?v=df03485741" defer></script>
+  <script src="search.js?v=e716fa23b8" defer></script>
   <script src="ravving-api.js?v=3135469da3" defer></script>
 </head>
 <body class="api">
@@ -107,7 +107,7 @@
 </table></div>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#LiveFx" translate="no">LiveFx</a></b>(ZynthboxBridge *<i>bridge</i>, int *<i>master</i>, const QList&lt;Machine *&gt; &amp;<i>machines</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#LiveFx" translate="no">LiveFx</a></b>(DeviceBridge *<i>bridge</i>, int *<i>master</i>, const QList&lt;Machine *&gt; &amp;<i>machines</i>, QObject *<i>parent</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#active-prop" translate="no">active</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#allPads-prop" translate="no">allPads</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> quint64 </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#audioFrame" translate="no">audioFrame</a></b>() const</td></tr>
@@ -146,6 +146,8 @@
 <h2 id="static-public-members">Static Public Members</h2>
 <div class="table"><table class="alignedsummary" translate="no">
 <tr><td class="memItemLeft rightAlign topAlign"> const int </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#BankSize-var" translate="no">BankSize</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#knobGlideMs" translate="no">knobGlideMs</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="livefx.html#transition" translate="no">transition</a></b>(const QString &amp;<i>pad</i>)</td></tr>
 </table></div>
 <!-- $$$LiveFx-description -->
 <div class="descr">
@@ -157,7 +159,8 @@
 </ul>
 <p>One LOOP plays at a time, STUTTER on top of a held one; one head reads the engine's ring at a time: a press on one lets go of the others of its group.</p>
 <p>NO KICK, ONLY KICK, LO PASS, HI PASS and the KILLs toggle on <a href="livefx.html#press" translate="no">press</a>(). DROP, CRUSH, ALIAS, PHONE, MONO, FLANGER, GATE and AUTO-PAN act while pressed, and a press held for 0.5 s latches them (a later short press releases them). STUTTER, the LOOPs, the heads, ECHO, FREEZE and FADE OUT act only while pressed, unless latched with <a href="livefx.html#toggle" translate="no">toggle</a>().</p>
-<p>The send levels: phaser (Calf Phaser on the master), echo (every machine sent into the studio's delay at least this much) and heavy (GlobalPlayback's compressor squashing harder).</p>
+<p>Every pad that glides has one transition (<a href="livefx.html#transition" translate="no">transition</a>(): an engage, a release and a curve, in one table beside the pad list): the engine's effects glide their amounts along theirs (<a href="livefxengine.html#setTransition" translate="no">LiveFxEngine::setTransition</a>()), STUTTER and the LOOPs the switch between the live input and the repeat (<a href="repeatcore.html#setTransition" translate="no">RepeatCore::setTransition</a>()), DROP, HI PASS and LO PASS their filter's sweep. The heads, FADE OUT, STUTTER and the LOOPs come in at once (10 ms) and give the live input back over 300 ms; the filter-like effects and ECHO's send fade their wet part out over 150 ms. The others act at once: NO KICK and ONLY KICK skip or keep the kick rows (what already sounds rings out), CRUSH switches Calf Crusher, which crossfades its own bypass (1024 frames, 21 ms at 48 kHz), and FREEZE takes in its moment and rings out by itself.</p>
+<p>The send levels: phaser (Calf Phaser on the master), echo (every machine sent into the studio's delay at least this much) and heavy (GlobalPlayback's compressor squashing harder). Each change glides over <a href="livefx.html#knobGlideMs" translate="no">knobGlideMs</a>(): the phaser's amount through Calf's own smoothing (10 ms; the phaser stays on, its amount at 0 is the dry sound), the echo's send and the compressor (switching it in and its make-up gain) in libravving.</p>
 <p>The master chain is GlobalPlayback, the beat repeat (with the engine after it), the crusher and the phaser, each passing the sound through untouched until used (<a href="livefx.html#masterInserts" translate="no">masterInserts</a>()). Without libravving (a desktop run) only the states change. GUI thread only.</p>
 </div>
 <!-- @@@LiveFx -->
@@ -314,8 +317,8 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <div class="fnitem">
-<!-- $$$LiveFx[overload1]$$$LiveFxZynthboxBridge*int*constQList<Machine*>&QObject* -->
-<h3 class="fn" translate="no" id="LiveFx">LiveFx::<span class="name">LiveFx</span>(<span class="type"><a href="zynthboxbridge.html" translate="no">ZynthboxBridge</a></span> *<i>bridge</i>, <span class="type">int</span> *<i>master</i>, const <span class="type">QList</span>&lt;<span class="type"><a href="machine.html" translate="no">Machine</a></span> *&gt; &amp;<i>machines</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
+<!-- $$$LiveFx[overload1]$$$LiveFxDeviceBridge*int*constQList<Machine*>&QObject* -->
+<h3 class="fn" translate="no" id="LiveFx">LiveFx::<span class="name">LiveFx</span>(<span class="type"><a href="devicebridge.html" translate="no">DeviceBridge</a></span> *<i>bridge</i>, <span class="type">int</span> *<i>master</i>, const <span class="type">QList</span>&lt;<span class="type"><a href="machine.html" translate="no">Machine</a></span> *&gt; &amp;<i>machines</i>, <span class="type">QObject</span> *<i>parent</i> = nullptr)</h3>
 <p>Constructs the live effects over <i translate="no">master</i> (libravving's master strip, GlobalPlayback; null on a desktop run) and the studio's <i translate="no">machines</i> (kick cuts, echo sends), with the given <i translate="no">parent</i>. <i translate="no">bridge</i> runs the crusher and phaser and keeps the beat repeat and the engine on the transport's grid (null on a desktop run).</p>
 <!-- @@@LiveFx -->
 </div>
@@ -367,6 +370,12 @@
 </div><!-- @@@key -->
 </div>
 <div class="fnitem">
+<!-- $$$knobGlideMs[overload1]$$$knobGlideMs -->
+<h3 class="fn" translate="no" id="knobGlideMs"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> LiveFx::<span class="name">knobGlideMs</span>()</h3>
+<p>Returns how long a change of the send levels (phaser, echo, heavy) glides, in milliseconds.</p>
+<!-- @@@knobGlideMs -->
+</div>
+<div class="fnitem">
 <!-- $$$knobsChanged -->
 <h3 class="fn" translate="no" id="knobsChanged"><code class="details extra" translate="no">[signal]</code> <span class="type">void</span> LiveFx::<span class="name">knobsChanged</span>()</h3>
 <p>Emitted when phaser, echo or heavy changed.</p>
@@ -413,9 +422,15 @@
 <div class="admonition note"><p><b>Note: </b>This function can be invoked via the meta-object system and from QML. See Q_INVOKABLE.</p>
 </div><!-- @@@toggle -->
 </div>
+<div class="fnitem">
+<!-- $$$transition[overload1]$$$transitionconstQString& -->
+<h3 class="fn" translate="no" id="transition"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> LiveFx::<span class="name">transition</span>(const <span class="type">QString</span> &amp;<i>pad</i>)</h3>
+<p>Returns how <i translate="no">pad</i> comes in and lets go: its engage and release, in milliseconds, and its curve. A pad that acts at once (NO KICK, ONLY KICK, CRUSH, FREEZE), or no pad, has none: 0 ms both ways.</p>
+<!-- @@@transition -->
+</div>
+</div>
 <div class="vars">
 <h2>Member Variable Documentation</h2>
-</div>
 <div class="fnitem">
 <!-- $$$BankSize -->
 <h3 class="fn" translate="no" id="BankSize-var">const <span class="type">int</span> LiveFx::<span class="name">BankSize</span></h3>
